@@ -1,0 +1,10 @@
+
+full-build:
+  deps:
+  - code-style
+
+  build:
+    target: ExternDotnetSDK.sln
+    configuration: None
+
+  artifacts:
