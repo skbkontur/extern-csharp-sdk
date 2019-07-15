@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Docflows.Common
+namespace ExternDotnetSDK.Docflows
 {
     [JsonObject]
     public class FormVersion

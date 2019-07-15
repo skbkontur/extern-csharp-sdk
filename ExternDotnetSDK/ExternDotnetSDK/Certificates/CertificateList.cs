@@ -6,6 +6,7 @@ namespace ExternDotnetSDK.Certificates
     public class CertificateList
     {
         public CertificateDto[] Certificates { get; set; }
+
         [UsedImplicitly]
         public long TotalCount { get; set; }
         [UsedImplicitly]

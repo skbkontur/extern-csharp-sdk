@@ -1,5 +1,4 @@
 ﻿using System;
-using ExternDotnetSDK.Docflows.Common;
 using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Docflows.Descriptions
@@ -16,4 +15,5 @@ namespace ExternDotnetSDK.Docflows.Descriptions
         public Guid? RelatedDocflowId { get; set; }
         public Guid? RelatedDocumentId { get; set; }
     }
+
 }

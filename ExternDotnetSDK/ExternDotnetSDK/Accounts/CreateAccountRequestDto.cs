@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using Newtonsoft.Json;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ExternDotnetSDK.Accounts
 {
     public class CreateAccountRequestDto
     {
-        [JsonProperty("inn"), Required]
+        [Required]
         public string Inn { get; set; }
-
-        [JsonProperty("kpp")]
         public string Kpp { get; set; }
-
-        [JsonProperty("organization-name"), Required]
+        [Required]
         public string OrganizationName { get; set; }
     }
 }

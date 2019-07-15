@@ -1,43 +1,142 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: Kontur.Api.Link
-// Assembly: Kontur.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: AA280C05-1D50-4E0C-9593-3BE7096E3298
-// Assembly location: C:\Users\trubitsin\Desktop\Not My Projects\ke.api\libapi\Kontur.Api\bin\Release\Kontur.Api.dll
-
-using System;
+﻿using System;
 using System.Text;
-using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Common
 {
-    public class Link
+    /// <summary>
+    ///     Просто ссылка.
+    ///     Подробности на https://wiki.skbkontur.ru/pages/viewpage.action?pageId=82510147.
+    /// </summary>
+    public sealed class Link : IEquatable<Link>
     {
-        [JsonProperty("href")]
-        public readonly Uri Href;
+        public const string RelSelf = "self";
+        public const string RelPrev = "prev";
+        public const string RelNext = "next";
 
-        [JsonProperty("rel")]
-        public readonly string Rel;
-
-        [JsonProperty("name")]
-        public readonly string Name;
-
-        [JsonProperty("title")]
-        public readonly string Title;
-
-        [JsonProperty("profile")]
-        public readonly string Profile;
-
-        [JsonProperty("templated")]
-        public readonly bool Templated;
-
-        public Link(Uri href = default(Uri), string rel = null, string name = null, string title = null, string profile = null, bool templated = false)
+        public Link(Uri href, string rel, string name = null, string title = null, string profile = null, bool templated = false)
         {
-            Href = href;
-            Rel = rel;
-            Name = name;
-            Title = title;
-            Profile = profile;
-            Templated = templated;
+            if (href == null)
+                throw new ArgumentNullException(nameof(href));
+
+            if (rel == null)
+                throw new ArgumentNullException(nameof(rel));
+
+            this.Href = href;
+            this.Rel = rel;
+            this.Name = name;
+            this.Title = title;
+            this.Templated = templated;
+            this.Profile = profile;
+        }
+
+        /// <summary>
+        ///     Ссылка на ресурс.
+        /// </summary>
+        public Uri Href { get; private set; }
+
+        /// <summary>
+        ///     Тип отношения.
+        /// </summary>
+        public string Rel { get; private set; }
+
+        /// <summary>
+        ///     Имя отношения.
+        ///     Используется для идентификации ресурсов с одинаковым типом отношения.
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
+        ///     Человек-понятное имя ресурса.
+        /// </summary>
+        public string Title { get; private set; }
+
+        /// <summary>
+        ///     Профиль представления.
+        /// </summary>
+        public string Profile { get; private set; }
+
+        /// <summary>
+        ///     Определяет шаблонную ссылку.
+        /// </summary>
+        public bool Templated { get; private set; }
+
+        public bool Equals(Link other)
+        {
+            return other != null &&
+                   Href == other.Href &&
+                   EqualsOrNulls(Rel, other.Rel) &&
+                   EqualsOrNulls(Title, other.Title) &&
+                   EqualsOrNulls(Name, other.Name) &&
+                   EqualsOrNulls(Profile, other.Profile) &&
+                   Templated == other.Templated;
+        }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            builder.Append("<link ");
+
+            if (Rel != null)
+                builder.Append("rel=\"").Append(Rel).Append("\" ");
+
+            if (Name != null)
+                builder.Append("name=\"").Append(Name).Append("\" ");
+
+            if (Profile != null)
+                builder.Append("profile=\"").Append(Profile).Append("\" ");
+
+            if (Title != null)
+                builder.Append("title=\"").Append(Title).Append("\" ");
+
+            if (Templated)
+                builder.Append("templated=\"true\" ");
+
+            builder.Append("href=\"").Append(Href).Append("\" />");
+
+            return builder.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Link);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashcode = 19;
+
+                hashcode = hashcode*23 + Href.GetHashCode();
+
+                if (Title != null)
+                    hashcode = hashcode*23 + Title.ToLower().GetHashCode();
+
+                if (Rel != null)
+                    hashcode = hashcode*23 + Rel.ToLower().GetHashCode();
+
+                if (Name != null)
+                    hashcode = hashcode*23 + Name.ToLower().GetHashCode();
+
+                if (Profile != null)
+                    hashcode = hashcode*23 + Profile.ToLower().GetHashCode();
+
+                hashcode = hashcode*23 + Templated.GetHashCode();
+
+                return hashcode;
+            }
+        }
+
+        private static bool EqualsOrNulls(string a, string b)
+        {
+            if (a == null)
+                return b == null;
+
+            if (b == null)
+                return false;
+
+            return 0 == string.Compare(a, b, StringComparison.CurrentCultureIgnoreCase);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using ExternDotnetSDK.Docflows.Common;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Docflows.Descriptions
 {
@@ -11,4 +10,5 @@ namespace ExternDotnetSDK.Docflows.Descriptions
         public string Cu { get; set; }
         public string TransitCu { get; set; }
     }
+
 }

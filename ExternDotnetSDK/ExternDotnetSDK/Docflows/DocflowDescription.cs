@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Docflows.Descriptions
+﻿namespace ExternDotnetSDK.Docflows
 {
     public abstract class DocflowDescription
     {

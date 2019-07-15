@@ -23,15 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DraftsBuilders\" />
-    <Folder Include="Drafts\" />
     <Folder Include="Events\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Documents\" />
-    <Folder Include="Inventories\" />
-    <Folder Include="Tasks\" />
-    <Folder Include="Replies\" />
-    <Folder Include="Signatures\" />
   </ItemGroup>
 
 </Project>

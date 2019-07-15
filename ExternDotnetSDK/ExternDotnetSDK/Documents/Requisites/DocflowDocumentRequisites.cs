@@ -1,6 +1,6 @@
 ﻿namespace ExternDotnetSDK.Documents
 {
-    public abstract class DocflowDocumentRequisites
+    public class DocflowDocumentRequisites
     {
     }
 }

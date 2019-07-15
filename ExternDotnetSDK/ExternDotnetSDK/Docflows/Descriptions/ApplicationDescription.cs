@@ -1,5 +1,4 @@
-﻿using ExternDotnetSDK.Docflows.Common;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Docflows.Descriptions
 {

@@ -14,4 +14,5 @@ namespace ExternDotnetSDK.Docflows.Descriptions
         public Guid? RelatedDocflowId { get; set; }
         public string Okpo { get; set; }
     }
+
 }
