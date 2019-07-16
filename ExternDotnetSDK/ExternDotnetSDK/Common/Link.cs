@@ -57,10 +57,14 @@ namespace ExternDotnetSDK.Common
         public override string ToString()
         {
             var builder = new StringBuilder("<link ");
-            TryAppendLinkField(builder, Rel);
-            TryAppendLinkField(builder, Name);
-            TryAppendLinkField(builder, Profile);
-            TryAppendLinkField(builder, Title);
+            if (Rel != null)
+                builder.Append($"rel=\"{Rel}\" ");
+            if (Name != null)
+                builder.Append($"name=\"{Name}\" ");
+            if (Profile != null)
+                builder.Append($"profile=\"{Profile}\" ");
+            if (Title != null)
+                builder.Append($"title=\"{Title}\" ");
             if (Templated)
                 builder.Append("templated=\"true\" ");
             builder.Append($"href=\"{Href}\" />");
@@ -85,12 +89,6 @@ namespace ExternDotnetSDK.Common
             return a == null
                 ? b == null
                 : b != null && string.Compare(a, b, StringComparison.CurrentCultureIgnoreCase) == 0;
-        }
-
-        private void TryAppendLinkField(StringBuilder builder, string field)
-        {
-            if (field != null)
-                builder.Append($"{nameof(field)}=\"{field}\" ");
         }
 
         private int TryIncreaseHashcode(int hashcode, string linkField)

@@ -13,12 +13,9 @@ namespace ExternDotnetSDK.Common
 
         public static bool TryParse(string value, out Urn result)
         {
+            result = null;
             if (value == null || !value.ToLower().StartsWith(Schema))
-            {
-                result = null;
                 return false;
-            }
-
             result = Parse(value);
             return true;
         }
@@ -119,10 +116,16 @@ namespace ExternDotnetSDK.Common
             return Schema + Value;
         }
 
-        private void TryThrowArgumentNullException(object obj)
+        private void TryThrowArgumentNullException(Urn urn)
         {
-            if (obj is null)
-                throw new ArgumentNullException(nameof(obj));
+            if (urn == null)
+                throw new ArgumentNullException(nameof(urn));
+        }
+
+        private void TryThrowArgumentNullException(string str)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+                throw new ArgumentNullException(nameof(str));
         }
     }
 }

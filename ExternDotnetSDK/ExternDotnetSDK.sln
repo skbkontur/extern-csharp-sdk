@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternDotnetSDK", "ExternDotnetSDK\ExternDotnetSDK.csproj", "{BC1380C5-17B7-4C82-832C-40A647FBAD58}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternDotnetSDKTests", "ExternDotnetSDKTests\ExternDotnetSDKTests.csproj", "{ABA9A116-2F0A-4442-8449-4994A3B257AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BC1380C5-17B7-4C82-832C-40A647FBAD58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC1380C5-17B7-4C82-832C-40A647FBAD58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC1380C5-17B7-4C82-832C-40A647FBAD58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABA9A116-2F0A-4442-8449-4994A3B257AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABA9A116-2F0A-4442-8449-4994A3B257AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABA9A116-2F0A-4442-8449-4994A3B257AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABA9A116-2F0A-4442-8449-4994A3B257AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
