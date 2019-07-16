@@ -1,5 +1,6 @@
 ﻿using System;
 using ExternDotnetSDK.Common;
+
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace ExternDotnetSDK.Documents

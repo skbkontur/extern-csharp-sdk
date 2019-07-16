@@ -3,67 +3,50 @@ using System.Text;
 
 namespace ExternDotnetSDK.Common
 {
-    /// <summary>
-    ///     Просто ссылка.
-    ///     Подробности на https://wiki.skbkontur.ru/pages/viewpage.action?pageId=82510147.
-    /// </summary>
+    /// <summary>Просто ссылка. Подробности на https://wiki.skbkontur.ru/pages/viewpage.action?pageId=82510147. </summary>
     public sealed class Link : IEquatable<Link>
     {
         public const string RelSelf = "self";
         public const string RelPrev = "prev";
         public const string RelNext = "next";
 
+        /// <summary>Ссылка на ресурс.</summary>
+        public readonly Uri Href;
+
+        /// <summary>Тип отношения.</summary>
+        public readonly string Rel;
+
+        /// <summary>Имя отношения. Используется для идентификации ресурсов с одинаковым типом отношения.</summary>
+        public readonly string Name;
+
+        /// <summary>Человек-понятное имя ресурса.</summary>
+        public readonly string Title;
+
+        /// <summary>Профиль представления.</summary>
+        public readonly string Profile;
+
+        /// <summary>Определяет шаблонную ссылку.</summary>
+        public readonly bool Templated;
+
         public Link(Uri href, string rel, string name = null, string title = null, string profile = null, bool templated = false)
         {
-            if (href == null)
-                throw new ArgumentNullException(nameof(href));
-
-            if (rel == null)
-                throw new ArgumentNullException(nameof(rel));
-
-            this.Href = href;
-            this.Rel = rel;
-            this.Name = name;
-            this.Title = title;
-            this.Templated = templated;
-            this.Profile = profile;
+            Href = href ?? throw new ArgumentNullException(nameof(href));
+            Rel = rel ?? throw new ArgumentNullException(nameof(rel));
+            Name = name;
+            Title = title;
+            Templated = templated;
+            Profile = profile;
         }
 
-        /// <summary>
-        ///     Ссылка на ресурс.
-        /// </summary>
-        public Uri Href { get; private set; }
-
-        /// <summary>
-        ///     Тип отношения.
-        /// </summary>
-        public string Rel { get; private set; }
-
-        /// <summary>
-        ///     Имя отношения.
-        ///     Используется для идентификации ресурсов с одинаковым типом отношения.
-        /// </summary>
-        public string Name { get; private set; }
-
-        /// <summary>
-        ///     Человек-понятное имя ресурса.
-        /// </summary>
-        public string Title { get; private set; }
-
-        /// <summary>
-        ///     Профиль представления.
-        /// </summary>
-        public string Profile { get; private set; }
-
-        /// <summary>
-        ///     Определяет шаблонную ссылку.
-        /// </summary>
-        public bool Templated { get; private set; }
+        public override bool Equals(object obj)
+        {
+            return ReferenceEquals(this, obj) || obj is Link link && Equals(link);
+        }
 
         public bool Equals(Link other)
         {
-            return other != null &&
-                   Href == other.Href &&
+            return other != null
+                   && Href == other.Href &&
                    EqualsOrNulls(Rel, other.Rel) &&
                    EqualsOrNulls(Title, other.Title) &&
                    EqualsOrNulls(Name, other.Name) &&
@@ -73,70 +56,51 @@ namespace ExternDotnetSDK.Common
 
         public override string ToString()
         {
-            var builder = new StringBuilder();
-
-            builder.Append("<link ");
-
-            if (Rel != null)
-                builder.Append("rel=\"").Append(Rel).Append("\" ");
-
-            if (Name != null)
-                builder.Append("name=\"").Append(Name).Append("\" ");
-
-            if (Profile != null)
-                builder.Append("profile=\"").Append(Profile).Append("\" ");
-
-            if (Title != null)
-                builder.Append("title=\"").Append(Title).Append("\" ");
-
+            var builder = new StringBuilder("<link ");
+            TryAppendLinkField(builder, Rel);
+            TryAppendLinkField(builder, Name);
+            TryAppendLinkField(builder, Profile);
+            TryAppendLinkField(builder, Title);
             if (Templated)
                 builder.Append("templated=\"true\" ");
-
-            builder.Append("href=\"").Append(Href).Append("\" />");
-
+            builder.Append($"href=\"{Href}\" />");
             return builder.ToString();
-        }
-
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as Link);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                var hashcode = 19;
-
-                hashcode = hashcode*23 + Href.GetHashCode();
-
-                if (Title != null)
-                    hashcode = hashcode*23 + Title.ToLower().GetHashCode();
-
-                if (Rel != null)
-                    hashcode = hashcode*23 + Rel.ToLower().GetHashCode();
-
-                if (Name != null)
-                    hashcode = hashcode*23 + Name.ToLower().GetHashCode();
-
-                if (Profile != null)
-                    hashcode = hashcode*23 + Profile.ToLower().GetHashCode();
-
-                hashcode = hashcode*23 + Templated.GetHashCode();
-
-                return hashcode;
+                var hashcode = 19 * 23 + Href.GetHashCode();
+                hashcode = TryIncreaseHashcode(hashcode, Title);
+                hashcode = TryIncreaseHashcode(hashcode, Rel);
+                hashcode = TryIncreaseHashcode(hashcode, Name);
+                hashcode = TryIncreaseHashcode(hashcode, Profile);
+                return hashcode * 23 + Templated.GetHashCode();
             }
         }
 
         private static bool EqualsOrNulls(string a, string b)
         {
-            if (a == null)
-                return b == null;
+            return a == null
+                ? b == null
+                : b != null && string.Compare(a, b, StringComparison.CurrentCultureIgnoreCase) == 0;
+        }
 
-            if (b == null)
-                return false;
+        private void TryAppendLinkField(StringBuilder builder, string field)
+        {
+            if (field != null)
+                builder.Append($"{nameof(field)}=\"{field}\" ");
+        }
 
-            return 0 == string.Compare(a, b, StringComparison.CurrentCultureIgnoreCase);
+        private int TryIncreaseHashcode(int hashcode, string linkField)
+        {
+            unchecked
+            {
+                return linkField is null
+                    ? hashcode
+                    : hashcode * 23 + linkField.ToLower().GetHashCode();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using ExternDotnetSDK.Api.Enums;
 using ExternDotnetSDK.Common;
 using JetBrains.Annotations;
 

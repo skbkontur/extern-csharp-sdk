@@ -8,6 +8,7 @@ namespace ExternDotnetSDK.Docflows.Descriptions
     {
         /// <summary>field CU is deprecated and ought to be not used</summary>
         public string Cu { get; set; }
+
         public string RegistrationNumber { get; set; }
         public string FinalRecipient { get; set; }
         public FormVersion FormVersion { get; set; }

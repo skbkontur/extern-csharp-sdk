@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using ExternDotnetSDK.Common;
-using ExternDotnetSDK.DraftsBuilders.Info;
 
-namespace ExternDotnetSDK.DraftsBuilders
+namespace ExternDotnetSDK.DraftsBuilders.Info
 {
     public class RegistrationInfo
     {

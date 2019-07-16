@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ExternDotnetSDK.Api.Enums;
 
-namespace ExternDotnetSDK.Api.Statuses
+namespace ExternDotnetSDK.Api
 {
     public class CryptOperationStatusResult
     {

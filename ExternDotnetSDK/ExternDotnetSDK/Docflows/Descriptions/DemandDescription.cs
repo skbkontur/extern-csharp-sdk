@@ -10,5 +10,4 @@ namespace ExternDotnetSDK.Docflows.Descriptions
         public string Cu { get; set; }
         public string TransitCu { get; set; }
     }
-
 }

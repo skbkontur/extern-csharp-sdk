@@ -15,5 +15,4 @@ namespace ExternDotnetSDK.Docflows.Descriptions
         public int PeriodCode { get; set; }
         public int CorrectionNumber { get; set; }
     }
-
 }

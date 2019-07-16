@@ -1,7 +1,8 @@
 ﻿using System;
+using ExternDotnetSDK.Common;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Documents
+namespace ExternDotnetSDK.Documents.Requisites
 {
     public class DemandAttachmentRequisites : DocflowDocumentRequisites
     {
@@ -9,6 +10,7 @@ namespace ExternDotnetSDK.Documents
 
         [JsonConverter(typeof (DateFormat))]
         public DateTime? DemandDate { get; set; }
+
         public string[] DemandInnList { get; set; }
     }
 }

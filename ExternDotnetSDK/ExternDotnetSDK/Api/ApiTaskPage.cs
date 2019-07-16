@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace ExternDotnetSDK.Api
+﻿namespace ExternDotnetSDK.Api
 {
     public class ApiTaskPage
     {

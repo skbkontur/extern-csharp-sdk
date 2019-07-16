@@ -2,7 +2,7 @@
 
 namespace ExternDotnetSDK.Organizations
 {
-    class OrganizationGeneral
+    internal class OrganizationGeneral
     {
         public string Inn { get; set; }
         public string Kpp { get; set; }

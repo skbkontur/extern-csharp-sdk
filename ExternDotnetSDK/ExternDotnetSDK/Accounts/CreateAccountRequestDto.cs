@@ -6,7 +6,9 @@ namespace ExternDotnetSDK.Accounts
     {
         [Required]
         public string Inn { get; set; }
+
         public string Kpp { get; set; }
+
         [Required]
         public string OrganizationName { get; set; }
     }

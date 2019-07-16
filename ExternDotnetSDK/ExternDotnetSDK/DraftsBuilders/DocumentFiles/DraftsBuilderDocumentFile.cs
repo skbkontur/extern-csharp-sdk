@@ -1,8 +1,7 @@
 ﻿using System;
 using ExternDotnetSDK.Common;
-using ExternDotnetSDK.DraftsBuilders.DocumentFiles;
 
-namespace ExternDotnetSDK.DraftsBuilders
+namespace ExternDotnetSDK.DraftsBuilders.DocumentFiles
 {
     public class DraftsBuilderDocumentFile
     {

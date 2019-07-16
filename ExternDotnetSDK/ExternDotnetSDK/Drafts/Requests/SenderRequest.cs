@@ -6,38 +6,28 @@ namespace ExternDotnetSDK.Drafts.Requests
     [DataContract]
     public class SenderRequest
     {
-        /// <summary>
-        ///     ИНН
-        /// </summary>
+        /// <summary>ИНН</summary>
         [DataMember]
         [Required]
         public string Inn { get; set; }
 
-        /// <summary>
-        ///     КПП
-        /// </summary>
+        /// <summary>КПП</summary>
         [DataMember]
         public string Kpp { get; set; }
 
-        /// <summary>
-        ///     Сертификат для отправки
-        /// </summary>
+        /// <summary>Сертификат для отправки</summary>
         [DataMember]
         [Required]
         public CertificateRequest Certificate { get; set; }
 
-        /// <summary>
-        ///     Отправитель является представителем
-        /// </summary>
+        /// <summary>Отправитель является представителем</summary>
         [DataMember]
         [Required]
         public bool IsRepresentative { get; set; }
 
-        /// <summary>
-        ///     IP адрес отправителя отчета
-        /// </summary>
+        /// <summary>IP адрес отправителя отчета</summary>
         [DataMember]
         [Required]
-        public string IPAddress { get; set; }
+        public string IpAddress { get; set; }
     }
 }

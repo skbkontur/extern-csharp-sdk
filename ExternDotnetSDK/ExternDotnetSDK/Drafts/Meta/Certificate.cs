@@ -6,9 +6,7 @@ namespace ExternDotnetSDK.Drafts.Meta
     [DataContract]
     public class Certificate
     {
-        /// <summary>
-        ///     Публичная часть сертификата
-        /// </summary>
+        /// <summary>Публичная часть сертификата</summary>
         [DataMember]
         [Required]
         public string Content { get; set; }

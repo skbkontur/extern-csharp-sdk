@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
 using ExternDotnetSDK.Common;
-using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Accounts
 {

@@ -5,9 +5,7 @@ namespace ExternDotnetSDK.Drafts.Meta
     [DataContract]
     public class AdditionalInfo
     {
-        /// <summary>
-        ///     Тема письма
-        /// </summary>
+        /// <summary>Тема письма</summary>
         [DataMember]
         public string Subject { get; set; }
     }

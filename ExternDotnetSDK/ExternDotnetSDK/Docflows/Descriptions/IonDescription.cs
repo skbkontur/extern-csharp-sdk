@@ -10,5 +10,4 @@ namespace ExternDotnetSDK.Docflows.Descriptions
         public string FinalRecipient { get; set; }
         public string ServiceCode { get; set; }
     }
-
 }

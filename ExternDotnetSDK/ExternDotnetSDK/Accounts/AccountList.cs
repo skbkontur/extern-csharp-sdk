@@ -7,10 +7,13 @@ namespace ExternDotnetSDK.Accounts
     {
         [UsedImplicitly]
         public long Skip { get; set; }
+
         [UsedImplicitly]
         public long Take { get; set; }
+
         [UsedImplicitly]
         public long TotalCount { get; set; }
+
         public Account[] Accounts { get; set; }
         public Link[] Links { get; set; }
     }

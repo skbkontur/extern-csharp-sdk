@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ExternDotnetSDK.Drafts.Requests;
+﻿using ExternDotnetSDK.Drafts.Requests;
 
 namespace ExternDotnetSDK.Drafts
 {

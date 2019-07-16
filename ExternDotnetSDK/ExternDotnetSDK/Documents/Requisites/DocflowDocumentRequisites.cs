@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Documents
+﻿namespace ExternDotnetSDK.Documents.Requisites
 {
     public class DocflowDocumentRequisites
     {

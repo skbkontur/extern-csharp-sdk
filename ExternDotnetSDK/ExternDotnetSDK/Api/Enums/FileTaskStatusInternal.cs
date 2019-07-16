@@ -4,6 +4,6 @@
     {
         InProgress,
         Completed,
-        Error,
+        Error
     }
 }

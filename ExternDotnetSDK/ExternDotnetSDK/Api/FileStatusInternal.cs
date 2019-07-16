@@ -1,6 +1,5 @@
 ﻿using System;
 using ExternDotnetSDK.Api.Enums;
-using ExternDotnetSDK.Api.Statuses;
 
 namespace ExternDotnetSDK.Api
 {
@@ -11,7 +10,7 @@ namespace ExternDotnetSDK.Api
         public Guid? ErrorId { get; set; }
         public ErrorCodeInternal ErrorCode { get; set; }
         public long ResultSize { get; set; }
-        public string ResultMD5 { get; set; }
+        public string ResultMd5 { get; set; }
         public Guid? ResultId { get; set; }
     }
 }

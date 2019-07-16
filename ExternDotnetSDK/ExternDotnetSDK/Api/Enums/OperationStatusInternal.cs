@@ -10,6 +10,6 @@
         Crashed,
         UserHasUnconfirmedOperation,
         AwaitingForConfirmation,
-        ExceededConfirmationAttemptsCount,
+        ExceededConfirmationAttemptsCount
     }
 }

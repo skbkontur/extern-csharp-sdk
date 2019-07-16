@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.DraftsBuilders
+﻿namespace ExternDotnetSDK.Common
 {
     public class Fio
     {

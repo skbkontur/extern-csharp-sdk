@@ -1,10 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: Kontur.Api.Urn
-// Assembly: Kontur.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: AA280C05-1D50-4E0C-9593-3BE7096E3298
-// Assembly location: C:\Users\trubitsin\Desktop\Not My Projects\ke.api\libapi\Kontur.Api\bin\Release\Kontur.Api.dll
-
-using System;
+﻿using System;
 
 namespace ExternDotnetSDK.Common
 {
@@ -12,38 +6,46 @@ namespace ExternDotnetSDK.Common
     {
         private const string Schema = "urn:";
 
+        public static Urn Parse(string value)
+        {
+            return new Urn(value);
+        }
+
+        public static bool TryParse(string value, out Urn result)
+        {
+            if (value == null || !value.ToLower().StartsWith(Schema))
+            {
+                result = null;
+                return false;
+            }
+
+            result = Parse(value);
+            return true;
+        }
+
         public Urn(string value)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
-
+            TryThrowArgumentNullException(value);
             if (0 != string.Compare(value, 0, Schema, 0, Schema.Length, StringComparison.OrdinalIgnoreCase))
                 throw new UrnException("Invalid URN schema");
-
-            this.Value = value.Substring(Schema.Length);
+            Value = value.Substring(Schema.Length);
         }
 
         public Urn(string nid, string nss)
         {
-            if (nid == null)
-                throw new ArgumentNullException(nameof(nid));
-
-            if (nss == null)
-                throw new ArgumentNullException(nameof(nss));
-
-            Value = nid + ':' + nss;
+            TryThrowArgumentNullException(nid);
+            TryThrowArgumentNullException(nss);
+            Value = $"{nid}:{nss}";
         }
 
         public Urn(Urn parent, string nss)
         {
-            if (parent == null)
-                throw new ArgumentNullException(nameof(parent));
-
-            if (nss == null)
-                throw new ArgumentNullException(nameof(nss));
-
-            Value = parent.Value + ':' + nss;
+            TryThrowArgumentNullException(parent);
+            TryThrowArgumentNullException(nss);
+            Value = $"{parent.Value}:{nss}";
         }
+
+        public string Value { get; }
 
         public string Nid
         {
@@ -63,51 +65,14 @@ namespace ExternDotnetSDK.Common
             }
         }
 
-        public string Value { get; private set; }
-
         public int CompareTo(Urn other)
         {
-            if (other == null)
-                return 1;
-
-            return string.Compare(Value, other.Value, StringComparison.OrdinalIgnoreCase);
+            return other == null ? 1 : string.Compare(Value, other.Value, StringComparison.OrdinalIgnoreCase);
         }
 
         public bool Equals(Urn other)
         {
-            return ((object) other) != null && 0 == string.Compare(Value, other.Value, StringComparison.OrdinalIgnoreCase);
-        }
-
-        public static Urn Parse(string value)
-        {
-            return new Urn(value);
-        }
-
-        public static bool TryParse(string value, out Urn result)
-        {
-            result = null;
-
-            if (value == null || !value.ToLower().StartsWith(Schema))
-                return false;
-
-            result = Parse(value);
-            return true;
-        }
-
-        public static bool operator==(Urn a, Urn b)
-        {
-            if (ReferenceEquals(a, b))
-                return true;
-
-            if ((object) a == null)
-                return false;
-
-            return a.Equals(b);
-        }
-
-        public static bool operator!=(Urn a, Urn b)
-        {
-            return !(a == b);
+            return !(other is null) && 0 == string.Compare(Value, other.Value, StringComparison.OrdinalIgnoreCase);
         }
 
         public Urn CreateChild(string nss)
@@ -117,24 +82,26 @@ namespace ExternDotnetSDK.Common
 
         public bool IsParentOf(Urn urn)
         {
-            if (urn == null)
-                throw new ArgumentNullException(nameof(urn));
-
-            if (urn.Value.Length <= Value.Length)
-                return false;
-
-            if (0 != string.Compare(Value, 0, urn.Value, 0, Value.Length, StringComparison.OrdinalIgnoreCase))
-                return false;
-
-            return urn.Value[Value.Length] == ':';
+            TryThrowArgumentNullException(urn);
+            return urn.Value.Length > Value.Length &&
+                   0 == string.Compare(Value, 0, urn.Value, 0, Value.Length, StringComparison.OrdinalIgnoreCase) &&
+                   urn.Value[Value.Length] == ':';
         }
 
         public bool IsChildOf(Urn urn)
         {
-            if (urn == null)
-                throw new ArgumentNullException(nameof(urn));
-
+            TryThrowArgumentNullException(urn);
             return urn.IsParentOf(this);
+        }
+
+        public static bool operator==(Urn a, Urn b)
+        {
+            return ReferenceEquals(a, b) || !(a is null) && a.Equals(b);
+        }
+
+        public static bool operator!=(Urn a, Urn b)
+        {
+            return !(a == b);
         }
 
         public override int GetHashCode()
@@ -150,6 +117,12 @@ namespace ExternDotnetSDK.Common
         public override string ToString()
         {
             return Schema + Value;
+        }
+
+        private void TryThrowArgumentNullException(object obj)
+        {
+            if (obj is null)
+                throw new ArgumentNullException(nameof(obj));
         }
     }
 }

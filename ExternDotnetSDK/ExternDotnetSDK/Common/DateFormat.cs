@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Converters;
 
-namespace ExternDotnetSDK.Documents
+namespace ExternDotnetSDK.Common
 {
     public class DateFormat : IsoDateTimeConverter
     {

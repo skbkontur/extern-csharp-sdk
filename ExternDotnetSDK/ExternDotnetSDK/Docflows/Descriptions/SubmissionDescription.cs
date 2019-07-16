@@ -15,5 +15,4 @@ namespace ExternDotnetSDK.Docflows.Descriptions
         public Guid? RelatedDocflowId { get; set; }
         public Guid? RelatedDocumentId { get; set; }
     }
-
 }

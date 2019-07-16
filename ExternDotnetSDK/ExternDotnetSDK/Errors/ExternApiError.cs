@@ -24,7 +24,6 @@ namespace ExternDotnetSDK.Errors
         public new string Message { get; set; }
         public new string TrackId { get; set; }
         public string TraceId { get; set; }
-
         public new Dictionary<string, string> Properties { get; set; }
 
         public override string ToString()

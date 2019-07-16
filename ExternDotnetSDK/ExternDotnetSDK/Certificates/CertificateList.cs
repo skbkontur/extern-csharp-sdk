@@ -9,10 +9,13 @@ namespace ExternDotnetSDK.Certificates
 
         [UsedImplicitly]
         public long TotalCount { get; set; }
+
         [UsedImplicitly]
         public long Skip { get; set; }
+
         [UsedImplicitly]
         public long Take { get; set; }
+
         public Link[] Links { get; set; }
     }
 }

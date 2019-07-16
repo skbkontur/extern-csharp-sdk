@@ -5,33 +5,23 @@ namespace ExternDotnetSDK.Drafts.Requests
     [DataContract]
     public class RecipientInfoRequest
     {
-        /// <summary>
-        ///     ИФНС
-        /// </summary>
+        /// <summary>ИФНС</summary>
         [DataMember]
         public string IfnsCode { get; set; }
 
-        /// <summary>
-        ///     МРИ
-        /// </summary>
+        /// <summary>МРИ</summary>
         [DataMember]
         public string MriCode { get; set; }
 
-        /// <summary>
-        ///     ТОГС
-        /// </summary>
+        /// <summary>ТОГС</summary>
         [DataMember]
         public string TogsCode { get; set; }
 
-        /// <summary>
-        ///     УПФР
-        /// </summary>
+        /// <summary>УПФР</summary>
         [DataMember]
         public string UpfrCode { get; set; }
 
-        /// <summary>
-        ///     ФСС 
-        /// </summary>
+        /// <summary>ФСС</summary>
         [DataMember]
         public string FssCode { get; set; }
     }

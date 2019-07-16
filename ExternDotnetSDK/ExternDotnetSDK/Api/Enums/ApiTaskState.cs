@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Api
+﻿namespace ExternDotnetSDK.Api.Enums
 {
     public enum ApiTaskState
     {

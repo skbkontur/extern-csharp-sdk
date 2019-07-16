@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using ExternDotnetSDK.DraftsBuilders.Info;
 
 namespace ExternDotnetSDK.DraftsBuilders.Builders.Data
 {

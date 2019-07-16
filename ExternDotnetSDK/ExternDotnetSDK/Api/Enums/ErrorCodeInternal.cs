@@ -6,6 +6,6 @@
         Unknown,
         BadEncryptedData,
         EncryptedForOtherRecipient,
-        UnknownCertificate,
+        UnknownCertificate
     }
 }

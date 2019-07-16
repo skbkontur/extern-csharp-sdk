@@ -1,4 +1,5 @@
 ﻿using ExternDotnetSDK.Common;
+using ExternDotnetSDK.Documents.Requisites;
 
 namespace ExternDotnetSDK.Documents
 {
