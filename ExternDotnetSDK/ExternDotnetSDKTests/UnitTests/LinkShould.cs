@@ -39,10 +39,15 @@ namespace ExternDotnetSDKTests.UnitTests
         [Test]
         public void BeEqual_ToSameLinks()
         {
-            var sameLink = link;
             var similarLink = new Link(link.Href, link.Rel, link.Profile, link.Title, link.Profile, link.Templated);
-            link.Equals(sameLink).Should().BeTrue();
             link.Equals(similarLink).Should().BeTrue();
+        }
+
+        [Test]
+        public void BeEqual_ToSelf()
+        {
+            var sameLink = link;
+            link.Equals(sameLink).Should().BeTrue();
         }
 
         [TestCase("NAME", "TITLE", "PROFILE", true)]

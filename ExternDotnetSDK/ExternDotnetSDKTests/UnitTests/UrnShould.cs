@@ -45,16 +45,14 @@ namespace ExternDotnetSDKTests.UnitTests
         public void TryParseCorrectly()
         {
             Urn result;
-            Urn.TryParse("bad value", out result).Should().BeFalse();
-            Urn.TryParse("urn:good value", out result).Should().BeTrue();
+            Urn.TryParse("value", out result).Should().BeFalse();
+            Urn.TryParse("urn:value", out result).Should().BeTrue();
         }
 
         [Test]
         public void BeEqual_ToSameUrns()
         {
-            var sameUrn = new Urn(urn.Nid, urn.Nss);
-            urn.Equals(sameUrn).Should().BeTrue();
-            (urn == sameUrn).Should().BeTrue();
+            urn.Equals(new Urn(urn.Nid, urn.Nss)).Should().BeTrue();
             urn.Equals(urn).Should().BeTrue();
         }
 
