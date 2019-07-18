@@ -5,7 +5,7 @@ using Refit;
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.APIs
 {
-    public interface IAccountApi
+    internal interface IAccountApi
     {
         [Get("/")]
         Task<Link[]> GetRootIndex();

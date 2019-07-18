@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using ExternDotnetSDK.Accounts;
 using ExternDotnetSDK.Common;
-using JetBrains.Annotations;
+
 #pragma warning disable 649
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
