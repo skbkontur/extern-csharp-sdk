@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using ExternDotnetSDKTests.SwaggerMethodsTests.APIs;
 using FluentAssertions;
 using NUnit.Framework;
@@ -9,14 +10,14 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
     [TestFixture]
     internal class ICertificateApiShould : AllTestsShould<ICertificateApi>
     {
-        [TestCase()]
+        [TestCase]
         [TestCase(1)]
         [TestCase(1, 3)]
         [TestCase(1, 100, true)]
-        public void GetCertificates_WithValidParameters(long skip = 0, long take = long.MaxValue, bool folAllUsers = false)
+        public void GetCertificates_WithValidParameters(long skip = 0, long take = long.MaxValue, bool forAllUsers = false)
         {
-            var accountId = Data.FullAccountList.Accounts[0].Id;
-            Assert.DoesNotThrowAsync(async () => await Api.GetCertificates(accountId.ToString(), skip, take, folAllUsers));
+            var accountId = Data.FullAccountList.Accounts[0].Id.ToString();
+            Assert.DoesNotThrowAsync(async () => await Api.GetCertificates(accountId, skip, take, forAllUsers));
         }
 
         [TestCase(0, 0)]
@@ -39,10 +40,10 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             try
             {
-                foreach (var account in Data.FullAccountList.Accounts)
+                foreach (var id in Data.FullAccountList.Accounts.Select(account => account.Id.ToString()))
                 {
-                    var id = account.Id.ToString();
-                    var certsForFewUsersTotal = (await Api.GetCertificates(id)).Certificates.Length;
+                    var certificateList = await Api.GetCertificates(id);
+                    var certsForFewUsersTotal = certificateList.Certificates.Length;
                     var certsForAllUsersTotal = (await Api.GetCertificates(id, forAllUsers: true)).Certificates.Length;
                     certsForAllUsersTotal.Should().BeGreaterOrEqualTo(certsForFewUsersTotal);
                 }

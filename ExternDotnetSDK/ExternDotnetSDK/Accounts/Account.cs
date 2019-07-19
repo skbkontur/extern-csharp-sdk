@@ -1,8 +1,10 @@
 ﻿using System;
 using ExternDotnetSDK.Common;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Accounts
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class Account
     {
         public Guid Id { get; set; }

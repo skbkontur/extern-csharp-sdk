@@ -10,6 +10,7 @@ using Refit;
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 {
+    [TestFixture]
     internal class AllTestsShould<TApi>
     {
         private const string DataPath = "Environment.txt";

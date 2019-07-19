@@ -1,7 +1,11 @@
 ﻿using System;
+using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Common
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonConverter(typeof(ExternSdkJsonConverter))]
     public sealed class Urn : IComparable<Urn>, IEquatable<Urn>
     {
         private const string Schema = "urn:";
@@ -28,6 +32,7 @@ namespace ExternDotnetSDK.Common
             Value = value.Substring(Schema.Length);
         }
 
+        [JsonConstructor]
         public Urn(string nid, string nss)
         {
             TryThrowArgumentNullException(nid);

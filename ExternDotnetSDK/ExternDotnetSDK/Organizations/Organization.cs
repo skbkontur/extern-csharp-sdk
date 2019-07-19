@@ -2,7 +2,7 @@
 
 namespace ExternDotnetSDK.Organizations
 {
-    internal class Organization
+    public class Organization
     {
         public Guid Id { get; set; }
         public OrganizationGeneral General { get; set; }

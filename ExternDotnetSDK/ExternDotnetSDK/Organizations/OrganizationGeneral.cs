@@ -2,7 +2,8 @@
 
 namespace ExternDotnetSDK.Organizations
 {
-    internal class OrganizationGeneral
+    //WHERE IS NAMING STRATEGY AND JSON CONVERTER FOR ALL THIS NAMESPACE?!
+    public class OrganizationGeneral
     {
         public string Inn { get; set; }
         public string Kpp { get; set; }

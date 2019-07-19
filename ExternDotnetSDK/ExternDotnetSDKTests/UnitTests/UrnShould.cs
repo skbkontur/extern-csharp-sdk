@@ -1,6 +1,7 @@
 ﻿using System;
 using ExternDotnetSDK.Common;
 using FluentAssertions;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace ExternDotnetSDKTests.UnitTests
@@ -70,6 +71,15 @@ namespace ExternDotnetSDKTests.UnitTests
         {
             urnParent.CompareTo(urnChild).Should().BeLessThan(0);
             urn.CompareTo(new Urn("1234", "abce")).Should().BeLessThan(0);
+        }
+
+        [Test]
+        public void SerializeCorrectly()
+        {
+            var original = new Urn("docflow", "fns534-ion");
+            var serialized = JsonConvert.SerializeObject(original);
+            var deserialized = JsonConvert.DeserializeObject<Urn>(serialized);
+            deserialized.Should().BeEquivalentTo(original);
         }
     }
 }

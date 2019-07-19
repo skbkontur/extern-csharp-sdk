@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using ExternDotnetSDK.Accounts;
 using ExternDotnetSDKTests.SwaggerMethodsTests.APIs;
 using FluentAssertions;
@@ -19,12 +20,9 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 
         [TestCase(0, 2)]
         [TestCase(100, 100)]
-        public async Task GetAllAccounts(int skip, int take)
+        public void GetAccounts_WithValidParameters(int skip, int take)
         {
-            var allAccounts = await Api.GetAccounts(skip, take);
-            foreach (var account in allAccounts.Accounts)
-                Data.FullAccountList.Accounts.Should().ContainEquivalentOf(account);
-            Data.FullAccountList.TotalCount.Should().Be(allAccounts.TotalCount);
+            Assert.DoesNotThrowAsync(async () => await Api.GetAccounts(skip, take));
         }
 
         [TestCase(0, 0)]
@@ -36,11 +34,10 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         }
 
         [Test]
-        public async Task GetAccountById()
+        public void GetAccount_ByValidId()
         {
-            var expected = Data.FullAccountList.Accounts[0];
-            var actual = await Api.GetAccount(expected.Id.ToString());
-            actual.Should().BeEquivalentTo(expected);
+            var id = Data.FullAccountList.Accounts[0].Id.ToString();
+            Assert.DoesNotThrowAsync(async () => await Api.GetAccount(id));
         }
 
         [Test]

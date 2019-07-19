@@ -1,8 +1,10 @@
 ﻿using ExternDotnetSDK.Common;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Certificates
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class CertificateList
     {
         public CertificateDto[] Certificates { get; set; }

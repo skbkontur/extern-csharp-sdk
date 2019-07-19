@@ -2,7 +2,7 @@
 
 namespace ExternDotnetSDK.Organizations
 {
-    internal class OrganizationBatch
+    public class OrganizationBatch
     {
         public Organization[] Organizations { get; set; }
         public long TotalCount { get; set; }

@@ -1,8 +1,11 @@
 ﻿using System;
+using ExternDotnetSDK.Common;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Certificates
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class CertificateDto
     {
         [UsedImplicitly]
@@ -27,5 +30,7 @@ namespace ExternDotnetSDK.Certificates
         public string Content { get; set; }
 
         public DateTime ExpiredAt { get; set; }
+
+        public CertificateType CertificateType { get; set; }
     }
 }

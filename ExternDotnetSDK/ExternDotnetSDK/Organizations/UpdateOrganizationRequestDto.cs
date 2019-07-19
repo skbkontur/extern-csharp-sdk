@@ -2,7 +2,7 @@
 
 namespace ExternDotnetSDK.Organizations
 {
-    internal class UpdateOrganizationRequestDto
+    public class UpdateOrganizationRequestDto
     {
         [Required]
         public string Name { get; set; }
