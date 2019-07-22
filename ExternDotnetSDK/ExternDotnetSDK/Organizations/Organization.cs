@@ -1,7 +1,10 @@
 ﻿using System;
+using ExternDotnetSDK.Common;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Organizations
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class Organization
     {
         public Guid Id { get; set; }

@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
-using ExternDotnetSDKTests.SwaggerMethodsTests.Common;
 using Refit;
 
-namespace ExternDotnetSDKTests.SwaggerMethodsTests.APIs
+namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
 {
     public interface IAuthApi
     {

@@ -14,18 +14,18 @@ namespace ExternDotnetSDK.JsonConverters
                 {
                     var urnParts = reader.Value.ToString().Split(':');
                     return new Urn(urnParts[1], urnParts[2]);
-                },
+                }
             };
 
         private static Dictionary<Type, Func<Type, bool>> convertMethods = new Dictionary<Type, Func<Type, bool>>
         {
-            [typeof(Urn)] = type => typeof (Urn).IsAssignableFrom(type),
+            [typeof(Urn)] = type => typeof (Urn).IsAssignableFrom(type)
         };
 
         private static Dictionary<Type, Action<JsonWriter, object, JsonSerializer>> writeMethods
             = new Dictionary<Type, Action<JsonWriter, object, JsonSerializer>>
             {
-                [typeof(Urn)] = (writer, value, serializer) => serializer.Serialize(writer, ((Urn)value).ToString()),
+                [typeof(Urn)] = (writer, value, serializer) => serializer.Serialize(writer, ((Urn)value).ToString())
             };
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

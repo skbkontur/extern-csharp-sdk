@@ -1,7 +1,8 @@
 ﻿using System;
+using ExternDotnetSDK.Common;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Common
+namespace ExternDotnetSDK.JsonConverters
 {
     public class UrnConverter : JsonConverter
     {

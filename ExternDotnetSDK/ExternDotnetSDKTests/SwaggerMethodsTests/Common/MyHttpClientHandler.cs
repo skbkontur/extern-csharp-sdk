@@ -16,7 +16,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
         {
             this.apiKey = apiKey;
             this.authSid = authSid;
-            httpClient = new HttpClient()
+            httpClient = new HttpClient
             {
                 BaseAddress = new Uri(baseAddress)
             };

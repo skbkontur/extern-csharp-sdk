@@ -1,8 +1,9 @@
 ﻿using ExternDotnetSDK.Common;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Organizations
 {
-    //WHERE IS NAMING STRATEGY AND JSON CONVERTER FOR ALL THIS NAMESPACE?!
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class OrganizationGeneral
     {
         public string Inn { get; set; }
