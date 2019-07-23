@@ -1,8 +1,11 @@
 ﻿using System;
 using ExternDotnetSDK.Api.Enums;
+using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Api
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class FileStatusInternal
     {
         public Guid FileId { get; set; }

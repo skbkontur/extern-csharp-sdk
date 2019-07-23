@@ -1,9 +1,10 @@
 ﻿using System;
+using ExternDotnetSDK.JsonConverters;
 using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Docflows.Descriptions
 {
-    [JsonObject]
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class StatLetterDescription : DocflowDescription
     {
         /// <summary>field CU is deprecated and ought to be not used</summary>

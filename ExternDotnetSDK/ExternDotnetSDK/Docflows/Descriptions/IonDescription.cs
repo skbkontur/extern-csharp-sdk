@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Docflows.Descriptions
 {
-    [JsonObject]
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class IonDescription : DocflowDescription
     {
         public FormVersion FormVersion { get; set; }

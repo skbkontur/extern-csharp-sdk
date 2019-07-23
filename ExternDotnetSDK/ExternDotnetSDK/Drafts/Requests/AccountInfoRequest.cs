@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Drafts.Requests
 {
     /// <summary>Учетная запись организации</summary>
     [DataContract]
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class AccountInfoRequest
     {
         private OrganizationInfoRequest organization;

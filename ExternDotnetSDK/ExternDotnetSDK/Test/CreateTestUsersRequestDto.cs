@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Test
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class CreateTestUsersRequestDto
     {
         [Required]

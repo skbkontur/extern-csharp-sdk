@@ -2,9 +2,12 @@
 using System.Runtime.Serialization;
 using ExternDotnetSDK.Common;
 using ExternDotnetSDK.DraftsBuilders.Documents.Data;
+using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.DraftsBuilders.Documents
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class DraftsBuilderDocumentMeta
     {
         [Required]

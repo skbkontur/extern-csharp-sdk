@@ -1,9 +1,12 @@
 ﻿using System;
+using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace ExternDotnetSDK.Common
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class Signature
     {
         public Guid Id { get; set; }

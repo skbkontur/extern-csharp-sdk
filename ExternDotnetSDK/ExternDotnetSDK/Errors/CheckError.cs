@@ -1,5 +1,9 @@
-﻿namespace ExternDotnetSDK.Errors
+﻿using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
+
+namespace ExternDotnetSDK.Errors
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class CheckError
     {
         public string Description { get; set; }

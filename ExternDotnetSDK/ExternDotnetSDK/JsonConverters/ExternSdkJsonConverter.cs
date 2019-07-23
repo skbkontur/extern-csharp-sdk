@@ -7,7 +7,7 @@ namespace ExternDotnetSDK.JsonConverters
 {
     internal class ExternSdkJsonConverter : JsonConverter
     {
-        private static Dictionary<Type, Func<JsonReader, Type, object, JsonSerializer, object>> readMethods
+        private static readonly Dictionary<Type, Func<JsonReader, Type, object, JsonSerializer, object>> ReadMethods
             = new Dictionary<Type, Func<JsonReader, Type, object, JsonSerializer, object>>
             {
                 [typeof (Urn)] = (reader, type, value, serializer) =>
@@ -17,12 +17,12 @@ namespace ExternDotnetSDK.JsonConverters
                 }
             };
 
-        private static Dictionary<Type, Func<Type, bool>> convertMethods = new Dictionary<Type, Func<Type, bool>>
+        private static readonly Dictionary<Type, Func<Type, bool>> ConvertMethods = new Dictionary<Type, Func<Type, bool>>
         {
             [typeof(Urn)] = type => typeof (Urn).IsAssignableFrom(type)
         };
 
-        private static Dictionary<Type, Action<JsonWriter, object, JsonSerializer>> writeMethods
+        private static readonly Dictionary<Type, Action<JsonWriter, object, JsonSerializer>> WriteMethods
             = new Dictionary<Type, Action<JsonWriter, object, JsonSerializer>>
             {
                 [typeof(Urn)] = (writer, value, serializer) => serializer.Serialize(writer, ((Urn)value).ToString())
@@ -31,21 +31,17 @@ namespace ExternDotnetSDK.JsonConverters
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             var type = value.GetType();
-            if (writeMethods.ContainsKey(type))
-                writeMethods[type](writer, value, serializer);
+            if (WriteMethods.ContainsKey(type))
+                WriteMethods[type](writer, value, serializer);
             else throw new KeyNotFoundException();
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            if (readMethods.ContainsKey(objectType))
-                return readMethods[objectType](reader, objectType, existingValue, serializer);
-            throw new KeyNotFoundException();
-        }
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) =>
+            ReadMethods.ContainsKey(objectType)
+                ? ReadMethods[objectType](reader, objectType, existingValue, serializer)
+                : throw new KeyNotFoundException();
 
-        public override bool CanConvert(Type objectType)
-        {
-            return convertMethods.ContainsKey(objectType) && convertMethods[objectType](objectType);
-        }
+        public override bool CanConvert(Type objectType) =>
+            ConvertMethods.ContainsKey(objectType) && ConvertMethods[objectType](objectType);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using ExternDotnetSDK.Common;
+using ExternDotnetSDK.JsonConverters;
 using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Organizations

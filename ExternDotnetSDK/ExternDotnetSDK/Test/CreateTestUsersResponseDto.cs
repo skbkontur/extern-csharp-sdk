@@ -1,9 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using ExternDotnetSDK.JsonConverters;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Test
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class CreateTestUsersResponseDto
     {
         public CreateTestUsersResponseDto(CreateTestUsersRequestDto testUserRequisites, Guid portalUserId)

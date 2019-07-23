@@ -1,5 +1,5 @@
 ﻿using System;
-using ExternDotnetSDK.Common;
+using ExternDotnetSDK.JsonConverters;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 

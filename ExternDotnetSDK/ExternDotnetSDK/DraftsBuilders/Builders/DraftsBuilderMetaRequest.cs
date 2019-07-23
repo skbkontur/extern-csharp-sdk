@@ -3,9 +3,12 @@ using System.Runtime.Serialization;
 using ExternDotnetSDK.Common;
 using ExternDotnetSDK.Drafts.Requests;
 using ExternDotnetSDK.DraftsBuilders.Builders.Data;
+using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.DraftsBuilders.Builders
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class DraftsBuilderMetaRequest
     {
         [Required]

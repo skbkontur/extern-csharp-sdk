@@ -77,7 +77,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             var authApi = RestService.For<IAuthApi>(Data.AuthAddress);
             var session = await authApi.ByPass("a776dbe1055b4", "testPassword", Data.ApiKey);
-            var myClient = new HttpClient(new MyHttpClientHandler(Data.ApiKey, session.Sid, Data.BaseAddress))
+            var myClient = new HttpClient(new MyHttpClientHandler("9d31db5e-34d3-47ad-9e61-2713189b5ab7", session.Sid, Data.BaseAddress))
             {
                 BaseAddress = new Uri(Data.BaseAddress)
             };

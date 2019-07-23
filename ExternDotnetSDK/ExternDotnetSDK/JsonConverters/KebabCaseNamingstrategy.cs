@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Newtonsoft.Json.Serialization;
 
-namespace ExternDotnetSDK.Common
+namespace ExternDotnetSDK.JsonConverters
 {
     public class KebabCaseNamingStrategy : NamingStrategy
     {

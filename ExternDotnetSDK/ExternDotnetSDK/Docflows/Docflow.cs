@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using ExternDotnetSDK.Common;
 using ExternDotnetSDK.Documents;
+using ExternDotnetSDK.JsonConverters;
 using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Docflows
 {
     //[JsonConverter(typeof(DocflowJsonConverter))]
-    [JsonObject]
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class Docflow
     {
         public Guid Id { get; set; }

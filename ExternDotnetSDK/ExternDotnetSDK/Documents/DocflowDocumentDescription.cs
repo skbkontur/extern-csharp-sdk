@@ -1,8 +1,11 @@
 ﻿using ExternDotnetSDK.Common;
 using ExternDotnetSDK.Documents.Requisites;
+using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Documents
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class DocflowDocumentDescription
     {
         public Urn Type { get; set; }

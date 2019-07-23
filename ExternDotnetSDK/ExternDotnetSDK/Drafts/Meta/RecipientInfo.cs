@@ -1,8 +1,11 @@
 ﻿using System.Runtime.Serialization;
+using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Drafts.Meta
 {
     [DataContract]
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class RecipientInfo
     {
         /// <summary>ИФНС</summary>

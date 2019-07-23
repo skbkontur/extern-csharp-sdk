@@ -1,5 +1,9 @@
-﻿namespace ExternDotnetSDK.DraftsBuilders.DocumentFiles
+﻿using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
+
+namespace ExternDotnetSDK.DraftsBuilders.DocumentFiles
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class DraftsBuilderDocumentFileContents
     {
         public string Base64Content { get; set; }

@@ -1,8 +1,11 @@
 ﻿using System;
 using ExternDotnetSDK.Common;
+using ExternDotnetSDK.JsonConverters;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.DraftsBuilders.DocumentFiles
 {
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class DraftsBuilderDocumentFile
     {
         public Guid Id { get; set; }

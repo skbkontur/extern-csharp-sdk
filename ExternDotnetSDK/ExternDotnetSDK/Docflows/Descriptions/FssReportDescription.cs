@@ -1,9 +1,10 @@
 ﻿using System;
+using ExternDotnetSDK.JsonConverters;
 using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Docflows.Descriptions
 {
-    [JsonObject]
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class FssReportDescription : DocflowDescription
     {
         public FormVersion FormVersion { get; set; }

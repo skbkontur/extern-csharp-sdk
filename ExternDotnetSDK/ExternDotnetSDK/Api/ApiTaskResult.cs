@@ -2,11 +2,14 @@
 using ExternDotnetSDK.Api.Enums;
 using ExternDotnetSDK.Common;
 using ExternDotnetSDK.Errors;
+using ExternDotnetSDK.JsonConverters;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Api
 {
     [PublicAPI]
+    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class ApiTaskResult<TResult>
     {
         public static ApiTaskResult<TResult> Running(Guid taskId, Urn taskType)
