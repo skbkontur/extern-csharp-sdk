@@ -2,6 +2,12 @@
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Accounts;
+using ExternDotnetSDK.Clients.Account;
+using ExternDotnetSDK.Clients.Certificates;
+using ExternDotnetSDK.Clients.Docflows;
+using ExternDotnetSDK.Clients.Organizations;
+using ExternDotnetSDK.Organizations;
 using ExternDotnetSDKTests.SwaggerMethodsTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -12,26 +18,69 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
     [TestFixture]
     internal class AllTestsShould
     {
-        private const string DataPath = "Environment.txt";
+        protected static string DataPath = "Environment3.txt";
+        protected static EnvironmentData Data;
+        protected static IAuthApi AuthApi;
 
-        private IAuthApi authApi;
-        private SessionResponse session;
-
+        protected SessionResponse Session;
         protected HttpClient Client;
-        protected EnvironmentData Data;
 
-        [OneTimeSetUp]
-        public virtual async Task SetUp()
+        protected bool ReadyToTest = true;
+        protected Account Account;
+        protected Organization Organization;
+
+        protected CertificateClient CertificateClient;
+        protected AccountClient AccountClient;
+        protected OrganizationsClient OrganizationsClient;
+        protected DocflowsClient docflowsClient;
+
+        static AllTestsShould()
         {
             using (var file = File.OpenText(DataPath))
                 using (var reader = new JsonTextReader(file))
                     Data = new JsonSerializer().Deserialize<EnvironmentData>(reader);
-            authApi = RestService.For<IAuthApi>(Data.AuthAddress);
-            session = await authApi.ByPass(Data.Login, Data.Password, Data.ApiKey);
-            Client = new HttpClient(new MyHttpClientHandler(Data.ApiKey, session.Sid, Data.BaseAddress))
+            AuthApi = RestService.For<IAuthApi>(Data.AuthAddress);
+        }
+
+        [OneTimeSetUp]
+        public virtual async Task SetUp()
+        {
+            try
             {
-                BaseAddress = new Uri(Data.BaseAddress)
-            };
+                Session = await AuthApi.ByPass(Data.Login, Data.Password, Data.ApiKey);
+                Client = new HttpClient(new MyHttpClientHandler(Data.ApiKey, Session.Sid, Data.BaseAddress))
+                {
+                    BaseAddress = new Uri(Data.BaseAddress)
+                };
+                AccountClient = new AccountClient(Client);
+                CertificateClient = new CertificateClient(Client);
+                OrganizationsClient = new OrganizationsClient(Client);
+                docflowsClient = new DocflowsClient(Client);
+
+                Account = await AccountClient.CreateAccountAsync(
+                    "1754462785",
+                    "515744582",
+                    "NEW ACCOUNT WITH RANDOM BUT VALID PARAMETERS");
+                Organization = (await OrganizationsClient.SearchOrganizationsAsync(Account.Id))
+                    .Organizations[0];
+            }
+            catch (Exception)
+            {
+                ReadyToTest = false;
+            }
+        }
+
+        [OneTimeTearDown]
+        public async Task TearDown()
+        {
+            await AccountClient.DeleteAccountAsync(Account.Id);
+        }
+
+        [SetUp]
+        public void CheckInitialData()
+        {
+            if(!ReadyToTest)
+                Assert.Fail("There was an exception while initializing data used for tests");
         }
     }
 }

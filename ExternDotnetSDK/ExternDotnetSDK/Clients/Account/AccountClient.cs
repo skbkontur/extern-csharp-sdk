@@ -13,13 +13,13 @@ namespace ExternDotnetSDK.Clients.Account
         public AccountClient(HttpClient client) => clientRefit = RestService.For<IAccountClientRefit>(client);
 
         public async Task<AccountList> GetAccountsAsync(int skip = 0, int take = int.MaxValue) 
-            => await clientRefit.GetAccounts(skip, take);
+            => await clientRefit.GetAccountsAsync(skip, take);
 
         public async Task<Accounts.Account> GetAccountAsync(Guid accountId) 
-            => await clientRefit.GetAccount(accountId);
+            => await clientRefit.GetAccountAsync(accountId);
 
         public async Task DeleteAccountAsync(Guid accountId) 
-            => await clientRefit.DeleteAccount(accountId);
+            => await clientRefit.DeleteAccountAsync(accountId);
 
         public async Task<Accounts.Account> CreateAccountAsync(string inn, string kpp, string organizationName)
         {
@@ -27,7 +27,7 @@ namespace ExternDotnetSDK.Clients.Account
             {
                 Inn = inn, Kpp = kpp, OrganizationName = organizationName
             };
-            return await clientRefit.CreateAccount(request);
+            return await clientRefit.CreateAccountAsync(request);
         }
     }
 }

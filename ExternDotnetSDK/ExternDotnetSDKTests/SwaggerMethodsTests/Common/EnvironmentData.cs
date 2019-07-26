@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using ExternDotnetSDK.Accounts;
-using ExternDotnetSDK.Common;
-using ExternDotnetSDK.Organizations;
-
-#pragma warning disable 649
+﻿#pragma warning disable 649
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
 {
@@ -14,8 +9,9 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
         public string ApiKey;
         public string AuthAddress;
         public string BaseAddress;
-        public IEnumerable<Link> RootIndexLinks;
-        public AccountList FullAccountList;
-        public Organization Organization;
+        public string OldApiKey;
+        //public IEnumerable<Link> RootIndexLinks;
+        //public AccountList FullAccountList;
+        //public Organization Organization;
     }
 }

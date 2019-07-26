@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace ExternDotnetSDK.Common
 {
     [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
-    [JsonConverter(typeof(ExternSdkJsonConverter))]
+    [JsonConverter(typeof(UrnJsonConverter))]
     public sealed class Urn : IComparable<Urn>, IEquatable<Urn>
     {
         private const string Schema = "urn:";

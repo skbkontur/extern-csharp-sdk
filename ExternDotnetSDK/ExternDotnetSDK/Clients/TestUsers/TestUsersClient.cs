@@ -14,6 +14,6 @@ namespace ExternDotnetSDK.Clients.TestUsers
 
         public async Task<CreateTestUsersResponseDto> CreateTestUserAsync(
             CreateTestUsersRequestDto request) =>
-            await clientRefit.GenerateTestUser(request);
+            await clientRefit.GenerateTestUserAsync(request);
     }
 }

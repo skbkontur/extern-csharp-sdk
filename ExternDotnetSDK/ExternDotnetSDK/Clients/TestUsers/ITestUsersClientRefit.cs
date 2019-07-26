@@ -7,6 +7,6 @@ namespace ExternDotnetSDK.Clients.TestUsers
     internal interface ITestUsersClientRefit
     {
         [Post("/v1/generate-test-user")]
-        Task<CreateTestUsersResponseDto> GenerateTestUser([Body] CreateTestUsersRequestDto request);
+        Task<CreateTestUsersResponseDto> GenerateTestUserAsync([Body] CreateTestUsersRequestDto request);
     }
 }

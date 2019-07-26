@@ -18,10 +18,11 @@ namespace ExternDotnetSDK.Clients.Organizations
             string inn = null,
             string kpp = null,
             int skip = 0,
-            int take = 1000) => await clientRefit.GetAllOrganizations(accountId, inn, kpp, skip, take);
+            int take = 1000) 
+            => await clientRefit.GetAllOrganizationsAsync(accountId, inn, kpp, skip, take);
 
         public async Task<Organization> GetOrganizationAsync(Guid accountId, Guid orgId) 
-            => await clientRefit.GetOrganization(accountId, orgId);
+            => await clientRefit.GetOrganizationAsync(accountId, orgId);
 
         public async Task<Organization> UpdateOrganizationAsync(Guid accountId, Guid orgId, string newName)
         {
@@ -29,7 +30,7 @@ namespace ExternDotnetSDK.Clients.Organizations
             {
                 Name = newName
             };
-            return await clientRefit.UpdateOrganization(accountId, orgId, request);
+            return await clientRefit.UpdateOrganizationAsync(accountId, orgId, request);
         }
 
         public async Task<Organization> CreateOrganizationAsync(Guid accountId, string inn, string kpp, string name)
@@ -40,10 +41,10 @@ namespace ExternDotnetSDK.Clients.Organizations
                 Kpp = kpp,
                 Name = name
             };
-            return await clientRefit.CreateOrganization(accountId, request);
+            return await clientRefit.CreateOrganizationAsync(accountId, request);
         }
 
-        public async Task DeleteOrganization(Guid accountId, Guid orgId)
-            => await clientRefit.DeleteOrganization(accountId, orgId);
+        public async Task DeleteOrganizationAsync(Guid accountId, Guid orgId)
+            => await clientRefit.DeleteOrganizationAsync(accountId, orgId);
     }
 }

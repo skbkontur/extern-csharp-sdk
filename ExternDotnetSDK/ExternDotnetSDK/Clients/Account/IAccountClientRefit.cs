@@ -8,15 +8,15 @@ namespace ExternDotnetSDK.Clients.Account
     public interface IAccountClientRefit
     {
         [Get("/v1?skip={skip}&take={take}")]
-        Task<AccountList> GetAccounts(int skip = 0, int take = int.MaxValue);
+        Task<AccountList> GetAccountsAsync(int skip = 0, int take = int.MaxValue);
 
         [Post("/v1")]
-        Task<Accounts.Account> CreateAccount([Body] CreateAccountRequestDto request);
+        Task<Accounts.Account> CreateAccountAsync([Body] CreateAccountRequestDto request);
 
         [Get("/v1/{accountId}")]
-        Task<Accounts.Account> GetAccount(Guid accountId);
+        Task<Accounts.Account> GetAccountAsync(Guid accountId);
 
         [Delete("/v1/{accountId}")]
-        Task DeleteAccount(Guid accountId);
+        Task DeleteAccountAsync(Guid accountId);
     }
 }

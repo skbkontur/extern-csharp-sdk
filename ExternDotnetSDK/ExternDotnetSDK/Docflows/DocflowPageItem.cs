@@ -7,12 +7,13 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Docflows
 {
-    //[JsonConverter(typeof(DocflowPageItemJsonConverter))]
     [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
     public class DocflowPageItem
     {
         public Guid Id { get; set; }
         public Guid OrganizationId { get; set; }
+
+        [JsonConverter(typeof(DocflowDescriptionConverter))]
         public DocflowDescription Description { get; set; }
 
         [UsedImplicitly]

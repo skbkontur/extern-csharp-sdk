@@ -13,6 +13,6 @@ namespace ExternDotnetSDK.Clients.TestApi
             clientRefit = RestService.For<ITestApiClientRefit>(client);
 
         public async Task PokeAsync(Guid accountId, Guid docflowId, uint times = 1) =>
-            await clientRefit.Poke(accountId, docflowId, times);
+            await clientRefit.PokeAsync(accountId, docflowId, times);
     }
 }

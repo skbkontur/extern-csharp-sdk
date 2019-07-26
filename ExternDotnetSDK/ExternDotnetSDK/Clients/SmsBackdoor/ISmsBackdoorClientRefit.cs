@@ -7,6 +7,6 @@ namespace ExternDotnetSDK.Clients.SmsBackdoor
     {
         // ReSharper disable once StringLiteralTypo
         [Get("/v1/get-confirmationcode?requestId={requestId}")]
-        Task<string> GetConfirmationCode(string requestId);
+        Task<string> GetConfirmationCodeAsync(string requestId);
     }
 }

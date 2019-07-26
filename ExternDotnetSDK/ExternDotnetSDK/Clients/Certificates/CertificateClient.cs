@@ -13,11 +13,11 @@ namespace ExternDotnetSDK.Clients.Certificates
         public CertificateClient(HttpClient client)
             => clientRefit = RestService.For<ICertificateClientRefit>(client);
 
-        public async Task<CertificateList> GetCertificateListAsync(
+        public async Task<CertificateList> GetCertificatesAsync(
             Guid accountId,
             int skip = 0,
             int take = 100,
             bool forAllUsers = false) 
-            => await clientRefit.GetCertificates(accountId, skip, take, forAllUsers);
+            => await clientRefit.GetCertificatesAsync(accountId, skip, take, forAllUsers);
     }
 }

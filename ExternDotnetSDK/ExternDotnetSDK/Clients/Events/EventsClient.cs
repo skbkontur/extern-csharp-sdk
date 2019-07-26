@@ -12,6 +12,6 @@ namespace ExternDotnetSDK.Clients.Events
         public EventsClient(HttpClient client) => clientRefit = RestService.For<IEventsClientRefit>(client);
 
         public async Task<EventsPage> GetEventsAsync(int take, string fromId = "0_0") 
-            => await clientRefit.GetEvents(take, fromId);
+            => await clientRefit.GetEventsAsync(take, fromId);
     }
 }
