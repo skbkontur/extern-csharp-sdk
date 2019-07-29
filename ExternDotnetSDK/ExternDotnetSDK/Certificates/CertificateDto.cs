@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Certificates
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class CertificateDto
     {
         [UsedImplicitly]

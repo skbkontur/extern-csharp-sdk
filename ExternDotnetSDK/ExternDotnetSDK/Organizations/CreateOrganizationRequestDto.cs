@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Organizations
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class CreateOrganizationRequestDto
     {
         [Required]

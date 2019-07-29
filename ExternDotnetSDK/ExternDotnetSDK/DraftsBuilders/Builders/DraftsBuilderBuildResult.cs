@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.DraftsBuilders.Builders
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DraftsBuilderBuildResult
     {
         public Guid[] DraftIds { get; set; }

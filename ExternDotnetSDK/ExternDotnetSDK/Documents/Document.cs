@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Documents
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class Document
     {
         public Guid Id { get; set; }

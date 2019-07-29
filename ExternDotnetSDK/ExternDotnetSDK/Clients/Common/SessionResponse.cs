@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
+﻿namespace ExternDotnetSDK.Clients.Common
 {
     public class SessionResponse
     {

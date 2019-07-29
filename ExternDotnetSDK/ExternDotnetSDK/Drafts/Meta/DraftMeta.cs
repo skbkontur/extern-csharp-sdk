@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Drafts.Meta
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DraftMeta
     {
         /// <summary>Отправитель</summary>

@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.DraftsBuilders.DocumentFiles
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DraftsBuilderDocumentFileMetaRequest
     {
         [Required]

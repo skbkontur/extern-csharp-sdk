@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Docflows
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class FormVersion
     {
         public string Knd { get; set; }

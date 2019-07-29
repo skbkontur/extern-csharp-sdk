@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Docflows.Descriptions
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class PfrCuLetterDescription : DocflowDescription
     {
         public string Cu { get; set; }

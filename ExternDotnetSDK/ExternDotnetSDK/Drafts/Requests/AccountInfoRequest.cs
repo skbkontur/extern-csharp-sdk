@@ -7,7 +7,7 @@ namespace ExternDotnetSDK.Drafts.Requests
 {
     /// <summary>Учетная запись организации</summary>
     [DataContract]
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class AccountInfoRequest
     {
         private OrganizationInfoRequest organization;

@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace ExternDotnetSDK.Common
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DateFormat : IsoDateTimeConverter
     {
         public DateFormat()

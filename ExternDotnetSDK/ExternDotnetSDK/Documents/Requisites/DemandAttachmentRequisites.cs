@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Documents.Requisites
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DemandAttachmentRequisites : DocflowDocumentRequisites
     {
         public string DemandNumber { get; set; }

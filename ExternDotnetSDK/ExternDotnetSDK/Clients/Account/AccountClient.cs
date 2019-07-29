@@ -10,16 +10,25 @@ namespace ExternDotnetSDK.Clients.Account
     {
         private readonly IAccountClientRefit clientRefit;
 
-        public AccountClient(HttpClient client) => clientRefit = RestService.For<IAccountClientRefit>(client);
+        public AccountClient(HttpClient client)
+        {
+            clientRefit = RestService.For<IAccountClientRefit>(client);
+        }
 
-        public async Task<AccountList> GetAccountsAsync(int skip = 0, int take = int.MaxValue) 
-            => await clientRefit.GetAccountsAsync(skip, take);
+        public async Task<AccountList> GetAccountsAsync(int skip = 0, int take = int.MaxValue)
+        {
+            return await clientRefit.GetAccountsAsync(skip, take);
+        }
 
-        public async Task<Accounts.Account> GetAccountAsync(Guid accountId) 
-            => await clientRefit.GetAccountAsync(accountId);
+        public async Task<Accounts.Account> GetAccountAsync(Guid accountId)
+        {
+            return await clientRefit.GetAccountAsync(accountId);
+        }
 
-        public async Task DeleteAccountAsync(Guid accountId) 
-            => await clientRefit.DeleteAccountAsync(accountId);
+        public async Task DeleteAccountAsync(Guid accountId)
+        {
+            await clientRefit.DeleteAccountAsync(accountId);
+        }
 
         public async Task<Accounts.Account> CreateAccountAsync(string inn, string kpp, string organizationName)
         {

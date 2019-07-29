@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Documents.Data
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class PrintDocumentData
     {
         public string Content { get; set; }

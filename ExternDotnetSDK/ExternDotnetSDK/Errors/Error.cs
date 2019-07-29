@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Errors
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class Error
     {
         public static readonly Urn Namespace = new Urn("urn:error");

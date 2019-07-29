@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace ExternDotnetSDK.Common
 {
     /// <summary>Просто ссылка. Подробности на https://wiki.skbkontur.ru/pages/viewpage.action?pageId=82510147. </summary>
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public sealed class Link : IEquatable<Link>
     {
         public const string RelSelf = "self";

@@ -7,7 +7,7 @@ namespace ExternDotnetSDK.Drafts.Meta
 {
     /// <summary>Учетная запись организации</summary>
     [DataContract]
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class AccountInfo
     {
         private OrganizationInfo organization;

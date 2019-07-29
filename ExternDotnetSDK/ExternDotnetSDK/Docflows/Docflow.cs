@@ -7,8 +7,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Docflows
 {
-    //[JsonConverter(typeof(DocflowDescriptionJsonConverter<Docflow>))]
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class Docflow
     {
         public Guid Id { get; set; }
@@ -17,7 +16,7 @@ namespace ExternDotnetSDK.Docflows
         public Urn Status { get; set; }
         public Urn SuccessState { get; set; }
 
-        [JsonConverter(typeof(DocflowDescriptionConverter))]
+        [JsonConverter(typeof (DocflowDescriptionConverter))]
         public DocflowDescription Description { get; set; }
 
         public List<Document> Documents { get; set; }

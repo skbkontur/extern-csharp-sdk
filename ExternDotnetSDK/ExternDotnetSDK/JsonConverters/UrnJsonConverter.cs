@@ -8,7 +8,7 @@ namespace ExternDotnetSDK.JsonConverters
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var urn = (Urn)value;
+            var urn = (Urn) value;
             serializer.Serialize(writer, urn.ToString());
         }
 
@@ -20,7 +20,7 @@ namespace ExternDotnetSDK.JsonConverters
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(Urn).IsAssignableFrom(objectType);
+            return typeof (Urn).IsAssignableFrom(objectType);
         }
     }
 }

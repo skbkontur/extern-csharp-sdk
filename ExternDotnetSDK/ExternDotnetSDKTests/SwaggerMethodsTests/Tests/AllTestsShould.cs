@@ -4,7 +4,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Accounts;
 using ExternDotnetSDK.Clients.Account;
+using ExternDotnetSDK.Clients.Authentication;
 using ExternDotnetSDK.Clients.Certificates;
+using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Clients.Docflows;
 using ExternDotnetSDK.Clients.Organizations;
 using ExternDotnetSDK.Organizations;
@@ -20,7 +22,20 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
     {
         protected static string DataPath = "Environment3.txt";
         protected static EnvironmentData Data;
-        protected static IAuthApi AuthApi;
+        protected static IAuthClientRefit AuthClientRefit;
+
+        static AllTestsShould()
+        {
+            using (var file = File.OpenText(DataPath))
+            {
+                using (var reader = new JsonTextReader(file))
+                {
+                    Data = new JsonSerializer().Deserialize<EnvironmentData>(reader);
+                }
+            }
+
+            AuthClientRefit = RestService.For<IAuthClientRefit>(Data.AuthAddress);
+        }
 
         protected SessionResponse Session;
         protected HttpClient Client;
@@ -34,20 +49,12 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         protected OrganizationsClient OrganizationsClient;
         protected DocflowsClient docflowsClient;
 
-        static AllTestsShould()
-        {
-            using (var file = File.OpenText(DataPath))
-                using (var reader = new JsonTextReader(file))
-                    Data = new JsonSerializer().Deserialize<EnvironmentData>(reader);
-            AuthApi = RestService.For<IAuthApi>(Data.AuthAddress);
-        }
-
         [OneTimeSetUp]
         public virtual async Task SetUp()
         {
             try
             {
-                Session = await AuthApi.ByPass(Data.Login, Data.Password, Data.ApiKey);
+                Session = await AuthClientRefit.ByPass(Data.Login, Data.Password, Data.ApiKey);
                 Client = new HttpClient(new MyHttpClientHandler(Data.ApiKey, Session.Sid, Data.BaseAddress))
                 {
                     BaseAddress = new Uri(Data.BaseAddress)
@@ -79,7 +86,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [SetUp]
         public void CheckInitialData()
         {
-            if(!ReadyToTest)
+            if (!ReadyToTest)
                 Assert.Fail("There was an exception while initializing data used for tests");
         }
     }

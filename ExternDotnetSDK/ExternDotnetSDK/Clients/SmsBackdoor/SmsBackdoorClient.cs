@@ -9,10 +9,14 @@ namespace ExternDotnetSDK.Clients.SmsBackdoor
         private readonly ISmsBackdoorClientRefit clientRefit;
 
         public SmsBackdoorClient(
-            HttpClient client) =>
+            HttpClient client)
+        {
             clientRefit = RestService.For<ISmsBackdoorClientRefit>(client);
+        }
 
         public async Task<string> GetConfirmationCodeAsync(string requestId)
-            => await clientRefit.GetConfirmationCodeAsync(requestId);
+        {
+            return await clientRefit.GetConfirmationCodeAsync(requestId);
+        }
     }
 }

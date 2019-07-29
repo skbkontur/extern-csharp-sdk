@@ -19,12 +19,16 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 
         [TestCase(1)]
         [TestCase(1, "123")]
-        public void GetEvents_WithValidParameters(int take, string fromId = "0_0") =>
+        public void GetEvents_WithValidParameters(int take, string fromId = "0_0")
+        {
             Assert.DoesNotThrowAsync(async () => await client.GetEventsAsync(take, fromId));
+        }
 
         [TestCase(-1)]
         [TestCase(1, null)]
-        public void GetNoEvents_WithBadParameters(int take, string fromId = "0_0") =>
+        public void GetNoEvents_WithBadParameters(int take, string fromId = "0_0")
+        {
             Assert.ThrowsAsync<ApiException>(async () => await client.GetEventsAsync(take, fromId));
+        }
     }
 }

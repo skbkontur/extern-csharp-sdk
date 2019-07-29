@@ -10,19 +10,25 @@ namespace ExternDotnetSDK.Clients.Organizations
     {
         private readonly IOrganizationClientRefit clientRefit;
 
-        public OrganizationsClient(HttpClient client) 
-            => clientRefit = RestService.For<IOrganizationClientRefit>(client);
+        public OrganizationsClient(HttpClient client)
+        {
+            clientRefit = RestService.For<IOrganizationClientRefit>(client);
+        }
 
         public async Task<OrganizationBatch> SearchOrganizationsAsync(
             Guid accountId,
             string inn = null,
             string kpp = null,
             int skip = 0,
-            int take = 1000) 
-            => await clientRefit.GetAllOrganizationsAsync(accountId, inn, kpp, skip, take);
+            int take = 1000)
+        {
+            return await clientRefit.GetAllOrganizationsAsync(accountId, inn, kpp, skip, take);
+        }
 
-        public async Task<Organization> GetOrganizationAsync(Guid accountId, Guid orgId) 
-            => await clientRefit.GetOrganizationAsync(accountId, orgId);
+        public async Task<Organization> GetOrganizationAsync(Guid accountId, Guid orgId)
+        {
+            return await clientRefit.GetOrganizationAsync(accountId, orgId);
+        }
 
         public async Task<Organization> UpdateOrganizationAsync(Guid accountId, Guid orgId, string newName)
         {
@@ -45,6 +51,8 @@ namespace ExternDotnetSDK.Clients.Organizations
         }
 
         public async Task DeleteOrganizationAsync(Guid accountId, Guid orgId)
-            => await clientRefit.DeleteOrganizationAsync(accountId, orgId);
+        {
+            await clientRefit.DeleteOrganizationAsync(accountId, orgId);
+        }
     }
 }

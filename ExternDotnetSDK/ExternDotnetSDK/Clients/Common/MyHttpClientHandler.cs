@@ -4,9 +4,9 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
+namespace ExternDotnetSDK.Clients.Common
 {
-    class MyHttpClientHandler : HttpClientHandler
+    public class MyHttpClientHandler : HttpClientHandler
     {
         private readonly string apiKey;
         private readonly string authSid;
@@ -21,7 +21,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
                 BaseAddress = new Uri(baseAddress)
             };
         }
-        
+
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             var myRequest = new HttpRequestMessage(request.Method, request.RequestUri)
@@ -29,7 +29,10 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
                 Content = request.Content
             };
             foreach (var header in request.Headers)
+            {
                 myRequest.Headers.Add(header.Key, header.Value);
+            }
+
             myRequest.Headers.Authorization = new AuthenticationHeaderValue("auth.sid", authSid);
             myRequest.Headers.Add("X-Kontur-Apikey", apiKey);
 
@@ -43,8 +46,10 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
             };
 
             foreach (var responseHeader in response.Headers)
+            {
                 if (responseHeader.Key.StartsWith("X"))
                     message.Headers.Add(responseHeader.Key, responseHeader.Value);
+            }
 
             return message;
         }

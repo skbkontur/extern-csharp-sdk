@@ -42,7 +42,8 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [TestCase("123456789")]
         [TestCase("123456789", "3565487840")]
         [TestCase("123456789", "3565487844", "560644400")]
-        public void FailToCreateUser_WithBadParameters(string phone, string inn = null, string kpp = null) =>
+        public void FailToCreateUser_WithBadParameters(string phone, string inn = null, string kpp = null)
+        {
             Assert.ThrowsAsync<ApiException>(
                 async () => await client.CreateTestUserAsync(
                     new CreateTestUsersRequestDto
@@ -51,5 +52,6 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                         Kpp = kpp,
                         Inn = inn
                     }));
+        }
     }
 }

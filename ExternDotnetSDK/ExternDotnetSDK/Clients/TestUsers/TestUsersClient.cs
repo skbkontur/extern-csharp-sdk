@@ -9,11 +9,15 @@ namespace ExternDotnetSDK.Clients.TestUsers
     {
         private readonly ITestUsersClientRefit clientRefit;
 
-        public TestUsersClient(HttpClient client) => 
+        public TestUsersClient(HttpClient client)
+        {
             clientRefit = RestService.For<ITestUsersClientRefit>(client);
+        }
 
         public async Task<CreateTestUsersResponseDto> CreateTestUserAsync(
-            CreateTestUsersRequestDto request) =>
-            await clientRefit.GenerateTestUserAsync(request);
+            CreateTestUsersRequestDto request)
+        {
+            return await clientRefit.GenerateTestUserAsync(request);
+        }
     }
 }

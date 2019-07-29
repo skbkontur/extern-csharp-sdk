@@ -9,6 +9,7 @@ namespace ExternDotnetSDK.Docflows
     [PublicAPI]
     public class DocflowFilter
     {
+        private static PropertyInfo[] properties = typeof (DocflowFilter).GetProperties();
         /// <summary>Get finished docflow</summary>
         public bool? Finished { get; set; }
 
@@ -21,7 +22,10 @@ namespace ExternDotnetSDK.Docflows
         /// <summary>Get take docflows</summary>
         public int Take { get; set; } = 1000;
 
-        /// <summary>Get docflows with specified inn-kpp. Supported formats: '1234567890-123456789' (for legal entity), '123456789012' (for individual entrepreneur, shouldn't start with '00')</summary>
+        /// <summary>
+        ///     Get docflows with specified inn-kpp. Supported formats: '1234567890-123456789' (for legal entity),
+        ///     '123456789012' (for individual entrepreneur, shouldn't start with '00')
+        /// </summary>
         public string InnKpp { get; set; }
 
         /// <summary name="orgId">Get docflows with specified organization identifier</summary>
@@ -30,13 +34,20 @@ namespace ExternDotnetSDK.Docflows
         /// <summary name="orderBy">Get docflows sorted by ascending/descending of creation date</summary>
         public SortOrder? OrderBy { get; set; }
 
-        /// <summary name="updatedFrom">Get docflows updated from specified date. Supported formats: ISO 8601 ("yyyy-mm-ddThh:mm:ss±hh:mm", "yyyy-mm-ddThh:mm:ssZ", "yyyy-mm-ddThh:mm:ss.fffffff±hh:mm" or "yyyy-mm-ddThh:mm:ss.fffffffZ")</summary>
+        /// <summary name="updatedFrom">
+        ///     Get docflows updated from specified date. Supported formats: ISO 8601
+        ///     ("yyyy-mm-ddThh:mm:ss±hh:mm", "yyyy-mm-ddThh:mm:ssZ", "yyyy-mm-ddThh:mm:ss.fffffff±hh:mm" or
+        ///     "yyyy-mm-ddThh:mm:ss.fffffffZ")
+        /// </summary>
         public DateTime? UpdatedFrom { get; set; }
 
         /// <summary name="updatedTo">Get docflows updated to specified date. Supported formats are the same as for "updatedFrom"</summary>
         public DateTime? UpdatedTo { get; set; }
 
-        /// <summary name="createdFrom">Get docflows created from specified date. Supported formats are the same as for "updatedFrom"</summary>
+        /// <summary name="createdFrom">
+        ///     Get docflows created from specified date. Supported formats are the same as for
+        ///     "updatedFrom"
+        /// </summary>
         public DateTime? CreatedFrom { get; set; }
 
         /// <summary name="createdTo">Get docflows created to specified date. Supported formats are the same as for "updatedFrom"</summary>
@@ -69,25 +80,26 @@ namespace ExternDotnetSDK.Docflows
         /// <summary name="periodTo">Get docflows with period to specified date</summary>
         public DateTime? PeriodTo { get; set; }
 
-        private static PropertyInfo[] properties = typeof(DocflowFilter).GetProperties();
-
         public string StringifyParams()
         {
             var requestParams = properties
-                       .Select(
-                           x => new
-                           {
-                               x.Name, Value = (x.PropertyType == typeof (DateTime?))
-                                   ? (x.GetValue(this) as DateTime?)?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
-                                   : x.GetValue(this)?.ToString()
-                           })
-                       .Where(x => !string.IsNullOrEmpty(x.Value))
-                       .Select(x => $"{ToLowerCamelCase(x.Name)}={x.Value}");
-            return requestParams.Any() 
-                ? "?" + string.Join("&", requestParams) 
+                                .Select(
+                                    x => new
+                                    {
+                                        x.Name, Value = x.PropertyType == typeof (DateTime?)
+                                            ? (x.GetValue(this) as DateTime?)?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
+                                            : x.GetValue(this)?.ToString()
+                                    })
+                                .Where(x => !string.IsNullOrEmpty(x.Value))
+                                .Select(x => $"{ToLowerCamelCase(x.Name)}={x.Value}");
+            return requestParams.Any()
+                ? "?" + string.Join("&", requestParams)
                 : "";
         }
 
-        private string ToLowerCamelCase(string value) => char.ToLowerInvariant(value[0]) + value.Substring(1);
+        private string ToLowerCamelCase(string value)
+        {
+            return char.ToLowerInvariant(value[0]) + value.Substring(1);
+        }
     }
 }

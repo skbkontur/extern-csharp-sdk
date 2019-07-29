@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace ExternDotnetSDK.Drafts.Requests
 {
     [DataContract]
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DraftMetaRequest
     {
         /// <summary>Отправитель</summary>

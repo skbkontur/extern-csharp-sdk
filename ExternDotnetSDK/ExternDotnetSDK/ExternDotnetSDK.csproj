@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Events\" />
+    <Folder Include="Warrants\" />
   </ItemGroup>
 
 </Project>

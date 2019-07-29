@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace ExternDotnetSDKTests.UnitTests
 {
     [TestFixture]
-    class DocflowFilterShould
+    internal class DocflowFilterShould
     {
         [Test]
         public void StringifyCorrectly()
@@ -31,9 +31,11 @@ namespace ExternDotnetSDKTests.UnitTests
             };
             var result = filter.StringifyParams();
             result.Should().NotBeNullOrWhiteSpace();
-            for(var i = 0; i < result.Length; i++)
-                if(result[i] == '&')
-                    Assert.IsTrue(char.IsLower(result[i+1]));
+            for (var i = 0; i < result.Length; i++)
+            {
+                if (result[i] == '&')
+                    Assert.IsTrue(char.IsLower(result[i + 1]));
+            }
         }
 
         [Test]

@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Drafts
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DraftDocument
     {
         public Guid Id { get; set; }

@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Drafts.Check
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class CheckResultData
     {
         public Dictionary<Guid, CheckError[]> DocumentsErrors { get; set; }

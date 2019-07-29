@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace ExternDotnetSDK.Api
 {
     [PublicAPI]
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ApiTaskResult<TResult>
     {
         public static ApiTaskResult<TResult> Running(Guid taskId, Urn taskType)

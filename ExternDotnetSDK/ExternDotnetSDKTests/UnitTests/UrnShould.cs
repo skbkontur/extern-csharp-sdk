@@ -15,7 +15,7 @@ namespace ExternDotnetSDKTests.UnitTests
         [OneTimeSetUp]
         public void SetUp()
         {
-            urn = new Urn("1234","abcd");
+            urn = new Urn("1234", "abcd");
             urnParent = new Urn("myNid", "myNss");
             urnChild = new Urn("myNid:myNss", "child");
         }

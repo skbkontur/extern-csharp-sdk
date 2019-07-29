@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace ExternDotnetSDK.Documents.Data
 {
     [DataContract]
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class GenerateReplyDocumentRequestData
     {
         [DataMember]

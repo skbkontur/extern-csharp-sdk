@@ -9,10 +9,14 @@ namespace ExternDotnetSDK.Clients.TestApi
     {
         private readonly ITestApiClientRefit clientRefit;
 
-        public TestApiClient(HttpClient client) => 
+        public TestApiClient(HttpClient client)
+        {
             clientRefit = RestService.For<ITestApiClientRefit>(client);
+        }
 
-        public async Task PokeAsync(Guid accountId, Guid docflowId, uint times = 1) =>
+        public async Task PokeAsync(Guid accountId, Guid docflowId, uint times = 1)
+        {
             await clientRefit.PokeAsync(accountId, docflowId, times);
+        }
     }
 }

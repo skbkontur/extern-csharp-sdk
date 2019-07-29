@@ -20,11 +20,16 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 
         [TestCase(null)]
         [TestCase("not a request id at all")]
-        public void GetNoConfirmationCode_WithBasRequestId(string requestId) =>
+        public void GetNoConfirmationCode_WithBasRequestId(string requestId)
+        {
             Assert.ThrowsAsync<ApiException>(async () => await client.GetConfirmationCodeAsync(requestId));
+        }
 
         [Test]
-        public void GetNoConfirmationCode_WithRandomRequestId() => Assert.ThrowsAsync<ApiException>(
-            async () => await client.GetConfirmationCodeAsync(Guid.NewGuid().ToString()));
+        public void GetNoConfirmationCode_WithRandomRequestId()
+        {
+            Assert.ThrowsAsync<ApiException>(
+                async () => await client.GetConfirmationCodeAsync(Guid.NewGuid().ToString()));
+        }
     }
 }

@@ -4,8 +4,8 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Common
 {
-    [JsonObject(NamingStrategyType = typeof(KebabCaseNamingStrategy))]
-    [JsonConverter(typeof(UrnJsonConverter))]
+    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
+    [JsonConverter(typeof (UrnJsonConverter))]
     public sealed class Urn : IComparable<Urn>, IEquatable<Urn>
     {
         private const string Schema = "urn:";

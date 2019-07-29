@@ -19,10 +19,12 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         }
 
         [Test]
-        public void FailPoke_ByBadRequestedIds() =>
+        public void FailPoke_ByBadRequestedIds()
+        {
             Assert.ThrowsAsync<ApiException>(
                 async () => await client.PokeAsync(
                     Guid.NewGuid(),
                     Guid.NewGuid()));
+        }
     }
 }

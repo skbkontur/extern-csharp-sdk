@@ -39,22 +39,6 @@ namespace ExternDotnetSDK.JsonConverters
             return description;
         }
 
-        private static DocflowDescription FindCorrectDescription(JToken[] tokens)
-        {
-            foreach (var pair in DocflowGenerator)
-            {
-                var propertyNames = pair.Key.GetProperties().Select(x => x.Name.ToKebabCase()).ToArray();
-                if (propertyNames.Length < tokens.Length) 
-                    continue;
-                var correctTypeFound = tokens
-                            .Select(token => token.ToObject<JProperty>().Name)
-                            .All(tokenName => propertyNames.Contains(tokenName));
-                if (correctTypeFound)
-                    return pair.Value();
-            }
-            throw new ArgumentOutOfRangeException();
-        }
-
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             throw new NotImplementedException("Implement me if you need");
@@ -63,6 +47,23 @@ namespace ExternDotnetSDK.JsonConverters
         public override bool CanConvert(Type objectType)
         {
             throw new NotImplementedException("Implement me if you need");
+        }
+
+        private static DocflowDescription FindCorrectDescription(JToken[] tokens)
+        {
+            foreach (var pair in DocflowGenerator)
+            {
+                var propertyNames = pair.Key.GetProperties().Select(x => x.Name.ToKebabCase()).ToArray();
+                if (propertyNames.Length < tokens.Length)
+                    continue;
+                var correctTypeFound = tokens
+                                       .Select(token => token.ToObject<JProperty>().Name)
+                                       .All(tokenName => propertyNames.Contains(tokenName));
+                if (correctTypeFound)
+                    return pair.Value();
+            }
+
+            throw new ArgumentOutOfRangeException();
         }
     }
 }
