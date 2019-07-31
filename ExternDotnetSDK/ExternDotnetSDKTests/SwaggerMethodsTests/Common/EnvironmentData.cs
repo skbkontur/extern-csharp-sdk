@@ -9,9 +9,5 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
         public string ApiKey;
         public string AuthAddress;
         public string BaseAddress;
-        public string OldApiKey;
-        //public IEnumerable<Link> RootIndexLinks;
-        //public AccountList FullAccountList;
-        //public Organization Organization;
     }
 }

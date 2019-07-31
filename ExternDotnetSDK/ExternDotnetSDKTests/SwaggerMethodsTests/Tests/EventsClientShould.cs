@@ -13,7 +13,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [OneTimeSetUp]
         public override async Task SetUp()
         {
-            await base.SetUp();
+            await InitializeCommonHttpClient();
             client = new EventsClient(Client);
         }
 

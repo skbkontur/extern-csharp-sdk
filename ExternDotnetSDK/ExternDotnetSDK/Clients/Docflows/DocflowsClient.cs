@@ -6,6 +6,7 @@ using ExternDotnetSDK.Api;
 using ExternDotnetSDK.Common;
 using ExternDotnetSDK.Docflows;
 using ExternDotnetSDK.Documents;
+using ExternDotnetSDK.Documents.Data;
 using Refit;
 
 namespace ExternDotnetSDK.Clients.Docflows
@@ -73,6 +74,40 @@ namespace ExternDotnetSDK.Clients.Docflows
         public async Task<ApiTaskResult<byte[]>> GetApiTaskAsync(Guid accountId, Guid docflowId, Guid documentId, Guid apiTaskId)
         {
             return await clientRefit.GetApiTaskAsync(accountId, docflowId, documentId, apiTaskId);
+        }
+
+        public async Task<ApiReplyDocument> GetDocumentReplyAsync(Guid accountId, Guid docflowId, Guid documentId, Guid replyId)
+        {
+            return await clientRefit.GetDocumentReplyAsync(accountId, docflowId, documentId, replyId);
+        }
+
+        public async Task<string> PrintDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, byte[] data)
+        {
+            var docData = new PrintDocumentData
+            {
+                Content = Convert.ToBase64String(data)
+            };
+            return await clientRefit.PrintDocumentAsync(accountId, docflowId, documentId, docData);
+        }
+
+        public async Task<DecryptionInitResult> DecryptDocumentContentAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            DecryptDocumentRequestData data)
+        {
+            return await clientRefit.DecryptDocumentContentAsync(accountId, docflowId, documentId, data);
+        }
+
+        public async Task<byte> ConfirmDocumentContentDecryptionAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            string requestId,
+            string code,
+            bool unzip = false)
+        {
+            return await clientRefit.ConfirmDocumentContentDecryptionAsync(accountId, docflowId, documentId, requestId, code, unzip);
         }
     }
 }

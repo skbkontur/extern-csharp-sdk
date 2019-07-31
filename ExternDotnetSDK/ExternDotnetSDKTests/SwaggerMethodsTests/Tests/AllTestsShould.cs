@@ -5,11 +5,7 @@ using System.Threading.Tasks;
 using ExternDotnetSDK.Accounts;
 using ExternDotnetSDK.Clients.Account;
 using ExternDotnetSDK.Clients.Authentication;
-using ExternDotnetSDK.Clients.Certificates;
 using ExternDotnetSDK.Clients.Common;
-using ExternDotnetSDK.Clients.Docflows;
-using ExternDotnetSDK.Clients.Organizations;
-using ExternDotnetSDK.Organizations;
 using ExternDotnetSDKTests.SwaggerMethodsTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -40,54 +36,34 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         protected SessionResponse Session;
         protected HttpClient Client;
 
-        protected bool ReadyToTest = true;
         protected Account Account;
-        protected Organization Organization;
-
-        protected CertificateClient CertificateClient;
         protected AccountClient AccountClient;
-        protected OrganizationsClient OrganizationsClient;
-        protected DocflowsClient docflowsClient;
 
         [OneTimeSetUp]
         public virtual async Task SetUp()
         {
-            try
-            {
-                Session = await AuthClientRefit.ByPass(Data.Login, Data.Password, Data.ApiKey);
-                Client = new HttpClient(new MyHttpClientHandler(Data.ApiKey, Session.Sid, Data.BaseAddress))
-                {
-                    BaseAddress = new Uri(Data.BaseAddress)
-                };
-                AccountClient = new AccountClient(Client);
-                CertificateClient = new CertificateClient(Client);
-                OrganizationsClient = new OrganizationsClient(Client);
-                docflowsClient = new DocflowsClient(Client);
+            await InitializeCommonHttpClient();
+            AccountClient = new AccountClient(Client);
 
-                Account = await AccountClient.CreateAccountAsync(
-                    "1754462785",
-                    "515744582",
-                    "NEW ACCOUNT WITH RANDOM BUT VALID PARAMETERS");
-                Organization = (await OrganizationsClient.SearchOrganizationsAsync(Account.Id))
-                    .Organizations[0];
-            }
-            catch (Exception)
-            {
-                ReadyToTest = false;
-            }
+            Account = await AccountClient.CreateAccountAsync(
+                "1754462785",
+                "515744582",
+                "NEW ACCOUNT WITH RANDOM BUT VALID PARAMETERS");
         }
 
         [OneTimeTearDown]
-        public async Task TearDown()
+        public virtual async Task TearDown()
         {
             await AccountClient.DeleteAccountAsync(Account.Id);
         }
 
-        [SetUp]
-        public void CheckInitialData()
+        protected async Task InitializeCommonHttpClient()
         {
-            if (!ReadyToTest)
-                Assert.Fail("There was an exception while initializing data used for tests");
+            Session = await AuthClientRefit.ByPass(Data.Login, Data.Password, Data.ApiKey);
+            Client = new HttpClient(new MyHttpClientHandler(Data.ApiKey, Session.Sid, Data.BaseAddress))
+            {
+                BaseAddress = new Uri(Data.BaseAddress)
+            };
         }
     }
 }
