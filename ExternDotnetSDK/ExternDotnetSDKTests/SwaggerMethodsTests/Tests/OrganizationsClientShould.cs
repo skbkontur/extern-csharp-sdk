@@ -44,59 +44,51 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void GetNoOrganizations_WithNonexistentAccount()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () =>
-                    await OrgClient.SearchOrganizationsAsync(Guid.Empty));
+                async () => await OrgClient.SearchOrganizationsAsync(Guid.Empty));
         }
 
         [Test]
         public void GetAnOrganization_WithValidParameters()
         {
             Assert.DoesNotThrowAsync(
-                async () =>
-                    await OrgClient.GetOrganizationAsync(Account.Id, Organization.Id));
+                async () => await OrgClient.GetOrganizationAsync(Account.Id, Organization.Id));
         }
 
         [Test]
         public void FailToGetAnOrganization_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () =>
-                    await OrgClient.GetOrganizationAsync(Account.Id, Guid.Empty));
+                async () => await OrgClient.GetOrganizationAsync(Account.Id, Guid.Empty));
             Assert.ThrowsAsync<ApiException>(
-                async () =>
-                    await OrgClient.GetOrganizationAsync(Guid.Empty, Organization.Id));
+                async () => await OrgClient.GetOrganizationAsync(Guid.Empty, Organization.Id));
         }
 
         [Test]
         public void UpdateOrganizationName()
         {
             Assert.DoesNotThrowAsync(
-                async () =>
-                    await OrgClient.UpdateOrganizationAsync(Account.Id, Organization.Id, Organization.General.Name));
+                async () => await OrgClient.UpdateOrganizationAsync(Account.Id, Organization.Id, Organization.General.Name));
         }
 
         [Test]
         public void FailToCreateNewOrganization_WithoutAccess()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () =>
-                    await OrgClient.CreateOrganizationAsync(Account.Id, "9194113617", "335544394", "Good name"));
+                async () => await OrgClient.CreateOrganizationAsync(Account.Id, "9194113617", "335544394", "Good name"));
         }
 
         [Test]
         public void FailToDeleteOrganization_WithBadAccountId()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () =>
-                    await OrgClient.DeleteOrganizationAsync(Guid.Empty, Organization.Id));
+                async () => await OrgClient.DeleteOrganizationAsync(Guid.Empty, Organization.Id));
         }
 
         [Test]
         public void FailToDeleteOrganization_WithBadOrganizationId()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () =>
-                    await OrgClient.DeleteOrganizationAsync(Account.Id, Guid.Empty));
+                async () => await OrgClient.DeleteOrganizationAsync(Account.Id, Guid.Empty));
         }
     }
 }

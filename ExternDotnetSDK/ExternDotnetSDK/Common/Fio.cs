@@ -6,8 +6,8 @@ namespace ExternDotnetSDK.Common
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class Fio
     {
-        public string Surname { get; set; } = "Фамилия";
-        public string Name { get; set; } = "Имя";
-        public string Patronymic { get; set; } = "Отчество";
+        public string Surname { get; set; }
+        public string Name { get; set; }
+        public string Patronymic { get; set; }
     }
 }

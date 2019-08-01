@@ -26,8 +26,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void GetCertificates_WithValidParameters(int skip = 0, int take = 100, bool forAllUsers = false)
         {
             Assert.DoesNotThrowAsync(
-                async () =>
-                    await certClient.GetCertificatesAsync(Account.Id, skip, take, forAllUsers));
+                async () => await certClient.GetCertificatesAsync(Account.Id, skip, take, forAllUsers));
         }
 
         [TestCase(0, 0)]
@@ -36,16 +35,13 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void GetNoCertificates_WithBadParameters(int skip = 0, int take = 100, bool folAllUsers = false)
         {
             Assert.ThrowsAsync<ApiException>(
-                async () =>
-                    await certClient.GetCertificatesAsync(Account.Id, skip, take, folAllUsers));
+                async () => await certClient.GetCertificatesAsync(Account.Id, skip, take, folAllUsers));
         }
 
         [Test]
         public void GetNoCertificates_ForBadAccountId()
         {
-            Assert.ThrowsAsync<ApiException>(
-                async () =>
-                    await certClient.GetCertificatesAsync(Guid.Empty));
+            Assert.ThrowsAsync<ApiException>(async () => await certClient.GetCertificatesAsync(Guid.Empty));
         }
 
         [Test]

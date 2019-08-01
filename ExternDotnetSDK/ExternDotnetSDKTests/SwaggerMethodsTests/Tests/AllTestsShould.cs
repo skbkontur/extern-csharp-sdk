@@ -9,7 +9,6 @@ using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDKTests.SwaggerMethodsTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Refit;
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 {
@@ -18,7 +17,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
     {
         protected static string DataPath = "Environment3.txt";
         protected static EnvironmentData Data;
-        protected static IAuthClientRefit AuthClientRefit;
+        protected static AuthClient AuthClient;
 
         static AllTestsShould()
         {
@@ -29,8 +28,6 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                     Data = new JsonSerializer().Deserialize<EnvironmentData>(reader);
                 }
             }
-
-            AuthClientRefit = RestService.For<IAuthClientRefit>(Data.AuthAddress);
         }
 
         protected SessionResponse Session;
@@ -44,7 +41,6 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             await InitializeCommonHttpClient();
             AccountClient = new AccountClient(Client);
-
             Account = await AccountClient.CreateAccountAsync(
                 "1754462785",
                 "515744582",
@@ -59,7 +55,8 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 
         protected async Task InitializeCommonHttpClient()
         {
-            Session = await AuthClientRefit.ByPass(Data.Login, Data.Password, Data.ApiKey);
+            AuthClient = new AuthClient(Data.AuthAddress);
+            Session = await AuthClient.ByPass(Data.Login, Data.Password, Data.ApiKey);
             Client = new HttpClient(new MyHttpClientHandler(Data.ApiKey, Session.Sid, Data.BaseAddress))
             {
                 BaseAddress = new Uri(Data.BaseAddress)

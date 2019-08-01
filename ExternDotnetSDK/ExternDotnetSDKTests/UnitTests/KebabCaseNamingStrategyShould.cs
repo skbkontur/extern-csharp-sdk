@@ -13,7 +13,7 @@ namespace ExternDotnetSDKTests.UnitTests
         public void SerializeClassesCorrectly()
         {
             var serialized = JsonConvert.SerializeObject(new AccountList());
-            Assert.False(serialized.Any(char.IsUpper));
+            serialized.Should().Match(s => !s.Any(char.IsUpper));
             serialized.Should().Contain("-");
         }
     }

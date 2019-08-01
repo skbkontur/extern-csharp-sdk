@@ -23,10 +23,10 @@ namespace ExternDotnetSDKTests.UnitTests
         [Test]
         public void BeNotEqual_ToDifferentLinks()
         {
-            link.Equals(null).Should().BeFalse();
-            link.Equals(new Link(href, "difference")).Should().BeFalse();
-            link.Equals(new Link(new Uri("http://htmlbook.ru/html"), rel)).Should().BeFalse();
-            link.Equals(new Link(href, rel, "extra name")).Should().BeFalse();
+            link.Should().NotBeNull();
+            link.Should().NotBe(new Link(href, "difference"));
+            link.Should().NotBe(new Link(new Uri("http://htmlbook.ru/html"), rel));
+            link.Should().NotBe(new Link(href, rel, "extra name"));
         }
 
         [Test]
@@ -40,14 +40,14 @@ namespace ExternDotnetSDKTests.UnitTests
         public void BeEqual_ToSameLinks()
         {
             var similarLink = new Link(link.Href, link.Rel, link.Profile, link.Title, link.Profile, link.Templated);
-            link.Equals(similarLink).Should().BeTrue();
+            link.Should().Be(similarLink);
         }
 
         [Test]
         public void BeEqual_ToSelf()
         {
             var sameLink = link;
-            link.Equals(sameLink).Should().BeTrue();
+            link.Should().Be(sameLink);
         }
 
         [TestCase("NAME", "TITLE", "PROFILE", true)]

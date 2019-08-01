@@ -40,7 +40,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             Assert.ThrowsAsync<ApiException>(async () => await AccountClient.DeleteAccountAsync(Guid.NewGuid()));
         }
 
-        [TestCase("1111111111", "111111111", "obvious case")]
+        [TestCase("not an inn", "not a kpp", "obvious case")]
         [TestCase("1754462781", "515744583", "wrong inn control digit")]
         public void FailToCreateAccount_WithBadParameters(string inn, string kpp, string orgName)
         {

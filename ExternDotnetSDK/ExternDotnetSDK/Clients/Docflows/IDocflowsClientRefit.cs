@@ -71,5 +71,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             string requestId,
             string code,
             bool unzip = false);
+
+        //todo make all Post methods for docflows and all methods for docflows: replies
     }
 }
