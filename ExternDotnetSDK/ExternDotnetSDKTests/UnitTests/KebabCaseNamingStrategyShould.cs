@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ExternDotnetSDK.Accounts;
+using ExternDotnetSDK.Drafts.Requests;
 using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -15,6 +16,14 @@ namespace ExternDotnetSDKTests.UnitTests
             var serialized = JsonConvert.SerializeObject(new AccountList());
             serialized.Should().Match(s => !s.Any(char.IsUpper));
             serialized.Should().Contain("-");
+        }
+
+        [Test]
+        public void SerializeSenderRequest_AccordingToDocumentation()
+        {
+            var request = new SenderRequest();
+            var serialized = JsonConvert.SerializeObject(request);
+            serialized.Should().Contain("ipaddress");
         }
     }
 }

@@ -31,6 +31,7 @@ namespace ExternDotnetSDK.Drafts.Requests
         /// <summary>IP адрес отправителя отчета</summary>
         [DataMember]
         [Required]
+        [JsonProperty("ipaddress")]
         public string IpAddress { get; set; }
     }
 }

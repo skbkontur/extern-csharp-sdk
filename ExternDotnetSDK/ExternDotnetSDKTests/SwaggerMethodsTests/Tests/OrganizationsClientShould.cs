@@ -18,7 +18,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             await base.SetUp();
             OrgClient = new OrganizationsClient(Client);
-            Organization = (await OrgClient.SearchOrganizationsAsync(Account.Id)).Organizations[0];
+            Organization = (await OrgClient.GetAllOrganizationsAsync(Account.Id)).Organizations[0];
         }
 
         [TestCase]
@@ -27,7 +27,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void GetOrganizations_WithValidParameters(string inn = null, string kpp = null, int skip = 0, int take = 1000)
         {
             Assert.DoesNotThrowAsync(
-                async () => await OrgClient.SearchOrganizationsAsync(Account.Id, inn, kpp, skip, take));
+                async () => await OrgClient.GetAllOrganizationsAsync(Account.Id, inn, kpp, skip, take));
         }
 
         [TestCase(null, null, 0, 0)]
@@ -37,14 +37,14 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void GetNoOrganizations_WithBadParameters(string inn = null, string kpp = null, int skip = 0, int take = 1000)
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await OrgClient.SearchOrganizationsAsync(Account.Id, inn, kpp, skip, take));
+                async () => await OrgClient.GetAllOrganizationsAsync(Account.Id, inn, kpp, skip, take));
         }
 
         [Test]
         public void GetNoOrganizations_WithNonexistentAccount()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await OrgClient.SearchOrganizationsAsync(Guid.Empty));
+                async () => await OrgClient.GetAllOrganizationsAsync(Guid.Empty));
         }
 
         [Test]

@@ -15,7 +15,7 @@ namespace ExternDotnetSDK.Clients.Organizations
             clientRefit = RestService.For<IOrganizationClientRefit>(client);
         }
 
-        public async Task<OrganizationBatch> SearchOrganizationsAsync(
+        public async Task<OrganizationBatch> GetAllOrganizationsAsync(
             Guid accountId,
             string inn = null,
             string kpp = null,
