@@ -5,6 +5,7 @@ using Refit;
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 {
+    [TestFixture]
     internal class AuthClientShould : AllTestsShould
     {
         [Test]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Common;
 using ExternDotnetSDK.Drafts;
 using ExternDotnetSDK.Drafts.Meta;
 using ExternDotnetSDK.Drafts.Requests;
@@ -8,7 +9,7 @@ using Refit;
 
 namespace ExternDotnetSDK.Clients.Drafts
 {
-    public class DraftClient
+    public class DraftClient 
     {
         private readonly IDraftClientRefit clientRefit;
 
@@ -65,6 +66,58 @@ namespace ExternDotnetSDK.Clients.Drafts
         public async Task<string> GetDocumentPrintAsync(Guid accountId, Guid draftId, Guid documentId)
         {
             return await clientRefit.GetDocumentPrintAsync(accountId, draftId, documentId);
+        }
+
+        public async Task<string> GetDocumentDecryptedContentAsync(Guid accountId, Guid draftId, Guid documentId)
+        {
+            return await clientRefit.GetDocumentDecryptedContentAsync(accountId, draftId, documentId);
+        }
+
+        public async Task UpdateDocumentDecryptedContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content)
+        {
+            var convertedContent = Convert.ToBase64String(content);
+            await clientRefit.UpdateDocumentDecryptedContentAsync(accountId, draftId, documentId, convertedContent);
+        }
+
+        public async Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId)
+        {
+            return await clientRefit.GetDocumentSignatureContentAsync(accountId, draftId, documentId);
+        }
+
+        public async Task UpdateDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content)
+        {
+            var convertedContent = Convert.ToBase64String(content);
+            await clientRefit.UpdateDocumentSignatureContentAsync(accountId, draftId, documentId, convertedContent);
+        }
+
+        public async Task<Signature> AddDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, SignatureRequest request)
+        {
+            return await clientRefit.AddDocumentSignatureAsync(accountId, draftId, documentId, request);
+        }
+
+        public async Task DeleteDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId)
+        {
+            await clientRefit.DeleteDocumentSignatureAsync(accountId, draftId, documentId, signatureId);
+        }
+
+        public async Task<Signature> GetDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId)
+        {
+            return await clientRefit.GetDocumentSignatureAsync(accountId, draftId, documentId, signatureId);
+        }
+
+        public async Task<Signature> UpdateDocumentSignatureAsync(
+            Guid accountId,
+            Guid draftId,
+            Guid documentId,
+            Guid signatureId,
+            SignatureRequest request)
+        {
+            return await clientRefit.UpdateDocumentSignatureAsync(accountId, draftId, documentId, signatureId, request);
+        }
+
+        public async Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId)
+        {
+            return await clientRefit.GetDocumentSignatureContentAsync(accountId, draftId, documentId, signatureId);
         }
     }
 }

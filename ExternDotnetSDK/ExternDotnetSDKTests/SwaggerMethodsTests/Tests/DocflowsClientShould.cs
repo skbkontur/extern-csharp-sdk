@@ -196,20 +196,19 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public void FailToPrintDocument_WhenDocumentPrintUnsupported()
         {
-            Func<Task> func = async () =>
-                await docClient.PrintDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] {0, 1, 2, 3});
-            func.Should().ThrowAsync<ApiException>().WithMessage("documentPrintUnsupported");
+            Assert.ThrowsAsync<ApiException>(
+                async () => await docClient.PrintDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] {0, 1, 2, 3}));
         }
 
         [Test]
         public void FailToDecryptDocumentContent_WithBadCertificate()
         {
-            var data = new DecryptDocumentRequestData
-            {
-                CertificateBase64 = "bad cert"
-            };
-            Func<Task> func = async () => await docClient.DecryptDocumentContentAsync(Account.Id, docflow.Id, document.Id, data);
-            func.Should().ThrowAsync<ApiException>().WithMessage("contentIsNotBase64Format");
+            Assert.ThrowsAsync<ApiException>(
+                async () => await docClient.DecryptDocumentContentAsync(
+                    Account.Id,
+                    docflow.Id,
+                    document.Id,
+                    new DecryptDocumentRequestData {CertificateBase64 = "bad cert"}));
         }
     }
 }
