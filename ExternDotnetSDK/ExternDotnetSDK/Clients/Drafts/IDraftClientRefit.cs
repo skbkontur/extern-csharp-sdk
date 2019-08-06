@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Common;
-using ExternDotnetSDK.Drafts;
-using ExternDotnetSDK.Drafts.Meta;
-using ExternDotnetSDK.Drafts.Requests;
+using ExternDotnetSDK.Models.Common;
+using ExternDotnetSDK.Models.Drafts;
+using ExternDotnetSDK.Models.Drafts.Meta;
+using ExternDotnetSDK.Models.Drafts.Requests;
 using Refit;
 
 namespace ExternDotnetSDK.Clients.Drafts
 {
-    internal interface IDraftClientRefit
+    public interface IDraftClientRefit
     {
         [Post("/v1/{accountId}/drafts")]
         Task<Draft> CreateDraftAsync(Guid accountId, [Body] DraftMetaRequest draftRequest);
@@ -64,11 +64,7 @@ namespace ExternDotnetSDK.Clients.Drafts
 
         [Put("/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}")]
         Task<Signature> UpdateDocumentSignatureAsync(
-            Guid accountId,
-            Guid draftId,
-            Guid documentId,
-            Guid signatureId,
-            [Body] SignatureRequest request);
+            Guid accountId, Guid draftId, Guid documentId, Guid signatureId, [Body] SignatureRequest request);
 
         [Get("/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}/content")]
         Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId);

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Account;
 using ExternDotnetSDK.Clients.Docflows;
-using ExternDotnetSDK.Common;
-using ExternDotnetSDK.Docflows;
-using ExternDotnetSDK.Documents;
-using ExternDotnetSDK.Documents.Data;
-using FluentAssertions;
+using ExternDotnetSDK.Models.Common;
+using ExternDotnetSDK.Models.Docflows;
+using ExternDotnetSDK.Models.Documents;
+using ExternDotnetSDK.Models.Documents.Data;
 using NUnit.Framework;
 using Refit;
+
 #pragma warning disable 1998
 #pragma warning disable 4014
 

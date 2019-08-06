@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using ExternDotnetSDK.Accounts;
-using ExternDotnetSDK.Drafts.Requests;
+using ExternDotnetSDK.Models.Accounts;
+using ExternDotnetSDK.Models.Drafts.Requests;
 using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;

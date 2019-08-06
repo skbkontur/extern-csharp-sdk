@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Warrants;
+using ExternDotnetSDK.Models.Warrants;
 using Refit;
 
 namespace ExternDotnetSDK.Clients.Warrants
 {
-    public class WarrantsClient
+    public class WarrantsClient : IWarrantsClient
     {
-        private readonly IWarrantsClientRefit clientRefit;
-
         public WarrantsClient(HttpClient client)
         {
-            clientRefit = RestService.For<IWarrantsClientRefit>(client);
+            ClientRefit = RestService.For<IWarrantsClientRefit>(client);
         }
 
+        public IWarrantsClientRefit ClientRefit { get; }
+
         public async Task<WarrantList> GetWarrantsAsync(
-            Guid accountId,
-            int skip = 0,
-            int take = int.MaxValue,
-            bool forAllUsers = false)
+            Guid accountId, int skip = 0, int take = int.MaxValue, bool forAllUsers = false)
         {
-            return await clientRefit.GetWarrantsAsync(accountId, skip, take, forAllUsers);
+            return await ClientRefit.GetWarrantsAsync(accountId, skip, take, forAllUsers);
         }
     }
 }

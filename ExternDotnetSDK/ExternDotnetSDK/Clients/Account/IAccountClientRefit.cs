@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Accounts;
+using ExternDotnetSDK.Models.Accounts;
 using Refit;
 
 namespace ExternDotnetSDK.Clients.Account
@@ -11,10 +11,10 @@ namespace ExternDotnetSDK.Clients.Account
         Task<AccountList> GetAccountsAsync(int skip = 0, int take = int.MaxValue);
 
         [Post("/v1")]
-        Task<Accounts.Account> CreateAccountAsync([Body] CreateAccountRequestDto request);
+        Task<Models.Accounts.Account> CreateAccountAsync([Body] CreateAccountRequestDto request);
 
         [Get("/v1/{accountId}")]
-        Task<Accounts.Account> GetAccountAsync(Guid accountId);
+        Task<Models.Accounts.Account> GetAccountAsync(Guid accountId);
 
         [Delete("/v1/{accountId}")]
         Task DeleteAccountAsync(Guid accountId);

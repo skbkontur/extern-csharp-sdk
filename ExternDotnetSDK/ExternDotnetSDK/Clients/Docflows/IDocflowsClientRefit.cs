@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Api;
-using ExternDotnetSDK.Common;
-using ExternDotnetSDK.Docflows;
-using ExternDotnetSDK.Documents;
-using ExternDotnetSDK.Documents.Data;
+using ExternDotnetSDK.Models.Api;
+using ExternDotnetSDK.Models.Common;
+using ExternDotnetSDK.Models.Docflows;
+using ExternDotnetSDK.Models.Documents;
+using ExternDotnetSDK.Models.Documents.Data;
 using Refit;
 
 namespace ExternDotnetSDK.Clients.Docflows
 {
-    internal interface IDocflowsClientRefit
+    public interface IDocflowsClientRefit
     {
         [Get("/v1/{accountId}/docflows")]
         Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter filter);
@@ -57,20 +57,12 @@ namespace ExternDotnetSDK.Clients.Docflows
         //todo add test where it works with valid parameters
         [Post("/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content")]
         Task<DecryptionInitResult> DecryptDocumentContentAsync(
-            Guid accountId,
-            Guid docflowId,
-            Guid documentId,
-            [Body] DecryptDocumentRequestData data);
+            Guid accountId, Guid docflowId, Guid documentId, [Body] DecryptDocumentRequestData data);
 
         //todo make tests when you know where to find required data
         [Post("/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content-confirm")]
         Task<byte> ConfirmDocumentContentDecryptionAsync(
-            Guid accountId,
-            Guid docflowId,
-            Guid documentId,
-            string requestId,
-            string code,
-            bool unzip = false);
+            Guid accountId, Guid docflowId, Guid documentId, string requestId, string code, bool unzip = false);
 
         //todo make all Post methods for docflows and all methods for docflows: replies
     }

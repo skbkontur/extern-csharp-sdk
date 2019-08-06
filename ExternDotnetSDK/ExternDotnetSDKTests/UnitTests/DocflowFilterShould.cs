@@ -1,6 +1,6 @@
 ﻿using System;
-using ExternDotnetSDK.Docflows;
-using ExternDotnetSDK.JsonConverters;
+using ExternDotnetSDK.Models.Docflows;
+using ExternDotnetSDK.Models.JsonConverters;
 using FluentAssertions;
 using NUnit.Framework;
 

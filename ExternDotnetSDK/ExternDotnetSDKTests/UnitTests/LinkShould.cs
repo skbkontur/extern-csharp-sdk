@@ -1,5 +1,5 @@
 ﻿using System;
-using ExternDotnetSDK.Common;
+using ExternDotnetSDK.Models.Common;
 using FluentAssertions;
 using NUnit.Framework;
 

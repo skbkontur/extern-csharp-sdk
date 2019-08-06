@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Events\" />
-    <Folder Include="Warrants\" />
+    <Folder Include="Models\Events\" />
+    <Folder Include="Models\Warrants\" />
   </ItemGroup>
 
 </Project>

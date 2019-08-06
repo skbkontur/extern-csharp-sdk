@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Organizations;
-using ExternDotnetSDK.Organizations;
+using ExternDotnetSDK.Models.Organizations;
 using NUnit.Framework;
 using Refit;
 
