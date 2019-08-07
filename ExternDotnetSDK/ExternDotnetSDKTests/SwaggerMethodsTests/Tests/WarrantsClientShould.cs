@@ -10,13 +10,13 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public void FailToGetWarrants_WithBadAccountId()
         {
-            Assert.ThrowsAsync<ApiException>(async () => await Client.WarrantsClient.GetWarrantsAsync(Guid.NewGuid()));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Warrants.GetWarrantsAsync(Guid.NewGuid()));
         }
 
         [Test]
         public void GetWarrants_WithValidParameters()
         {
-            Assert.DoesNotThrowAsync(async () => await Client.WarrantsClient.GetWarrantsAsync(Account.Id));
+            Assert.DoesNotThrowAsync(async () => await Client.Warrants.GetWarrantsAsync(Account.Id));
         }
 
         [TestCase(-1)]
@@ -24,7 +24,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [TestCase(0, -1)]
         public void FailToGetWarrants_WithBadQueryParameters(int skip = 0, int take = int.MaxValue)
         {
-            Assert.ThrowsAsync<ApiException>(async () => await Client.WarrantsClient.GetWarrantsAsync(Account.Id, skip, take));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Warrants.GetWarrantsAsync(Account.Id, skip, take));
         }
     }
 }

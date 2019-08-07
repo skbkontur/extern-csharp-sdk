@@ -28,7 +28,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public virtual async Task SetUp()
         {
             InitializeClient();
-            Account = await Client.AccountClient.CreateAccountAsync(
+            Account = await Client.Accounts.CreateAccountAsync(
                 "1754462785",
                 "515744582",
                 "TEST ACCOUNT");
@@ -37,7 +37,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [OneTimeTearDown]
         public virtual async Task TearDown()
         {
-            await Client.AccountClient.DeleteAccountAsync(Account.Id);
+            await Client.Accounts.DeleteAccountAsync(Account.Id);
         }
 
         protected void InitializeClient()

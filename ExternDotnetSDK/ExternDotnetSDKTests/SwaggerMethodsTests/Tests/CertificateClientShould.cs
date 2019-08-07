@@ -16,7 +16,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void GetCertificates_WithValidParameters(int skip = 0, int take = 100, bool forAllUsers = false)
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.CertificateClient.GetCertificatesAsync(Account.Id, skip, take, forAllUsers));
+                async () => await Client.Certificates.GetCertificatesAsync(Account.Id, skip, take, forAllUsers));
         }
 
         [TestCase(0, 0)]
@@ -25,20 +25,20 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void GetNoCertificates_WithBadParameters(int skip = 0, int take = 100, bool folAllUsers = false)
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.CertificateClient.GetCertificatesAsync(Account.Id, skip, take, folAllUsers));
+                async () => await Client.Certificates.GetCertificatesAsync(Account.Id, skip, take, folAllUsers));
         }
 
         [Test]
         public void GetNoCertificates_ForBadAccountId()
         {
-            Assert.ThrowsAsync<ApiException>(async () => await Client.CertificateClient.GetCertificatesAsync(Guid.Empty));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Certificates.GetCertificatesAsync(Guid.Empty));
         }
 
         [Test]
         public async Task GetNoLessCertificates_ForAllUsers()
         {
-            var certsForFewUsersTotal = (await Client.CertificateClient.GetCertificatesAsync(Account.Id)).Certificates.Length;
-            var certsForAllUsersTotal = (await Client.CertificateClient.GetCertificatesAsync(Account.Id, forAllUsers: true))
+            var certsForFewUsersTotal = (await Client.Certificates.GetCertificatesAsync(Account.Id)).Certificates.Length;
+            var certsForAllUsersTotal = (await Client.Certificates.GetCertificatesAsync(Account.Id, forAllUsers: true))
                 .Certificates.Length;
             certsForAllUsersTotal.Should().BeGreaterOrEqualTo(certsForFewUsersTotal);
         }

@@ -22,8 +22,8 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public override async Task SetUp()
         {
             InitializeClient();
-            Account = (await Client.AccountClient.GetAccountsAsync(0, 1)).Accounts[0];
-            var cert = (await Client.CertificateClient.GetCertificatesAsync(Account.Id, 0, 1)).Certificates[0];
+            Account = (await Client.Accounts.GetAccountsAsync(0, 1)).Accounts[0];
+            var cert = (await Client.Certificates.GetCertificatesAsync(Account.Id, 0, 1)).Certificates[0];
             validDraftMetaRequest = new DraftMetaRequest
             {
                 Payer = new AccountInfoRequest
@@ -40,10 +40,10 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                 },
                 Recipient = new RecipientInfoRequest {FssCode = "11111"}
             };
-            draft = await Client.DraftClient.CreateDraftAsync(Account.Id, validDraftMetaRequest);
+            draft = await Client.Drafts.CreateDraftAsync(Account.Id, validDraftMetaRequest);
             emptyDocument = await CreateEmptyDocument();
             filledDocument = await CreateFilledDocument();
-            filledDocumentSignature = await Client.DraftClient.AddDocumentSignatureAsync(
+            filledDocumentSignature = await Client.Drafts.AddDocumentSignatureAsync(
                 Account.Id,
                 draft.Id,
                 filledDocument.Id,
@@ -53,35 +53,35 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [OneTimeTearDown]
         public override async Task TearDown()
         {
-            await Client.DraftClient.DeleteDocumentSignatureAsync(
+            await Client.Drafts.DeleteDocumentSignatureAsync(
                 Account.Id,
                 draft.Id,
                 filledDocument.Id,
                 filledDocumentSignature.Id);
-            await Client.DraftClient.DeleteDocumentAsync(Account.Id, draft.Id, emptyDocument.Id);
-            await Client.DraftClient.DeleteDocumentAsync(Account.Id, draft.Id, filledDocument.Id);
-            await Client.DraftClient.DeleteDraftAsync(Account.Id, draft.Id);
+            await Client.Drafts.DeleteDocumentAsync(Account.Id, draft.Id, emptyDocument.Id);
+            await Client.Drafts.DeleteDocumentAsync(Account.Id, draft.Id, filledDocument.Id);
+            await Client.Drafts.DeleteDraftAsync(Account.Id, draft.Id);
         }
 
         [Test]
         public void FailToCreateDraft_WithMissingDraftMetaRequest()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.CreateDraftAsync(Account.Id, null));
+                async () => await Client.Drafts.CreateDraftAsync(Account.Id, null));
         }
 
         [Test]
         public void FailToCreateDraft_WithMissingPayer()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.CreateDraftAsync(Account.Id, new DraftMetaRequest()));
+                async () => await Client.Drafts.CreateDraftAsync(Account.Id, new DraftMetaRequest()));
         }
 
         [Test]
         public void FailToCreateDraft_WithMissingSender()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.CreateDraftAsync(
+                async () => await Client.Drafts.CreateDraftAsync(
                     Account.Id,
                     new DraftMetaRequest {Payer = new AccountInfoRequest()}));
         }
@@ -90,7 +90,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToCreateDraft_WithMissingRecipient()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.CreateDraftAsync(
+                async () => await Client.Drafts.CreateDraftAsync(
                     Account.Id,
                     new DraftMetaRequest
                     {
@@ -103,7 +103,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToCreateDraft_WithMissingInnKpp()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.CreateDraftAsync(
+                async () => await Client.Drafts.CreateDraftAsync(
                     Account.Id,
                     new DraftMetaRequest
                     {
@@ -117,7 +117,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToCreateDraft_WithMissingIp()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.CreateDraftAsync(
+                async () => await Client.Drafts.CreateDraftAsync(
                     Account.Id,
                     new DraftMetaRequest
                     {
@@ -135,7 +135,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToCreateDraft_WithMissingSenderCertificate()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.CreateDraftAsync(
+                async () => await Client.Drafts.CreateDraftAsync(
                     Account.Id,
                     new DraftMetaRequest
                     {
@@ -154,7 +154,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToCreateDraft_WithEmptySenderCertificate()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.CreateDraftAsync(
+                async () => await Client.Drafts.CreateDraftAsync(
                     Account.Id,
                     new DraftMetaRequest
                     {
@@ -174,7 +174,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToCreateDraft_WithInconvertableSenderCertificate()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.CreateDraftAsync(
+                async () => await Client.Drafts.CreateDraftAsync(
                     Account.Id,
                     new DraftMetaRequest
                     {
@@ -194,7 +194,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToCreateDraft_WithSenderCertificateOfWrongOrganization()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.CreateDraftAsync(
+                async () => await Client.Drafts.CreateDraftAsync(
                     Account.Id,
                     new DraftMetaRequest
                     {
@@ -214,7 +214,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToCreateDraft_WithMissingSenderOrganization()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.CreateDraftAsync(
+                async () => await Client.Drafts.CreateDraftAsync(
                     Account.Id,
                     new DraftMetaRequest
                     {
@@ -234,55 +234,55 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToDeleteDraft_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.DeleteDraftAsync(Account.Id, Guid.Empty));
+                async () => await Client.Drafts.DeleteDraftAsync(Account.Id, Guid.Empty));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.DeleteDraftAsync(Guid.Empty, draft.Id));
+                async () => await Client.Drafts.DeleteDraftAsync(Guid.Empty, draft.Id));
         }
 
         [Test]
         public void FailToGetDraft_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDraftAsync(Account.Id, Guid.Empty));
+                async () => await Client.Drafts.GetDraftAsync(Account.Id, Guid.Empty));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDraftAsync(Guid.Empty, draft.Id));
+                async () => await Client.Drafts.GetDraftAsync(Guid.Empty, draft.Id));
         }
 
         [Test]
         public void GetDraft_WithValidParameters()
         {
-            Assert.DoesNotThrowAsync(async () => await Client.DraftClient.GetDraftAsync(Account.Id, draft.Id));
+            Assert.DoesNotThrowAsync(async () => await Client.Drafts.GetDraftAsync(Account.Id, draft.Id));
         }
 
         [Test]
         public void GetDraftMeta_WithValidParameters()
         {
-            Assert.DoesNotThrowAsync(async () => await Client.DraftClient.GetDraftMetaAsync(Account.Id, draft.Id));
+            Assert.DoesNotThrowAsync(async () => await Client.Drafts.GetDraftMetaAsync(Account.Id, draft.Id));
         }
 
         [Test]
         public void FailToGetDraftMeta_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDraftMetaAsync(Account.Id, Guid.Empty));
+                async () => await Client.Drafts.GetDraftMetaAsync(Account.Id, Guid.Empty));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDraftMetaAsync(Guid.Empty, draft.Id));
+                async () => await Client.Drafts.GetDraftMetaAsync(Guid.Empty, draft.Id));
         }
 
         [Test]
         public void UpdateDraftMeta_WithValidParameters()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.DraftClient.UpdateDraftMetaAsync(Account.Id, draft.Id, validDraftMetaRequest));
+                async () => await Client.Drafts.UpdateDraftMetaAsync(Account.Id, draft.Id, validDraftMetaRequest));
             Assert.DoesNotThrowAsync(
-                async () => await Client.DraftClient.UpdateDraftMetaAsync(Account.Id, draft.Id, null));
+                async () => await Client.Drafts.UpdateDraftMetaAsync(Account.Id, draft.Id, null));
         }
 
         [Test]
         public async Task ReturnDifferentDraftMeta_WhenUpdatedWithValidAndDifferentParameters()
         {
-            var oldMeta = await Client.DraftClient.UpdateDraftMetaAsync(Account.Id, draft.Id, validDraftMetaRequest);
-            var newMeta = await Client.DraftClient.UpdateDraftMetaAsync(
+            var oldMeta = await Client.Drafts.UpdateDraftMetaAsync(Account.Id, draft.Id, validDraftMetaRequest);
+            var newMeta = await Client.Drafts.UpdateDraftMetaAsync(
                 Account.Id,
                 draft.Id,
                 new DraftMetaRequest
@@ -297,8 +297,8 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public async Task ReturnSameMeta_WhenUpdatedWithInvalidParameters()
         {
-            var oldMeta = await Client.DraftClient.UpdateDraftMetaAsync(Account.Id, draft.Id, validDraftMetaRequest);
-            var newMeta = await Client.DraftClient.UpdateDraftMetaAsync(Account.Id, draft.Id, null);
+            var oldMeta = await Client.Drafts.UpdateDraftMetaAsync(Account.Id, draft.Id, validDraftMetaRequest);
+            var newMeta = await Client.Drafts.UpdateDraftMetaAsync(Account.Id, draft.Id, null);
             oldMeta.Should().BeEquivalentTo(newMeta);
         }
 
@@ -307,25 +307,25 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             var document = await CreateEmptyDocument();
             Assert.DoesNotThrowAsync(
-                async () => await Client.DraftClient.DeleteDocumentAsync(Account.Id, draft.Id, document.Id));
+                async () => await Client.Drafts.DeleteDocumentAsync(Account.Id, draft.Id, document.Id));
         }
 
         [Test]
         public void FailToDeleteDocument_WithInvalidParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.DeleteDocumentAsync(Guid.Empty, draft.Id, emptyDocument.Id));
+                async () => await Client.Drafts.DeleteDocumentAsync(Guid.Empty, draft.Id, emptyDocument.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.DeleteDocumentAsync(Account.Id, Guid.Empty, emptyDocument.Id));
+                async () => await Client.Drafts.DeleteDocumentAsync(Account.Id, Guid.Empty, emptyDocument.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.DeleteDocumentAsync(Account.Id, draft.Id, Guid.Empty));
+                async () => await Client.Drafts.DeleteDocumentAsync(Account.Id, draft.Id, Guid.Empty));
         }
 
         [Test]
         public void FailToCreateDocument_WithWrongBase64Content()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.AddDocumentAsync(
+                async () => await Client.Drafts.AddDocumentAsync(
                     Account.Id,
                     draft.Id,
                     new DocumentContents {Base64Content = "1"}));
@@ -335,7 +335,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToCreateDocument_WithWrongSignature()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.AddDocumentAsync(
+                async () => await Client.Drafts.AddDocumentAsync(
                     Account.Id,
                     draft.Id,
                     new DocumentContents {Signature = "1"}));
@@ -345,31 +345,31 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void GetDocument_WithValidParameters()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.DraftClient.GetDocumentAsync(Account.Id, draft.Id, emptyDocument.Id));
+                async () => await Client.Drafts.GetDocumentAsync(Account.Id, draft.Id, emptyDocument.Id));
         }
 
         [Test]
         public void FailToGetDocument_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentAsync(Guid.Empty, draft.Id, emptyDocument.Id));
+                async () => await Client.Drafts.GetDocumentAsync(Guid.Empty, draft.Id, emptyDocument.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentAsync(Account.Id, Guid.Empty, emptyDocument.Id));
+                async () => await Client.Drafts.GetDocumentAsync(Account.Id, Guid.Empty, emptyDocument.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentAsync(Account.Id, draft.Id, Guid.Empty));
+                async () => await Client.Drafts.GetDocumentAsync(Account.Id, draft.Id, Guid.Empty));
         }
 
         [Test]
         public void FailToUpdateDocument_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentAsync(
+                async () => await Client.Drafts.UpdateDocumentAsync(
                     Account.Id,
                     draft.Id,
                     emptyDocument.Id,
                     new DocumentContents {Base64Content = "1"}));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentAsync(
+                async () => await Client.Drafts.UpdateDocumentAsync(
                     Account.Id,
                     draft.Id,
                     emptyDocument.Id,
@@ -381,55 +381,55 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             var document = await CreateEmptyDocument();
             Assert.DoesNotThrowAsync(
-                async () => await Client.DraftClient.UpdateDocumentAsync(
+                async () => await Client.Drafts.UpdateDocumentAsync(
                     Account.Id,
                     draft.Id,
                     document.Id,
                     new DocumentContents {Base64Content = Convert.ToBase64String(new byte[] {1})}));
-            await Client.DraftClient.DeleteDocumentAsync(Account.Id, draft.Id, document.Id);
+            await Client.Drafts.DeleteDocumentAsync(Account.Id, draft.Id, document.Id);
         }
 
         [Test]
         public void FailToGetDocumentPrint_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentPrintAsync(Guid.Empty, draft.Id, emptyDocument.Id));
+                async () => await Client.Drafts.GetDocumentPrintAsync(Guid.Empty, draft.Id, emptyDocument.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentPrintAsync(Account.Id, Guid.Empty, emptyDocument.Id));
+                async () => await Client.Drafts.GetDocumentPrintAsync(Account.Id, Guid.Empty, emptyDocument.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentPrintAsync(Account.Id, draft.Id, Guid.Empty));
+                async () => await Client.Drafts.GetDocumentPrintAsync(Account.Id, draft.Id, Guid.Empty));
         }
 
         [Test]
         public void FailToGetNonexistentDocumentPrint()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentPrintAsync(Account.Id, draft.Id, emptyDocument.Id));
+                async () => await Client.Drafts.GetDocumentPrintAsync(Account.Id, draft.Id, emptyDocument.Id));
         }
 
         [Test]
         public void FailToGetDocumentDecryptedContent_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentDecryptedContentAsync(Guid.Empty, draft.Id, emptyDocument.Id));
+                async () => await Client.Drafts.GetDocumentDecryptedContentAsync(Guid.Empty, draft.Id, emptyDocument.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentDecryptedContentAsync(Account.Id, Guid.Empty, emptyDocument.Id));
+                async () => await Client.Drafts.GetDocumentDecryptedContentAsync(Account.Id, Guid.Empty, emptyDocument.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentDecryptedContentAsync(Account.Id, draft.Id, Guid.Empty));
+                async () => await Client.Drafts.GetDocumentDecryptedContentAsync(Account.Id, draft.Id, Guid.Empty));
         }
 
         [Test]
         public void FailToGetDocumentDecryptedContent_WhenItIsEmpty()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentDecryptedContentAsync(Account.Id, draft.Id, emptyDocument.Id));
+                async () => await Client.Drafts.GetDocumentDecryptedContentAsync(Account.Id, draft.Id, emptyDocument.Id));
         }
 
         [Test]
         public void GetDocumentDecryptedContent_WhenItExists()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.DraftClient.GetDocumentDecryptedContentAsync(Account.Id, draft.Id, filledDocument.Id));
+                async () => await Client.Drafts.GetDocumentDecryptedContentAsync(Account.Id, draft.Id, filledDocument.Id));
         }
 
         [Test]
@@ -437,25 +437,25 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             var content = new byte[] {9, 1, 1};
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentDecryptedContentAsync(
+                async () => await Client.Drafts.UpdateDocumentDecryptedContentAsync(
                     Guid.Empty,
                     draft.Id,
                     emptyDocument.Id,
                     content));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentDecryptedContentAsync(
+                async () => await Client.Drafts.UpdateDocumentDecryptedContentAsync(
                     Account.Id,
                     Guid.Empty,
                     emptyDocument.Id,
                     content));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentDecryptedContentAsync(
+                async () => await Client.Drafts.UpdateDocumentDecryptedContentAsync(
                     Account.Id,
                     draft.Id,
                     Guid.Empty,
                     content));
             Assert.ThrowsAsync<ArgumentNullException>(
-                async () => await Client.DraftClient.UpdateDocumentDecryptedContentAsync(
+                async () => await Client.Drafts.UpdateDocumentDecryptedContentAsync(
                     Account.Id,
                     draft.Id,
                     emptyDocument.Id,
@@ -468,37 +468,37 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             var content = new byte[] {1};
             var document = await CreateEmptyDocument();
             Assert.DoesNotThrowAsync(
-                async () => await Client.DraftClient.UpdateDocumentDecryptedContentAsync(
+                async () => await Client.Drafts.UpdateDocumentDecryptedContentAsync(
                     Account.Id,
                     draft.Id,
                     document.Id,
                     content));
-            await Client.DraftClient.DeleteDocumentAsync(Account.Id, draft.Id, document.Id);
+            await Client.Drafts.DeleteDocumentAsync(Account.Id, draft.Id, document.Id);
         }
 
         [Test]
         public void FailToGetDocumentSignatureContent_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentSignatureContentAsync(Guid.Empty, draft.Id, emptyDocument.Id));
+                async () => await Client.Drafts.GetDocumentSignatureContentAsync(Guid.Empty, draft.Id, emptyDocument.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentSignatureContentAsync(Account.Id, Guid.Empty, emptyDocument.Id));
+                async () => await Client.Drafts.GetDocumentSignatureContentAsync(Account.Id, Guid.Empty, emptyDocument.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentSignatureContentAsync(Account.Id, draft.Id, Guid.Empty));
+                async () => await Client.Drafts.GetDocumentSignatureContentAsync(Account.Id, draft.Id, Guid.Empty));
         }
 
         [Test]
         public void FailToGetDocumentSignatureContent_WhenItIsEmpty()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentSignatureContentAsync(Account.Id, draft.Id, emptyDocument.Id));
+                async () => await Client.Drafts.GetDocumentSignatureContentAsync(Account.Id, draft.Id, emptyDocument.Id));
         }
 
         [Test]
         public void GetDocumentSignatureContent_WhenItExists()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.DraftClient.GetDocumentSignatureContentAsync(Account.Id, draft.Id, filledDocument.Id));
+                async () => await Client.Drafts.GetDocumentSignatureContentAsync(Account.Id, draft.Id, filledDocument.Id));
         }
 
         [Test]
@@ -506,25 +506,25 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             var content = new byte[] {1};
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentSignatureContentAsync(
+                async () => await Client.Drafts.UpdateDocumentSignatureContentAsync(
                     Guid.Empty,
                     draft.Id,
                     emptyDocument.Id,
                     content));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentSignatureContentAsync(
+                async () => await Client.Drafts.UpdateDocumentSignatureContentAsync(
                     Account.Id,
                     Guid.Empty,
                     emptyDocument.Id,
                     content));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentSignatureContentAsync(
+                async () => await Client.Drafts.UpdateDocumentSignatureContentAsync(
                     Account.Id,
                     draft.Id,
                     Guid.Empty,
                     content));
             Assert.ThrowsAsync<ArgumentNullException>(
-                async () => await Client.DraftClient.UpdateDocumentSignatureContentAsync(
+                async () => await Client.Drafts.UpdateDocumentSignatureContentAsync(
                     Account.Id,
                     draft.Id,
                     emptyDocument.Id,
@@ -537,12 +537,12 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             var content = new byte[] {7};
             var document = await CreateEmptyDocument();
             Assert.DoesNotThrowAsync(
-                async () => await Client.DraftClient.UpdateDocumentSignatureContentAsync(
+                async () => await Client.Drafts.UpdateDocumentSignatureContentAsync(
                     Account.Id,
                     draft.Id,
                     document.Id,
                     content));
-            await Client.DraftClient.DeleteDocumentAsync(Account.Id, draft.Id, document.Id);
+            await Client.Drafts.DeleteDocumentAsync(Account.Id, draft.Id, document.Id);
         }
 
         [Test]
@@ -551,21 +551,21 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             var request = new SignatureRequest {Base64Content = Convert.ToBase64String(new byte[] {5})};
             var badRequest = new SignatureRequest {Base64Content = "2"};
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.AddDocumentSignatureAsync(
+                async () => await Client.Drafts.AddDocumentSignatureAsync(
                     Guid.Empty,
                     draft.Id,
                     filledDocument.Id,
                     request));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.AddDocumentSignatureAsync(
+                async () => await Client.Drafts.AddDocumentSignatureAsync(
                     Account.Id,
                     Guid.Empty,
                     filledDocument.Id,
                     request));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.AddDocumentSignatureAsync(Account.Id, draft.Id, Guid.Empty, request));
+                async () => await Client.Drafts.AddDocumentSignatureAsync(Account.Id, draft.Id, Guid.Empty, request));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.AddDocumentSignatureAsync(
+                async () => await Client.Drafts.AddDocumentSignatureAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -576,25 +576,25 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToDeleteSignature_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.DeleteDocumentSignatureAsync(
+                async () => await Client.Drafts.DeleteDocumentSignatureAsync(
                     Guid.Empty,
                     draft.Id,
                     filledDocument.Id,
                     filledDocumentSignature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.DeleteDocumentSignatureAsync(
+                async () => await Client.Drafts.DeleteDocumentSignatureAsync(
                     Account.Id,
                     Guid.Empty,
                     filledDocument.Id,
                     filledDocumentSignature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.DeleteDocumentSignatureAsync(
+                async () => await Client.Drafts.DeleteDocumentSignatureAsync(
                     Account.Id,
                     draft.Id,
                     Guid.Empty,
                     filledDocumentSignature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.DeleteDocumentSignatureAsync(
+                async () => await Client.Drafts.DeleteDocumentSignatureAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -607,8 +607,8 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             Assert.DoesNotThrowAsync(
                 async () =>
                 {
-                    var signature = await Client.DraftClient.AddDocumentSignatureAsync(Account.Id, draft.Id, emptyDocument.Id);
-                    await Client.DraftClient.DeleteDocumentSignatureAsync(Account.Id, draft.Id, emptyDocument.Id, signature.Id);
+                    var signature = await Client.Drafts.AddDocumentSignatureAsync(Account.Id, draft.Id, emptyDocument.Id);
+                    await Client.Drafts.DeleteDocumentSignatureAsync(Account.Id, draft.Id, emptyDocument.Id, signature.Id);
                 });
         }
 
@@ -616,25 +616,25 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToGetSignature_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentSignatureAsync(
+                async () => await Client.Drafts.GetDocumentSignatureAsync(
                     Guid.Empty,
                     draft.Id,
                     filledDocument.Id,
                     filledDocumentSignature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentSignatureAsync(
+                async () => await Client.Drafts.GetDocumentSignatureAsync(
                     Account.Id,
                     Guid.Empty,
                     filledDocument.Id,
                     filledDocumentSignature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentSignatureAsync(
+                async () => await Client.Drafts.GetDocumentSignatureAsync(
                     Account.Id,
                     draft.Id,
                     Guid.Empty,
                     filledDocumentSignature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentSignatureAsync(
+                async () => await Client.Drafts.GetDocumentSignatureAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -645,7 +645,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void GetExistingSignature()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.DraftClient.GetDocumentSignatureAsync(
+                async () => await Client.Drafts.GetDocumentSignatureAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -658,35 +658,35 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             var validRequest = new SignatureRequest {Base64Content = Convert.ToBase64String(new byte[] {6, 7})};
             var invalidRequest = new SignatureRequest {Base64Content = "2"};
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentSignatureAsync(
+                async () => await Client.Drafts.UpdateDocumentSignatureAsync(
                     Guid.Empty,
                     draft.Id,
                     filledDocument.Id,
                     filledDocumentSignature.Id,
                     validRequest));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentSignatureAsync(
+                async () => await Client.Drafts.UpdateDocumentSignatureAsync(
                     Account.Id,
                     Guid.Empty,
                     filledDocument.Id,
                     filledDocumentSignature.Id,
                     validRequest));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentSignatureAsync(
+                async () => await Client.Drafts.UpdateDocumentSignatureAsync(
                     Account.Id,
                     draft.Id,
                     Guid.Empty,
                     filledDocumentSignature.Id,
                     validRequest));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentSignatureAsync(
+                async () => await Client.Drafts.UpdateDocumentSignatureAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
                     Guid.Empty,
                     validRequest));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.UpdateDocumentSignatureAsync(
+                async () => await Client.Drafts.UpdateDocumentSignatureAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -697,41 +697,41 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public async Task UpdateSignature_WithValidParameters()
         {
-            var signature = await Client.DraftClient.AddDocumentSignatureAsync(Account.Id, draft.Id, filledDocument.Id);
+            var signature = await Client.Drafts.AddDocumentSignatureAsync(Account.Id, draft.Id, filledDocument.Id);
             var newRequest = new SignatureRequest {Base64Content = Convert.ToBase64String(new byte[] {6, 7})};
             Assert.DoesNotThrowAsync(
-                async () => await Client.DraftClient.UpdateDocumentSignatureAsync(
+                async () => await Client.Drafts.UpdateDocumentSignatureAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
                     signature.Id,
                     newRequest));
-            await Client.DraftClient.DeleteDocumentSignatureAsync(Account.Id, draft.Id, filledDocument.Id, signature.Id);
+            await Client.Drafts.DeleteDocumentSignatureAsync(Account.Id, draft.Id, filledDocument.Id, signature.Id);
         }
 
         [Test]
         public void FailToGetSignatureContent_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentSignatureContentAsync(
+                async () => await Client.Drafts.GetDocumentSignatureContentAsync(
                     Guid.Empty,
                     draft.Id,
                     filledDocument.Id,
                     filledDocumentSignature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentSignatureContentAsync(
+                async () => await Client.Drafts.GetDocumentSignatureContentAsync(
                     Account.Id,
                     Guid.Empty,
                     filledDocument.Id,
                     filledDocumentSignature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentSignatureContentAsync(
+                async () => await Client.Drafts.GetDocumentSignatureContentAsync(
                     Account.Id,
                     draft.Id,
                     Guid.Empty,
                     filledDocumentSignature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DraftClient.GetDocumentSignatureContentAsync(
+                async () => await Client.Drafts.GetDocumentSignatureContentAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -742,7 +742,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void GetExistingSignatureContent()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.DraftClient.GetDocumentSignatureContentAsync(
+                async () => await Client.Drafts.GetDocumentSignatureContentAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -750,10 +750,10 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         }
 
         private async Task<DraftDocument> CreateEmptyDocument() =>
-            await Client.DraftClient.AddDocumentAsync(Account.Id, draft.Id, null);
+            await Client.Drafts.AddDocumentAsync(Account.Id, draft.Id, null);
 
         private async Task<DraftDocument> CreateFilledDocument() =>
-            await Client.DraftClient.AddDocumentAsync(
+            await Client.Drafts.AddDocumentAsync(
                 Account.Id,
                 draft.Id,
                 new DocumentContents

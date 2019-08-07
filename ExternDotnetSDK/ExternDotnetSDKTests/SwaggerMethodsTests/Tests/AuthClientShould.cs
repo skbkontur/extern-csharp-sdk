@@ -9,19 +9,19 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public void Authorize_WithValidParameters()
         {
-            Assert.DoesNotThrowAsync(async () => await Client.AuthClient.ByPass(Data.Login, Data.Password, Data.ApiKey));
+            Assert.DoesNotThrowAsync(async () => await Client.Auth.ByPass(Data.Login, Data.Password, Data.ApiKey));
         }
 
         [Test]
         public void FailToAuthorize_WithBadLogin()
         {
-            Assert.ThrowsAsync<ApiException>(async () => await Client.AuthClient.ByPass("not a login", Data.Password));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Auth.ByPass("not a login", Data.Password));
         }
 
         [Test]
         public void FailToAuthorize_WithBadPassword()
         {
-            Assert.ThrowsAsync<ApiException>(async () => await Client.AuthClient.ByPass(Data.Login, "not a password"));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Auth.ByPass(Data.Login, "not a password"));
         }
     }
 }

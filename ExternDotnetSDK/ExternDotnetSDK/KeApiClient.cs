@@ -14,35 +14,35 @@ namespace ExternDotnetSDK
 {
     public class KeApiClient
     {
-        public IAuthClient AuthClient;
-        public IAccountClient AccountClient;
-        public ICertificateClient CertificateClient;
-        public IDocflowsClient DocflowsClient;
-        public IDraftClient DraftClient;
-        public IEventsClient EventsClient;
-        public IOrganizationsClient OrganizationsClient;
-        public IWarrantsClient WarrantsClient;
+        public IAuthClient Auth;
+        public IAccountClient Accounts;
+        public ICertificateClient Certificates;
+        public IDocflowsClient Docflows;
+        public IDraftClient Drafts;
+        public IEventsClient Events;
+        public IOrganizationsClient Organizations;
+        public IWarrantsClient Warrants;
 
         public KeApiClient(string baseAddress, string login, string password, string apiKey = null)
         {
-            AuthClient = new AuthClient("https://api.testkontur.ru");
-            var sessionResponse = AuthClient.ByPass(login, password, apiKey).Result;
-            var client = new HttpClient(new KeApiHttpClientHandler(apiKey, sessionResponse.Sid, baseAddress))
+            Auth = new AuthClient("https://api.testkontur.ru");
+            var sessionResponse = Auth.ByPass(login, password, apiKey).Result;
+            var client = new HttpClient(new KeApiHttpClientHandler(apiKey, sessionResponse.Sid))
             {
                 BaseAddress = new Uri(baseAddress)
             };
-            InitializeAllClients(client);
+            InitializeAllClientInterfaces(client);
         }
 
-        private void InitializeAllClients(HttpClient client)
+        private void InitializeAllClientInterfaces(HttpClient client)
         {
-            AccountClient = new AccountClient(client);
-            CertificateClient = new CertificateClient(client);
-            DocflowsClient = new DocflowsClient(client);
-            DraftClient = new DraftClient(client);
-            EventsClient = new EventsClient(client);
-            OrganizationsClient = new OrganizationsClient(client);
-            WarrantsClient = new WarrantsClient(client);
+            Accounts = new AccountClient(client);
+            Certificates = new CertificateClient(client);
+            Docflows = new DocflowsClient(client);
+            Drafts = new DraftClient(client);
+            Events = new EventsClient(client);
+            Organizations = new OrganizationsClient(client);
+            Warrants = new WarrantsClient(client);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public override async Task SetUp()
         {
             await base.SetUp();
-            Organization = (await Client.OrganizationsClient.GetAllOrganizationsAsync(Account.Id)).Organizations[0];
+            Organization = (await Client.Organizations.GetAllOrganizationsAsync(Account.Id)).Organizations[0];
         }
 
         [TestCase]
@@ -24,7 +24,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void GetOrganizations_WithValidParameters(string inn = null, string kpp = null, int skip = 0, int take = 1000)
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.OrganizationsClient.GetAllOrganizationsAsync(Account.Id, inn, kpp, skip, take));
+                async () => await Client.Organizations.GetAllOrganizationsAsync(Account.Id, inn, kpp, skip, take));
         }
 
         [TestCase(null, null, 0, 0)]
@@ -34,37 +34,37 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void GetNoOrganizations_WithBadParameters(string inn = null, string kpp = null, int skip = 0, int take = 1000)
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.OrganizationsClient.GetAllOrganizationsAsync(Account.Id, inn, kpp, skip, take));
+                async () => await Client.Organizations.GetAllOrganizationsAsync(Account.Id, inn, kpp, skip, take));
         }
 
         [Test]
         public void GetNoOrganizations_WithNonexistentAccount()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.OrganizationsClient.GetAllOrganizationsAsync(Guid.Empty));
+                async () => await Client.Organizations.GetAllOrganizationsAsync(Guid.Empty));
         }
 
         [Test]
         public void GetAnOrganization_WithValidParameters()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.OrganizationsClient.GetOrganizationAsync(Account.Id, Organization.Id));
+                async () => await Client.Organizations.GetOrganizationAsync(Account.Id, Organization.Id));
         }
 
         [Test]
         public void FailToGetAnOrganization_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.OrganizationsClient.GetOrganizationAsync(Account.Id, Guid.Empty));
+                async () => await Client.Organizations.GetOrganizationAsync(Account.Id, Guid.Empty));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.OrganizationsClient.GetOrganizationAsync(Guid.Empty, Organization.Id));
+                async () => await Client.Organizations.GetOrganizationAsync(Guid.Empty, Organization.Id));
         }
 
         [Test]
         public void UpdateOrganizationName()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.OrganizationsClient.UpdateOrganizationAsync(
+                async () => await Client.Organizations.UpdateOrganizationAsync(
                     Account.Id,
                     Organization.Id,
                     Organization.General.Name));
@@ -74,7 +74,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToCreateNewOrganization_WithoutAccess()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.OrganizationsClient.CreateOrganizationAsync(
+                async () => await Client.Organizations.CreateOrganizationAsync(
                     Account.Id,
                     "9194113617",
                     "335544394",
@@ -85,14 +85,14 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToDeleteOrganization_WithBadAccountId()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.OrganizationsClient.DeleteOrganizationAsync(Guid.Empty, Organization.Id));
+                async () => await Client.Organizations.DeleteOrganizationAsync(Guid.Empty, Organization.Id));
         }
 
         [Test]
         public void FailToDeleteOrganization_WithBadOrganizationId()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.OrganizationsClient.DeleteOrganizationAsync(Account.Id, Guid.Empty));
+                async () => await Client.Organizations.DeleteOrganizationAsync(Account.Id, Guid.Empty));
         }
     }
 }

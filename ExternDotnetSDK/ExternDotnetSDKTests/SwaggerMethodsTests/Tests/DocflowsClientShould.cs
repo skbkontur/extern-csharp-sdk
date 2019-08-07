@@ -25,12 +25,12 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public override async Task SetUp()
         {
             InitializeClient();
-            Account = (await Client.AccountClient.GetAccountsAsync(0, 1)).Accounts[0];
-            page = await Client.DocflowsClient.GetDocflowsAsync(Account.Id);
+            Account = (await Client.Accounts.GetAccountsAsync(0, 1)).Accounts[0];
+            page = await Client.Docflows.GetDocflowsAsync(Account.Id);
             docflow = page.DocflowsPageItem[0];
-            docflowDocuments = await Client.DocflowsClient.GetDocumentsAsync(Account.Id, docflow.Id);
+            docflowDocuments = await Client.Docflows.GetDocumentsAsync(Account.Id, docflow.Id);
             document = docflowDocuments[0];
-            signature = (await Client.DocflowsClient.GetDocumentSignaturesAsync(Account.Id, docflow.Id, document.Id))[0];
+            signature = (await Client.Docflows.GetDocumentSignaturesAsync(Account.Id, docflow.Id, document.Id))[0];
         }
 
         [OneTimeTearDown]
@@ -46,60 +46,60 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                 Take = 1,
                 InnKpp = "wrong innKpp"
             };
-            Assert.ThrowsAsync<ApiException>(async () => await Client.DocflowsClient.GetDocflowsAsync(Account.Id, badFilter));
-            Assert.ThrowsAsync<ApiException>(async () => await Client.DocflowsClient.GetDocflowsAsync(badId));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GetDocflowsAsync(Account.Id, badFilter));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GetDocflowsAsync(badId));
         }
 
         [Test]
         public void FailToGetSingleDocflow_WithBadParameters()
         {
-            Assert.ThrowsAsync<ApiException>(async () => await Client.DocflowsClient.GetDocflowAsync(Account.Id, badId));
-            Assert.ThrowsAsync<ApiException>(async () => await Client.DocflowsClient.GetDocflowAsync(badId, docflow.Id));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GetDocflowAsync(Account.Id, badId));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GetDocflowAsync(badId, docflow.Id));
         }
 
         [Test]
         public void GetSingleDocflow_WithValidParameters()
         {
-            Assert.DoesNotThrowAsync(async () => await Client.DocflowsClient.GetDocflowAsync(Account.Id, docflow.Id));
+            Assert.DoesNotThrowAsync(async () => await Client.Docflows.GetDocflowAsync(Account.Id, docflow.Id));
         }
 
         [Test]
         public void FailToGetDocflowDocuments_WithBadParameters()
         {
-            Assert.ThrowsAsync<ApiException>(async () => await Client.DocflowsClient.GetDocumentsAsync(Account.Id, badId));
-            Assert.ThrowsAsync<ApiException>(async () => await Client.DocflowsClient.GetDocumentsAsync(badId, docflow.Id));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GetDocumentsAsync(Account.Id, badId));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GetDocumentsAsync(badId, docflow.Id));
         }
 
         [Test]
         public void GetSingleDocument_WithValidParameters()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.DocflowsClient.GetDocumentAsync(Account.Id, docflow.Id, document.Id));
+                async () => await Client.Docflows.GetDocumentAsync(Account.Id, docflow.Id, document.Id));
         }
 
         [Test]
         public void FailToGetSingleDocument_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetDocumentAsync(badId, docflow.Id, document.Id));
+                async () => await Client.Docflows.GetDocumentAsync(badId, docflow.Id, document.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetDocumentAsync(Account.Id, badId, document.Id));
+                async () => await Client.Docflows.GetDocumentAsync(Account.Id, badId, document.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetDocumentAsync(Account.Id, docflow.Id, badId));
+                async () => await Client.Docflows.GetDocumentAsync(Account.Id, docflow.Id, badId));
         }
 
         [Test]
         public void GetDocumentDescription_WithValidParameters()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.DocflowsClient.GetDocumentDescriptionAsync(Account.Id, docflow.Id, document.Id));
+                async () => await Client.Docflows.GetDocumentDescriptionAsync(Account.Id, docflow.Id, document.Id));
         }
 
         [Test]
         public void GetDocumentEncryptedContent_WhenItExists()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.DocflowsClient.GetEncryptedDocumentContentAsync(Account.Id, docflow.Id, document.Id));
+                async () => await Client.Docflows.GetEncryptedDocumentContentAsync(Account.Id, docflow.Id, document.Id));
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             var documentId = docflowDocuments[4].Id;
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetEncryptedDocumentContentAsync(Account.Id, docflow.Id, documentId));
+                async () => await Client.Docflows.GetEncryptedDocumentContentAsync(Account.Id, docflow.Id, documentId));
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             var documentId = docflowDocuments[4].Id;
             Assert.DoesNotThrowAsync(
-                async () => await Client.DocflowsClient.GetDecryptedDocumentContentAsync(Account.Id, docflow.Id, documentId));
+                async () => await Client.Docflows.GetDecryptedDocumentContentAsync(Account.Id, docflow.Id, documentId));
         }
 
         [Test]
@@ -123,58 +123,58 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             var documentId = docflowDocuments[2].Id;
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetEncryptedDocumentContentAsync(Account.Id, docflow.Id, documentId));
+                async () => await Client.Docflows.GetEncryptedDocumentContentAsync(Account.Id, docflow.Id, documentId));
         }
 
         [Test]
         public void FailToGetSignatures_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetDocumentSignaturesAsync(badId, docflow.Id, document.Id));
+                async () => await Client.Docflows.GetDocumentSignaturesAsync(badId, docflow.Id, document.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetDocumentSignaturesAsync(Account.Id, badId, document.Id));
+                async () => await Client.Docflows.GetDocumentSignaturesAsync(Account.Id, badId, document.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetDocumentSignaturesAsync(Account.Id, docflow.Id, badId));
+                async () => await Client.Docflows.GetDocumentSignaturesAsync(Account.Id, docflow.Id, badId));
         }
 
         [Test]
         public void GetSingleSignature_WithValidParameters()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.DocflowsClient.GetSignatureAsync(Account.Id, docflow.Id, document.Id, signature.Id));
+                async () => await Client.Docflows.GetSignatureAsync(Account.Id, docflow.Id, document.Id, signature.Id));
         }
 
         [Test]
         public void FailToGetSingleSignature_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetSignatureAsync(badId, docflow.Id, document.Id, signature.Id));
+                async () => await Client.Docflows.GetSignatureAsync(badId, docflow.Id, document.Id, signature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetSignatureAsync(Account.Id, badId, document.Id, signature.Id));
+                async () => await Client.Docflows.GetSignatureAsync(Account.Id, badId, document.Id, signature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetSignatureAsync(Account.Id, docflow.Id, badId, signature.Id));
+                async () => await Client.Docflows.GetSignatureAsync(Account.Id, docflow.Id, badId, signature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetSignatureAsync(Account.Id, docflow.Id, document.Id, badId));
+                async () => await Client.Docflows.GetSignatureAsync(Account.Id, docflow.Id, document.Id, badId));
         }
 
         [Test]
         public void FailToGetSignatureContent_WithBadParameters()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetSignatureContentAsync(badId, docflow.Id, document.Id, signature.Id));
+                async () => await Client.Docflows.GetSignatureContentAsync(badId, docflow.Id, document.Id, signature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetSignatureContentAsync(Account.Id, badId, document.Id, signature.Id));
+                async () => await Client.Docflows.GetSignatureContentAsync(Account.Id, badId, document.Id, signature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetSignatureContentAsync(Account.Id, docflow.Id, badId, signature.Id));
+                async () => await Client.Docflows.GetSignatureContentAsync(Account.Id, docflow.Id, badId, signature.Id));
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetSignatureContentAsync(Account.Id, docflow.Id, document.Id, badId));
+                async () => await Client.Docflows.GetSignatureContentAsync(Account.Id, docflow.Id, document.Id, badId));
         }
 
         [Test]
         public void GetSignatureContent_WithValidParameters()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.DocflowsClient.GetSignatureContentAsync(
+                async () => await Client.Docflows.GetSignatureContentAsync(
                     Account.Id,
                     docflow.Id,
                     document.Id,
@@ -185,28 +185,28 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToGetApiTask_WithBadApiTaskId()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetApiTaskAsync(Account.Id, docflow.Id, document.Id, badId));
+                async () => await Client.Docflows.GetApiTaskAsync(Account.Id, docflow.Id, document.Id, badId));
         }
 
         [Test]
         public void FailToGetDocumentReply_WithBadReplyId()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.GetDocumentReplyAsync(Account.Id, docflow.Id, document.Id, badId));
+                async () => await Client.Docflows.GetDocumentReplyAsync(Account.Id, docflow.Id, document.Id, badId));
         }
 
         [Test]
         public void FailToPrintDocument_WhenDocumentPrintUnsupported()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.PrintDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] {0}));
+                async () => await Client.Docflows.PrintDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] {0}));
         }
 
         [Test]
         public void FailToDecryptDocumentContent_WithBadCertificate()
         {
             Assert.ThrowsAsync<ApiException>(
-                async () => await Client.DocflowsClient.DecryptDocumentContentAsync(
+                async () => await Client.Docflows.DecryptDocumentContentAsync(
                     Account.Id,
                     docflow.Id,
                     document.Id,
