@@ -26,9 +26,19 @@ namespace ExternDotnetSDK.Clients.Docflows
         Task<ApiTaskResult<byte[]>> GetApiTaskAsync(Guid accountId, Guid docflowId, Guid documentId, Guid apiTaskId);
         Task<ApiReplyDocument> GetDocumentReplyAsync(Guid accountId, Guid docflowId, Guid documentId, Guid replyId);
         Task<string> PrintDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, byte[] data);
+
         Task<DecryptionInitResult> DecryptDocumentContentAsync(
-            Guid accountId, Guid docflowId, Guid documentId, DecryptDocumentRequestData data);
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            DecryptDocumentRequestData data);
+
         Task<byte> ConfirmDocumentContentDecryptionAsync(
-            Guid accountId,Guid docflowId,Guid documentId,string requestId,string code,bool unzip = false);
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            string requestId,
+            string code,
+            bool unzip = false);
     }
 }

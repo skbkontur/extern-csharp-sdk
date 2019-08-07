@@ -9,7 +9,11 @@ namespace ExternDotnetSDK.Clients.Organizations
     {
         [Get("/v1/{accountId}/organizations?inn={inn}&kpp={kpp}&skip={skip}&take={take}")]
         Task<OrganizationBatch> GetAllOrganizationsAsync(
-            Guid accountId, string inn = null, string kpp = null, int skip = 0, int take = 1000);
+            Guid accountId,
+            string inn = null,
+            string kpp = null,
+            int skip = 0,
+            int take = 1000);
 
         [Get("/v1/{accountId}/organizations/{orgId}")]
         Task<Organization> GetOrganizationAsync(Guid accountId, Guid orgId);

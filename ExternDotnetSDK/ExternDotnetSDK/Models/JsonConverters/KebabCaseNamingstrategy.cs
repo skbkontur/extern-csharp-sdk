@@ -4,14 +4,8 @@ namespace ExternDotnetSDK.Models.JsonConverters
 {
     public class KebabCaseNamingStrategy : NamingStrategy
     {
-        protected override string ResolvePropertyName(string name)
-        {
-            return ToKebabCase(name);
-        }
+        protected override string ResolvePropertyName(string name) => ToKebabCase(name);
 
-        private static string ToKebabCase(string str)
-        {
-            return str.ToKebabCase();
-        }
+        private static string ToKebabCase(string str) => str.ToKebabCase();
     }
 }

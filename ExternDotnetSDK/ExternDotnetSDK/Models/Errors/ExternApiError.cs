@@ -19,7 +19,6 @@ namespace ExternDotnetSDK.Models.Errors
         public ExternApiError(Urn id, HttpStatusCode statusCode = HttpStatusCode.InternalServerError, string message = null)
             : base(id, statusCode, message)
         {
-            //TraceId = LoggingContext.Prefix;
         }
 
         public new Urn Id { get; set; }
@@ -29,9 +28,7 @@ namespace ExternDotnetSDK.Models.Errors
         public string TraceId { get; set; }
         public new Dictionary<string, string> Properties { get; set; }
 
-        public override string ToString()
-        {
-            return $"[id: \"{Id}\", status: {StatusCode}, track-id: \"{TrackId}\", trace-id: \"{TraceId}\"]";
-        }
+        public override string ToString() =>
+            $"[id: \"{Id}\", status: {StatusCode}, track-id: \"{TrackId}\", trace-id: \"{TraceId}\"]";
     }
 }

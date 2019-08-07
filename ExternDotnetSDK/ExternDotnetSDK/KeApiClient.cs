@@ -14,7 +14,7 @@ namespace ExternDotnetSDK
 {
     public class KeApiClient
     {
-        private readonly IAuthClient authClient;
+        public IAuthClient AuthClient;
         public IAccountClient AccountClient;
         public ICertificateClient CertificateClient;
         public IDocflowsClient DocflowsClient;
@@ -25,8 +25,8 @@ namespace ExternDotnetSDK
 
         public KeApiClient(string baseAddress, string login, string password, string apiKey = null)
         {
-            authClient = new AuthClient("https://api.testkontur.ru");
-            var sessionResponse = authClient.ByPass(login, password, apiKey).Result;
+            AuthClient = new AuthClient("https://api.testkontur.ru");
+            var sessionResponse = AuthClient.ByPass(login, password, apiKey).Result;
             var client = new HttpClient(new KeApiHttpClientHandler(apiKey, sessionResponse.Sid, baseAddress))
             {
                 BaseAddress = new Uri(baseAddress)

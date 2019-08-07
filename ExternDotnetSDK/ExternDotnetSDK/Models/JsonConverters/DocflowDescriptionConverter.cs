@@ -32,7 +32,7 @@ namespace ExternDotnetSDK.Models.JsonConverters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            var jObject = (JObject) JToken.ReadFrom(reader);
+            var jObject = (JObject)JToken.ReadFrom(reader);
             var tokens = jObject.Children().ToArray();
             var description = FindCorrectDescription(tokens);
             serializer.Populate(jObject.CreateReader(), description);
@@ -44,10 +44,7 @@ namespace ExternDotnetSDK.Models.JsonConverters
             throw new NotImplementedException("Implement me if you need");
         }
 
-        public override bool CanConvert(Type objectType)
-        {
-            throw new NotImplementedException("Implement me if you need");
-        }
+        public override bool CanConvert(Type objectType) => throw new NotImplementedException("Implement me if you need");
 
         private static DocflowDescription FindCorrectDescription(JToken[] tokens)
         {
@@ -57,12 +54,11 @@ namespace ExternDotnetSDK.Models.JsonConverters
                 if (propertyNames.Length < tokens.Length)
                     continue;
                 var correctTypeFound = tokens
-                                       .Select(token => token.ToObject<JProperty>().Name)
-                                       .All(tokenName => propertyNames.Contains(tokenName));
+                    .Select(token => token.ToObject<JProperty>().Name)
+                    .All(tokenName => propertyNames.Contains(tokenName));
                 if (correctTypeFound)
                     return pair.Value();
             }
-
             throw new ArgumentOutOfRangeException();
         }
     }

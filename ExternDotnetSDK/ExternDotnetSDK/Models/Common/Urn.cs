@@ -10,15 +10,12 @@ namespace ExternDotnetSDK.Models.Common
     {
         private const string Schema = "urn:";
 
-        public static Urn Parse(string value)
-        {
-            return new Urn(value);
-        }
+        public static Urn Parse(string value) => new Urn(value);
 
         public static bool TryParse(string value, out Urn result)
         {
             result = null;
-            if (value == null || !value.ToLower().StartsWith(Schema))
+            if (value?.ToLower().StartsWith(Schema, StringComparison.Ordinal) != true)
                 return false;
             result = Parse(value);
             return true;
@@ -67,27 +64,20 @@ namespace ExternDotnetSDK.Models.Common
             }
         }
 
-        public int CompareTo(Urn other)
-        {
-            return other == null ? 1 : string.Compare(Value, other.Value, StringComparison.OrdinalIgnoreCase);
-        }
+        public int CompareTo(Urn other) =>
+            other == null ? 1 : string.Compare(Value, other.Value, StringComparison.OrdinalIgnoreCase);
 
-        public bool Equals(Urn other)
-        {
-            return !(other is null) && 0 == string.Compare(Value, other.Value, StringComparison.OrdinalIgnoreCase);
-        }
+        public bool Equals(Urn other) =>
+            !(other is null) && 0 == string.Compare(Value, other.Value, StringComparison.OrdinalIgnoreCase);
 
-        public Urn CreateChild(string nss)
-        {
-            return new Urn(this, nss);
-        }
+        public Urn CreateChild(string nss) => new Urn(this, nss);
 
         public bool IsParentOf(Urn urn)
         {
             TryThrowArgumentNullException(urn);
-            return urn.Value.Length > Value.Length &&
-                   0 == string.Compare(Value, 0, urn.Value, 0, Value.Length, StringComparison.OrdinalIgnoreCase) &&
-                   urn.Value[Value.Length] == ':';
+            return urn.Value.Length > Value.Length
+                && 0 == string.Compare(Value, 0, urn.Value, 0, Value.Length, StringComparison.OrdinalIgnoreCase)
+                && urn.Value[Value.Length] == ':';
         }
 
         public bool IsChildOf(Urn urn)
@@ -96,30 +86,15 @@ namespace ExternDotnetSDK.Models.Common
             return urn.IsParentOf(this);
         }
 
-        public static bool operator==(Urn a, Urn b)
-        {
-            return ReferenceEquals(a, b) || !(a is null) && a.Equals(b);
-        }
+        public static bool operator ==(Urn a, Urn b) => ReferenceEquals(a, b) || a?.Equals(b) == true;
 
-        public static bool operator!=(Urn a, Urn b)
-        {
-            return !(a == b);
-        }
+        public static bool operator !=(Urn a, Urn b) => !(a == b);
 
-        public override int GetHashCode()
-        {
-            return Value.ToLowerInvariant().GetHashCode();
-        }
+        public override int GetHashCode() => Value.ToLowerInvariant().GetHashCode();
 
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as Urn);
-        }
+        public override bool Equals(object obj) => Equals(obj as Urn);
 
-        public override string ToString()
-        {
-            return Schema + Value;
-        }
+        public override string ToString() => Schema + Value;
 
         private void TryThrowArgumentNullException(Urn urn)
         {

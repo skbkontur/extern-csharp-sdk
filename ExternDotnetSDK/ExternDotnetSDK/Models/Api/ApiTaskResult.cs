@@ -12,37 +12,31 @@ namespace ExternDotnetSDK.Models.Api
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ApiTaskResult<TResult>
     {
-        public static ApiTaskResult<TResult> Running(Guid taskId, Urn taskType)
-        {
-            return new ApiTaskResult<TResult>
+        public static ApiTaskResult<TResult> Running(Guid taskId, Urn taskType) =>
+            new ApiTaskResult<TResult>
             {
                 Id = taskId,
                 TaskState = ApiTaskState.Running,
                 TaskType = taskType
             };
-        }
 
-        public static ApiTaskResult<TResult> Success(Guid taskId, Urn taskType, TResult result)
-        {
-            return new ApiTaskResult<TResult>
+        public static ApiTaskResult<TResult> Success(Guid taskId, Urn taskType, TResult result) =>
+            new ApiTaskResult<TResult>
             {
                 Id = taskId,
                 TaskType = taskType,
                 TaskState = ApiTaskState.Succeed,
                 TaskResult = result
             };
-        }
 
-        public static ApiTaskResult<TResult> Failure(Guid taskId, Urn taskType, Error error)
-        {
-            return new ApiTaskResult<TResult>
+        public static ApiTaskResult<TResult> Failure(Guid taskId, Urn taskType, Error error) =>
+            new ApiTaskResult<TResult>
             {
                 Id = taskId,
                 TaskType = taskType,
                 TaskState = ApiTaskState.Failed,
                 Error = error
             };
-        }
 
         public Guid Id { get; set; }
         public ApiTaskState TaskState { get; set; }

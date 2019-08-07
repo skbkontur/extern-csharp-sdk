@@ -1,10 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Net.Http;
+﻿using System.IO;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Account;
-using ExternDotnetSDK.Clients.Authentication;
-using ExternDotnetSDK.Clients.Common;
+using ExternDotnetSDK;
 using ExternDotnetSDK.Models.Accounts;
 using ExternDotnetSDKTests.SwaggerMethodsTests.Common;
 using Newtonsoft.Json;
@@ -17,50 +13,36 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
     {
         protected static string DataPath = "Environment4.txt";
         protected static EnvironmentData Data;
-        protected static AuthClient AuthClient;
 
         static AllTestsShould()
         {
             using (var file = File.OpenText(DataPath))
-            {
-                using (var reader = new JsonTextReader(file))
-                {
-                    Data = new JsonSerializer().Deserialize<EnvironmentData>(reader);
-                }
-            }
+            using (var reader = new JsonTextReader(file))
+                Data = new JsonSerializer().Deserialize<EnvironmentData>(reader);
         }
 
-        protected SessionResponse Session;
-        protected HttpClient Client;
-
+        protected KeApiClient Client;
         protected Account Account;
-        protected AccountClient AccountClient;
 
         [OneTimeSetUp]
         public virtual async Task SetUp()
         {
-            await InitializeCommonHttpClient();
-            AccountClient = new AccountClient(Client);
-            Account = await AccountClient.CreateAccountAsync(
+            InitializeClient();
+            Account = await Client.AccountClient.CreateAccountAsync(
                 "1754462785",
                 "515744582",
-                "NEW ACCOUNT WITH RANDOM BUT VALID PARAMETERS");
+                "TEST ACCOUNT");
         }
 
         [OneTimeTearDown]
         public virtual async Task TearDown()
         {
-            await AccountClient.DeleteAccountAsync(Account.Id);
+            await Client.AccountClient.DeleteAccountAsync(Account.Id);
         }
 
-        protected async Task InitializeCommonHttpClient()
+        protected void InitializeClient()
         {
-            AuthClient = new AuthClient(Data.AuthAddress);
-            Session = await AuthClient.ByPass(Data.Login, Data.Password, Data.ApiKey);
-            Client = new HttpClient(new KeApiHttpClientHandler(Data.ApiKey, Session.Sid, Data.BaseAddress))
-            {
-                BaseAddress = new Uri(Data.BaseAddress)
-            };
+            Client = new KeApiClient(Data.BaseAddress, Data.Login, Data.Password, Data.ApiKey);
         }
     }
 }

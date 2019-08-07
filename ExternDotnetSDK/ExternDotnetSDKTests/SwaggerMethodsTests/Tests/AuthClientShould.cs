@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
 using Refit;
 
-#pragma warning disable 1998
-
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
@@ -11,19 +9,19 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public void Authorize_WithValidParameters()
         {
-            Assert.DoesNotThrowAsync(async () => await AuthClient.ByPass(Data.Login, Data.Password, Data.ApiKey));
+            Assert.DoesNotThrowAsync(async () => await Client.AuthClient.ByPass(Data.Login, Data.Password, Data.ApiKey));
         }
 
         [Test]
         public void FailToAuthorize_WithBadLogin()
         {
-            Assert.ThrowsAsync<ApiException>(async () => await AuthClient.ByPass("not a login", Data.Password));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.AuthClient.ByPass("not a login", Data.Password));
         }
 
         [Test]
         public void FailToAuthorize_WithBadPassword()
         {
-            Assert.ThrowsAsync<ApiException>(async () => await AuthClient.ByPass(Data.Login, "not a password"));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.AuthClient.ByPass(Data.Login, "not a password"));
         }
     }
 }

@@ -41,21 +41,16 @@ namespace ExternDotnetSDK.Models.Common
             Profile = profile;
         }
 
-        public override bool Equals(object obj)
-        {
-            return ReferenceEquals(this, obj) || obj is Link link && Equals(link);
-        }
+        public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is Link link && Equals(link);
 
-        public bool Equals(Link other)
-        {
-            return other != null
-                   && Href == other.Href &&
-                   EqualsOrNulls(Rel, other.Rel) &&
-                   EqualsOrNulls(Title, other.Title) &&
-                   EqualsOrNulls(Name, other.Name) &&
-                   EqualsOrNulls(Profile, other.Profile) &&
-                   Templated == other.Templated;
-        }
+        public bool Equals(Link other) =>
+            other != null
+            && Href == other.Href
+            && EqualsOrNulls(Rel, other.Rel)
+            && EqualsOrNulls(Title, other.Title)
+            && EqualsOrNulls(Name, other.Name)
+            && EqualsOrNulls(Profile, other.Profile)
+            && Templated == other.Templated;
 
         public override string ToString()
         {
@@ -87,12 +82,10 @@ namespace ExternDotnetSDK.Models.Common
             }
         }
 
-        private static bool EqualsOrNulls(string a, string b)
-        {
-            return a == null
+        private static bool EqualsOrNulls(string a, string b) =>
+            a == null
                 ? b == null
                 : b != null && string.Compare(a, b, StringComparison.CurrentCultureIgnoreCase) == 0;
-        }
 
         private int TryIncreaseHashcode(int hashcode, string linkField)
         {

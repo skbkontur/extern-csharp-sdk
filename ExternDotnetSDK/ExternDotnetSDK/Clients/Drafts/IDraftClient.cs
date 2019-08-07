@@ -26,11 +26,17 @@ namespace ExternDotnetSDK.Clients.Drafts
         Task UpdateDocumentDecryptedContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content);
         Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId);
         Task UpdateDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content);
-        Task<Signature> AddDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, SignatureRequest request);
+        Task<Signature> AddDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, SignatureRequest request = null);
         Task DeleteDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId);
         Task<Signature> GetDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId);
+
         Task<Signature> UpdateDocumentSignatureAsync(
-            Guid accountId, Guid draftId, Guid documentId, Guid signatureId, SignatureRequest request);
+            Guid accountId,
+            Guid draftId,
+            Guid documentId,
+            Guid signatureId,
+            SignatureRequest request);
+
         Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId);
     }
 }

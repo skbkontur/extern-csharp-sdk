@@ -8,7 +8,7 @@ namespace ExternDotnetSDK.Models.JsonConverters
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var urn = (Urn) value;
+            var urn = (Urn)value;
             serializer.Serialize(writer, urn.ToString());
         }
 
@@ -18,9 +18,6 @@ namespace ExternDotnetSDK.Models.JsonConverters
             return new Urn(urnParts[1], urnParts[2]);
         }
 
-        public override bool CanConvert(Type objectType)
-        {
-            return typeof (Urn).IsAssignableFrom(objectType);
-        }
+        public override bool CanConvert(Type objectType) => typeof (Urn).IsAssignableFrom(objectType);
     }
 }

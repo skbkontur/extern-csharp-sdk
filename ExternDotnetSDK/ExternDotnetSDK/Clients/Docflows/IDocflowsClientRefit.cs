@@ -57,12 +57,20 @@ namespace ExternDotnetSDK.Clients.Docflows
         //todo add test where it works with valid parameters
         [Post("/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content")]
         Task<DecryptionInitResult> DecryptDocumentContentAsync(
-            Guid accountId, Guid docflowId, Guid documentId, [Body] DecryptDocumentRequestData data);
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            [Body] DecryptDocumentRequestData data);
 
         //todo make tests when you know where to find required data
         [Post("/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content-confirm")]
         Task<byte> ConfirmDocumentContentDecryptionAsync(
-            Guid accountId, Guid docflowId, Guid documentId, string requestId, string code, bool unzip = false);
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            string requestId,
+            string code,
+            bool unzip = false);
 
         //todo make all Post methods for docflows and all methods for docflows: replies
     }

@@ -83,23 +83,21 @@ namespace ExternDotnetSDK.Models.Docflows
         public string StringifyParams()
         {
             var requestParams = properties
-                                .Select(
-                                    x => new
-                                    {
-                                        x.Name, Value = x.PropertyType == typeof (DateTime?)
-                                            ? (x.GetValue(this) as DateTime?)?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
-                                            : x.GetValue(this)?.ToString()
-                                    })
-                                .Where(x => !string.IsNullOrEmpty(x.Value))
-                                .Select(x => $"{ToLowerCamelCase(x.Name)}={x.Value}");
+                .Select(
+                    x => new
+                    {
+                        x.Name,
+                        Value = x.PropertyType == typeof (DateTime?)
+                            ? (x.GetValue(this) as DateTime?)?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
+                            : x.GetValue(this)?.ToString()
+                    })
+                .Where(x => !string.IsNullOrEmpty(x.Value))
+                .Select(x => $"{ToLowerCamelCase(x.Name)}={x.Value}");
             return requestParams.Any()
                 ? "?" + string.Join("&", requestParams)
                 : "";
         }
 
-        private string ToLowerCamelCase(string value)
-        {
-            return char.ToLowerInvariant(value[0]) + value.Substring(1);
-        }
+        private string ToLowerCamelCase(string value) => char.ToLowerInvariant(value[0]) + value.Substring(1);
     }
 }

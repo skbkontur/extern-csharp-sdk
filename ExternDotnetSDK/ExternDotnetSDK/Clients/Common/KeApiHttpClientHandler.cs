@@ -17,21 +17,17 @@ namespace ExternDotnetSDK.Clients.Common
         {
             this.apiKey = apiKey;
             this.authSid = authSid;
-            httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(baseAddress)
-            };
+            httpClient = new HttpClient {BaseAddress = new Uri(baseAddress)};
         }
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
         {
             var myRequest = new HttpRequestMessage(request.Method, request.RequestUri)
             {
                 Content = request.Content,
-                Headers =
-                {
-                    Authorization = new AuthenticationHeaderValue("auth.sid", authSid),
-                }
+                Headers = {Authorization = new AuthenticationHeaderValue("auth.sid", authSid)}
             };
             myRequest.Headers.Add("X-Kontur-Apikey", apiKey);
             var response = await httpClient.SendAsync(myRequest, cancellationToken);

@@ -30,9 +30,6 @@ namespace ExternDotnetSDK.Models.Errors
         public string TrackId { get; set; }
         public Dictionary<string, string> Properties { get; set; }
 
-        public override string ToString()
-        {
-            return $"[id: \"{Id}\", status: {StatusCode}, track-id: \"{TrackId}\"]";
-        }
+        public override string ToString() => $"[id: \"{Id}\", status: {StatusCode}, track-id: \"{TrackId}\"]";
     }
 }

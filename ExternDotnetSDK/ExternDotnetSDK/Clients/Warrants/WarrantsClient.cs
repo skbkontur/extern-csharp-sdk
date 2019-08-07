@@ -8,17 +8,15 @@ namespace ExternDotnetSDK.Clients.Warrants
 {
     public class WarrantsClient : IWarrantsClient
     {
-        public WarrantsClient(HttpClient client)
-        {
-            ClientRefit = RestService.For<IWarrantsClientRefit>(client);
-        }
-
         public IWarrantsClientRefit ClientRefit { get; }
 
+        public WarrantsClient(HttpClient client) => ClientRefit = RestService.For<IWarrantsClientRefit>(client);
+
         public async Task<WarrantList> GetWarrantsAsync(
-            Guid accountId, int skip = 0, int take = int.MaxValue, bool forAllUsers = false)
-        {
-            return await ClientRefit.GetWarrantsAsync(accountId, skip, take, forAllUsers);
-        }
+            Guid accountId,
+            int skip = 0,
+            int take = int.MaxValue,
+            bool forAllUsers = false) =>
+            await ClientRefit.GetWarrantsAsync(accountId, skip, take, forAllUsers);
     }
 }

@@ -8,30 +8,24 @@ namespace ExternDotnetSDK.Clients.Organizations
 {
     public class OrganizationsClient : IOrganizationsClient
     {
-        public OrganizationsClient(HttpClient client)
-        {
-            ClientRefit = RestService.For<IOrganizationClientRefit>(client);
-        }
-
         public IOrganizationClientRefit ClientRefit { get; }
 
-        public async Task<OrganizationBatch> GetAllOrganizationsAsync(
-            Guid accountId, string inn = null, string kpp = null, int skip = 0, int take = 1000)
-        {
-            return await ClientRefit.GetAllOrganizationsAsync(accountId, inn, kpp, skip, take);
-        }
+        public OrganizationsClient(HttpClient client) => ClientRefit = RestService.For<IOrganizationClientRefit>(client);
 
-        public async Task<Organization> GetOrganizationAsync(Guid accountId, Guid orgId)
-        {
-            return await ClientRefit.GetOrganizationAsync(accountId, orgId);
-        }
+        public async Task<OrganizationBatch> GetAllOrganizationsAsync(
+            Guid accountId,
+            string inn = null,
+            string kpp = null,
+            int skip = 0,
+            int take = 1000) =>
+            await ClientRefit.GetAllOrganizationsAsync(accountId, inn, kpp, skip, take);
+
+        public async Task<Organization> GetOrganizationAsync(Guid accountId, Guid orgId) =>
+            await ClientRefit.GetOrganizationAsync(accountId, orgId);
 
         public async Task<Organization> UpdateOrganizationAsync(Guid accountId, Guid orgId, string newName)
         {
-            var request = new UpdateOrganizationRequestDto
-            {
-                Name = newName
-            };
+            var request = new UpdateOrganizationRequestDto {Name = newName};
             return await ClientRefit.UpdateOrganizationAsync(accountId, orgId, request);
         }
 
@@ -46,9 +40,7 @@ namespace ExternDotnetSDK.Clients.Organizations
             return await ClientRefit.CreateOrganizationAsync(accountId, request);
         }
 
-        public async Task DeleteOrganizationAsync(Guid accountId, Guid orgId)
-        {
+        public async Task DeleteOrganizationAsync(Guid accountId, Guid orgId) =>
             await ClientRefit.DeleteOrganizationAsync(accountId, orgId);
-        }
     }
 }

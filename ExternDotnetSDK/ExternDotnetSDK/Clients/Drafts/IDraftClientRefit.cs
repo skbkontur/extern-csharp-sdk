@@ -64,7 +64,11 @@ namespace ExternDotnetSDK.Clients.Drafts
 
         [Put("/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}")]
         Task<Signature> UpdateDocumentSignatureAsync(
-            Guid accountId, Guid draftId, Guid documentId, Guid signatureId, [Body] SignatureRequest request);
+            Guid accountId,
+            Guid draftId,
+            Guid documentId,
+            Guid signatureId,
+            [Body] SignatureRequest request);
 
         [Get("/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}/content")]
         Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId);

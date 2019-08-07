@@ -32,8 +32,8 @@ namespace ExternDotnetSDKTests.UnitTests
         [Test]
         public void Throw_WhenConstructedWithBadParameters()
         {
-            Assert.Throws<ArgumentNullException>(() => { link = new Link(href, null); });
-            Assert.Throws<ArgumentNullException>(() => { link = new Link(null, rel); });
+            Assert.Throws<ArgumentNullException>(() => link = new Link(href, null));
+            Assert.Throws<ArgumentNullException>(() => link = new Link(null, rel));
         }
 
         [Test]
