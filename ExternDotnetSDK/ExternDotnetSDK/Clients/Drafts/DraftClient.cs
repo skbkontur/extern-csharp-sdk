@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Drafts;
 using ExternDotnetSDK.Models.Drafts.Meta;
@@ -92,5 +94,58 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid draftId,
             Guid documentId,
             Guid signatureId) => await ClientRefit.GetDocumentSignatureContentAsync(accountId, draftId, documentId, signatureId);
+
+        public async Task<string> CheckDraftAsync(Guid accountId, Guid draftId, bool deferred = false) =>
+            await ClientRefit.CheckDraftAsync(accountId, draftId, deferred);
+
+        public async Task<string> PrepareDraftAsync(Guid accountId, Guid draftId, bool deferred = false) =>
+            await ClientRefit.PrepareDraftAsync(accountId, draftId, deferred);
+
+        public async Task<string> SendDraftAsync(Guid accountId, Guid draftId, bool deferred = false, bool force = false) =>
+            await ClientRefit.SendDraftAsync(accountId, draftId, deferred, force);
+
+        public async Task<string> GetDocumentEncryptedContentAsync(Guid accountId, Guid draftId, Guid documentId) =>
+            await ClientRefit.GetDocumentEncryptedContentAsync(accountId, draftId, documentId);
+
+        public async Task BuildDocumentContentAsync(
+            Guid accountId,
+            Guid draftId,
+            Guid documentId,
+            FormatType type,
+            string content) => await ClientRefit.BuildDocumentContentAsync(
+            accountId,
+            draftId,
+            documentId,
+            type.ToString(),
+            1,
+            content);
+
+        public async Task<DraftDocument> CreateDocumentWithContentFromFormatAsync(
+            Guid accountId,
+            Guid draftId,
+            FormatType type,
+            string content) => await ClientRefit.CreateDocumentWithContentFromFormatAsync(
+            accountId,
+            draftId,
+            type.ToString(),
+            1,
+            content);
+
+        public async Task<ApiTaskPage> GetDraftTasks(
+            Guid accountId,
+            Guid draftId,
+            long skip = 0,
+            int take = int.MaxValue,
+            bool includeReleased = true) =>
+            await ClientRefit.GetDraftTasks(accountId, draftId, skip, take, includeReleased);
+
+        public async Task<ApiTaskResult<CryptOperationStatusResult>> GetDraftTask(Guid accountId, Guid draftId, Guid apiTaskId) =>
+            await ClientRefit.GetDraftTask(accountId, draftId, apiTaskId);
+
+        public async Task<SignInitResult> CloudSignDraftAsync(Guid accountId, Guid draftId) =>
+            await ClientRefit.CloudSignDraftAsync(accountId, draftId);
+
+        public async Task<SignResult> CloudSignConfirmDraftAsync(Guid accountId, Guid draftId, Guid requestId, string code) =>
+            await ClientRefit.CloudSignConfirmDraftAsync(accountId, draftId, requestId, code);
     }
 }

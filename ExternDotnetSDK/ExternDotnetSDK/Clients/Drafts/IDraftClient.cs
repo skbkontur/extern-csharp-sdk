@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Drafts;
 using ExternDotnetSDK.Models.Drafts.Meta;
@@ -38,5 +39,27 @@ namespace ExternDotnetSDK.Clients.Drafts
             SignatureRequest request);
 
         Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId);
+        Task<string> CheckDraftAsync(Guid accountId, Guid draftId, bool deferred = false);
+        Task<string> PrepareDraftAsync(Guid accountId, Guid draftId, bool deferred = false);
+        Task<string> SendDraftAsync(Guid accountId, Guid draftId, bool deferred = false, bool force = false);
+        Task<string> GetDocumentEncryptedContentAsync(Guid accountId, Guid draftId, Guid documentId);
+        Task BuildDocumentContentAsync(Guid accountId, Guid draftId, Guid documentId, FormatType type, string content);
+
+        Task<DraftDocument> CreateDocumentWithContentFromFormatAsync(
+            Guid accountId,
+            Guid draftId,
+            FormatType type,
+            string content);
+
+        Task<ApiTaskPage> GetDraftTasks(
+            Guid accountId,
+            Guid draftId,
+            long skip = 0,
+            int take = int.MaxValue,
+            bool includeReleased = true);
+
+        Task<ApiTaskResult<CryptOperationStatusResult>> GetDraftTask(Guid accountId, Guid draftId, Guid apiTaskId);
+        Task<SignInitResult> CloudSignDraftAsync(Guid accountId, Guid draftId);
+        Task<SignResult> CloudSignConfirmDraftAsync(Guid accountId, Guid draftId, Guid requestId, string code);
     }
 }

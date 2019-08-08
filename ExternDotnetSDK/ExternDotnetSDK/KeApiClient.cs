@@ -23,9 +23,9 @@ namespace ExternDotnetSDK
         public IOrganizationsClient Organizations;
         public IWarrantsClient Warrants;
 
-        public KeApiClient(string baseAddress, string login, string password, string apiKey = null)
+        public KeApiClient(string authAddress, string baseAddress, string login, string password, string apiKey = null)
         {
-            Auth = new AuthClient("https://api.testkontur.ru");
+            Auth = new AuthClient(authAddress);
             var sessionResponse = Auth.ByPass(login, password, apiKey).Result;
             var client = new HttpClient(new KeApiHttpClientHandler(apiKey, sessionResponse.Sid))
             {

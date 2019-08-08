@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Models.Api;
+using ExternDotnetSDK.Models.Certificates;
 using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Drafts;
 using ExternDotnetSDK.Models.Drafts.Requests;
 using FluentAssertions;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Refit;
 
@@ -23,7 +26,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             InitializeClient();
             Account = (await Client.Accounts.GetAccountsAsync(0, 1)).Accounts[0];
-            var cert = (await Client.Certificates.GetCertificatesAsync(Account.Id, 0, 1)).Certificates[0];
+            var cert = (await Client.Certificates.GetCertificatesAsync(Account.Id)).Certificates[0];
             validDraftMetaRequest = new DraftMetaRequest
             {
                 Payer = new AccountInfoRequest
@@ -40,9 +43,9 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                 },
                 Recipient = new RecipientInfoRequest {FssCode = "11111"}
             };
-            draft = await Client.Drafts.CreateDraftAsync(Account.Id, validDraftMetaRequest);
+            draft = await CreateDraftAsync();
             emptyDocument = await CreateEmptyDocument();
-            filledDocument = await CreateFilledDocument();
+            filledDocument = await CreateFilledDocument(draft);
             filledDocumentSignature = await Client.Drafts.AddDocumentSignatureAsync(
                 Account.Id,
                 draft.Id,
@@ -749,16 +752,179 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                     filledDocumentSignature.Id));
         }
 
+        [Test]
+        public void FailToCheckOrPrepareOrSendDraft_WithBadParameters()
+        {
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.CheckDraftAsync(Account.Id, Guid.Empty));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.CheckDraftAsync(Guid.Empty, draft.Id));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.PrepareDraftAsync(Account.Id, Guid.Empty));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.PrepareDraftAsync(Guid.Empty, draft.Id));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.SendDraftAsync(Account.Id, Guid.Empty));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.SendDraftAsync(Guid.Empty, draft.Id));
+        }
+
+        [Test]
+        public void FailToCheckAndPrepareAndSendNotDeferredDraft_WithDocumentsWithoutContent()
+        {
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.CheckDraftAsync(Account.Id, draft.Id));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.PrepareDraftAsync(Account.Id, draft.Id));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.SendDraftAsync(Account.Id, draft.Id));
+        }
+
+        [Test]
+        public async Task FailToCheckAndPrepareAndSendDraft_WithoutDocuments()
+        {
+            var d = await CreateDraftAsync();
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.CheckDraftAsync(Account.Id, d.Id));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.PrepareDraftAsync(Account.Id, d.Id));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.SendDraftAsync(Account.Id, d.Id));
+            await DeleteDraftAsync(d);
+        }
+
+        [Test]
+        public async Task CheckDraft_WhenDeferredIsTrue()
+        {
+            var d = await CreateDraftAsync();
+            Assert.DoesNotThrowAsync(async () => await Client.Drafts.CheckDraftAsync(Account.Id, d.Id, true));
+            await DeleteDraftAsync(d);
+        }
+
+        [Test]
+        public async Task PrepareDraft_WhenDeferredIsTrue()
+        {
+            var d = await CreateDraftAsync();
+            Assert.DoesNotThrowAsync(async () => await Client.Drafts.PrepareDraftAsync(Account.Id, d.Id, true));
+            await DeleteDraftAsync(d);
+        }
+
+        [Test]
+        public async Task SendDraft_WhenDeferredIsTrue()
+        {
+            var d = await CreateDraftAsync();
+            Assert.DoesNotThrowAsync(async () => await Client.Drafts.SendDraftAsync(Account.Id, d.Id, true));
+            await DeleteDraftAsync(d);
+        }
+
+        [Test]
+        public void FailToGetDocumentEncryptedContent_WithBadParameters()
+        {
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Drafts.GetDocumentEncryptedContentAsync(Guid.Empty, draft.Id, emptyDocument.Id));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Drafts.GetDocumentEncryptedContentAsync(Account.Id, Guid.Empty, emptyDocument.Id));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Drafts.GetDocumentEncryptedContentAsync(Account.Id, draft.Id, Guid.Empty));
+        }
+
+        [Test]
+        public void FailToGetDocumentEncryptedContent_WhenItIsEmpty()
+        {
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Drafts.GetDocumentEncryptedContentAsync(Account.Id, draft.Id, emptyDocument.Id));
+        }
+
+        [Test]
+        public void FailToBuildDocument_WithBadParameters()
+        {
+            var content = JsonConvert.SerializeObject(new DocumentContents());
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.BuildDocumentContentAsync(
+                Guid.Empty, draft.Id, filledDocument.Id, FormatType.uSN, content));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.BuildDocumentContentAsync(
+                Account.Id, Guid.Empty, filledDocument.Id, FormatType.uSN, content));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.BuildDocumentContentAsync(
+                Account.Id, draft.Id, Guid.Empty, FormatType.uSN, content));
+        }
+
+        [Test]
+        public void FailToCreateDocumentWithContentFromFormat_WithBadParameters()
+        {
+            var content = JsonConvert.SerializeObject(new DocumentContents());
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Drafts.CreateDocumentWithContentFromFormatAsync(
+                    Guid.Empty, draft.Id, FormatType.uSN, content));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Drafts.CreateDocumentWithContentFromFormatAsync(
+                    Account.Id, Guid.Empty, FormatType.uSN, content));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Drafts.CreateDocumentWithContentFromFormatAsync(
+                    Account.Id, draft.Id, FormatType.uSN, "ha"));
+        }
+
+        [Test]
+        public void FailToGetDraftTasks_WithBadParameters()
+        {
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.GetDraftTasks(Guid.Empty, draft.Id));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.GetDraftTasks(Account.Id, Guid.Empty));
+        }
+
+        [Test]
+        public void GetDraftTasks_WithValidParameters()
+        {
+            Assert.DoesNotThrowAsync(async () => await Client.Drafts.GetDraftTasks(Account.Id, draft.Id));
+        }
+
+        [Test]
+        public async Task FailToGetDraftTask_WithBadParameters()
+        {
+            var d = await CreateDraftAsync();
+            await Client.Drafts.CheckDraftAsync(Account.Id, d.Id, true);
+            var taskId = (await Client.Drafts.GetDraftTasks(Account.Id, d.Id)).ApiTaskPageItems[0].Id;
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.GetDraftTask(Guid.Empty, d.Id, taskId));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.GetDraftTask(Account.Id, Guid.Empty, taskId));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.GetDraftTask(Account.Id, d.Id, Guid.Empty));
+            await Client.Drafts.DeleteDraftAsync(Account.Id, d.Id);
+        }
+
+        [Test]
+        public async Task GetDraftTask_WithValidParameters()
+        {
+            var d = await CreateDraftAsync();
+            await Client.Drafts.CheckDraftAsync(Account.Id, d.Id, true);
+            var taskId = (await Client.Drafts.GetDraftTasks(Account.Id, d.Id)).ApiTaskPageItems[0].Id;
+            Assert.DoesNotThrowAsync(async () => await Client.Drafts.GetDraftTask(Account.Id, d.Id, taskId));
+            await Client.Drafts.DeleteDraftAsync(Account.Id, d.Id);
+        }
+
+        [Test]
+        public async Task FailToCloudSignDraft_WithBadParameters()
+        {
+            var d = await CreateDraftAsync();
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.CloudSignDraftAsync(Guid.Empty, d.Id));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.CloudSignDraftAsync(Account.Id, Guid.Empty));
+            await DeleteDraftAsync(d);
+        }
+
+        //[Test]
+        //public async Task Test()
+        //{
+        //    var d = await CreateDraftAsync();
+        //    var doc = await CreateFilledDocument(d);
+        //    try
+        //    {
+        //        var t = await Client.Drafts.CloudSignDraftAsync(Account.Id, d.Id);
+        //    }
+        //    catch (ApiException)
+        //    {
+        //    }
+        //    await Client.Drafts.DeleteDocumentAsync(Account.Id, d.Id, doc.Id);
+        //    await DeleteDraftAsync(d);
+        //    Assert.Fail();
+        //}
+
+        private async Task<Draft> CreateDraftAsync() => await Client.Drafts.CreateDraftAsync(Account.Id, validDraftMetaRequest);
+
+        private async Task DeleteDraftAsync(Draft d) => await Client.Drafts.DeleteDraftAsync(Account.Id, d.Id);
+
         private async Task<DraftDocument> CreateEmptyDocument() =>
             await Client.Drafts.AddDocumentAsync(Account.Id, draft.Id, null);
 
-        private async Task<DraftDocument> CreateFilledDocument() =>
+        private async Task<DraftDocument> CreateFilledDocument(Draft d) =>
             await Client.Drafts.AddDocumentAsync(
                 Account.Id,
-                draft.Id,
+                d.Id,
                 new DocumentContents
                 {
-                    Base64Content = Convert.ToBase64String(new byte[] {1, 2, 3, 4}),
+                    Base64Content = Convert.ToBase64String(new byte[] {1}),
                     Description = new DocumentDescriptionRequestDto
                     {
                         ContentType = "application/json",

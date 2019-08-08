@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ExternDotnetSDK.Models.Errors;
 using ExternDotnetSDK.Models.JsonConverters;
 using Newtonsoft.Json;
 

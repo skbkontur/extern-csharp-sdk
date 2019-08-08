@@ -42,7 +42,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 
         protected void InitializeClient()
         {
-            Client = new KeApiClient(Data.BaseAddress, Data.Login, Data.Password, Data.ApiKey);
+            Client = new KeApiClient(Data.AuthAddress, Data.BaseAddress, Data.Login, Data.Password, Data.ApiKey);
         }
     }
 }

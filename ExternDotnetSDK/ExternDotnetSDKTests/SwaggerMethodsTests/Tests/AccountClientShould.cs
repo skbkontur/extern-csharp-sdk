@@ -1,6 +1,4 @@
 ﻿using System;
-using ExternDotnetSDK.Models.Accounts;
-using FluentAssertions;
 using NUnit.Framework;
 using Refit;
 

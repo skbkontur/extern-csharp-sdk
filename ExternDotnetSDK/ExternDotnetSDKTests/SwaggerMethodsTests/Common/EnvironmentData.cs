@@ -1,6 +1,4 @@
-﻿#pragma warning disable 649
-
-namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
+﻿namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
 {
     internal class EnvironmentData
     {

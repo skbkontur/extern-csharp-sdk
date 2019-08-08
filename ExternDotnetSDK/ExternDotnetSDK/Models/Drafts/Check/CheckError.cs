@@ -1,7 +1,7 @@
 ﻿using ExternDotnetSDK.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Errors
+namespace ExternDotnetSDK.Models.Drafts.Check
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class CheckError
