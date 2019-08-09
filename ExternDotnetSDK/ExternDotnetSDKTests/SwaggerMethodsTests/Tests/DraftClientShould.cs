@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Models.Api;
-using ExternDotnetSDK.Models.Certificates;
 using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Drafts;
 using ExternDotnetSDK.Models.Drafts.Requests;

@@ -6,6 +6,7 @@ using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Docflows;
 using ExternDotnetSDK.Models.Documents;
 using ExternDotnetSDK.Models.Documents.Data;
+using ExternDotnetSDK.Models.Drafts;
 using Refit;
 
 namespace ExternDotnetSDK.Clients.Docflows
@@ -72,6 +73,65 @@ namespace ExternDotnetSDK.Clients.Docflows
             string code,
             bool unzip = false);
 
-        //todo make all Post methods for docflows and all methods for docflows: replies
+        //todo add test where it works with valid parameters
+        [Post("/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/generate-reply")]
+        Task<ApiReplyDocument> GenerateDocumentReplyAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            string documentType,
+            [Body] GenerateReplyDocumentRequestData request);
+
+        //todo add test where it works with valid parameters and documents that support recognition
+        [Post("/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/recognize")]
+        Task<RecognizedMeta> RecognizeDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, [Body] byte[] content);
+
+        //todo add tests after "GenerateDocumentReplyAsync" method has valid parameters to work with
+        [Post("/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/send")]
+        Task<Docflow> SendDocumentReplyAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            [Body] SendReplyDocumentRequest request);
+
+        //todo add tests after "GenerateDocumentReplyAsync" method has valid parameters to work with
+        [Put("/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/signature")]
+        Task<ApiReplyDocument> UpdateDocumentReplySignatureAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            [Body] string content);
+
+        //todo add tests after "GenerateDocumentReplyAsync" method has valid parameters to work with
+        [Put("/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/content")]
+        Task<ApiReplyDocument> UpdateDocumentReplyContentAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            [Body] string content);
+
+
+        //todo add tests after "GenerateDocumentReplyAsync" method has valid parameters to work with
+        //todo understand what object does this method actually return and return that object instead of JSON format of it
+        [Post("/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/cloud-sign")]
+        Task<string> CloudSignDocumentReplyAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            bool forceConfirmation);
+
+        //todo add tests after "GenerateDocumentReplyAsync" method has valid parameters to work with
+        [Post("/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/cloud-sign-confirm")]
+        Task<SignResult> CloudSignConfirmDocumentReplyAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            string code,
+            string requestId);
     }
 }

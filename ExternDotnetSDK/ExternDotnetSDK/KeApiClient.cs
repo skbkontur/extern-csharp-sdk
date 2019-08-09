@@ -8,6 +8,7 @@ using ExternDotnetSDK.Clients.Docflows;
 using ExternDotnetSDK.Clients.Drafts;
 using ExternDotnetSDK.Clients.Events;
 using ExternDotnetSDK.Clients.Organizations;
+using ExternDotnetSDK.Clients.RelatedDocflows;
 using ExternDotnetSDK.Clients.Warrants;
 
 namespace ExternDotnetSDK
@@ -22,6 +23,7 @@ namespace ExternDotnetSDK
         public IEventsClient Events;
         public IOrganizationsClient Organizations;
         public IWarrantsClient Warrants;
+        public IRelatedDocflowsClient RelatedDocflows;
 
         public KeApiClient(string authAddress, string baseAddress, string login, string password, string apiKey = null)
         {
@@ -43,6 +45,7 @@ namespace ExternDotnetSDK
             Events = new EventsClient(client);
             Organizations = new OrganizationsClient(client);
             Warrants = new WarrantsClient(client);
+            RelatedDocflows = new RelatedDocflowsClient(client);
         }
     }
 }

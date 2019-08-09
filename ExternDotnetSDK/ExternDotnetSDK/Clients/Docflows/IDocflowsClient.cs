@@ -6,6 +6,7 @@ using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Docflows;
 using ExternDotnetSDK.Models.Documents;
 using ExternDotnetSDK.Models.Documents.Data;
+using ExternDotnetSDK.Models.Drafts;
 
 namespace ExternDotnetSDK.Clients.Docflows
 {
@@ -40,5 +41,44 @@ namespace ExternDotnetSDK.Clients.Docflows
             string requestId,
             string code,
             bool unzip = false);
+
+        Task<ApiReplyDocument> GenerateDocumentReplyAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Urn documentType,
+            byte[] certificateContent);
+
+        Task<RecognizedMeta> RecognizeDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, byte[] content);
+        Task<Docflow> SendDocumentReplyAsync(Guid accountId, Guid docflowId, Guid documentId, Guid replyId, string senderIp);
+
+        Task<ApiReplyDocument> UpdateDocumentReplySignatureAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            byte[] signature);
+
+        Task<ApiReplyDocument> UpdateDocumentReplyContentAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            byte[] content);
+
+        Task<string> CloudSignDocumentReplyAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            bool forceConfirmation);
+
+        Task<SignResult> CloudSignConfirmDocumentReplyAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            string code,
+            string requestId);
     }
 }

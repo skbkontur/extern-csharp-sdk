@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Models.Certificates;
 using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Docflows;
 using ExternDotnetSDK.Models.Documents;
 using ExternDotnetSDK.Models.Documents.Data;
 using NUnit.Framework;
 using Refit;
-#pragma warning disable 1998
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 {
@@ -20,6 +20,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         private List<Document> docflowDocuments;
         private Document document;
         private Signature signature;
+        private CertificateDto certificate;
 
         [OneTimeSetUp]
         public override async Task SetUp()
@@ -31,10 +32,13 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             docflowDocuments = await Client.Docflows.GetDocumentsAsync(Account.Id, docflow.Id);
             document = docflowDocuments[0];
             signature = (await Client.Docflows.GetDocumentSignaturesAsync(Account.Id, docflow.Id, document.Id))[0];
+            certificate = (await Client.Certificates.GetCertificatesAsync(Account.Id, 0, 1)).Certificates[0];
         }
 
         [OneTimeTearDown]
+#pragma warning disable 1998
         public override async Task TearDown()
+#pragma warning restore 1998
         {
         }
 
@@ -211,6 +215,45 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                     docflow.Id,
                     document.Id,
                     new DecryptDocumentRequestData {CertificateBase64 = "bad cert"}));
+        }
+
+        [Test]
+        public void FailToGenerateDocumentReply_WithBadParameters()
+        {
+            //goodUrn itself is actually not valid, but i didn't find a valid one
+            var goodUrn = new Urn("urn:document:business-registration-reply-receipt");
+            var goodContent = Convert.FromBase64String(certificate.Content);
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                Guid.Empty, docflow.Id, document.Id, goodUrn, goodContent));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                Account.Id, Guid.Empty, document.Id, goodUrn, goodContent));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                Account.Id, docflow.Id, Guid.Empty, goodUrn, goodContent));
+            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                Account.Id, docflow.Id, document.Id, new Urn("hello", "world"), goodContent));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                Account.Id, docflow.Id, document.Id, goodUrn, null));
+        }
+
+        [Test]
+        public void FailToRecognizeDocument_WithoutRecognitionSupport()
+        {
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] {1}));
+        }
+
+        [Test]
+        public void FailToRecognizeDocument_WithBadParameters()
+        {
+            var content = new byte[]{1};
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Docflows.RecognizeDocumentAsync(Guid.Empty, docflow.Id, document.Id, content));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, Guid.Empty, document.Id, content));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, docflow.Id, Guid.Empty, content));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, docflow.Id, document.Id, null));
         }
     }
 }

@@ -8,6 +8,7 @@ using NUnit.Framework;
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 {
+    //todo I have a LOT of similar tests in this whole project that can be shortened and/or merged. It's not really necessary right now, but i don't like it, but i'm not sure if i have enough time to fix it. And i'm not a dedicated tester, sorry, da?
     [TestFixture]
     internal class AllTestsShould
     {

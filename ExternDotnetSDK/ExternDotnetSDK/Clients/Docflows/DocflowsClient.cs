@@ -7,6 +7,7 @@ using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Docflows;
 using ExternDotnetSDK.Models.Documents;
 using ExternDotnetSDK.Models.Documents.Data;
+using ExternDotnetSDK.Models.Drafts;
 using Refit;
 
 namespace ExternDotnetSDK.Clients.Docflows
@@ -77,5 +78,86 @@ namespace ExternDotnetSDK.Clients.Docflows
             string code,
             bool unzip = false) =>
             await ClientRefit.ConfirmDocumentContentDecryptionAsync(accountId, docflowId, documentId, requestId, code, unzip);
+
+        public async Task<ApiReplyDocument> GenerateDocumentReplyAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Urn documentType,
+            byte[] certificateContent) => await ClientRefit.GenerateDocumentReplyAsync(
+            accountId,
+            docflowId,
+            documentId,
+            documentType.ToString(),
+            new GenerateReplyDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)});
+
+        public async Task<RecognizedMeta> RecognizeDocumentAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            byte[] content) => await ClientRefit.RecognizeDocumentAsync(accountId, docflowId, documentId, content);
+
+        public async Task<Docflow> SendDocumentReplyAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            string senderIp) =>
+            await ClientRefit.SendDocumentReplyAsync(
+                accountId,
+                docflowId,
+                documentId,
+                replyId,
+                new SendReplyDocumentRequest {SenderIp = senderIp});
+
+        public async Task<ApiReplyDocument> UpdateDocumentReplySignatureAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            byte[] signature) => await ClientRefit.UpdateDocumentReplySignatureAsync(
+            accountId,
+            docflowId,
+            documentId,
+            replyId,
+            Convert.ToBase64String(signature));
+
+        public async Task<ApiReplyDocument> UpdateDocumentReplyContentAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            byte[] content) => await ClientRefit.UpdateDocumentReplyContentAsync(
+            accountId,
+            docflowId,
+            documentId,
+            replyId,
+            Convert.ToBase64String(content));
+
+        public async Task<string> CloudSignDocumentReplyAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            bool forceConfirmation) => await ClientRefit.CloudSignDocumentReplyAsync(
+            accountId,
+            docflowId,
+            documentId,
+            replyId,
+            forceConfirmation);
+
+        public async Task<SignResult> CloudSignConfirmDocumentReplyAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            string code,
+            string requestId) => await ClientRefit.CloudSignConfirmDocumentReplyAsync(
+            accountId,
+            docflowId,
+            documentId,
+            replyId,
+            code,
+            requestId);
     }
 }
