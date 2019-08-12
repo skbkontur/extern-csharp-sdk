@@ -47,25 +47,25 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId);
 
-        //[Post("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypted-content")]
-        //Task<DecryptionInitResult> DecryptDocumentContentAsync(
-        //    Guid accountId,
-        //    Guid relatedDocflowId,
-        //    Guid relatedDocumentId,
-        //    Guid inventoryId,
-        //    Guid documentId,
-        //    [Body] DecryptDocumentRequestData request);
+        [Post("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypted-content")]
+        Task<DecryptionInitResult> DecryptDocumentContentAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            [Body] DecryptDocumentRequestData request);
 
-        //[Post("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypted-content-confirm")]
-        //Task<byte> ConfirmDocumentContentDecryptionAsync(
-        //    Guid accountId,
-        //    Guid relatedDocflowId,
-        //    Guid relatedDocumentId,
-        //    Guid inventoryId,
-        //    Guid documentId,
-        //    Guid requestId,
-        //    string code,
-        //    bool unzip);
+        [Post("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypted-content-confirm")]
+        Task<byte[]> ConfirmDocumentContentDecryptionAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid requestId,
+            string code,
+            bool unzip = false);
 
         [Get("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/signatures/{signatureId}/content")]
         Task<string> GetSignatureContentAsync(
@@ -86,14 +86,14 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             string documentType,
             [Body] GenerateReplyDocumentRequestData request);
 
-        //[Get("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}")]
-        //Task<ApiReplyDocument> GetDocumentReplyAsync(
-        //    Guid accountId,
-        //    Guid relatedDocflowId,
-        //    Guid relatedDocumentId,
-        //    Guid inventoryId,
-        //    Guid documentId,
-        //    Guid replyId);
+        [Get("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}")]
+        Task<ApiReplyDocument> GetDocumentReplyAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId);
 
         [Post("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/send")]
         Task<Docflow> SendDocumentReplyAsync(
@@ -125,35 +125,35 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid replyId,
             [Body] string content);
 
-        //[Post("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/cloud-sign")]
-        //Task<string> CloudSignDocumentReplyAsync(
-        //    Guid accountId,
-        //    Guid relatedDocflowId,
-        //    Guid relatedDocumentId,
-        //    Guid inventoryId,
-        //    Guid documentId,
-        //    Guid replyId,
-        //    bool forceConfirmation);
+        [Post("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/cloud-sign")]
+        Task<SignInitResult> CloudSignDocumentReplyAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId,
+            bool forceConfirmation = true);
 
-        //[Get("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/tasks/{apiTaskId}")]
-        //Task<ApiTaskResult<CryptOperationStatusResult>> GetDocflowReplyDocumentTaskAsync(
-        //    Guid accountId,
-        //    Guid relatedDocflowId,
-        //    Guid relatedDocumentId,
-        //    Guid inventoryId,
-        //    Guid documentId,
-        //    Guid replyId,
-        //    Guid apiTaskId);
+        [Get("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/tasks/{apiTaskId}")]
+        Task<ApiTaskResult<CryptOperationStatusResult>> GetDocflowReplyDocumentTaskAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId,
+            Guid apiTaskId);
 
-        //[Post("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/cloud-sign-confirm")]
-        //Task<SignResult> ConfirmCloudSignDocumentReplyAsync(
-        //    Guid accountId,
-        //    Guid relatedDocflowId,
-        //    Guid relatedDocumentId,
-        //    Guid inventoryId,
-        //    Guid documentId,
-        //    Guid replyId,
-        //    Guid requestId,
-        //    string code);
+        [Post("/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/cloud-sign-confirm")]
+        Task<SignResult> ConfirmCloudSignDocumentReplyAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId,
+            Guid requestId,
+            string code);
     }
 }

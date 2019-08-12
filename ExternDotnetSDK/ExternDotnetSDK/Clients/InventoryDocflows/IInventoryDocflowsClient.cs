@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Docflows;
 using ExternDotnetSDK.Models.Documents;
+using ExternDotnetSDK.Models.Drafts;
 
 namespace ExternDotnetSDK.Clients.InventoryDocflows
 {
@@ -67,5 +69,59 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid replyId,
             byte[] signature);
+
+        Task<ApiReplyDocument> GetDocumentReplyAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId);
+
+        Task<SignResult> ConfirmCloudSignDocumentReplyAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId,
+            Guid requestId,
+            string code);
+
+        Task<ApiTaskResult<CryptOperationStatusResult>> GetDocflowReplyDocumentTaskAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId,
+            Guid apiTaskId);
+
+        Task<SignInitResult> CloudSignDocumentReplyAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId,
+            bool forceConfirmation = true);
+
+        Task<byte[]> ConfirmDocumentContentDecryptionAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid requestId,
+            string code,
+            bool unzip = false);
+
+        Task<DecryptionInitResult> DecryptDocumentContentAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            byte[] certificateContent);
     }
 }
