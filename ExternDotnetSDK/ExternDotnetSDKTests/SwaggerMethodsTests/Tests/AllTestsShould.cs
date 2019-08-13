@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using ExternDotnetSDK;
+using ExternDotnetSDK.Clients.Authentication;
+using ExternDotnetSDK.Logging;
 using ExternDotnetSDK.Models.Accounts;
 using ExternDotnetSDKTests.SwaggerMethodsTests.Common;
 using Newtonsoft.Json;
@@ -43,7 +45,8 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 
         protected void InitializeClient()
         {
-            Client = new KeApiClient(Data.AuthAddress, Data.BaseAddress, Data.Login, Data.Password, Data.ApiKey);
+            var authProvider = new DefaultAuthenticationProvider(Data.AuthAddress, Data.Login, Data.Password, Data.ApiKey);
+            Client = new KeApiClient(new FakeLog(), Data.BaseAddress, authProvider);
         }
     }
 }

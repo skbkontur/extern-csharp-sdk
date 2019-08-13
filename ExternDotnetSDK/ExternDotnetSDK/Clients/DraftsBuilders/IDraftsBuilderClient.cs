@@ -77,6 +77,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
         Task DeleteDraftsBuilderDocumentAsync(Guid accountId, Guid draftsBuilderId, Guid documentId);
         Task<DraftsBuilderDocument> GetDraftsBuilderDocumentAsync(Guid accountId, Guid draftsBuilderId, Guid documentId);
         Task<DraftsBuilderDocumentMeta> GetDraftsBuilderDocumentMetaAsync(Guid accountId, Guid draftsBuilderId, Guid documentId);
+
         Task<DraftsBuilderDocumentMeta> UpdateDraftsBuilderDocumentMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,

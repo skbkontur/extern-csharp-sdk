@@ -223,16 +223,41 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             //goodUrn itself is actually not valid, but i didn't find a valid one
             var goodUrn = new Urn("urn:document:business-registration-reply-receipt");
             var goodContent = Convert.FromBase64String(certificate.Content);
-            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GenerateDocumentReplyAsync(
-                Guid.Empty, docflow.Id, document.Id, goodUrn, goodContent));
-            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GenerateDocumentReplyAsync(
-                Account.Id, Guid.Empty, document.Id, goodUrn, goodContent));
-            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GenerateDocumentReplyAsync(
-                Account.Id, docflow.Id, Guid.Empty, goodUrn, goodContent));
-            Assert.ThrowsAsync<ApiException>(async () => await Client.Docflows.GenerateDocumentReplyAsync(
-                Account.Id, docflow.Id, document.Id, new Urn("hello", "world"), goodContent));
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.Docflows.GenerateDocumentReplyAsync(
-                Account.Id, docflow.Id, document.Id, goodUrn, null));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                    Guid.Empty,
+                    docflow.Id,
+                    document.Id,
+                    goodUrn,
+                    goodContent));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                    Account.Id,
+                    Guid.Empty,
+                    document.Id,
+                    goodUrn,
+                    goodContent));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                    Account.Id,
+                    docflow.Id,
+                    Guid.Empty,
+                    goodUrn,
+                    goodContent));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                    Account.Id,
+                    docflow.Id,
+                    document.Id,
+                    new Urn("hello", "world"),
+                    goodContent));
+            Assert.ThrowsAsync<ArgumentNullException>(
+                async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                    Account.Id,
+                    docflow.Id,
+                    document.Id,
+                    goodUrn,
+                    null));
         }
 
         [Test]
@@ -245,7 +270,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public void FailToRecognizeDocument_WithBadParameters()
         {
-            var content = new byte[]{1};
+            var content = new byte[] {1};
             Assert.ThrowsAsync<ApiException>(
                 async () => await Client.Docflows.RecognizeDocumentAsync(Guid.Empty, docflow.Id, document.Id, content));
             Assert.ThrowsAsync<ApiException>(

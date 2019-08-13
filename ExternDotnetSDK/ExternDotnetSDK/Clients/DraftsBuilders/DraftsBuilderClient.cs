@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Clients.Common;
+using ExternDotnetSDK.Logging;
 using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.DraftsBuilders.Builders;
 using ExternDotnetSDK.Models.DraftsBuilders.DocumentFiles;
@@ -9,97 +11,109 @@ using Refit;
 
 namespace ExternDotnetSDK.Clients.DraftsBuilders
 {
-    public class DraftsBuilderClient : IDraftsBuilderClient
+    public class DraftsBuilderClient : InnerCommonClient, IDraftsBuilderClient
     {
-        public DraftsBuilderClient(HttpClient client) => ClientRefit = RestService.For<IDraftsBuildersClientRefit>(client);
+        public DraftsBuilderClient(ILog log, HttpClient client)
+            : base(log)
+            => ClientRefit = RestService.For<IDraftsBuildersClientRefit>(client);
 
         public IDraftsBuildersClientRefit ClientRefit { get; }
 
         public async Task<DraftsBuilder> CreateDraftsBuilderAsync(Guid accountId, DraftsBuilderMetaRequest meta) =>
-            await ClientRefit.CreateDraftsBuilderAsync(accountId, meta);
+            await TryExecuteTask(ClientRefit.CreateDraftsBuilderAsync(accountId, meta));
 
         public async Task DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId) =>
-            await ClientRefit.DeleteDraftsBuilderAsync(accountId, draftsBuilderId);
+            await TryExecuteTask(ClientRefit.DeleteDraftsBuilderAsync(accountId, draftsBuilderId));
 
         public async Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId) =>
-            await ClientRefit.GetDraftsBuilderAsync(accountId, draftsBuilderId);
+            await TryExecuteTask(ClientRefit.GetDraftsBuilderAsync(accountId, draftsBuilderId));
 
         public async Task<DraftsBuilderMeta> GetDraftsBuilderMetaAsync(Guid accountId, Guid draftsBuilderId) =>
-            await ClientRefit.GetDraftsBuilderMetaAsync(accountId, draftsBuilderId);
+            await TryExecuteTask(ClientRefit.GetDraftsBuilderMetaAsync(accountId, draftsBuilderId));
 
         public async Task<DraftsBuilderMeta> UpdateDraftsBuilderMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
-            DraftsBuilderMetaRequest meta) => await ClientRefit.UpdateDraftsBuilderMetaAsync(accountId, draftsBuilderId, meta);
+            DraftsBuilderMetaRequest meta) =>
+            await TryExecuteTask(ClientRefit.UpdateDraftsBuilderMetaAsync(accountId, draftsBuilderId, meta));
 
         public async Task<DraftsBuilderBuildResult> BuildDraftsAsync(Guid accountId, Guid draftsBuilderId) =>
-            await ClientRefit.BuildDraftsAsync(accountId, draftsBuilderId);
+            await TryExecuteTask(ClientRefit.BuildDraftsAsync(accountId, draftsBuilderId));
 
-        public async Task<ApiTaskResult<DraftsBuilderBuildResult>> BuildDeferredDraftsAsync(Guid accountId, Guid draftsBuilderId) =>
-            await ClientRefit.BuildDeferredDraftsAsync(accountId, draftsBuilderId);
+        public async Task<ApiTaskResult<DraftsBuilderBuildResult>>
+            BuildDeferredDraftsAsync(Guid accountId, Guid draftsBuilderId) =>
+            await TryExecuteTask(ClientRefit.BuildDeferredDraftsAsync(accountId, draftsBuilderId));
 
         public async Task<ApiTaskResult<DraftsBuilderBuildResult>> GetBuildResultAsync(
             Guid accountId,
             Guid draftsBuilderId,
-            Guid apiTaskId) => await ClientRefit.GetBuildResultAsync(accountId, draftsBuilderId, apiTaskId);
+            Guid apiTaskId) => await TryExecuteTask(ClientRefit.GetBuildResultAsync(accountId, draftsBuilderId, apiTaskId));
 
         public async Task<DraftsBuilderDocumentFile[]> GetDraftsBuilderDocumentFilesAsync(
             Guid accountId,
             Guid draftsBuildersId,
-            Guid documentId) => await ClientRefit.GetDraftsBuilderDocumentFilesAsync(accountId, draftsBuildersId, documentId);
+            Guid documentId) => await TryExecuteTask(
+            ClientRefit.GetDraftsBuilderDocumentFilesAsync(accountId, draftsBuildersId, documentId));
 
         public async Task<DraftsBuilderDocumentFile> CreateDraftsBuilderDocumentFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             DraftsBuilderDocumentFileContents contents) =>
-            await ClientRefit.CreateDraftsBuilderDocumentFileAsync(accountId, draftsBuilderId, documentId, contents);
+            await TryExecuteTask(
+                ClientRefit.CreateDraftsBuilderDocumentFileAsync(accountId, draftsBuilderId, documentId, contents));
 
         public async Task DeleteDraftsBuilderDocumentFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await ClientRefit.DeleteDraftsBuilderDocumentFileAsync(accountId, draftsBuilderId, documentId, fileId);
+            await TryExecuteTask(
+                ClientRefit.DeleteDraftsBuilderDocumentFileAsync(accountId, draftsBuilderId, documentId, fileId));
 
         public async Task<DraftsBuilderDocumentFile> GetDraftsBuilderDocumentFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
-            Guid fileId) => await ClientRefit.GetDraftsBuilderDocumentFileAsync(accountId, draftsBuilderId, documentId, fileId);
+            Guid fileId) => await TryExecuteTask(
+            ClientRefit.GetDraftsBuilderDocumentFileAsync(accountId, draftsBuilderId, documentId, fileId));
 
         public async Task<DraftsBuilderDocumentFile> UpdateDraftsBuilderDocumentFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId,
-            DraftsBuilderDocumentFileContents contents) => await ClientRefit.UpdateDraftsBuilderDocumentFileAsync(
-            accountId,
-            draftsBuilderId,
-            documentId,
-            fileId,
-            contents);
+            DraftsBuilderDocumentFileContents contents) => await TryExecuteTask(
+            ClientRefit.UpdateDraftsBuilderDocumentFileAsync(
+                accountId,
+                draftsBuilderId,
+                documentId,
+                fileId,
+                contents));
 
         public async Task<string> GetDraftsBuilderDocumentFileContentAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await ClientRefit.GetDraftsBuilderDocumentFileContentAsync(accountId, draftsBuilderId, documentId, fileId);
+            await TryExecuteTask(
+                ClientRefit.GetDraftsBuilderDocumentFileContentAsync(accountId, draftsBuilderId, documentId, fileId));
 
         public async Task<string> GetDraftsBuilderDocumentFileSignatureAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await ClientRefit.GetDraftsBuilderDocumentFileSignatureAsync(accountId, draftsBuilderId, documentId, fileId);
+            await TryExecuteTask(
+                ClientRefit.GetDraftsBuilderDocumentFileSignatureAsync(accountId, draftsBuilderId, documentId, fileId));
 
         public async Task<DraftsBuilderDocumentFileMeta> GetDraftsBuilderDocumentFileMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await ClientRefit.GetDraftsBuilderDocumentFileMetaAsync(accountId, draftsBuilderId, documentId, fileId);
+            await TryExecuteTask(
+                ClientRefit.GetDraftsBuilderDocumentFileMetaAsync(accountId, draftsBuilderId, documentId, fileId));
 
         public async Task<DraftsBuilderDocumentFileMeta> UpdateDraftsBuilderDocumentFileMetaAsync(
             Guid accountId,
@@ -107,35 +121,38 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid documentId,
             Guid fileId,
             DraftsBuilderDocumentFileMetaRequest meta) =>
-            await ClientRefit.UpdateDraftsBuilderDocumentFileMetaAsync(accountId, draftsBuilderId, documentId, fileId, meta);
+            await TryExecuteTask(
+                ClientRefit.UpdateDraftsBuilderDocumentFileMetaAsync(accountId, draftsBuilderId, documentId, fileId, meta));
 
         public async Task<DraftsBuilderDocument[]> GetDraftsBuilderDocumentsAsync(Guid accountId, Guid draftsBuilderId) =>
-            await ClientRefit.GetDraftsBuilderDocumentsAsync(accountId, draftsBuilderId);
+            await TryExecuteTask(ClientRefit.GetDraftsBuilderDocumentsAsync(accountId, draftsBuilderId));
 
         public async Task<DraftsBuilderDocument> CreateDraftsBuilderDocumentAsync(
             Guid accountId,
             Guid draftsBuilderId,
             DraftsBuilderDocumentMetaRequest meta) =>
-            await ClientRefit.CreateDraftsBuilderDocumentAsync(accountId, draftsBuilderId, meta);
+            await TryExecuteTask(ClientRefit.CreateDraftsBuilderDocumentAsync(accountId, draftsBuilderId, meta));
 
         public async Task DeleteDraftsBuilderDocumentAsync(Guid accountId, Guid draftsBuilderId, Guid documentId) =>
-            await ClientRefit.DeleteDraftsBuilderDocumentAsync(accountId, draftsBuilderId, documentId);
+            await TryExecuteTask(ClientRefit.DeleteDraftsBuilderDocumentAsync(accountId, draftsBuilderId, documentId));
 
         public async Task<DraftsBuilderDocument> GetDraftsBuilderDocumentAsync(
             Guid accountId,
             Guid draftsBuilderId,
-            Guid documentId) => await ClientRefit.GetDraftsBuilderDocumentAsync(accountId, draftsBuilderId, documentId);
+            Guid documentId) =>
+            await TryExecuteTask(ClientRefit.GetDraftsBuilderDocumentAsync(accountId, draftsBuilderId, documentId));
 
         public async Task<DraftsBuilderDocumentMeta> GetDraftsBuilderDocumentMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
-            Guid documentId) => await ClientRefit.GetDraftsBuilderDocumentMetaAsync(accountId, draftsBuilderId, documentId);
+            Guid documentId) => await TryExecuteTask(
+            ClientRefit.GetDraftsBuilderDocumentMetaAsync(accountId, draftsBuilderId, documentId));
 
         public async Task<DraftsBuilderDocumentMeta> UpdateDraftsBuilderDocumentMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             DraftsBuilderMetaRequest meta) =>
-            await ClientRefit.UpdateDraftsBuilderDocumentMetaAsync(accountId, draftsBuilderId, documentId, meta);
+            await TryExecuteTask(ClientRefit.UpdateDraftsBuilderDocumentMetaAsync(accountId, draftsBuilderId, documentId, meta));
     }
 }

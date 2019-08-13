@@ -113,7 +113,6 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid replyId,
             [Body] string content);
 
-
         //todo add tests after "GenerateDocumentReplyAsync" method has valid parameters to work with
         //todo understand what object does this method actually return and return that object instead of JSON format of it
         [Post("/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/cloud-sign")]

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Clients.Common;
+using ExternDotnetSDK.Logging;
 using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Drafts;
@@ -10,75 +12,82 @@ using Refit;
 
 namespace ExternDotnetSDK.Clients.Drafts
 {
-    public class DraftClient : IDraftClient
+    public class DraftClient : InnerCommonClient, IDraftClient
     {
+        public DraftClient(ILog log, HttpClient client)
+            : base(log) =>
+            ClientRefit = RestService.For<IDraftClientRefit>(client);
+
         public IDraftClientRefit ClientRefit { get; }
 
-        public DraftClient(HttpClient client) => ClientRefit = RestService.For<IDraftClientRefit>(client);
-
         public async Task<Draft> CreateDraftAsync(Guid accountId, DraftMetaRequest draftRequest) =>
-            await ClientRefit.CreateDraftAsync(accountId, draftRequest);
+            await TryExecuteTask(ClientRefit.CreateDraftAsync(accountId, draftRequest));
 
         public async Task DeleteDraftAsync(Guid accountId, Guid draftId) =>
-            await ClientRefit.DeleteDraftAsync(accountId, draftId);
+            await TryExecuteTask(ClientRefit.DeleteDraftAsync(accountId, draftId));
 
         public async Task<Draft> GetDraftAsync(Guid accountId, Guid draftId) =>
-            await ClientRefit.GetDraftAsync(accountId, draftId);
+            await TryExecuteTask(ClientRefit.GetDraftAsync(accountId, draftId));
 
         public async Task<DraftMeta> GetDraftMetaAsync(Guid accountId, Guid draftId) =>
-            await ClientRefit.GetDraftMetaAsync(accountId, draftId);
+            await TryExecuteTask(ClientRefit.GetDraftMetaAsync(accountId, draftId));
 
         public async Task<DraftMeta> UpdateDraftMetaAsync(Guid accountId, Guid draftId, DraftMetaRequest newMeta) =>
-            await ClientRefit.UpdateDraftMetaAsync(accountId, draftId, newMeta);
+            await TryExecuteTask(ClientRefit.UpdateDraftMetaAsync(accountId, draftId, newMeta));
 
         public async Task<DraftDocument> AddDocumentAsync(Guid accountId, Guid draftId, [Body] DocumentContents content) =>
-            await ClientRefit.AddDocumentAsync(accountId, draftId, content);
+            await TryExecuteTask(ClientRefit.AddDocumentAsync(accountId, draftId, content));
 
         public async Task DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId) =>
-            await ClientRefit.DeleteDocumentAsync(accountId, draftId, documentId);
+            await TryExecuteTask(ClientRefit.DeleteDocumentAsync(accountId, draftId, documentId));
 
         public async Task<DraftDocument> GetDocumentAsync(Guid accountId, Guid draftId, Guid documentId) =>
-            await ClientRefit.GetDocumentAsync(accountId, draftId, documentId);
+            await TryExecuteTask(ClientRefit.GetDocumentAsync(accountId, draftId, documentId));
 
         public async Task<DraftDocument> UpdateDocumentAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
-            DocumentContents content) => await ClientRefit.UpdateDocumentAsync(accountId, draftId, documentId, content);
+            DocumentContents content) =>
+            await TryExecuteTask(ClientRefit.UpdateDocumentAsync(accountId, draftId, documentId, content));
 
         public async Task<string> GetDocumentPrintAsync(Guid accountId, Guid draftId, Guid documentId) =>
-            await ClientRefit.GetDocumentPrintAsync(accountId, draftId, documentId);
+            await TryExecuteTask(ClientRefit.GetDocumentPrintAsync(accountId, draftId, documentId));
 
         public async Task<string> GetDocumentDecryptedContentAsync(Guid accountId, Guid draftId, Guid documentId) =>
-            await ClientRefit.GetDocumentDecryptedContentAsync(accountId, draftId, documentId);
+            await TryExecuteTask(ClientRefit.GetDocumentDecryptedContentAsync(accountId, draftId, documentId));
 
-        public async Task UpdateDocumentDecryptedContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content)
-        {
-            var convertedContent = Convert.ToBase64String(content);
-            await ClientRefit.UpdateDocumentDecryptedContentAsync(accountId, draftId, documentId, convertedContent);
-        }
+        public async Task UpdateDocumentDecryptedContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content) =>
+            await TryExecuteTask(
+                ClientRefit.UpdateDocumentDecryptedContentAsync(
+                    accountId,
+                    draftId,
+                    documentId,
+                    Convert.ToBase64String(content)));
 
         public async Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId) =>
-            await ClientRefit.GetDocumentSignatureContentAsync(accountId, draftId, documentId);
+            await TryExecuteTask(ClientRefit.GetDocumentSignatureContentAsync(accountId, draftId, documentId));
 
-        public async Task UpdateDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content)
-        {
-            var convertedContent = Convert.ToBase64String(content);
-            await ClientRefit.UpdateDocumentSignatureContentAsync(accountId, draftId, documentId, convertedContent);
-        }
+        public async Task UpdateDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content) =>
+            await TryExecuteTask(
+                ClientRefit.UpdateDocumentSignatureContentAsync(
+                    accountId,
+                    draftId,
+                    documentId,
+                    Convert.ToBase64String(content)));
 
         public async Task<Signature> AddDocumentSignatureAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
             SignatureRequest request = null) =>
-            await ClientRefit.AddDocumentSignatureAsync(accountId, draftId, documentId, request);
+            await TryExecuteTask(ClientRefit.AddDocumentSignatureAsync(accountId, draftId, documentId, request));
 
         public async Task DeleteDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId) =>
-            await ClientRefit.DeleteDocumentSignatureAsync(accountId, draftId, documentId, signatureId);
+            await TryExecuteTask(ClientRefit.DeleteDocumentSignatureAsync(accountId, draftId, documentId, signatureId));
 
         public async Task<Signature> GetDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId) =>
-            await ClientRefit.GetDocumentSignatureAsync(accountId, draftId, documentId, signatureId);
+            await TryExecuteTask(ClientRefit.GetDocumentSignatureAsync(accountId, draftId, documentId, signatureId));
 
         public async Task<Signature> UpdateDocumentSignatureAsync(
             Guid accountId,
@@ -86,49 +95,52 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid documentId,
             Guid signatureId,
             SignatureRequest request) =>
-            await ClientRefit.UpdateDocumentSignatureAsync(accountId, draftId, documentId, signatureId, request);
+            await TryExecuteTask(ClientRefit.UpdateDocumentSignatureAsync(accountId, draftId, documentId, signatureId, request));
 
         public async Task<string> GetDocumentSignatureContentAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
-            Guid signatureId) => await ClientRefit.GetDocumentSignatureContentAsync(accountId, draftId, documentId, signatureId);
+            Guid signatureId) => await TryExecuteTask(
+            ClientRefit.GetDocumentSignatureContentAsync(accountId, draftId, documentId, signatureId));
 
         public async Task<string> CheckDraftAsync(Guid accountId, Guid draftId, bool deferred = false) =>
-            await ClientRefit.CheckDraftAsync(accountId, draftId, deferred);
+            await TryExecuteTask(ClientRefit.CheckDraftAsync(accountId, draftId, deferred));
 
         public async Task<string> PrepareDraftAsync(Guid accountId, Guid draftId, bool deferred = false) =>
-            await ClientRefit.PrepareDraftAsync(accountId, draftId, deferred);
+            await TryExecuteTask(ClientRefit.PrepareDraftAsync(accountId, draftId, deferred));
 
         public async Task<string> SendDraftAsync(Guid accountId, Guid draftId, bool deferred = false, bool force = false) =>
-            await ClientRefit.SendDraftAsync(accountId, draftId, deferred, force);
+            await TryExecuteTask(ClientRefit.SendDraftAsync(accountId, draftId, deferred, force));
 
         public async Task<string> GetDocumentEncryptedContentAsync(Guid accountId, Guid draftId, Guid documentId) =>
-            await ClientRefit.GetDocumentEncryptedContentAsync(accountId, draftId, documentId);
+            await TryExecuteTask(ClientRefit.GetDocumentEncryptedContentAsync(accountId, draftId, documentId));
 
         public async Task BuildDocumentContentAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
             FormatType type,
-            string content) => await ClientRefit.BuildDocumentContentAsync(
-            accountId,
-            draftId,
-            documentId,
-            type.ToString(),
-            1,
-            content);
+            string content) => await TryExecuteTask(
+            ClientRefit.BuildDocumentContentAsync(
+                accountId,
+                draftId,
+                documentId,
+                type.ToString(),
+                1,
+                content));
 
         public async Task<DraftDocument> CreateDocumentWithContentFromFormatAsync(
             Guid accountId,
             Guid draftId,
             FormatType type,
-            string content) => await ClientRefit.CreateDocumentWithContentFromFormatAsync(
-            accountId,
-            draftId,
-            type.ToString(),
-            1,
-            content);
+            string content) => await TryExecuteTask(
+            ClientRefit.CreateDocumentWithContentFromFormatAsync(
+                accountId,
+                draftId,
+                type.ToString(),
+                1,
+                content));
 
         public async Task<ApiTaskPage> GetDraftTasks(
             Guid accountId,
@@ -136,15 +148,15 @@ namespace ExternDotnetSDK.Clients.Drafts
             long skip = 0,
             int take = int.MaxValue,
             bool includeReleased = true) =>
-            await ClientRefit.GetDraftTasks(accountId, draftId, skip, take, includeReleased);
+            await TryExecuteTask(ClientRefit.GetDraftTasks(accountId, draftId, skip, take, includeReleased));
 
         public async Task<ApiTaskResult<CryptOperationStatusResult>> GetDraftTask(Guid accountId, Guid draftId, Guid apiTaskId) =>
-            await ClientRefit.GetDraftTask(accountId, draftId, apiTaskId);
+            await TryExecuteTask(ClientRefit.GetDraftTask(accountId, draftId, apiTaskId));
 
         public async Task<SignInitResult> CloudSignDraftAsync(Guid accountId, Guid draftId) =>
-            await ClientRefit.CloudSignDraftAsync(accountId, draftId);
+            await TryExecuteTask(ClientRefit.CloudSignDraftAsync(accountId, draftId));
 
         public async Task<SignResult> CloudSignConfirmDraftAsync(Guid accountId, Guid draftId, Guid requestId, string code) =>
-            await ClientRefit.CloudSignConfirmDraftAsync(accountId, draftId, requestId, code);
+            await TryExecuteTask(ClientRefit.CloudSignConfirmDraftAsync(accountId, draftId, requestId, code));
     }
 }

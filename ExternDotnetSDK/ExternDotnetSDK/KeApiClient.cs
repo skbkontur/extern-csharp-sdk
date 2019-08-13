@@ -12,12 +12,12 @@ using ExternDotnetSDK.Clients.InventoryDocflows;
 using ExternDotnetSDK.Clients.Organizations;
 using ExternDotnetSDK.Clients.RelatedDocflows;
 using ExternDotnetSDK.Clients.Warrants;
+using ExternDotnetSDK.Logging;
 
 namespace ExternDotnetSDK
 {
     public class KeApiClient
     {
-        public IAuthClient Auth;
         public IAccountClient Accounts;
         public ICertificateClient Certificates;
         public IDocflowsClient Docflows;
@@ -29,29 +29,27 @@ namespace ExternDotnetSDK
         public IWarrantsClient Warrants;
         public IRelatedDocflowsClient RelatedDocflows;
 
-        public KeApiClient(string authAddress, string baseAddress, string login, string password, string apiKey = null)
+        public KeApiClient(ILog iLog, string baseAddress, IAuthenticationProvider authProvider)
         {
-            Auth = new AuthClient(authAddress);
-            var sessionResponse = Auth.ByPass(login, password, apiKey).Result;
-            var client = new HttpClient(new KeApiHttpClientHandler(apiKey, sessionResponse.Sid))
+            var client = new HttpClient(new KeApiHttpClientHandler(authProvider.GetApiKey(), authProvider.GetSessionId()))
             {
                 BaseAddress = new Uri(baseAddress)
             };
-            InitializeAllClientInterfaces(client);
+            InitializeAllClients(iLog, client);
         }
 
-        private void InitializeAllClientInterfaces(HttpClient client)
+        private void InitializeAllClients(ILog iLog, HttpClient client)
         {
-            Accounts = new AccountClient(client);
-            Certificates = new CertificateClient(client);
-            Docflows = new DocflowsClient(client);
-            Drafts = new DraftClient(client);
-            DraftsBuilder = new DraftsBuilderClient(client);
-            Events = new EventsClient(client);
-            InventoryDocflows = new InventoryDocflowsClient(client);
-            Organizations = new OrganizationsClient(client);
-            Warrants = new WarrantsClient(client);
-            RelatedDocflows = new RelatedDocflowsClient(client);
+            Accounts = new AccountClient(iLog, client);
+            Certificates = new CertificateClient(iLog, client);
+            Docflows = new DocflowsClient(iLog, client);
+            Drafts = new DraftClient(iLog, client);
+            DraftsBuilder = new DraftsBuilderClient(iLog, client);
+            Events = new EventsClient(iLog, client);
+            InventoryDocflows = new InventoryDocflowsClient(iLog, client);
+            Organizations = new OrganizationsClient(iLog, client);
+            Warrants = new WarrantsClient(iLog, client);
+            RelatedDocflows = new RelatedDocflowsClient(iLog, client);
         }
     }
 }

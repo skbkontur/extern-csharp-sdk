@@ -8,6 +8,6 @@ namespace ExternDotnetSDK.Models.Drafts
         iON2,
         iON3,
         iON4,
-        iON5,
+        iON5
     }
 }

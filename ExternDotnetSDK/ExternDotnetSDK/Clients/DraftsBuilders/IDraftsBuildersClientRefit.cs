@@ -41,7 +41,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
         [Get("/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files")]
         Task<DraftsBuilderDocumentFile[]> GetDraftsBuilderDocumentFilesAsync(
             Guid accountId,
-            Guid draftsBuildersId,
+            Guid draftsBuilderId,
             Guid documentId);
 
         [Post("/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files")]

@@ -825,12 +825,27 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToBuildDocument_WithBadParameters()
         {
             var content = JsonConvert.SerializeObject(new DocumentContents());
-            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.BuildDocumentContentAsync(
-                Guid.Empty, draft.Id, filledDocument.Id, FormatType.uSN, content));
-            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.BuildDocumentContentAsync(
-                Account.Id, Guid.Empty, filledDocument.Id, FormatType.uSN, content));
-            Assert.ThrowsAsync<ApiException>(async () => await Client.Drafts.BuildDocumentContentAsync(
-                Account.Id, draft.Id, Guid.Empty, FormatType.uSN, content));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Drafts.BuildDocumentContentAsync(
+                    Guid.Empty,
+                    draft.Id,
+                    filledDocument.Id,
+                    FormatType.uSN,
+                    content));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Drafts.BuildDocumentContentAsync(
+                    Account.Id,
+                    Guid.Empty,
+                    filledDocument.Id,
+                    FormatType.uSN,
+                    content));
+            Assert.ThrowsAsync<ApiException>(
+                async () => await Client.Drafts.BuildDocumentContentAsync(
+                    Account.Id,
+                    draft.Id,
+                    Guid.Empty,
+                    FormatType.uSN,
+                    content));
         }
 
         [Test]
@@ -839,13 +854,22 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             var content = JsonConvert.SerializeObject(new DocumentContents());
             Assert.ThrowsAsync<ApiException>(
                 async () => await Client.Drafts.CreateDocumentWithContentFromFormatAsync(
-                    Guid.Empty, draft.Id, FormatType.uSN, content));
+                    Guid.Empty,
+                    draft.Id,
+                    FormatType.uSN,
+                    content));
             Assert.ThrowsAsync<ApiException>(
                 async () => await Client.Drafts.CreateDocumentWithContentFromFormatAsync(
-                    Account.Id, Guid.Empty, FormatType.uSN, content));
+                    Account.Id,
+                    Guid.Empty,
+                    FormatType.uSN,
+                    content));
             Assert.ThrowsAsync<ApiException>(
                 async () => await Client.Drafts.CreateDocumentWithContentFromFormatAsync(
-                    Account.Id, draft.Id, FormatType.uSN, "ha"));
+                    Account.Id,
+                    draft.Id,
+                    FormatType.uSN,
+                    "ha"));
         }
 
         [Test]

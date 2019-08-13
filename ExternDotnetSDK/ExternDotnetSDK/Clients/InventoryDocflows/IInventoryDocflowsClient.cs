@@ -13,7 +13,10 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
         IInventoryDocflowsClientRefit ClientRefit { get; }
 
         Task<DocflowPage> GetAllInventoryDocflowsAsync(
-            Guid accountId, Guid relatedDocflowId, Guid relatedDocumentId, DocflowFilter filter = null);
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            DocflowFilter filter = null);
 
         Task<Docflow> GetInventoryDocflowAsync(Guid accountId, Guid relatedDocflowId, Guid relatedDocumentId, Guid inventoryId);
 
@@ -26,13 +29,26 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             byte[] decryptedDocumentContent);
 
         Task<byte[]> GetInventoryDocflowDocumentEncryptedContentAsync(
-            Guid accountId, Guid relatedDocflowId, Guid relatedDocumentId, Guid inventoryId, Guid documentId);
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId);
 
         Task<byte[]> GetInventoryDocflowDocumentDecryptedContentAsync(
-            Guid accountId, Guid relatedDocflowId, Guid relatedDocumentId, Guid inventoryId, Guid documentId);
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId);
 
         Task<byte[]> GetSignatureContentAsync(
-            Guid accountId, Guid relatedDocflowId, Guid relatedDocumentId, Guid inventoryId, Guid documentId, Guid signatureId);
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid signatureId);
 
         Task<ApiReplyDocument> GenerateDocumentReplyAsync(
             Guid accountId,
