@@ -14,8 +14,8 @@ namespace ExternDotnetSDK.Clients.Drafts
 {
     public class DraftClient : InnerCommonClient, IDraftClient
     {
-        public DraftClient(ILog log, HttpClient client)
-            : base(log) =>
+        public DraftClient(ILogError logError, HttpClient client)
+            : base(logError) =>
             ClientRefit = RestService.For<IDraftClientRefit>(client);
 
         public IDraftClientRefit ClientRefit { get; }

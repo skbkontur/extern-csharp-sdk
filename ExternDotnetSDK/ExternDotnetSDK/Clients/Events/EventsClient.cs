@@ -9,8 +9,8 @@ namespace ExternDotnetSDK.Clients.Events
 {
     public class EventsClient : InnerCommonClient, IEventsClient
     {
-        public EventsClient(ILog log, HttpClient client)
-            : base(log) =>
+        public EventsClient(ILogError logError, HttpClient client)
+            : base(logError) =>
             ClientRefit = RestService.For<IEventsClientRefit>(client);
 
         public IEventsClientRefit ClientRefit { get; }

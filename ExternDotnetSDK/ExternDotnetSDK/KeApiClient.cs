@@ -16,40 +16,48 @@ using ExternDotnetSDK.Logging;
 
 namespace ExternDotnetSDK
 {
-    public class KeApiClient
+    public class KeApiClient : IKeApiClient
     {
-        public IAccountClient Accounts;
-        public ICertificateClient Certificates;
-        public IDocflowsClient Docflows;
-        public IDraftClient Drafts;
-        public IDraftsBuilderClient DraftsBuilder;
-        public IEventsClient Events;
-        public IInventoryDocflowsClient InventoryDocflows;
-        public IOrganizationsClient Organizations;
-        public IWarrantsClient Warrants;
-        public IRelatedDocflowsClient RelatedDocflows;
+        private readonly ILogError iLogError;
+        private readonly HttpClient client;
 
-        public KeApiClient(ILog iLog, string baseAddress, IAuthenticationProvider authProvider)
+        private IAccountClient accounts;
+        private ICertificateClient certificates;
+        private IDocflowsClient docflows;
+        private IDraftClient drafts;
+        private IDraftsBuilderClient draftsBuilder;
+        private IEventsClient events;
+        private IInventoryDocflowsClient inventoryDocflows;
+        private IOrganizationsClient organizations;
+        private IRelatedDocflowsClient relatedDocflows;
+        private IWarrantsClient warrants;
+
+        public KeApiClient(ILogError iLogError, string baseAddress, IAuthenticationProvider authProvider)
         {
-            var client = new HttpClient(new KeApiHttpClientHandler(authProvider.GetApiKey(), authProvider.GetSessionId()))
+            this.iLogError = iLogError;
+            client = new HttpClient(new KeApiHttpClientHandler(authProvider.GetApiKey(), authProvider.GetSessionId()))
             {
                 BaseAddress = new Uri(baseAddress)
             };
-            InitializeAllClients(iLog, client);
         }
 
-        private void InitializeAllClients(ILog iLog, HttpClient client)
-        {
-            Accounts = new AccountClient(iLog, client);
-            Certificates = new CertificateClient(iLog, client);
-            Docflows = new DocflowsClient(iLog, client);
-            Drafts = new DraftClient(iLog, client);
-            DraftsBuilder = new DraftsBuilderClient(iLog, client);
-            Events = new EventsClient(iLog, client);
-            InventoryDocflows = new InventoryDocflowsClient(iLog, client);
-            Organizations = new OrganizationsClient(iLog, client);
-            Warrants = new WarrantsClient(iLog, client);
-            RelatedDocflows = new RelatedDocflowsClient(iLog, client);
-        }
+        public IAccountClient Accounts => accounts ?? (accounts = new AccountClient(iLogError, client));
+        public ICertificateClient Certificates => certificates ?? (certificates = new CertificateClient(iLogError, client));
+        public IDocflowsClient Docflows => docflows ?? (docflows = new DocflowsClient(iLogError, client));
+        public IDraftClient Drafts => drafts ?? (drafts = new DraftClient(iLogError, client));
+        public IEventsClient Events => events ?? (events = new EventsClient(iLogError, client));
+        public IWarrantsClient Warrants => warrants ?? (warrants = new WarrantsClient(iLogError, client));
+
+        public IDraftsBuilderClient DraftsBuilder =>
+            draftsBuilder ?? (draftsBuilder = new DraftsBuilderClient(iLogError, client));
+
+        public IOrganizationsClient Organizations =>
+            organizations ?? (organizations = new OrganizationsClient(iLogError, client));
+
+        public IInventoryDocflowsClient InventoryDocflows =>
+            inventoryDocflows ?? (inventoryDocflows = new InventoryDocflowsClient(iLogError, client));
+
+        public IRelatedDocflowsClient RelatedDocflows =>
+            relatedDocflows ?? (relatedDocflows = new RelatedDocflowsClient(iLogError, client));
     }
 }

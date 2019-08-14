@@ -15,8 +15,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
 {
     public class InventoryDocflowsClient : InnerCommonClient, IInventoryDocflowsClient
     {
-        public InventoryDocflowsClient(ILog log, HttpClient client)
-            : base(log) =>
+        public InventoryDocflowsClient(ILogError logError, HttpClient client)
+            : base(logError) =>
             ClientRefit = RestService.For<IInventoryDocflowsClientRefit>(client);
 
         public IInventoryDocflowsClientRefit ClientRefit { get; }

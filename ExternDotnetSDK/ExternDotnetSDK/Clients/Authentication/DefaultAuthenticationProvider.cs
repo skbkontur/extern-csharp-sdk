@@ -1,23 +1,24 @@
-﻿using ExternDotnetSDK.Clients.Common;
-using Refit;
+﻿using Refit;
 
 namespace ExternDotnetSDK.Clients.Authentication
 {
     public class DefaultAuthenticationProvider : IAuthenticationProvider
     {
-        private readonly string apiKey;
-        private readonly SessionResponse sessionResponse;
         public readonly IAuthClientRefit ClientRefit;
+        private readonly string login;
+        private readonly string password;
+        private readonly string apiKey;
 
         public DefaultAuthenticationProvider(string authAddress, string login, string password, string apiKey = null)
         {
+            this.login = login;
+            this.password = password;
             this.apiKey = apiKey;
             ClientRefit = RestService.For<IAuthClientRefit>(authAddress);
-            sessionResponse = ClientRefit.ByPass(login, password, apiKey).Result;
         }
 
         public string GetApiKey() => apiKey;
 
-        public string GetSessionId() => sessionResponse.Sid;
+        public string GetSessionId() => ClientRefit.ByPass(login, password, apiKey).Result.Sid;
     }
 }

@@ -13,8 +13,8 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
 {
     public class DraftsBuilderClient : InnerCommonClient, IDraftsBuilderClient
     {
-        public DraftsBuilderClient(ILog log, HttpClient client)
-            : base(log)
+        public DraftsBuilderClient(ILogError logError, HttpClient client)
+            : base(logError)
             => ClientRefit = RestService.For<IDraftsBuildersClientRefit>(client);
 
         public IDraftsBuildersClientRefit ClientRefit { get; }

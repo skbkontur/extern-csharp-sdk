@@ -10,8 +10,8 @@ namespace ExternDotnetSDK.Clients.Account
 {
     public class AccountClient : InnerCommonClient, IAccountClient
     {
-        public AccountClient(ILog log, HttpClient client)
-            : base(log) =>
+        public AccountClient(ILogError logError, HttpClient client)
+            : base(logError) =>
             ClientRefit = RestService.For<IAccountClientRefit>(client);
 
         public IAccountClientRefit ClientRefit { get; }
@@ -26,12 +26,13 @@ namespace ExternDotnetSDK.Clients.Account
             await TryExecuteTask(ClientRefit.DeleteAccountAsync(accountId));
 
         public async Task<Models.Accounts.Account> CreateAccountAsync(string inn, string kpp, string organizationName) =>
-            await TryExecuteTask(ClientRefit.CreateAccountAsync(
-                new CreateAccountRequestDto
-                {
-                    Inn = inn,
-                    Kpp = kpp,
-                    OrganizationName = organizationName
-                }));
+            await TryExecuteTask(
+                ClientRefit.CreateAccountAsync(
+                    new CreateAccountRequestDto
+                    {
+                        Inn = inn,
+                        Kpp = kpp,
+                        OrganizationName = organizationName
+                    }));
     }
 }

@@ -10,8 +10,8 @@ namespace ExternDotnetSDK.Clients.Organizations
 {
     public class OrganizationsClient : InnerCommonClient, IOrganizationsClient
     {
-        public OrganizationsClient(ILog log, HttpClient client)
-            : base(log) =>
+        public OrganizationsClient(ILogError logError, HttpClient client)
+            : base(logError) =>
             ClientRefit = RestService.For<IOrganizationClientRefit>(client);
 
         public IOrganizationClientRefit ClientRefit { get; }

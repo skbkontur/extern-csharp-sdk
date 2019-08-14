@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Logging;
+using ExternDotnetSDK.Models.Errors;
+using Refit;
 
 namespace ExternDotnetSDK.Clients.Common
 {
     public class InnerCommonClient
     {
-        protected readonly ILog Log;
+        protected readonly ILogError LogError;
 
-        public InnerCommonClient(ILog log) => Log = log;
+        public InnerCommonClient(ILogError logError) => LogError = logError;
 
         public async Task<T> TryExecuteTask<T>(Task<T> task)
         {
@@ -16,9 +19,9 @@ namespace ExternDotnetSDK.Clients.Common
             {
                 return await task;
             }
-            catch (Exception e)
+            catch (ApiException e)
             {
-                Log.Error(e);
+                await ProcessException(e);
                 throw;
             }
         }
@@ -29,10 +32,24 @@ namespace ExternDotnetSDK.Clients.Common
             {
                 await task;
             }
+            catch (ApiException e)
+            {
+                await ProcessException(e);
+                throw;
+            }
+        }
+
+        private async Task ProcessException(ApiException exception)
+        {
+            try
+            {
+                var error = await exception.GetContentAsAsync<ExternApiError>();
+                error.TraceId = exception.Headers.FirstOrDefault(x => x.Key == "X-Kontur-Trace-Id").Value.FirstOrDefault();
+                LogError.Error(error);
+            }
             catch (Exception e)
             {
-                Log.Error(e);
-                throw;
+                LogError.Error(e.Message);
             }
         }
     }

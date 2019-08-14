@@ -10,8 +10,8 @@ namespace ExternDotnetSDK.Clients.Certificates
 {
     public class CertificateClient : InnerCommonClient, ICertificateClient
     {
-        public CertificateClient(ILog log, HttpClient client)
-            : base(log) =>
+        public CertificateClient(ILogError logError, HttpClient client)
+            : base(logError) =>
             ClientRefit = RestService.For<ICertificateClientRefit>(client);
 
         public ICertificateClientRefit ClientRefit { get; }

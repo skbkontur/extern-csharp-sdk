@@ -16,8 +16,8 @@ namespace ExternDotnetSDK.Clients.Docflows
 {
     public class DocflowsClient : InnerCommonClient, IDocflowsClient
     {
-        public DocflowsClient(ILog log, HttpClient client)
-            : base(log) =>
+        public DocflowsClient(ILogError logError, HttpClient client)
+            : base(logError) =>
             ClientRefit = RestService.For<IDocflowsClientRefit>(client);
 
         public IDocflowsClientRefit ClientRefit { get; }
@@ -67,11 +67,12 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid replyId) => await TryExecuteTask(ClientRefit.GetDocumentReplyAsync(accountId, docflowId, documentId, replyId));
 
         public async Task<string> PrintDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, byte[] data) =>
-            await TryExecuteTask(ClientRefit.PrintDocumentAsync(
-                accountId,
-                docflowId,
-                documentId,
-                new PrintDocumentData {Content = Convert.ToBase64String(data)}));
+            await TryExecuteTask(
+                ClientRefit.PrintDocumentAsync(
+                    accountId,
+                    docflowId,
+                    documentId,
+                    new PrintDocumentData {Content = Convert.ToBase64String(data)}));
 
         public async Task<DecryptionInitResult> DecryptDocumentContentAsync(
             Guid accountId,
@@ -107,7 +108,8 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid accountId,
             Guid docflowId,
             Guid documentId,
-            byte[] content) => await TryExecuteTask(ClientRefit.RecognizeDocumentAsync(accountId, docflowId, documentId, content));
+            byte[] content) =>
+            await TryExecuteTask(ClientRefit.RecognizeDocumentAsync(accountId, docflowId, documentId, content));
 
         public async Task<Docflow> SendDocumentReplyAsync(
             Guid accountId,

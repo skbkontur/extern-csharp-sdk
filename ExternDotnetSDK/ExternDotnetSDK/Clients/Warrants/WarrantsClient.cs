@@ -10,8 +10,8 @@ namespace ExternDotnetSDK.Clients.Warrants
 {
     public class WarrantsClient : InnerCommonClient, IWarrantsClient
     {
-        public WarrantsClient(ILog log, HttpClient client)
-            : base(log) =>
+        public WarrantsClient(ILogError logError, HttpClient client)
+            : base(logError) =>
             ClientRefit = RestService.For<IWarrantsClientRefit>(client);
 
         public IWarrantsClientRefit ClientRefit { get; }
