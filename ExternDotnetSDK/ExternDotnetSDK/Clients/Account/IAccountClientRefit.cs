@@ -5,6 +5,7 @@ using Refit;
 
 namespace ExternDotnetSDK.Clients.Account
 {
+    //
     public interface IAccountClientRefit
     {
         [Get("/v1?skip={skip}&take={take}")]
