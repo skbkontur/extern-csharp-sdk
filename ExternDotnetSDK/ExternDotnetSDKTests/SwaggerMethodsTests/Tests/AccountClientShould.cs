@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Net.Http;
 using NUnit.Framework;
-using Refit;
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 {
@@ -19,7 +19,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [TestCase(0, -1)]
         public void GetNoAccounts_WithBadParameters(int skip, int take)
         {
-            Assert.ThrowsAsync<ApiException>(async () => await Client.Accounts.GetAccountsAsync(skip, take));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Accounts.GetAccountsAsync(skip, take));
         }
 
         [Test]
@@ -31,20 +31,20 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public void GetNoAccount_ByNonexistentId()
         {
-            Assert.ThrowsAsync<ApiException>(async () => await Client.Accounts.GetAccountAsync(Guid.NewGuid()));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Accounts.GetAccountAsync(Guid.NewGuid()));
         }
 
         [Test]
         public void FailToDeleteAccount_ByNonexistentId()
         {
-            Assert.ThrowsAsync<ApiException>(async () => await Client.Accounts.DeleteAccountAsync(Guid.NewGuid()));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Accounts.DeleteAccountAsync(Guid.NewGuid()));
         }
 
         [TestCase("not an inn", "not a kpp", "obvious case")]
         [TestCase("1754462781", "515744583", "wrong inn control digit")]
         public void FailToCreateAccount_WithBadParameters(string inn, string kpp, string orgName)
         {
-            Assert.ThrowsAsync<ApiException>(async () => await Client.Accounts.CreateAccountAsync(inn, kpp, orgName));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Accounts.CreateAccountAsync(inn, kpp, orgName));
         }
     }
 }

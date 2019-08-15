@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Models.Accounts;
 
 namespace ExternDotnetSDK.Clients.Account
 {
-    public interface IAccountClient
+    public interface IAccountClient : IHttpClient
     {
-        IAccountClientRefit ClientRefit { get; }
-
         Task<AccountList> GetAccountsAsync(int skip = 0, int take = int.MaxValue);
         Task<Models.Accounts.Account> GetAccountAsync(Guid accountId);
         Task DeleteAccountAsync(Guid accountId);

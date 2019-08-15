@@ -11,7 +11,7 @@ namespace ExternDotnetSDK.Clients.RelatedDocflows
     public class RelatedDocflowsClient : InnerCommonClient, IRelatedDocflowsClient
     {
         public RelatedDocflowsClient(ILogError logError, HttpClient client)
-            : base(logError) =>
+            : base(logError, client) =>
             ClientRefit = RestService.For<IRelatedDocflowsClientRefit>(client);
 
         public IRelatedDocflowsClientRefit ClientRefit { get; }

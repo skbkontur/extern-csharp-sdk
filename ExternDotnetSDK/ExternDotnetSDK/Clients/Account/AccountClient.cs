@@ -4,35 +4,34 @@ using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Logging;
 using ExternDotnetSDK.Models.Accounts;
-using Refit;
 
 namespace ExternDotnetSDK.Clients.Account
 {
     public class AccountClient : InnerCommonClient, IAccountClient
     {
         public AccountClient(ILogError logError, HttpClient client)
-            : base(logError) =>
-            ClientRefit = RestService.For<IAccountClientRefit>(client);
-
-        public IAccountClientRefit ClientRefit { get; }
+            : base(logError, client)
+        {
+        }
 
         public async Task<AccountList> GetAccountsAsync(int skip = 0, int take = int.MaxValue) =>
-            await TryExecuteTask(ClientRefit.GetAccountsAsync(skip, take));
+            await SendRequestAsync<AccountList>(HttpMethod.Get, $"/v1?skip={skip}&take={take}");
 
         public async Task<Models.Accounts.Account> GetAccountAsync(Guid accountId) =>
-            await TryExecuteTask(ClientRefit.GetAccountAsync(accountId));
+            await SendRequestAsync<Models.Accounts.Account>(HttpMethod.Get, $"/v1/{{{accountId}}}");
 
         public async Task DeleteAccountAsync(Guid accountId) =>
-            await TryExecuteTask(ClientRefit.DeleteAccountAsync(accountId));
+            await SendRequestAsync(HttpMethod.Delete, $"/v1/{{{accountId}}}");
 
         public async Task<Models.Accounts.Account> CreateAccountAsync(string inn, string kpp, string organizationName) =>
-            await TryExecuteTask(
-                ClientRefit.CreateAccountAsync(
-                    new CreateAccountRequestDto
-                    {
-                        Inn = inn,
-                        Kpp = kpp,
-                        OrganizationName = organizationName
-                    }));
+            await SendRequestAsync<Models.Accounts.Account>(
+                HttpMethod.Post,
+                "/v1",
+                new CreateAccountRequestDto
+                {
+                    Inn = inn,
+                    Kpp = kpp,
+                    OrganizationName = organizationName
+                });
     }
 }

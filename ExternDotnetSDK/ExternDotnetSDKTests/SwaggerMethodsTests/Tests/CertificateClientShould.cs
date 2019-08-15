@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
-using Refit;
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 {
@@ -24,14 +24,14 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [TestCase(0, -1)]
         public void GetNoCertificates_WithBadParameters(int skip = 0, int take = 100, bool folAllUsers = false)
         {
-            Assert.ThrowsAsync<ApiException>(
+            Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Certificates.GetCertificatesAsync(Account.Id, skip, take, folAllUsers));
         }
 
         [Test]
         public void GetNoCertificates_ForBadAccountId()
         {
-            Assert.ThrowsAsync<ApiException>(async () => await Client.Certificates.GetCertificatesAsync(Guid.Empty));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Certificates.GetCertificatesAsync(Guid.Empty));
         }
 
         [Test]
