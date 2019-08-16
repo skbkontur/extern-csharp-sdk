@@ -4,21 +4,20 @@ namespace ExternDotnetSDK.Clients.Authentication
 {
     public class DefaultAuthenticationProvider : IAuthenticationProvider
     {
-        public readonly IAuthClientRefit ClientRefit;
         private readonly string login;
         private readonly string password;
         private readonly string apiKey;
+        public IAuthClientRefit ClientRefit { get; }
 
-        public DefaultAuthenticationProvider(string authAddress, string login, string password, string apiKey = null)
+        public DefaultAuthenticationProvider(string address, string apiKey, string password, string login)
         {
-            this.login = login;
-            this.password = password;
             this.apiKey = apiKey;
-            ClientRefit = RestService.For<IAuthClientRefit>(authAddress);
+            this.password = password;
+            this.login = login;
+            ClientRefit = RestService.For<IAuthClientRefit>(address);
         }
 
         public string GetApiKey() => apiKey;
-
         public string GetSessionId() => ClientRefit.ByPass(login, password, apiKey).Result.Sid;
     }
 }

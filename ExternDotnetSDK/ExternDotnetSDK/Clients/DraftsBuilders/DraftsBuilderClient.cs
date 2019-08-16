@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
@@ -7,7 +8,6 @@ using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.DraftsBuilders.Builders;
 using ExternDotnetSDK.Models.DraftsBuilders.DocumentFiles;
 using ExternDotnetSDK.Models.DraftsBuilders.Documents;
-using Refit;
 
 namespace ExternDotnetSDK.Clients.DraftsBuilders
 {
@@ -15,105 +15,121 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
     {
         public DraftsBuilderClient(ILogError logError, HttpClient client)
             : base(logError, client)
-            => ClientRefit = RestService.For<IDraftsBuildersClientRefit>(client);
-
-        public IDraftsBuildersClientRefit ClientRefit { get; }
+        {
+        }
 
         public async Task<DraftsBuilder> CreateDraftsBuilderAsync(Guid accountId, DraftsBuilderMetaRequest meta) =>
-            await TryExecuteTask(ClientRefit.CreateDraftsBuilderAsync(accountId, meta));
+            await SendRequestAsync<DraftsBuilder>(HttpMethod.Post, $"/v1/{accountId}/drafts/builders", meta);
 
         public async Task DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId) =>
-            await TryExecuteTask(ClientRefit.DeleteDraftsBuilderAsync(accountId, draftsBuilderId));
+            await SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/drafts/builders/{draftsBuilderId}");
 
         public async Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId) =>
-            await TryExecuteTask(ClientRefit.GetDraftsBuilderAsync(accountId, draftsBuilderId));
+            await SendRequestAsync<DraftsBuilder>(HttpMethod.Get, $"/v1/{accountId}/drafts/builders/{draftsBuilderId}");
 
         public async Task<DraftsBuilderMeta> GetDraftsBuilderMetaAsync(Guid accountId, Guid draftsBuilderId) =>
-            await TryExecuteTask(ClientRefit.GetDraftsBuilderMetaAsync(accountId, draftsBuilderId));
+            await SendRequestAsync<DraftsBuilderMeta>(HttpMethod.Get, $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta");
 
         public async Task<DraftsBuilderMeta> UpdateDraftsBuilderMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
             DraftsBuilderMetaRequest meta) =>
-            await TryExecuteTask(ClientRefit.UpdateDraftsBuilderMetaAsync(accountId, draftsBuilderId, meta));
+            await SendRequestAsync<DraftsBuilderMeta>(HttpMethod.Put, $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta");
 
         public async Task<DraftsBuilderBuildResult> BuildDraftsAsync(Guid accountId, Guid draftsBuilderId) =>
-            await TryExecuteTask(ClientRefit.BuildDraftsAsync(accountId, draftsBuilderId));
+            await SendRequestAsync<DraftsBuilderBuildResult>(
+                HttpMethod.Post,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build",
+                new Dictionary<string, object> {["deferred"] = false});
 
         public async Task<ApiTaskResult<DraftsBuilderBuildResult>>
             BuildDeferredDraftsAsync(Guid accountId, Guid draftsBuilderId) =>
-            await TryExecuteTask(ClientRefit.BuildDeferredDraftsAsync(accountId, draftsBuilderId));
+            await SendRequestAsync<ApiTaskResult<DraftsBuilderBuildResult>>(
+                HttpMethod.Post,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build",
+                new Dictionary<string, object> {["deferred"] = true});
 
         public async Task<ApiTaskResult<DraftsBuilderBuildResult>> GetBuildResultAsync(
             Guid accountId,
             Guid draftsBuilderId,
-            Guid apiTaskId) => await TryExecuteTask(ClientRefit.GetBuildResultAsync(accountId, draftsBuilderId, apiTaskId));
+            Guid apiTaskId) =>
+            await SendRequestAsync<ApiTaskResult<DraftsBuilderBuildResult>>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/tasks/{apiTaskId}");
 
         public async Task<DraftsBuilderDocumentFile[]> GetDraftsBuilderDocumentFilesAsync(
             Guid accountId,
-            Guid draftsBuildersId,
-            Guid documentId) => await TryExecuteTask(
-            ClientRefit.GetDraftsBuilderDocumentFilesAsync(accountId, draftsBuildersId, documentId));
+            Guid draftsBuilderId,
+            Guid documentId) =>
+            await SendRequestAsync<DraftsBuilderDocumentFile[]>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files");
 
         public async Task<DraftsBuilderDocumentFile> CreateDraftsBuilderDocumentFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             DraftsBuilderDocumentFileContents contents) =>
-            await TryExecuteTask(
-                ClientRefit.CreateDraftsBuilderDocumentFileAsync(accountId, draftsBuilderId, documentId, contents));
+            await SendRequestAsync<DraftsBuilderDocumentFile>(
+                HttpMethod.Post,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files",
+                contents);
 
         public async Task DeleteDraftsBuilderDocumentFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await TryExecuteTask(
-                ClientRefit.DeleteDraftsBuilderDocumentFileAsync(accountId, draftsBuilderId, documentId, fileId));
+            await SendRequestAsync(
+                HttpMethod.Delete,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}");
 
         public async Task<DraftsBuilderDocumentFile> GetDraftsBuilderDocumentFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
-            Guid fileId) => await TryExecuteTask(
-            ClientRefit.GetDraftsBuilderDocumentFileAsync(accountId, draftsBuilderId, documentId, fileId));
+            Guid fileId) =>
+            await SendRequestAsync<DraftsBuilderDocumentFile>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}");
 
         public async Task<DraftsBuilderDocumentFile> UpdateDraftsBuilderDocumentFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId,
-            DraftsBuilderDocumentFileContents contents) => await TryExecuteTask(
-            ClientRefit.UpdateDraftsBuilderDocumentFileAsync(
-                accountId,
-                draftsBuilderId,
-                documentId,
-                fileId,
-                contents));
+            DraftsBuilderDocumentFileContents contents) =>
+            await SendRequestAsync<DraftsBuilderDocumentFile>(
+                HttpMethod.Put,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
+                contents);
 
         public async Task<string> GetDraftsBuilderDocumentFileContentAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await TryExecuteTask(
-                ClientRefit.GetDraftsBuilderDocumentFileContentAsync(accountId, draftsBuilderId, documentId, fileId));
+            await SendRequestAsync<string>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/content");
 
         public async Task<string> GetDraftsBuilderDocumentFileSignatureAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await TryExecuteTask(
-                ClientRefit.GetDraftsBuilderDocumentFileSignatureAsync(accountId, draftsBuilderId, documentId, fileId));
+            await SendRequestAsync<string>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/signature");
 
         public async Task<DraftsBuilderDocumentFileMeta> GetDraftsBuilderDocumentFileMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await TryExecuteTask(
-                ClientRefit.GetDraftsBuilderDocumentFileMetaAsync(accountId, draftsBuilderId, documentId, fileId));
+            await SendRequestAsync<DraftsBuilderDocumentFileMeta>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta");
 
         public async Task<DraftsBuilderDocumentFileMeta> UpdateDraftsBuilderDocumentFileMetaAsync(
             Guid accountId,
@@ -121,38 +137,54 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid documentId,
             Guid fileId,
             DraftsBuilderDocumentFileMetaRequest meta) =>
-            await TryExecuteTask(
-                ClientRefit.UpdateDraftsBuilderDocumentFileMetaAsync(accountId, draftsBuilderId, documentId, fileId, meta));
+            await SendRequestAsync<DraftsBuilderDocumentFileMeta>(
+                HttpMethod.Put,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta",
+                meta);
 
         public async Task<DraftsBuilderDocument[]> GetDraftsBuilderDocumentsAsync(Guid accountId, Guid draftsBuilderId) =>
-            await TryExecuteTask(ClientRefit.GetDraftsBuilderDocumentsAsync(accountId, draftsBuilderId));
+            await SendRequestAsync<DraftsBuilderDocument[]>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents");
 
         public async Task<DraftsBuilderDocument> CreateDraftsBuilderDocumentAsync(
             Guid accountId,
             Guid draftsBuilderId,
             DraftsBuilderDocumentMetaRequest meta) =>
-            await TryExecuteTask(ClientRefit.CreateDraftsBuilderDocumentAsync(accountId, draftsBuilderId, meta));
+            await SendRequestAsync<DraftsBuilderDocument>(
+                HttpMethod.Post,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents",
+                meta);
 
         public async Task DeleteDraftsBuilderDocumentAsync(Guid accountId, Guid draftsBuilderId, Guid documentId) =>
-            await TryExecuteTask(ClientRefit.DeleteDraftsBuilderDocumentAsync(accountId, draftsBuilderId, documentId));
+            await SendRequestAsync(
+                HttpMethod.Delete,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}");
 
         public async Task<DraftsBuilderDocument> GetDraftsBuilderDocumentAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId) =>
-            await TryExecuteTask(ClientRefit.GetDraftsBuilderDocumentAsync(accountId, draftsBuilderId, documentId));
+            await SendRequestAsync<DraftsBuilderDocument>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}");
 
         public async Task<DraftsBuilderDocumentMeta> GetDraftsBuilderDocumentMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
-            Guid documentId) => await TryExecuteTask(
-            ClientRefit.GetDraftsBuilderDocumentMetaAsync(accountId, draftsBuilderId, documentId));
+            Guid documentId) =>
+            await SendRequestAsync<DraftsBuilderDocumentMeta>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta");
 
         public async Task<DraftsBuilderDocumentMeta> UpdateDraftsBuilderDocumentMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             DraftsBuilderMetaRequest meta) =>
-            await TryExecuteTask(ClientRefit.UpdateDraftsBuilderDocumentMetaAsync(accountId, draftsBuilderId, documentId, meta));
+            await SendRequestAsync<DraftsBuilderDocumentMeta>(
+                HttpMethod.Put,
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta",
+                meta);
     }
 }

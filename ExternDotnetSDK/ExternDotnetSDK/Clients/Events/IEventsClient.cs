@@ -1,12 +1,11 @@
 ﻿using System.Threading.Tasks;
+using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Models.Events;
 
 namespace ExternDotnetSDK.Clients.Events
 {
-    public interface IEventsClient
+    public interface IEventsClient : IHttpClient
     {
-        IEventsClientRefit ClientRefit { get; }
-
         Task<EventsPage> GetEventsAsync(int take, string fromId = "0_0");
     }
 }

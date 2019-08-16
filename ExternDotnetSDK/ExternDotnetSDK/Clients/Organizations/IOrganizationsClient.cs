@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Models.Organizations;
 
 namespace ExternDotnetSDK.Clients.Organizations
 {
-    public interface IOrganizationsClient
+    public interface IOrganizationsClient : IHttpClient
     {
-        IOrganizationClientRefit ClientRefit { get; }
-
         Task<OrganizationBatch> GetAllOrganizationsAsync(
             Guid accountId,
             string inn = null,

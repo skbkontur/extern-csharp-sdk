@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -20,19 +19,10 @@ namespace ExternDotnetSDK.Clients.Common
             Client = client;
         }
 
-        protected async Task<T> TryExecuteTask<T>(Task<T> task)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected async Task TryExecuteTask(Task task)
-        {
-            throw new NotImplementedException();
-        }
-
         private async Task<string> GetResponseAsync(HttpRequestMessage message)
         {
             using (var response = await Client.SendAsync(message))
+            {
                 try
                 {
                     response.EnsureSuccessStatusCode();
@@ -44,28 +34,24 @@ namespace ExternDotnetSDK.Clients.Common
                     LogError.Error(e);
                     throw;
                 }
+            }
         }
-
-        protected string StringifyUriQueryParams(Dictionary<string, object> parameters) =>
-            $"?{string.Join("&", parameters.Select(x => $"{x.Key}={x.Value.ToString()}"))}";
 
         protected async Task<TResult> SendRequestAsync<TResult>(
             HttpMethod method,
             string requestUri,
-            string uriQueryParams = null)
+            Dictionary<string, object> uriQueryParams = null)
         {
-            var uri = uriQueryParams != null ? requestUri + uriQueryParams : requestUri;
-            using (var request = new HttpRequestMessage(method, uri))
-            {
-                var result = await GetResponseAsync(request);
-                return JsonConvert.DeserializeObject<TResult>(result);
-            }
+            using (var request = new HttpRequestMessage(method, GetFullUri(requestUri, uriQueryParams)))
+                return JsonConvert.DeserializeObject<TResult>(await GetResponseAsync(request));
         }
 
-        protected async Task SendRequestAsync(HttpMethod method, string requestUri, string uriQueryParams = null)
+        protected async Task SendRequestAsync(
+            HttpMethod method,
+            string requestUri,
+            Dictionary<string, object> uriQueryParams = null)
         {
-            var uri = uriQueryParams != null ? requestUri + uriQueryParams : requestUri;
-            using (var request = new HttpRequestMessage(method, uri))
+            using (var request = new HttpRequestMessage(method, GetFullUri(requestUri, uriQueryParams)))
                 await GetResponseAsync(request);
         }
 
@@ -73,17 +59,15 @@ namespace ExternDotnetSDK.Clients.Common
             HttpMethod method,
             string requestUri,
             object contentDto,
-            string uriQueryParams = null)
+            Dictionary<string, object> uriQueryParams = null)
         {
             using (var content = new StringContent(JsonConvert.SerializeObject(contentDto)))
             {
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var uri = uriQueryParams != null ? requestUri + uriQueryParams : requestUri;
-                using (var request = new HttpRequestMessage(method, uri))
+                using (var request = new HttpRequestMessage(method, GetFullUri(requestUri, uriQueryParams)))
                 {
                     request.Content = content;
-                    var result = await GetResponseAsync(request);
-                    return JsonConvert.DeserializeObject<TResult>(result);
+                    return JsonConvert.DeserializeObject<TResult>(await GetResponseAsync(request));
                 }
             }
         }
@@ -92,18 +76,23 @@ namespace ExternDotnetSDK.Clients.Common
             HttpMethod method,
             string requestUri,
             object contentDto,
-            string uriQueryParams = null)
+            Dictionary<string, object> uriQueryParams = null)
         {
             using (var content = new StringContent(JsonConvert.SerializeObject(contentDto)))
             {
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var uri = uriQueryParams != null ? requestUri + uriQueryParams : requestUri;
-                using (var request = new HttpRequestMessage(method, uri))
+                using (var request = new HttpRequestMessage(method, GetFullUri(requestUri, uriQueryParams)))
                 {
                     request.Content = content;
                     await GetResponseAsync(request);
                 }
             }
         }
+
+        private static string GetFullUri(string requestUri, Dictionary<string, object> uriQueryParams) =>
+            uriQueryParams != null ? requestUri + StringifyUriQueryParams(uriQueryParams) : requestUri;
+
+        private static string StringifyUriQueryParams(Dictionary<string, object> parameters) =>
+            $"?{string.Join("&", parameters.Select(x => $"{x.Key}={x.Value.ToString()}"))}";
     }
 }

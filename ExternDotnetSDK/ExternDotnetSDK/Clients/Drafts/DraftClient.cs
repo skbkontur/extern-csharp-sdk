@@ -50,10 +50,11 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid accountId,
             Guid draftId,
             Guid documentId,
-            DocumentContents content) => await SendRequestAsync<DraftDocument>(
-            HttpMethod.Put,
-            $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}",
-            content);
+            DocumentContents content) =>
+            await SendRequestAsync<DraftDocument>(
+                HttpMethod.Put,
+                $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}",
+                content);
 
         public async Task<string> GetDocumentPrintAsync(Guid accountId, Guid draftId, Guid documentId) =>
             await SendRequestAsync<string>(HttpMethod.Get, $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/print");
@@ -82,10 +83,11 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid accountId,
             Guid draftId,
             Guid documentId,
-            SignatureRequest request = null) => await SendRequestAsync<Signature>(
-            HttpMethod.Post,
-            $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures",
-            request);
+            SignatureRequest request = null) =>
+            await SendRequestAsync<Signature>(
+                HttpMethod.Post,
+                $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures",
+                request);
 
         public async Task DeleteDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId) =>
             await SendRequestAsync(
@@ -102,64 +104,64 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid draftId,
             Guid documentId,
             Guid signatureId,
-            SignatureRequest request) => await SendRequestAsync<Signature>(
-            HttpMethod.Put,
-            $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}",
-            request);
+            SignatureRequest request) =>
+            await SendRequestAsync<Signature>(
+                HttpMethod.Put,
+                $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}",
+                request);
 
         public async Task<string> GetDocumentSignatureContentAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
-            Guid signatureId) => await SendRequestAsync<string>(
-            HttpMethod.Get,
-            $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}/content");
+            Guid signatureId) =>
+            await SendRequestAsync<string>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}/content");
 
         public async Task<CheckResult> CheckDraftAsync(Guid accountId, Guid draftId) =>
             await SendRequestAsync<CheckResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/check",
-                uriQueryParams: "?deferred=false");
+                new Dictionary<string, object> {["deferred"] = false});
 
         public async Task<ApiTaskResult<CheckResult>> StartCheckDraftAsync(Guid accountId, Guid draftId) =>
             await SendRequestAsync<ApiTaskResult<CheckResult>>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/check",
-                uriQueryParams: "?deferred=true");
+                new Dictionary<string, object> {["deferred"] = true});
 
         public async Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId) =>
             await SendRequestAsync<PrepareResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/prepare",
-                uriQueryParams: "?deferred=false");
+                new Dictionary<string, object> {["deferred"] = false});
 
         public async Task<ApiTaskResult<PrepareResult>> StartPrepareDraftAsync(Guid accountId, Guid draftId) =>
             await SendRequestAsync<ApiTaskResult<PrepareResult>>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/prepare",
-                uriQueryParams: "?deferred=true");
+                new Dictionary<string, object> {["deferred"] = true});
 
         public async Task<Docflow> SendDraftAsync(Guid accountId, Guid draftId, bool force = false) =>
             await SendRequestAsync<Docflow>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/send",
-                uriQueryParams: StringifyUriQueryParams(
-                    new Dictionary<string, object>
-                    {
-                        ["deferred"] = false,
-                        [nameof(force)] = force
-                    }));
+                new Dictionary<string, object>
+                {
+                    ["deferred"] = false,
+                    [nameof(force)] = force
+                });
 
-        public async Task<ApiTaskResult<Docflow>> StartSendDraftAsync(Guid accountId, Guid draftId, bool force = false)=>
+        public async Task<ApiTaskResult<Docflow>> StartSendDraftAsync(Guid accountId, Guid draftId, bool force = false) =>
             await SendRequestAsync<ApiTaskResult<Docflow>>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/send",
-                uriQueryParams: StringifyUriQueryParams(
-                    new Dictionary<string, object>
-                    {
-                        ["deferred"] = true,
-                        [nameof(force)] = force
-                    }));
+                new Dictionary<string, object>
+                {
+                    ["deferred"] = true,
+                    [nameof(force)] = force
+                });
 
         public async Task<string> GetDocumentEncryptedContentAsync(Guid accountId, Guid draftId, Guid documentId) =>
             await SendRequestAsync<string>(
@@ -171,48 +173,48 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid draftId,
             Guid documentId,
             FormatType type,
-            string content) => await SendRequestAsync(
-            HttpMethod.Post,
-            $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/build",
-            content,
-            StringifyUriQueryParams(
+            string content) =>
+            await SendRequestAsync(
+                HttpMethod.Post,
+                $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/build",
+                content,
                 new Dictionary<string, object>
                 {
                     ["type"] = type,
                     ["version"] = 1
-                }));
+                });
 
         public async Task<DraftDocument> CreateDocumentWithContentFromFormatAsync(
             Guid accountId,
             Guid draftId,
             FormatType type,
             int version,
-            string content) => await SendRequestAsync<DraftDocument>(
-            HttpMethod.Post,
-            $"/v1/{accountId}/drafts/{draftId}/build-document",
-            content,
-            StringifyUriQueryParams(
+            string content) =>
+            await SendRequestAsync<DraftDocument>(
+                HttpMethod.Post,
+                $"/v1/{accountId}/drafts/{draftId}/build-document",
+                content,
                 new Dictionary<string, object>
                 {
                     ["type"] = type,
                     ["version"] = version,
-                }));
+                });
 
         public async Task<ApiTaskPage> GetDraftTasks(
             Guid accountId,
             Guid draftId,
             long skip = 0,
             int take = int.MaxValue,
-            bool includeReleased = true) => await SendRequestAsync<ApiTaskPage>(
-            HttpMethod.Get,
-            $"/v1/{accountId}/drafts/{draftId}/tasks",
-            uriQueryParams: StringifyUriQueryParams(
+            bool includeReleased = true) =>
+            await SendRequestAsync<ApiTaskPage>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/drafts/{draftId}/tasks",
                 new Dictionary<string, object>
                 {
                     ["skip"] = skip,
                     ["take"] = take,
                     ["includeReleased"] = includeReleased
-                }));
+                });
 
         public async Task<ApiTaskResult<CryptOperationStatusResult>> GetDraftTask(Guid accountId, Guid draftId, Guid apiTaskId) =>
             await SendRequestAsync<ApiTaskResult<CryptOperationStatusResult>>(
@@ -226,11 +228,10 @@ namespace ExternDotnetSDK.Clients.Drafts
             await SendRequestAsync<SignResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/cloud-sign-confirm",
-                uriQueryParams: StringifyUriQueryParams(
-                    new Dictionary<string, object>
-                    {
-                        ["requestId"] = requestId,
-                        ["code"] = code
-                    }));
+                new Dictionary<string, object>
+                {
+                    ["requestId"] = requestId,
+                    ["code"] = code
+                });
     }
 }

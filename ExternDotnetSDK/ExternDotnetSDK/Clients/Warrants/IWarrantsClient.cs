@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Models.Warrants;
 
 namespace ExternDotnetSDK.Clients.Warrants
 {
-    public interface IWarrantsClient
+    public interface IWarrantsClient:IHttpClient
     {
-        IWarrantsClientRefit ClientRefit { get; }
-
         Task<WarrantList> GetWarrantsAsync(Guid accountId, int skip = 0, int take = int.MaxValue, bool forAllUsers = false);
     }
 }

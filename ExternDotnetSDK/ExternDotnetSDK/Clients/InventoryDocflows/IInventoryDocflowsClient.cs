@@ -8,10 +8,9 @@ using ExternDotnetSDK.Models.Drafts;
 
 namespace ExternDotnetSDK.Clients.InventoryDocflows
 {
+    //todo test these methods. Like, all of them.
     public interface IInventoryDocflowsClient
     {
-        IInventoryDocflowsClientRefit ClientRefit { get; }
-
         Task<DocflowPage> GetAllInventoryDocflowsAsync(
             Guid accountId,
             Guid relatedDocflowId,

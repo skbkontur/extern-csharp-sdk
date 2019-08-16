@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
@@ -18,8 +19,15 @@ namespace ExternDotnetSDK.Clients.Certificates
             Guid accountId,
             int skip = 0,
             int take = 100,
-            bool forAllUsers = false) => await SendRequestAsync<CertificateList>(
-            HttpMethod.Get,
-            $"/v1/{accountId}/certificates?skip={skip}&take={take}&forAllUsers={forAllUsers}");
+            bool forAllUsers = false) =>
+            await SendRequestAsync<CertificateList>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/certificates",
+                new Dictionary<string, object>
+                {
+                    ["skip"] = skip,
+                    ["take"] = take,
+                    ["forAllUsers"] = forAllUsers,
+                });
     }
 }

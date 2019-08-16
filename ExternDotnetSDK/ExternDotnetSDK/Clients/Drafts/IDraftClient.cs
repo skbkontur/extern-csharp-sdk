@@ -48,19 +48,16 @@ namespace ExternDotnetSDK.Clients.Drafts
         //todo make test when this method works properly
         Task<CheckResult> CheckDraftAsync(Guid accountId, Guid draftId);
 
-        //todo make test when this method works properly
         Task<ApiTaskResult<CheckResult>> StartCheckDraftAsync(Guid accountId, Guid draftId);
 
         //todo make test when this method works properly
         Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId);
 
-        //todo make test when this method works properly
         Task<ApiTaskResult<PrepareResult>> StartPrepareDraftAsync(Guid accountId, Guid draftId);
 
         //todo make test when this method works properly
         Task<Docflow> SendDraftAsync(Guid accountId, Guid draftId, bool force = false);
 
-        //todo make test when this method works properly
         Task<ApiTaskResult<Docflow>> StartSendDraftAsync(Guid accountId, Guid draftId, bool force = false);
 
         //todo make test when this method works properly

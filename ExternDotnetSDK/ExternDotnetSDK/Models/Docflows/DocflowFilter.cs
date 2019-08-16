@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ExternDotnetSDK.Models.JsonConverters;
@@ -80,22 +81,16 @@ namespace ExternDotnetSDK.Models.Docflows
         /// <summary name="periodTo">Get docflows with period to specified date</summary>
         public DateTime? PeriodTo { get; set; }
 
-        public string StringifyParams()
+        public Dictionary<string, object> ConvertToQueryParameters()
         {
-            var requestParams = properties
-                .Select(
-                    x => new
-                    {
-                        x.Name,
-                        Value = x.PropertyType == typeof (DateTime?)
-                            ? (x.GetValue(this) as DateTime?)?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
-                            : x.GetValue(this)?.ToString()
-                    })
-                .Where(x => !string.IsNullOrEmpty(x.Value))
-                .Select(x => $"{ToLowerCamelCase(x.Name)}={x.Value}");
-            return requestParams.Any()
-                ? "?" + string.Join("&", requestParams)
-                : "";
+            var result = new Dictionary<string, object>();
+            foreach (var info in properties.Where(x => x.GetValue(this) != null))
+            {
+                result[ToLowerCamelCase(info.Name)] = info.PropertyType == typeof (DateTime?)
+                    ? (info.GetValue(this) as DateTime?)?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
+                    : info.GetValue(this)?.ToString();
+            }
+            return result;
         }
 
         private string ToLowerCamelCase(string value) => char.ToLowerInvariant(value[0]) + value.Substring(1);

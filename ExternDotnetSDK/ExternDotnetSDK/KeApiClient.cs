@@ -1,9 +1,7 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using ExternDotnetSDK.Clients.Account;
 using ExternDotnetSDK.Clients.Authentication;
 using ExternDotnetSDK.Clients.Certificates;
-using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Clients.Docflows;
 using ExternDotnetSDK.Clients.Drafts;
 using ExternDotnetSDK.Clients.DraftsBuilders;
@@ -20,6 +18,7 @@ namespace ExternDotnetSDK
     {
         private readonly ILogError iLogError;
         private readonly HttpClient client;
+        private readonly IAuthenticationProvider authProvider;
 
         private IAccountClient accounts;
         private ICertificateClient certificates;
@@ -32,13 +31,11 @@ namespace ExternDotnetSDK
         private IRelatedDocflowsClient relatedDocflows;
         private IWarrantsClient warrants;
 
-        public KeApiClient(ILogError iLogError, string baseAddress, IAuthenticationProvider authProvider)
+        public KeApiClient(ILogError iLogError, IAuthenticationProvider authProvider, HttpClient client)
         {
+            this.authProvider = authProvider;
             this.iLogError = iLogError;
-            client = new HttpClient(new KeApiHttpClientHandler(authProvider.GetApiKey(), authProvider.GetSessionId()))
-            {
-                BaseAddress = new Uri(baseAddress)
-            };
+            this.client = client;
         }
 
         public IAccountClient Accounts => accounts ?? (accounts = new AccountClient(iLogError, client));

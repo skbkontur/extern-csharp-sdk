@@ -4,23 +4,24 @@ using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Logging;
 using ExternDotnetSDK.Models.Docflows;
-using Refit;
 
 namespace ExternDotnetSDK.Clients.RelatedDocflows
 {
     public class RelatedDocflowsClient : InnerCommonClient, IRelatedDocflowsClient
     {
         public RelatedDocflowsClient(ILogError logError, HttpClient client)
-            : base(logError, client) =>
-            ClientRefit = RestService.For<IRelatedDocflowsClientRefit>(client);
-
-        public IRelatedDocflowsClientRefit ClientRefit { get; }
+            : base(logError, client)
+        {
+        }
 
         public async Task<DocflowPage> GetRelatedDocflows(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
-            DocflowFilter filter) => await TryExecuteTask(
-            ClientRefit.GetRelatedDocflows(accountId, relatedDocflowId, relatedDocumentId, filter));
+            DocflowFilter filter) =>
+            await SendRequestAsync<DocflowPage>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/related",
+                filter.ConvertToQueryParameters());
     }
 }
