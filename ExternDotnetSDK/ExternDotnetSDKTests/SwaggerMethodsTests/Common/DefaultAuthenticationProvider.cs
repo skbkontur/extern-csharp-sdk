@@ -1,6 +1,7 @@
-﻿using Refit;
+﻿using ExternDotnetSDK.Clients.Common;
+using Refit;
 
-namespace ExternDotnetSDK.Clients.Authentication
+namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
 {
     public class DefaultAuthenticationProvider : IAuthenticationProvider
     {

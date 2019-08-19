@@ -1,9 +1,7 @@
-﻿namespace ExternDotnetSDK.Clients.Authentication
+﻿namespace ExternDotnetSDK.Clients.Common
 {
     public interface IAuthenticationProvider
     {
-        IAuthClientRefit ClientRefit { get; }
-
         string GetApiKey();
 
         string GetSessionId();

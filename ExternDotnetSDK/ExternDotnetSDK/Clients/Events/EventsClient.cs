@@ -9,8 +9,8 @@ namespace ExternDotnetSDK.Clients.Events
 {
     public class EventsClient : InnerCommonClient, IEventsClient
     {
-        public EventsClient(ILogError logError, HttpClient client)
-            : base(logError, client)
+        public EventsClient(ILogError logError, HttpClient client, IAuthenticationProvider authenticationProvider)
+            : base(logError, client, authenticationProvider)
         {
         }
 

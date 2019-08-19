@@ -17,13 +17,13 @@ namespace ExternDotnetSDK.Clients.Drafts
 {
     public class DraftClient : InnerCommonClient, IDraftClient
     {
-        public DraftClient(ILogError logError, HttpClient client)
-            : base(logError, client)
+        public DraftClient(ILogError logError, HttpClient client, IAuthenticationProvider authenticationProvider)
+            : base(logError, client, authenticationProvider)
         {
         }
 
         public async Task<Draft> CreateDraftAsync(Guid accountId, DraftMetaRequest draftRequest) =>
-            await SendRequestAsync<Draft>(HttpMethod.Post, $"/v1/{accountId}/drafts", draftRequest);
+            await SendRequestWithContentAsync<Draft>(HttpMethod.Post, $"/v1/{accountId}/drafts", draftRequest);
 
         public async Task DeleteDraftAsync(Guid accountId, Guid draftId) =>
             await SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/drafts/{draftId}");
@@ -35,10 +35,10 @@ namespace ExternDotnetSDK.Clients.Drafts
             await SendRequestAsync<DraftMeta>(HttpMethod.Get, $"/v1/{accountId}/drafts/{draftId}/meta");
 
         public async Task<DraftMeta> UpdateDraftMetaAsync(Guid accountId, Guid draftId, DraftMetaRequest newMeta) =>
-            await SendRequestAsync<DraftMeta>(HttpMethod.Put, $"/v1/{accountId}/drafts/{draftId}/meta", newMeta);
+            await SendRequestWithContentAsync<DraftMeta>(HttpMethod.Put, $"/v1/{accountId}/drafts/{draftId}/meta", newMeta);
 
         public async Task<DraftDocument> AddDocumentAsync(Guid accountId, Guid draftId, DocumentContents content) =>
-            await SendRequestAsync<DraftDocument>(HttpMethod.Post, $"/v1/{accountId}/drafts/{draftId}/documents", content);
+            await SendRequestWithContentAsync<DraftDocument>(HttpMethod.Post, $"/v1/{accountId}/drafts/{draftId}/documents", content);
 
         public async Task DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId) =>
             await SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}");
@@ -51,7 +51,7 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid draftId,
             Guid documentId,
             DocumentContents content) =>
-            await SendRequestAsync<DraftDocument>(
+            await SendRequestWithContentAsync<DraftDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}",
                 content);
@@ -65,7 +65,7 @@ namespace ExternDotnetSDK.Clients.Drafts
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/decrypted-content");
 
         public async Task UpdateDocumentDecryptedContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content) =>
-            await SendRequestAsync(
+            await SendRequestWithContentAsync(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/decrypted-content",
                 contentDto: Convert.ToBase64String(content));
@@ -74,7 +74,7 @@ namespace ExternDotnetSDK.Clients.Drafts
             await SendRequestAsync<string>(HttpMethod.Get, $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signature");
 
         public async Task UpdateDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content) =>
-            await SendRequestAsync(
+            await SendRequestWithContentAsync(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signature",
                 contentDto: Convert.ToBase64String(content));
@@ -84,7 +84,7 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid draftId,
             Guid documentId,
             SignatureRequest request = null) =>
-            await SendRequestAsync<Signature>(
+            await SendRequestWithContentAsync<Signature>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures",
                 request);
@@ -105,7 +105,7 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid documentId,
             Guid signatureId,
             SignatureRequest request) =>
-            await SendRequestAsync<Signature>(
+            await SendRequestWithContentAsync<Signature>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}",
                 request);
@@ -174,7 +174,7 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid documentId,
             FormatType type,
             string content) =>
-            await SendRequestAsync(
+            await SendRequestWithContentAsync(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/build",
                 content,
@@ -190,7 +190,7 @@ namespace ExternDotnetSDK.Clients.Drafts
             FormatType type,
             int version,
             string content) =>
-            await SendRequestAsync<DraftDocument>(
+            await SendRequestWithContentAsync<DraftDocument>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/build-document",
                 content,

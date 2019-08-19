@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using ExternDotnetSDK.Clients.Account;
-using ExternDotnetSDK.Clients.Authentication;
+using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Clients.Docflows;
 using ExternDotnetSDK.Clients.Drafts;
 using ExternDotnetSDK.Clients.DraftsBuilders;
@@ -13,7 +13,7 @@ namespace ExternDotnetSDK
 {
     public class KeApiClient : IKeApiClient
     {
-        private readonly ILogError iLogError;
+        private readonly ILogError iLog;
         private readonly HttpClient client;
         private readonly IAuthenticationProvider authProvider;
 
@@ -25,25 +25,25 @@ namespace ExternDotnetSDK
         private IInventoryDocflowsClient inventoryDocflows;
         private IOrganizationsClient organizations;
 
-        public KeApiClient(ILogError iLogError, IAuthenticationProvider authProvider, HttpClient client)
+        public KeApiClient(ILogError iLog, IAuthenticationProvider authProvider, HttpClient client)
         {
             this.authProvider = authProvider;
-            this.iLogError = iLogError;
+            this.iLog = iLog;
             this.client = client;
         }
 
-        public IAccountClient Accounts => accounts ?? (accounts = new AccountClient(iLogError, client));
-        public IDocflowsClient Docflows => docflows ?? (docflows = new DocflowsClient(iLogError, client));
-        public IDraftClient Drafts => drafts ?? (drafts = new DraftClient(iLogError, client));
-        public IEventsClient Events => events ?? (events = new EventsClient(iLogError, client));
+        public IAccountClient Accounts => accounts ?? (accounts = new AccountClient(iLog, client, authProvider));
+        public IDocflowsClient Docflows => docflows ?? (docflows = new DocflowsClient(iLog, client, authProvider));
+        public IDraftClient Drafts => drafts ?? (drafts = new DraftClient(iLog, client, authProvider));
+        public IEventsClient Events => events ?? (events = new EventsClient(iLog, client, authProvider));
 
         public IDraftsBuilderClient DraftsBuilder =>
-            draftsBuilder ?? (draftsBuilder = new DraftsBuilderClient(iLogError, client));
+            draftsBuilder ?? (draftsBuilder = new DraftsBuilderClient(iLog, client, authProvider));
 
         public IOrganizationsClient Organizations =>
-            organizations ?? (organizations = new OrganizationsClient(iLogError, client));
+            organizations ?? (organizations = new OrganizationsClient(iLog, client, authProvider));
 
         public IInventoryDocflowsClient InventoryDocflows =>
-            inventoryDocflows ?? (inventoryDocflows = new InventoryDocflowsClient(iLogError, client));
+            inventoryDocflows ?? (inventoryDocflows = new InventoryDocflowsClient(iLog, client, authProvider));
     }
 }

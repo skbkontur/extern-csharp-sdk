@@ -13,13 +13,13 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
 {
     public class DraftsBuilderClient : InnerCommonClient, IDraftsBuilderClient
     {
-        public DraftsBuilderClient(ILogError logError, HttpClient client)
-            : base(logError, client)
+        public DraftsBuilderClient(ILogError logError, HttpClient client, IAuthenticationProvider authenticationProvider)
+            : base(logError, client, authenticationProvider)
         {
         }
 
         public async Task<DraftsBuilder> CreateDraftsBuilderAsync(Guid accountId, DraftsBuilderMetaRequest meta) =>
-            await SendRequestAsync<DraftsBuilder>(HttpMethod.Post, $"/v1/{accountId}/drafts/builders", meta);
+            await SendRequestWithContentAsync<DraftsBuilder>(HttpMethod.Post, $"/v1/{accountId}/drafts/builders", meta);
 
         public async Task DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId) =>
             await SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/drafts/builders/{draftsBuilderId}");
@@ -70,7 +70,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid draftsBuilderId,
             Guid documentId,
             DraftsBuilderDocumentFileContents contents) =>
-            await SendRequestAsync<DraftsBuilderDocumentFile>(
+            await SendRequestWithContentAsync<DraftsBuilderDocumentFile>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files",
                 contents);
@@ -99,7 +99,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid documentId,
             Guid fileId,
             DraftsBuilderDocumentFileContents contents) =>
-            await SendRequestAsync<DraftsBuilderDocumentFile>(
+            await SendRequestWithContentAsync<DraftsBuilderDocumentFile>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
                 contents);
@@ -137,7 +137,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid documentId,
             Guid fileId,
             DraftsBuilderDocumentFileMetaRequest meta) =>
-            await SendRequestAsync<DraftsBuilderDocumentFileMeta>(
+            await SendRequestWithContentAsync<DraftsBuilderDocumentFileMeta>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta",
                 meta);
@@ -151,7 +151,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid accountId,
             Guid draftsBuilderId,
             DraftsBuilderDocumentMetaRequest meta) =>
-            await SendRequestAsync<DraftsBuilderDocument>(
+            await SendRequestWithContentAsync<DraftsBuilderDocument>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents",
                 meta);
@@ -182,7 +182,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid draftsBuilderId,
             Guid documentId,
             DraftsBuilderMetaRequest meta) =>
-            await SendRequestAsync<DraftsBuilderDocumentMeta>(
+            await SendRequestWithContentAsync<DraftsBuilderDocumentMeta>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta",
                 meta);

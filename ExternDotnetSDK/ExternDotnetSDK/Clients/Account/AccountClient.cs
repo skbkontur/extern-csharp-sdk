@@ -12,12 +12,12 @@ namespace ExternDotnetSDK.Clients.Account
 {
     public class AccountClient : InnerCommonClient, IAccountClient
     {
-        public AccountClient(ILogError logError, HttpClient client)
-            : base(logError, client)
+        public AccountClient(ILogError logError, HttpClient client, IAuthenticationProvider authenticationProvider)
+            : base(logError, client, authenticationProvider)
         {
         }
 
-        public async Task<AccountList> GetAccountsAsync(int skip = 0, int take = int.MaxValue) =>
+        public async Task<AccountList> GetAccountsAsync(int skip = 0, int take = 100) =>
             await SendRequestAsync<AccountList>(
                 HttpMethod.Get,
                 "/v1",
@@ -30,11 +30,10 @@ namespace ExternDotnetSDK.Clients.Account
         public async Task<Models.Accounts.Account> GetAccountAsync(Guid accountId) =>
             await SendRequestAsync<Models.Accounts.Account>(HttpMethod.Get, $"/v1/{accountId}");
 
-        public async Task DeleteAccountAsync(Guid accountId) =>
-            await SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}");
+        public async Task DeleteAccountAsync(Guid accountId) => await SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}");
 
         public async Task<Models.Accounts.Account> CreateAccountAsync(string inn, string kpp, string organizationName) =>
-            await SendRequestAsync<Models.Accounts.Account>(
+            await SendRequestWithContentAsync<Models.Accounts.Account>(
                 HttpMethod.Post,
                 "/v1",
                 new CreateAccountRequestDto

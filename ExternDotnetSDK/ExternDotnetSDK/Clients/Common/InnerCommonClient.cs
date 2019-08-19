@@ -10,16 +10,75 @@ namespace ExternDotnetSDK.Clients.Common
 {
     public class InnerCommonClient : IHttpClient
     {
+        private const string MediaType = "application/json";
+        private const string AuthSidHeader = "auth.sid";
+        private const string ApiKeyHeader = "X-Kontur-Apikey";
+
         protected readonly ILogError LogError;
+        protected readonly IAuthenticationProvider AuthenticationProvider;
+
         public HttpClient Client { get; }
 
-        public InnerCommonClient(ILogError logError, HttpClient client)
+        public InnerCommonClient(ILogError logError, HttpClient client, IAuthenticationProvider authenticationProvider)
         {
             LogError = logError;
             Client = client;
+            AuthenticationProvider = authenticationProvider;
         }
 
-        private async Task<string> GetResponseAsync(HttpRequestMessage message)
+        protected async Task<TResult> SendRequestAsync<TResult>(
+            HttpMethod method,
+            string requestUri,
+            Dictionary<string, object> uriQueryParams = null)
+        {
+            using (var request = MakeAuthorizedRequest(method, GetFullUri(requestUri, uriQueryParams)))
+                return JsonConvert.DeserializeObject<TResult>(await TryGetResponseAsync(request));
+        }
+
+        protected async Task SendRequestAsync(
+            HttpMethod method,
+            string requestUri,
+            Dictionary<string, object> uriQueryParams = null)
+        {
+            using (var request = MakeAuthorizedRequest(method, GetFullUri(requestUri, uriQueryParams)))
+                await TryGetResponseAsync(request);
+        }
+
+        protected async Task<TResult> SendRequestWithContentAsync<TResult>(
+            HttpMethod method,
+            string requestUri,
+            object contentDto,
+            Dictionary<string, object> uriQueryParams = null)
+        {
+            using (var content = new StringContent(JsonConvert.SerializeObject(contentDto)))
+            {
+                content.Headers.ContentType = new MediaTypeHeaderValue(MediaType);
+                using (var request = MakeAuthorizedRequest(method, GetFullUri(requestUri, uriQueryParams)))
+                {
+                    request.Content = content;
+                    return JsonConvert.DeserializeObject<TResult>(await TryGetResponseAsync(request));
+                }
+            }
+        }
+
+        protected async Task SendRequestWithContentAsync(
+            HttpMethod method,
+            string requestUri,
+            object contentDto,
+            Dictionary<string, object> uriQueryParams = null)
+        {
+            using (var content = new StringContent(JsonConvert.SerializeObject(contentDto)))
+            {
+                content.Headers.ContentType = new MediaTypeHeaderValue(MediaType);
+                using (var request = MakeAuthorizedRequest(method, GetFullUri(requestUri, uriQueryParams)))
+                {
+                    request.Content = content;
+                    await TryGetResponseAsync(request);
+                }
+            }
+        }
+
+        private async Task<string> TryGetResponseAsync(HttpRequestMessage message)
         {
             using (var response = await Client.SendAsync(message))
             {
@@ -37,56 +96,12 @@ namespace ExternDotnetSDK.Clients.Common
             }
         }
 
-        protected async Task<TResult> SendRequestAsync<TResult>(
-            HttpMethod method,
-            string requestUri,
-            Dictionary<string, object> uriQueryParams = null)
+        private HttpRequestMessage MakeAuthorizedRequest(HttpMethod method, string fullUri)
         {
-            using (var request = new HttpRequestMessage(method, GetFullUri(requestUri, uriQueryParams)))
-                return JsonConvert.DeserializeObject<TResult>(await GetResponseAsync(request));
-        }
-
-        protected async Task SendRequestAsync(
-            HttpMethod method,
-            string requestUri,
-            Dictionary<string, object> uriQueryParams = null)
-        {
-            using (var request = new HttpRequestMessage(method, GetFullUri(requestUri, uriQueryParams)))
-                await GetResponseAsync(request);
-        }
-
-        protected async Task<TResult> SendRequestAsync<TResult>(
-            HttpMethod method,
-            string requestUri,
-            object contentDto,
-            Dictionary<string, object> uriQueryParams = null)
-        {
-            using (var content = new StringContent(JsonConvert.SerializeObject(contentDto)))
-            {
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                using (var request = new HttpRequestMessage(method, GetFullUri(requestUri, uriQueryParams)))
-                {
-                    request.Content = content;
-                    return JsonConvert.DeserializeObject<TResult>(await GetResponseAsync(request));
-                }
-            }
-        }
-
-        protected async Task SendRequestAsync(
-            HttpMethod method,
-            string requestUri,
-            object contentDto,
-            Dictionary<string, object> uriQueryParams = null)
-        {
-            using (var content = new StringContent(JsonConvert.SerializeObject(contentDto)))
-            {
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                using (var request = new HttpRequestMessage(method, GetFullUri(requestUri, uriQueryParams)))
-                {
-                    request.Content = content;
-                    await GetResponseAsync(request);
-                }
-            }
+            var request = new HttpRequestMessage(method, fullUri);
+            request.Headers.Authorization = new AuthenticationHeaderValue(AuthSidHeader, AuthenticationProvider.GetSessionId());
+            request.Headers.Add(ApiKeyHeader, AuthenticationProvider.GetApiKey());
+            return request;
         }
 
         private static string GetFullUri(string requestUri, Dictionary<string, object> uriQueryParams) =>

@@ -10,8 +10,8 @@ namespace ExternDotnetSDK.Clients.Organizations
 {
     public class OrganizationsClient : InnerCommonClient, IOrganizationsClient
     {
-        public OrganizationsClient(ILogError logError, HttpClient client)
-            : base(logError, client)
+        public OrganizationsClient(ILogError logError, HttpClient client, IAuthenticationProvider authenticationProvider)
+            : base(logError, client, authenticationProvider)
         {
         }
 
@@ -36,13 +36,13 @@ namespace ExternDotnetSDK.Clients.Organizations
             await SendRequestAsync<Organization>(HttpMethod.Get, $"/v1/{accountId}/organizations/{orgId}");
 
         public async Task<Organization> UpdateOrganizationAsync(Guid accountId, Guid orgId, string newName) =>
-            await SendRequestAsync<Organization>(
+            await SendRequestWithContentAsync<Organization>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/organizations/{orgId}",
                 new UpdateOrganizationRequestDto {Name = newName});
 
         public async Task<Organization> CreateOrganizationAsync(Guid accountId, string inn, string kpp, string name) =>
-            await SendRequestAsync<Organization>(
+            await SendRequestWithContentAsync<Organization>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/organizations",
                 new CreateOrganizationRequestDto

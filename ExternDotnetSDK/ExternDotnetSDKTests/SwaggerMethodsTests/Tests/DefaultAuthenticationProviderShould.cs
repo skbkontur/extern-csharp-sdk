@@ -1,5 +1,5 @@
 ﻿using System;
-using ExternDotnetSDK.Clients.Authentication;
+using ExternDotnetSDKTests.SwaggerMethodsTests.Common;
 using NUnit.Framework;
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
