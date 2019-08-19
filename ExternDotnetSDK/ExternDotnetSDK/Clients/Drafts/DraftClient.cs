@@ -69,7 +69,7 @@ namespace ExternDotnetSDK.Clients.Drafts
             await SendRequestAsync(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/decrypted-content",
-                contentDto: Convert.ToBase64String(content));
+                Convert.ToBase64String(content));
 
         public async Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId) =>
             await SendRequestAsync<string>(HttpMethod.Get, $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signature");
@@ -78,7 +78,7 @@ namespace ExternDotnetSDK.Clients.Drafts
             await SendRequestAsync(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signature",
-                contentDto: Convert.ToBase64String(content));
+                Convert.ToBase64String(content));
 
         public async Task<Signature> AddDocumentSignatureAsync(
             Guid accountId,

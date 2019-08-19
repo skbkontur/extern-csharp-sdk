@@ -8,7 +8,6 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
         private readonly string login;
         private readonly string password;
         private readonly string apiKey;
-        public IAuthClientRefit ClientRefit { get; }
 
         public MyAuthenticationProvider(string address, string apiKey, string password, string login)
         {
@@ -17,6 +16,8 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
             this.login = login;
             ClientRefit = RestService.For<IAuthClientRefit>(address);
         }
+
+        public IAuthClientRefit ClientRefit { get; }
 
         public string GetApiKey() => apiKey;
         public string GetSessionId() => ClientRefit.ByPass(login, password, apiKey).Result.Sid;

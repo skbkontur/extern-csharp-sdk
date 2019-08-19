@@ -48,10 +48,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             var fakeLogError = new FakeLogError();
             var authProvider = new MyAuthenticationProvider(Data.AuthAddress, Data.ApiKey, Data.Password, Data.Login);
-            var client = new HttpClient
-            {
-                BaseAddress = new Uri(Data.BaseAddress)
-            };
+            var client = new HttpClient {BaseAddress = new Uri(Data.BaseAddress)};
             Client = new KeApiClient(fakeLogError, authProvider, new DefaultSender(client));
         }
     }

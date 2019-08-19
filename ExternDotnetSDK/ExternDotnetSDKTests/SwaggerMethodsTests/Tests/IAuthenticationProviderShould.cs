@@ -11,11 +11,12 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public void Authorize_WithValidParameters()
         {
-            Assert.DoesNotThrow(() =>
-            {
-                var authProvider = new MyAuthenticationProvider(Data.AuthAddress, Data.ApiKey, Data.Password, Data.Login);
-                authProvider.GetSessionId();
-            });
+            Assert.DoesNotThrow(
+                () =>
+                {
+                    var authProvider = new MyAuthenticationProvider(Data.AuthAddress, Data.ApiKey, Data.Password, Data.Login);
+                    authProvider.GetSessionId();
+                });
         }
 
         [Test]

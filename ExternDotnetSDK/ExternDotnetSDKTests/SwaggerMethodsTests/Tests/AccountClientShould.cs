@@ -100,7 +100,8 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [TestCase(0, -1)]
         public void FailToGetWarrants_WithBadQueryParameters(int skip = 0, int take = int.MaxValue)
         {
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Accounts.GetAccountWarrantsAsync(Account.Id, skip, take));
+            Assert.ThrowsAsync<HttpRequestException>(
+                async () => await Client.Accounts.GetAccountWarrantsAsync(Account.Id, skip, take));
         }
     }
 }

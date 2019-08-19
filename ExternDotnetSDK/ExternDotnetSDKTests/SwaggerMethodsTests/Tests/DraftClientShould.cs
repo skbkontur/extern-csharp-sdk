@@ -30,16 +30,16 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                 Payer = new AccountInfoRequest
                 {
                     Inn = cert.Inn,
-                    Organization = new OrganizationInfoRequest { Kpp = cert.Kpp }
+                    Organization = new OrganizationInfoRequest {Kpp = cert.Kpp}
                 },
                 Sender = new SenderRequest
                 {
                     Inn = cert.Inn,
                     Kpp = cert.Kpp,
                     IpAddress = "8.8.8.8",
-                    Certificate = new CertificateRequest { Content = cert.Content }
+                    Certificate = new CertificateRequest {Content = cert.Content}
                 },
-                Recipient = new RecipientInfoRequest { FssCode = "11111" }
+                Recipient = new RecipientInfoRequest {FssCode = "11111"}
             };
             draft = await CreateDraftAsync();
             emptyDocument = await CreateEmptyDocument();
@@ -48,7 +48,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                 Account.Id,
                 draft.Id,
                 filledDocument.Id,
-                new SignatureRequest { Base64Content = Convert.ToBase64String(new byte[] { 1, 2, 3, 4 }) });
+                new SignatureRequest {Base64Content = Convert.ToBase64String(new byte[] {1, 2, 3, 4})});
         }
 
         [OneTimeTearDown]
@@ -83,7 +83,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Drafts.CreateDraftAsync(
                     Account.Id,
-                    new DraftMetaRequest { Payer = new AccountInfoRequest() }));
+                    new DraftMetaRequest {Payer = new AccountInfoRequest()}));
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                     {
                         Payer = new AccountInfoRequest(),
                         Sender = new SenderRequest(),
-                        Recipient = new RecipientInfoRequest { FssCode = "11111" }
+                        Recipient = new RecipientInfoRequest {FssCode = "11111"}
                     }));
         }
 
@@ -184,7 +184,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                             Inn = validDraftMetaRequest.Sender.Inn,
                             IpAddress = "8.8.8.8",
                             Kpp = validDraftMetaRequest.Sender.Kpp,
-                            Certificate = new CertificateRequest { Content = "1111" }
+                            Certificate = new CertificateRequest {Content = "1111"}
                         },
                         Recipient = validDraftMetaRequest.Recipient
                     }));
@@ -289,7 +289,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                 {
                     Payer = validDraftMetaRequest.Payer,
                     Sender = validDraftMetaRequest.Sender,
-                    Recipient = new RecipientInfoRequest { FssCode = "22222" }
+                    Recipient = new RecipientInfoRequest {FssCode = "22222"}
                 });
             oldMeta.Should().NotBeEquivalentTo(newMeta);
         }
@@ -328,7 +328,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                 async () => await Client.Drafts.AddDocumentAsync(
                     Account.Id,
                     draft.Id,
-                    new DocumentContents { Base64Content = "1" }));
+                    new DocumentContents {Base64Content = "1"}));
         }
 
         [Test]
@@ -338,7 +338,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                 async () => await Client.Drafts.AddDocumentAsync(
                     Account.Id,
                     draft.Id,
-                    new DocumentContents { Signature = "1" }));
+                    new DocumentContents {Signature = "1"}));
         }
 
         [Test]
@@ -367,13 +367,13 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                     Account.Id,
                     draft.Id,
                     emptyDocument.Id,
-                    new DocumentContents { Base64Content = "1" }));
+                    new DocumentContents {Base64Content = "1"}));
             Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Drafts.UpdateDocumentAsync(
                     Account.Id,
                     draft.Id,
                     emptyDocument.Id,
-                    new DocumentContents { Signature = "1" }));
+                    new DocumentContents {Signature = "1"}));
         }
 
         [Test]
@@ -385,7 +385,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                     Account.Id,
                     draft.Id,
                     document.Id,
-                    new DocumentContents { Base64Content = Convert.ToBase64String(new byte[] { 1 }) }));
+                    new DocumentContents {Base64Content = Convert.ToBase64String(new byte[] {1})}));
             await Client.Drafts.DeleteDocumentAsync(Account.Id, draft.Id, document.Id);
         }
 
@@ -435,7 +435,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public void FailToUpdateDocumentDecryptedContent_WithBadParameters()
         {
-            var content = new byte[] { 9, 1, 1 };
+            var content = new byte[] {9, 1, 1};
             Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Drafts.UpdateDocumentDecryptedContentAsync(
                     Guid.Empty,
@@ -465,7 +465,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public async Task UpdateDocumentDecryptedContent_WithValidParameters()
         {
-            var content = new byte[] { 1 };
+            var content = new byte[] {1};
             var document = await CreateEmptyDocument();
             Assert.DoesNotThrowAsync(
                 async () => await Client.Drafts.UpdateDocumentDecryptedContentAsync(
@@ -504,7 +504,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public void FailToUpdateSignatureContent_WithBadParameters()
         {
-            var content = new byte[] { 1 };
+            var content = new byte[] {1};
             Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Drafts.UpdateDocumentSignatureContentAsync(
                     Guid.Empty,
@@ -534,7 +534,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public async Task UpdateSignatureContent_WithValidParameters()
         {
-            var content = new byte[] { 7 };
+            var content = new byte[] {7};
             var document = await CreateEmptyDocument();
             Assert.DoesNotThrowAsync(
                 async () => await Client.Drafts.UpdateDocumentSignatureContentAsync(
@@ -548,8 +548,8 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public void FailToCreateSignature_WithBadParameters()
         {
-            var request = new SignatureRequest { Base64Content = Convert.ToBase64String(new byte[] { 5 }) };
-            var badRequest = new SignatureRequest { Base64Content = "2" };
+            var request = new SignatureRequest {Base64Content = Convert.ToBase64String(new byte[] {5})};
+            var badRequest = new SignatureRequest {Base64Content = "2"};
             Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Drafts.AddDocumentSignatureAsync(
                     Guid.Empty,
@@ -655,8 +655,8 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [Test]
         public void FailToUpdateSignature_WithBadParameters()
         {
-            var validRequest = new SignatureRequest { Base64Content = Convert.ToBase64String(new byte[] { 6, 7 }) };
-            var invalidRequest = new SignatureRequest { Base64Content = "2" };
+            var validRequest = new SignatureRequest {Base64Content = Convert.ToBase64String(new byte[] {6, 7})};
+            var invalidRequest = new SignatureRequest {Base64Content = "2"};
             Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Drafts.UpdateDocumentSignatureAsync(
                     Guid.Empty,
@@ -698,7 +698,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public async Task UpdateSignature_WithValidParameters()
         {
             var signature = await Client.Drafts.AddDocumentSignatureAsync(Account.Id, draft.Id, filledDocument.Id);
-            var newRequest = new SignatureRequest { Base64Content = Convert.ToBase64String(new byte[] { 6, 7 }) };
+            var newRequest = new SignatureRequest {Base64Content = Convert.ToBase64String(new byte[] {6, 7})};
             Assert.DoesNotThrowAsync(
                 async () => await Client.Drafts.UpdateDocumentSignatureAsync(
                     Account.Id,
@@ -894,7 +894,8 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             await Client.Drafts.StartCheckDraftAsync(Account.Id, d.Id);
             var taskId = (await Client.Drafts.GetDraftTasks(Account.Id, d.Id)).ApiTaskPageItems[0].Id;
             Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.GetDraftTask(Guid.Empty, d.Id, taskId));
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.GetDraftTask(Account.Id, Guid.Empty, taskId));
+            Assert.ThrowsAsync<HttpRequestException>(
+                async () => await Client.Drafts.GetDraftTask(Account.Id, Guid.Empty, taskId));
             Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.GetDraftTask(Account.Id, d.Id, Guid.Empty));
             await Client.Drafts.DeleteDraftAsync(Account.Id, d.Id);
         }
@@ -931,7 +932,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                 d.Id,
                 new DocumentContents
                 {
-                    Base64Content = Convert.ToBase64String(new byte[] { 1 }),
+                    Base64Content = Convert.ToBase64String(new byte[] {1}),
                     Description = new DocumentDescriptionRequestDto
                     {
                         ContentType = "application/json",

@@ -203,7 +203,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToPrintDocument_WhenDocumentPrintUnsupported()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.PrintDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] { 0 }));
+                async () => await Client.Docflows.PrintDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] {0}));
         }
 
         [Test]
@@ -214,7 +214,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
                     Account.Id,
                     docflow.Id,
                     document.Id,
-                    new DecryptDocumentRequestData { CertificateBase64 = "bad cert" }));
+                    new DecryptDocumentRequestData {CertificateBase64 = "bad cert"}));
         }
 
         [Test]
@@ -264,13 +264,13 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         public void FailToRecognizeDocument_WithoutRecognitionSupport()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] { 1 }));
+                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] {1}));
         }
 
         [Test]
         public void FailToRecognizeDocument_WithBadParameters()
         {
-            var content = new byte[] { 1 };
+            var content = new byte[] {1};
             Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Docflows.RecognizeDocumentAsync(Guid.Empty, docflow.Id, document.Id, content));
             Assert.ThrowsAsync<HttpRequestException>(
