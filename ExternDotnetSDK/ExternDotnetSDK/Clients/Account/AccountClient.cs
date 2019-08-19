@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
+using ExternDotnetSDK.Clients.Common.SendAsync;
 using ExternDotnetSDK.Logging;
 using ExternDotnetSDK.Models.Accounts;
 using ExternDotnetSDK.Models.Certificates;
@@ -12,7 +13,7 @@ namespace ExternDotnetSDK.Clients.Account
 {
     public class AccountClient : InnerCommonClient, IAccountClient
     {
-        public AccountClient(ILogError logError, HttpClient client, IAuthenticationProvider authenticationProvider)
+        public AccountClient(ILogError logError, ISendAsync client, IAuthenticationProvider authenticationProvider)
             : base(logError, client, authenticationProvider)
         {
         }
@@ -33,7 +34,7 @@ namespace ExternDotnetSDK.Clients.Account
         public async Task DeleteAccountAsync(Guid accountId) => await SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}");
 
         public async Task<Models.Accounts.Account> CreateAccountAsync(string inn, string kpp, string organizationName) =>
-            await SendRequestWithContentAsync<Models.Accounts.Account>(
+            await SendRequestAsync<Models.Accounts.Account>(
                 HttpMethod.Post,
                 "/v1",
                 new CreateAccountRequestDto
@@ -55,7 +56,7 @@ namespace ExternDotnetSDK.Clients.Account
                 {
                     ["skip"] = skip,
                     ["take"] = take,
-                    ["forAllUsers"] = forAllUsers,
+                    ["forAllUsers"] = forAllUsers
                 });
 
         public async Task<WarrantList> GetAccountWarrantsAsync(

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
+using ExternDotnetSDK.Clients.Common.SendAsync;
 using ExternDotnetSDK.Logging;
 using ExternDotnetSDK.Models.Organizations;
 
@@ -10,7 +11,7 @@ namespace ExternDotnetSDK.Clients.Organizations
 {
     public class OrganizationsClient : InnerCommonClient, IOrganizationsClient
     {
-        public OrganizationsClient(ILogError logError, HttpClient client, IAuthenticationProvider authenticationProvider)
+        public OrganizationsClient(ILogError logError, ISendAsync client, IAuthenticationProvider authenticationProvider)
             : base(logError, client, authenticationProvider)
         {
         }
@@ -36,13 +37,13 @@ namespace ExternDotnetSDK.Clients.Organizations
             await SendRequestAsync<Organization>(HttpMethod.Get, $"/v1/{accountId}/organizations/{orgId}");
 
         public async Task<Organization> UpdateOrganizationAsync(Guid accountId, Guid orgId, string newName) =>
-            await SendRequestWithContentAsync<Organization>(
+            await SendRequestAsync<Organization>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/organizations/{orgId}",
                 new UpdateOrganizationRequestDto {Name = newName});
 
         public async Task<Organization> CreateOrganizationAsync(Guid accountId, string inn, string kpp, string name) =>
-            await SendRequestWithContentAsync<Organization>(
+            await SendRequestAsync<Organization>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/organizations",
                 new CreateOrganizationRequestDto

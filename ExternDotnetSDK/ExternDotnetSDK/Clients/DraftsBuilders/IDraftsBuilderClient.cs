@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.DraftsBuilders.Builders;
 using ExternDotnetSDK.Models.DraftsBuilders.DocumentFiles;
@@ -9,7 +8,7 @@ using ExternDotnetSDK.Models.DraftsBuilders.Documents;
 namespace ExternDotnetSDK.Clients.DraftsBuilders
 {
     //todo Cover all these methods with tests. Use KeApiClient for that.
-    public interface IDraftsBuilderClient : IHttpClient
+    public interface IDraftsBuilderClient
     {
         Task<DraftsBuilder> CreateDraftsBuilderAsync(Guid accountId, DraftsBuilderMetaRequest meta);
         Task DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId);

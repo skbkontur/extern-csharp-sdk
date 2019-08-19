@@ -5,14 +5,15 @@ using NUnit.Framework;
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
-    internal class DefaultAuthenticationProviderShould : AllTestsShould
+    // ReSharper disable once InconsistentNaming
+    internal class IAuthenticationProviderShould : AllTestsShould
     {
         [Test]
         public void Authorize_WithValidParameters()
         {
             Assert.DoesNotThrow(() =>
             {
-                var authProvider = new DefaultAuthenticationProvider(Data.AuthAddress, Data.ApiKey, Data.Password, Data.Login);
+                var authProvider = new MyAuthenticationProvider(Data.AuthAddress, Data.ApiKey, Data.Password, Data.Login);
                 authProvider.GetSessionId();
             });
         }
@@ -23,7 +24,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             Assert.Throws<AggregateException>(
                 () =>
                 {
-                    var authProvider = new DefaultAuthenticationProvider(
+                    var authProvider = new MyAuthenticationProvider(
                         Data.AuthAddress,
                         Data.ApiKey,
                         Data.Password,
@@ -38,7 +39,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             Assert.Throws<AggregateException>(
                 () =>
                 {
-                    var authProvider = new DefaultAuthenticationProvider(
+                    var authProvider = new MyAuthenticationProvider(
                         Data.AuthAddress,
                         Data.ApiKey,
                         "not a password",

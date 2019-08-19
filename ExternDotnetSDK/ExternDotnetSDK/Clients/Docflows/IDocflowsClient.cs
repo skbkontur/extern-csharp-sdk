@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Docflows;
@@ -11,7 +10,7 @@ using ExternDotnetSDK.Models.Drafts;
 
 namespace ExternDotnetSDK.Clients.Docflows
 {
-    public interface IDocflowsClient : IHttpClient
+    public interface IDocflowsClient
     {
         Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter filter = null);
         Task<Docflow> GetDocflowAsync(Guid accountId, Guid docflowId);

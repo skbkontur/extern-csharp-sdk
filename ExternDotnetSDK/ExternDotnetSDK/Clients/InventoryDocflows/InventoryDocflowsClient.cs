@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
+using ExternDotnetSDK.Clients.Common.SendAsync;
 using ExternDotnetSDK.Logging;
 using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.Common;
@@ -15,7 +16,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
 {
     public class InventoryDocflowsClient : InnerCommonClient, IInventoryDocflowsClient
     {
-        public InventoryDocflowsClient(ILogError logError, HttpClient client, IAuthenticationProvider authenticationProvider)
+        public InventoryDocflowsClient(ILogError logError, ISendAsync client, IAuthenticationProvider authenticationProvider)
             : base(logError, client, authenticationProvider)
         {
         }
@@ -46,7 +47,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             byte[] decryptedDocumentContent) =>
-            await SendRequestWithContentAsync<byte[]>(
+            await SendRequestAsync<byte[]>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/print",
                 new PrintDocumentData {Content = Convert.ToBase64String(decryptedDocumentContent)});
@@ -90,7 +91,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Urn documentType,
             byte[] certificateContent) =>
-            await SendRequestWithContentAsync<ApiReplyDocument>(
+            await SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/generate-reply",
                 new GenerateReplyDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)},
@@ -104,7 +105,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid replyId,
             byte[] senderIpContent) =>
-            await SendRequestWithContentAsync<Docflow>(
+            await SendRequestAsync<Docflow>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/send",
                 new SendReplyDocumentRequest {SenderIp = Convert.ToBase64String(senderIpContent)});
@@ -117,7 +118,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid replyId,
             byte[] content) =>
-            await SendRequestWithContentAsync<ApiReplyDocument>(
+            await SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/content",
                 Convert.ToBase64String(content));
@@ -130,7 +131,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid replyId,
             byte[] signature) =>
-            await SendRequestWithContentAsync<ApiReplyDocument>(
+            await SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/signature",
                 Convert.ToBase64String(signature));
@@ -209,7 +210,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             byte[] certificateContent) =>
-            await SendRequestWithContentAsync<DecryptionInitResult>(
+            await SendRequestAsync<DecryptionInitResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypt-content",
                 new DecryptDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)});

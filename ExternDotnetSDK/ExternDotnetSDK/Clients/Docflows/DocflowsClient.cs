@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
+using ExternDotnetSDK.Clients.Common.SendAsync;
 using ExternDotnetSDK.Logging;
 using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.Common;
@@ -15,7 +16,7 @@ namespace ExternDotnetSDK.Clients.Docflows
 {
     public class DocflowsClient : InnerCommonClient, IDocflowsClient
     {
-        public DocflowsClient(ILogError logError, HttpClient client, IAuthenticationProvider authenticationProvider)
+        public DocflowsClient(ILogError logError, ISendAsync client, IAuthenticationProvider authenticationProvider)
             : base(logError, client, authenticationProvider)
         {
         }
@@ -84,7 +85,7 @@ namespace ExternDotnetSDK.Clients.Docflows
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}");
 
         public async Task<string> PrintDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, byte[] data) =>
-            await SendRequestWithContentAsync<string>(
+            await SendRequestAsync<string>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/print",
                 new PrintDocumentData {Content = Convert.ToBase64String(data)});
@@ -94,7 +95,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid docflowId,
             Guid documentId,
             DecryptDocumentRequestData data) =>
-            await SendRequestWithContentAsync<DecryptionInitResult>(
+            await SendRequestAsync<DecryptionInitResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content",
                 data);
@@ -113,7 +114,7 @@ namespace ExternDotnetSDK.Clients.Docflows
                 {
                     [nameof(requestId)] = requestId,
                     [nameof(code)] = code,
-                    [nameof(unzip)] = unzip,
+                    [nameof(unzip)] = unzip
                 });
 
         public async Task<ApiReplyDocument> GenerateDocumentReplyAsync(
@@ -122,7 +123,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid documentId,
             Urn documentType,
             byte[] certificateContent) =>
-            await SendRequestWithContentAsync<ApiReplyDocument>(
+            await SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/generate-reply",
                 new GenerateReplyDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)},
@@ -133,7 +134,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid docflowId,
             Guid documentId,
             byte[] content) =>
-            await SendRequestWithContentAsync<RecognizedMeta>(
+            await SendRequestAsync<RecognizedMeta>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/recognize",
                 Convert.ToBase64String(content));
@@ -144,7 +145,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid documentId,
             Guid replyId,
             string senderIp) =>
-            await SendRequestWithContentAsync<Docflow>(
+            await SendRequestAsync<Docflow>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/send",
                 new SendReplyDocumentRequest {SenderIp = senderIp});
@@ -155,7 +156,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid documentId,
             Guid replyId,
             byte[] signature) =>
-            await SendRequestWithContentAsync<ApiReplyDocument>(
+            await SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/signature",
                 Convert.ToBase64String(signature));
@@ -166,7 +167,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid documentId,
             Guid replyId,
             byte[] content) =>
-            await SendRequestWithContentAsync<ApiReplyDocument>(
+            await SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/content",
                 Convert.ToBase64String(content));

@@ -3,12 +3,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Clients.Common.SendAsync;
 using ExternDotnetSDK.Logging;
 using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Clients.Common
 {
-    public class InnerCommonClient : IHttpClient
+    public class InnerCommonClient
     {
         private const string MediaType = "application/json";
         private const string AuthSidHeader = "auth.sid";
@@ -16,14 +17,13 @@ namespace ExternDotnetSDK.Clients.Common
 
         protected readonly ILogError LogError;
         protected readonly IAuthenticationProvider AuthenticationProvider;
+        protected readonly ISendAsync RequestSender;
 
-        public HttpClient Client { get; }
-
-        public InnerCommonClient(ILogError logError, HttpClient client, IAuthenticationProvider authenticationProvider)
+        public InnerCommonClient(ILogError logError, ISendAsync requestSender, IAuthenticationProvider authenticationProvider)
         {
             LogError = logError;
-            Client = client;
             AuthenticationProvider = authenticationProvider;
+            RequestSender = requestSender;
         }
 
         protected async Task<TResult> SendRequestAsync<TResult>(
@@ -44,7 +44,7 @@ namespace ExternDotnetSDK.Clients.Common
                 await TryGetResponseAsync(request);
         }
 
-        protected async Task<TResult> SendRequestWithContentAsync<TResult>(
+        protected async Task<TResult> SendRequestAsync<TResult>(
             HttpMethod method,
             string requestUri,
             object contentDto,
@@ -61,7 +61,7 @@ namespace ExternDotnetSDK.Clients.Common
             }
         }
 
-        protected async Task SendRequestWithContentAsync(
+        protected async Task SendRequestAsync(
             HttpMethod method,
             string requestUri,
             object contentDto,
@@ -80,26 +80,26 @@ namespace ExternDotnetSDK.Clients.Common
 
         private async Task<string> TryGetResponseAsync(HttpRequestMessage message)
         {
-            using (var response = await Client.SendAsync(message))
+            try
             {
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                    using (var content = response.Content)
-                        return await content.ReadAsStringAsync();
-                }
-                catch (HttpRequestException e)
-                {
-                    LogError.Error(e);
-                    throw;
-                }
+                var response = await RequestSender.SendAsync(message);
+                response.HttpResponseMessage.EnsureSuccessStatusCode();
+                using (var content = response.HttpResponseMessage.Content)
+                    return await content.ReadAsStringAsync();
+            }
+            catch (HttpRequestException e)
+            {
+                LogError.Error(e);
+                throw;
             }
         }
 
         private HttpRequestMessage MakeAuthorizedRequest(HttpMethod method, string fullUri)
         {
             var request = new HttpRequestMessage(method, fullUri);
-            request.Headers.Authorization = new AuthenticationHeaderValue(AuthSidHeader, AuthenticationProvider.GetSessionId());
+            request.Headers.Authorization = new AuthenticationHeaderValue(
+                AuthSidHeader,
+                AuthenticationProvider.GetSessionId());
             request.Headers.Add(ApiKeyHeader, AuthenticationProvider.GetApiKey());
             return request;
         }

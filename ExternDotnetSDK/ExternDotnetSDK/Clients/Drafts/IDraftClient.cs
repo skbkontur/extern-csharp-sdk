@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Docflows;
@@ -13,7 +12,7 @@ using Refit;
 
 namespace ExternDotnetSDK.Clients.Drafts
 {
-    public interface IDraftClient : IHttpClient
+    public interface IDraftClient
     {
         Task<Draft> CreateDraftAsync(Guid accountId, DraftMetaRequest draftRequest);
         Task DeleteDraftAsync(Guid accountId, Guid draftId);

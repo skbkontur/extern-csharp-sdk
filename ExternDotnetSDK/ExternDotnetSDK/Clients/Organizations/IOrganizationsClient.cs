@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Models.Organizations;
 
 namespace ExternDotnetSDK.Clients.Organizations
 {
-    public interface IOrganizationsClient : IHttpClient
+    public interface IOrganizationsClient
     {
         Task<OrganizationBatch> GetAllOrganizationsAsync(
             Guid accountId,

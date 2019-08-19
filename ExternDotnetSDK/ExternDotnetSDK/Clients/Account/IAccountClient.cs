@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Models.Accounts;
 using ExternDotnetSDK.Models.Certificates;
 using ExternDotnetSDK.Models.Warrants;
 
 namespace ExternDotnetSDK.Clients.Account
 {
-    public interface IAccountClient : IHttpClient
+    public interface IAccountClient
     {
         Task<AccountList> GetAccountsAsync(int skip = 0, int take = int.MaxValue);
         Task<Models.Accounts.Account> GetAccountAsync(Guid accountId);

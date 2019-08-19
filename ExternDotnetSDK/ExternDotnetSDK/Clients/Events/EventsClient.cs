@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
+using ExternDotnetSDK.Clients.Common.SendAsync;
 using ExternDotnetSDK.Logging;
 using ExternDotnetSDK.Models.Events;
 
@@ -9,7 +10,7 @@ namespace ExternDotnetSDK.Clients.Events
 {
     public class EventsClient : InnerCommonClient, IEventsClient
     {
-        public EventsClient(ILogError logError, HttpClient client, IAuthenticationProvider authenticationProvider)
+        public EventsClient(ILogError logError, ISendAsync client, IAuthenticationProvider authenticationProvider)
             : base(logError, client, authenticationProvider)
         {
         }

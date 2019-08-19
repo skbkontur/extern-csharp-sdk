@@ -3,14 +3,14 @@ using Refit;
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Common
 {
-    public class DefaultAuthenticationProvider : IAuthenticationProvider
+    public class MyAuthenticationProvider : IAuthenticationProvider
     {
         private readonly string login;
         private readonly string password;
         private readonly string apiKey;
         public IAuthClientRefit ClientRefit { get; }
 
-        public DefaultAuthenticationProvider(string address, string apiKey, string password, string login)
+        public MyAuthenticationProvider(string address, string apiKey, string password, string login)
         {
             this.apiKey = apiKey;
             this.password = password;
