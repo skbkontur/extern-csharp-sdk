@@ -95,5 +95,8 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid replyId,
             string code,
             string requestId);
+
+        //todo add tests for this method
+        Task<DocflowPage> GetRelatedDocflows(Guid accountId, Guid relatedDocflowId, Guid relatedDocumentId, DocflowFilter filter);
     }
 }

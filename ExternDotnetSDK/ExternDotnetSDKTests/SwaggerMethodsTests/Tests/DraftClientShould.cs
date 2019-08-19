@@ -24,7 +24,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         {
             InitializeClient();
             Account = (await Client.Accounts.GetAccountsAsync(0, 1)).Accounts[0];
-            var cert = (await Client.Certificates.GetCertificatesAsync(Account.Id)).Certificates[0];
+            var cert = (await Client.Accounts.GetAccountCertificatesAsync(Account.Id)).Certificates[0];
             validDraftMetaRequest = new DraftMetaRequest
             {
                 Payer = new AccountInfoRequest

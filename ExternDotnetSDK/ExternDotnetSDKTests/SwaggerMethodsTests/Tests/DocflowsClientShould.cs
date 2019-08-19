@@ -32,7 +32,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
             docflowDocuments = await Client.Docflows.GetDocumentsAsync(Account.Id, docflow.Id);
             document = docflowDocuments[0];
             signature = (await Client.Docflows.GetDocumentSignaturesAsync(Account.Id, docflow.Id, document.Id))[0];
-            certificate = (await Client.Certificates.GetCertificatesAsync(Account.Id, 0, 1)).Certificates[0];
+            certificate = (await Client.Accounts.GetAccountCertificatesAsync(Account.Id, 0, 1)).Certificates[0];
         }
 
         [OneTimeTearDown]

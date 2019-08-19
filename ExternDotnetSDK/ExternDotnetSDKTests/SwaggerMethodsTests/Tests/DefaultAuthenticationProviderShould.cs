@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Authentication;
 using NUnit.Framework;
-using Refit;
 
 namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
-    internal class AuthClientShould : AllTestsShould
+    internal class DefaultAuthenticationProviderShould : AllTestsShould
     {
         [Test]
         public void Authorize_WithValidParameters()

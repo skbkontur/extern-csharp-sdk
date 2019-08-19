@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Logging;
 using ExternDotnetSDK.Models.Accounts;
+using ExternDotnetSDK.Models.Certificates;
+using ExternDotnetSDK.Models.Warrants;
 
 namespace ExternDotnetSDK.Clients.Account
 {
@@ -40,6 +42,36 @@ namespace ExternDotnetSDK.Clients.Account
                     Inn = inn,
                     Kpp = kpp,
                     OrganizationName = organizationName
+                });
+
+        public async Task<CertificateList> GetAccountCertificatesAsync(
+            Guid accountId,
+            int skip = 0,
+            int take = 100,
+            bool forAllUsers = false) =>
+            await SendRequestAsync<CertificateList>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/certificates",
+                new Dictionary<string, object>
+                {
+                    ["skip"] = skip,
+                    ["take"] = take,
+                    ["forAllUsers"] = forAllUsers,
+                });
+
+        public async Task<WarrantList> GetAccountWarrantsAsync(
+            Guid accountId,
+            int skip = 0,
+            int take = int.MaxValue,
+            bool forAllUsers = false) =>
+            await SendRequestAsync<WarrantList>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/warrants",
+                new Dictionary<string, object>
+                {
+                    ["skip"] = skip,
+                    ["take"] = take,
+                    ["forAllUsers"] = forAllUsers
                 });
     }
 }

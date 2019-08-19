@@ -197,5 +197,15 @@ namespace ExternDotnetSDK.Clients.Docflows
                     [nameof(code)] = code,
                     [nameof(requestId)] = requestId
                 });
+
+        public async Task<DocflowPage> GetRelatedDocflows(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            DocflowFilter filter) =>
+            await SendRequestAsync<DocflowPage>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/related",
+                filter.ConvertToQueryParameters());
     }
 }
