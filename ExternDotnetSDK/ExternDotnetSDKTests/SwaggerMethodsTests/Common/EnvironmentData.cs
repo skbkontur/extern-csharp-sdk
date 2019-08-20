@@ -7,5 +7,6 @@
         public string ApiKey { get; set; }
         public string AuthAddress { get; set; }
         public string BaseAddress { get; set; }
+        public string SessionId { get; set; }
     }
 }

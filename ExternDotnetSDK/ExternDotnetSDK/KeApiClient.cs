@@ -1,5 +1,7 @@
-﻿using ExternDotnetSDK.Clients.Account;
-using ExternDotnetSDK.Clients.Common;
+﻿using System;
+using System.Net.Http;
+using ExternDotnetSDK.Clients.Account;
+using ExternDotnetSDK.Clients.Authentication;
 using ExternDotnetSDK.Clients.Common.SendAsync;
 using ExternDotnetSDK.Clients.Docflows;
 using ExternDotnetSDK.Clients.Drafts;
@@ -13,8 +15,11 @@ namespace ExternDotnetSDK
 {
     public class KeApiClient : IKeApiClient
     {
-        private readonly ILogError iLog;
-        private readonly ISendAsync requestSender;
+        //todo change this address for a real one when SDK is ready for release
+        private const string BaseAddress = "https://extern-api.staging2.testkontur.ru";
+
+        private readonly ILogger iLog;
+        private readonly IHttpSender requestSender;
         private readonly IAuthenticationProvider authProvider;
 
         private IAccountClient accounts;
@@ -25,11 +30,18 @@ namespace ExternDotnetSDK
         private IInventoryDocflowsClient inventoryDocflows;
         private IOrganizationsClient organizations;
 
-        public KeApiClient(ILogError iLog, IAuthenticationProvider authProvider, ISendAsync requestSender)
+        public KeApiClient(IAuthenticationProvider authProvider, IHttpSender customSender = null, ILogger customLogger = null)
         {
             this.authProvider = authProvider;
-            this.iLog = iLog;
-            this.requestSender = requestSender;
+            iLog = customLogger ?? new FakeLogError();
+            requestSender = SetIHttpSender(customSender);
+        }
+
+        public KeApiClient(string apiKey, string sessionId, IHttpSender customSender = null, ILogger customLogger = null)
+        {
+            authProvider = new SessionAuthenticationProvider(apiKey, sessionId);
+            iLog = customLogger ?? new FakeLogError();
+            requestSender = SetIHttpSender(customSender);
         }
 
         public IAccountClient Accounts => accounts ?? (accounts = new AccountClient(iLog, requestSender, authProvider));
@@ -45,5 +57,8 @@ namespace ExternDotnetSDK
 
         public IInventoryDocflowsClient InventoryDocflows =>
             inventoryDocflows ?? (inventoryDocflows = new InventoryDocflowsClient(iLog, requestSender, authProvider));
+
+        private static IHttpSender SetIHttpSender(IHttpSender requestSender) =>
+            requestSender ?? new HttpSender(new HttpClient {BaseAddress = new Uri(BaseAddress)});
     }
 }

@@ -3,30 +3,31 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Clients.Authentication;
 using ExternDotnetSDK.Clients.Common.SendAsync;
 using ExternDotnetSDK.Logging;
 using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Clients.Common
 {
-    public class InnerCommonClient
+    internal class RequestFactory
     {
         private const string MediaType = "application/json";
         private const string AuthSidHeader = "auth.sid";
         private const string ApiKeyHeader = "X-Kontur-Apikey";
 
-        protected readonly ILogError LogError;
+        protected readonly ILogger Logger;
         protected readonly IAuthenticationProvider AuthenticationProvider;
-        protected readonly ISendAsync RequestSender;
+        protected readonly IHttpSender RequestSender;
 
-        public InnerCommonClient(ILogError logError, ISendAsync requestSender, IAuthenticationProvider authenticationProvider)
+        public RequestFactory(ILogger logger, IHttpSender requestSender, IAuthenticationProvider authenticationProvider)
         {
-            LogError = logError;
+            Logger = logger;
             AuthenticationProvider = authenticationProvider;
             RequestSender = requestSender;
         }
 
-        protected async Task<TResult> SendRequestAsync<TResult>(
+        public async Task<TResult> SendRequestAsync<TResult>(
             HttpMethod method,
             string requestUri,
             Dictionary<string, object> uriQueryParams = null)
@@ -35,7 +36,7 @@ namespace ExternDotnetSDK.Clients.Common
                 return JsonConvert.DeserializeObject<TResult>(await TryGetResponseAsync(request));
         }
 
-        protected async Task SendRequestAsync(
+        public async Task SendRequestAsync(
             HttpMethod method,
             string requestUri,
             Dictionary<string, object> uriQueryParams = null)
@@ -44,7 +45,7 @@ namespace ExternDotnetSDK.Clients.Common
                 await TryGetResponseAsync(request);
         }
 
-        protected async Task<TResult> SendRequestAsync<TResult>(
+        public async Task<TResult> SendRequestAsync<TResult>(
             HttpMethod method,
             string requestUri,
             object contentDto,
@@ -61,7 +62,7 @@ namespace ExternDotnetSDK.Clients.Common
             }
         }
 
-        protected async Task SendRequestAsync(
+        public async Task SendRequestAsync(
             HttpMethod method,
             string requestUri,
             object contentDto,
@@ -89,7 +90,7 @@ namespace ExternDotnetSDK.Clients.Common
             }
             catch (HttpRequestException e)
             {
-                LogError.Error(e);
+                Logger.Log(e);
                 throw;
             }
         }
@@ -97,9 +98,7 @@ namespace ExternDotnetSDK.Clients.Common
         private HttpRequestMessage MakeAuthorizedRequest(HttpMethod method, string fullUri)
         {
             var request = new HttpRequestMessage(method, fullUri);
-            request.Headers.Authorization = new AuthenticationHeaderValue(
-                AuthSidHeader,
-                AuthenticationProvider.GetSessionId());
+            request.Headers.Authorization = new AuthenticationHeaderValue(AuthSidHeader, AuthenticationProvider.GetSessionId());
             request.Headers.Add(ApiKeyHeader, AuthenticationProvider.GetApiKey());
             return request;
         }

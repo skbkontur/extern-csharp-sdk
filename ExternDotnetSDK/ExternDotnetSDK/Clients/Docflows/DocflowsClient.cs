@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Clients.Authentication;
 using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Clients.Common.SendAsync;
 using ExternDotnetSDK.Logging;
@@ -14,55 +15,60 @@ using ExternDotnetSDK.Models.Drafts;
 
 namespace ExternDotnetSDK.Clients.Docflows
 {
-    public class DocflowsClient : InnerCommonClient, IDocflowsClient
+    public class DocflowsClient : IDocflowsClient
     {
-        public DocflowsClient(ILogError logError, ISendAsync client, IAuthenticationProvider authenticationProvider)
-            : base(logError, client, authenticationProvider)
-        {
-        }
+        private readonly RequestFactory factory;
+
+        public DocflowsClient(ILogger logger, IHttpSender client, IAuthenticationProvider authenticationProvider) =>
+            factory = new RequestFactory(logger, client, authenticationProvider);
 
         public async Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter filter = null) =>
-            await SendRequestAsync<DocflowPage>(HttpMethod.Get, $"/v1/{accountId}/docflows", filter?.ConvertToQueryParameters());
+            await factory.SendRequestAsync<DocflowPage>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/docflows",
+                filter?.ConvertToQueryParameters());
 
         public async Task<Docflow> GetDocflowAsync(Guid accountId, Guid docflowId) =>
-            await SendRequestAsync<Docflow>(HttpMethod.Get, $"/v1/{accountId}/docflows/{docflowId}");
+            await factory.SendRequestAsync<Docflow>(HttpMethod.Get, $"/v1/{accountId}/docflows/{docflowId}");
 
         public async Task<List<Document>> GetDocumentsAsync(Guid accountId, Guid docflowId) =>
-            await SendRequestAsync<List<Document>>(HttpMethod.Get, $"/v1/{accountId}/docflows/{docflowId}/documents");
+            await factory.SendRequestAsync<List<Document>>(HttpMethod.Get, $"/v1/{accountId}/docflows/{docflowId}/documents");
 
         public async Task<Document> GetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId) =>
-            await SendRequestAsync<Document>(HttpMethod.Get, $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}");
+            await factory.SendRequestAsync<Document>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}");
 
         public async Task<DocflowDocumentDescription> GetDocumentDescriptionAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId) =>
-            await SendRequestAsync<DocflowDocumentDescription>(
+            await factory.SendRequestAsync<DocflowDocumentDescription>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/description");
 
         public async Task<byte[]> GetEncryptedDocumentContentAsync(Guid accountId, Guid docflowId, Guid documentId) =>
-            await SendRequestAsync<byte[]>(
+            await factory.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/encrypted-content");
 
         public async Task<byte[]> GetDecryptedDocumentContentAsync(Guid accountId, Guid docflowId, Guid documentId) =>
-            await SendRequestAsync<byte[]>(
+            await factory.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypted-content");
 
         public async Task<List<Signature>> GetDocumentSignaturesAsync(Guid accountId, Guid docflowId, Guid documentId) =>
-            await SendRequestAsync<List<Signature>>(
+            await factory.SendRequestAsync<List<Signature>>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures");
 
         public async Task<Signature> GetSignatureAsync(Guid accountId, Guid docflowId, Guid documentId, Guid signatureId) =>
-            await SendRequestAsync<Signature>(
+            await factory.SendRequestAsync<Signature>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}");
 
         public async Task<byte[]> GetSignatureContentAsync(Guid accountId, Guid docflowId, Guid documentId, Guid signatureId) =>
-            await SendRequestAsync<byte[]>(
+            await factory.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}/content");
 
@@ -71,7 +77,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid docflowId,
             Guid documentId,
             Guid apiTaskId) =>
-            await SendRequestAsync<ApiTaskResult<byte[]>>(
+            await factory.SendRequestAsync<ApiTaskResult<byte[]>>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/tasks/{apiTaskId}");
 
@@ -80,12 +86,12 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid docflowId,
             Guid documentId,
             Guid replyId) =>
-            await SendRequestAsync<ApiReplyDocument>(
+            await factory.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}");
 
         public async Task<string> PrintDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, byte[] data) =>
-            await SendRequestAsync<string>(
+            await factory.SendRequestAsync<string>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/print",
                 new PrintDocumentData {Content = Convert.ToBase64String(data)});
@@ -95,7 +101,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid docflowId,
             Guid documentId,
             DecryptDocumentRequestData data) =>
-            await SendRequestAsync<DecryptionInitResult>(
+            await factory.SendRequestAsync<DecryptionInitResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content",
                 data);
@@ -107,7 +113,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             string requestId,
             string code,
             bool unzip = false) =>
-            await SendRequestAsync<byte>(
+            await factory.SendRequestAsync<byte>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content-confirm",
                 new Dictionary<string, object>
@@ -123,7 +129,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid documentId,
             Urn documentType,
             byte[] certificateContent) =>
-            await SendRequestAsync<ApiReplyDocument>(
+            await factory.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/generate-reply",
                 new GenerateReplyDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)},
@@ -134,7 +140,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid docflowId,
             Guid documentId,
             byte[] content) =>
-            await SendRequestAsync<RecognizedMeta>(
+            await factory.SendRequestAsync<RecognizedMeta>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/recognize",
                 Convert.ToBase64String(content));
@@ -145,7 +151,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid documentId,
             Guid replyId,
             string senderIp) =>
-            await SendRequestAsync<Docflow>(
+            await factory.SendRequestAsync<Docflow>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/send",
                 new SendReplyDocumentRequest {SenderIp = senderIp});
@@ -156,7 +162,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid documentId,
             Guid replyId,
             byte[] signature) =>
-            await SendRequestAsync<ApiReplyDocument>(
+            await factory.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/signature",
                 Convert.ToBase64String(signature));
@@ -167,7 +173,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid documentId,
             Guid replyId,
             byte[] content) =>
-            await SendRequestAsync<ApiReplyDocument>(
+            await factory.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/content",
                 Convert.ToBase64String(content));
@@ -178,7 +184,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid documentId,
             Guid replyId,
             bool forceConfirmation) =>
-            await SendRequestAsync<SignInitResult>(
+            await factory.SendRequestAsync<SignInitResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/cloud-sign",
                 new Dictionary<string, object> {[nameof(forceConfirmation)] = forceConfirmation});
@@ -190,7 +196,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid replyId,
             string code,
             string requestId) =>
-            await SendRequestAsync<SignResult>(
+            await factory.SendRequestAsync<SignResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/cloud-sign-confirm",
                 new Dictionary<string, object>
@@ -204,7 +210,7 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid relatedDocflowId,
             Guid relatedDocumentId,
             DocflowFilter filter) =>
-            await SendRequestAsync<DocflowPage>(
+            await factory.SendRequestAsync<DocflowPage>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/related",
                 filter.ConvertToQueryParameters());

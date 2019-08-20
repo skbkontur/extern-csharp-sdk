@@ -8,7 +8,6 @@ using ExternDotnetSDK.Models.Drafts.Check;
 using ExternDotnetSDK.Models.Drafts.Meta;
 using ExternDotnetSDK.Models.Drafts.Prepare;
 using ExternDotnetSDK.Models.Drafts.Requests;
-using Refit;
 
 namespace ExternDotnetSDK.Clients.Drafts
 {
@@ -19,7 +18,7 @@ namespace ExternDotnetSDK.Clients.Drafts
         Task<Draft> GetDraftAsync(Guid accountId, Guid draftId);
         Task<DraftMeta> GetDraftMetaAsync(Guid accountId, Guid draftId);
         Task<DraftMeta> UpdateDraftMetaAsync(Guid accountId, Guid draftId, DraftMetaRequest newMeta);
-        Task<DraftDocument> AddDocumentAsync(Guid accountId, Guid draftId, [Body] DocumentContents content);
+        Task<DraftDocument> AddDocumentAsync(Guid accountId, Guid draftId, DocumentContents content);
         Task DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId);
         Task<DraftDocument> GetDocumentAsync(Guid accountId, Guid draftId, Guid documentId);
         Task<DraftDocument> UpdateDocumentAsync(Guid accountId, Guid draftId, Guid documentId, DocumentContents content);

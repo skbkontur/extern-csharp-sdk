@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Clients.Common
+﻿namespace ExternDotnetSDK.Clients.Authentication
 {
     public interface IAuthenticationProvider
     {

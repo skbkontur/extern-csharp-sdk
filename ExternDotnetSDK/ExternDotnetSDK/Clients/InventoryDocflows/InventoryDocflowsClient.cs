@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ExternDotnetSDK.Clients.Authentication;
 using ExternDotnetSDK.Clients.Common;
 using ExternDotnetSDK.Clients.Common.SendAsync;
 using ExternDotnetSDK.Logging;
@@ -14,19 +15,19 @@ using ExternDotnetSDK.Models.Drafts;
 
 namespace ExternDotnetSDK.Clients.InventoryDocflows
 {
-    public class InventoryDocflowsClient : InnerCommonClient, IInventoryDocflowsClient
+    public class InventoryDocflowsClient : IInventoryDocflowsClient
     {
-        public InventoryDocflowsClient(ILogError logError, ISendAsync client, IAuthenticationProvider authenticationProvider)
-            : base(logError, client, authenticationProvider)
-        {
-        }
+        private readonly RequestFactory factory;
+
+        public InventoryDocflowsClient(ILogger logger, IHttpSender client, IAuthenticationProvider authenticationProvider) =>
+            factory = new RequestFactory(logger, client, authenticationProvider);
 
         public async Task<DocflowPage> GetAllInventoryDocflowsAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
             DocflowFilter filter = null) =>
-            await SendRequestAsync<DocflowPage>(
+            await factory.SendRequestAsync<DocflowPage>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories",
                 filter?.ConvertToQueryParameters());
@@ -36,7 +37,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid relatedDocflowId,
             Guid relatedDocumentId,
             Guid inventoryId) =>
-            await SendRequestAsync<Docflow>(
+            await factory.SendRequestAsync<Docflow>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}");
 
@@ -47,7 +48,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             byte[] decryptedDocumentContent) =>
-            await SendRequestAsync<byte[]>(
+            await factory.SendRequestAsync<byte[]>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/print",
                 new PrintDocumentData {Content = Convert.ToBase64String(decryptedDocumentContent)});
@@ -58,7 +59,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid relatedDocumentId,
             Guid inventoryId,
             Guid documentId) =>
-            await SendRequestAsync<byte[]>(
+            await factory.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/encrypted-content");
 
@@ -68,7 +69,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid relatedDocumentId,
             Guid inventoryId,
             Guid documentId) =>
-            await SendRequestAsync<byte[]>(
+            await factory.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypted-content");
 
@@ -79,7 +80,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Guid signatureId) =>
-            await SendRequestAsync<byte[]>(
+            await factory.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/signatures/{signatureId}/content");
 
@@ -91,7 +92,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Urn documentType,
             byte[] certificateContent) =>
-            await SendRequestAsync<ApiReplyDocument>(
+            await factory.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/generate-reply",
                 new GenerateReplyDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)},
@@ -105,7 +106,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid replyId,
             byte[] senderIpContent) =>
-            await SendRequestAsync<Docflow>(
+            await factory.SendRequestAsync<Docflow>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/send",
                 new SendReplyDocumentRequest {SenderIp = Convert.ToBase64String(senderIpContent)});
@@ -118,7 +119,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid replyId,
             byte[] content) =>
-            await SendRequestAsync<ApiReplyDocument>(
+            await factory.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/content",
                 Convert.ToBase64String(content));
@@ -131,7 +132,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid replyId,
             byte[] signature) =>
-            await SendRequestAsync<ApiReplyDocument>(
+            await factory.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/signature",
                 Convert.ToBase64String(signature));
@@ -143,7 +144,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Guid replyId) =>
-            await SendRequestAsync<ApiReplyDocument>(
+            await factory.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}");
 
@@ -156,7 +157,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid replyId,
             Guid requestId,
             string code) =>
-            await SendRequestAsync<SignResult>(
+            await factory.SendRequestAsync<SignResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/cloud-sign-confirm",
                 new Dictionary<string, object>
@@ -173,7 +174,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid replyId,
             Guid apiTaskId) =>
-            await SendRequestAsync<ApiTaskResult<CryptOperationStatusResult>>(
+            await factory.SendRequestAsync<ApiTaskResult<CryptOperationStatusResult>>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/tasks/{apiTaskId}");
 
@@ -185,7 +186,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid replyId,
             bool forceConfirmation = true) =>
-            await SendRequestAsync<SignInitResult>(
+            await factory.SendRequestAsync<SignInitResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/cloud-sign",
                 new Dictionary<string, object> {["forceConfirmation"] = forceConfirmation});
@@ -199,7 +200,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid requestId,
             string code,
             bool unzip = false) =>
-            await SendRequestAsync<byte[]>(
+            await factory.SendRequestAsync<byte[]>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypt-content-confirm");
 
@@ -210,7 +211,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             byte[] certificateContent) =>
-            await SendRequestAsync<DecryptionInitResult>(
+            await factory.SendRequestAsync<DecryptionInitResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypt-content",
                 new DecryptDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)});
