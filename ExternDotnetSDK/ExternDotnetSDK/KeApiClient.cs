@@ -33,14 +33,14 @@ namespace ExternDotnetSDK
         public KeApiClient(IAuthenticationProvider authProvider, IHttpSender customSender = null, ILogger customLogger = null)
         {
             this.authProvider = authProvider;
-            iLog = customLogger ?? new FakeLogError();
+            iLog = customLogger ?? new SilentLogger();
             requestSender = SetIHttpSender(customSender);
         }
 
         public KeApiClient(string apiKey, string sessionId, IHttpSender customSender = null, ILogger customLogger = null)
         {
             authProvider = new SessionAuthenticationProvider(apiKey, sessionId);
-            iLog = customLogger ?? new FakeLogError();
+            iLog = customLogger ?? new SilentLogger();
             requestSender = SetIHttpSender(customSender);
         }
 

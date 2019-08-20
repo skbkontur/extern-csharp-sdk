@@ -2,7 +2,7 @@
 
 namespace ExternDotnetSDK.Logging
 {
-    public class FakeLogError : ILogger
+    public class SilentLogger : ILogger
     {
         public void Log(string message, LogMessageType messageType = LogMessageType.Error)
         {
