@@ -4,6 +4,9 @@ using ExternDotnetSDK.Models.Organizations;
 
 namespace ExternDotnetSDK.Clients.Organizations
 {
+    /// <summary>
+    ///     Contains methods for working with organizations
+    /// </summary>
     public interface IOrganizationsClient
     {
         Task<OrganizationBatch> GetAllOrganizationsAsync(

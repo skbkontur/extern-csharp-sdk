@@ -11,6 +11,9 @@ using ExternDotnetSDK.Models.Drafts.Requests;
 
 namespace ExternDotnetSDK.Clients.Drafts
 {
+    /// <summary>
+    ///     Contains methods for working with drafts
+    /// </summary>
     public interface IDraftClient
     {
         Task<Draft> CreateDraftAsync(Guid accountId, DraftMetaRequest draftRequest);

@@ -85,11 +85,9 @@ namespace ExternDotnetSDK.Models.Docflows
         {
             var result = new Dictionary<string, object>();
             foreach (var info in properties.Where(x => x.GetValue(this) != null))
-            {
                 result[ToLowerCamelCase(info.Name)] = info.PropertyType == typeof (DateTime?)
                     ? (info.GetValue(this) as DateTime?)?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
                     : info.GetValue(this)?.ToString();
-            }
             return result;
         }
 

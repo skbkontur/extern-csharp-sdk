@@ -44,13 +44,13 @@ namespace ExternDotnetSDK.Models.Common
         public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is Link link && Equals(link);
 
         public bool Equals(Link other) =>
-            other != null
-            && Href == other.Href
-            && EqualsOrNulls(Rel, other.Rel)
-            && EqualsOrNulls(Title, other.Title)
-            && EqualsOrNulls(Name, other.Name)
-            && EqualsOrNulls(Profile, other.Profile)
-            && Templated == other.Templated;
+            other != null &&
+            Href == other.Href &&
+            EqualsOrNulls(Rel, other.Rel) &&
+            EqualsOrNulls(Title, other.Title) &&
+            EqualsOrNulls(Name, other.Name) &&
+            EqualsOrNulls(Profile, other.Profile) &&
+            Templated == other.Templated;
 
         public override string ToString()
         {
@@ -73,12 +73,12 @@ namespace ExternDotnetSDK.Models.Common
         {
             unchecked
             {
-                var hashcode = 19 * 23 + Href.GetHashCode();
+                var hashcode = 19*23 + Href.GetHashCode();
                 hashcode = TryIncreaseHashcode(hashcode, Title);
                 hashcode = TryIncreaseHashcode(hashcode, Rel);
                 hashcode = TryIncreaseHashcode(hashcode, Name);
                 hashcode = TryIncreaseHashcode(hashcode, Profile);
-                return hashcode * 23 + Templated.GetHashCode();
+                return hashcode*23 + Templated.GetHashCode();
             }
         }
 
@@ -93,7 +93,7 @@ namespace ExternDotnetSDK.Models.Common
             {
                 return linkField is null
                     ? hashcode
-                    : hashcode * 23 + linkField.ToLower().GetHashCode();
+                    : hashcode*23 + linkField.ToLower().GetHashCode();
             }
         }
     }

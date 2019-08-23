@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Authentication;
 using ExternDotnetSDK.Clients.Common;
-using ExternDotnetSDK.Clients.Common.SendAsync;
-using ExternDotnetSDK.Logging;
+using ExternDotnetSDK.Clients.Common.ImplementableInterfaces;
+using ExternDotnetSDK.Clients.Common.ImplementableInterfaces.Logging;
 using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Docflows;
@@ -19,37 +18,40 @@ namespace ExternDotnetSDK.Clients.Drafts
 {
     public class DraftClient : IDraftClient
     {
-        private readonly RequestFactory factory;
+        private readonly InnerCommonClient client;
 
-        public DraftClient(ILogger logger, IHttpSender client, IAuthenticationProvider authenticationProvider) =>
-            factory = new RequestFactory(logger, client, authenticationProvider);
+        public DraftClient(ILogger logger, IRequestSender sender, IRequestFactory requestFactory) =>
+            client = new InnerCommonClient(logger, sender, requestFactory);
 
         public async Task<Draft> CreateDraftAsync(Guid accountId, DraftMetaRequest draftRequest) =>
-            await factory.SendRequestAsync<Draft>(HttpMethod.Post, $"/v1/{accountId}/drafts", draftRequest);
+            await client.SendRequestAsync<Draft>(HttpMethod.Post, $"/v1/{accountId}/drafts", contentDto: draftRequest);
 
         public async Task DeleteDraftAsync(Guid accountId, Guid draftId) =>
-            await factory.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/drafts/{draftId}");
+            await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/drafts/{draftId}");
 
         public async Task<Draft> GetDraftAsync(Guid accountId, Guid draftId) =>
-            await factory.SendRequestAsync<Draft>(HttpMethod.Get, $"/v1/{accountId}/drafts/{draftId}");
+            await client.SendRequestAsync<Draft>(HttpMethod.Get, $"/v1/{accountId}/drafts/{draftId}");
 
         public async Task<DraftMeta> GetDraftMetaAsync(Guid accountId, Guid draftId) =>
-            await factory.SendRequestAsync<DraftMeta>(HttpMethod.Get, $"/v1/{accountId}/drafts/{draftId}/meta");
+            await client.SendRequestAsync<DraftMeta>(HttpMethod.Get, $"/v1/{accountId}/drafts/{draftId}/meta");
 
         public async Task<DraftMeta> UpdateDraftMetaAsync(Guid accountId, Guid draftId, DraftMetaRequest newMeta) =>
-            await factory.SendRequestAsync<DraftMeta>(HttpMethod.Put, $"/v1/{accountId}/drafts/{draftId}/meta", newMeta);
+            await client.SendRequestAsync<DraftMeta>(
+                HttpMethod.Put,
+                $"/v1/{accountId}/drafts/{draftId}/meta",
+                contentDto: newMeta);
 
         public async Task<DraftDocument> AddDocumentAsync(Guid accountId, Guid draftId, DocumentContents content) =>
-            await factory.SendRequestAsync<DraftDocument>(
+            await client.SendRequestAsync<DraftDocument>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/documents",
-                content);
+                contentDto: content);
 
         public async Task DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId) =>
-            await factory.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}");
+            await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}");
 
         public async Task<DraftDocument> GetDocumentAsync(Guid accountId, Guid draftId, Guid documentId) =>
-            await factory.SendRequestAsync<DraftDocument>(
+            await client.SendRequestAsync<DraftDocument>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}");
 
@@ -58,55 +60,55 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid draftId,
             Guid documentId,
             DocumentContents content) =>
-            await factory.SendRequestAsync<DraftDocument>(
+            await client.SendRequestAsync<DraftDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}",
-                content);
+                contentDto: content);
 
         public async Task<string> GetDocumentPrintAsync(Guid accountId, Guid draftId, Guid documentId) =>
-            await factory.SendRequestAsync<string>(
+            await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/print");
 
         public async Task<string> GetDocumentDecryptedContentAsync(Guid accountId, Guid draftId, Guid documentId) =>
-            await factory.SendRequestAsync<string>(
+            await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/decrypted-content");
 
         public async Task UpdateDocumentDecryptedContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content) =>
-            await factory.SendRequestAsync(
+            await client.SendRequestAsync(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/decrypted-content",
-                Convert.ToBase64String(content));
+                contentDto: Convert.ToBase64String(content));
 
         public async Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId) =>
-            await factory.SendRequestAsync<string>(
+            await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signature");
 
         public async Task UpdateDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content) =>
-            await factory.SendRequestAsync(
+            await client.SendRequestAsync(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signature",
-                Convert.ToBase64String(content));
+                contentDto: Convert.ToBase64String(content));
 
         public async Task<Signature> AddDocumentSignatureAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
             SignatureRequest request = null) =>
-            await factory.SendRequestAsync<Signature>(
+            await client.SendRequestAsync<Signature>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures",
-                request);
+                contentDto: request);
 
         public async Task DeleteDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId) =>
-            await factory.SendRequestAsync(
+            await client.SendRequestAsync(
                 HttpMethod.Delete,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}");
 
         public async Task<Signature> GetDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId) =>
-            await factory.SendRequestAsync<Signature>(
+            await client.SendRequestAsync<Signature>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}");
 
@@ -116,46 +118,46 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid documentId,
             Guid signatureId,
             SignatureRequest request) =>
-            await factory.SendRequestAsync<Signature>(
+            await client.SendRequestAsync<Signature>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}",
-                request);
+                contentDto: request);
 
         public async Task<string> GetDocumentSignatureContentAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
             Guid signatureId) =>
-            await factory.SendRequestAsync<string>(
+            await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}/content");
 
         public async Task<CheckResult> CheckDraftAsync(Guid accountId, Guid draftId) =>
-            await factory.SendRequestAsync<CheckResult>(
+            await client.SendRequestAsync<CheckResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/check",
                 new Dictionary<string, object> {["deferred"] = false});
 
         public async Task<ApiTaskResult<CheckResult>> StartCheckDraftAsync(Guid accountId, Guid draftId) =>
-            await factory.SendRequestAsync<ApiTaskResult<CheckResult>>(
+            await client.SendRequestAsync<ApiTaskResult<CheckResult>>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/check",
                 new Dictionary<string, object> {["deferred"] = true});
 
         public async Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId) =>
-            await factory.SendRequestAsync<PrepareResult>(
+            await client.SendRequestAsync<PrepareResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/prepare",
                 new Dictionary<string, object> {["deferred"] = false});
 
         public async Task<ApiTaskResult<PrepareResult>> StartPrepareDraftAsync(Guid accountId, Guid draftId) =>
-            await factory.SendRequestAsync<ApiTaskResult<PrepareResult>>(
+            await client.SendRequestAsync<ApiTaskResult<PrepareResult>>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/prepare",
                 new Dictionary<string, object> {["deferred"] = true});
 
         public async Task<Docflow> SendDraftAsync(Guid accountId, Guid draftId, bool force = false) =>
-            await factory.SendRequestAsync<Docflow>(
+            await client.SendRequestAsync<Docflow>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/send",
                 new Dictionary<string, object>
@@ -165,7 +167,7 @@ namespace ExternDotnetSDK.Clients.Drafts
                 });
 
         public async Task<ApiTaskResult<Docflow>> StartSendDraftAsync(Guid accountId, Guid draftId, bool force = false) =>
-            await factory.SendRequestAsync<ApiTaskResult<Docflow>>(
+            await client.SendRequestAsync<ApiTaskResult<Docflow>>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/send",
                 new Dictionary<string, object>
@@ -175,7 +177,7 @@ namespace ExternDotnetSDK.Clients.Drafts
                 });
 
         public async Task<string> GetDocumentEncryptedContentAsync(Guid accountId, Guid draftId, Guid documentId) =>
-            await factory.SendRequestAsync<string>(
+            await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 "/v1/{accountId}/drafts/{draftId}/documents/{documentId}/encrypted-content");
 
@@ -185,15 +187,15 @@ namespace ExternDotnetSDK.Clients.Drafts
             Guid documentId,
             FormatType type,
             string content) =>
-            await factory.SendRequestAsync(
+            await client.SendRequestAsync(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/build",
-                content,
                 new Dictionary<string, object>
                 {
                     ["type"] = type,
                     ["version"] = 1
-                });
+                },
+                content);
 
         public async Task<DraftDocument> CreateDocumentWithContentFromFormatAsync(
             Guid accountId,
@@ -201,15 +203,15 @@ namespace ExternDotnetSDK.Clients.Drafts
             FormatType type,
             int version,
             string content) =>
-            await factory.SendRequestAsync<DraftDocument>(
+            await client.SendRequestAsync<DraftDocument>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/build-document",
-                content,
                 new Dictionary<string, object>
                 {
                     ["type"] = type,
                     ["version"] = version
-                });
+                },
+                content);
 
         public async Task<ApiTaskPage> GetDraftTasks(
             Guid accountId,
@@ -217,7 +219,7 @@ namespace ExternDotnetSDK.Clients.Drafts
             long skip = 0,
             int take = int.MaxValue,
             bool includeReleased = true) =>
-            await factory.SendRequestAsync<ApiTaskPage>(
+            await client.SendRequestAsync<ApiTaskPage>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/tasks",
                 new Dictionary<string, object>
@@ -228,15 +230,15 @@ namespace ExternDotnetSDK.Clients.Drafts
                 });
 
         public async Task<ApiTaskResult<CryptOperationStatusResult>> GetDraftTask(Guid accountId, Guid draftId, Guid apiTaskId) =>
-            await factory.SendRequestAsync<ApiTaskResult<CryptOperationStatusResult>>(
+            await client.SendRequestAsync<ApiTaskResult<CryptOperationStatusResult>>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/tasks/{apiTaskId}");
 
         public async Task<SignInitResult> CloudSignDraftAsync(Guid accountId, Guid draftId) =>
-            await factory.SendRequestAsync<SignInitResult>(HttpMethod.Post, $"/v1/{accountId}/drafts/{draftId}/cloud-sign");
+            await client.SendRequestAsync<SignInitResult>(HttpMethod.Post, $"/v1/{accountId}/drafts/{draftId}/cloud-sign");
 
         public async Task<SignResult> CloudSignConfirmDraftAsync(Guid accountId, Guid draftId, Guid requestId, string code) =>
-            await factory.SendRequestAsync<SignResult>(
+            await client.SendRequestAsync<SignResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/cloud-sign-confirm",
                 new Dictionary<string, object>

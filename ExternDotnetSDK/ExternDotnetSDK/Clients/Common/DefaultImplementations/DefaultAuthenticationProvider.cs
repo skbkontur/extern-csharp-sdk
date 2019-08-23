@@ -1,13 +1,14 @@
 ﻿using System;
+using ExternDotnetSDK.Clients.Common.ImplementableInterfaces;
 
-namespace ExternDotnetSDK.Clients.Authentication
+namespace ExternDotnetSDK.Clients.Common.DefaultImplementations
 {
-    public class SessionAuthenticationProvider : IAuthenticationProvider
+    public class DefaultAuthenticationProvider : IAuthenticationProvider
     {
         private readonly string sessionId;
         private readonly string apiKey;
 
-        public SessionAuthenticationProvider(string apiKey, string sessionId)
+        public DefaultAuthenticationProvider(string apiKey, string sessionId)
         {
             if (string.IsNullOrWhiteSpace(apiKey))
                 throw new ArgumentNullException(nameof(apiKey));

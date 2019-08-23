@@ -1,64 +1,63 @@
 ﻿using System;
 using System.Net.Http;
 using ExternDotnetSDK.Clients.Account;
-using ExternDotnetSDK.Clients.Authentication;
-using ExternDotnetSDK.Clients.Common.SendAsync;
+using ExternDotnetSDK.Clients.Common.DefaultImplementations;
+using ExternDotnetSDK.Clients.Common.ImplementableInterfaces;
+using ExternDotnetSDK.Clients.Common.ImplementableInterfaces.Logging;
 using ExternDotnetSDK.Clients.Docflows;
 using ExternDotnetSDK.Clients.Drafts;
 using ExternDotnetSDK.Clients.DraftsBuilders;
 using ExternDotnetSDK.Clients.Events;
 using ExternDotnetSDK.Clients.InventoryDocflows;
 using ExternDotnetSDK.Clients.Organizations;
-using ExternDotnetSDK.Logging;
 
 namespace ExternDotnetSDK
 {
+    /// <summary>
+    ///     Main class for using Kontur Extern API
+    /// </summary>
     public class KeApiClient : IKeApiClient
     {
         //todo change this address for a real one when SDK is ready for release
         private const string BaseAddress = "https://extern-api.staging2.testkontur.ru";
 
         private readonly ILogger iLog;
-        private readonly IHttpSender requestSender;
-        private readonly IAuthenticationProvider authProvider;
+        private readonly IRequestSender requestSender;
+        private readonly IRequestFactory requestFactory;
 
-        private IAccountClient accounts;
-        private IDocflowsClient docflows;
-        private IDraftClient drafts;
-        private IDraftsBuilderClient draftsBuilder;
-        private IEventsClient events;
-        private IInventoryDocflowsClient inventoryDocflows;
-        private IOrganizationsClient organizations;
-
-        public KeApiClient(IAuthenticationProvider authProvider, IHttpSender customSender = null, ILogger customLogger = null)
+        public KeApiClient(IRequestFactory customRequestFactory, IRequestSender customSender = null, ILogger customLogger = null)
         {
-            this.authProvider = authProvider;
+            requestFactory = customRequestFactory;
             iLog = customLogger ?? new SilentLogger();
-            requestSender = SetIHttpSender(customSender);
+            requestSender = customSender ?? new DefaultRequestSender(new HttpClient {BaseAddress = new Uri(BaseAddress)});
+            InitializeClients();
         }
 
-        public KeApiClient(string apiKey, string sessionId, IHttpSender customSender = null, ILogger customLogger = null)
+        public KeApiClient(string apiKey, string sessionId, IRequestSender customSender = null, ILogger customLogger = null)
         {
-            authProvider = new SessionAuthenticationProvider(apiKey, sessionId);
+            requestFactory = new DefaultRequestFactory(new DefaultAuthenticationProvider(apiKey, sessionId));
             iLog = customLogger ?? new SilentLogger();
-            requestSender = SetIHttpSender(customSender);
+            requestSender = customSender ?? new DefaultRequestSender(new HttpClient {BaseAddress = new Uri(BaseAddress)});
+            InitializeClients();
         }
 
-        public IAccountClient Accounts => accounts ?? (accounts = new AccountClient(iLog, requestSender, authProvider));
-        public IDocflowsClient Docflows => docflows ?? (docflows = new DocflowsClient(iLog, requestSender, authProvider));
-        public IDraftClient Drafts => drafts ?? (drafts = new DraftClient(iLog, requestSender, authProvider));
-        public IEventsClient Events => events ?? (events = new EventsClient(iLog, requestSender, authProvider));
+        public IAccountClient Accounts { get; private set; }
+        public IDocflowsClient Docflows { get; private set; }
+        public IDraftClient Drafts { get; private set; }
+        public IDraftsBuilderClient DraftsBuilder { get; private set; }
+        public IEventsClient Events { get; private set; }
+        public IInventoryDocflowsClient InventoryDocflows { get; private set; }
+        public IOrganizationsClient Organizations { get; private set; }
 
-        public IDraftsBuilderClient DraftsBuilder =>
-            draftsBuilder ?? (draftsBuilder = new DraftsBuilderClient(iLog, requestSender, authProvider));
-
-        public IOrganizationsClient Organizations =>
-            organizations ?? (organizations = new OrganizationsClient(iLog, requestSender, authProvider));
-
-        public IInventoryDocflowsClient InventoryDocflows =>
-            inventoryDocflows ?? (inventoryDocflows = new InventoryDocflowsClient(iLog, requestSender, authProvider));
-
-        private static IHttpSender SetIHttpSender(IHttpSender requestSender) =>
-            requestSender ?? new HttpSender(new HttpClient {BaseAddress = new Uri(BaseAddress)});
+        private void InitializeClients()
+        {
+            Accounts = new AccountClient(iLog, requestSender, requestFactory);
+            Docflows = new DocflowsClient(iLog, requestSender, requestFactory);
+            Drafts = new DraftClient(iLog, requestSender, requestFactory);
+            Events = new EventsClient(iLog, requestSender, requestFactory);
+            DraftsBuilder = new DraftsBuilderClient(iLog, requestSender, requestFactory);
+            Organizations = new OrganizationsClient(iLog, requestSender, requestFactory);
+            InventoryDocflows = new InventoryDocflowsClient(iLog, requestSender, requestFactory);
+        }
     }
 }

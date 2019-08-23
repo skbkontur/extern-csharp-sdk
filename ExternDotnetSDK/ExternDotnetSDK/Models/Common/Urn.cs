@@ -75,9 +75,9 @@ namespace ExternDotnetSDK.Models.Common
         public bool IsParentOf(Urn urn)
         {
             TryThrowArgumentNullException(urn);
-            return urn.Value.Length > Value.Length
-                && 0 == string.Compare(Value, 0, urn.Value, 0, Value.Length, StringComparison.OrdinalIgnoreCase)
-                && urn.Value[Value.Length] == ':';
+            return urn.Value.Length > Value.Length &&
+                   0 == string.Compare(Value, 0, urn.Value, 0, Value.Length, StringComparison.OrdinalIgnoreCase) &&
+                   urn.Value[Value.Length] == ':';
         }
 
         public bool IsChildOf(Urn urn)
@@ -86,9 +86,9 @@ namespace ExternDotnetSDK.Models.Common
             return urn.IsParentOf(this);
         }
 
-        public static bool operator ==(Urn a, Urn b) => ReferenceEquals(a, b) || a?.Equals(b) == true;
+        public static bool operator==(Urn a, Urn b) => ReferenceEquals(a, b) || a?.Equals(b) == true;
 
-        public static bool operator !=(Urn a, Urn b) => !(a == b);
+        public static bool operator!=(Urn a, Urn b) => !(a == b);
 
         public override int GetHashCode() => Value.ToLowerInvariant().GetHashCode();
 

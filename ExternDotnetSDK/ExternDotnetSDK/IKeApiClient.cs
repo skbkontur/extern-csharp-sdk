@@ -8,6 +8,9 @@ using ExternDotnetSDK.Clients.Organizations;
 
 namespace ExternDotnetSDK
 {
+    /// <summary>
+    ///     Contains all methods of Kontur Extern API
+    /// </summary>
     public interface IKeApiClient
     {
         IAccountClient Accounts { get; }

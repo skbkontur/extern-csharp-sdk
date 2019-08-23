@@ -6,6 +6,9 @@ using ExternDotnetSDK.Models.Warrants;
 
 namespace ExternDotnetSDK.Clients.Account
 {
+    /// <summary>
+    ///     Contains methods for working with accounts
+    /// </summary>
     public interface IAccountClient
     {
         Task<AccountList> GetAccountsAsync(int skip = 0, int take = int.MaxValue);

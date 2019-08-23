@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Authentication;
 using ExternDotnetSDK.Clients.Common;
-using ExternDotnetSDK.Clients.Common.SendAsync;
-using ExternDotnetSDK.Logging;
+using ExternDotnetSDK.Clients.Common.ImplementableInterfaces;
+using ExternDotnetSDK.Clients.Common.ImplementableInterfaces.Logging;
 using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.DraftsBuilders.Builders;
 using ExternDotnetSDK.Models.DraftsBuilders.DocumentFiles;
@@ -15,22 +14,22 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
 {
     public class DraftsBuilderClient : IDraftsBuilderClient
     {
-        private readonly RequestFactory factory;
+        private readonly InnerCommonClient client;
 
-        public DraftsBuilderClient(ILogger logger, IHttpSender client, IAuthenticationProvider authenticationProvider) =>
-            factory = new RequestFactory(logger, client, authenticationProvider);
+        public DraftsBuilderClient(ILogger logger, IRequestSender sender, IRequestFactory requestFactory) =>
+            client = new InnerCommonClient(logger, sender, requestFactory);
 
         public async Task<DraftsBuilder> CreateDraftsBuilderAsync(Guid accountId, DraftsBuilderMetaRequest meta) =>
-            await factory.SendRequestAsync<DraftsBuilder>(HttpMethod.Post, $"/v1/{accountId}/drafts/builders", meta);
+            await client.SendRequestAsync<DraftsBuilder>(HttpMethod.Post, $"/v1/{accountId}/drafts/builders", contentDto: meta);
 
         public async Task DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId) =>
-            await factory.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/drafts/builders/{draftsBuilderId}");
+            await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/drafts/builders/{draftsBuilderId}");
 
         public async Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId) =>
-            await factory.SendRequestAsync<DraftsBuilder>(HttpMethod.Get, $"/v1/{accountId}/drafts/builders/{draftsBuilderId}");
+            await client.SendRequestAsync<DraftsBuilder>(HttpMethod.Get, $"/v1/{accountId}/drafts/builders/{draftsBuilderId}");
 
         public async Task<DraftsBuilderMeta> GetDraftsBuilderMetaAsync(Guid accountId, Guid draftsBuilderId) =>
-            await factory.SendRequestAsync<DraftsBuilderMeta>(
+            await client.SendRequestAsync<DraftsBuilderMeta>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta");
 
@@ -38,19 +37,19 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid accountId,
             Guid draftsBuilderId,
             DraftsBuilderMetaRequest meta) =>
-            await factory.SendRequestAsync<DraftsBuilderMeta>(
+            await client.SendRequestAsync<DraftsBuilderMeta>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta");
 
         public async Task<DraftsBuilderBuildResult> BuildDraftsAsync(Guid accountId, Guid draftsBuilderId) =>
-            await factory.SendRequestAsync<DraftsBuilderBuildResult>(
+            await client.SendRequestAsync<DraftsBuilderBuildResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build",
                 new Dictionary<string, object> {["deferred"] = false});
 
         public async Task<ApiTaskResult<DraftsBuilderBuildResult>>
             BuildDeferredDraftsAsync(Guid accountId, Guid draftsBuilderId) =>
-            await factory.SendRequestAsync<ApiTaskResult<DraftsBuilderBuildResult>>(
+            await client.SendRequestAsync<ApiTaskResult<DraftsBuilderBuildResult>>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build",
                 new Dictionary<string, object> {["deferred"] = true});
@@ -59,7 +58,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid accountId,
             Guid draftsBuilderId,
             Guid apiTaskId) =>
-            await factory.SendRequestAsync<ApiTaskResult<DraftsBuilderBuildResult>>(
+            await client.SendRequestAsync<ApiTaskResult<DraftsBuilderBuildResult>>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/tasks/{apiTaskId}");
 
@@ -67,7 +66,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId) =>
-            await factory.SendRequestAsync<DraftsBuilderDocumentFile[]>(
+            await client.SendRequestAsync<DraftsBuilderDocumentFile[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files");
 
@@ -76,17 +75,17 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid draftsBuilderId,
             Guid documentId,
             DraftsBuilderDocumentFileContents contents) =>
-            await factory.SendRequestAsync<DraftsBuilderDocumentFile>(
+            await client.SendRequestAsync<DraftsBuilderDocumentFile>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files",
-                contents);
+                contentDto: contents);
 
         public async Task DeleteDraftsBuilderDocumentFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await factory.SendRequestAsync(
+            await client.SendRequestAsync(
                 HttpMethod.Delete,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}");
 
@@ -95,7 +94,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await factory.SendRequestAsync<DraftsBuilderDocumentFile>(
+            await client.SendRequestAsync<DraftsBuilderDocumentFile>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}");
 
@@ -105,17 +104,17 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid documentId,
             Guid fileId,
             DraftsBuilderDocumentFileContents contents) =>
-            await factory.SendRequestAsync<DraftsBuilderDocumentFile>(
+            await client.SendRequestAsync<DraftsBuilderDocumentFile>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
-                contents);
+                contentDto: contents);
 
         public async Task<string> GetDraftsBuilderDocumentFileContentAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await factory.SendRequestAsync<string>(
+            await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/content");
 
@@ -124,7 +123,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await factory.SendRequestAsync<string>(
+            await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/signature");
 
@@ -133,7 +132,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId) =>
-            await factory.SendRequestAsync<DraftsBuilderDocumentFileMeta>(
+            await client.SendRequestAsync<DraftsBuilderDocumentFileMeta>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta");
 
@@ -143,13 +142,13 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid documentId,
             Guid fileId,
             DraftsBuilderDocumentFileMetaRequest meta) =>
-            await factory.SendRequestAsync<DraftsBuilderDocumentFileMeta>(
+            await client.SendRequestAsync<DraftsBuilderDocumentFileMeta>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta",
-                meta);
+                contentDto: meta);
 
         public async Task<DraftsBuilderDocument[]> GetDraftsBuilderDocumentsAsync(Guid accountId, Guid draftsBuilderId) =>
-            await factory.SendRequestAsync<DraftsBuilderDocument[]>(
+            await client.SendRequestAsync<DraftsBuilderDocument[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents");
 
@@ -157,13 +156,13 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid accountId,
             Guid draftsBuilderId,
             DraftsBuilderDocumentMetaRequest meta) =>
-            await factory.SendRequestAsync<DraftsBuilderDocument>(
+            await client.SendRequestAsync<DraftsBuilderDocument>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents",
-                meta);
+                contentDto: meta);
 
         public async Task DeleteDraftsBuilderDocumentAsync(Guid accountId, Guid draftsBuilderId, Guid documentId) =>
-            await factory.SendRequestAsync(
+            await client.SendRequestAsync(
                 HttpMethod.Delete,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}");
 
@@ -171,7 +170,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId) =>
-            await factory.SendRequestAsync<DraftsBuilderDocument>(
+            await client.SendRequestAsync<DraftsBuilderDocument>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}");
 
@@ -179,7 +178,7 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId) =>
-            await factory.SendRequestAsync<DraftsBuilderDocumentMeta>(
+            await client.SendRequestAsync<DraftsBuilderDocumentMeta>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta");
 
@@ -188,9 +187,9 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
             Guid draftsBuilderId,
             Guid documentId,
             DraftsBuilderMetaRequest meta) =>
-            await factory.SendRequestAsync<DraftsBuilderDocumentMeta>(
+            await client.SendRequestAsync<DraftsBuilderDocumentMeta>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta",
-                meta);
+                contentDto: meta);
     }
 }
