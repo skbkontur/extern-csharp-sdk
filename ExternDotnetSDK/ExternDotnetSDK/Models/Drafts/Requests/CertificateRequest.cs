@@ -9,7 +9,6 @@ namespace ExternDotnetSDK.Models.Drafts.Requests
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class CertificateRequest
     {
-        /// <summary>Публичная часть сертификата</summary>
         [DataMember]
         [Required]
         public string Content { get; set; }

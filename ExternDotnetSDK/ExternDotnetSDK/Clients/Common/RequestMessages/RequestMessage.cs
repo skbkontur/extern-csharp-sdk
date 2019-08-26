@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces;
 
-namespace ExternDotnetSDK.Clients.Common.DefaultImplementations
+namespace ExternDotnetSDK.Clients.Common.RequestMessages
 {
-    public class DefaultRequest : IHaveHttpRequestMessage
+    public class RequestMessage : IRequestMessage
     {
         private readonly HttpRequestMessage requestMessage;
 
-        public DefaultRequest(HttpRequestMessage message) => requestMessage = message;
+        public RequestMessage(HttpRequestMessage message) => requestMessage = message;
         public HttpRequestHeaders Headers => requestMessage.Headers;
         public HttpContent Content => requestMessage.Content;
         public HttpMethod Method => requestMessage.Method;

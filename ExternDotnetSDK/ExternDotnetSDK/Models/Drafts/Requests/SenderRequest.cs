@@ -9,26 +9,21 @@ namespace ExternDotnetSDK.Models.Drafts.Requests
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class SenderRequest
     {
-        /// <summary>ИНН</summary>
         [DataMember]
         [Required]
         public string Inn { get; set; }
 
-        /// <summary>КПП</summary>
         [DataMember]
         public string Kpp { get; set; }
 
-        /// <summary>Сертификат для отправки</summary>
         [DataMember]
         [Required]
         public CertificateRequest Certificate { get; set; }
 
-        /// <summary>Отправитель является представителем</summary>
         [DataMember]
         [Required]
         public bool IsRepresentative { get; set; }
 
-        /// <summary>IP адрес отправителя отчета</summary>
         [DataMember]
         [Required]
         [JsonProperty("ipaddress")]

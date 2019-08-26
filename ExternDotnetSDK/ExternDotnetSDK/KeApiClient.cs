@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net.Http;
-using ExternDotnetSDK.Clients.Account;
-using ExternDotnetSDK.Clients.Common.DefaultImplementations;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces.Logging;
+using ExternDotnetSDK.Clients.Accounts;
+using ExternDotnetSDK.Clients.Common.AuthenticationProviders;
+using ExternDotnetSDK.Clients.Common.Logging;
+using ExternDotnetSDK.Clients.Common.RequestSenders;
 using ExternDotnetSDK.Clients.Docflows;
 using ExternDotnetSDK.Clients.Drafts;
 using ExternDotnetSDK.Clients.DraftsBuilders;
@@ -13,31 +13,36 @@ using ExternDotnetSDK.Clients.Organizations;
 
 namespace ExternDotnetSDK
 {
-    /// <summary>
-    ///     Main class for using Kontur Extern API
-    /// </summary>
     public class KeApiClient : IKeApiClient
     {
-        //todo change this address for a real one when SDK is ready for release
-        private const string BaseAddress = "https://extern-api.staging2.testkontur.ru";
-
         private readonly ILogger iLog;
         private readonly IRequestSender requestSender;
-        private readonly IRequestFactory requestFactory;
 
-        public KeApiClient(IRequestFactory customRequestFactory, IRequestSender customSender = null, ILogger customLogger = null)
+        public KeApiClient(
+            string apiKey,
+            IAuthenticationProvider authenticationProvider,
+            string baseAddress,
+            ILogger logger = null)
         {
-            requestFactory = customRequestFactory;
-            iLog = customLogger ?? new SilentLogger();
-            requestSender = customSender ?? new DefaultRequestSender(new HttpClient {BaseAddress = new Uri(BaseAddress)});
+            requestSender = new RequestSender(
+                authenticationProvider,
+                apiKey,
+                new HttpClient {BaseAddress = new Uri(baseAddress)});
+            iLog = logger ?? new SilentLogger();
             InitializeClients();
         }
 
-        public KeApiClient(string apiKey, string sessionId, IRequestSender customSender = null, ILogger customLogger = null)
+        public KeApiClient(string apiKey, IAuthenticationProvider authenticationProvider, Uri baseAddress, ILogger logger = null)
         {
-            requestFactory = new DefaultRequestFactory(new DefaultAuthenticationProvider(apiKey, sessionId));
-            iLog = customLogger ?? new SilentLogger();
-            requestSender = customSender ?? new DefaultRequestSender(new HttpClient {BaseAddress = new Uri(BaseAddress)});
+            requestSender = new RequestSender(authenticationProvider, apiKey, new HttpClient {BaseAddress = baseAddress});
+            iLog = logger ?? new SilentLogger();
+            InitializeClients();
+        }
+
+        public KeApiClient(IRequestSender requestSender, ILogger logger = null)
+        {
+            this.requestSender = requestSender;
+            iLog = logger ?? new SilentLogger();
             InitializeClients();
         }
 
@@ -51,13 +56,13 @@ namespace ExternDotnetSDK
 
         private void InitializeClients()
         {
-            Accounts = new AccountClient(iLog, requestSender, requestFactory);
-            Docflows = new DocflowsClient(iLog, requestSender, requestFactory);
-            Drafts = new DraftClient(iLog, requestSender, requestFactory);
-            Events = new EventsClient(iLog, requestSender, requestFactory);
-            DraftsBuilder = new DraftsBuilderClient(iLog, requestSender, requestFactory);
-            Organizations = new OrganizationsClient(iLog, requestSender, requestFactory);
-            InventoryDocflows = new InventoryDocflowsClient(iLog, requestSender, requestFactory);
+            Accounts = new AccountClient(iLog, requestSender);
+            Docflows = new DocflowsClient(iLog, requestSender);
+            Drafts = new DraftClient(iLog, requestSender);
+            Events = new EventsClient(iLog, requestSender);
+            DraftsBuilder = new DraftsBuilderClient(iLog, requestSender);
+            Organizations = new OrganizationsClient(iLog, requestSender);
+            InventoryDocflows = new InventoryDocflowsClient(iLog, requestSender);
         }
     }
 }

@@ -8,9 +8,6 @@ using ExternDotnetSDK.Models.DraftsBuilders.Documents;
 namespace ExternDotnetSDK.Clients.DraftsBuilders
 {
     //todo Cover all these methods with tests. Use KeApiClient for that.
-    /// <summary>
-    ///     Contains methods for working with drafts builders
-    /// </summary>
     public interface IDraftsBuilderClient
     {
         Task<DraftsBuilder> CreateDraftsBuilderAsync(Guid accountId, DraftsBuilderMetaRequest meta);

@@ -8,7 +8,6 @@ namespace ExternDotnetSDK.Models.Drafts.Meta
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class AdditionalInfo
     {
-        /// <summary>Тема письма</summary>
         [DataMember]
         public string Subject { get; set; }
     }

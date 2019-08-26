@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces.Logging;
+using ExternDotnetSDK.Clients.Common.Logging;
+using ExternDotnetSDK.Clients.Common.RequestSenders;
 using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Docflows;
@@ -18,8 +18,8 @@ namespace ExternDotnetSDK.Clients.Docflows
     {
         private readonly InnerCommonClient client;
 
-        public DocflowsClient(ILogger logger, IRequestSender sender, IRequestFactory requestFactory) =>
-            client = new InnerCommonClient(logger, sender, requestFactory);
+        public DocflowsClient(ILogger logger, IRequestSender requestSender) =>
+            client = new InnerCommonClient(logger, requestSender);
 
         public async Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter filter = null) =>
             await client.SendRequestAsync<DocflowPage>(

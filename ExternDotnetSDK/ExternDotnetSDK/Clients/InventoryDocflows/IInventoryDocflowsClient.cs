@@ -9,9 +9,6 @@ using ExternDotnetSDK.Models.Drafts;
 namespace ExternDotnetSDK.Clients.InventoryDocflows
 {
     //todo test these methods. Like, all of them.
-    /// <summary>
-    ///     Contains methods for working with inventory docflows (ответ на требование)
-    /// </summary>
     public interface IInventoryDocflowsClient
     {
         Task<DocflowPage> GetAllInventoryDocflowsAsync(

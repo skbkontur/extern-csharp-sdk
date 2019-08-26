@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Clients.Common.ImplementableInterfaces.Logging
+﻿namespace ExternDotnetSDK.Clients.Common.Logging
 {
     public enum LogMessageType
     {

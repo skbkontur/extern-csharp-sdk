@@ -1,8 +1,7 @@
 ﻿using System;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces.Logging;
+using ExternDotnetSDK.Clients.Common.ResponseMessages;
 
-namespace ExternDotnetSDK.Clients.Common.DefaultImplementations
+namespace ExternDotnetSDK.Clients.Common.Logging
 {
     public class SilentLogger : ILogger
     {
@@ -18,7 +17,7 @@ namespace ExternDotnetSDK.Clients.Common.DefaultImplementations
         {
         }
 
-        public void Log(IHaveHttpResponseMessage response, Exception exc, LogMessageType messageType = LogMessageType.Error)
+        public void Log(IResponseMessage response, Exception exc, LogMessageType messageType = LogMessageType.Error)
         {
         }
     }

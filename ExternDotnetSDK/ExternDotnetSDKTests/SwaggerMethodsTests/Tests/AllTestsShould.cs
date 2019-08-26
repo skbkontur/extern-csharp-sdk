@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using ExternDotnetSDK;
+using ExternDotnetSDK.Clients.Common.AuthenticationProviders;
 using ExternDotnetSDK.Models.Accounts;
 using ExternDotnetSDKTests.SwaggerMethodsTests.Common;
 using Newtonsoft.Json;
@@ -38,6 +39,9 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
         [OneTimeTearDown]
         public virtual async Task TearDown() => await Client.Accounts.DeleteAccountAsync(Account.Id);
 
-        protected void InitializeClient() => Client = new KeApiClient(Data.ApiKey, Data.SessionId);
+        protected void InitializeClient() => Client = new KeApiClient(
+            Data.ApiKey,
+            new AuthenticationProvider(Data.SessionId),
+            Data.BaseAddress);
     }
 }

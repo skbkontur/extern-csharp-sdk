@@ -2,12 +2,9 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace ExternDotnetSDK.Clients.Common.ImplementableInterfaces
+namespace ExternDotnetSDK.Clients.Common.RequestMessages
 {
-    /// <summary>
-    ///     Implements a request sent to server, like HttpRequestMessage class.
-    /// </summary>
-    public interface IHaveHttpRequestMessage
+    public interface IRequestMessage
     {
         HttpRequestHeaders Headers { get; }
         HttpContent Content { get; }

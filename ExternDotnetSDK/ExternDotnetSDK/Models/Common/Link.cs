@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Models.Common
 {
-    /// <summary>Просто ссылка. Подробности на https://wiki.skbkontur.ru/pages/viewpage.action?pageId=82510147. </summary>
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public sealed class Link : IEquatable<Link>
     {
@@ -13,22 +12,16 @@ namespace ExternDotnetSDK.Models.Common
         public const string RelPrev = "prev";
         public const string RelNext = "next";
 
-        /// <summary>Ссылка на ресурс.</summary>
         public readonly Uri Href;
 
-        /// <summary>Тип отношения.</summary>
         public readonly string Rel;
 
-        /// <summary>Имя отношения. Используется для идентификации ресурсов с одинаковым типом отношения.</summary>
         public readonly string Name;
 
-        /// <summary>Человек-понятное имя ресурса.</summary>
         public readonly string Title;
 
-        /// <summary>Профиль представления.</summary>
         public readonly string Profile;
 
-        /// <summary>Определяет шаблонную ссылку.</summary>
         public readonly bool Templated;
 
         public Link(Uri href, string rel, string name = null, string title = null, string profile = null, bool templated = false)

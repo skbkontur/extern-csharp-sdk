@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces.Logging;
+using ExternDotnetSDK.Clients.Common.Logging;
+using ExternDotnetSDK.Clients.Common.RequestSenders;
 using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.DraftsBuilders.Builders;
 using ExternDotnetSDK.Models.DraftsBuilders.DocumentFiles;
@@ -16,8 +16,8 @@ namespace ExternDotnetSDK.Clients.DraftsBuilders
     {
         private readonly InnerCommonClient client;
 
-        public DraftsBuilderClient(ILogger logger, IRequestSender sender, IRequestFactory requestFactory) =>
-            client = new InnerCommonClient(logger, sender, requestFactory);
+        public DraftsBuilderClient(ILogger logger, IRequestSender requestSender) =>
+            client = new InnerCommonClient(logger, requestSender);
 
         public async Task<DraftsBuilder> CreateDraftsBuilderAsync(Guid accountId, DraftsBuilderMetaRequest meta) =>
             await client.SendRequestAsync<DraftsBuilder>(HttpMethod.Post, $"/v1/{accountId}/drafts/builders", contentDto: meta);

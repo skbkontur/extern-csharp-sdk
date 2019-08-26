@@ -10,9 +10,6 @@ using ExternDotnetSDK.Models.Drafts;
 
 namespace ExternDotnetSDK.Clients.Docflows
 {
-    /// <summary>
-    ///     Contains methods for working with docflows
-    /// </summary>
     public interface IDocflowsClient
     {
         Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter filter = null);

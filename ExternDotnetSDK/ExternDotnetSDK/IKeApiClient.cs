@@ -1,4 +1,4 @@
-﻿using ExternDotnetSDK.Clients.Account;
+﻿using ExternDotnetSDK.Clients.Accounts;
 using ExternDotnetSDK.Clients.Docflows;
 using ExternDotnetSDK.Clients.Drafts;
 using ExternDotnetSDK.Clients.DraftsBuilders;
@@ -8,9 +8,6 @@ using ExternDotnetSDK.Clients.Organizations;
 
 namespace ExternDotnetSDK
 {
-    /// <summary>
-    ///     Contains all methods of Kontur Extern API
-    /// </summary>
     public interface IKeApiClient
     {
         IAccountClient Accounts { get; }

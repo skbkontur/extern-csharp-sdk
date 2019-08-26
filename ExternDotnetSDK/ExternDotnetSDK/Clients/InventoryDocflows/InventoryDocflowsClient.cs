@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces.Logging;
+using ExternDotnetSDK.Clients.Common.Logging;
+using ExternDotnetSDK.Clients.Common.RequestSenders;
 using ExternDotnetSDK.Models.Api;
 using ExternDotnetSDK.Models.Common;
 using ExternDotnetSDK.Models.Docflows;
@@ -18,8 +18,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
     {
         private readonly InnerCommonClient client;
 
-        public InventoryDocflowsClient(ILogger logger, IRequestSender sender, IRequestFactory requestFactory) =>
-            client = new InnerCommonClient(logger, sender, requestFactory);
+        public InventoryDocflowsClient(ILogger logger, IRequestSender requestSender) =>
+            client = new InnerCommonClient(logger, requestSender);
 
         public async Task<DocflowPage> GetAllInventoryDocflowsAsync(
             Guid accountId,

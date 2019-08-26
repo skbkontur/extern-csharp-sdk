@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ExternDotnetSDK.Clients.Common;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces;
-using ExternDotnetSDK.Clients.Common.ImplementableInterfaces.Logging;
+using ExternDotnetSDK.Clients.Common.Logging;
+using ExternDotnetSDK.Clients.Common.RequestSenders;
 using ExternDotnetSDK.Models.Accounts;
 using ExternDotnetSDK.Models.Certificates;
 using ExternDotnetSDK.Models.Warrants;
 
-namespace ExternDotnetSDK.Clients.Account
+namespace ExternDotnetSDK.Clients.Accounts
 {
     public class AccountClient : IAccountClient
     {
         private readonly InnerCommonClient client;
 
-        public AccountClient(ILogger logger, IRequestSender sender, IRequestFactory requestFactory) =>
-            client = new InnerCommonClient(logger, sender, requestFactory);
+        public AccountClient(ILogger logger, IRequestSender requestSender) =>
+            client = new InnerCommonClient(logger, requestSender);
 
         public async Task<AccountList> GetAccountsAsync(int skip = 0, int take = 100) =>
             await client.SendRequestAsync<AccountList>(
@@ -28,14 +28,14 @@ namespace ExternDotnetSDK.Clients.Account
                     ["take"] = take
                 });
 
-        public async Task<Models.Accounts.Account> GetAccountAsync(Guid accountId) =>
-            await client.SendRequestAsync<Models.Accounts.Account>(HttpMethod.Get, $"/v1/{accountId}");
+        public async Task<Account> GetAccountAsync(Guid accountId) =>
+            await client.SendRequestAsync<Account>(HttpMethod.Get, $"/v1/{accountId}");
 
         public async Task DeleteAccountAsync(Guid accountId) =>
             await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}");
 
-        public async Task<Models.Accounts.Account> CreateAccountAsync(string inn, string kpp, string organizationName) =>
-            await client.SendRequestAsync<Models.Accounts.Account>(
+        public async Task<Account> CreateAccountAsync(string inn, string kpp, string organizationName) =>
+            await client.SendRequestAsync<Account>(
                 HttpMethod.Post,
                 "/v1",
                 contentDto: new CreateAccountRequestDto

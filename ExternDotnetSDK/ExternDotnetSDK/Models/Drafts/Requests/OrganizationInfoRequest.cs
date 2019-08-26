@@ -4,14 +4,12 @@ using Newtonsoft.Json;
 
 namespace ExternDotnetSDK.Models.Drafts.Requests
 {
-    /// <summary>Реквизиты, специфичные для ЮЛ</summary>
     [DataContract]
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class OrganizationInfoRequest
     {
         private string kpp;
 
-        /// <summary>КПП</summary>
         [DataMember]
         public string Kpp
         {
