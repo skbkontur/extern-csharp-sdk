@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net.Http;
-using ExternDotnetSDK.Clients.Account;
+using ExternDotnetSDK.Clients.Accounts;
 using ExternDotnetSDK.Clients.Common.DefaultImplementations;
 using ExternDotnetSDK.Clients.Common.ImplementableInterfaces;
 using ExternDotnetSDK.Clients.Common.ImplementableInterfaces.Logging;

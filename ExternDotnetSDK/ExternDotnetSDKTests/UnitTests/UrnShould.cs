@@ -33,6 +33,7 @@ namespace ExternDotnetSDKTests.UnitTests
         [Test]
         public void Throw_WhenConstructedWithBadParameters()
         {
+            // ReSharper disable once NotAccessedVariable
             Urn badUrn;
             Assert.Throws<UrnException>(() => badUrn = new Urn("bad value"), "Invalid URN schema");
             Assert.Throws<ArgumentNullException>(() => badUrn = new Urn(null));

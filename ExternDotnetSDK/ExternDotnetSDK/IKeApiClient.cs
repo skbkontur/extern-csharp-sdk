@@ -1,4 +1,4 @@
-﻿using ExternDotnetSDK.Clients.Account;
+﻿using ExternDotnetSDK.Clients.Accounts;
 using ExternDotnetSDK.Clients.Docflows;
 using ExternDotnetSDK.Clients.Drafts;
 using ExternDotnetSDK.Clients.DraftsBuilders;
