@@ -1,8 +1,8 @@
 ﻿using System;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.DraftsBuilders.Builders
+namespace KeApiOpenSdk.Models.DraftsBuilders.Builders
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DraftsBuilderBuildErrorDocumentResult

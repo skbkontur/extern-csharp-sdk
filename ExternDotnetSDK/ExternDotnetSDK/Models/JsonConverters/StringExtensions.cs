@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace ExternDotnetSDK.Models.JsonConverters
+namespace KeApiOpenSdk.Models.JsonConverters
 {
     internal static class StringExtensions
     {

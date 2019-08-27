@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Models.Api;
-using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.Docflows;
-using ExternDotnetSDK.Models.Documents;
-using ExternDotnetSDK.Models.Drafts;
+using KeApiOpenSdk.Models.Api;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.Docflows;
+using KeApiOpenSdk.Models.Documents;
+using KeApiOpenSdk.Models.Drafts;
 
-namespace ExternDotnetSDK.Clients.InventoryDocflows
+namespace KeApiOpenSdk.Clients.InventoryDocflows
 {
-    //todo test these methods. Like, all of them.
     public interface IInventoryDocflowsClient
     {
         Task<DocflowPage> GetAllInventoryDocflowsAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
-            DocflowFilter filter = null);
+            DocflowFilter filter = null,
+            TimeSpan? timeout = null);
 
-        Task<Docflow> GetInventoryDocflowAsync(Guid accountId, Guid relatedDocflowId, Guid relatedDocumentId, Guid inventoryId);
+        Task<Docflow> GetInventoryDocflowAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            TimeSpan? timeout = null);
 
         Task<byte[]> PrintInventoryDocflowDocumentAsync(
             Guid accountId,
@@ -25,21 +30,24 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid relatedDocumentId,
             Guid inventoryId,
             Guid documentId,
-            byte[] decryptedDocumentContent);
+            byte[] decryptedDocumentContent,
+            TimeSpan? timeout = null);
 
         Task<byte[]> GetInventoryDocflowDocumentEncryptedContentAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
             Guid inventoryId,
-            Guid documentId);
+            Guid documentId,
+            TimeSpan? timeout = null);
 
         Task<byte[]> GetInventoryDocflowDocumentDecryptedContentAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
             Guid inventoryId,
-            Guid documentId);
+            Guid documentId,
+            TimeSpan? timeout = null);
 
         Task<byte[]> GetSignatureContentAsync(
             Guid accountId,
@@ -47,7 +55,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid relatedDocumentId,
             Guid inventoryId,
             Guid documentId,
-            Guid signatureId);
+            Guid signatureId,
+            TimeSpan? timeout = null);
 
         Task<ApiReplyDocument> GenerateDocumentReplyAsync(
             Guid accountId,
@@ -56,7 +65,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Urn documentType,
-            byte[] certificateContent);
+            byte[] certificateContent,
+            TimeSpan? timeout = null);
 
         Task<Docflow> SendDocumentReplyAsync(
             Guid accountId,
@@ -65,7 +75,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Guid replyId,
-            byte[] senderIpContent);
+            byte[] senderIpContent,
+            TimeSpan? timeout = null);
 
         Task<ApiReplyDocument> UpdateDocumentReplyContentAsync(
             Guid accountId,
@@ -74,7 +85,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Guid replyId,
-            byte[] content);
+            byte[] content,
+            TimeSpan? timeout = null);
 
         Task<ApiReplyDocument> UpdateDocumentReplySignatureAsync(
             Guid accountId,
@@ -83,7 +95,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Guid replyId,
-            byte[] signature);
+            byte[] signature,
+            TimeSpan? timeout = null);
 
         Task<ApiReplyDocument> GetDocumentReplyAsync(
             Guid accountId,
@@ -91,7 +104,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid relatedDocumentId,
             Guid inventoryId,
             Guid documentId,
-            Guid replyId);
+            Guid replyId,
+            TimeSpan? timeout = null);
 
         Task<SignResult> ConfirmCloudSignDocumentReplyAsync(
             Guid accountId,
@@ -101,7 +115,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid replyId,
             Guid requestId,
-            string code);
+            string code,
+            TimeSpan? timeout = null);
 
         Task<ApiTaskResult<CryptOperationStatusResult>> GetDocflowReplyDocumentTaskAsync(
             Guid accountId,
@@ -110,7 +125,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Guid replyId,
-            Guid apiTaskId);
+            Guid apiTaskId,
+            TimeSpan? timeout = null);
 
         Task<SignInitResult> CloudSignDocumentReplyAsync(
             Guid accountId,
@@ -119,7 +135,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Guid replyId,
-            bool forceConfirmation = true);
+            bool forceConfirmation = true,
+            TimeSpan? timeout = null);
 
         Task<byte[]> ConfirmDocumentContentDecryptionAsync(
             Guid accountId,
@@ -129,7 +146,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid requestId,
             string code,
-            bool unzip = false);
+            bool unzip = false,
+            TimeSpan? timeout = null);
 
         Task<DecryptionInitResult> DecryptDocumentContentAsync(
             Guid accountId,
@@ -137,6 +155,7 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid relatedDocumentId,
             Guid inventoryId,
             Guid documentId,
-            byte[] certificateContent);
+            byte[] certificateContent,
+            TimeSpan? timeout = null);
     }
 }

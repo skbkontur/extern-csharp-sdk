@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExternDotnetSDK\ExternDotnetSDK.csproj" />
+    <ProjectReference Include="..\ExternDotnetSDK\KeApiOpenSdk.csproj" />
   </ItemGroup>
 
 </Project>

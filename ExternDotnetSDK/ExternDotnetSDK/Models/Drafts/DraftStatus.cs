@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Models.Drafts
+﻿namespace KeApiOpenSdk.Models.Drafts
 {
     public enum DraftStatus
     {

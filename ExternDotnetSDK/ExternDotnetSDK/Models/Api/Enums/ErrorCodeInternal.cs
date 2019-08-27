@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Models.Api.Enums
+﻿namespace KeApiOpenSdk.Models.Api.Enums
 {
     public enum ErrorCodeInternal
     {

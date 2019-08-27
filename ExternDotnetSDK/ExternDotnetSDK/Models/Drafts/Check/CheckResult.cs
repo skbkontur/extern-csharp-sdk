@@ -1,7 +1,7 @@
-﻿using ExternDotnetSDK.Models.JsonConverters;
+﻿using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Drafts.Check
+namespace KeApiOpenSdk.Models.Drafts.Check
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class CheckResult

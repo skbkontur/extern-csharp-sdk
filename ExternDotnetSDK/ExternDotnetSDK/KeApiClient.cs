@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Net.Http;
-using ExternDotnetSDK.Clients.Accounts;
-using ExternDotnetSDK.Clients.Common.AuthenticationProviders;
-using ExternDotnetSDK.Clients.Common.Logging;
-using ExternDotnetSDK.Clients.Common.RequestSenders;
-using ExternDotnetSDK.Clients.Docflows;
-using ExternDotnetSDK.Clients.Drafts;
-using ExternDotnetSDK.Clients.DraftsBuilders;
-using ExternDotnetSDK.Clients.Events;
-using ExternDotnetSDK.Clients.InventoryDocflows;
-using ExternDotnetSDK.Clients.Organizations;
+using KeApiOpenSdk.Clients.Accounts;
+using KeApiOpenSdk.Clients.Authentication;
+using KeApiOpenSdk.Clients.Common.Logging;
+using KeApiOpenSdk.Clients.Common.RequestSenders;
+using KeApiOpenSdk.Clients.Docflows;
+using KeApiOpenSdk.Clients.Drafts;
+using KeApiOpenSdk.Clients.DraftsBuilders;
+using KeApiOpenSdk.Clients.Events;
+using KeApiOpenSdk.Clients.InventoryDocflows;
+using KeApiOpenSdk.Clients.Organizations;
 
-namespace ExternDotnetSDK
+namespace KeApiOpenSdk
 {
     public class KeApiClient : IKeApiClient
     {

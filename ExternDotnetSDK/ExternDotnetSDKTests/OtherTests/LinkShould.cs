@@ -1,9 +1,9 @@
 ﻿using System;
-using ExternDotnetSDK.Models.Common;
 using FluentAssertions;
+using KeApiOpenSdk.Models.Common;
 using NUnit.Framework;
 
-namespace ExternDotnetSDKTests.UnitTests
+namespace KeApiOpenSdkTests.OtherTests
 {
     [TestFixture]
     internal class LinkShould

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Models.Organizations;
+using KeApiOpenSdk.Models.Organizations;
 using NUnit.Framework;
 
-namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
+namespace KeApiOpenSdkTests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class OrganizationsClientShould : AllTestsShould

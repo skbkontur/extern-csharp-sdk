@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.DraftsBuilders.Info
+namespace KeApiOpenSdk.Models.DraftsBuilders.Info
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class RegistrationInfo

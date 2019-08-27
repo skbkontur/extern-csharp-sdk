@@ -1,8 +1,8 @@
-﻿using ExternDotnetSDK.Models.JsonConverters;
+﻿using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace ExternDotnetSDK.Models.Common
+namespace KeApiOpenSdk.Models.Common
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DateFormat : IsoDateTimeConverter

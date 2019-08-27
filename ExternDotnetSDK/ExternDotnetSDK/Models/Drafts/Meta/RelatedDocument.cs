@@ -1,8 +1,8 @@
 ﻿using System;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Drafts.Meta
+namespace KeApiOpenSdk.Models.Drafts.Meta
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class RelatedDocument

@@ -1,9 +1,9 @@
 ﻿using System;
-using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Documents.Requisites
+namespace KeApiOpenSdk.Models.Documents.Requisites
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DemandAttachmentRequisites : DocflowDocumentRequisites

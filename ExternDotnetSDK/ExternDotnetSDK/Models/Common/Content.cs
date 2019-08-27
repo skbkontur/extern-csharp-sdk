@@ -1,8 +1,8 @@
-﻿using ExternDotnetSDK.Models.JsonConverters;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Common
+namespace KeApiOpenSdk.Models.Common
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class Content

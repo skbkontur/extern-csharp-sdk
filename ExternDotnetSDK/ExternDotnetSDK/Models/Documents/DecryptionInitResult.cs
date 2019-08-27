@@ -1,8 +1,8 @@
-﻿using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.JsonConverters;
+﻿using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Documents
+namespace KeApiOpenSdk.Models.Documents
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DecryptionInitResult

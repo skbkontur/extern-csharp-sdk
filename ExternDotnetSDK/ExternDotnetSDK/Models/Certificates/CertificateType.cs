@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Models.Certificates
+﻿namespace KeApiOpenSdk.Models.Certificates
 {
     public enum CertificateType
     {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.JsonConverters;
 using JetBrains.Annotations;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Docflows
+namespace KeApiOpenSdk.Models.Docflows
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DocflowPageItem

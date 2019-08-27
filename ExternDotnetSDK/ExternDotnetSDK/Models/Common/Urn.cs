@@ -1,8 +1,8 @@
 ﻿using System;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Common
+namespace KeApiOpenSdk.Models.Common
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     [JsonConverter(typeof (UrnJsonConverter))]

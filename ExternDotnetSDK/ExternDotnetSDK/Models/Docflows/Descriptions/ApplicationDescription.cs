@@ -1,7 +1,7 @@
-﻿using ExternDotnetSDK.Models.JsonConverters;
+﻿using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Docflows.Descriptions
+namespace KeApiOpenSdk.Models.Docflows.Descriptions
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ApplicationDescription : DocflowDescription

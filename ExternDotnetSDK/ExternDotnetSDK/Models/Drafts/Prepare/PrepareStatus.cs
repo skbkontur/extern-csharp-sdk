@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Models.Drafts.Prepare
+﻿namespace KeApiOpenSdk.Models.Drafts.Prepare
 {
     public enum PrepareStatus
     {

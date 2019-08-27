@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace ExternDotnetSDK.Clients.Common.RequestMessages
+namespace KeApiOpenSdk.Clients.Common.RequestMessages
 {
     public class RequestMessage : IRequestMessage
     {

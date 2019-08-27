@@ -1,90 +1,140 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Models.Api;
-using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.Docflows;
-using ExternDotnetSDK.Models.Drafts;
-using ExternDotnetSDK.Models.Drafts.Check;
-using ExternDotnetSDK.Models.Drafts.Meta;
-using ExternDotnetSDK.Models.Drafts.Prepare;
-using ExternDotnetSDK.Models.Drafts.Requests;
+using KeApiOpenSdk.Models.Api;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.Docflows;
+using KeApiOpenSdk.Models.Drafts;
+using KeApiOpenSdk.Models.Drafts.Check;
+using KeApiOpenSdk.Models.Drafts.Meta;
+using KeApiOpenSdk.Models.Drafts.Prepare;
+using KeApiOpenSdk.Models.Drafts.Requests;
 
-namespace ExternDotnetSDK.Clients.Drafts
+namespace KeApiOpenSdk.Clients.Drafts
 {
     public interface IDraftClient
     {
-        Task<Draft> CreateDraftAsync(Guid accountId, DraftMetaRequest draftRequest);
-        Task DeleteDraftAsync(Guid accountId, Guid draftId);
-        Task<Draft> GetDraftAsync(Guid accountId, Guid draftId);
-        Task<DraftMeta> GetDraftMetaAsync(Guid accountId, Guid draftId);
-        Task<DraftMeta> UpdateDraftMetaAsync(Guid accountId, Guid draftId, DraftMetaRequest newMeta);
-        Task<DraftDocument> AddDocumentAsync(Guid accountId, Guid draftId, DocumentContents content);
-        Task DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId);
-        Task<DraftDocument> GetDocumentAsync(Guid accountId, Guid draftId, Guid documentId);
-        Task<DraftDocument> UpdateDocumentAsync(Guid accountId, Guid draftId, Guid documentId, DocumentContents content);
+        Task<Draft> CreateDraftAsync(Guid accountId, DraftMetaRequest draftRequest, TimeSpan? timeout = null);
+        Task DeleteDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
+        Task<Draft> GetDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
+        Task<DraftMeta> GetDraftMetaAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
+        Task<DraftMeta> UpdateDraftMetaAsync(Guid accountId, Guid draftId, DraftMetaRequest newMeta, TimeSpan? timeout = null);
+        Task<DraftDocument> AddDocumentAsync(Guid accountId, Guid draftId, DocumentContents content, TimeSpan? timeout = null);
+        Task DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null);
+        Task<DraftDocument> GetDocumentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null);
 
-        //todo make test when it works properly
-        Task<string> GetDocumentPrintAsync(Guid accountId, Guid draftId, Guid documentId);
+        Task<DraftDocument> UpdateDocumentAsync(
+            Guid accountId,
+            Guid draftId,
+            Guid documentId,
+            DocumentContents content,
+            TimeSpan? timeout = null);
 
-        Task<string> GetDocumentDecryptedContentAsync(Guid accountId, Guid draftId, Guid documentId);
-        Task UpdateDocumentDecryptedContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content);
-        Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId);
-        Task UpdateDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, byte[] content);
-        Task<Signature> AddDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, SignatureRequest request = null);
-        Task DeleteDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId);
-        Task<Signature> GetDocumentSignatureAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId);
+        Task<string> GetDocumentPrintAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null);
+        Task<string> GetDocumentDecryptedContentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null);
+
+        Task UpdateDocumentDecryptedContentAsync(
+            Guid accountId,
+            Guid draftId,
+            Guid documentId,
+            byte[] content,
+            TimeSpan? timeout = null);
+
+        Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null);
+
+        Task UpdateDocumentSignatureContentAsync(
+            Guid accountId,
+            Guid draftId,
+            Guid documentId,
+            byte[] content,
+            TimeSpan? timeout = null);
+
+        Task<Signature> AddDocumentSignatureAsync(
+            Guid accountId,
+            Guid draftId,
+            Guid documentId,
+            SignatureRequest request = null,
+            TimeSpan? timeout = null);
+
+        Task DeleteDocumentSignatureAsync(
+            Guid accountId,
+            Guid draftId,
+            Guid documentId,
+            Guid signatureId,
+            TimeSpan? timeout = null);
+
+        Task<Signature> GetDocumentSignatureAsync(
+            Guid accountId,
+            Guid draftId,
+            Guid documentId,
+            Guid signatureId,
+            TimeSpan? timeout = null);
 
         Task<Signature> UpdateDocumentSignatureAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
             Guid signatureId,
-            SignatureRequest request);
+            SignatureRequest request,
+            TimeSpan? timeout = null);
 
-        Task<string> GetDocumentSignatureContentAsync(Guid accountId, Guid draftId, Guid documentId, Guid signatureId);
+        Task<string> GetDocumentSignatureContentAsync(
+            Guid accountId,
+            Guid draftId,
+            Guid documentId,
+            Guid signatureId,
+            TimeSpan? timeout = null);
 
-        //todo make test when this method works properly
-        Task<CheckResult> CheckDraftAsync(Guid accountId, Guid draftId);
+        Task<CheckResult> CheckDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
+        Task<ApiTaskResult<CheckResult>> StartCheckDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
+        Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
+        Task<ApiTaskResult<PrepareResult>> StartPrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
+        Task<Docflow> SendDraftAsync(Guid accountId, Guid draftId, bool force = false, TimeSpan? timeout = null);
 
-        Task<ApiTaskResult<CheckResult>> StartCheckDraftAsync(Guid accountId, Guid draftId);
+        Task<ApiTaskResult<Docflow>> StartSendDraftAsync(
+            Guid accountId,
+            Guid draftId,
+            bool force = false,
+            TimeSpan? timeout = null);
 
-        //todo make test when this method works properly
-        Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId);
+        Task<string> GetDocumentEncryptedContentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null);
 
-        Task<ApiTaskResult<PrepareResult>> StartPrepareDraftAsync(Guid accountId, Guid draftId);
+        Task BuildDocumentContentAsync(
+            Guid accountId,
+            Guid draftId,
+            Guid documentId,
+            FormatType type,
+            string content,
+            TimeSpan? timeout = null);
 
-        //todo make test when this method works properly
-        Task<Docflow> SendDraftAsync(Guid accountId, Guid draftId, bool force = false);
-
-        Task<ApiTaskResult<Docflow>> StartSendDraftAsync(Guid accountId, Guid draftId, bool force = false);
-
-        //todo make test when this method works properly
-        Task<string> GetDocumentEncryptedContentAsync(Guid accountId, Guid draftId, Guid documentId);
-
-        //todo make test when this method works properly
-        Task BuildDocumentContentAsync(Guid accountId, Guid draftId, Guid documentId, FormatType type, string content);
-
-        //todo make test when this method works properly
         Task<DraftDocument> CreateDocumentWithContentFromFormatAsync(
             Guid accountId,
             Guid draftId,
             FormatType type,
             int version,
-            string content);
+            string content,
+            TimeSpan? timeout = null);
 
         Task<ApiTaskPage> GetDraftTasks(
             Guid accountId,
             Guid draftId,
             long skip = 0,
             int take = int.MaxValue,
-            bool includeReleased = true);
+            bool includeReleased = true,
+            TimeSpan? timeout = null);
 
-        Task<ApiTaskResult<CryptOperationStatusResult>> GetDraftTask(Guid accountId, Guid draftId, Guid apiTaskId);
+        Task<ApiTaskResult<CryptOperationStatusResult>> GetDraftTask(
+            Guid accountId,
+            Guid draftId,
+            Guid apiTaskId,
+            TimeSpan? timeout = null);
 
-        //todo make test when this method works properly
-        Task<SignInitResult> CloudSignDraftAsync(Guid accountId, Guid draftId);
+        Task<SignInitResult> CloudSignDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
 
-        //todo make tests
-        Task<SignResult> CloudSignConfirmDraftAsync(Guid accountId, Guid draftId, Guid requestId, string code);
+        Task<SignResult> CloudSignConfirmDraftAsync(
+            Guid accountId,
+            Guid draftId,
+            Guid requestId,
+            string code,
+            TimeSpan? timeout = null);
     }
 }

@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Common;
-using ExternDotnetSDK.Clients.Common.Logging;
-using ExternDotnetSDK.Clients.Common.RequestSenders;
-using ExternDotnetSDK.Models.Api;
-using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.Docflows;
-using ExternDotnetSDK.Models.Documents;
-using ExternDotnetSDK.Models.Documents.Data;
-using ExternDotnetSDK.Models.Drafts;
+using KeApiOpenSdk.Clients.Common;
+using KeApiOpenSdk.Clients.Common.Logging;
+using KeApiOpenSdk.Clients.Common.RequestSenders;
+using KeApiOpenSdk.Models.Api;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.Docflows;
+using KeApiOpenSdk.Models.Documents;
+using KeApiOpenSdk.Models.Documents.Data;
+using KeApiOpenSdk.Models.Drafts;
 
-namespace ExternDotnetSDK.Clients.InventoryDocflows
+namespace KeApiOpenSdk.Clients.InventoryDocflows
 {
+    //todo Сделать нормальные тесты для методов.
     public class InventoryDocflowsClient : IInventoryDocflowsClient
     {
         private readonly InnerCommonClient client;
@@ -25,20 +26,24 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
-            DocflowFilter filter = null) =>
+            DocflowFilter filter = null,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<DocflowPage>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories",
-                filter?.ConvertToQueryParameters());
+                filter?.ConvertToQueryParameters(),
+                timeout: timeout);
 
         public async Task<Docflow> GetInventoryDocflowAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
-            Guid inventoryId) =>
+            Guid inventoryId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<Docflow>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}");
+                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}",
+                timeout: timeout);
 
         public async Task<byte[]> PrintInventoryDocflowDocumentAsync(
             Guid accountId,
@@ -46,31 +51,37 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid relatedDocumentId,
             Guid inventoryId,
             Guid documentId,
-            byte[] decryptedDocumentContent) =>
+            byte[] decryptedDocumentContent,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/print",
-                contentDto: new PrintDocumentData {Content = Convert.ToBase64String(decryptedDocumentContent)});
+                contentDto: new PrintDocumentData {Content = Convert.ToBase64String(decryptedDocumentContent)},
+                timeout: timeout);
 
         public async Task<byte[]> GetInventoryDocflowDocumentEncryptedContentAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
             Guid inventoryId,
-            Guid documentId) =>
+            Guid documentId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/encrypted-content");
+                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/encrypted-content",
+                timeout: timeout);
 
         public async Task<byte[]> GetInventoryDocflowDocumentDecryptedContentAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
             Guid inventoryId,
-            Guid documentId) =>
+            Guid documentId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypted-content");
+                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypted-content",
+                timeout: timeout);
 
         public async Task<byte[]> GetSignatureContentAsync(
             Guid accountId,
@@ -78,10 +89,12 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid relatedDocumentId,
             Guid inventoryId,
             Guid documentId,
-            Guid signatureId) =>
+            Guid signatureId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/signatures/{signatureId}/content");
+                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/signatures/{signatureId}/content",
+                timeout: timeout);
 
         public async Task<ApiReplyDocument> GenerateDocumentReplyAsync(
             Guid accountId,
@@ -90,12 +103,14 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Urn documentType,
-            byte[] certificateContent) =>
+            byte[] certificateContent,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/generate-reply",
                 new Dictionary<string, object> {["documentType"] = documentType},
-                new GenerateReplyDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)});
+                new GenerateReplyDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)},
+                timeout);
 
         public async Task<Docflow> SendDocumentReplyAsync(
             Guid accountId,
@@ -104,11 +119,13 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Guid replyId,
-            byte[] senderIpContent) =>
+            byte[] senderIpContent,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<Docflow>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/send",
-                contentDto: new SendReplyDocumentRequest {SenderIp = Convert.ToBase64String(senderIpContent)});
+                contentDto: new SendReplyDocumentRequest {SenderIp = Convert.ToBase64String(senderIpContent)},
+                timeout: timeout);
 
         public async Task<ApiReplyDocument> UpdateDocumentReplyContentAsync(
             Guid accountId,
@@ -117,11 +134,13 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Guid replyId,
-            byte[] content) =>
+            byte[] content,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/content",
-                contentDto: Convert.ToBase64String(content));
+                contentDto: Convert.ToBase64String(content),
+                timeout: timeout);
 
         public async Task<ApiReplyDocument> UpdateDocumentReplySignatureAsync(
             Guid accountId,
@@ -130,11 +149,13 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Guid replyId,
-            byte[] signature) =>
+            byte[] signature,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/signature",
-                contentDto: Convert.ToBase64String(signature));
+                contentDto: Convert.ToBase64String(signature),
+                timeout: timeout);
 
         public async Task<ApiReplyDocument> GetDocumentReplyAsync(
             Guid accountId,
@@ -142,10 +163,12 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid relatedDocumentId,
             Guid inventoryId,
             Guid documentId,
-            Guid replyId) =>
+            Guid replyId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}");
+                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}",
+                timeout: timeout);
 
         public async Task<SignResult> ConfirmCloudSignDocumentReplyAsync(
             Guid accountId,
@@ -155,7 +178,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid replyId,
             Guid requestId,
-            string code) =>
+            string code,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<SignResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/cloud-sign-confirm",
@@ -163,7 +187,8 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
                 {
                     ["code"] = code,
                     ["requestId"] = requestId
-                });
+                },
+                timeout: timeout);
 
         public async Task<ApiTaskResult<CryptOperationStatusResult>> GetDocflowReplyDocumentTaskAsync(
             Guid accountId,
@@ -172,10 +197,12 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Guid replyId,
-            Guid apiTaskId) =>
+            Guid apiTaskId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<ApiTaskResult<CryptOperationStatusResult>>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/tasks/{apiTaskId}");
+                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/tasks/{apiTaskId}",
+                timeout: timeout);
 
         public async Task<SignInitResult> CloudSignDocumentReplyAsync(
             Guid accountId,
@@ -184,11 +211,13 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Guid replyId,
-            bool forceConfirmation = true) =>
+            bool forceConfirmation = true,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<SignInitResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/cloud-sign",
-                new Dictionary<string, object> {["forceConfirmation"] = forceConfirmation});
+                new Dictionary<string, object> {["forceConfirmation"] = forceConfirmation},
+                timeout: timeout);
 
         public async Task<byte[]> ConfirmDocumentContentDecryptionAsync(
             Guid accountId,
@@ -198,10 +227,12 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid documentId,
             Guid requestId,
             string code,
-            bool unzip = false) =>
+            bool unzip = false,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Post,
-                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypt-content-confirm");
+                $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypt-content-confirm",
+                timeout: timeout);
 
         public async Task<DecryptionInitResult> DecryptDocumentContentAsync(
             Guid accountId,
@@ -209,10 +240,12 @@ namespace ExternDotnetSDK.Clients.InventoryDocflows
             Guid relatedDocumentId,
             Guid inventoryId,
             Guid documentId,
-            byte[] certificateContent) =>
+            byte[] certificateContent,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<DecryptionInitResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypt-content",
-                contentDto: new DecryptDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)});
+                contentDto: new DecryptDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)},
+                timeout: timeout);
     }
 }

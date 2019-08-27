@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Common;
-using ExternDotnetSDK.Clients.Common.Logging;
-using ExternDotnetSDK.Clients.Common.RequestSenders;
-using ExternDotnetSDK.Models.Accounts;
-using ExternDotnetSDK.Models.Certificates;
-using ExternDotnetSDK.Models.Warrants;
+using KeApiOpenSdk.Clients.Common;
+using KeApiOpenSdk.Clients.Common.Logging;
+using KeApiOpenSdk.Clients.Common.RequestSenders;
+using KeApiOpenSdk.Models.Accounts;
+using KeApiOpenSdk.Models.Certificates;
+using KeApiOpenSdk.Models.Warrants;
 
-namespace ExternDotnetSDK.Clients.Accounts
+namespace KeApiOpenSdk.Clients.Accounts
 {
+    //todo Сделать нормальные тесты для методов.
     public class AccountClient : IAccountClient
     {
         private readonly InnerCommonClient client;
@@ -18,7 +19,7 @@ namespace ExternDotnetSDK.Clients.Accounts
         public AccountClient(ILogger logger, IRequestSender requestSender) =>
             client = new InnerCommonClient(logger, requestSender);
 
-        public async Task<AccountList> GetAccountsAsync(int skip = 0, int take = 100) =>
+        public async Task<AccountList> GetAccountsAsync(int skip = 0, int take = 100, TimeSpan? timeout = null) =>
             await client.SendRequestAsync<AccountList>(
                 HttpMethod.Get,
                 "/v1",
@@ -26,15 +27,20 @@ namespace ExternDotnetSDK.Clients.Accounts
                 {
                     ["skip"] = skip,
                     ["take"] = take
-                });
+                },
+                timeout: timeout);
 
-        public async Task<Account> GetAccountAsync(Guid accountId) =>
-            await client.SendRequestAsync<Account>(HttpMethod.Get, $"/v1/{accountId}");
+        public async Task<Account> GetAccountAsync(Guid accountId, TimeSpan? timeout = null) =>
+            await client.SendRequestAsync<Account>(HttpMethod.Get, $"/v1/{accountId}", timeout: timeout);
 
-        public async Task DeleteAccountAsync(Guid accountId) =>
-            await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}");
+        public async Task DeleteAccountAsync(Guid accountId, TimeSpan? timeout = null) =>
+            await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}", timeout: timeout);
 
-        public async Task<Account> CreateAccountAsync(string inn, string kpp, string organizationName) =>
+        public async Task<Account> CreateAccountAsync(
+            string inn,
+            string kpp,
+            string organizationName,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<Account>(
                 HttpMethod.Post,
                 "/v1",
@@ -43,13 +49,15 @@ namespace ExternDotnetSDK.Clients.Accounts
                     Inn = inn,
                     Kpp = kpp,
                     OrganizationName = organizationName
-                });
+                },
+                timeout: timeout);
 
         public async Task<CertificateList> GetAccountCertificatesAsync(
             Guid accountId,
             int skip = 0,
             int take = 100,
-            bool forAllUsers = false) =>
+            bool forAllUsers = false,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<CertificateList>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/certificates",
@@ -58,13 +66,15 @@ namespace ExternDotnetSDK.Clients.Accounts
                     ["skip"] = skip,
                     ["take"] = take,
                     ["forAllUsers"] = forAllUsers
-                });
+                },
+                timeout: timeout);
 
         public async Task<WarrantList> GetAccountWarrantsAsync(
             Guid accountId,
             int skip = 0,
             int take = int.MaxValue,
-            bool forAllUsers = false) =>
+            bool forAllUsers = false,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<WarrantList>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/warrants",
@@ -73,6 +83,7 @@ namespace ExternDotnetSDK.Clients.Accounts
                     ["skip"] = skip,
                     ["take"] = take,
                     ["forAllUsers"] = forAllUsers
-                });
+                },
+                timeout: timeout);
     }
 }

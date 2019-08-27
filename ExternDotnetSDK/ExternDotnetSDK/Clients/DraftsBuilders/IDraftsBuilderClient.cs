@@ -1,86 +1,132 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Models.Api;
-using ExternDotnetSDK.Models.DraftsBuilders.Builders;
-using ExternDotnetSDK.Models.DraftsBuilders.DocumentFiles;
-using ExternDotnetSDK.Models.DraftsBuilders.Documents;
+using KeApiOpenSdk.Models.Api;
+using KeApiOpenSdk.Models.DraftsBuilders.Builders;
+using KeApiOpenSdk.Models.DraftsBuilders.DocumentFiles;
+using KeApiOpenSdk.Models.DraftsBuilders.Documents;
 
-namespace ExternDotnetSDK.Clients.DraftsBuilders
+namespace KeApiOpenSdk.Clients.DraftsBuilders
 {
-    //todo Cover all these methods with tests. Use KeApiClient for that.
     public interface IDraftsBuilderClient
     {
-        Task<DraftsBuilder> CreateDraftsBuilderAsync(Guid accountId, DraftsBuilderMetaRequest meta);
-        Task DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId);
-        Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId);
-        Task<DraftsBuilderMeta> GetDraftsBuilderMetaAsync(Guid accountId, Guid draftsBuilderId);
-        Task<DraftsBuilderMeta> UpdateDraftsBuilderMetaAsync(Guid accountId, Guid draftsBuilderId, DraftsBuilderMetaRequest meta);
-        Task<DraftsBuilderBuildResult> BuildDraftsAsync(Guid accountId, Guid draftsBuilderId);
-        Task<ApiTaskResult<DraftsBuilderBuildResult>> BuildDeferredDraftsAsync(Guid accountId, Guid draftsBuilderId);
-        Task<ApiTaskResult<DraftsBuilderBuildResult>> GetBuildResultAsync(Guid accountId, Guid draftsBuilderId, Guid apiTaskId);
+        Task<DraftsBuilder> CreateDraftsBuilderAsync(Guid accountId, DraftsBuilderMetaRequest meta, TimeSpan? timeout = null);
+        Task DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null);
+        Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null);
+        Task<DraftsBuilderMeta> GetDraftsBuilderMetaAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null);
+
+        Task<DraftsBuilderMeta> UpdateDraftsBuilderMetaAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            DraftsBuilderMetaRequest meta,
+            TimeSpan? timeout = null);
+
+        Task<DraftsBuilderBuildResult> BuildDraftsAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null);
+
+        Task<ApiTaskResult<DraftsBuilderBuildResult>> BuildDeferredDraftsAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            TimeSpan? timeout = null);
+
+        Task<ApiTaskResult<DraftsBuilderBuildResult>> GetBuildResultAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid apiTaskId,
+            TimeSpan? timeout = null);
 
         Task<DraftsBuilderDocumentFile[]> GetDraftsBuilderDocumentFilesAsync(
             Guid accountId,
             Guid draftsBuilderId,
-            Guid documentId);
+            Guid documentId,
+            TimeSpan? timeout = null);
 
         Task<DraftsBuilderDocumentFile> CreateDraftsBuilderDocumentFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
-            DraftsBuilderDocumentFileContents contents);
+            DraftsBuilderDocumentFileContents contents,
+            TimeSpan? timeout = null);
 
-        Task DeleteDraftsBuilderDocumentFileAsync(Guid accountId, Guid draftsBuilderId, Guid documentId, Guid fileId);
+        Task DeleteDraftsBuilderDocumentFileAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            Guid fileId,
+            TimeSpan? timeout = null);
 
         Task<DraftsBuilderDocumentFile> GetDraftsBuilderDocumentFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
-            Guid fileId);
+            Guid fileId,
+            TimeSpan? timeout = null);
 
         Task<DraftsBuilderDocumentFile> UpdateDraftsBuilderDocumentFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId,
-            DraftsBuilderDocumentFileContents contents);
+            DraftsBuilderDocumentFileContents contents,
+            TimeSpan? timeout = null);
 
-        Task<string> GetDraftsBuilderDocumentFileContentAsync(Guid accountId, Guid draftsBuilderId, Guid documentId, Guid fileId);
+        Task<string> GetDraftsBuilderDocumentFileContentAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            Guid fileId,
+            TimeSpan? timeout = null);
 
         Task<string> GetDraftsBuilderDocumentFileSignatureAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
-            Guid fileId);
+            Guid fileId,
+            TimeSpan? timeout = null);
 
         Task<DraftsBuilderDocumentFileMeta> GetDraftsBuilderDocumentFileMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
-            Guid fileId);
+            Guid fileId,
+            TimeSpan? timeout = null);
 
         Task<DraftsBuilderDocumentFileMeta> UpdateDraftsBuilderDocumentFileMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId,
-            DraftsBuilderDocumentFileMetaRequest meta);
+            DraftsBuilderDocumentFileMetaRequest meta,
+            TimeSpan? timeout = null);
 
-        Task<DraftsBuilderDocument[]> GetDraftsBuilderDocumentsAsync(Guid accountId, Guid draftsBuilderId);
+        Task<DraftsBuilderDocument[]> GetDraftsBuilderDocumentsAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            TimeSpan? timeout = null);
 
         Task<DraftsBuilderDocument> CreateDraftsBuilderDocumentAsync(
             Guid accountId,
             Guid draftsBuilderId,
-            DraftsBuilderDocumentMetaRequest meta);
+            DraftsBuilderDocumentMetaRequest meta,
+            TimeSpan? timeout = null);
 
-        Task DeleteDraftsBuilderDocumentAsync(Guid accountId, Guid draftsBuilderId, Guid documentId);
-        Task<DraftsBuilderDocument> GetDraftsBuilderDocumentAsync(Guid accountId, Guid draftsBuilderId, Guid documentId);
-        Task<DraftsBuilderDocumentMeta> GetDraftsBuilderDocumentMetaAsync(Guid accountId, Guid draftsBuilderId, Guid documentId);
+        Task DeleteDraftsBuilderDocumentAsync(Guid accountId, Guid draftsBuilderId, Guid documentId, TimeSpan? timeout = null);
+
+        Task<DraftsBuilderDocument> GetDraftsBuilderDocumentAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            TimeSpan? timeout = null);
+
+        Task<DraftsBuilderDocumentMeta> GetDraftsBuilderDocumentMetaAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            TimeSpan? timeout = null);
 
         Task<DraftsBuilderDocumentMeta> UpdateDraftsBuilderDocumentMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
-            DraftsBuilderMetaRequest meta);
+            DraftsBuilderMetaRequest meta,
+            TimeSpan? timeout = null);
     }
 }

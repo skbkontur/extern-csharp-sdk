@@ -1,10 +1,10 @@
 ﻿using System;
-using ExternDotnetSDK.Models.Common;
 using FluentAssertions;
+using KeApiOpenSdk.Models.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace ExternDotnetSDKTests.UnitTests
+namespace KeApiOpenSdkTests.OtherTests
 {
     internal class UrnShould
     {

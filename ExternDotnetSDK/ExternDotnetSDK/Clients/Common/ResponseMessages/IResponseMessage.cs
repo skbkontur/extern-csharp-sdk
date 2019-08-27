@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using ExternDotnetSDK.Clients.Common.RequestMessages;
+using KeApiOpenSdk.Clients.Common.RequestMessages;
 
-namespace ExternDotnetSDK.Clients.Common.ResponseMessages
+namespace KeApiOpenSdk.Clients.Common.ResponseMessages
 {
     public interface IResponseMessage
     {

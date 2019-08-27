@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Errors
+namespace KeApiOpenSdk.Models.Errors
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ExternApiError : Error

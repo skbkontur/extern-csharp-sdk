@@ -1,11 +1,11 @@
 ﻿using System;
-using ExternDotnetSDK.Models.Api.Enums;
-using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.JsonConverters;
 using JetBrains.Annotations;
+using KeApiOpenSdk.Models.Api.Enums;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Api
+namespace KeApiOpenSdk.Models.Api
 {
     [PublicAPI]
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]

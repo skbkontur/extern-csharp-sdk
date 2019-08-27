@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Models.DraftsBuilders.Builders
+﻿namespace KeApiOpenSdk.Models.DraftsBuilders.Builders
 {
     public enum DraftsBuilderStatus
     {

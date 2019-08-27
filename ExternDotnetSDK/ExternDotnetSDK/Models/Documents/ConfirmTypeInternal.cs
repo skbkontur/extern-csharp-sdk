@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Models.Documents
+﻿namespace KeApiOpenSdk.Models.Documents
 {
     public enum ConfirmTypeInternal
     {

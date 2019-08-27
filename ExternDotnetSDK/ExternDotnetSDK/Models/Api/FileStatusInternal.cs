@@ -1,9 +1,9 @@
 ﻿using System;
-using ExternDotnetSDK.Models.Api.Enums;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.Api.Enums;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Api
+namespace KeApiOpenSdk.Models.Api
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class FileStatusInternal

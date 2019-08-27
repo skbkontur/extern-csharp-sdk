@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Models.DraftsBuilders.Documents
+﻿namespace KeApiOpenSdk.Models.DraftsBuilders.Documents
 {
     public enum DraftsBuilderDocumentType
     {

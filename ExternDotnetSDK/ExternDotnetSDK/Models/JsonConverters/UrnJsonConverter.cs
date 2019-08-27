@@ -1,8 +1,8 @@
 ﻿using System;
-using ExternDotnetSDK.Models.Common;
+using KeApiOpenSdk.Models.Common;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.JsonConverters
+namespace KeApiOpenSdk.Models.JsonConverters
 {
     public class UrnJsonConverter : JsonConverter
     {

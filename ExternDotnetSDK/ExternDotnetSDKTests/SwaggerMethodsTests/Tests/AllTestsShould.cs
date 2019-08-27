@@ -1,15 +1,14 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using ExternDotnetSDK;
-using ExternDotnetSDK.Clients.Common.AuthenticationProviders;
-using ExternDotnetSDK.Models.Accounts;
-using ExternDotnetSDKTests.SwaggerMethodsTests.Common;
+using KeApiOpenSdk;
+using KeApiOpenSdk.Clients.Authentication;
+using KeApiOpenSdk.Models.Accounts;
+using KeApiOpenSdkTests.SwaggerMethodsTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
+namespace KeApiOpenSdkTests.SwaggerMethodsTests.Tests
 {
-    //todo This whole project has a LOT of tests that can be shortened and/or merged. It's not really necessary right now, but i don't like it, but i'm not sure if i have enough time to fix it. And i'm not a dedicated tester, sorry, da?
     [TestFixture]
     internal class AllTestsShould
     {
@@ -41,7 +40,7 @@ namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
 
         protected void InitializeClient() => Client = new KeApiClient(
             Data.ApiKey,
-            new AuthenticationProvider(Data.SessionId),
+            new AuthenticationProvider(Data.Login, Data.Password, Data.AuthBaseAddress),
             Data.BaseAddress);
     }
 }

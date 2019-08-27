@@ -1,8 +1,8 @@
-﻿using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.JsonConverters;
+﻿using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Organizations
+namespace KeApiOpenSdk.Models.Organizations
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class OrganizationGeneral

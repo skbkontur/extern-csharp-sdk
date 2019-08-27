@@ -1,4 +1,4 @@
-﻿namespace ExternDotnetSDK.Clients.Common.Logging
+﻿namespace KeApiOpenSdk.Clients.Common.Logging
 {
     public enum LogMessageType
     {

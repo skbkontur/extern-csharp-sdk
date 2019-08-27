@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Models.Certificates;
-using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.Docflows;
-using ExternDotnetSDK.Models.Documents;
-using ExternDotnetSDK.Models.Documents.Data;
+using KeApiOpenSdk.Models.Certificates;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.Docflows;
+using KeApiOpenSdk.Models.Documents;
+using KeApiOpenSdk.Models.Documents.Data;
 using NUnit.Framework;
 
-namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
+namespace KeApiOpenSdkTests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class DocflowsClientShould : AllTestsShould

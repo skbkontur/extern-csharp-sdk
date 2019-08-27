@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Common;
-using ExternDotnetSDK.Clients.Common.Logging;
-using ExternDotnetSDK.Clients.Common.RequestSenders;
-using ExternDotnetSDK.Models.Api;
-using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.Docflows;
-using ExternDotnetSDK.Models.Documents;
-using ExternDotnetSDK.Models.Documents.Data;
-using ExternDotnetSDK.Models.Drafts;
+using KeApiOpenSdk.Clients.Common;
+using KeApiOpenSdk.Clients.Common.Logging;
+using KeApiOpenSdk.Clients.Common.RequestSenders;
+using KeApiOpenSdk.Models.Api;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.Docflows;
+using KeApiOpenSdk.Models.Documents;
+using KeApiOpenSdk.Models.Documents.Data;
+using KeApiOpenSdk.Models.Drafts;
 
-namespace ExternDotnetSDK.Clients.Docflows
+namespace KeApiOpenSdk.Clients.Docflows
 {
+    //todo Сделать нормальные тесты для методов.
     public class DocflowsClient : IDocflowsClient
     {
         private readonly InnerCommonClient client;
@@ -21,89 +22,135 @@ namespace ExternDotnetSDK.Clients.Docflows
         public DocflowsClient(ILogger logger, IRequestSender requestSender) =>
             client = new InnerCommonClient(logger, requestSender);
 
-        public async Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter filter = null) =>
+        public async Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter filter = null, TimeSpan? timeout = null) =>
             await client.SendRequestAsync<DocflowPage>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows",
-                filter?.ConvertToQueryParameters());
+                filter?.ConvertToQueryParameters(),
+                timeout: timeout);
 
-        public async Task<Docflow> GetDocflowAsync(Guid accountId, Guid docflowId) =>
-            await client.SendRequestAsync<Docflow>(HttpMethod.Get, $"/v1/{accountId}/docflows/{docflowId}");
+        public async Task<Docflow> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) =>
+            await client.SendRequestAsync<Docflow>(HttpMethod.Get, $"/v1/{accountId}/docflows/{docflowId}", timeout: timeout);
 
-        public async Task<List<Document>> GetDocumentsAsync(Guid accountId, Guid docflowId) =>
-            await client.SendRequestAsync<List<Document>>(HttpMethod.Get, $"/v1/{accountId}/docflows/{docflowId}/documents");
+        public async Task<List<Document>> GetDocumentsAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) =>
+            await client.SendRequestAsync<List<Document>>(
+                HttpMethod.Get,
+                $"/v1/{accountId}/docflows/{docflowId}/documents",
+                timeout: timeout);
 
-        public async Task<Document> GetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId) =>
+        public async Task<Document> GetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null) =>
             await client.SendRequestAsync<Document>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}");
+                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}",
+                timeout: timeout);
 
         public async Task<DocflowDocumentDescription> GetDocumentDescriptionAsync(
             Guid accountId,
             Guid docflowId,
-            Guid documentId) =>
+            Guid documentId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<DocflowDocumentDescription>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/description");
+                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/description",
+                timeout: timeout);
 
-        public async Task<byte[]> GetEncryptedDocumentContentAsync(Guid accountId, Guid docflowId, Guid documentId) =>
+        public async Task<byte[]> GetEncryptedDocumentContentAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/encrypted-content");
+                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/encrypted-content",
+                timeout: timeout);
 
-        public async Task<byte[]> GetDecryptedDocumentContentAsync(Guid accountId, Guid docflowId, Guid documentId) =>
+        public async Task<byte[]> GetDecryptedDocumentContentAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypted-content");
+                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypted-content",
+                timeout: timeout);
 
-        public async Task<List<Signature>> GetDocumentSignaturesAsync(Guid accountId, Guid docflowId, Guid documentId) =>
+        public async Task<List<Signature>> GetDocumentSignaturesAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<List<Signature>>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures");
+                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures",
+                timeout: timeout);
 
-        public async Task<Signature> GetSignatureAsync(Guid accountId, Guid docflowId, Guid documentId, Guid signatureId) =>
+        public async Task<Signature> GetSignatureAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid signatureId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<Signature>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}");
+                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}",
+                timeout: timeout);
 
-        public async Task<byte[]> GetSignatureContentAsync(Guid accountId, Guid docflowId, Guid documentId, Guid signatureId) =>
+        public async Task<byte[]> GetSignatureContentAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid signatureId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}/content");
+                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}/content",
+                timeout: timeout);
 
         public async Task<ApiTaskResult<byte[]>> GetApiTaskAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
-            Guid apiTaskId) =>
+            Guid apiTaskId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<ApiTaskResult<byte[]>>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/tasks/{apiTaskId}");
+                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/tasks/{apiTaskId}",
+                timeout: timeout);
 
         public async Task<ApiReplyDocument> GetDocumentReplyAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
-            Guid replyId) =>
+            Guid replyId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Get,
-                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}");
+                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}",
+                timeout: timeout);
 
-        public async Task<string> PrintDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, byte[] data) =>
+        public async Task<string> PrintDocumentAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            byte[] data,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<string>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/print",
-                contentDto: new PrintDocumentData {Content = Convert.ToBase64String(data)});
+                contentDto: new PrintDocumentData {Content = Convert.ToBase64String(data)},
+                timeout: timeout);
 
         public async Task<DecryptionInitResult> DecryptDocumentContentAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
-            DecryptDocumentRequestData data) =>
+            DecryptDocumentRequestData data,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<DecryptionInitResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content",
-                contentDto: data);
+                contentDto: data,
+                timeout: timeout);
 
         public async Task<byte> ConfirmDocumentContentDecryptionAsync(
             Guid accountId,
@@ -111,7 +158,8 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid documentId,
             string requestId,
             string code,
-            bool unzip = false) =>
+            bool unzip = false,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<byte>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content-confirm",
@@ -120,73 +168,86 @@ namespace ExternDotnetSDK.Clients.Docflows
                     [nameof(requestId)] = requestId,
                     [nameof(code)] = code,
                     [nameof(unzip)] = unzip
-                });
+                },
+                timeout: timeout);
 
         public async Task<ApiReplyDocument> GenerateDocumentReplyAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
             Urn documentType,
-            byte[] certificateContent) =>
+            byte[] certificateContent,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/generate-reply",
                 new Dictionary<string, object> {[nameof(documentType)] = documentType},
-                new GenerateReplyDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)});
+                new GenerateReplyDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)},
+                timeout);
 
         public async Task<RecognizedMeta> RecognizeDocumentAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
-            byte[] content) =>
+            byte[] content,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<RecognizedMeta>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/recognize",
-                contentDto: Convert.ToBase64String(content));
+                contentDto: Convert.ToBase64String(content),
+                timeout: timeout);
 
         public async Task<Docflow> SendDocumentReplyAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
             Guid replyId,
-            string senderIp) =>
+            string senderIp,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<Docflow>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/send",
-                contentDto: new SendReplyDocumentRequest {SenderIp = senderIp});
+                contentDto: new SendReplyDocumentRequest {SenderIp = senderIp},
+                timeout: timeout);
 
         public async Task<ApiReplyDocument> UpdateDocumentReplySignatureAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
             Guid replyId,
-            byte[] signature) =>
+            byte[] signature,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/signature",
-                contentDto: Convert.ToBase64String(signature));
+                contentDto: Convert.ToBase64String(signature),
+                timeout: timeout);
 
         public async Task<ApiReplyDocument> UpdateDocumentReplyContentAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
             Guid replyId,
-            byte[] content) =>
+            byte[] content,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/content",
-                contentDto: Convert.ToBase64String(content));
+                contentDto: Convert.ToBase64String(content),
+                timeout: timeout);
 
         public async Task<SignInitResult> CloudSignDocumentReplyAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
             Guid replyId,
-            bool forceConfirmation) =>
+            bool forceConfirmation,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<SignInitResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/cloud-sign",
-                new Dictionary<string, object> {[nameof(forceConfirmation)] = forceConfirmation});
+                new Dictionary<string, object> {[nameof(forceConfirmation)] = forceConfirmation},
+                timeout: timeout);
 
         public async Task<SignResult> CloudSignConfirmDocumentReplyAsync(
             Guid accountId,
@@ -194,7 +255,8 @@ namespace ExternDotnetSDK.Clients.Docflows
             Guid documentId,
             Guid replyId,
             string code,
-            string requestId) =>
+            string requestId,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<SignResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/cloud-sign-confirm",
@@ -202,16 +264,19 @@ namespace ExternDotnetSDK.Clients.Docflows
                 {
                     [nameof(code)] = code,
                     [nameof(requestId)] = requestId
-                });
+                },
+                timeout: timeout);
 
         public async Task<DocflowPage> GetRelatedDocflows(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
-            DocflowFilter filter) =>
+            DocflowFilter filter,
+            TimeSpan? timeout = null) =>
             await client.SendRequestAsync<DocflowPage>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/related",
-                filter.ConvertToQueryParameters());
+                filter.ConvertToQueryParameters(),
+                timeout: timeout);
     }
 }

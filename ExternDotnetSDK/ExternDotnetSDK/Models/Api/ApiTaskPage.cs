@@ -1,7 +1,7 @@
-﻿using ExternDotnetSDK.Models.JsonConverters;
+﻿using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Api
+namespace KeApiOpenSdk.Models.Api
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ApiTaskPage

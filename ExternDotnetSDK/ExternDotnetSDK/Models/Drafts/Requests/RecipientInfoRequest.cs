@@ -1,8 +1,8 @@
 ﻿using System.Runtime.Serialization;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Drafts.Requests
+namespace KeApiOpenSdk.Models.Drafts.Requests
 {
     [DataContract]
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]

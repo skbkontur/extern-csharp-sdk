@@ -1,9 +1,9 @@
 ﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
 
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Documents
+namespace KeApiOpenSdk.Models.Documents
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class SendReplyDocumentRequest

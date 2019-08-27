@@ -1,9 +1,9 @@
-﻿using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.JsonConverters;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Accounts
+namespace KeApiOpenSdk.Models.Accounts
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class AccountList

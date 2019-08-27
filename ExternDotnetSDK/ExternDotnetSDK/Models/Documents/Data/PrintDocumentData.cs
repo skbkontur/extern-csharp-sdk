@@ -1,9 +1,9 @@
 ﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
 
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Documents.Data
+namespace KeApiOpenSdk.Models.Documents.Data
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class PrintDocumentData

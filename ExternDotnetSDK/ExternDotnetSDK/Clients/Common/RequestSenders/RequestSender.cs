@@ -4,11 +4,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Common.AuthenticationProviders;
-using ExternDotnetSDK.Clients.Common.ResponseMessages;
+using KeApiOpenSdk.Clients.Authentication;
+using KeApiOpenSdk.Clients.Common.ResponseMessages;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Clients.Common.RequestSenders
+namespace KeApiOpenSdk.Clients.Common.RequestSenders
 {
     public class RequestSender : IRequestSender
     {
@@ -36,11 +36,11 @@ namespace ExternDotnetSDK.Clients.Common.RequestSenders
             object content = null,
             TimeSpan? timeout = null)
         {
-            var request = CreateAuthorizedRequest(method, uriPath, uriQueryParams, content, timeout);
+            var request = await CreateAuthorizedRequest(method, uriPath, uriQueryParams, content, timeout);
             return new ResponseMessage(await client.SendAsync(request));
         }
 
-        private HttpRequestMessage CreateAuthorizedRequest(
+        private async Task<HttpRequestMessage> CreateAuthorizedRequest(
             HttpMethod method,
             string uriPath,
             Dictionary<string, object> uriQueryParams = null,
@@ -50,7 +50,7 @@ namespace ExternDotnetSDK.Clients.Common.RequestSenders
             var request = new HttpRequestMessage(method, GetFullUri(uriPath, uriQueryParams));
             request.Headers.Authorization = new AuthenticationHeaderValue(
                 AuthSidHeader,
-                AuthenticationProvider.GetSessionId());
+                await AuthenticationProvider.GetSessionId());
             request.Headers.Add(ApiKeyHeader, ApiKey);
             if (content != null)
             {

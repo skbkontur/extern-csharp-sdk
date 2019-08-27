@@ -1,10 +1,10 @@
 ﻿using System;
-using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.Drafts.Meta;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.Drafts.Meta;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Drafts
+namespace KeApiOpenSdk.Models.Drafts
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class Draft

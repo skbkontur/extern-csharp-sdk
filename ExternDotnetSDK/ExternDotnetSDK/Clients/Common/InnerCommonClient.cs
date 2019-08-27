@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Common.Logging;
-using ExternDotnetSDK.Clients.Common.RequestSenders;
-using ExternDotnetSDK.Clients.Common.ResponseMessages;
+using KeApiOpenSdk.Clients.Common.Logging;
+using KeApiOpenSdk.Clients.Common.RequestSenders;
+using KeApiOpenSdk.Clients.Common.ResponseMessages;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Clients.Common
+namespace KeApiOpenSdk.Clients.Common
 {
     internal class InnerCommonClient
     {

@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using ExternDotnetSDK.Models.Accounts;
-using ExternDotnetSDK.Models.Drafts.Requests;
 using FluentAssertions;
+using KeApiOpenSdk.Models.Accounts;
+using KeApiOpenSdk.Models.Drafts.Requests;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace ExternDotnetSDKTests.UnitTests
+namespace KeApiOpenSdkTests.OtherTests
 {
     [TestFixture]
     internal class KebabCaseNamingStrategyShould

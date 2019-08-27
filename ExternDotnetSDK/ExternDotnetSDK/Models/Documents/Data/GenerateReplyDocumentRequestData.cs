@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
-namespace ExternDotnetSDK.Models.Documents.Data
+namespace KeApiOpenSdk.Models.Documents.Data
 {
     [DataContract]
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]

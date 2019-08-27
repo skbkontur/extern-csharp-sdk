@@ -1,11 +1,11 @@
 ﻿using System.Net;
-using ExternDotnetSDK.Models.Common;
-using ExternDotnetSDK.Models.Drafts.Check;
-using ExternDotnetSDK.Models.Errors;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.Common;
+using KeApiOpenSdk.Models.Drafts.Check;
+using KeApiOpenSdk.Models.Errors;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Drafts.Prepare
+namespace KeApiOpenSdk.Models.Drafts.Prepare
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ErrorPrepareResult : Error, IPrepareResult

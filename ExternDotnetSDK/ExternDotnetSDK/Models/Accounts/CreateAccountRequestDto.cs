@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.Accounts
+namespace KeApiOpenSdk.Models.Accounts
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class CreateAccountRequestDto

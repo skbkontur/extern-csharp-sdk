@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using ExternDotnetSDK.Clients.Common;
-using ExternDotnetSDK.Clients.Common.Logging;
-using ExternDotnetSDK.Clients.Common.RequestSenders;
-using ExternDotnetSDK.Models.Events;
+using KeApiOpenSdk.Clients.Common;
+using KeApiOpenSdk.Clients.Common.Logging;
+using KeApiOpenSdk.Clients.Common.RequestSenders;
+using KeApiOpenSdk.Models.Events;
 
-namespace ExternDotnetSDK.Clients.Events
+namespace KeApiOpenSdk.Clients.Events
 {
+    //todo Сделать нормальные тесты для методов.
     public class EventsClient : IEventsClient
     {
         private readonly InnerCommonClient client;
@@ -15,7 +17,7 @@ namespace ExternDotnetSDK.Clients.Events
         public EventsClient(ILogger logger, IRequestSender requestSender) =>
             client = new InnerCommonClient(logger, requestSender);
 
-        public async Task<EventsPage> GetEventsAsync(int take, string fromId = "0_0") =>
+        public async Task<EventsPage> GetEventsAsync(int take, string fromId = "0_0", TimeSpan? timeout = null) =>
             await client.SendRequestAsync<EventsPage>(
                 HttpMethod.Get,
                 "/v1/events",
@@ -23,6 +25,7 @@ namespace ExternDotnetSDK.Clients.Events
                 {
                     ["take"] = take,
                     ["fromId"] = fromId
-                });
+                },
+                timeout: timeout);
     }
 }

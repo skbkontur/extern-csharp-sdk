@@ -1,10 +1,10 @@
 ﻿using System;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
-namespace ExternDotnetSDK.Models.Common
+namespace KeApiOpenSdk.Models.Common
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class Signature

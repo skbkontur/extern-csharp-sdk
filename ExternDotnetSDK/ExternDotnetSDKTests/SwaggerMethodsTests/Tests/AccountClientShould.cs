@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace ExternDotnetSDKTests.SwaggerMethodsTests.Tests
+namespace KeApiOpenSdkTests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class AccountClientShould : AllTestsShould

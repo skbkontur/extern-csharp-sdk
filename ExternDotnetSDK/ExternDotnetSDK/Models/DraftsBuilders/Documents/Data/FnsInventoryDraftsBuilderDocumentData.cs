@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using ExternDotnetSDK.Models.JsonConverters;
+using KeApiOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace ExternDotnetSDK.Models.DraftsBuilders.Documents.Data
+namespace KeApiOpenSdk.Models.DraftsBuilders.Documents.Data
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class FnsInventoryDraftsBuilderDocumentData : DraftsBuilderDocumentData
