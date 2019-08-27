@@ -1,6 +1,6 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using KeApiOpenSdk.Clients.Common.RequestMessages;
 
 namespace KeApiOpenSdk.Clients.Common.ResponseMessages
@@ -12,7 +12,17 @@ namespace KeApiOpenSdk.Clients.Common.ResponseMessages
         public ResponseMessage(HttpResponseMessage message) => responseMessage = message;
 
         public HttpContent Content => responseMessage.Content;
-        public HttpResponseHeaders Headers => responseMessage.Headers;
+        public Dictionary<string, string> Headers
+        {
+            get
+            {
+                var result = new Dictionary<string, string>();
+                foreach (var header in responseMessage.Headers)
+                foreach (var value in header.Value)
+                    result.Add(header.Key, value);
+                return result;
+            }
+        }
         public HttpStatusCode StatusCode => responseMessage.StatusCode;
 
         public IRequestMessage Request => new RequestMessage(responseMessage.RequestMessage);

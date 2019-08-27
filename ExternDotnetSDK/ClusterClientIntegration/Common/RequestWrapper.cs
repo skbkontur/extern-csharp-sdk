@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using KeApiOpenSdk.Clients.Common.RequestMessages;
+using Vostok.Clusterclient.Core.Model;
+
+namespace ClusterClientIntegration.Common
+{
+    public class RequestWrapper : IRequestMessage
+    {
+        private readonly Request request;
+
+        public RequestWrapper(Request request) => this.request = request;
+
+        public Dictionary<string, string> Headers =>
+            request.Headers?.ToDictionary(x => x.Name, x => x.Value) ?? new Dictionary<string, string>();
+
+        public HttpContent Content =>
+            request.Content != null
+                ? new ByteArrayContent(request.Content.ToArray())
+                : request.StreamContent != null
+                    ? (HttpContent)new System.Net.Http.StreamContent(request.StreamContent.Stream)
+                    : request.CompositeContent != null
+                        ? new ByteArrayContent(request.CompositeContent.Parts.SelectMany(x => x.ToArray()).ToArray())
+                        : new StringContent(string.Empty);
+
+        public HttpMethod Method => new HttpMethod(request.Method.ToUpperInvariant());
+
+        public Uri Uri => request.Url;
+    }
+}

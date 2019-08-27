@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
 
 namespace KeApiOpenSdk.Clients.Common.RequestMessages
 {
     public interface IRequestMessage
     {
-        HttpRequestHeaders Headers { get; }
+        Dictionary<string, string> Headers { get; }
         HttpContent Content { get; }
         HttpMethod Method { get; }
         Uri Uri { get; }
