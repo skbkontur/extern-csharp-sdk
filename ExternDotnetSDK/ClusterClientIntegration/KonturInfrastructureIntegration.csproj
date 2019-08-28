@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Vostok.ClusterClient.Core" Version="0.1.9" />
+    <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.1" />
   </ItemGroup>
 
 </Project>

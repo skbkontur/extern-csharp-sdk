@@ -2,54 +2,58 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using KeApiOpenSdk.Clients.Common.Logging;
+using KeApiOpenSdk.Clients.Common.RequestSenders;
+using KeApiOpenSdk.Clients.Common.ResponseMessages;
 using KeApiOpenSdk.Models.Authentication;
 using Newtonsoft.Json;
+
+// ReSharper disable CommentTypo
 
 namespace KeApiOpenSdk.Clients.Authentication
 {
     //todo Сделать нормальные тесты для методов.
     public class AuthenticationProvider : IAuthenticationProvider
     {
-        private const string MediaType = "application/json";
-        private const string TimeoutHeader = "Timeout";
-
+        private readonly ILogger logger;
         private readonly string login;
-        private readonly string password;
         private readonly string authenticationBaseAddress;
         private readonly HttpClient client;
+        private readonly StringContent content;
 
-        public AuthenticationProvider(string login, string password, string authenticationBaseAddress)
+        public AuthenticationProvider(string login, string password, string authenticationBaseAddress, ILogger logger = null)
         {
             this.login = login;
-            this.password = password;
             this.authenticationBaseAddress = authenticationBaseAddress;
+            this.logger = logger ?? new SilentLogger();
             client = new HttpClient();
+            content = new StringContent(password, Encoding.UTF8, SenderConstants.MediaType);
         }
 
         public async Task<string> GetSessionId(TimeSpan? timeout = null)
         {
             var fullUrl = $"{authenticationBaseAddress}/v5.13/authenticate-by-pass?login={login}";
-            var request = new HttpRequestMessage(HttpMethod.Post, fullUrl)
-            {
-                Content = new StringContent(password, Encoding.UTF8, MediaType)
-            };
-            if (timeout != null)
-                request.Headers.Add(TimeoutHeader, timeout.Value.ToString("c"));
-            var response = await client.SendAsync(request);
-            var authResponse = JsonConvert.DeserializeObject<AuthenticationResponse>(await response.Content.ReadAsStringAsync());
+            var request = new HttpRequestMessage(HttpMethod.Post, fullUrl) {Content = content};
+            TrySetTimeoutHeader(timeout, request);
+            var response = new ResponseMessage(await client.SendAsync(request));
+            var authResponse = JsonConvert.DeserializeObject<AuthenticationResponse>(await response.TryGetResponseAsync(logger));
             return authResponse.Sid;
         }
 
         public async Task<PasswordStrength> GetPasswordStrength(TimeSpan? timeout = null)
         {
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{authenticationBaseAddress}/v5.13/get-pass-strength")
-            {
-                Content = new StringContent(password, Encoding.UTF8, MediaType)
-            };
+            var fullUrl = $"{authenticationBaseAddress}/v5.13/get-pass-strength";
+            var request = new HttpRequestMessage(HttpMethod.Post, fullUrl) {Content = content};
+            TrySetTimeoutHeader(timeout, request);
+            var responseMessage = new ResponseMessage(await client.SendAsync(request));
+            var result = await responseMessage.TryGetResponseAsync(logger);
+            return JsonConvert.DeserializeObject<PasswordStrength>(result);
+        }
+
+        private static void TrySetTimeoutHeader(TimeSpan? timeout, HttpRequestMessage request)
+        {
             if (timeout != null)
-                request.Headers.Add(TimeoutHeader, timeout.Value.ToString("c"));
-            var response = await client.SendAsync(request);
-            return JsonConvert.DeserializeObject<PasswordStrength>(await response.Content.ReadAsStringAsync());
+                request.Headers.Add(SenderConstants.TimeoutHeader, timeout.Value.ToString("c"));
         }
     }
 }

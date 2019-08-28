@@ -28,7 +28,7 @@ namespace KeApiOpenSdk.Clients.Common
             TimeSpan? timeout = null)
         {
             var response = await RequestSender.SendAsync(method, uriPath, uriQueryParams, contentDto, timeout);
-            return JsonConvert.DeserializeObject<TResult>(await TryGetResponseAsync(response));
+            return JsonConvert.DeserializeObject<TResult>(await response.TryGetResponseAsync(Logger));
         }
 
         public async Task SendRequestAsync(
@@ -39,21 +39,7 @@ namespace KeApiOpenSdk.Clients.Common
             TimeSpan? timeout = null)
         {
             var response = await RequestSender.SendAsync(method, uriPath, uriQueryParams, contentDto, timeout);
-            await TryGetResponseAsync(response);
-        }
-
-        private async Task<string> TryGetResponseAsync(IResponseMessage response)
-        {
-            try
-            {
-                response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsStringAsync();
-            }
-            catch (Exception e)
-            {
-                Logger.Log(response, e);
-                throw;
-            }
+            await response.TryGetResponseAsync(Logger);
         }
     }
 }

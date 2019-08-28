@@ -1,0 +1,24 @@
+﻿using System;
+using System.Threading.Tasks;
+using KeApiOpenSdk.Clients.Common.Logging;
+
+namespace KeApiOpenSdk.Clients.Common.ResponseMessages
+{
+    // ReSharper disable once InconsistentNaming
+    internal static class IResponseMessageExtensions
+    {
+        public static async Task<string> TryGetResponseAsync(this IResponseMessage response, ILogger logger)
+        {
+            try
+            {
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch (Exception e)
+            {
+                logger.Log(response, e);
+                throw;
+            }
+        }
+    }
+}

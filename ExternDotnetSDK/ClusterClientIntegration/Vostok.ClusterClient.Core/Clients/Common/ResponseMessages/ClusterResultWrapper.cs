@@ -4,9 +4,11 @@ using System.Net;
 using System.Net.Http;
 using KeApiOpenSdk.Clients.Common.RequestMessages;
 using KeApiOpenSdk.Clients.Common.ResponseMessages;
+using KonturInfrastructureIntegration.Vostok.ClusterClient.Core.Clients.Common.RequestMessages;
 using Vostok.Clusterclient.Core.Model;
+using StreamContent = System.Net.Http.StreamContent;
 
-namespace ClusterClientIntegration.Common
+namespace KonturInfrastructureIntegration.Vostok.ClusterClient.Core.Clients.Common.ResponseMessages
 {
     public class ClusterResultWrapper : IResponseMessage
     {
@@ -16,7 +18,7 @@ namespace ClusterClientIntegration.Common
 
         public HttpContent Content =>
             result.Response.HasStream
-                ? (HttpContent)new System.Net.Http.StreamContent(result.Response.Stream)
+                ? (HttpContent)new StreamContent(result.Response.Stream)
                 : result.Response.HasContent
                     ? new ByteArrayContent(result.Response.Content.ToArray())
                     : new StringContent(string.Empty);

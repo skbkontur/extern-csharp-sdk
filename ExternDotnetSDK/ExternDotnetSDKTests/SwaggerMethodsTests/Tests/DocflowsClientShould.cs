@@ -9,6 +9,8 @@ using KeApiOpenSdk.Models.Documents;
 using KeApiOpenSdk.Models.Documents.Data;
 using NUnit.Framework;
 
+#pragma warning disable 1998
+
 namespace KeApiOpenSdkTests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
@@ -36,9 +38,7 @@ namespace KeApiOpenSdkTests.SwaggerMethodsTests.Tests
         }
 
         [OneTimeTearDown]
-#pragma warning disable 1998
         public override async Task TearDown()
-#pragma warning restore 1998
         {
         }
 
