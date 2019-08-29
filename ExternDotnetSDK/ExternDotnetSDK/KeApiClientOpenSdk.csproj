@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.1.0</Version>
+    <Description>Public SDK for making clients for Ke.API.</Description>
+    <Authors>Ke.Connector and Ke.API.Public</Authors>
+    <Company>SKB Kontur</Company>
+    <Product>KeApiClientOpenSdk</Product>
+    <Copyright></Copyright>
+    <PackageReleaseNotes>Work in progress. Not properly tested.</PackageReleaseNotes>
+    <PackageTags>kontur, skbkontur, needMoreTests, workInProgress, technicallyTheyFiredMeAfterIMadeThis, extern, kontur-extern, madeByAnIntern, SDK, API</PackageTags>
+    <RepositoryUrl>https://github.com/trurl123/extern-dotnet-sdk</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
