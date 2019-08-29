@@ -1,4 +1,4 @@
-﻿namespace KeApiOpenSdk.Models.Authentication
+﻿namespace KeApiClientOpenSdk.Models.Authentication
 {
     public enum PasswordStrengthLevel
     {

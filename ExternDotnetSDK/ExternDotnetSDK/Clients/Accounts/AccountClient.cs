@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Clients.Common;
-using KeApiOpenSdk.Clients.Common.Logging;
-using KeApiOpenSdk.Clients.Common.RequestSenders;
-using KeApiOpenSdk.Models.Accounts;
-using KeApiOpenSdk.Models.Certificates;
-using KeApiOpenSdk.Models.Warrants;
+using KeApiClientOpenSdk.Clients.Common;
+using KeApiClientOpenSdk.Clients.Common.Logging;
+using KeApiClientOpenSdk.Clients.Common.RequestSenders;
+using KeApiClientOpenSdk.Models.Accounts;
+using KeApiClientOpenSdk.Models.Certificates;
+using KeApiClientOpenSdk.Models.Warrants;
 
-namespace KeApiOpenSdk.Clients.Accounts
+namespace KeApiClientOpenSdk.Clients.Accounts
 {
     //todo Сделать нормальные тесты для методов.
     public class AccountClient : IAccountClient

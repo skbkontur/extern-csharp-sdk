@@ -1,4 +1,4 @@
-﻿using KeApiOpenSdk.Clients.Common.Logging;
+﻿using KeApiClientOpenSdk.Clients.Common.Logging;
 using Vostok.Logging.Abstractions;
 
 namespace KonturInfrastructureIntegration.Vostok.Logging.Abstractions.Clients.Common.Logging

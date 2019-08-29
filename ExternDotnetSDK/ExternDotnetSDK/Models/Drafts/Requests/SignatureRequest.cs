@@ -1,7 +1,7 @@
-﻿using KeApiOpenSdk.Models.JsonConverters;
+﻿using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.Drafts.Requests
+namespace KeApiClientOpenSdk.Models.Drafts.Requests
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class SignatureRequest

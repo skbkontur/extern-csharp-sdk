@@ -1,8 +1,8 @@
-﻿using KeApiOpenSdk.Models.Common;
-using KeApiOpenSdk.Models.JsonConverters;
+﻿using KeApiClientOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.Warrants
+namespace KeApiClientOpenSdk.Models.Warrants
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class WarrantList

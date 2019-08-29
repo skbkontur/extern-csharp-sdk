@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using KeApiOpenSdk.Clients.Common.RequestMessages;
+using KeApiClientOpenSdk.Clients.Common.RequestMessages;
 using Vostok.Clusterclient.Core.Model;
 using StreamContent = System.Net.Http.StreamContent;
 

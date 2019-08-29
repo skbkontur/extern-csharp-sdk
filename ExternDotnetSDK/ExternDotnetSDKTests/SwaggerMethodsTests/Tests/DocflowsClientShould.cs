@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Models.Certificates;
-using KeApiOpenSdk.Models.Common;
-using KeApiOpenSdk.Models.Docflows;
-using KeApiOpenSdk.Models.Documents;
-using KeApiOpenSdk.Models.Documents.Data;
+using KeApiClientOpenSdk.Models.Certificates;
+using KeApiClientOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.Docflows;
+using KeApiClientOpenSdk.Models.Documents;
+using KeApiClientOpenSdk.Models.Documents.Data;
 using NUnit.Framework;
 
 #pragma warning disable 1998
 
-namespace KeApiOpenSdkTests.SwaggerMethodsTests.Tests
+namespace KeApiClientOpenSdkTests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class DocflowsClientShould : AllTestsShould

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using KeApiOpenSdk.Models.Api.Enums;
-using KeApiOpenSdk.Models.JsonConverters;
+using KeApiClientOpenSdk.Models.Api.Enums;
+using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.Api
+namespace KeApiClientOpenSdk.Models.Api
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class CryptOperationStatusResult

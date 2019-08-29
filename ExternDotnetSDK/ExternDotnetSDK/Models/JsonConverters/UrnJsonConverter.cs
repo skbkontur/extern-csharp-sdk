@@ -1,16 +1,13 @@
 ﻿using System;
-using KeApiOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.Common;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.JsonConverters
+namespace KeApiClientOpenSdk.Models.JsonConverters
 {
     public class UrnJsonConverter : JsonConverter
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            var urn = (Urn)value;
-            serializer.Serialize(writer, urn.ToString());
-        }
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) =>
+            serializer.Serialize(writer, ((Urn)value).ToString());
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {

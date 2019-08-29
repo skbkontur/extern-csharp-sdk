@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using KeApiOpenSdk.Models.Common;
-using KeApiOpenSdk.Models.Documents;
-using KeApiOpenSdk.Models.JsonConverters;
+using KeApiClientOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.Documents;
+using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.Docflows
+namespace KeApiClientOpenSdk.Models.Docflows
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class Docflow

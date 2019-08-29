@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Models.Accounts;
-using KeApiOpenSdk.Models.Certificates;
-using KeApiOpenSdk.Models.Warrants;
+using KeApiClientOpenSdk.Models.Accounts;
+using KeApiClientOpenSdk.Models.Certificates;
+using KeApiClientOpenSdk.Models.Warrants;
 
-namespace KeApiOpenSdk.Clients.Accounts
+namespace KeApiClientOpenSdk.Clients.Accounts
 {
     public interface IAccountClient
     {

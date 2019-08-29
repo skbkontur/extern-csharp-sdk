@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Clients.Common;
-using KeApiOpenSdk.Clients.Common.Logging;
-using KeApiOpenSdk.Clients.Common.RequestSenders;
-using KeApiOpenSdk.Models.Events;
+using KeApiClientOpenSdk.Clients.Common;
+using KeApiClientOpenSdk.Clients.Common.Logging;
+using KeApiClientOpenSdk.Clients.Common.RequestSenders;
+using KeApiClientOpenSdk.Models.Events;
 
-namespace KeApiOpenSdk.Clients.Events
+namespace KeApiClientOpenSdk.Clients.Events
 {
     //todo Сделать нормальные тесты для методов.
     public class EventsClient : IEventsClient

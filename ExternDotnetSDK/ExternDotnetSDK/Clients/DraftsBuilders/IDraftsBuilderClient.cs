@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Models.Api;
-using KeApiOpenSdk.Models.DraftsBuilders.Builders;
-using KeApiOpenSdk.Models.DraftsBuilders.DocumentFiles;
-using KeApiOpenSdk.Models.DraftsBuilders.Documents;
+using KeApiClientOpenSdk.Models.Api;
+using KeApiClientOpenSdk.Models.DraftsBuilders.Builders;
+using KeApiClientOpenSdk.Models.DraftsBuilders.DocumentFiles;
+using KeApiClientOpenSdk.Models.DraftsBuilders.Documents;
 
-namespace KeApiOpenSdk.Clients.DraftsBuilders
+namespace KeApiClientOpenSdk.Clients.DraftsBuilders
 {
     public interface IDraftsBuilderClient
     {

@@ -1,4 +1,4 @@
-﻿namespace KeApiOpenSdkTests.SwaggerMethodsTests.Common
+﻿namespace KeApiClientOpenSdkTests.SwaggerMethodsTests.Common
 {
     internal class EnvironmentData
     {

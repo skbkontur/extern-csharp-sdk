@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Models.Organizations;
+using KeApiClientOpenSdk.Models.Organizations;
 
-namespace KeApiOpenSdk.Clients.Organizations
+namespace KeApiClientOpenSdk.Clients.Organizations
 {
     public interface IOrganizationsClient
     {

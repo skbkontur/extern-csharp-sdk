@@ -1,4 +1,5 @@
-﻿namespace KeApiOpenSdk.Models.Certificates
+﻿// ReSharper disable InconsistentNaming
+namespace KeApiClientOpenSdk.Models.Certificates
 {
     public enum CertificateType
     {

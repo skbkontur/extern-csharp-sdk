@@ -1,7 +1,7 @@
 ﻿using System;
-using KeApiOpenSdk.Clients.Common.ResponseMessages;
+using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
 
-namespace KeApiOpenSdk.Clients.Common.Logging
+namespace KeApiClientOpenSdk.Clients.Common.Logging
 {
     public interface ILogger
     {

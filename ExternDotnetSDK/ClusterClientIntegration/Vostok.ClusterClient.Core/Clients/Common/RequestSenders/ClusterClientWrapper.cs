@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Clients.Authentication;
-using KeApiOpenSdk.Clients.Common.RequestSenders;
-using KeApiOpenSdk.Clients.Common.ResponseMessages;
+using KeApiClientOpenSdk.Clients.Authentication;
+using KeApiClientOpenSdk.Clients.Common.RequestSenders;
+using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
 using KonturInfrastructureIntegration.Vostok.ClusterClient.Core.Clients.Common.ResponseMessages;
 using Newtonsoft.Json;
 using Vostok.Clusterclient.Core;
@@ -45,27 +45,22 @@ namespace KonturInfrastructureIntegration.Vostok.ClusterClient.Core.Clients.Comm
             object content,
             TimeSpan? timeout)
         {
-            var request = new Request(method.ToString().ToUpperInvariant(), GetFullUri(uriPath, uriQueryParams))
+            var request = new Request(
+                    method.ToString().ToUpperInvariant(),
+                    GetFullUri(uriPath, uriQueryParams),
+                    new Content(Convert.FromBase64String(JsonConvert.SerializeObject(content))))
                 .WithAuthorizationHeader(SenderConstants.AuthSidHeader, await AuthenticationProvider.GetSessionId())
-                .WithHeader(SenderConstants.ApiKeyHeader, ApiKey);
-            if (content != null)
-            {
-                request = request.WithContent(Convert.FromBase64String(JsonConvert.SerializeObject(content)))
-                    .WithContentTypeHeader(SenderConstants.MediaType);
-            }
-            if (timeout != null)
-                request = request.WithHeader(SenderConstants.TimeoutHeader, timeout.Value.ToString("c"));
-            return request;
+                .WithHeader(SenderConstants.ApiKeyHeader, ApiKey)
+                .WithContentTypeHeader(SenderConstants.MediaType);
+            return timeout != null ? request.WithHeader(SenderConstants.TimeoutHeader, timeout.Value.ToString("c")) : request;
         }
 
         private static Uri GetFullUri(string uriPath, Dictionary<string, object> uriQueryParams)
         {
             var urlBuilder = new RequestUrlBuilder(uriPath);
             if (uriQueryParams != null)
-            {
                 foreach (var queryParam in uriQueryParams)
                     urlBuilder.AppendToQuery(queryParam.Key, queryParam.Value);
-            }
             return urlBuilder.Build();
         }
     }

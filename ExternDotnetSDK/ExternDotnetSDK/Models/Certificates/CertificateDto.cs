@@ -1,9 +1,9 @@
 ﻿using System;
 using JetBrains.Annotations;
-using KeApiOpenSdk.Models.JsonConverters;
+using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.Certificates
+namespace KeApiClientOpenSdk.Models.Certificates
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class CertificateDto

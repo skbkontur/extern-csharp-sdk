@@ -1,7 +1,7 @@
-﻿using KeApiOpenSdk.Models.JsonConverters;
+﻿using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.Docflows
+namespace KeApiClientOpenSdk.Models.Docflows
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DocflowPage

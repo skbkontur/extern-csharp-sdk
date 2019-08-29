@@ -1,5 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming
-namespace KeApiOpenSdk.Models.Authentication
+namespace KeApiClientOpenSdk.Models.Authentication
 {
     public class PasswordStrength
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Clients.Common.Logging;
+using KeApiClientOpenSdk.Clients.Common.Logging;
 
-namespace KeApiOpenSdk.Clients.Common.ResponseMessages
+namespace KeApiClientOpenSdk.Clients.Common.ResponseMessages
 {
     // ReSharper disable once InconsistentNaming
     internal static class IResponseMessageExtensions

@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExternDotnetSDK\KeApiOpenSdk.csproj" />
+    <PackageReference Include="Vostok.ClusterClient.Core" Version="0.1.9" />
+    <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Vostok.ClusterClient.Core" Version="0.1.9" />
-    <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.1" />
+    <ProjectReference Include="..\ExternDotnetSDK\KeApiClientOpenSdk.csproj" />
   </ItemGroup>
 
 </Project>

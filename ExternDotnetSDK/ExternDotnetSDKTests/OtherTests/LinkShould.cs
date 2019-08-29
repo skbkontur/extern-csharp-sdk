@@ -1,9 +1,9 @@
 ﻿using System;
 using FluentAssertions;
-using KeApiOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.Common;
 using NUnit.Framework;
 
-namespace KeApiOpenSdkTests.OtherTests
+namespace KeApiClientOpenSdkTests.OtherTests
 {
     [TestFixture]
     internal class LinkShould

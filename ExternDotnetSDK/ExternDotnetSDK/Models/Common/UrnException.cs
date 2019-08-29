@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KeApiOpenSdk.Models.Common
+namespace KeApiClientOpenSdk.Models.Common
 {
     public class UrnException : Exception
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using KeApiOpenSdk.Models.JsonConverters;
+using KeApiClientOpenSdk.Models.JsonConverters;
 
-namespace KeApiOpenSdk.Models.Docflows
+namespace KeApiClientOpenSdk.Models.Docflows
 {
     [PublicAPI]
     public class DocflowFilter

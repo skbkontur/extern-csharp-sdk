@@ -1,11 +1,11 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Clients.Authentication;
+using KeApiClientOpenSdk.Clients.Authentication;
 using NUnit.Framework;
 
 #pragma warning disable 1998
 
-namespace KeApiOpenSdkTests.SwaggerMethodsTests.Tests
+namespace KeApiClientOpenSdkTests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class AuthenticationProviderShould : AllTestsShould

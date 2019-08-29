@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Clients.Common;
-using KeApiOpenSdk.Clients.Common.Logging;
-using KeApiOpenSdk.Clients.Common.RequestSenders;
-using KeApiOpenSdk.Models.Organizations;
+using KeApiClientOpenSdk.Clients.Common;
+using KeApiClientOpenSdk.Clients.Common.Logging;
+using KeApiClientOpenSdk.Clients.Common.RequestSenders;
+using KeApiClientOpenSdk.Models.Organizations;
 
-namespace KeApiOpenSdk.Clients.Organizations
+namespace KeApiClientOpenSdk.Clients.Organizations
 {
     //todo Сделать нормальные тесты для методов.
     public class OrganizationsClient : IOrganizationsClient

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Serialization;
 
-namespace KeApiOpenSdk.Models.JsonConverters
+namespace KeApiClientOpenSdk.Models.JsonConverters
 {
     public class KebabCaseNamingStrategy : NamingStrategy
     {

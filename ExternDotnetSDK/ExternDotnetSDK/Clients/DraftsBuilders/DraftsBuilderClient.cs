@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Clients.Common;
-using KeApiOpenSdk.Clients.Common.Logging;
-using KeApiOpenSdk.Clients.Common.RequestSenders;
-using KeApiOpenSdk.Models.Api;
-using KeApiOpenSdk.Models.DraftsBuilders.Builders;
-using KeApiOpenSdk.Models.DraftsBuilders.DocumentFiles;
-using KeApiOpenSdk.Models.DraftsBuilders.Documents;
+using KeApiClientOpenSdk.Clients.Common;
+using KeApiClientOpenSdk.Clients.Common.Logging;
+using KeApiClientOpenSdk.Clients.Common.RequestSenders;
+using KeApiClientOpenSdk.Models.Api;
+using KeApiClientOpenSdk.Models.DraftsBuilders.Builders;
+using KeApiClientOpenSdk.Models.DraftsBuilders.DocumentFiles;
+using KeApiClientOpenSdk.Models.DraftsBuilders.Documents;
 
-namespace KeApiOpenSdk.Clients.DraftsBuilders
+namespace KeApiClientOpenSdk.Clients.DraftsBuilders
 {
     //todo Сделать нормальные тесты для методов.
     public class DraftsBuilderClient : IDraftsBuilderClient

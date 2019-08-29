@@ -1,4 +1,4 @@
-﻿namespace KeApiOpenSdk.Models.JsonConverters
+﻿namespace KeApiClientOpenSdk.Models.JsonConverters
 {
     public enum SortOrder
     {

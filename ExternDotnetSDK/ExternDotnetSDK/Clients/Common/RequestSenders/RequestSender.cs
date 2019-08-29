@@ -4,11 +4,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Clients.Authentication;
-using KeApiOpenSdk.Clients.Common.ResponseMessages;
+using KeApiClientOpenSdk.Clients.Authentication;
+using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Clients.Common.RequestSenders
+namespace KeApiClientOpenSdk.Clients.Common.RequestSenders
 {
     public class RequestSender : IRequestSender
     {
@@ -36,14 +36,17 @@ namespace KeApiOpenSdk.Clients.Common.RequestSenders
                 SenderConstants.AuthSidHeader,
                 await AuthenticationProvider.GetSessionId());
             request.Headers.Add(SenderConstants.ApiKeyHeader, ApiKey);
-            if (content != null)
-            {
-                request.Content = new StringContent(JsonConvert.SerializeObject(content));
-                request.Content.Headers.ContentType = new MediaTypeHeaderValue(SenderConstants.MediaType);
-            }
+            TryAddContent(content, request);
             if (timeout != null)
                 request.Headers.Add(SenderConstants.TimeoutHeader, timeout.Value.ToString("c"));
             return new ResponseMessage(await client.SendAsync(request));
+        }
+
+        private static void TryAddContent(object content, HttpRequestMessage request)
+        {
+            if (content == null) return;
+            request.Content = new StringContent(JsonConvert.SerializeObject(content));
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue(SenderConstants.MediaType);
         }
 
         private static string GetFullUri(string requestUri, Dictionary<string, object> uriQueryParams) =>

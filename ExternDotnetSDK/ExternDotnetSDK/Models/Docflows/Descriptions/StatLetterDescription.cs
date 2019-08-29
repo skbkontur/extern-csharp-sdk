@@ -1,8 +1,8 @@
 ﻿using System;
-using KeApiOpenSdk.Models.JsonConverters;
+using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.Docflows.Descriptions
+namespace KeApiClientOpenSdk.Models.Docflows.Descriptions
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class StatLetterDescription : DocflowDescription

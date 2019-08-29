@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using KeApiOpenSdk.Models.Docflows;
-using KeApiOpenSdk.Models.Docflows.Descriptions;
+using KeApiClientOpenSdk.Models.Docflows;
+using KeApiClientOpenSdk.Models.Docflows.Descriptions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace KeApiOpenSdk.Models.JsonConverters
+namespace KeApiClientOpenSdk.Models.JsonConverters
 {
     internal class DocflowDescriptionConverter : JsonConverter
     {

@@ -1,13 +1,13 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using KeApiOpenSdk;
-using KeApiOpenSdk.Clients.Authentication;
-using KeApiOpenSdk.Models.Accounts;
-using KeApiOpenSdkTests.SwaggerMethodsTests.Common;
+using KeApiClientOpenSdk;
+using KeApiClientOpenSdk.Clients.Authentication;
+using KeApiClientOpenSdk.Models.Accounts;
+using KeApiClientOpenSdkTests.SwaggerMethodsTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace KeApiOpenSdkTests.SwaggerMethodsTests.Tests
+namespace KeApiClientOpenSdkTests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class AllTestsShould

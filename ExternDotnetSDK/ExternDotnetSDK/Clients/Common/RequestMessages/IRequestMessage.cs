@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace KeApiOpenSdk.Clients.Common.RequestMessages
+namespace KeApiClientOpenSdk.Clients.Common.RequestMessages
 {
     public interface IRequestMessage
     {

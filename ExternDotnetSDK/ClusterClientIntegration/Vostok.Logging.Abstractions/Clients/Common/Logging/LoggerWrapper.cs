@@ -1,6 +1,6 @@
 ﻿using System;
-using KeApiOpenSdk.Clients.Common.Logging;
-using KeApiOpenSdk.Clients.Common.ResponseMessages;
+using KeApiClientOpenSdk.Clients.Common.Logging;
+using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
 using Vostok.Logging.Abstractions;
 
 namespace KonturInfrastructureIntegration.Vostok.Logging.Abstractions.Clients.Common.Logging
@@ -8,13 +8,12 @@ namespace KonturInfrastructureIntegration.Vostok.Logging.Abstractions.Clients.Co
     public class LoggerWrapper : ILogger
     {
         private readonly ILog iLog;
-        private readonly Func<IResponseMessage, string> responseToMessageConverter;
+        private readonly Func<IResponseMessage, string> converter;
 
-        public LoggerWrapper(ILog iLog, Func<IResponseMessage, string> responseToMessageConverter = null)
+        public LoggerWrapper(ILog iLog, Func<IResponseMessage, string> converter = null)
         {
             this.iLog = iLog;
-            this.responseToMessageConverter =
-                responseToMessageConverter ?? (x => $"StatusCode: {x.StatusCode} | {x.ReasonPhrase}");
+            this.converter = converter ?? (x => $"StatusCode: {x.StatusCode} | {x.ReasonPhrase}");
         }
 
         public void Log(string message, LogMessageType messageType = LogMessageType.Error) =>
@@ -27,7 +26,7 @@ namespace KonturInfrastructureIntegration.Vostok.Logging.Abstractions.Clients.Co
             LogEvent(new LogEvent(messageType.ToLogLevel(), DateTimeOffset.Now, message, exc));
 
         public void Log(IResponseMessage response, Exception exc, LogMessageType messageType = LogMessageType.Error) =>
-            LogEvent(new LogEvent(messageType.ToLogLevel(), DateTimeOffset.Now, responseToMessageConverter(response), exc));
+            LogEvent(new LogEvent(messageType.ToLogLevel(), DateTimeOffset.Now, converter(response), exc));
 
         private void LogEvent(LogEvent logEvent)
         {

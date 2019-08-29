@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
-using KeApiOpenSdk.Models.JsonConverters;
+using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.Common
+namespace KeApiClientOpenSdk.Models.Common
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public sealed class Link : IEquatable<Link>
@@ -13,15 +13,10 @@ namespace KeApiOpenSdk.Models.Common
         public const string RelNext = "next";
 
         public readonly Uri Href;
-
         public readonly string Rel;
-
         public readonly string Name;
-
         public readonly string Title;
-
         public readonly string Profile;
-
         public readonly bool Templated;
 
         public Link(Uri href, string rel, string name = null, string title = null, string profile = null, bool templated = false)
@@ -48,14 +43,10 @@ namespace KeApiOpenSdk.Models.Common
         public override string ToString()
         {
             var builder = new StringBuilder("<link ");
-            if (Rel != null)
-                builder.Append($"rel=\"{Rel}\" ");
-            if (Name != null)
-                builder.Append($"name=\"{Name}\" ");
-            if (Profile != null)
-                builder.Append($"profile=\"{Profile}\" ");
-            if (Title != null)
-                builder.Append($"title=\"{Title}\" ");
+            TryAppendLinkPart(builder, "rel", Rel);
+            TryAppendLinkPart(builder, "name", Name);
+            TryAppendLinkPart(builder, "profile", Profile);
+            TryAppendLinkPart(builder, "title", Title);
             if (Templated)
                 builder.Append("templated=\"true\" ");
             builder.Append($"href=\"{Href}\" />");
@@ -73,6 +64,12 @@ namespace KeApiOpenSdk.Models.Common
                 hashcode = TryIncreaseHashcode(hashcode, Profile);
                 return hashcode*23 + Templated.GetHashCode();
             }
+        }
+
+        private void TryAppendLinkPart(StringBuilder builder, string parameterName, string parameter)
+        {
+            if (!string.IsNullOrWhiteSpace(parameter))
+                builder.Append($"{parameterName}=\"{parameter}\" ");
         }
 
         private static bool EqualsOrNulls(string a, string b) =>

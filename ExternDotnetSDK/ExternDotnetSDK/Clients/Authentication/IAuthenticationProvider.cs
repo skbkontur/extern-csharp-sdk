@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace KeApiOpenSdk.Clients.Authentication
+namespace KeApiClientOpenSdk.Clients.Authentication
 {
     public interface IAuthenticationProvider
     {

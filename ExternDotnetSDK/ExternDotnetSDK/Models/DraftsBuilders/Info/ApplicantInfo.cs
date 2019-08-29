@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using KeApiOpenSdk.Models.Common;
-using KeApiOpenSdk.Models.JsonConverters;
+using KeApiClientOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.DraftsBuilders.Info
+namespace KeApiClientOpenSdk.Models.DraftsBuilders.Info
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ApplicantInfo

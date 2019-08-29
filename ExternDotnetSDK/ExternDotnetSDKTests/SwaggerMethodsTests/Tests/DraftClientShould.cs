@@ -2,13 +2,13 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
-using KeApiOpenSdk.Models.Common;
-using KeApiOpenSdk.Models.Drafts;
-using KeApiOpenSdk.Models.Drafts.Requests;
+using KeApiClientOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.Drafts;
+using KeApiClientOpenSdk.Models.Drafts.Requests;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace KeApiOpenSdkTests.SwaggerMethodsTests.Tests
+namespace KeApiClientOpenSdkTests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class DraftClientShould : AllTestsShould

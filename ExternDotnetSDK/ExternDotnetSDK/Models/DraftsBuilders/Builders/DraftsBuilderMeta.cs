@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using KeApiOpenSdk.Models.Common;
-using KeApiOpenSdk.Models.Drafts.Meta;
-using KeApiOpenSdk.Models.DraftsBuilders.Builders.Data;
-using KeApiOpenSdk.Models.JsonConverters;
+using KeApiClientOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.Drafts.Meta;
+using KeApiClientOpenSdk.Models.DraftsBuilders.Builders.Data;
+using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.DraftsBuilders.Builders
+namespace KeApiClientOpenSdk.Models.DraftsBuilders.Builders
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DraftsBuilderMeta

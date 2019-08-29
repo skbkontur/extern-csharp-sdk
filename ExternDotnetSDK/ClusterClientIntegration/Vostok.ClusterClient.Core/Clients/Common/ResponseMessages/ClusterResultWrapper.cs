@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using KeApiOpenSdk.Clients.Common.RequestMessages;
-using KeApiOpenSdk.Clients.Common.ResponseMessages;
+using KeApiClientOpenSdk.Clients.Common.RequestMessages;
+using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
 using KonturInfrastructureIntegration.Vostok.ClusterClient.Core.Clients.Common.RequestMessages;
 using Vostok.Clusterclient.Core.Model;
 using StreamContent = System.Net.Http.StreamContent;
@@ -16,12 +16,9 @@ namespace KonturInfrastructureIntegration.Vostok.ClusterClient.Core.Clients.Comm
 
         public ClusterResultWrapper(ClusterResult result) => this.result = result;
 
-        public HttpContent Content =>
-            result.Response.HasStream
-                ? (HttpContent)new StreamContent(result.Response.Stream)
-                : result.Response.HasContent
-                    ? new ByteArrayContent(result.Response.Content.ToArray())
-                    : new StringContent(string.Empty);
+        public HttpContent Content => result.Response.HasStream
+            ? (HttpContent)new StreamContent(result.Response.Stream)
+            : new ByteArrayContent(result.Response.Content.ToArray());
 
         public Dictionary<string, string> Headers => result.Response.HasHeaders
             ? result.Response.Headers.ToDictionary(x => x.Name, x => x.Value)

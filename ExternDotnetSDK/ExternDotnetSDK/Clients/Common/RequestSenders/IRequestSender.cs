@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Clients.Authentication;
-using KeApiOpenSdk.Clients.Common.ResponseMessages;
+using KeApiClientOpenSdk.Clients.Authentication;
+using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
 
-namespace KeApiOpenSdk.Clients.Common.RequestSenders
+namespace KeApiClientOpenSdk.Clients.Common.RequestSenders
 {
     public interface IRequestSender
     {

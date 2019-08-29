@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Models.Api;
-using KeApiOpenSdk.Models.Common;
-using KeApiOpenSdk.Models.Docflows;
-using KeApiOpenSdk.Models.Drafts;
-using KeApiOpenSdk.Models.Drafts.Check;
-using KeApiOpenSdk.Models.Drafts.Meta;
-using KeApiOpenSdk.Models.Drafts.Prepare;
-using KeApiOpenSdk.Models.Drafts.Requests;
+using KeApiClientOpenSdk.Models.Api;
+using KeApiClientOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.Docflows;
+using KeApiClientOpenSdk.Models.Drafts;
+using KeApiClientOpenSdk.Models.Drafts.Check;
+using KeApiClientOpenSdk.Models.Drafts.Meta;
+using KeApiClientOpenSdk.Models.Drafts.Prepare;
+using KeApiClientOpenSdk.Models.Drafts.Requests;
 
-namespace KeApiOpenSdk.Clients.Drafts
+namespace KeApiClientOpenSdk.Clients.Drafts
 {
     public interface IDraftClient
     {

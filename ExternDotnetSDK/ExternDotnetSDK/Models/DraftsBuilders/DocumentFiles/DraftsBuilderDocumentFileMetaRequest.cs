@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
-using KeApiOpenSdk.Models.DraftsBuilders.DocumentFiles.Data;
-using KeApiOpenSdk.Models.JsonConverters;
+using KeApiClientOpenSdk.Models.DraftsBuilders.DocumentFiles.Data;
+using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.DraftsBuilders.DocumentFiles
+namespace KeApiClientOpenSdk.Models.DraftsBuilders.DocumentFiles
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DraftsBuilderDocumentFileMetaRequest

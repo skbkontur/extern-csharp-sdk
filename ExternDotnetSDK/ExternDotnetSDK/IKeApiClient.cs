@@ -1,12 +1,12 @@
-﻿using KeApiOpenSdk.Clients.Accounts;
-using KeApiOpenSdk.Clients.Docflows;
-using KeApiOpenSdk.Clients.Drafts;
-using KeApiOpenSdk.Clients.DraftsBuilders;
-using KeApiOpenSdk.Clients.Events;
-using KeApiOpenSdk.Clients.InventoryDocflows;
-using KeApiOpenSdk.Clients.Organizations;
+﻿using KeApiClientOpenSdk.Clients.Accounts;
+using KeApiClientOpenSdk.Clients.Docflows;
+using KeApiClientOpenSdk.Clients.Drafts;
+using KeApiClientOpenSdk.Clients.DraftsBuilders;
+using KeApiClientOpenSdk.Clients.Events;
+using KeApiClientOpenSdk.Clients.InventoryDocflows;
+using KeApiClientOpenSdk.Clients.Organizations;
 
-namespace KeApiOpenSdk
+namespace KeApiClientOpenSdk
 {
     //todo Сделать нормальные тесты для всех методов всех реализованных подклиентов этого интерфейса.
     public interface IKeApiClient

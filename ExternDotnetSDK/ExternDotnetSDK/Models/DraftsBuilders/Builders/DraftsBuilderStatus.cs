@@ -1,4 +1,4 @@
-﻿namespace KeApiOpenSdk.Models.DraftsBuilders.Builders
+﻿namespace KeApiClientOpenSdk.Models.DraftsBuilders.Builders
 {
     public enum DraftsBuilderStatus
     {

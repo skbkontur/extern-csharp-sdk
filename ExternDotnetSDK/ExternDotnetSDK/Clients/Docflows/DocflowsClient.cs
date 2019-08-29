@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Clients.Common;
-using KeApiOpenSdk.Clients.Common.Logging;
-using KeApiOpenSdk.Clients.Common.RequestSenders;
-using KeApiOpenSdk.Models.Api;
-using KeApiOpenSdk.Models.Common;
-using KeApiOpenSdk.Models.Docflows;
-using KeApiOpenSdk.Models.Documents;
-using KeApiOpenSdk.Models.Documents.Data;
-using KeApiOpenSdk.Models.Drafts;
+using KeApiClientOpenSdk.Clients.Common;
+using KeApiClientOpenSdk.Clients.Common.Logging;
+using KeApiClientOpenSdk.Clients.Common.RequestSenders;
+using KeApiClientOpenSdk.Models.Api;
+using KeApiClientOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.Docflows;
+using KeApiClientOpenSdk.Models.Documents;
+using KeApiClientOpenSdk.Models.Documents.Data;
+using KeApiClientOpenSdk.Models.Drafts;
 
-namespace KeApiOpenSdk.Clients.Docflows
+namespace KeApiClientOpenSdk.Clients.Docflows
 {
     //todo Сделать нормальные тесты для методов.
     public class DocflowsClient : IDocflowsClient

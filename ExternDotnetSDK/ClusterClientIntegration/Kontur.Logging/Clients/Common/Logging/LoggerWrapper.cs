@@ -1,64 +1,42 @@
 ﻿using System;
-using KeApiOpenSdk.Clients.Common.Logging;
-using KeApiOpenSdk.Clients.Common.ResponseMessages;
+using System.Linq;
+using KeApiClientOpenSdk.Clients.Common.Logging;
+using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
 
 namespace KonturInfrastructureIntegration.Kontur.Logging.Clients.Common.Logging
 {
     public class LoggerWrapper : ILogger
     {
         private readonly ILog iLog;
-        private readonly Func<IResponseMessage, string> responseToMessageConverter;
+        private readonly Type iLogType;
+        private readonly Func<IResponseMessage, string> converter;
 
-        public LoggerWrapper(ILog iLog, Func<IResponseMessage, string> responseToMessageConverter = null)
+        public LoggerWrapper(ILog iLog, Func<IResponseMessage, string> converter = null)
         {
             this.iLog = iLog;
-            this.responseToMessageConverter =
-                responseToMessageConverter ?? (x => $"StatusCode: {x.StatusCode} | {x.ReasonPhrase}");
+            iLogType = iLog.GetType();
+            this.converter = converter ?? (x => $"StatusCode: {x.StatusCode} | {x.ReasonPhrase}");
         }
 
-        public void Log(string message, LogMessageType messageType = LogMessageType.Error)
-        {
-            if ((messageType == LogMessageType.Debug || messageType == LogMessageType.Trace) && iLog.IsDebugEnabled)
-                iLog.Debug(message);
-            else if (messageType == LogMessageType.Error && iLog.IsErrorEnabled)
-                iLog.Error(message);
-            else if (messageType == LogMessageType.Fatal && iLog.IsFatalEnabled)
-                iLog.Fatal(message);
-            else if (messageType == LogMessageType.Info && iLog.IsInfoEnabled)
-                iLog.Info(message);
-            else if (messageType == LogMessageType.Warn && iLog.IsWarnEnabled)
-                iLog.Warn(message);
-        }
+        public void Log(string message, LogMessageType messageType = LogMessageType.Error) =>
+            Log(messageType, new object[] {message});
 
-        public void Log(Exception exc, LogMessageType messageType = LogMessageType.Error)
-        {
-            if ((messageType == LogMessageType.Debug || messageType == LogMessageType.Trace) && iLog.IsDebugEnabled)
-                iLog.Debug(exc);
-            else if (messageType == LogMessageType.Error && iLog.IsErrorEnabled)
-                iLog.Error(exc);
-            else if (messageType == LogMessageType.Fatal && iLog.IsFatalEnabled)
-                iLog.Fatal(exc);
-            else if (messageType == LogMessageType.Info && iLog.IsInfoEnabled)
-                iLog.Info(exc);
-            else if (messageType == LogMessageType.Warn && iLog.IsWarnEnabled)
-                iLog.Warn(exc);
-        }
+        public void Log(Exception exc, LogMessageType messageType = LogMessageType.Error) =>
+            Log(messageType, new object[] {exc});
 
-        public void Log(string message, Exception exc, LogMessageType messageType = LogMessageType.Error)
-        {
-            if ((messageType == LogMessageType.Debug || messageType == LogMessageType.Trace) && iLog.IsDebugEnabled)
-                iLog.Debug(message, exc);
-            else if (messageType == LogMessageType.Error && iLog.IsErrorEnabled)
-                iLog.Error(message, exc);
-            else if (messageType == LogMessageType.Fatal && iLog.IsFatalEnabled)
-                iLog.Fatal(message, exc);
-            else if (messageType == LogMessageType.Info && iLog.IsInfoEnabled)
-                iLog.Info(message, exc);
-            else if (messageType == LogMessageType.Warn && iLog.IsWarnEnabled)
-                iLog.Warn(message, exc);
-        }
+        public void Log(string message, Exception exc, LogMessageType messageType = LogMessageType.Error) =>
+            Log(messageType, new object[] {message, exc});
 
         public void Log(IResponseMessage response, Exception exc, LogMessageType messageType = LogMessageType.Error) =>
-            Log(responseToMessageConverter(response), exc, messageType);
+            Log(converter(response), exc, messageType);
+
+        private void Log(LogMessageType messageType, object[] methodParameters)
+        {
+            var methodName = messageType == LogMessageType.Trace ? "Debug" : messageType.ToString();
+            var isEnabledInfo = iLogType.GetProperty($"Is{methodName}Enabled", typeof (bool));
+            if (isEnabledInfo != null && (bool)isEnabledInfo.GetValue(iLog))
+                iLogType.GetMethod(methodName, methodParameters.Select(x => x.GetType()).ToArray())
+                    ?.Invoke(iLog, methodParameters);
+        }
     }
 }

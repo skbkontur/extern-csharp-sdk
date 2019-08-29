@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace KeApiOpenSdk.Models.Warrants
+namespace KeApiClientOpenSdk.Models.Warrants
 {
     [PublicAPI]
     public enum TrustedIssuerType

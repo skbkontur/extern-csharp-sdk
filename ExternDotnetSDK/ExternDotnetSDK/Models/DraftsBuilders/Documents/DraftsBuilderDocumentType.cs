@@ -1,4 +1,4 @@
-﻿namespace KeApiOpenSdk.Models.DraftsBuilders.Documents
+﻿namespace KeApiClientOpenSdk.Models.DraftsBuilders.Documents
 {
     public enum DraftsBuilderDocumentType
     {

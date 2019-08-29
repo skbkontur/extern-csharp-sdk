@@ -1,4 +1,4 @@
-﻿namespace KeApiOpenSdk.Models.Drafts.Prepare
+﻿namespace KeApiClientOpenSdk.Models.Drafts.Prepare
 {
     public enum PrepareStatus
     {

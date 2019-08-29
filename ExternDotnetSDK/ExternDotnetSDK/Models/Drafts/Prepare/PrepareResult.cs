@@ -1,9 +1,9 @@
-﻿using KeApiOpenSdk.Models.Common;
-using KeApiOpenSdk.Models.Drafts.Check;
-using KeApiOpenSdk.Models.JsonConverters;
+﻿using KeApiClientOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.Drafts.Check;
+using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.Drafts.Prepare
+namespace KeApiClientOpenSdk.Models.Drafts.Prepare
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class PrepareResult : IPrepareResult

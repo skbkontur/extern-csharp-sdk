@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Models.Events;
+using KeApiClientOpenSdk.Models.Events;
 
-namespace KeApiOpenSdk.Clients.Events
+namespace KeApiClientOpenSdk.Clients.Events
 {
     public interface IEventsClient
     {

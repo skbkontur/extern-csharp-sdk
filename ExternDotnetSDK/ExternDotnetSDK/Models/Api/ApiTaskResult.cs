@@ -1,12 +1,12 @@
 ﻿using System;
 using JetBrains.Annotations;
-using KeApiOpenSdk.Models.Api.Enums;
-using KeApiOpenSdk.Models.Common;
-using KeApiOpenSdk.Models.Errors;
-using KeApiOpenSdk.Models.JsonConverters;
+using KeApiClientOpenSdk.Models.Api.Enums;
+using KeApiClientOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.Errors;
+using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.Api
+namespace KeApiClientOpenSdk.Models.Api
 {
     [PublicAPI]
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]

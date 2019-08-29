@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using KeApiOpenSdk.Clients.Common.RequestMessages;
+using KeApiClientOpenSdk.Clients.Common.RequestMessages;
 
-namespace KeApiOpenSdk.Clients.Common.ResponseMessages
+namespace KeApiClientOpenSdk.Clients.Common.ResponseMessages
 {
     public interface IResponseMessage
     {

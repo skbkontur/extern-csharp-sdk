@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Models.Api;
-using KeApiOpenSdk.Models.Common;
-using KeApiOpenSdk.Models.Docflows;
-using KeApiOpenSdk.Models.Documents;
-using KeApiOpenSdk.Models.Drafts;
+using KeApiClientOpenSdk.Models.Api;
+using KeApiClientOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.Docflows;
+using KeApiClientOpenSdk.Models.Documents;
+using KeApiClientOpenSdk.Models.Drafts;
 
-namespace KeApiOpenSdk.Clients.InventoryDocflows
+namespace KeApiClientOpenSdk.Clients.InventoryDocflows
 {
     public interface IInventoryDocflowsClient
     {

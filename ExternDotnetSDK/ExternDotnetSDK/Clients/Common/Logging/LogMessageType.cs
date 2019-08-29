@@ -1,4 +1,4 @@
-﻿namespace KeApiOpenSdk.Clients.Common.Logging
+﻿namespace KeApiClientOpenSdk.Clients.Common.Logging
 {
     public enum LogMessageType
     {

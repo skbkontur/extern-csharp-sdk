@@ -1,9 +1,9 @@
 ﻿using System;
 using JetBrains.Annotations;
-using KeApiOpenSdk.Models.JsonConverters;
+using KeApiClientOpenSdk.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiOpenSdk.Models.Warrants
+namespace KeApiClientOpenSdk.Models.Warrants
 {
     [PublicAPI]
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]

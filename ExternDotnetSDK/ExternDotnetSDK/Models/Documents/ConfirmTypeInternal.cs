@@ -1,4 +1,4 @@
-﻿namespace KeApiOpenSdk.Models.Documents
+﻿namespace KeApiClientOpenSdk.Models.Documents
 {
     public enum ConfirmTypeInternal
     {

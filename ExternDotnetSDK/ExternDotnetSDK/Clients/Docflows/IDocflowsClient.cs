@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using KeApiOpenSdk.Models.Api;
-using KeApiOpenSdk.Models.Common;
-using KeApiOpenSdk.Models.Docflows;
-using KeApiOpenSdk.Models.Documents;
-using KeApiOpenSdk.Models.Documents.Data;
-using KeApiOpenSdk.Models.Drafts;
+using KeApiClientOpenSdk.Models.Api;
+using KeApiClientOpenSdk.Models.Common;
+using KeApiClientOpenSdk.Models.Docflows;
+using KeApiClientOpenSdk.Models.Documents;
+using KeApiClientOpenSdk.Models.Documents.Data;
+using KeApiClientOpenSdk.Models.Drafts;
 
-namespace KeApiOpenSdk.Clients.Docflows
+namespace KeApiClientOpenSdk.Clients.Docflows
 {
     public interface IDocflowsClient
     {

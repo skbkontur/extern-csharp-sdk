@@ -1,4 +1,4 @@
-﻿namespace KeApiOpenSdk.Models.Api.Enums
+﻿namespace KeApiClientOpenSdk.Models.Api.Enums
 {
     public enum ApiTaskState
     {
