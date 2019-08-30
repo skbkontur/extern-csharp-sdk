@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Models.Api;
-using KeApiClientOpenSdk.Models.Common;
-using KeApiClientOpenSdk.Models.Docflows;
-using KeApiClientOpenSdk.Models.Documents;
-using KeApiClientOpenSdk.Models.Drafts;
+using Kontur.Extern.Client.Models.Api;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Docflows;
+using Kontur.Extern.Client.Models.Documents;
+using Kontur.Extern.Client.Models.Drafts;
 
-namespace KeApiClientOpenSdk.Clients.InventoryDocflows
+namespace Kontur.Extern.Client.Clients.InventoryDocflows
 {
     public interface IInventoryDocflowsClient
     {

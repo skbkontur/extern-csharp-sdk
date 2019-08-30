@@ -1,4 +1,4 @@
-﻿namespace KeApiClientOpenSdk.Models.Authentication
+﻿namespace Kontur.Extern.Client.Models.Authentication
 {
     public enum PasswordStrengthLevel
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KeApiClientOpenSdk.Models.Common
+namespace Kontur.Extern.Client.Models.Common
 {
     public class UrnException : Exception
     {

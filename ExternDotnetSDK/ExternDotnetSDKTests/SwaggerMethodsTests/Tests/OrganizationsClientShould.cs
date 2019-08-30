@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Models.Organizations;
+using Kontur.Extern.Client.Models.Organizations;
 using NUnit.Framework;
 
-namespace KeApiClientOpenSdkTests.SwaggerMethodsTests.Tests
+namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class OrganizationsClientShould : AllTestsShould

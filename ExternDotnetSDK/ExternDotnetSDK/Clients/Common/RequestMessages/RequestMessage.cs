@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace KeApiClientOpenSdk.Clients.Common.RequestMessages
+namespace Kontur.Extern.Client.Clients.Common.RequestMessages
 {
     public class RequestMessage : IRequestMessage
     {

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using KeApiClientOpenSdk.Clients.Common.RequestMessages;
+using Kontur.Extern.Client.Clients.Common.RequestMessages;
 using Vostok.Clusterclient.Core.Model;
 using StreamContent = System.Net.Http.StreamContent;
 
-namespace KonturInfrastructureIntegration.Vostok.ClusterClient.Core.Clients.Common.RequestMessages
+namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.RequestMessages
 {
     public class RequestWrapper : IRequestMessage
     {

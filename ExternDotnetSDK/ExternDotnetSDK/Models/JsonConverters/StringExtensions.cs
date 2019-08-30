@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace KeApiClientOpenSdk.Models.JsonConverters
+namespace Kontur.Extern.Client.Models.JsonConverters
 {
     internal static class StringExtensions
     {

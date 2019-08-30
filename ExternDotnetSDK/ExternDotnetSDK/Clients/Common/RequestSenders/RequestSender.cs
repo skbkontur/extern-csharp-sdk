@@ -4,11 +4,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Clients.Authentication;
-using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
+using Kontur.Extern.Client.Clients.Authentication;
+using Kontur.Extern.Client.Clients.Common.ResponseMessages;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Clients.Common.RequestSenders
+namespace Kontur.Extern.Client.Clients.Common.RequestSenders
 {
     public class RequestSender : IRequestSender
     {

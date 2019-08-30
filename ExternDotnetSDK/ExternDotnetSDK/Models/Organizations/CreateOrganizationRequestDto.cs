@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using KeApiClientOpenSdk.Models.JsonConverters;
+using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Models.Organizations
+namespace Kontur.Extern.Client.Models.Organizations
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class CreateOrganizationRequestDto

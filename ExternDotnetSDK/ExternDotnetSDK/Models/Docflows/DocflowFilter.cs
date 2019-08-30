@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using KeApiClientOpenSdk.Models.JsonConverters;
+using Kontur.Extern.Client.Models.JsonConverters;
 
-namespace KeApiClientOpenSdk.Models.Docflows
+namespace Kontur.Extern.Client.Models.Docflows
 {
     [PublicAPI]
     public class DocflowFilter

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.1.0-alpha</Version>
+    <Authors>trubitsin</Authors>
+    <Company>SKB Kontur</Company>
+    <Description>Interfaces that can connect Kontur.Extern.Client with few other Kontur libraries.</Description>
+    <RepositoryUrl>https://github.com/trurl123/extern-dotnet-sdk</RepositoryUrl>
+    <PackageReleaseNotes>Work in progress. Not properly tested.</PackageReleaseNotes>
+    <PackageTags>kontur, skbkontur, extern, kontur-extern, SDK, API, workInProgress</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Vostok.ClusterClient.Core" Version="0.1.9" />
+    <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExternDotnetSDK\Kontur.Extern.Client.csproj" />
+  </ItemGroup>
+
+</Project>

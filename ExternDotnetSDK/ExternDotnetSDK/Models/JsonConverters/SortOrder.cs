@@ -1,4 +1,4 @@
-﻿namespace KeApiClientOpenSdk.Models.JsonConverters
+﻿namespace Kontur.Extern.Client.Models.JsonConverters
 {
     public enum SortOrder
     {

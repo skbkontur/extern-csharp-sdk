@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Models.Events;
+using Kontur.Extern.Client.Models.Events;
 
-namespace KeApiClientOpenSdk.Clients.Events
+namespace Kontur.Extern.Client.Clients.Events
 {
     public interface IEventsClient
     {

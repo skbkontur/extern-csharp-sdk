@@ -1,8 +1,8 @@
 ﻿using System;
-using KeApiClientOpenSdk.Models.JsonConverters;
+using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Models.Drafts.Meta
+namespace Kontur.Extern.Client.Models.Drafts.Meta
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class RelatedDocument

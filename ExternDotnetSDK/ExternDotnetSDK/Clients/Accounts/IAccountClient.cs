@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Models.Accounts;
-using KeApiClientOpenSdk.Models.Certificates;
-using KeApiClientOpenSdk.Models.Warrants;
+using Kontur.Extern.Client.Models.Accounts;
+using Kontur.Extern.Client.Models.Certificates;
+using Kontur.Extern.Client.Models.Warrants;
 
-namespace KeApiClientOpenSdk.Clients.Accounts
+namespace Kontur.Extern.Client.Clients.Accounts
 {
     public interface IAccountClient
     {

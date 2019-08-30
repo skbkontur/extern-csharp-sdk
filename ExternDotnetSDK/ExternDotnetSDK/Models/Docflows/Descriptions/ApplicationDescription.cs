@@ -1,7 +1,7 @@
-﻿using KeApiClientOpenSdk.Models.JsonConverters;
+﻿using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Models.Docflows.Descriptions
+namespace Kontur.Extern.Client.Models.Docflows.Descriptions
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ApplicationDescription : DocflowDescription

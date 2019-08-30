@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Models.Api;
-using KeApiClientOpenSdk.Models.DraftsBuilders.Builders;
-using KeApiClientOpenSdk.Models.DraftsBuilders.DocumentFiles;
-using KeApiClientOpenSdk.Models.DraftsBuilders.Documents;
+using Kontur.Extern.Client.Models.Api;
+using Kontur.Extern.Client.Models.DraftsBuilders.Builders;
+using Kontur.Extern.Client.Models.DraftsBuilders.DocumentFiles;
+using Kontur.Extern.Client.Models.DraftsBuilders.Documents;
 
-namespace KeApiClientOpenSdk.Clients.DraftsBuilders
+namespace Kontur.Extern.Client.Clients.DraftsBuilders
 {
     public interface IDraftsBuilderClient
     {

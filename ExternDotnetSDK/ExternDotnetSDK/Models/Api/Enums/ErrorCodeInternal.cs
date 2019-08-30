@@ -1,4 +1,4 @@
-﻿namespace KeApiClientOpenSdk.Models.Api.Enums
+﻿namespace Kontur.Extern.Client.Models.Api.Enums
 {
     public enum ErrorCodeInternal
     {

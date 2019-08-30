@@ -1,10 +1,10 @@
 ﻿using System;
-using KeApiClientOpenSdk.Models.Common;
-using KeApiClientOpenSdk.Models.Drafts.Meta;
-using KeApiClientOpenSdk.Models.JsonConverters;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Drafts.Meta;
+using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Models.Drafts
+namespace Kontur.Extern.Client.Models.Drafts
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class Draft

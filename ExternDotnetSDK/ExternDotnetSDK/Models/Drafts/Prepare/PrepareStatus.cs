@@ -1,4 +1,4 @@
-﻿namespace KeApiClientOpenSdk.Models.Drafts.Prepare
+﻿namespace Kontur.Extern.Client.Models.Drafts.Prepare
 {
     public enum PrepareStatus
     {

@@ -1,5 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming
-namespace KeApiClientOpenSdk.Models.Drafts
+namespace Kontur.Extern.Client.Models.Drafts
 {
     public enum FormatType
     {

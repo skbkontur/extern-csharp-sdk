@@ -1,13 +1,12 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk;
-using KeApiClientOpenSdk.Clients.Authentication;
-using KeApiClientOpenSdk.Models.Accounts;
-using KeApiClientOpenSdkTests.SwaggerMethodsTests.Common;
+using Kontur.Extern.Client.Clients.Authentication;
+using Kontur.Extern.Client.Models.Accounts;
+using Kontur.Extern.Client.Tests.SwaggerMethodsTests.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace KeApiClientOpenSdkTests.SwaggerMethodsTests.Tests
+namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class AllTestsShould

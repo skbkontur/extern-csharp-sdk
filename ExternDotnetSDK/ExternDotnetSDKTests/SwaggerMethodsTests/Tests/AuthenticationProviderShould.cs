@@ -1,11 +1,11 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Clients.Authentication;
+using Kontur.Extern.Client.Clients.Authentication;
 using NUnit.Framework;
 
 #pragma warning disable 1998
 
-namespace KeApiClientOpenSdkTests.SwaggerMethodsTests.Tests
+namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class AuthenticationProviderShould : AllTestsShould

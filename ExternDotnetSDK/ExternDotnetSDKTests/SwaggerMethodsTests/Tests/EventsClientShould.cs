@@ -2,7 +2,7 @@
 using System.Net.Http;
 using NUnit.Framework;
 
-namespace KeApiClientOpenSdkTests.SwaggerMethodsTests.Tests
+namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class EventsClientShould : AllTestsShould

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Net;
-using KeApiClientOpenSdk.Models.Common;
-using KeApiClientOpenSdk.Models.JsonConverters;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Models.Errors
+namespace Kontur.Extern.Client.Models.Errors
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ExternApiError : Error

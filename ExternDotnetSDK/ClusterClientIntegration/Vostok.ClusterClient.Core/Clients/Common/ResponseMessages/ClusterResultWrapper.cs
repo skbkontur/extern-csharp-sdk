@@ -2,13 +2,13 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using KeApiClientOpenSdk.Clients.Common.RequestMessages;
-using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
-using KonturInfrastructureIntegration.Vostok.ClusterClient.Core.Clients.Common.RequestMessages;
+using Kontur.Extern.Client.Clients.Common.RequestMessages;
+using Kontur.Extern.Client.Clients.Common.ResponseMessages;
+using Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.RequestMessages;
 using Vostok.Clusterclient.Core.Model;
 using StreamContent = System.Net.Http.StreamContent;
 
-namespace KonturInfrastructureIntegration.Vostok.ClusterClient.Core.Clients.Common.ResponseMessages
+namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.ResponseMessages
 {
     public class ClusterResultWrapper : IResponseMessage
     {

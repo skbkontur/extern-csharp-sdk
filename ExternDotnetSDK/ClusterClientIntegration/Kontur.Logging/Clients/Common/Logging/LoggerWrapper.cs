@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using KeApiClientOpenSdk.Clients.Common.Logging;
-using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
+using Kontur.Extern.Client.Clients.Common.Logging;
+using Kontur.Extern.Client.Clients.Common.ResponseMessages;
 
-namespace KonturInfrastructureIntegration.Kontur.Logging.Clients.Common.Logging
+namespace Kontur.Extern.Client.Vostok.Kontur.Logging.Clients.Common.Logging
 {
     public class LoggerWrapper : ILogger
     {

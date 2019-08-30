@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using FluentAssertions;
-using KeApiClientOpenSdk.Models.Accounts;
-using KeApiClientOpenSdk.Models.Drafts.Requests;
+using Kontur.Extern.Client.Models.Accounts;
+using Kontur.Extern.Client.Models.Drafts.Requests;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace KeApiClientOpenSdkTests.OtherTests
+namespace Kontur.Extern.Client.Tests.OtherTests
 {
     [TestFixture]
     internal class KebabCaseNamingStrategyShould

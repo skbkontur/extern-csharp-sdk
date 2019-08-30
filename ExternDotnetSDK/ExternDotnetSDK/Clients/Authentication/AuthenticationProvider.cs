@@ -2,15 +2,15 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Clients.Common.Logging;
-using KeApiClientOpenSdk.Clients.Common.RequestSenders;
-using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
-using KeApiClientOpenSdk.Models.Authentication;
+using Kontur.Extern.Client.Clients.Common.Logging;
+using Kontur.Extern.Client.Clients.Common.RequestSenders;
+using Kontur.Extern.Client.Clients.Common.ResponseMessages;
+using Kontur.Extern.Client.Models.Authentication;
 using Newtonsoft.Json;
 
 // ReSharper disable CommentTypo
 
-namespace KeApiClientOpenSdk.Clients.Authentication
+namespace Kontur.Extern.Client.Clients.Authentication
 {
     //todo Сделать нормальные тесты для методов.
     public class AuthenticationProvider : IAuthenticationProvider

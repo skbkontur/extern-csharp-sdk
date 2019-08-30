@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
-using KeApiClientOpenSdk.Models.JsonConverters;
+using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Models.Common
+namespace Kontur.Extern.Client.Models.Common
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public sealed class Link : IEquatable<Link>

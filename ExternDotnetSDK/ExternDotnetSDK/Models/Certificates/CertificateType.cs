@@ -1,5 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming
-namespace KeApiClientOpenSdk.Models.Certificates
+namespace Kontur.Extern.Client.Models.Certificates
 {
     public enum CertificateType
     {

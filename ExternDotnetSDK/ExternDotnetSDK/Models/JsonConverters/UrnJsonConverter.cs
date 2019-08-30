@@ -1,8 +1,8 @@
 ﻿using System;
-using KeApiClientOpenSdk.Models.Common;
+using Kontur.Extern.Client.Models.Common;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Models.JsonConverters
+namespace Kontur.Extern.Client.Models.JsonConverters
 {
     public class UrnJsonConverter : JsonConverter
     {

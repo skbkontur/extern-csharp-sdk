@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Net.Http;
-using KeApiClientOpenSdk.Clients.Accounts;
-using KeApiClientOpenSdk.Clients.Authentication;
-using KeApiClientOpenSdk.Clients.Common.Logging;
-using KeApiClientOpenSdk.Clients.Common.RequestSenders;
-using KeApiClientOpenSdk.Clients.Docflows;
-using KeApiClientOpenSdk.Clients.Drafts;
-using KeApiClientOpenSdk.Clients.DraftsBuilders;
-using KeApiClientOpenSdk.Clients.Events;
-using KeApiClientOpenSdk.Clients.InventoryDocflows;
-using KeApiClientOpenSdk.Clients.Organizations;
+using Kontur.Extern.Client.Clients.Accounts;
+using Kontur.Extern.Client.Clients.Authentication;
+using Kontur.Extern.Client.Clients.Common.Logging;
+using Kontur.Extern.Client.Clients.Common.RequestSenders;
+using Kontur.Extern.Client.Clients.Docflows;
+using Kontur.Extern.Client.Clients.Drafts;
+using Kontur.Extern.Client.Clients.DraftsBuilders;
+using Kontur.Extern.Client.Clients.Events;
+using Kontur.Extern.Client.Clients.InventoryDocflows;
+using Kontur.Extern.Client.Clients.Organizations;
 
-namespace KeApiClientOpenSdk
+namespace Kontur.Extern.Client
 {
     public class KeApiClient : IKeApiClient
     {

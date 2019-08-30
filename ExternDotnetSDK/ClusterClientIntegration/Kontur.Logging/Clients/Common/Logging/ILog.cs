@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace KonturInfrastructureIntegration.Kontur.Logging.Clients.Common.Logging
+namespace Kontur.Extern.Client.Vostok.Kontur.Logging.Clients.Common.Logging
 {
     /// <summary>
     ///     This interface already exists somewhere in Kontur.Logging library.

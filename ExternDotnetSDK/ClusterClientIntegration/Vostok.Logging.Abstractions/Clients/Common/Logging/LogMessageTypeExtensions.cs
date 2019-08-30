@@ -1,7 +1,7 @@
-﻿using KeApiClientOpenSdk.Clients.Common.Logging;
+﻿using Kontur.Extern.Client.Clients.Common.Logging;
 using Vostok.Logging.Abstractions;
 
-namespace KonturInfrastructureIntegration.Vostok.Logging.Abstractions.Clients.Common.Logging
+namespace Kontur.Extern.Client.Vostok.Vostok.Logging.Abstractions.Clients.Common.Logging
 {
     public static class LogMessageTypeExtensions
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using KeApiClientOpenSdk.Clients.Common.RequestMessages;
+using Kontur.Extern.Client.Clients.Common.RequestMessages;
 
-namespace KeApiClientOpenSdk.Clients.Common.ResponseMessages
+namespace Kontur.Extern.Client.Clients.Common.ResponseMessages
 {
     public class ResponseMessage : IResponseMessage
     {

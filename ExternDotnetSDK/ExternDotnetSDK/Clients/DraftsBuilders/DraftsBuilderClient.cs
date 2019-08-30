@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Clients.Common;
-using KeApiClientOpenSdk.Clients.Common.Logging;
-using KeApiClientOpenSdk.Clients.Common.RequestSenders;
-using KeApiClientOpenSdk.Models.Api;
-using KeApiClientOpenSdk.Models.DraftsBuilders.Builders;
-using KeApiClientOpenSdk.Models.DraftsBuilders.DocumentFiles;
-using KeApiClientOpenSdk.Models.DraftsBuilders.Documents;
+using Kontur.Extern.Client.Clients.Common;
+using Kontur.Extern.Client.Clients.Common.Logging;
+using Kontur.Extern.Client.Clients.Common.RequestSenders;
+using Kontur.Extern.Client.Models.Api;
+using Kontur.Extern.Client.Models.DraftsBuilders.Builders;
+using Kontur.Extern.Client.Models.DraftsBuilders.DocumentFiles;
+using Kontur.Extern.Client.Models.DraftsBuilders.Documents;
 
-namespace KeApiClientOpenSdk.Clients.DraftsBuilders
+namespace Kontur.Extern.Client.Clients.DraftsBuilders
 {
     //todo Сделать нормальные тесты для методов.
     public class DraftsBuilderClient : IDraftsBuilderClient

@@ -1,10 +1,10 @@
 ﻿using System;
 using FluentAssertions;
-using KeApiClientOpenSdk.Models.Common;
+using Kontur.Extern.Client.Models.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace KeApiClientOpenSdkTests.OtherTests
+namespace Kontur.Extern.Client.Tests.OtherTests
 {
     internal class UrnShould
     {

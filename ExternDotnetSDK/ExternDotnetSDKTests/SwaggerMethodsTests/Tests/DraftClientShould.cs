@@ -2,13 +2,13 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
-using KeApiClientOpenSdk.Models.Common;
-using KeApiClientOpenSdk.Models.Drafts;
-using KeApiClientOpenSdk.Models.Drafts.Requests;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Drafts;
+using Kontur.Extern.Client.Models.Drafts.Requests;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace KeApiClientOpenSdkTests.SwaggerMethodsTests.Tests
+namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class DraftClientShould : AllTestsShould

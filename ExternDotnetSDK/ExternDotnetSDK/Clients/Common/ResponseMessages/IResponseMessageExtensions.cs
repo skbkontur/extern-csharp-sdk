@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Clients.Common.Logging;
+using Kontur.Extern.Client.Clients.Common.Logging;
 
-namespace KeApiClientOpenSdk.Clients.Common.ResponseMessages
+namespace Kontur.Extern.Client.Clients.Common.ResponseMessages
 {
     // ReSharper disable once InconsistentNaming
     internal static class IResponseMessageExtensions

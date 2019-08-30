@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using KeApiClientOpenSdk.Models.Docflows;
-using KeApiClientOpenSdk.Models.Docflows.Descriptions;
+using Kontur.Extern.Client.Models.Docflows;
+using Kontur.Extern.Client.Models.Docflows.Descriptions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace KeApiClientOpenSdk.Models.JsonConverters
+namespace Kontur.Extern.Client.Models.JsonConverters
 {
     internal class DocflowDescriptionConverter : JsonConverter
     {

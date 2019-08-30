@@ -1,7 +1,7 @@
-﻿using KeApiClientOpenSdk.Models.JsonConverters;
+﻿using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Models.DraftsBuilders.DocumentFiles.Data
+namespace Kontur.Extern.Client.Models.DraftsBuilders.DocumentFiles.Data
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public abstract class DraftsBuilderDocumentFileData

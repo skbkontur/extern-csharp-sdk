@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Models.Organizations;
+using Kontur.Extern.Client.Models.Organizations;
 
-namespace KeApiClientOpenSdk.Clients.Organizations
+namespace Kontur.Extern.Client.Clients.Organizations
 {
     public interface IOrganizationsClient
     {

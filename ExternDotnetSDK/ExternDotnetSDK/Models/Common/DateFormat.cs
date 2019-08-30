@@ -1,8 +1,8 @@
-﻿using KeApiClientOpenSdk.Models.JsonConverters;
+﻿using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace KeApiClientOpenSdk.Models.Common
+namespace Kontur.Extern.Client.Models.Common
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DateFormat : IsoDateTimeConverter

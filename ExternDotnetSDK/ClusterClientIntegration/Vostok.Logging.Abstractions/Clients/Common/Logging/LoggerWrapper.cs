@@ -1,9 +1,9 @@
 ﻿using System;
-using KeApiClientOpenSdk.Clients.Common.Logging;
-using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
+using Kontur.Extern.Client.Clients.Common.Logging;
+using Kontur.Extern.Client.Clients.Common.ResponseMessages;
 using Vostok.Logging.Abstractions;
 
-namespace KonturInfrastructureIntegration.Vostok.Logging.Abstractions.Clients.Common.Logging
+namespace Kontur.Extern.Client.Vostok.Vostok.Logging.Abstractions.Clients.Common.Logging
 {
     public class LoggerWrapper : ILogger
     {

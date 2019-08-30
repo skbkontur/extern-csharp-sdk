@@ -1,7 +1,7 @@
 ﻿using System;
-using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
+using Kontur.Extern.Client.Clients.Common.ResponseMessages;
 
-namespace KeApiClientOpenSdk.Clients.Common.Logging
+namespace Kontur.Extern.Client.Clients.Common.Logging
 {
     public class SilentLogger : ILogger
     {

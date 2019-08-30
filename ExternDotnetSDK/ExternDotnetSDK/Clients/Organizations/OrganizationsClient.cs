@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Clients.Common;
-using KeApiClientOpenSdk.Clients.Common.Logging;
-using KeApiClientOpenSdk.Clients.Common.RequestSenders;
-using KeApiClientOpenSdk.Models.Organizations;
+using Kontur.Extern.Client.Clients.Common;
+using Kontur.Extern.Client.Clients.Common.Logging;
+using Kontur.Extern.Client.Clients.Common.RequestSenders;
+using Kontur.Extern.Client.Models.Organizations;
 
-namespace KeApiClientOpenSdk.Clients.Organizations
+namespace Kontur.Extern.Client.Clients.Organizations
 {
     //todo Сделать нормальные тесты для методов.
     public class OrganizationsClient : IOrganizationsClient

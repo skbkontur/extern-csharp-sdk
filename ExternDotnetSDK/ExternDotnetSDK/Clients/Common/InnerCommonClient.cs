@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Clients.Common.Logging;
-using KeApiClientOpenSdk.Clients.Common.RequestSenders;
-using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
+using Kontur.Extern.Client.Clients.Common.Logging;
+using Kontur.Extern.Client.Clients.Common.RequestSenders;
+using Kontur.Extern.Client.Clients.Common.ResponseMessages;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Clients.Common
+namespace Kontur.Extern.Client.Clients.Common
 {
     internal class InnerCommonClient
     {

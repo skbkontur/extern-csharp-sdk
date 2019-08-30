@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeApiClientOpenSdk", "ExternDotnetSDK\KeApiClientOpenSdk.csproj", "{BC1380C5-17B7-4C82-832C-40A647FBAD58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Client", "ExternDotnetSDK\Kontur.Extern.Client.csproj", "{BC1380C5-17B7-4C82-832C-40A647FBAD58}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeApiClientOpenSdkTests", "ExternDotnetSDKTests\KeApiClientOpenSdkTests.csproj", "{ABA9A116-2F0A-4442-8449-4994A3B257AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Client.Tests", "ExternDotnetSDKTests\Kontur.Extern.Client.Tests.csproj", "{ABA9A116-2F0A-4442-8449-4994A3B257AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KonturInfrastructureIntegration", "ClusterClientIntegration\KonturInfrastructureIntegration.csproj", "{FE0A6C55-9C46-4A24-B07F-6058C560A839}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Client.Vostok", "ClusterClientIntegration\Kontur.Extern.Client.Vostok.csproj", "{FE0A6C55-9C46-4A24-B07F-6058C560A839}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,8 +1,8 @@
 ﻿using JetBrains.Annotations;
-using KeApiClientOpenSdk.Models.JsonConverters;
+using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Models.Warrants
+namespace Kontur.Extern.Client.Models.Warrants
 {
     [PublicAPI]
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]

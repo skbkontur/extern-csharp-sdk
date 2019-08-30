@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace KeApiClientOpenSdk.Clients.Authentication
+namespace Kontur.Extern.Client.Clients.Authentication
 {
     public interface IAuthenticationProvider
     {

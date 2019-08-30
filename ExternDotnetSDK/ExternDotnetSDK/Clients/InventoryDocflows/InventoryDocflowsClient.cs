@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Clients.Common;
-using KeApiClientOpenSdk.Clients.Common.Logging;
-using KeApiClientOpenSdk.Clients.Common.RequestSenders;
-using KeApiClientOpenSdk.Models.Api;
-using KeApiClientOpenSdk.Models.Common;
-using KeApiClientOpenSdk.Models.Docflows;
-using KeApiClientOpenSdk.Models.Documents;
-using KeApiClientOpenSdk.Models.Documents.Data;
-using KeApiClientOpenSdk.Models.Drafts;
+using Kontur.Extern.Client.Clients.Common;
+using Kontur.Extern.Client.Clients.Common.Logging;
+using Kontur.Extern.Client.Clients.Common.RequestSenders;
+using Kontur.Extern.Client.Models.Api;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Docflows;
+using Kontur.Extern.Client.Models.Documents;
+using Kontur.Extern.Client.Models.Documents.Data;
+using Kontur.Extern.Client.Models.Drafts;
 
-namespace KeApiClientOpenSdk.Clients.InventoryDocflows
+namespace Kontur.Extern.Client.Clients.InventoryDocflows
 {
     //todo Сделать нормальные тесты для методов.
     public class InventoryDocflowsClient : IInventoryDocflowsClient

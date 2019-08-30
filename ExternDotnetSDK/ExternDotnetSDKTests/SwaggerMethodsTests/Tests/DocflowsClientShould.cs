@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Models.Certificates;
-using KeApiClientOpenSdk.Models.Common;
-using KeApiClientOpenSdk.Models.Docflows;
-using KeApiClientOpenSdk.Models.Documents;
-using KeApiClientOpenSdk.Models.Documents.Data;
+using Kontur.Extern.Client.Models.Certificates;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Docflows;
+using Kontur.Extern.Client.Models.Documents;
+using Kontur.Extern.Client.Models.Documents.Data;
 using NUnit.Framework;
 
 #pragma warning disable 1998
 
-namespace KeApiClientOpenSdkTests.SwaggerMethodsTests.Tests
+namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
     internal class DocflowsClientShould : AllTestsShould

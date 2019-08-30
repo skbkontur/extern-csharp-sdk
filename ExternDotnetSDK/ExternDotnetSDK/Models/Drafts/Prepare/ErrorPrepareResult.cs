@@ -1,11 +1,11 @@
 ﻿using System.Net;
-using KeApiClientOpenSdk.Models.Common;
-using KeApiClientOpenSdk.Models.Drafts.Check;
-using KeApiClientOpenSdk.Models.Errors;
-using KeApiClientOpenSdk.Models.JsonConverters;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Drafts.Check;
+using Kontur.Extern.Client.Models.Errors;
+using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Models.Drafts.Prepare
+namespace Kontur.Extern.Client.Models.Drafts.Prepare
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ErrorPrepareResult : Error, IPrepareResult

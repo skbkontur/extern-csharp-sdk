@@ -1,6 +1,6 @@
 ﻿// ReSharper disable ArrangeTypeMemberModifiers
 
-namespace KeApiClientOpenSdk.Clients.Common.RequestSenders
+namespace Kontur.Extern.Client.Clients.Common.RequestSenders
 {
     public static class SenderConstants
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using FluentAssertions;
-using KeApiClientOpenSdk.Models.Common;
+using Kontur.Extern.Client.Models.Common;
 using NUnit.Framework;
 
-namespace KeApiClientOpenSdkTests.OtherTests
+namespace Kontur.Extern.Client.Tests.OtherTests
 {
     [TestFixture]
     internal class LinkShould

@@ -1,4 +1,4 @@
-﻿namespace KeApiClientOpenSdk.Clients.Common.Logging
+﻿namespace Kontur.Extern.Client.Clients.Common.Logging
 {
     public enum LogMessageType
     {

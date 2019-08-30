@@ -1,4 +1,4 @@
-﻿namespace KeApiClientOpenSdk.Models.DraftsBuilders.Builders
+﻿namespace Kontur.Extern.Client.Models.DraftsBuilders.Builders
 {
     public enum DraftsBuilderStatus
     {

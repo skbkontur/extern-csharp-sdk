@@ -1,4 +1,4 @@
-﻿namespace KeApiClientOpenSdkTests.SwaggerMethodsTests.Common
+﻿namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Common
 {
     internal class EnvironmentData
     {

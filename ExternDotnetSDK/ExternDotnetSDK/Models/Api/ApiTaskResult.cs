@@ -1,12 +1,12 @@
 ﻿using System;
 using JetBrains.Annotations;
-using KeApiClientOpenSdk.Models.Api.Enums;
-using KeApiClientOpenSdk.Models.Common;
-using KeApiClientOpenSdk.Models.Errors;
-using KeApiClientOpenSdk.Models.JsonConverters;
+using Kontur.Extern.Client.Models.Api.Enums;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Errors;
+using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace KeApiClientOpenSdk.Models.Api
+namespace Kontur.Extern.Client.Models.Api
 {
     [PublicAPI]
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]

@@ -1,4 +1,4 @@
-﻿namespace KeApiClientOpenSdk.Models.DraftsBuilders.Documents
+﻿namespace Kontur.Extern.Client.Models.DraftsBuilders.Documents
 {
     public enum DraftsBuilderDocumentType
     {

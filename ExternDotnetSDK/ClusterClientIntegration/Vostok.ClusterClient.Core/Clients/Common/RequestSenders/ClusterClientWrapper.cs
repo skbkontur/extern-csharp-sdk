@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Clients.Authentication;
-using KeApiClientOpenSdk.Clients.Common.RequestSenders;
-using KeApiClientOpenSdk.Clients.Common.ResponseMessages;
-using KonturInfrastructureIntegration.Vostok.ClusterClient.Core.Clients.Common.ResponseMessages;
+using Kontur.Extern.Client.Clients.Authentication;
+using Kontur.Extern.Client.Clients.Common.RequestSenders;
+using Kontur.Extern.Client.Clients.Common.ResponseMessages;
+using Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.ResponseMessages;
 using Newtonsoft.Json;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Core.Model;
 
-namespace KonturInfrastructureIntegration.Vostok.ClusterClient.Core.Clients.Common.RequestSenders
+namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.RequestSenders
 {
     public class ClusterClientWrapper : IRequestSender
     {

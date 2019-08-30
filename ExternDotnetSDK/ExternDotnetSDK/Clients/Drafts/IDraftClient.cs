@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
-using KeApiClientOpenSdk.Models.Api;
-using KeApiClientOpenSdk.Models.Common;
-using KeApiClientOpenSdk.Models.Docflows;
-using KeApiClientOpenSdk.Models.Drafts;
-using KeApiClientOpenSdk.Models.Drafts.Check;
-using KeApiClientOpenSdk.Models.Drafts.Meta;
-using KeApiClientOpenSdk.Models.Drafts.Prepare;
-using KeApiClientOpenSdk.Models.Drafts.Requests;
+using Kontur.Extern.Client.Models.Api;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Docflows;
+using Kontur.Extern.Client.Models.Drafts;
+using Kontur.Extern.Client.Models.Drafts.Check;
+using Kontur.Extern.Client.Models.Drafts.Meta;
+using Kontur.Extern.Client.Models.Drafts.Prepare;
+using Kontur.Extern.Client.Models.Drafts.Requests;
 
-namespace KeApiClientOpenSdk.Clients.Drafts
+namespace Kontur.Extern.Client.Clients.Drafts
 {
     public interface IDraftClient
     {

@@ -1,4 +1,4 @@
-﻿namespace KeApiClientOpenSdk.Models.Documents
+﻿namespace Kontur.Extern.Client.Models.Documents
 {
     public enum ConfirmTypeInternal
     {

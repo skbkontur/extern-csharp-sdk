@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace KeApiClientOpenSdk.Models.Warrants
+namespace Kontur.Extern.Client.Models.Warrants
 {
     [PublicAPI]
     public enum TrustedIssuerType
