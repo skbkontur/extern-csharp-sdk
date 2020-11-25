@@ -4,35 +4,24 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Version>0.1.0-alpha</Version>
     <Description>Public SDK for Ke.API.</Description>
-    <Authors>trubitsin</Authors>
     <Company>SKB Kontur</Company>
-    <Product>Kontur.Extern.Client</Product>
+    <Product>Kontur.Extern.SDK</Product>
     <Copyright></Copyright>
     <PackageReleaseNotes>Work in progress. Not properly tested.</PackageReleaseNotes>
     <PackageTags>kontur, skbkontur, extern, kontur-extern, SDK, API, workInProgress, technicallyTheyFiredMeAfterIMadeThis</PackageTags>
-    <RepositoryUrl>https://github.com/trurl123/extern-dotnet-sdk</RepositoryUrl>
+    <RepositoryUrl>https://github.com/skbkontur/extern-csharp-sdk</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Connector\**" />
-    <EmbeddedResource Remove="Connector\**" />
-    <None Remove="Connector\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Events\" />
-    <Folder Include="Models\Warrants\" />
   </ItemGroup>
 
 </Project>
