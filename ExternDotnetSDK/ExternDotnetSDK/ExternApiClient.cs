@@ -13,12 +13,12 @@ using Kontur.Extern.Client.Clients.Organizations;
 
 namespace Kontur.Extern.Client
 {
-    public class KeApiClient : IKeApiClient
+    public class ExternApiClient : IExternApiClient
     {
         private readonly ILogger iLog;
         private readonly IRequestSender requestSender;
 
-        public KeApiClient(
+        public ExternApiClient(
             string apiKey,
             IAuthenticationProvider authenticationProvider,
             string baseAddress,
@@ -32,14 +32,14 @@ namespace Kontur.Extern.Client
             InitializeClients();
         }
 
-        public KeApiClient(string apiKey, IAuthenticationProvider authenticationProvider, Uri baseAddress, ILogger logger = null)
+        public ExternApiClient(string apiKey, IAuthenticationProvider authenticationProvider, Uri baseAddress, ILogger logger = null)
         {
             requestSender = new RequestSender(authenticationProvider, apiKey, new HttpClient {BaseAddress = baseAddress});
             iLog = logger ?? new SilentLogger();
             InitializeClients();
         }
 
-        public KeApiClient(IRequestSender requestSender, ILogger logger = null)
+        public ExternApiClient(IRequestSender requestSender, ILogger logger = null)
         {
             this.requestSender = requestSender;
             iLog = logger ?? new SilentLogger();

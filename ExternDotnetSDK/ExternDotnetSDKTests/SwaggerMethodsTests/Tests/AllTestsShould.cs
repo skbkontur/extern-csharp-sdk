@@ -21,7 +21,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
                 Data = new JsonSerializer().Deserialize<EnvironmentData>(reader);
         }
 
-        protected KeApiClient Client;
+        protected ExternApiClient Client;
         protected Account Account;
 
         [OneTimeSetUp]
@@ -37,7 +37,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         [OneTimeTearDown]
         public virtual async Task TearDown() => await Client.Accounts.DeleteAccountAsync(Account.Id);
 
-        protected void InitializeClient() => Client = new KeApiClient(
+        protected void InitializeClient() => Client = new ExternApiClient(
             Data.ApiKey,
             new AuthenticationProvider(Data.Login, Data.Password, Data.AuthBaseAddress),
             Data.BaseAddress);

@@ -9,7 +9,7 @@ using Kontur.Extern.Client.Clients.Organizations;
 namespace Kontur.Extern.Client
 {
     //todo Сделать нормальные тесты для всех методов всех реализованных подклиентов этого интерфейса.
-    public interface IKeApiClient
+    public interface IExternApiClient
     {
         IAccountClient Accounts { get; }
         IDocflowsClient Docflows { get; }
