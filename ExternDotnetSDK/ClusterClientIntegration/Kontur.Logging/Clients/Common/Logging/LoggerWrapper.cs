@@ -34,7 +34,7 @@ namespace Kontur.Extern.Client.Vostok.Kontur.Logging.Clients.Common.Logging
         {
             var methodName = messageType == LogMessageType.Trace ? "Debug" : messageType.ToString();
             var isEnabledInfo = iLogType.GetProperty($"Is{methodName}Enabled", typeof (bool));
-            if (isEnabledInfo != null && (bool)isEnabledInfo.GetValue(iLog))
+            if (isEnabledInfo != null && (bool) isEnabledInfo.GetValue(iLog))
                 iLogType.GetMethod(methodName, methodParameters.Select(x => x.GetType()).ToArray())
                     ?.Invoke(iLog, methodParameters);
         }

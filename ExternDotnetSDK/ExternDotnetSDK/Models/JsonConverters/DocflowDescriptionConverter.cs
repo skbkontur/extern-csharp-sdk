@@ -32,7 +32,7 @@ namespace Kontur.Extern.Client.Models.JsonConverters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            var jObject = (JObject)JToken.ReadFrom(reader);
+            var jObject = (JObject) JToken.ReadFrom(reader);
             var tokens = jObject.Children().ToArray();
             var description = FindCorrectDescription(tokens);
             serializer.Populate(jObject.CreateReader(), description);
@@ -59,6 +59,7 @@ namespace Kontur.Extern.Client.Models.JsonConverters
                 if (correctTypeFound)
                     return pair.Value();
             }
+
             throw new ArgumentOutOfRangeException();
         }
     }

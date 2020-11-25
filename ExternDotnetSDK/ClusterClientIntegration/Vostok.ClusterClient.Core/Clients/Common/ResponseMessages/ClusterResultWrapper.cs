@@ -17,14 +17,14 @@ namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.R
         public ClusterResultWrapper(ClusterResult result) => this.result = result;
 
         public HttpContent Content => result.Response.HasStream
-            ? (HttpContent)new StreamContent(result.Response.Stream)
+            ? (HttpContent) new StreamContent(result.Response.Stream)
             : new ByteArrayContent(result.Response.Content.ToArray());
 
         public Dictionary<string, string> Headers => result.Response.HasHeaders
             ? result.Response.Headers.ToDictionary(x => x.Name, x => x.Value)
             : new Dictionary<string, string>();
 
-        public HttpStatusCode StatusCode => (HttpStatusCode)(int)result.Response.Code;
+        public HttpStatusCode StatusCode => (HttpStatusCode) (int) result.Response.Code;
         public IRequestMessage Request => new RequestWrapper(result.Request);
         public string ReasonPhrase => $"{result.Status.ToString()} : {result.Response.Code.ToString()}";
 

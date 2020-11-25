@@ -21,7 +21,7 @@ namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.R
             request.Content != null
                 ? new ByteArrayContent(request.Content.ToArray())
                 : request.StreamContent != null
-                    ? (HttpContent)new StreamContent(request.StreamContent.Stream)
+                    ? (HttpContent) new StreamContent(request.StreamContent.Stream)
                     : request.CompositeContent != null
                         ? new ByteArrayContent(request.CompositeContent.Parts.SelectMany(x => x.ToArray()).ToArray())
                         : new StringContent(string.Empty);
