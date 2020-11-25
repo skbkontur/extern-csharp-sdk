@@ -5,7 +5,7 @@ using Kontur.Extern.Client.Models.Drafts.Requests;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.OtherTests
+namespace Kontur.Extern.SDK.Tests.CommonTests
 {
     [TestFixture]
     internal class KebabCaseNamingStrategyShould

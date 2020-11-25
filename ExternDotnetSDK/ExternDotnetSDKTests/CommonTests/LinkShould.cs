@@ -3,7 +3,7 @@ using FluentAssertions;
 using Kontur.Extern.Client.Models.Common;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.OtherTests
+namespace Kontur.Extern.SDK.Tests.CommonTests
 {
     [TestFixture]
     internal class LinkShould

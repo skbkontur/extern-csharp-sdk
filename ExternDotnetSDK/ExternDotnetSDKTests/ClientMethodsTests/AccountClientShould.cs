@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
+namespace Kontur.Extern.SDK.Tests.ClientMethodsTests
 {
     [TestFixture]
     internal class AccountClientShould : AllTestsShould

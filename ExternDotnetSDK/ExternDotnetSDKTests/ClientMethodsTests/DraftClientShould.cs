@@ -8,7 +8,7 @@ using Kontur.Extern.Client.Models.Drafts.Requests;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
+namespace Kontur.Extern.SDK.Tests.ClientMethodsTests
 {
     [TestFixture]
     internal class DraftClientShould : AllTestsShould

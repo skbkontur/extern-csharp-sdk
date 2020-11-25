@@ -4,7 +4,7 @@ using Kontur.Extern.Client.Models.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.OtherTests
+namespace Kontur.Extern.SDK.Tests.CommonTests
 {
     internal class UrnShould
     {

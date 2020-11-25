@@ -1,4 +1,4 @@
-﻿namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Common
+﻿namespace Kontur.Extern.SDK.Tests.Infrastructure
 {
     internal class EnvironmentData
     {

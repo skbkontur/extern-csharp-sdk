@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 #pragma warning disable 1998
 
-namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
+namespace Kontur.Extern.SDK.Tests.ClientMethodsTests
 {
     [TestFixture]
     internal class AuthenticationProviderShould : AllTestsShould

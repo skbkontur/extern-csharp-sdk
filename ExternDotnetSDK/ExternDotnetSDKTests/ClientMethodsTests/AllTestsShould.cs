@@ -1,12 +1,13 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using Kontur.Extern.Client;
 using Kontur.Extern.Client.Clients.Authentication;
 using Kontur.Extern.Client.Models.Accounts;
-using Kontur.Extern.Client.Tests.SwaggerMethodsTests.Common;
+using Kontur.Extern.SDK.Tests.Infrastructure;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
+namespace Kontur.Extern.SDK.Tests.ClientMethodsTests
 {
     [TestFixture]
     internal class AllTestsShould
