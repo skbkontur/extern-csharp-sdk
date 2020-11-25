@@ -24,11 +24,10 @@ namespace Kontur.Extern.Client.Models.Errors
         public new Urn Id { get; set; }
         public new HttpStatusCode StatusCode { get; set; }
         public new string Message { get; set; }
-        public new string TrackId { get; set; }
         public string TraceId { get; set; }
         public new Dictionary<string, string> Properties { get; set; }
 
         public override string ToString() =>
-            $"[id: \"{Id}\", status: {StatusCode}, track-id: \"{TrackId}\", trace-id: \"{TraceId}\"]";
+            $"[id: \"{Id}\", status: {StatusCode}, trace-id: \"{TraceId}\"]";
     }
 }

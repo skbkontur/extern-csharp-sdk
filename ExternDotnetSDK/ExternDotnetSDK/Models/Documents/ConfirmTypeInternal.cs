@@ -1,4 +1,5 @@
-﻿namespace Kontur.Extern.Client.Models.Documents
+﻿// ReSharper disable All
+namespace Kontur.Extern.Client.Models.Documents
 {
     public enum ConfirmTypeInternal
     {
