@@ -25,10 +25,8 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         [Test]
         public void CreateExternAccountIndividualTest()
         {
-            // TODO uncomment below to test the method and replace null with proper value
             //CreateExternAccountIndividualRequestDto request = null;
             //var response = instance.CreateExternAccountIndividual(request);
-            //Assert.IsInstanceOf<CreateExternAccountResponseDto> (response, "response is CreateExternAccountResponseDto");
         }
 
         /// <summary>
@@ -37,10 +35,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         [Test]
         public void CreateExternAccountOrgTest()
         {
-            // TODO uncomment below to test the method and replace null with proper value
             // var response = await instance.CreateExternAccountOrgAsync();
-            // Assert.IsInstanceOf<CreateExternAccountResponseDto>(response.Data, "response is CreateExternAccountResponseDto");
-            // Assert.AreEqual(response.Data, HttpStatusCode.OK);
         }
 
         /// <summary>
@@ -51,8 +46,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         {
             var generateCertificateRequest = new GenerateCertificateRequest("183501166447", "525601001", "Romashka");
             var response = await instance.GenerateCertificateAsync(generateCertificateRequest);
-            Assert.IsInstanceOf<CertificateAndPrivateKey>(response.Data, "response is CertificateAndPrivateKey");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         /// <summary>
@@ -61,10 +55,8 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         [Test]
         public void GenerateCuLetterTest()
         {
-            // TODO uncomment below to test the method and replace null with proper value
             //GenerateCuLetterRequest generateCuLetterRequest = null;
             //var response = instance.GenerateCuLetter(generateCuLetterRequest);
-            //Assert.IsInstanceOf<Docflow> (response, "response is Docflow");
         }
 
         /// <summary>
@@ -73,10 +65,8 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         [Test]
         public void GenerateDemandTest()
         {
-            // TODO uncomment below to test the method and replace null with proper value
             //GenerateDemandRequest generateDemandRequest = null;
             //var response = instance.GenerateDemand(generateDemandRequest);
-            //Assert.IsInstanceOf<Docflow> (response, "response is Docflow");
         }
 
         /// <summary>
@@ -85,10 +75,8 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         [Test]
         public void GenerateDocflowsSuiteTest()
         {
-            // TODO uncomment below to test the method and replace null with proper value
             //GenerateDocflowsSuiteRequest generateDocflowsSuiteRequest = null;
             //var response = instance.GenerateDocflowsSuite(generateDocflowsSuiteRequest);
-            //Assert.IsInstanceOf<DocflowsSuite> (response, "response is DocflowsSuite");
         }
 
         /// <summary>
@@ -97,10 +85,8 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         [Test]
         public void GenerateFnsTest()
         {
-            // TODO uncomment below to test the method and replace null with proper value
             // var fnsReportRequest = new GenerateFnsReportRequest();
             // var response = await instance.GenerateFnsAsync(fnsReportRequest);
-            // Assert.IsInstanceOf<Docflow>(response, "response is Docflow");
             // Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
 
@@ -112,8 +98,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         {
             var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new Certificate(CertificateContent)));
             var response = await instance.GenerateFufEnvdAsync(generateFufRequest);
-            Assert.IsInstanceOf<string>(response.Data, "response is string");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         /// <summary>
@@ -124,8 +109,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         {
             var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new Certificate(CertificateContent)));
             var response = await instance.GenerateFufNdsWithAttachmentsAsync(generateFufRequest);
-            Assert.IsInstanceOf<NdsWithAttachments>(response.Data, "response is NdsWithAttachments");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         /// <summary>
@@ -136,8 +120,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         {
             var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new Certificate(CertificateContent)));
             var response = await instance.GenerateFufProfitTaxAsync(generateFufRequest);
-            Assert.IsInstanceOf<string>(response.Data, "response is string");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         /// <summary>
@@ -148,8 +131,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         {
             var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new Certificate(CertificateContent)));
             var response = await instance.GenerateFufSschAsync(generateFufRequest);
-            Assert.IsInstanceOf<string>(response.Data, "response is string");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         /// <summary>
@@ -159,8 +141,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         public async Task GenerateXmlCalendarTest()
         {
             var response = await instance.GenerateXmlCalendarAsync();
-            Assert.IsInstanceOf<XmlCalendar>(response.Data, "response is XmlCalendar");
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         /// Test GetConfirmationCode
@@ -170,7 +151,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         public void GetUnknownConfirmationCodeTest()
         {
             var ex = Assert.ThrowsAsync<ApiException>(async () => await instance.GetConfirmationCodeAsync("12345"));
-            Assert.AreEqual(ex.ErrorCode, 400);
+            Assert.AreEqual(400, ex.ErrorCode);
         }
     }
 }
