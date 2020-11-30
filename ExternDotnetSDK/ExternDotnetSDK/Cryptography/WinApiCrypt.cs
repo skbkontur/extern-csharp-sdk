@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Kontur.Extern.Client.Cryptography
 {
-    public class WinApiCrypt : ICrypt
+    internal class WinApiCrypt : ICrypt
     {
         private static readonly bool isWin2000 = Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor == 0;
 
@@ -42,12 +42,6 @@ namespace Kontur.Extern.Client.Cryptography
             return cert;
         }
 
-        /// <summary>
-        /// Проверка подписи
-        /// </summary>
-        /// <param name="content">Подписанные данные</param>
-        /// <param name="signatures">Содержимое подписи</param>
-        /// <returns>Список сертификатов из подписи</returns>
         public List<byte[]> VerifySignature(byte[] content, byte[] signatures)
         {
             GCHandle contentHandle = GCHandle.Alloc(content, GCHandleType.Pinned);
@@ -78,12 +72,6 @@ namespace Kontur.Extern.Client.Cryptography
             }
         }
 
-        /// <summary>
-        /// Подписывание данных
-        /// </summary>
-        /// <param name="content">Содержимое</param>
-        /// <param name="certificateContent">Содержимое сертификата</param>
-        /// <returns>Подпись</returns>
         public byte[] Sign(byte[] content, byte[] certificateContent)
         {
             var certificate = CertificateWithPrivateKeyFinder.GetCertificateWithPrivateKey(certificateContent);
