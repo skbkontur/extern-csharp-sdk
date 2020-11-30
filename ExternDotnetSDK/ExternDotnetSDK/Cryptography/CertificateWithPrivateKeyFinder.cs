@@ -6,14 +6,14 @@ using System.Text;
 
 namespace Kontur.Extern.Client.Cryptography
 {
-    public static class CertificateWithPrivateKeyFinder
+    internal static class CertificateWithPrivateKeyFinder
     {
         /// <summary>
         /// Поиск сертификата с закрытым ключом по содержимому
         /// </summary>
         /// <param name="certificateContent">Содержимое сертификата</param>
         /// <returns>Указатель на сертификат</returns>
-        public static IntPtr GetCertificateWithPrivateKey(byte[] certificateContent)
+        internal static IntPtr GetCertificateWithPrivateKey(byte[] certificateContent)
         {
             IntPtr signerCertificate = Api.CertCreateCertificateContext(Api.ENCODING, certificateContent, certificateContent.Length);
             return GetCertificateWithPrivateKeyInternal(signerCertificate);
