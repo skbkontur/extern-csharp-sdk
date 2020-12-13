@@ -65,7 +65,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
             urn.Equals(urnParent).Should().BeFalse();
             (urn == urnChild).Should().BeFalse();
             urn.Equals(null).Should().BeFalse();
-            (urn == default(Urn)).Should().BeFalse();
+            (urn == default).Should().BeFalse();
         }
 
         [Test]
