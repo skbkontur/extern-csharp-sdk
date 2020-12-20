@@ -10,7 +10,7 @@ namespace Kontur.Extern.Client.Models.JsonConverters
                 .Concat(
                     str.Select(
                         (x, i) => i > 0 && char.IsUpper(x)
-                            ? "-" + x.ToString()
+                            ? "-" + x
                             : x.ToString()))
                 .ToLower();
         }
