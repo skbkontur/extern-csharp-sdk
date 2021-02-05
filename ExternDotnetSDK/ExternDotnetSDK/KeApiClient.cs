@@ -3,6 +3,7 @@ using System.Net.Http;
 using Kontur.Extern.Client.Clients.Accounts;
 using Kontur.Extern.Client.Clients.Authentication;
 using Kontur.Extern.Client.Clients.Common.Logging;
+using Kontur.Extern.Client.Clients.Common.Requests;
 using Kontur.Extern.Client.Clients.Common.RequestSenders;
 using Kontur.Extern.Client.Clients.Docflows;
 using Kontur.Extern.Client.Clients.Drafts;
@@ -17,6 +18,7 @@ namespace Kontur.Extern.Client
     {
         private readonly ILogger iLog;
         private readonly IRequestSender requestSender;
+        private readonly IRequestBodySerializer requestBodySerializer;
 
         public KeApiClient(
             string apiKey,
@@ -28,6 +30,7 @@ namespace Kontur.Extern.Client
                 authenticationProvider,
                 apiKey,
                 new HttpClient {BaseAddress = new Uri(baseAddress)});
+            requestBodySerializer = new RequestBodySerializer();
             iLog = logger ?? new SilentLogger();
             InitializeClients();
         }
@@ -56,7 +59,7 @@ namespace Kontur.Extern.Client
 
         private void InitializeClients()
         {
-            Accounts = new AccountClient(iLog, requestSender);
+            Accounts = new AccountClient(iLog, requestSender, requestBodySerializer);
             Docflows = new DocflowsClient(iLog, requestSender);
             Drafts = new DraftClient(iLog, requestSender);
             Events = new EventsClient(iLog, requestSender);

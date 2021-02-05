@@ -29,9 +29,10 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         {
             InitializeClient();
             Account = await Client.Accounts.CreateAccountAsync(
-                "1754462785",
-                "515744582",
-                "TEST ACCOUNT").ConfigureAwait(false);
+                    "1754462785",
+                    "515744582",
+                    "TEST ACCOUNT")
+                .ConfigureAwait(false);
         }
 
         [OneTimeTearDown]
