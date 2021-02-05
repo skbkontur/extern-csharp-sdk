@@ -9,6 +9,7 @@ using Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.Respo
 using Newtonsoft.Json;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Core.Model;
+using Request = Kontur.Extern.Client.Clients.Common.Requests.Request;
 
 namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.RequestSenders
 {
@@ -26,6 +27,11 @@ namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.R
         public IAuthenticationProvider AuthenticationProvider { get; }
         public string ApiKey { get; }
 
+        public Task<IResponseMessage> SendJsonAsync(Request request, TimeSpan? timeout = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IResponseMessage> SendAsync(
             HttpMethod method,
             string uriPath,
@@ -38,14 +44,14 @@ namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.R
             return new ClusterResultWrapper(response);
         }
 
-        private async Task<Request> CreateRequest(
+        private async Task<global::Vostok.Clusterclient.Core.Model.Request> CreateRequest(
             HttpMethod method,
             string uriPath,
             Dictionary<string, object> uriQueryParams,
             object content,
             TimeSpan? timeout)
         {
-            var request = new Request(
+            var request = new global::Vostok.Clusterclient.Core.Model.Request(
                     method.ToString().ToUpperInvariant(),
                     GetFullUri(uriPath, uriQueryParams),
                     new Content(Convert.FromBase64String(JsonConvert.SerializeObject(content))))

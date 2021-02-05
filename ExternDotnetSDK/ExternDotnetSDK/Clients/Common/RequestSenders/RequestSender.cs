@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Clients.Authentication;
+using Kontur.Extern.Client.Clients.Common.Requests;
 using Kontur.Extern.Client.Clients.Common.ResponseMessages;
 using Newtonsoft.Json;
 
@@ -23,6 +24,49 @@ namespace Kontur.Extern.Client.Clients.Common.RequestSenders
 
         public IAuthenticationProvider AuthenticationProvider { get; }
         public string ApiKey { get; }
+
+        public async Task<IResponseMessage> SendJsonAsync(Request request, TimeSpan? timeout = null)
+        {
+            var httpRequestMessage = new HttpRequestMessage(ConvertHttpMethod(request.Method), request.Url);
+            await AddAuthHeaders(httpRequestMessage).ConfigureAwait(false);
+            AddJsonContent(httpRequestMessage, request);
+            if (timeout != null)
+                httpRequestMessage.Headers.Add(SenderConstants.TimeoutHeader, timeout.Value.ToString("c"));
+            var httpResponseMessage = await client.SendAsync(httpRequestMessage).ConfigureAwait(false);
+            return new ResponseMessage(httpResponseMessage);
+        }
+
+        private async Task AddAuthHeaders(HttpRequestMessage httpRequestMessage)
+        {
+            var sessionId = await AuthenticationProvider.GetSessionId().ConfigureAwait(false);
+            httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue(SenderConstants.AuthSidHeader, sessionId);
+            httpRequestMessage.Headers.Add(SenderConstants.ApiKeyHeader, ApiKey);
+        }
+
+        private void AddJsonContent(HttpRequestMessage httpRequestMessage, Request request)
+        {
+            if (request.Method == RequestMethod.Get || string.IsNullOrEmpty(request.JsonContent))
+                return;
+            httpRequestMessage.Content = new StringContent(request.JsonContent);
+            httpRequestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(SenderConstants.MediaType);
+        }
+
+        private static HttpMethod ConvertHttpMethod(RequestMethod method)
+        {
+            switch (method)
+            {
+                case RequestMethod.Get:
+                    return HttpMethod.Get;
+                case RequestMethod.Post:
+                    return HttpMethod.Post;
+                case RequestMethod.Put:
+                    return HttpMethod.Put;
+                case RequestMethod.Delete:
+                    return HttpMethod.Delete;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(method), method, null);
+            }
+        }
 
         public async Task<IResponseMessage> SendAsync(
             HttpMethod method,

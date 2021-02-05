@@ -7,6 +7,7 @@ using NUnit.Framework;
 namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.All)]
     internal class AccountClientShould : AllTestsShould
     {
         [TestCase(0, 2)]
