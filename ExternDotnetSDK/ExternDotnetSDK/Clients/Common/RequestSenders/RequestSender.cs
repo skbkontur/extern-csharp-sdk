@@ -34,12 +34,12 @@ namespace Kontur.Extern.Client.Clients.Common.RequestSenders
             var request = new HttpRequestMessage(method, GetFullUri(uriPath, uriQueryParams));
             request.Headers.Authorization = new AuthenticationHeaderValue(
                 SenderConstants.AuthSidHeader,
-                await AuthenticationProvider.GetSessionId());
+                await AuthenticationProvider.GetSessionId().ConfigureAwait(false));
             request.Headers.Add(SenderConstants.ApiKeyHeader, ApiKey);
             TryAddContent(content, request);
             if (timeout != null)
                 request.Headers.Add(SenderConstants.TimeoutHeader, timeout.Value.ToString("c"));
-            return new ResponseMessage(await client.SendAsync(request));
+            return new ResponseMessage(await client.SendAsync(request).ConfigureAwait(false));
         }
 
         private static void TryAddContent(object content, HttpRequestMessage request)

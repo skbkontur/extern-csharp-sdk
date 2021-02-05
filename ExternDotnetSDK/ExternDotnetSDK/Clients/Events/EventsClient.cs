@@ -26,6 +26,6 @@ namespace Kontur.Extern.Client.Clients.Events
                     ["take"] = take,
                     ["fromId"] = fromId
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
     }
 }

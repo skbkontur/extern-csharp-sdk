@@ -33,8 +33,8 @@ namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.R
             object content = null,
             TimeSpan? timeout = null)
         {
-            var request = await CreateRequest(method, uriPath, uriQueryParams, content, timeout);
-            var response = await client.SendAsync(request, timeout: timeout);
+            var request = await CreateRequest(method, uriPath, uriQueryParams, content, timeout).ConfigureAwait(false);
+            var response = await client.SendAsync(request, timeout: timeout).ConfigureAwait(false);
             return new ClusterResultWrapper(response);
         }
 
@@ -49,7 +49,7 @@ namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.R
                     method.ToString().ToUpperInvariant(),
                     GetFullUri(uriPath, uriQueryParams),
                     new Content(Convert.FromBase64String(JsonConvert.SerializeObject(content))))
-                .WithAuthorizationHeader(SenderConstants.AuthSidHeader, await AuthenticationProvider.GetSessionId())
+                .WithAuthorizationHeader(SenderConstants.AuthSidHeader, await AuthenticationProvider.GetSessionId().ConfigureAwait(false))
                 .WithHeader(SenderConstants.ApiKeyHeader, ApiKey)
                 .WithContentTypeHeader(SenderConstants.MediaType);
             return timeout != null ? request.WithHeader(SenderConstants.TimeoutHeader, timeout.Value.ToString("c")) : request;

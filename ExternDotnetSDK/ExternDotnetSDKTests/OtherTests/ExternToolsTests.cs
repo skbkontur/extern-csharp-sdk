@@ -45,7 +45,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         public async Task GenerateCertificateTest()
         {
             var generateCertificateRequest = new GenerateCertificateRequest("183501166447", "525601001", "Romashka");
-            var response = await instance.GenerateCertificateAsync(generateCertificateRequest);
+            var response = await instance.GenerateCertificateAsync(generateCertificateRequest).ConfigureAwait(false);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -97,7 +97,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         public async Task GenerateFufEnvdTest()
         {
             var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new Certificate(CertificateContent)));
-            var response = await instance.GenerateFufEnvdAsync(generateFufRequest);
+            var response = await instance.GenerateFufEnvdAsync(generateFufRequest).ConfigureAwait(false);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -108,7 +108,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         public async Task GenerateFufNdsWithAttachmentsTest()
         {
             var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new Certificate(CertificateContent)));
-            var response = await instance.GenerateFufNdsWithAttachmentsAsync(generateFufRequest);
+            var response = await instance.GenerateFufNdsWithAttachmentsAsync(generateFufRequest).ConfigureAwait(false);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -119,7 +119,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         public async Task GenerateFufProfitTaxTest()
         {
             var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new Certificate(CertificateContent)));
-            var response = await instance.GenerateFufProfitTaxAsync(generateFufRequest);
+            var response = await instance.GenerateFufProfitTaxAsync(generateFufRequest).ConfigureAwait(false);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -130,7 +130,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         public async Task GenerateFufSschTest()
         {
             var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new Certificate(CertificateContent)));
-            var response = await instance.GenerateFufSschAsync(generateFufRequest);
+            var response = await instance.GenerateFufSschAsync(generateFufRequest).ConfigureAwait(false);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -140,7 +140,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         [Test]
         public async Task GenerateXmlCalendarTest()
         {
-            var response = await instance.GenerateXmlCalendarAsync();
+            var response = await instance.GenerateXmlCalendarAsync().ConfigureAwait(false);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -150,7 +150,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         [Test]
         public void GetUnknownConfirmationCodeTest()
         {
-            var ex = Assert.ThrowsAsync<ApiException>(async () => await instance.GetConfirmationCodeAsync("12345"));
+            var ex = Assert.ThrowsAsync<ApiException>(async () => await instance.GetConfirmationCodeAsync("12345").ConfigureAwait(false));
             Assert.AreEqual(400, ex.ErrorCode);
         }
     }
