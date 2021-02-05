@@ -27,22 +27,22 @@ namespace Kontur.Extern.Client.Clients.Docflows
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows",
                 filter?.ConvertToQueryParameters(),
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<Docflow> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<Docflow>(HttpMethod.Get, $"/v1/{accountId}/docflows/{docflowId}", timeout: timeout);
+            await client.SendRequestAsync<Docflow>(HttpMethod.Get, $"/v1/{accountId}/docflows/{docflowId}", timeout: timeout).ConfigureAwait(false);
 
         public async Task<List<Document>> GetDocumentsAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) =>
             await client.SendRequestAsync<List<Document>>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<Document> GetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null) =>
             await client.SendRequestAsync<Document>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DocflowDocumentDescription> GetDocumentDescriptionAsync(
             Guid accountId,
@@ -52,7 +52,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
             await client.SendRequestAsync<DocflowDocumentDescription>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/description",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<byte[]> GetEncryptedDocumentContentAsync(
             Guid accountId,
@@ -62,7 +62,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/encrypted-content",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<byte[]> GetDecryptedDocumentContentAsync(
             Guid accountId,
@@ -72,7 +72,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypted-content",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<List<Signature>> GetDocumentSignaturesAsync(
             Guid accountId,
@@ -82,7 +82,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
             await client.SendRequestAsync<List<Signature>>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<Signature> GetSignatureAsync(
             Guid accountId,
@@ -93,7 +93,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
             await client.SendRequestAsync<Signature>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<byte[]> GetSignatureContentAsync(
             Guid accountId,
@@ -104,7 +104,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}/content",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<ApiTaskResult<byte[]>> GetApiTaskAsync(
             Guid accountId,
@@ -115,7 +115,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
             await client.SendRequestAsync<ApiTaskResult<byte[]>>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/tasks/{apiTaskId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<ApiReplyDocument> GetDocumentReplyAsync(
             Guid accountId,
@@ -126,7 +126,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
             await client.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<string> PrintDocumentAsync(
             Guid accountId,
@@ -138,7 +138,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/print",
                 contentDto: new PrintDocumentData {Content = Convert.ToBase64String(data)},
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DecryptionInitResult> DecryptDocumentContentAsync(
             Guid accountId,
@@ -150,7 +150,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content",
                 contentDto: data,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<byte> ConfirmDocumentContentDecryptionAsync(
             Guid accountId,
@@ -169,7 +169,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
                     [nameof(code)] = code,
                     [nameof(unzip)] = unzip
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<ApiReplyDocument> GenerateDocumentReplyAsync(
             Guid accountId,
@@ -183,7 +183,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/generate-reply",
                 new Dictionary<string, object> {[nameof(documentType)] = documentType},
                 new GenerateReplyDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)},
-                timeout);
+                timeout).ConfigureAwait(false);
 
         public async Task<RecognizedMeta> RecognizeDocumentAsync(
             Guid accountId,
@@ -195,7 +195,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/recognize",
                 contentDto: Convert.ToBase64String(content),
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<Docflow> SendDocumentReplyAsync(
             Guid accountId,
@@ -208,7 +208,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/send",
                 contentDto: new SendReplyDocumentRequest {SenderIp = senderIp},
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<ApiReplyDocument> UpdateDocumentReplySignatureAsync(
             Guid accountId,
@@ -221,7 +221,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/signature",
                 contentDto: Convert.ToBase64String(signature),
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<ApiReplyDocument> UpdateDocumentReplyContentAsync(
             Guid accountId,
@@ -234,7 +234,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
                 HttpMethod.Put,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/content",
                 contentDto: Convert.ToBase64String(content),
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<SignInitResult> CloudSignDocumentReplyAsync(
             Guid accountId,
@@ -247,7 +247,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/cloud-sign",
                 new Dictionary<string, object> {[nameof(forceConfirmation)] = forceConfirmation},
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<SignResult> CloudSignConfirmDocumentReplyAsync(
             Guid accountId,
@@ -265,7 +265,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
                     [nameof(code)] = code,
                     [nameof(requestId)] = requestId
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DocflowPage> GetRelatedDocflows(
             Guid accountId,
@@ -277,6 +277,6 @@ namespace Kontur.Extern.Client.Clients.Docflows
                 HttpMethod.Get,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/related",
                 filter.ConvertToQueryParameters(),
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
     }
 }

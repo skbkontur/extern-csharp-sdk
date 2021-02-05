@@ -27,8 +27,8 @@ namespace Kontur.Extern.Client.Clients.Common
             object contentDto = null,
             TimeSpan? timeout = null)
         {
-            var response = await RequestSender.SendAsync(method, uriPath, uriQueryParams, contentDto, timeout);
-            return JsonConvert.DeserializeObject<TResult>(await response.TryGetResponseAsync(Logger));
+            var response = await RequestSender.SendAsync(method, uriPath, uriQueryParams, contentDto, timeout).ConfigureAwait(false);
+            return JsonConvert.DeserializeObject<TResult>(await response.TryGetResponseAsync(Logger).ConfigureAwait(false));
         }
 
         public async Task SendRequestAsync(
@@ -38,8 +38,8 @@ namespace Kontur.Extern.Client.Clients.Common
             object contentDto = null,
             TimeSpan? timeout = null)
         {
-            var response = await RequestSender.SendAsync(method, uriPath, uriQueryParams, contentDto, timeout);
-            await response.TryGetResponseAsync(Logger);
+            var response = await RequestSender.SendAsync(method, uriPath, uriQueryParams, contentDto, timeout).ConfigureAwait(false);
+            await response.TryGetResponseAsync(Logger).ConfigureAwait(false);
         }
     }
 }

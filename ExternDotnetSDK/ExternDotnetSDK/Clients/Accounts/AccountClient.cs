@@ -28,13 +28,13 @@ namespace Kontur.Extern.Client.Clients.Accounts
                     ["skip"] = skip,
                     ["take"] = take
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<Account> GetAccountAsync(Guid accountId, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<Account>(HttpMethod.Get, $"/v1/{accountId}", timeout: timeout);
+            await client.SendRequestAsync<Account>(HttpMethod.Get, $"/v1/{accountId}", timeout: timeout).ConfigureAwait(false);
 
         public async Task DeleteAccountAsync(Guid accountId, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}", timeout: timeout);
+            await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}", timeout: timeout).ConfigureAwait(false);
 
         public async Task<Account> CreateAccountAsync(
             string inn,
@@ -50,7 +50,7 @@ namespace Kontur.Extern.Client.Clients.Accounts
                     Kpp = kpp,
                     OrganizationName = organizationName
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<CertificateList> GetAccountCertificatesAsync(
             Guid accountId,
@@ -67,7 +67,7 @@ namespace Kontur.Extern.Client.Clients.Accounts
                     ["take"] = take,
                     ["forAllUsers"] = forAllUsers
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<WarrantList> GetAccountWarrantsAsync(
             Guid accountId,
@@ -84,6 +84,6 @@ namespace Kontur.Extern.Client.Clients.Accounts
                     ["take"] = take,
                     ["forAllUsers"] = forAllUsers
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
     }
 }

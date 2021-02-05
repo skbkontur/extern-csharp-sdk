@@ -35,15 +35,15 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         [Test]
         public void GetSessionId_WithValidParameters()
         {
-            Assert.DoesNotThrowAsync(async () => await goodProvider.GetSessionId());
+            Assert.DoesNotThrowAsync(async () => await goodProvider.GetSessionId().ConfigureAwait(false));
         }
 
         [Test]
         public void FailToGetSessionId_WithBadParameters()
         {
-            Assert.ThrowsAsync<HttpRequestException>(async () => await providerWithBadLogin.GetSessionId());
-            Assert.ThrowsAsync<HttpRequestException>(async () => await providerWithBadPassword.GetSessionId());
-            Assert.ThrowsAsync<HttpRequestException>(async () => await providerWithBadAuthBaseAddress.GetSessionId());
+            Assert.ThrowsAsync<HttpRequestException>(async () => await providerWithBadLogin.GetSessionId().ConfigureAwait(false));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await providerWithBadPassword.GetSessionId().ConfigureAwait(false));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await providerWithBadAuthBaseAddress.GetSessionId().ConfigureAwait(false));
         }
     }
 }

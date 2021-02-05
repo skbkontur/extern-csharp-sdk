@@ -28,13 +28,13 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public override async Task SetUp()
         {
             InitializeClient();
-            Account = (await Client.Accounts.GetAccountsAsync(0, 1)).Accounts[0];
-            page = await Client.Docflows.GetDocflowsAsync(Account.Id);
+            Account = (await Client.Accounts.GetAccountsAsync(0, 1).ConfigureAwait(false)).Accounts[0];
+            page = await Client.Docflows.GetDocflowsAsync(Account.Id).ConfigureAwait(false);
             docflow = page.DocflowsPageItem[0];
-            docflowDocuments = await Client.Docflows.GetDocumentsAsync(Account.Id, docflow.Id);
+            docflowDocuments = await Client.Docflows.GetDocumentsAsync(Account.Id, docflow.Id).ConfigureAwait(false);
             document = docflowDocuments[0];
-            signature = (await Client.Docflows.GetDocumentSignaturesAsync(Account.Id, docflow.Id, document.Id))[0];
-            certificate = (await Client.Accounts.GetAccountCertificatesAsync(Account.Id, 0, 1)).Certificates[0];
+            signature = (await Client.Docflows.GetDocumentSignaturesAsync(Account.Id, docflow.Id, document.Id).ConfigureAwait(false))[0];
+            certificate = (await Client.Accounts.GetAccountCertificatesAsync(Account.Id, 0, 1).ConfigureAwait(false)).Certificates[0];
         }
 
         [OneTimeTearDown]
@@ -50,60 +50,60 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
                 Take = 1,
                 InnKpp = "wrong innKpp"
             };
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Docflows.GetDocflowsAsync(Account.Id, badFilter));
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Docflows.GetDocflowsAsync(badId));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Docflows.GetDocflowsAsync(Account.Id, badFilter).ConfigureAwait(false));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Docflows.GetDocflowsAsync(badId).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToGetSingleDocflow_WithBadParameters()
         {
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Docflows.GetDocflowAsync(Account.Id, badId));
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Docflows.GetDocflowAsync(badId, docflow.Id));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Docflows.GetDocflowAsync(Account.Id, badId).ConfigureAwait(false));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Docflows.GetDocflowAsync(badId, docflow.Id).ConfigureAwait(false));
         }
 
         [Test]
         public void GetSingleDocflow_WithValidParameters()
         {
-            Assert.DoesNotThrowAsync(async () => await Client.Docflows.GetDocflowAsync(Account.Id, docflow.Id));
+            Assert.DoesNotThrowAsync(async () => await Client.Docflows.GetDocflowAsync(Account.Id, docflow.Id).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToGetDocflowDocuments_WithBadParameters()
         {
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Docflows.GetDocumentsAsync(Account.Id, badId));
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Docflows.GetDocumentsAsync(badId, docflow.Id));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Docflows.GetDocumentsAsync(Account.Id, badId).ConfigureAwait(false));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Docflows.GetDocumentsAsync(badId, docflow.Id).ConfigureAwait(false));
         }
 
         [Test]
         public void GetSingleDocument_WithValidParameters()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.Docflows.GetDocumentAsync(Account.Id, docflow.Id, document.Id));
+                async () => await Client.Docflows.GetDocumentAsync(Account.Id, docflow.Id, document.Id).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToGetSingleDocument_WithBadParameters()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetDocumentAsync(badId, docflow.Id, document.Id));
+                async () => await Client.Docflows.GetDocumentAsync(badId, docflow.Id, document.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetDocumentAsync(Account.Id, badId, document.Id));
+                async () => await Client.Docflows.GetDocumentAsync(Account.Id, badId, document.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetDocumentAsync(Account.Id, docflow.Id, badId));
+                async () => await Client.Docflows.GetDocumentAsync(Account.Id, docflow.Id, badId).ConfigureAwait(false));
         }
 
         [Test]
         public void GetDocumentDescription_WithValidParameters()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.Docflows.GetDocumentDescriptionAsync(Account.Id, docflow.Id, document.Id));
+                async () => await Client.Docflows.GetDocumentDescriptionAsync(Account.Id, docflow.Id, document.Id).ConfigureAwait(false));
         }
 
         [Test]
         public void GetDocumentEncryptedContent_WhenItExists()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.Docflows.GetEncryptedDocumentContentAsync(Account.Id, docflow.Id, document.Id));
+                async () => await Client.Docflows.GetEncryptedDocumentContentAsync(Account.Id, docflow.Id, document.Id).ConfigureAwait(false));
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         {
             var documentId = docflowDocuments[4].Id;
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetEncryptedDocumentContentAsync(Account.Id, docflow.Id, documentId));
+                async () => await Client.Docflows.GetEncryptedDocumentContentAsync(Account.Id, docflow.Id, documentId).ConfigureAwait(false));
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         {
             var documentId = docflowDocuments[4].Id;
             Assert.DoesNotThrowAsync(
-                async () => await Client.Docflows.GetDecryptedDocumentContentAsync(Account.Id, docflow.Id, documentId));
+                async () => await Client.Docflows.GetDecryptedDocumentContentAsync(Account.Id, docflow.Id, documentId).ConfigureAwait(false));
         }
 
         [Test]
@@ -127,51 +127,51 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         {
             var documentId = docflowDocuments[2].Id;
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetEncryptedDocumentContentAsync(Account.Id, docflow.Id, documentId));
+                async () => await Client.Docflows.GetEncryptedDocumentContentAsync(Account.Id, docflow.Id, documentId).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToGetSignatures_WithBadParameters()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetDocumentSignaturesAsync(badId, docflow.Id, document.Id));
+                async () => await Client.Docflows.GetDocumentSignaturesAsync(badId, docflow.Id, document.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetDocumentSignaturesAsync(Account.Id, badId, document.Id));
+                async () => await Client.Docflows.GetDocumentSignaturesAsync(Account.Id, badId, document.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetDocumentSignaturesAsync(Account.Id, docflow.Id, badId));
+                async () => await Client.Docflows.GetDocumentSignaturesAsync(Account.Id, docflow.Id, badId).ConfigureAwait(false));
         }
 
         [Test]
         public void GetSingleSignature_WithValidParameters()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.Docflows.GetSignatureAsync(Account.Id, docflow.Id, document.Id, signature.Id));
+                async () => await Client.Docflows.GetSignatureAsync(Account.Id, docflow.Id, document.Id, signature.Id).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToGetSingleSignature_WithBadParameters()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetSignatureAsync(badId, docflow.Id, document.Id, signature.Id));
+                async () => await Client.Docflows.GetSignatureAsync(badId, docflow.Id, document.Id, signature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetSignatureAsync(Account.Id, badId, document.Id, signature.Id));
+                async () => await Client.Docflows.GetSignatureAsync(Account.Id, badId, document.Id, signature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetSignatureAsync(Account.Id, docflow.Id, badId, signature.Id));
+                async () => await Client.Docflows.GetSignatureAsync(Account.Id, docflow.Id, badId, signature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetSignatureAsync(Account.Id, docflow.Id, document.Id, badId));
+                async () => await Client.Docflows.GetSignatureAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToGetSignatureContent_WithBadParameters()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetSignatureContentAsync(badId, docflow.Id, document.Id, signature.Id));
+                async () => await Client.Docflows.GetSignatureContentAsync(badId, docflow.Id, document.Id, signature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetSignatureContentAsync(Account.Id, badId, document.Id, signature.Id));
+                async () => await Client.Docflows.GetSignatureContentAsync(Account.Id, badId, document.Id, signature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetSignatureContentAsync(Account.Id, docflow.Id, badId, signature.Id));
+                async () => await Client.Docflows.GetSignatureContentAsync(Account.Id, docflow.Id, badId, signature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetSignatureContentAsync(Account.Id, docflow.Id, document.Id, badId));
+                async () => await Client.Docflows.GetSignatureContentAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
         }
 
         [Test]
@@ -182,28 +182,28 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
                     Account.Id,
                     docflow.Id,
                     document.Id,
-                    signature.Id));
+                    signature.Id).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToGetApiTask_WithBadApiTaskId()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetApiTaskAsync(Account.Id, docflow.Id, document.Id, badId));
+                async () => await Client.Docflows.GetApiTaskAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToGetDocumentReply_WithBadReplyId()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetDocumentReplyAsync(Account.Id, docflow.Id, document.Id, badId));
+                async () => await Client.Docflows.GetDocumentReplyAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToPrintDocument_WhenDocumentPrintUnsupported()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.PrintDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] {0}));
+                async () => await Client.Docflows.PrintDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] {0}).ConfigureAwait(false));
         }
 
         [Test]
@@ -214,7 +214,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
                     Account.Id,
                     docflow.Id,
                     document.Id,
-                    new DecryptDocumentRequestData {CertificateBase64 = "bad cert"}));
+                    new DecryptDocumentRequestData {CertificateBase64 = "bad cert"}).ConfigureAwait(false));
         }
 
         [Test]
@@ -229,42 +229,42 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
                     docflow.Id,
                     document.Id,
                     goodUrn,
-                    goodContent));
+                    goodContent).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Docflows.GenerateDocumentReplyAsync(
                     Account.Id,
                     Guid.Empty,
                     document.Id,
                     goodUrn,
-                    goodContent));
+                    goodContent).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Docflows.GenerateDocumentReplyAsync(
                     Account.Id,
                     docflow.Id,
                     Guid.Empty,
                     goodUrn,
-                    goodContent));
+                    goodContent).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Docflows.GenerateDocumentReplyAsync(
                     Account.Id,
                     docflow.Id,
                     document.Id,
                     new Urn("hello", "world"),
-                    goodContent));
+                    goodContent).ConfigureAwait(false));
             Assert.ThrowsAsync<ArgumentNullException>(
                 async () => await Client.Docflows.GenerateDocumentReplyAsync(
                     Account.Id,
                     docflow.Id,
                     document.Id,
                     goodUrn,
-                    null));
+                    null).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToRecognizeDocument_WithoutRecognitionSupport()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] {1}));
+                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] {1}).ConfigureAwait(false));
         }
 
         [Test]
@@ -272,13 +272,13 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         {
             var content = new byte[] {1};
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.RecognizeDocumentAsync(Guid.Empty, docflow.Id, document.Id, content));
+                async () => await Client.Docflows.RecognizeDocumentAsync(Guid.Empty, docflow.Id, document.Id, content).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, Guid.Empty, document.Id, content));
+                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, Guid.Empty, document.Id, content).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, docflow.Id, Guid.Empty, content));
+                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, docflow.Id, Guid.Empty, content).ConfigureAwait(false));
             Assert.ThrowsAsync<ArgumentNullException>(
-                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, docflow.Id, document.Id, null));
+                async () => await Client.Docflows.RecognizeDocumentAsync(Account.Id, docflow.Id, document.Id, null).ConfigureAwait(false));
         }
     }
 }
