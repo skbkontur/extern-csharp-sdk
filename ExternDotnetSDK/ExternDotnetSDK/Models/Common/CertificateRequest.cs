@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 
-namespace Kontur.Extern.Client.Models.Drafts.Requests
+namespace Kontur.Extern.Client.Models.Common
 {
     [DataContract]
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
@@ -11,6 +11,6 @@ namespace Kontur.Extern.Client.Models.Drafts.Requests
     {
         [DataMember]
         [Required]
-        public string Content { get; set; }
+        public byte[] Content { get; set; }
     }
 }

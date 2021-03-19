@@ -9,10 +9,10 @@ namespace Kontur.Extern.Client.Models.Documents.Data
 {
     [DataContract]
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
-    public class GenerateReplyDocumentRequestData
+    public class GenerateReplyDocumentRequest
     {
         [DataMember]
         [Required]
-        public string CertificateBase64 { get; set; }
+        public byte[] CertificateBase64 { get; set; }
     }
 }

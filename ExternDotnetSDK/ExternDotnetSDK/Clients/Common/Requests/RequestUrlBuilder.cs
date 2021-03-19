@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using JetBrains.Annotations;
 
@@ -31,6 +32,13 @@ namespace Kontur.Extern.Client.Clients.Common.Requests
         public RequestUrlBuilder AppendToQuery<T>(string key, [CanBeNull] T value)
         {
             return AppendToQuery(key, value?.ToString());
+        }
+
+        public RequestUrlBuilder AppendToQuery<T>(string key, IEnumerable<T> values)
+        {
+            foreach (var value in values)
+                AppendToQuery(key, value?.ToString());
+            return this;
         }
 
         public RequestUrlBuilder AppendToQuery(string key, [CanBeNull] string value)
