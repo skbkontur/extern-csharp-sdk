@@ -189,7 +189,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public void FailToGetApiTask_WithBadApiTaskId()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetApiTaskAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
+                async () => await Client.Docflows.GetPrintTaskAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
         }
 
         [Test]
@@ -210,11 +210,11 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public void FailToDecryptDocumentContent_WithBadCertificate()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.DecryptDocumentContentAsync(
+                () => Client.Docflows.StartCloudDecryptDocumentAsync(
                     Account.Id,
                     docflow.Id,
                     document.Id,
-                    new DecryptDocumentRequestData {CertificateBase64 = "bad cert"}).ConfigureAwait(false));
+                    new byte[] {1, 2, 3}));
         }
 
         [Test]
@@ -224,35 +224,35 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
             var goodUrn = new Urn("urn:document:business-registration-reply-receipt");
             var goodContent = Convert.FromBase64String(certificate.Content);
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                async () => await Client.Replies.GenerateReplyAsync(
                     Guid.Empty,
                     docflow.Id,
                     document.Id,
                     goodUrn,
                     goodContent).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                async () => await Client.Replies.GenerateReplyAsync(
                     Account.Id,
                     Guid.Empty,
                     document.Id,
                     goodUrn,
                     goodContent).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                async () => await Client.Replies.GenerateReplyAsync(
                     Account.Id,
                     docflow.Id,
                     Guid.Empty,
                     goodUrn,
                     goodContent).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                async () => await Client.Replies.GenerateReplyAsync(
                     Account.Id,
                     docflow.Id,
                     document.Id,
                     new Urn("hello", "world"),
                     goodContent).ConfigureAwait(false));
             Assert.ThrowsAsync<ArgumentNullException>(
-                async () => await Client.Docflows.GenerateDocumentReplyAsync(
+                async () => await Client.Replies.GenerateReplyAsync(
                     Account.Id,
                     docflow.Id,
                     document.Id,

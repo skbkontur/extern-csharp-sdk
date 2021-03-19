@@ -5,11 +5,16 @@ using Newtonsoft.Json;
 namespace Kontur.Extern.Client.Models.Documents
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
-    public class DecryptionInitResult
+    public class CloudDecryptionInitResult
     {
+        /// <summary>
+        /// Ссылка для подтверждения дешифрования
+        /// </summary>
         public Link ConfirmLink { get; set; }
+
+        /// <summary>
+        /// Идентификатор запроса, нужен для подтверждения дешифрования
+        /// </summary>
         public string RequestId { get; set; }
-        public string TaskId { get; set; }
-        public ConfirmTypeInternal ConfirmType { get; set; }
     }
 }

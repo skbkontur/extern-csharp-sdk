@@ -56,7 +56,7 @@ namespace Kontur.Extern.Client.Clients.InventoryDocflows
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/print",
-                contentDto: new PrintDocumentData {Content = Convert.ToBase64String(decryptedDocumentContent)},
+                contentDto: new PrintDocumentRequest {Content = Convert.ToBase64String(decryptedDocumentContent)},
                 timeout: timeout).ConfigureAwait(false);
 
         public async Task<byte[]> GetInventoryDocflowDocumentEncryptedContentAsync(
@@ -109,7 +109,7 @@ namespace Kontur.Extern.Client.Clients.InventoryDocflows
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/generate-reply",
                 new Dictionary<string, object> {["documentType"] = documentType},
-                new GenerateReplyDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)},
+                new GenerateReplyDocumentRequest {CertificateBase64 = certificateContent},
                 timeout).ConfigureAwait(false);
 
         public async Task<Docflow> SendDocumentReplyAsync(
@@ -234,7 +234,7 @@ namespace Kontur.Extern.Client.Clients.InventoryDocflows
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypt-content-confirm",
                 timeout: timeout).ConfigureAwait(false);
 
-        public async Task<DecryptionInitResult> DecryptDocumentContentAsync(
+        public async Task<CloudDecryptionInitResult> DecryptDocumentContentAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
@@ -242,10 +242,10 @@ namespace Kontur.Extern.Client.Clients.InventoryDocflows
             Guid documentId,
             byte[] certificateContent,
             TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DecryptionInitResult>(
+            await client.SendRequestAsync<CloudDecryptionInitResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/decrypt-content",
-                contentDto: new DecryptDocumentRequestData {CertificateBase64 = Convert.ToBase64String(certificateContent)},
+                contentDto: new DecryptDocumentRequest {CertificateBase64 = certificateContent},
                 timeout: timeout).ConfigureAwait(false);
     }
 }

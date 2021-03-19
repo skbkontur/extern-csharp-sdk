@@ -12,6 +12,7 @@ using Kontur.Extern.Client.Clients.Events;
 using Kontur.Extern.Client.Clients.InventoryDocflows;
 using Kontur.Extern.Client.Clients.Organizations;
 using Kontur.Extern.Client.Cryptography;
+using Kontur.Extern.Client.Clients.Replies;
 
 namespace Kontur.Extern.Client
 {
@@ -52,6 +53,7 @@ namespace Kontur.Extern.Client
 
         public IAccountClient Accounts { get; private set; }
         public IDocflowsClient Docflows { get; private set; }
+        public IRepliesClient Replies { get; private set; }
         public IDraftClient Drafts { get; private set; }
         public IDraftsBuilderClient DraftsBuilder { get; private set; }
         public IEventsClient Events { get; private set; }
@@ -62,7 +64,8 @@ namespace Kontur.Extern.Client
         private void InitializeClients()
         {
             Accounts = new AccountClient(iLog, requestSender, requestBodySerializer);
-            Docflows = new DocflowsClient(iLog, requestSender);
+            Docflows = new DocflowsClient(iLog, requestSender, requestBodySerializer);
+            Replies = new RepliesClient(iLog, requestSender, requestBodySerializer);
             Drafts = new DraftClient(iLog, requestSender);
             Events = new EventsClient(iLog, requestSender);
             DraftsBuilder = new DraftsBuilderClient(iLog, requestSender);

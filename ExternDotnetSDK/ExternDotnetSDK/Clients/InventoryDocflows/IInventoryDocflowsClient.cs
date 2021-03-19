@@ -149,7 +149,7 @@ namespace Kontur.Extern.Client.Clients.InventoryDocflows
             bool unzip = false,
             TimeSpan? timeout = null);
 
-        Task<DecryptionInitResult> DecryptDocumentContentAsync(
+        Task<CloudDecryptionInitResult> DecryptDocumentContentAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
