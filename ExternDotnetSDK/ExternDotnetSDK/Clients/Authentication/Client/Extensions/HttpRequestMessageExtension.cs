@@ -10,7 +10,6 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client.Extensions
 {
     internal static class HttpRequestMessageContentExtension
     {
-        [Pure]
         [NotNull]
         public static HttpRequestMessage WithContent([NotNull] this HttpRequestMessage request, [NotNull] string content)
         {
@@ -18,7 +17,6 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client.Extensions
             return request;
         }
 
-        [Pure]
         [NotNull]
         public static HttpRequestMessage WithContent([NotNull] this HttpRequestMessage request, [NotNull] Stream stream)
         {
@@ -29,13 +27,19 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client.Extensions
 
     internal static class HttpRequestMessageExtension
     {
+        public static HttpRequestMessage TrySetTimeoutHeader(this HttpRequestMessage request, TimeSpan? timeout)
+        {
+            if (timeout != null)
+                request.Headers.Add(SenderConstants.TimeoutHeader, timeout.Value.ToString("c"));
+            return request;
+        }
+
         public static HttpRequestMessage WithAcceptHeader(this HttpRequestMessage message, string value)
         {
             message.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(value));
             return message;
         }
 
-        [Pure]
         [NotNull]
         public static HttpRequestMessage WithAcceptCharsetHeader([NotNull] this HttpRequestMessage request, [NotNull] string value)
         {
@@ -43,37 +47,36 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client.Extensions
             return request;
         }
 
-        [Pure]
         [NotNull]
         public static HttpRequestMessage WithContentTypeHeader([NotNull] this HttpRequestMessage request, [NotNull] string value)
         {
             return request.WithHeader(HeaderNames.ContentType, value);
         }
 
-        [Pure]
         [NotNull]
         public static HttpRequestMessage WithAcceptCharsetHeader([NotNull] this HttpRequestMessage request, [NotNull] Encoding value)
         {
             return WithAcceptCharsetHeader(request, value.WebName);
         }
 
-        [Pure]
         [NotNull]
         public static HttpRequestMessage WithAcceptEncodingHeader([NotNull] this HttpRequestMessage request, [NotNull] string value)
         {
             return request.WithHeader(HeaderNames.AcceptEncoding, value);
         }
 
-        [Pure]
         [NotNull]
         public static HttpRequestMessage WithAuthorizationHeader([NotNull] this HttpRequestMessage request, [NotNull] string value)
         {
-            request.Headers.Authorization= new AuthenticationHeaderValue(value);
-           // return request.WithHeader(HeaderNames.Authorization, value);
-           return request;
+             return request.WithHeader(HeaderNames.Authorization, value);
         }
 
-        [Pure]
+        [NotNull]
+        public static HttpRequestMessage WithKonturApiKeyHeader([NotNull] this HttpRequestMessage request, [NotNull] string apiKey)
+        {
+            return WithHeader(request, HeaderNames.ApiKeyHeader, apiKey);
+        }
+
         [NotNull]
         public static HttpRequestMessage WithBasicAuthorizationHeader([NotNull] this HttpRequestMessage request, [NotNull] string user, [NotNull] string password)
         {
@@ -84,7 +87,8 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client.Extensions
         [NotNull]
         public static HttpRequestMessage WithHeader([NotNull] this HttpRequestMessage request, [NotNull] string name, [NotNull] string value)
         {
-            request.Headers.Add(name, value);
+            if (!string.IsNullOrEmpty(value))
+                request.Headers.Add(name, value);
             return request;
         }
     }
@@ -96,5 +100,6 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client.Extensions
         public const string AcceptEncoding = "Accept-Encoding";
         public const string ContentType = "Content-Type";
         public const string RequestTimeout = "Request-Timeout";
+        public const string ApiKeyHeader = "X-Kontur-Apikey";
     }
 }
