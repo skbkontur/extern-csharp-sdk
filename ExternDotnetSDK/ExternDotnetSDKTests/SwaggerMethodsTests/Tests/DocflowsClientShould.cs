@@ -189,7 +189,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public void FailToGetApiTask_WithBadApiTaskId()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetPrintTaskAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
+                async () => await Client.Docflows.GetPrintDocumentTaskAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
         }
 
         [Test]

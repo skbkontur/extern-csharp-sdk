@@ -150,7 +150,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
             return client.SendJsonRequestAsync<ApiTaskResult<PrintDocumentResult>>(request, timeout);
         }
 
-        public Task<ApiTaskResult<PrintDocumentResult>> GetPrintTaskAsync(
+        public Task<ApiTaskResult<PrintDocumentResult>> GetPrintDocumentTaskAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,

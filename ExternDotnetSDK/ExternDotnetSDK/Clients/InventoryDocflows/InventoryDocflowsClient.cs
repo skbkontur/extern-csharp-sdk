@@ -22,7 +22,7 @@ namespace Kontur.Extern.Client.Clients.InventoryDocflows
         public InventoryDocflowsClient(ILogger logger, IRequestSender requestSender) =>
             client = new InnerCommonClient(logger, requestSender);
 
-        public async Task<DocflowPage> GetAllInventoryDocflowsAsync(
+        public async Task<DocflowPage> GetDocflowsAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
@@ -34,7 +34,7 @@ namespace Kontur.Extern.Client.Clients.InventoryDocflows
                 filter?.ConvertToQueryParameters(),
                 timeout: timeout).ConfigureAwait(false);
 
-        public async Task<Docflow> GetInventoryDocflowAsync(
+        public async Task<Docflow> GetDocflowAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
@@ -45,18 +45,18 @@ namespace Kontur.Extern.Client.Clients.InventoryDocflows
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}",
                 timeout: timeout).ConfigureAwait(false);
 
-        public async Task<byte[]> PrintInventoryDocflowDocumentAsync(
+        public async Task<byte[]> PrintDocumentAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
             Guid inventoryId,
             Guid documentId,
-            byte[] decryptedDocumentContent,
+            byte[] contentId,
             TimeSpan? timeout = null) =>
             await client.SendRequestAsync<byte[]>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/print",
-                contentDto: new PrintDocumentRequest {Content = Convert.ToBase64String(decryptedDocumentContent)},
+                contentDto: new PrintDocumentRequest {Content = Convert.ToBase64String(contentId)},
                 timeout: timeout).ConfigureAwait(false);
 
         public async Task<byte[]> GetInventoryDocflowDocumentEncryptedContentAsync(
@@ -103,13 +103,13 @@ namespace Kontur.Extern.Client.Clients.InventoryDocflows
             Guid inventoryId,
             Guid documentId,
             Urn documentType,
-            byte[] certificateContent,
+            byte[] certificate,
             TimeSpan? timeout = null) =>
             await client.SendRequestAsync<ApiReplyDocument>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/generate-reply",
                 new Dictionary<string, object> {["documentType"] = documentType},
-                new GenerateReplyDocumentRequest {CertificateBase64 = certificateContent},
+                new GenerateReplyDocumentRequest {CertificateBase64 = certificate},
                 timeout).ConfigureAwait(false);
 
         public async Task<Docflow> SendDocumentReplyAsync(
