@@ -154,7 +154,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
         /// <param name="taskId">Идентификатор задачи</param>
         /// <param name="timeout"></param>
         /// <returns>Задача печати документа</returns>
-        Task<ApiTaskResult<PrintDocumentResult>> GetPrintTaskAsync(
+        Task<ApiTaskResult<PrintDocumentResult>> GetPrintDocumentTaskAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,

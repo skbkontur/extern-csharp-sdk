@@ -33,7 +33,7 @@ namespace Kontur.Extern.Client.Clients.Replies
         /// <param name="docflowId">Идентификатор документооборота</param>
         /// <param name="documentId">Идентификатор документа, на который формируется ответный документ</param>
         /// <param name="documentType">Тип генерируемого ответного документа</param>
-        /// <param name="certificateContent">Сертификат</param>
+        /// <param name="certificate">Сертификат</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
         Task<ApiReplyDocument> GenerateReplyAsync(
@@ -41,7 +41,7 @@ namespace Kontur.Extern.Client.Clients.Replies
             Guid docflowId,
             Guid documentId,
             Urn documentType,
-            byte[] certificateContent,
+            byte[] certificate,
             TimeSpan? timeout = null);
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Kontur.Extern.Client.Clients.Replies
         /// <param name="documentId">Идентификатор документа, на который формируется ответный документ</param>
         /// <param name="documentType">Тип генерируемого ответного документа</param>
         /// <param name="declineNoticeErrorCodes">Коды причины отправки уведомления об отказе (используется при documentType = fns534-demand-acceptance-result-negative)</param>
-        /// <param name="certificateContent">Сертификат</param>
+        /// <param name="certificate">Сертификат</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
         Task<ApiReplyDocument> GenerateReplyAsync(
@@ -61,7 +61,7 @@ namespace Kontur.Extern.Client.Clients.Replies
             Guid documentId,
             Urn documentType,
             string[] declineNoticeErrorCodes,
-            byte[] certificateContent,
+            byte[] certificate,
             TimeSpan? timeout = null);
 
         /// <summary>

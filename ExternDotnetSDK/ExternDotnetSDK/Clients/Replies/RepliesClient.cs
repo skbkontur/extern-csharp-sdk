@@ -40,12 +40,12 @@ namespace Kontur.Extern.Client.Clients.Replies
             Guid docflowId,
             Guid documentId,
             Urn documentType,
-            byte[] certificateContent,
+            byte[] certificate,
             TimeSpan? timeout = null)
         {
             var body = new GenerateReplyDocumentRequest
             {
-                CertificateBase64 = certificateContent
+                CertificateBase64 = certificate
             };
             var url = new RequestUrlBuilder($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/generate-reply")
                 .AppendToQuery("documentType", documentType)
@@ -61,12 +61,12 @@ namespace Kontur.Extern.Client.Clients.Replies
             Guid documentId,
             Urn documentType,
             string[] declineNoticeErrorCodes,
-            byte[] certificateContent,
+            byte[] certificate,
             TimeSpan? timeout = null)
         {
             var body = new GenerateReplyDocumentRequest
             {
-                CertificateBase64 = certificateContent
+                CertificateBase64 = certificate
             };
             var url = new RequestUrlBuilder($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/generate-reply")
                 .AppendToQuery("documentType", documentType)
