@@ -11,9 +11,9 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client.Extensions
     internal static class HttpRequestMessageContentExtension
     {
         [NotNull]
-        public static HttpRequestMessage WithContent([NotNull] this HttpRequestMessage request, [NotNull] string content)
+        public static HttpRequestMessage WithContent([NotNull] this HttpRequestMessage request, [NotNull] string content, string mediaType)
         {
-            request.Content = new StringContent(content, Encoding.UTF8, SenderConstants.MediaType);
+            request.Content = new StringContent(content, Encoding.UTF8, mediaType);
             return request;
         }
 

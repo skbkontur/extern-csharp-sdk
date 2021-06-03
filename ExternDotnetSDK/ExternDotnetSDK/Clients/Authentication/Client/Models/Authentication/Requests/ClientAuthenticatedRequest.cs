@@ -18,19 +18,5 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client.Models.Authenticati
         /// Gets or sets the client secret.
         /// </summary>
         public string ClientSecret { get; set; }
-
-        protected HttpRequestMessage BuildOpenIdClientAuthenticatedRequest(
-            string formContent,
-            ClientAuthenticatedRequest clientAuthenticatedRequest,
-            TimeSpan? timeout,
-            string uri = "/connect/token"
-        )
-        {
-            return new HttpRequestMessage(HttpMethod.Post, new Uri(uri, UriKind.Relative))
-                .WithAcceptHeader("application/json")
-                .WithContentTypeHeader("application/x-www-form-urlencoded")
-                .WithBasicAuthorizationHeader(clientAuthenticatedRequest.ClientId, clientAuthenticatedRequest.ClientSecret)
-                .WithContent(formContent);
-        }
     }
 }
