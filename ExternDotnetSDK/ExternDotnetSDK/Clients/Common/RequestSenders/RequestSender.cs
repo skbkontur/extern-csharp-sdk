@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Clients.Authentication;
+using Kontur.Extern.Client.Clients.Common.Requests;
+using Kontur.Extern.Client.Clients.Authentication.Providers;
 using Kontur.Extern.Client.Clients.Common.ResponseMessages;
 using Newtonsoft.Json;
 
@@ -23,6 +25,18 @@ namespace Kontur.Extern.Client.Clients.Common.RequestSenders
 
         public IAuthenticationProvider AuthenticationProvider { get; }
         public string ApiKey { get; }
+        public async Task<IResponseMessage> SendJsonAsync(Request request, TimeSpan? timeout = null)
+        {
+            await AuthenticationProvider.AuthenticateAsync().ConfigureAwait(false);
+            AuthenticationProvider.ApplyAuth(request);
+
+            var httpRequestMessage = request.ToHttpRequestMessage();
+            httpRequestMessage.Headers.Add(SenderConstants.ApiKeyHeader, ApiKey);
+            if (timeout != null)
+                httpRequestMessage.Headers.Add(SenderConstants.TimeoutHeader, timeout.Value.ToString("c"));
+            var httpResponseMessage = await client.SendAsync(httpRequestMessage).ConfigureAwait(false);
+            return new ResponseMessage(httpResponseMessage);
+        }
 
         public async Task<IResponseMessage> SendAsync(
             HttpMethod method,
@@ -31,10 +45,10 @@ namespace Kontur.Extern.Client.Clients.Common.RequestSenders
             object content = null,
             TimeSpan? timeout = null)
         {
+            await AuthenticationProvider.AuthenticateAsync();
             var request = new HttpRequestMessage(method, GetFullUri(uriPath, uriQueryParams));
-            request.Headers.Authorization = new AuthenticationHeaderValue(
-                SenderConstants.AuthSidHeader,
-                await AuthenticationProvider.GetSessionId());
+           // request.Headers.Authorization = new AuthenticationHeaderValue("Bearer ", authorizationHeader);
+          
             request.Headers.Add(SenderConstants.ApiKeyHeader, ApiKey);
             TryAddContent(content, request);
             if (timeout != null)

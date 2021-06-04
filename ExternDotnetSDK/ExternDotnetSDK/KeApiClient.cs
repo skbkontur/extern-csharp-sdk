@@ -10,6 +10,7 @@ using Kontur.Extern.Client.Clients.DraftsBuilders;
 using Kontur.Extern.Client.Clients.Events;
 using Kontur.Extern.Client.Clients.InventoryDocflows;
 using Kontur.Extern.Client.Clients.Organizations;
+using Kontur.Extern.Client.Cryptography;
 
 namespace Kontur.Extern.Client
 {
@@ -53,6 +54,7 @@ namespace Kontur.Extern.Client
         public IEventsClient Events { get; private set; }
         public IInventoryDocflowsClient InventoryDocflows { get; private set; }
         public IOrganizationsClient Organizations { get; private set; }
+        public ICrypt CryptoProvider { get; private set; }
 
         private void InitializeClients()
         {
@@ -63,6 +65,7 @@ namespace Kontur.Extern.Client
             DraftsBuilder = new DraftsBuilderClient(iLog, requestSender);
             Organizations = new OrganizationsClient(iLog, requestSender);
             InventoryDocflows = new InventoryDocflowsClient(iLog, requestSender);
+            CryptoProvider=new WinApiCrypt();
         }
     }
 }
