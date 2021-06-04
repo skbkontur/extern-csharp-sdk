@@ -1,30 +1,33 @@
 ﻿namespace Kontur.Extern.Client.Clients.Authentication.Client.Models.Authentication.Requests
 {
     /// <summary>
-    /// Request for token using password
+    /// Запрос для получения токена по средствам связки логин пароль
     /// </summary>
     /// <seealso cref="ClientAuthenticatedRequest" />
     public class PasswordTokenRequest : ClientAuthenticatedRequest
     {
         /// <summary>
-        /// Gets or sets the name of the user
+        /// Получить или установить логин пользователя
         /// </summary>
         /// <value>
-        /// The name of the user.
+        /// Логин пользователя
         /// </value>
         public string UserName { get; set; }
 
         /// <summary>
-        /// Gets or sets the password
+        /// Получить или установить пароль пользователя
         /// </summary>
         /// <value>
-        /// The password
+        /// Пароль пользователя.
         /// </value>
         public string Password { get; set; }
 
         /// <summary>
-        /// Gets or sets partial factor token for 2FA.
+        /// Получить или установить токен для двуфакторной аутентификации
         /// </summary>
+        /// <value>
+        /// Токен для 2FA.
+        /// </value>
         public string PartialFactorToken { get; set; }
 
         /// <summary>

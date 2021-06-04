@@ -1,22 +1,21 @@
-﻿using System;
-using System.Net.Http;
-using Kontur.Extern.Client.Clients.Authentication.Client.Extensions;
-
-namespace Kontur.Extern.Client.Clients.Authentication.Client.Models.Authentication.Requests
+﻿namespace Kontur.Extern.Client.Clients.Authentication.Client.Models.Authentication.Requests
 {
     /// <summary>
-    /// Request for authenticated client
+    /// Базовый запрос для аутентификации
     /// </summary>
     public abstract class ClientAuthenticatedRequest
     {
         /// <summary>
-        /// Gets or sets the client identifier.
+        /// Получить или установить идентификатор клиента
         /// </summary>
         public string ClientId { get; set; }
 
         /// <summary>
-        /// Gets or sets the client secret.
+        /// Получить или установить секрет клиента
         /// </summary>
+        /// <value>
+        /// ApiKey
+        /// </value>
         public string ClientSecret { get; set; }
     }
 }

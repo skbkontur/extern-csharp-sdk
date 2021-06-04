@@ -3,33 +3,33 @@
 namespace Kontur.Extern.Client.Clients.Authentication.Client.Models.Authentication.Requests
 {
     /// <summary>
-    /// Authentication request for certificate
+    /// Запрос для аутентификации при помощи сертификата
     /// </summary>
     /// <seealso cref="ClientAuthenticatedRequest" />
     public class CertificateAuthenticationRequest : ClientAuthenticatedRequest
     {
         /// <summary>
-        /// Gets or sets public key.
+        /// Получить или установить публичный ключ
         /// </summary>
         /// <value>
-        /// User public key for authentication.
+        /// Публичный ключ пользователя
         /// </value>
         public X509Certificate2 PublicKey { get; set; }
 
         /// <summary>
-        /// Gets or sets validate certificate.
+        /// Получить или установить значение валидации сертификата
         /// </summary>
         /// <value>
-        /// Skip validation user certificate.
+        /// Пропускать валидацию сертификата пользователя
         /// </value>
         public bool Free { get; set; }
 
         /// <summary>
-        /// Gets or sets partial factor token.
+        /// Получить или установить токен для двуфакторной аутентификации
         /// </summary>
         /// <value>
-        /// Token for process 2FA.
+        /// Токен для 2FA.
         /// </value>
-        public string PartialFactorToken { get; set; }
+        public string PartialFactorToken { get; set; } = "extern.api";
     }
 }

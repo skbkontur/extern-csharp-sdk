@@ -1,26 +1,26 @@
 ﻿namespace Kontur.Extern.Client.Clients.Authentication.Client.Models.Authentication.Requests
 {
     /// <summary>
-    /// Request for token using certificate
+    /// Запрос для получения токенов авторизации при помощи сертификата
     /// </summary>
     /// <seealso cref="ClientAuthenticatedRequest" />
     public class CertificateTokenRequest : ClientAuthenticatedRequest
     {
         /// <summary>
-        /// Gets or sets decrypted content
+        /// Получить или установить расшифрованный контент
         /// </summary>
         public byte[] DecryptedKey { get; set; }
 
         /// <summary>
-        /// Gets or sets thumbprint of user certificate
+        /// Получить или установить отпечаток сертефиката пользователя
         /// </summary>
         public string Thumbprint { get; set; }
 
         /// <summary>
-        /// Gets or sets the scope
+        /// Получить или установить scope
         /// </summary>
         /// <value>
-        /// The scope
+        /// сфера использования токена
         /// </value>
         public string Scope { get; set; }
     }

@@ -1,19 +1,22 @@
 ﻿namespace Kontur.Extern.Client.Clients.Authentication.Client.Models.Authentication.Requests
 {
     /// <summary>
-    /// Request for token using refresh_token
+    /// Запрос для аутентификации при помощи refresh token
     /// </summary>
     /// <seealso cref="ClientAuthenticatedRequest" />
     public class RefreshTokenRequest : ClientAuthenticatedRequest
     {
         /// <summary>
-        /// Gets or sets the refresh token.
+        /// Получить или установить refresh token
         /// </summary>
         public string RefreshToken { get; set; }
 
         /// <summary>
-        /// Gets or sets the scope.
+        /// Получить или установить scope
         /// </summary>
+        /// <value>
+        /// сфера использования токена
+        /// </value>
         public string Scope { get; set; }
     }
 }
