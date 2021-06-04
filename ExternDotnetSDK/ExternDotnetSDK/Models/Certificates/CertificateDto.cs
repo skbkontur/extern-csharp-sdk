@@ -27,7 +27,7 @@ namespace Kontur.Extern.Client.Models.Certificates
         public bool IsQualified { get; set; }
 
         [UsedImplicitly]
-        public string Content { get; set; }
+        public byte[] Content { get; set; }
 
         public DateTime ExpiredAt { get; set; }
 

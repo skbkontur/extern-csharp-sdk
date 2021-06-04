@@ -175,19 +175,20 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         {
             Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Drafts.CreateDraftAsync(
-                    Account.Id,
-                    new DraftMetaRequest
-                    {
-                        Payer = validDraftMetaRequest.Payer,
-                        Sender = new SenderRequest
+                        Account.Id,
+                        new DraftMetaRequest
                         {
-                            Inn = validDraftMetaRequest.Sender.Inn,
-                            IpAddress = "8.8.8.8",
-                            Kpp = validDraftMetaRequest.Sender.Kpp,
-                            Certificate = new CertificateRequest {Content = "1111"}
-                        },
-                        Recipient = validDraftMetaRequest.Recipient
-                    }).ConfigureAwait(false));
+                            Payer = validDraftMetaRequest.Payer,
+                            Sender = new SenderRequest
+                            {
+                                Inn = validDraftMetaRequest.Sender.Inn,
+                                IpAddress = "8.8.8.8",
+                                Kpp = validDraftMetaRequest.Sender.Kpp,
+                                Certificate = new CertificateRequest {Content = new byte[] {1, 2, 3}}
+                            },
+                            Recipient = validDraftMetaRequest.Recipient
+                        })
+                    .ConfigureAwait(false));
         }
 
         [Test]

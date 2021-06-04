@@ -196,7 +196,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public void FailToGetDocumentReply_WithBadReplyId()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetDocumentReplyAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
+                async () => await Client.Replies.GetReplyAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
         }
 
         [Test]
