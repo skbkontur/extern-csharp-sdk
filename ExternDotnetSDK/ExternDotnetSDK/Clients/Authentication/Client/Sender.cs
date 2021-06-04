@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Clients.Authentication.Client.Extensions;
 using Kontur.Extern.Client.Clients.Authentication.Client.Factories;
 using Kontur.Extern.Client.Clients.Common.Logging;
-using Kontur.Extern.Client.Clients.Common.RequestMessages;
 
 namespace Kontur.Extern.Client.Clients.Authentication.Client
 {
     class Sender
     {
-        //Есть желание заменить на IRequestSender но, мне не хватает там возможности добавлять хэдеры
+        //возможно нужно перевести на requestSender
         private readonly HttpClient client;
         private readonly ILogger log;
 
@@ -23,18 +20,17 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client
             this.log = log;
         }
 
-        public Task<ServiceResult<TError>> SendAsync<TError>(HttpRequestMessage request,  TimeSpan? timeout)
+        public Task<ServiceResult<TError>> SendAsync<TError>(HttpRequestMessage request, TimeSpan? timeout)
             where TError : class
         {
-            return SendAsync(request,  timeout, ServiceResultFactory<TError>.Instance);
+            return SendAsync(request, timeout, ServiceResultFactory<TError>.Instance);
         }
 
-
-        public Task<ServiceResult<TResponse, TError>> SendAsync<TResponse, TError>(HttpRequestMessage request,  TimeSpan? timeout)
+        public Task<ServiceResult<TResponse, TError>> SendAsync<TResponse, TError>(HttpRequestMessage request, TimeSpan? timeout)
             where TResponse : class
             where TError : class
         {
-            return SendAsync(request,  timeout, ServiceResultFactory<TResponse, TError>.Instance);
+            return SendAsync(request, timeout, ServiceResultFactory<TResponse, TError>.Instance);
         }
 
         private async Task<TResult> SendAsync<TResult>(
@@ -46,7 +42,6 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client
             request.TrySetTimeoutHeader(timeout);
             var clusterResult = await client.SendAsync(request)
                 .ConfigureAwait(false);
-
             switch (clusterResult.StatusCode)
             {
                 case HttpStatusCode.OK:

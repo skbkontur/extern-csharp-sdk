@@ -1,6 +1,12 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Kontur.Extern.Client.Clients.Authentication;
+using Kontur.Extern.Client.Clients.Authentication.Client;
+using Kontur.Extern.Client.Clients.Authentication.Client.Models.Authentication.Requests;
+using Kontur.Extern.Client.Clients.Authentication.Providers;
+using Kontur.Extern.Client.Clients.Authentication.TokenAuth.Kontur.Extern.Client.Clients.Authentication;
 using NUnit.Framework;
 
 #pragma warning disable 1998
@@ -18,13 +24,15 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         [OneTimeSetUp]
         public override async Task SetUp()
         {
-            goodProvider = new AuthenticationProvider(Data.Login, Data.Password, Data.AuthBaseAddress);
-            providerWithBadLogin = new AuthenticationProvider("not a real login", Data.Password, Data.AuthBaseAddress);
-            providerWithBadPassword = new AuthenticationProvider(Data.Login, "not a real password", Data.AuthBaseAddress);
-            providerWithBadAuthBaseAddress = new AuthenticationProvider(
-                Data.Login,
-                Data.Password,
-                "https://api.testkontur.ru/not_a_real_address");
+            goodProvider = new OpenIdPasswordAuthenticationProvider(
+                Data.AuthBaseAddress,
+                new PasswordTokenRequest() {Password = Data.Password, UserName = Data.Login, ClientId = Data.ClientId, ClientSecret = Data.ApiKey});
+
+            providerWithBadLogin = new OpenIdPasswordAuthenticationProvider(Data.AuthBaseAddress, new PasswordTokenRequest() {Password = Data.Password, UserName = "not a real login", ClientId = Data.ClientId, ClientSecret = Data.ApiKey});
+            providerWithBadPassword = new OpenIdPasswordAuthenticationProvider(Data.AuthBaseAddress, new PasswordTokenRequest() {Password = "not a real password", UserName = Data.Login, ClientId = Data.ClientId});
+            providerWithBadAuthBaseAddress = new OpenIdPasswordAuthenticationProvider(
+                "https://api.testkontur.ru/not_a_real_address",
+                new PasswordTokenRequest() {Password = Data.Password, UserName = Data.Login, ClientId = Data.ClientId});
         }
 
         [OneTimeTearDown]
@@ -33,17 +41,24 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         }
 
         [Test]
-        public void GetSessionId_WithValidParameters()
+        public async Task GetAuthToken_WithValidParameters()
         {
-            Assert.DoesNotThrowAsync(async () => await goodProvider.GetSessionId());
+            var result = await goodProvider.AuthenticateAsync();
+
+            result.Success.Should().BeTrue(result.ErrorMessage);
         }
 
         [Test]
-        public void FailToGetSessionId_WithBadParameters()
+        public async Task FailToGetAuthToken_WithBadParameters()
         {
-            Assert.ThrowsAsync<HttpRequestException>(async () => await providerWithBadLogin.GetSessionId());
-            Assert.ThrowsAsync<HttpRequestException>(async () => await providerWithBadPassword.GetSessionId());
-            Assert.ThrowsAsync<HttpRequestException>(async () => await providerWithBadAuthBaseAddress.GetSessionId());
+            var providersResults = new List<ServiceResult>()
+            {
+                await providerWithBadLogin.AuthenticateAsync(),
+                await providerWithBadPassword.AuthenticateAsync(),
+                await providerWithBadAuthBaseAddress.AuthenticateAsync()
+            };
+
+            providersResults.ForEach(r => r.Success.Should().BeTrue(r.ErrorMessage));
         }
     }
 }

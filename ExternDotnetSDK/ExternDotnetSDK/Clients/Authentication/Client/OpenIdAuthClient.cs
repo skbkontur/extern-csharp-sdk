@@ -16,7 +16,8 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client
 
         public OpenIdAuthClient(string baseUrl, ILogger log)
         {
-            var client = new HttpClient {BaseAddress = new Uri(baseUrl, UriKind.Relative)};
+            var address = new Uri(baseUrl, UriKind.Absolute);
+            var client = new HttpClient {BaseAddress = address};
             sender = new Sender(client, log);
         }
 
