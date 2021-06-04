@@ -18,7 +18,7 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client
         public ServiceResult<TResponse, TError> CreateSuccessful(HttpResponseMessage response)
         {
             return ServiceResult<TResponse, TError>.CreateSuccessful(
-                JsonConvert.DeserializeObject<TResponse>(response.Content.ToString()),
+                JsonConvert.DeserializeObject<TResponse>(response.Content.ReadAsStringAsync().GetAwaiter().GetResult()),
                 (int) response.StatusCode);
         }
 

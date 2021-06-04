@@ -33,6 +33,6 @@
         /// <value>
         /// The scope
         /// </value>
-        public string Scope { get; set; }
+        public string Scope { get; set; } = "extern.api";
     }
 }

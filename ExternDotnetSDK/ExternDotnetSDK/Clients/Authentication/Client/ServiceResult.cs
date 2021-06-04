@@ -30,6 +30,7 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client
         public new static ServiceResult<TError> CreateUnknownError(string message) =>
             new ServiceResult<TError>(null, ServiceResultStatus.UnknownError, errorMessage: message);
     }
+
     public class ServiceResult
     {
         internal ServiceResult(ServiceResultStatus status, int? serviceResponseCode = null, string errorMessage = null)
@@ -43,7 +44,7 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client
         /// Статус операции. Успешный результат - <see cref="ServiceResultStatus.Success"/>
         /// </summary>
         public ServiceResultStatus Status { get; }
-
+        public bool Success => Status == ServiceResultStatus.Success;
         /// <summary>
         /// Код http-ответа, полученного от сервиса. Может отсутствовать, если ответ не был получен (возвращается <see langword="null"/>).
         /// </summary>
@@ -91,6 +92,7 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client
         public new static ServiceResult<TResponse, TError> CreateUnknownError(string message) =>
             new ServiceResult<TResponse, TError>(null, null, ServiceResultStatus.UnknownError, errorMessage: message);
     }
+
     public enum ServiceResultStatus
     {
         Success,

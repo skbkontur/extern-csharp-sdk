@@ -90,9 +90,8 @@ namespace Kontur.Extern.Client.Clients.Authentication.Client.Factories
         {
             return new HttpRequestMessage(HttpMethod.Post, new Uri(uri, UriKind.Relative))
                 .WithAcceptHeader("application/json")
-                .WithContentTypeHeader("application/x-www-form-urlencoded")
                 .WithBasicAuthorizationHeader(clientAuthenticatedRequest.ClientId, clientAuthenticatedRequest.ClientSecret)
-                .WithContent(formContent);
+                .WithContent(formContent, "application/x-www-form-urlencoded");
         }
     }
 }

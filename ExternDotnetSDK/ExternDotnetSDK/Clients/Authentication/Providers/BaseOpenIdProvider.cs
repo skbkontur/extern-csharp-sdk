@@ -41,9 +41,9 @@ namespace Kontur.Extern.Client.Clients.Authentication.Providers
             var content = new FormUrlEncodedContentBuilder()
                 .AddGrantType(ClientConstants.GrantTypes.Password)
                 .AddScope(request.Scope)
-                .Add(ClientConstants.PasswordTokenRequest.UserName, request.UserName)
-                .Add(ClientConstants.PasswordTokenRequest.Password, request.Password)
-                .Add(ClientConstants.PasswordTokenRequest.PartialFactorToken, request.PartialFactorToken)
+                .AddIfNotNull(ClientConstants.PasswordTokenRequest.UserName, request.UserName)
+                .AddIfNotNull(ClientConstants.PasswordTokenRequest.Password, request.Password)
+                .AddIfNotNull(ClientConstants.PasswordTokenRequest.PartialFactorToken, request.PartialFactorToken)
                 .ToString();
 
             return BuildOpenIdClientAuthenticatedRequest(content, request);
@@ -110,9 +110,10 @@ namespace Kontur.Extern.Client.Clients.Authentication.Providers
         {
             return new HttpRequestMessage(HttpMethod.Post, new Uri(uri, UriKind.Relative))
                 .WithAcceptHeader("application/json")
-                .WithContentTypeHeader("application/x-www-form-urlencoded")
+                //.WithContentTypeHeader()
                 .WithBasicAuthorizationHeader(clientAuthenticatedRequest.ClientId, clientAuthenticatedRequest.ClientSecret)
-                .WithContent(formContent);
+                .WithContent(formContent, "application/x-www-form-urlencoded");
+            //SenderConstants.MediaType
         }
     }
 }
