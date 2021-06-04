@@ -55,9 +55,37 @@ namespace Kontur.Extern.Client.Clients.Docflows
             return client.SendJsonRequestAsync<DocflowPage>(request, timeout);
         }
 
+        public Task<DocflowPage> GetInventoryDocflowsAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            DocflowFilter filter = null,
+            TimeSpan? timeout = null)
+        {
+            var urlBuilder = new RequestUrlBuilder($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories");
+            if (filter != null)
+            {
+                foreach (var kv in filter.ConvertToQueryParameters().Where(kv => kv.Value != null))
+                    urlBuilder.AppendToQuery(kv.Key, kv.Value);
+            }
+            var request = Request.Get(urlBuilder.Build());
+            return client.SendJsonRequestAsync<DocflowPage>(request, timeout);
+        }
+
         public Task<Docflow> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null)
         {
             var request = Request.Get($"/v1/{accountId}/docflows/{docflowId}");
+            return client.SendJsonRequestAsync<Docflow>(request, timeout);
+        }
+
+        public Task<Docflow> GetInventoryDocflowAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}");
             return client.SendJsonRequestAsync<Docflow>(request, timeout);
         }
 
@@ -115,6 +143,19 @@ namespace Kontur.Extern.Client.Clients.Docflows
             return client.SendJsonRequestAsync<byte[]>(request, timeout);
         }
 
+        public Task<byte[]> GetInventorySignatureContentAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid signatureId,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/signatures/{signatureId}/content");
+            return client.SendJsonRequestAsync<byte[]>(request, timeout);
+        }
+
         public Task<PrintDocumentResult> PrintDocumentAsync(
             Guid accountId,
             Guid docflowId,
@@ -127,6 +168,24 @@ namespace Kontur.Extern.Client.Clients.Docflows
                 ContentId = contentId
             };
             var request = Request.Post($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/print")
+                .WithContent(requestBodySerializer.SerializeToJson(body));
+            return client.SendJsonRequestAsync<PrintDocumentResult>(request, timeout);
+        }
+
+        public Task<PrintDocumentResult> PrintInventoryDocumentAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid contentId,
+            TimeSpan? timeout = null)
+        {
+            var body = new PrintDocumentRequest
+            {
+                ContentId = contentId
+            };
+            var request = Request.Post($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/print")
                 .WithContent(requestBodySerializer.SerializeToJson(body));
             return client.SendJsonRequestAsync<PrintDocumentResult>(request, timeout);
         }
@@ -150,6 +209,27 @@ namespace Kontur.Extern.Client.Clients.Docflows
             return client.SendJsonRequestAsync<ApiTaskResult<PrintDocumentResult>>(request, timeout);
         }
 
+         public Task<ApiTaskResult<PrintDocumentResult>> StartPrintInventoryDocumentAsync(
+             Guid accountId,
+             Guid relatedDocflowId,
+             Guid relatedDocumentId,
+             Guid inventoryId,
+             Guid documentId,
+             Guid contentId,
+             TimeSpan? timeout = null)
+        {
+            var body = new PrintDocumentRequest
+            {
+                ContentId = contentId
+            };
+            var url = new RequestUrlBuilder($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/print")
+                .AppendToQuery("deferred", true)
+                .Build();
+            var request = Request.Post(url)
+                .WithContent(requestBodySerializer.SerializeToJson(body));
+            return client.SendJsonRequestAsync<ApiTaskResult<PrintDocumentResult>>(request, timeout);
+        }
+
         public Task<ApiTaskResult<PrintDocumentResult>> GetPrintDocumentTaskAsync(
             Guid accountId,
             Guid docflowId,
@@ -158,6 +238,19 @@ namespace Kontur.Extern.Client.Clients.Docflows
             TimeSpan? timeout = null)
         {
             var request = Request.Get($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/tasks/{taskId}");
+            return client.SendJsonRequestAsync<ApiTaskResult<PrintDocumentResult>>(request, timeout);
+        }
+
+        public Task<ApiTaskResult<PrintDocumentResult>> GetPrintInventoryDocumentTaskAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid taskId,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/tasks/{taskId}");
             return client.SendJsonRequestAsync<ApiTaskResult<PrintDocumentResult>>(request, timeout);
         }
 
