@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Clients.Authentication.Client;
 using Kontur.Extern.Client.Clients.Authentication.Client.Models;
 using Kontur.Extern.Client.Clients.Authentication.Client.Models.Authentication.Requests;
 using Kontur.Extern.Client.Clients.Authentication.Client.Models.Authentication.Responses;
 using Kontur.Extern.Client.Clients.Authentication.Providers;
-using Kontur.Extern.Client.Clients.Common;
 using Kontur.Extern.Client.Clients.Common.Logging;
 using Kontur.Extern.Client.Clients.Common.Requests;
 using Kontur.Extern.Client.Clients.Common.RequestSenders;
-using Kontur.Extern.Client.Clients.Common.ResponseMessages;
-using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.Clients.Authentication.TokenAuth
 {

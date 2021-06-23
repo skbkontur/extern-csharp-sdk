@@ -1,16 +1,8 @@
 ﻿using System;
 using System.Net.Http;
-using Kontur.Extern.Client.Clients.Accounts;
 using Kontur.Extern.Client.Clients.Authentication.Providers;
 using Kontur.Extern.Client.Clients.Common.Logging;
-using Kontur.Extern.Client.Clients.Common.Requests;
 using Kontur.Extern.Client.Clients.Common.RequestSenders;
-using Kontur.Extern.Client.Clients.Docflows;
-using Kontur.Extern.Client.Clients.Drafts;
-using Kontur.Extern.Client.Clients.DraftsBuilders;
-using Kontur.Extern.Client.Clients.Events;
-using Kontur.Extern.Client.Clients.Organizations;
-using Kontur.Extern.Client.Clients.Replies;
 using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Engine.Services.Docflows;
 
@@ -47,7 +39,6 @@ namespace Kontur.Extern.Client.Engine
         public IDocflowsService DocflowsService { get; private set; }
         public IKeApiClient KeApiClient { get; private set; }
         public ICrypt CryptoProvider { get; }
-
 
         private void InitializeClients()
         {
