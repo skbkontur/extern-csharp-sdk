@@ -8,15 +8,15 @@ using System.Text;
 
 namespace Kontur.Extern.Client.Cryptography
 {
-    internal class WinApiCrypt : ICrypt
+    public class WinApiCrypt : ICrypt
     {
         private static readonly bool isWin2000 = Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor == 0;
 
         private static readonly IDictionary<string, string> HashAlgorithmsMap = new Dictionary<string, string>
         {
-            { Api.OID_GOST_34_11_94_R3410EL, Api.OID_GOST_34_11_94 },
-            { Api.OID_GOST_34_11_12_256_R3410, Api.OID_GOST_34_11_12_256 },
-            { Api.OID_GOST_34_11_12_512_R3410, Api.OID_GOST_34_11_12_512 }
+            {Api.OID_GOST_34_11_94_R3410EL, Api.OID_GOST_34_11_94},
+            {Api.OID_GOST_34_11_12_256_R3410, Api.OID_GOST_34_11_12_256},
+            {Api.OID_GOST_34_11_12_512_R3410, Api.OID_GOST_34_11_12_512}
         };
 
         public List<X509Certificate2> GetPersonalCertificates(bool onlyWithPrivateKey, bool useLocalSystemStorage = false)
@@ -51,19 +51,21 @@ namespace Kontur.Extern.Client.Cryptography
                 verifyParameters.size = Marshal.SizeOf(verifyParameters);
                 verifyParameters.encoding = Api.ENCODING;
                 var signersCertificateContents = new List<byte[]>();
-                for (Int32 signerIndex = 0; ; ++signerIndex)
+                for (Int32 signerIndex = 0;; ++signerIndex)
                 {
                     IntPtr certificate;
-                    if (!Api.CryptVerifyDetachedMessageSignature(ref verifyParameters, signerIndex, signatures, signatures.Length, 1, new[] { contentHandle.AddrOfPinnedObject() }, new[] { content.Length }, out certificate))
+                    if (!Api.CryptVerifyDetachedMessageSignature(ref verifyParameters, signerIndex, signatures, signatures.Length, 1, new[] {contentHandle.AddrOfPinnedObject()}, new[] {content.Length}, out certificate))
                     {
                         Int32 errorCode = Marshal.GetLastWin32Error();
                         if (errorCode == Api.CRYPT_E_NO_SIGNER) break;
                         if (errorCode == Api.NTE_BAD_SIGNATURE) throw new Exception("Неправильная подпись");
                         throw new Exception("Неправильная подпись", new Win32Exception(errorCode));
                     }
+
                     signersCertificateContents.Add(SerializeCertificateToBinaryData(certificate));
                     Api.CertFreeCertificateContext(certificate);
                 }
+
                 return signersCertificateContents;
             }
             finally
@@ -75,7 +77,7 @@ namespace Kontur.Extern.Client.Cryptography
         public byte[] Sign(byte[] content, byte[] certificateContent)
         {
             var certificate = CertificateWithPrivateKeyFinder.GetCertificateWithPrivateKey(certificateContent);
-            var certificatesHandle = GCHandle.Alloc(new[] { certificate }, GCHandleType.Pinned);
+            var certificatesHandle = GCHandle.Alloc(new[] {certificate}, GCHandleType.Pinned);
 
             try
             {
@@ -105,7 +107,7 @@ namespace Kontur.Extern.Client.Cryptography
                 var localSignParameters = signParameters;
                 var signatureSize = 0;
 
-                if (!Api.CryptSignMessage(ref localSignParameters, true, 1, new[] { contentHandle.AddrOfPinnedObject() }, new[] { content.Length }, IntPtr.Zero, ref signatureSize))
+                if (!Api.CryptSignMessage(ref localSignParameters, true, 1, new[] {contentHandle.AddrOfPinnedObject()}, new[] {content.Length}, IntPtr.Zero, ref signatureSize))
                     throw new Win32Exception();
 
                 var bufferLength = signatureSize + 1024;
@@ -118,7 +120,7 @@ namespace Kontur.Extern.Client.Cryptography
 
                     try
                     {
-                        if (!Api.CryptSignMessage(ref signParameters, true, 1, new[] { contentHandle.AddrOfPinnedObject() }, new[] { content.Length }, signatureHandle.AddrOfPinnedObject(), ref bytesWritten))
+                        if (!Api.CryptSignMessage(ref signParameters, true, 1, new[] {contentHandle.AddrOfPinnedObject()}, new[] {content.Length}, signatureHandle.AddrOfPinnedObject(), ref bytesWritten))
                             throw new Win32Exception();
 
                         Array.Resize(ref buffer, bytesWritten);
@@ -164,7 +166,7 @@ namespace Kontur.Extern.Client.Cryptography
                 var decryptParameters =
                     new Api.CRYPT_DECRYPT_MESSAGE_PARA
                     {
-                        size = Marshal.SizeOf(typeof(Api.CRYPT_DECRYPT_MESSAGE_PARA)),
+                        size = Marshal.SizeOf(typeof (Api.CRYPT_DECRYPT_MESSAGE_PARA)),
                         encoding = Api.ENCODING,
                         storesCount = 1,
                         stores = pinnedStoreHandle.AddrOfPinnedObject()
@@ -206,7 +208,7 @@ namespace Kontur.Extern.Client.Cryptography
 
         private byte[] SerializeCertificateToBinaryData(IntPtr certificate)
         {
-            var certificateContext = (Api.CERT_CONTEXT)Marshal.PtrToStructure(certificate, typeof(Api.CERT_CONTEXT));
+            var certificateContext = (Api.CERT_CONTEXT) Marshal.PtrToStructure(certificate, typeof (Api.CERT_CONTEXT));
             var encodedCertificate = new byte[certificateContext.encodedCertificateSize];
             Marshal.Copy(certificateContext.encodedCertificate, encodedCertificate, 0, certificateContext.encodedCertificateSize);
             return encodedCertificate;

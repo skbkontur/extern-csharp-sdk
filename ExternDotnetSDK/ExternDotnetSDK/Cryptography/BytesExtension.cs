@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Kontur.Extern.Client.Cryptography
 {
@@ -25,16 +24,6 @@ namespace Kontur.Extern.Client.Cryptography
             }
 
             return data1Length.CompareTo(data2Length);
-        }
-
-        /// <summary>
-        /// Получение сертификата в кодировке Base64
-        /// </summary>
-        /// <param name="cert">сертификат</param>
-        /// <returns>Сертификат в base64</returns>
-        public static string GetBase64(this X509Certificate2 cert)
-        {
-            return Convert.ToBase64String(cert.Export(X509ContentType.Cert));
         }
     }
 }
