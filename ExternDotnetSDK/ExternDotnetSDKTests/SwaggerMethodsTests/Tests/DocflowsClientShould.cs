@@ -189,14 +189,14 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public void FailToGetApiTask_WithBadApiTaskId()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetPrintTaskAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
+                async () => await Client.Docflows.GetPrintDocumentTaskAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToGetDocumentReply_WithBadReplyId()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Docflows.GetDocumentReplyAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
+                async () => await Client.Replies.GetReplyAsync(Account.Id, docflow.Id, document.Id, badId).ConfigureAwait(false));
         }
 
         [Test]

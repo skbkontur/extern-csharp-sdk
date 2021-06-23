@@ -36,6 +36,22 @@ namespace Kontur.Extern.Client.Clients.Docflows
             TimeSpan? timeout = null);
 
         /// <summary>
+        /// Поиск документооборотов описей
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Документооборот, к которому относится документооборот описи</param>
+        /// <param name="relatedDocumentId">Документ, к которому относится документооборот описи</param>
+        /// <param name="filter">Параметры поиска</param>
+        /// <param name="timeout"></param>
+        /// <returns>Список документооборотов</returns>
+        Task<DocflowPage> GetInventoryDocflowsAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            DocflowFilter filter = null,
+            TimeSpan? timeout = null);
+
+        /// <summary>
         /// Получение документооборота по идентификатору
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
@@ -43,6 +59,22 @@ namespace Kontur.Extern.Client.Clients.Docflows
         /// <param name="timeout"></param>
         /// <returns>Документооборот</returns>
         Task<Docflow> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Получение документооборота описи по идентификатору
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="timeout"></param>
+        /// <returns>Документооборот описи</returns>
+        Task<Docflow> GetInventoryDocflowAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            TimeSpan? timeout = null);
 
         /// <summary>
         /// Получение всех документов в документообороте
@@ -124,6 +156,26 @@ namespace Kontur.Extern.Client.Clients.Docflows
             TimeSpan? timeout = null);
 
         /// <summary>
+        /// Получение контента подписи документа документооборота описи
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="documentId">Идентификатор документа из документооборота описи</param>
+        /// <param name="signatureId">Идентификатор подписи документа</param>
+        /// <param name="timeout"></param>
+        /// <returns>Контент подписи документа</returns>
+        Task<byte[]> GetInventorySignatureContentAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid signatureId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
         /// Печать документа
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
@@ -133,6 +185,26 @@ namespace Kontur.Extern.Client.Clients.Docflows
         /// <param name="timeout"></param>
         /// <returns>Результат печати с идентификатором печатной формы документа в сервисе контентов</returns>
         Task<PrintDocumentResult> PrintDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, Guid contentId, TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Печать документа документооборота описи
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="documentId">Идентификатор документа, печатную форму которого нужно получить</param>
+        /// <param name="contentId">Идентификатор расшифрованного документа в сервисе контентов</param>
+        /// <param name="timeout"></param>
+        /// <returns>Результат печати с идентификатором печатной формы документа в сервисе контентов</returns>
+        Task<PrintDocumentResult> PrintInventoryDocumentAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid contentId,
+            TimeSpan? timeout = null);
 
         /// <summary>
         /// Печать документа
@@ -146,6 +218,26 @@ namespace Kontur.Extern.Client.Clients.Docflows
         Task<ApiTaskResult<PrintDocumentResult>> StartPrintDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, Guid contentId, TimeSpan? timeout = null);
 
         /// <summary>
+        /// Печать документа документооборота описи
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="documentId">Идентификатор документа, печатную форму которого нужно получить</param>
+        /// <param name="contentId">Идентификатор расшифрованного документа в сервисе контентов</param>
+        /// <param name="timeout"></param>
+        /// <returns>Задача печати документа</returns>
+        Task<ApiTaskResult<PrintDocumentResult>> StartPrintInventoryDocumentAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid contentId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
         /// Проверка статуса задачи печати по TaskId
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
@@ -154,9 +246,29 @@ namespace Kontur.Extern.Client.Clients.Docflows
         /// <param name="taskId">Идентификатор задачи</param>
         /// <param name="timeout"></param>
         /// <returns>Задача печати документа</returns>
-        Task<ApiTaskResult<PrintDocumentResult>> GetPrintTaskAsync(
+        Task<ApiTaskResult<PrintDocumentResult>> GetPrintDocumentTaskAsync(
             Guid accountId,
             Guid docflowId,
+            Guid documentId,
+            Guid taskId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Проверка статуса задачи печати документа документооборота описи по TaskId
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="documentId">Идентификатор документа из документооборота описи</param>
+        /// <param name="taskId">Идентификатор задачи</param>
+        /// <param name="timeout"></param>
+        /// <returns>Задача печати документа</returns>
+        Task<ApiTaskResult<PrintDocumentResult>> GetPrintInventoryDocumentTaskAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
             Guid documentId,
             Guid taskId,
             TimeSpan? timeout = null);

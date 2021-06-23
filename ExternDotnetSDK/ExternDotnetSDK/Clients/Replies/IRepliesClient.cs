@@ -15,7 +15,7 @@ namespace Kontur.Extern.Client.Clients.Replies
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="docflowId">Идентификатор документооборота</param>
-        /// <param name="documentId">Идентификатор документа</param>
+        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
         /// <param name="replyId">Идентификатор ответного документа</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
@@ -27,13 +27,33 @@ namespace Kontur.Extern.Client.Clients.Replies
             TimeSpan? timeout = null);
 
         /// <summary>
+        /// Получение ответного документа документооборота описи по идентификатору
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
+        /// <param name="replyId">Идентификатор ответного документа</param>
+        /// <param name="timeout"></param>
+        /// <returns>Ответный документ</returns>
+        Task<ApiReplyDocument> GetInventoryReplyAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
         /// Создание ответного документа
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="docflowId">Идентификатор документооборота</param>
         /// <param name="documentId">Идентификатор документа, на который формируется ответный документ</param>
         /// <param name="documentType">Тип генерируемого ответного документа</param>
-        /// <param name="certificateContent">Сертификат</param>
+        /// <param name="certificate">Сертификат</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
         Task<ApiReplyDocument> GenerateReplyAsync(
@@ -41,7 +61,7 @@ namespace Kontur.Extern.Client.Clients.Replies
             Guid docflowId,
             Guid documentId,
             Urn documentType,
-            byte[] certificateContent,
+            byte[] certificate,
             TimeSpan? timeout = null);
 
         /// <summary>
@@ -52,7 +72,7 @@ namespace Kontur.Extern.Client.Clients.Replies
         /// <param name="documentId">Идентификатор документа, на который формируется ответный документ</param>
         /// <param name="documentType">Тип генерируемого ответного документа</param>
         /// <param name="declineNoticeErrorCodes">Коды причины отправки уведомления об отказе (используется при documentType = fns534-demand-acceptance-result-negative)</param>
-        /// <param name="certificateContent">Сертификат</param>
+        /// <param name="certificate">Сертификат</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
         Task<ApiReplyDocument> GenerateReplyAsync(
@@ -61,7 +81,29 @@ namespace Kontur.Extern.Client.Clients.Replies
             Guid documentId,
             Urn documentType,
             string[] declineNoticeErrorCodes,
-            byte[] certificateContent,
+            byte[] certificate,
+            TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Создание ответного документа документооборота описи
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="documentId">Идентификатор документа, на который формируется ответный документ</param>
+        /// <param name="documentType">Тип ответного документа</param>
+        /// <param name="certificate">Сертификат</param>
+        /// <param name="timeout"></param>
+        /// <returns>Ответный документ</returns>
+        Task<ApiReplyDocument> GenerateInventoryReplyAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Urn documentType,
+            byte[] certificate,
             TimeSpan? timeout = null);
 
         /// <summary>
@@ -69,7 +111,7 @@ namespace Kontur.Extern.Client.Clients.Replies
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="docflowId">Идентификатор документооборота</param>
-        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документа</param>
+        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
         /// <param name="replyId">Идентификатор ответного документа</param>
         /// <param name="senderIp">IP адрес отправителя</param>
         /// <param name="timeout"></param>
@@ -83,11 +125,33 @@ namespace Kontur.Extern.Client.Clients.Replies
             TimeSpan? timeout = null);
 
         /// <summary>
+        /// Отправка ответного документа документооборота описи
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
+        /// <param name="replyId">Идентификатор ответного документа</param>
+        /// <param name="senderIp">IP адрес отправителя</param>
+        /// <param name="timeout"></param>
+        /// <returns>Ответный документ</returns>
+        Task<Docflow> SendInventoryReplyAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId,
+            string senderIp,
+            TimeSpan? timeout = null);
+
+        /// <summary>
         /// Добавление подписи к ответному документу
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="docflowId">Идентификатор документооборота</param>
-        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документа</param>
+        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
         /// <param name="replyId">Идентификатор ответного документа</param>
         /// <param name="signature">Подпись</param>
         /// <param name="timeout"></param>
@@ -101,11 +165,33 @@ namespace Kontur.Extern.Client.Clients.Replies
             TimeSpan? timeout = null);
 
         /// <summary>
+        /// Добавление подписи к ответному документу документооборота описи
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
+        /// <param name="replyId">Идентификатор ответного документа</param>
+        /// <param name="signature">Подпись</param>
+        /// <param name="timeout"></param>
+        /// <returns>Ответный документ</returns>
+        Task<ApiReplyDocument> UpdateInventoryReplySignatureAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId,
+            byte[] signature,
+            TimeSpan? timeout = null);
+
+        /// <summary>
         /// Обновление контента ответного документа
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="docflowId">Идентификатор документооборота</param>
-        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документа</param>
+        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
         /// <param name="replyId">Идентификатор ответного документа</param>
         /// <param name="content">Контент ответного документа</param>
         /// <param name="timeout"></param>
@@ -119,11 +205,33 @@ namespace Kontur.Extern.Client.Clients.Replies
             TimeSpan? timeout = null);
 
         /// <summary>
+        /// Обновление контента ответного документа документооборота описи
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
+        /// <param name="replyId">Идентификатор ответного документа</param>
+        /// <param name="content">Контент ответного документа</param>
+        /// <param name="timeout"></param>
+        /// <returns>Ответный документ</returns>
+        Task<ApiReplyDocument> UpdateInventoryReplyContentAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId,
+            byte[] content,
+            TimeSpan? timeout = null);
+
+        /// <summary>
         /// Подписание ответного документа сертификатом
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="docflowId">Идентификатор документооборота</param>
-        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документа</param>
+        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
         /// <param name="replyId">Идентификатор ответного документа</param>
         /// <param name="timeout"></param>
         /// <returns>Задача подписания ответного документа</returns>
@@ -135,11 +243,31 @@ namespace Kontur.Extern.Client.Clients.Replies
             TimeSpan? timeout = null);
 
         /// <summary>
+        /// Подписание ответного документа документооборота описи сертификатом
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
+        /// <param name="replyId">Идентификатор ответного документа</param>
+        /// <param name="timeout"></param>
+        /// <returns>Задача подписания ответного документа</returns>
+        Task<SignInitResult> DssSignInventoryReplyAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid replyId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
         /// Проверка статуса задачи подписания ответного документа по TaskId
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="docflowId">Идентификатор документооборота</param>
-        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документа</param>
+        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
         /// <param name="replyId">Идентификатор ответного документа</param>
         /// <param name="taskId">Идентификатор задачи</param>
         /// <param name="timeout"></param>
@@ -147,6 +275,28 @@ namespace Kontur.Extern.Client.Clients.Replies
         Task<ApiTaskResult<CryptOperationStatusResult>> GetDssSignReplyTaskAsync(
             Guid accountId,
             Guid docflowId,
+            Guid documentId,
+            Guid replyId,
+            Guid taskId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Проверка статуса задачи подписания ответного документа документооборота описи по TaskId
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
+        /// <param name="replyId">Идентификатор ответного документа</param>
+        /// <param name="taskId">Идентификатор задачи</param>
+        /// <param name="timeout"></param>
+        /// <returns>Задача подписания ответного документа</returns>
+        Task<ApiTaskResult<CryptOperationStatusResult>> GetDssSignReplyTaskAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
             Guid documentId,
             Guid replyId,
             Guid taskId,
