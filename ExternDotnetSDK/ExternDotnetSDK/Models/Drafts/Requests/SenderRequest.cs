@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Models.JsonConverters;
 using Newtonsoft.Json;
 

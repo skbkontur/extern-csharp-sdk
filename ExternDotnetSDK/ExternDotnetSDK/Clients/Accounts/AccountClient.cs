@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Clients.Common;
 using Kontur.Extern.Client.Clients.Common.Logging;
+using Kontur.Extern.Client.Clients.Common.Requests;
 using Kontur.Extern.Client.Clients.Common.RequestSenders;
 using Kontur.Extern.Client.Models.Accounts;
 using Kontur.Extern.Client.Models.Certificates;
@@ -11,79 +10,86 @@ using Kontur.Extern.Client.Models.Warrants;
 
 namespace Kontur.Extern.Client.Clients.Accounts
 {
-    //todo Сделать нормальные тесты для методов.
     public class AccountClient : IAccountClient
     {
         private readonly InnerCommonClient client;
+        private readonly IRequestBodySerializer requestBodySerializer;
 
-        public AccountClient(ILogger logger, IRequestSender requestSender) =>
+        public AccountClient(ILogger logger, IRequestSender requestSender, IRequestBodySerializer requestBodySerializer)
+        {
+            this.requestBodySerializer = requestBodySerializer;
             client = new InnerCommonClient(logger, requestSender);
+        }
 
-        public async Task<AccountList> GetAccountsAsync(int skip = 0, int take = 100, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<AccountList>(
-                HttpMethod.Get,
-                "/v1",
-                new Dictionary<string, object>
-                {
-                    ["skip"] = skip,
-                    ["take"] = take
-                },
-                timeout: timeout);
+        public Task<AccountList> GetAccountsAsync(int? skip = null, int? take = null, TimeSpan? timeout = null)
+        {
+            var url = new RequestUrlBuilder("v1")
+                .AppendToQuery("skip", skip)
+                .AppendToQuery("take", take)
+                .Build();
+            var request = Request.Get(url);
+            return client.SendJsonRequestAsync<AccountList>(request, timeout);
+        }
 
-        public async Task<Account> GetAccountAsync(Guid accountId, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<Account>(HttpMethod.Get, $"/v1/{accountId}", timeout: timeout);
+        public Task<Account> GetAccountAsync(Guid accountId, TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"v1/{accountId}");
+            return client.SendJsonRequestAsync<Account>(request, timeout);
+        }
 
-        public async Task DeleteAccountAsync(Guid accountId, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}", timeout: timeout);
+        public Task DeleteAccountAsync(Guid accountId, TimeSpan? timeout = null)
+        {
+            var request = Request.Delete($"v1/{accountId}");
+            return client.SendJsonRequestAsync(request, timeout);
+        }
 
-        public async Task<Account> CreateAccountAsync(
+        public Task<Account> CreateAccountAsync(
             string inn,
             string kpp,
             string organizationName,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<Account>(
-                HttpMethod.Post,
-                "/v1",
-                contentDto: new CreateAccountRequestDto
-                {
-                    Inn = inn,
-                    Kpp = kpp,
-                    OrganizationName = organizationName
-                },
-                timeout: timeout);
+            TimeSpan? timeout = null)
+        {
+            var requestDto = new CreateAccountRequestDto
+            {
+                Inn = inn,
+                Kpp = kpp,
+                OrganizationName = organizationName
+            };
+            var request = Request.Post("v1")
+                .WithContent(requestBodySerializer.SerializeToJson(requestDto));
+            return client.SendJsonRequestAsync<Account>(request, timeout);
+        }
 
-        public async Task<CertificateList> GetAccountCertificatesAsync(
+        public Task<CertificateList> GetAccountCertificatesAsync(
             Guid accountId,
-            int skip = 0,
-            int take = 100,
-            bool forAllUsers = false,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<CertificateList>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/certificates",
-                new Dictionary<string, object>
-                {
-                    ["skip"] = skip,
-                    ["take"] = take,
-                    ["forAllUsers"] = forAllUsers
-                },
-                timeout: timeout);
+            int? skip = null,
+            int? take = null,
+            bool? forAllUsers = null,
+            TimeSpan? timeout = null)
+        {
+            var url = new RequestUrlBuilder($"/v1/{accountId}/certificates")
+                .AppendToQuery("skip", skip)
+                .AppendToQuery("take", take)
+                .AppendToQuery("forAllUsers", forAllUsers)
+                .Build();
+            var request = Request.Get(url);
+            return client.SendJsonRequestAsync<CertificateList>(request, timeout);
+        }
 
-        public async Task<WarrantList> GetAccountWarrantsAsync(
+        public Task<WarrantList> GetAccountWarrantsAsync(
             Guid accountId,
-            int skip = 0,
-            int take = int.MaxValue,
-            bool forAllUsers = false,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<WarrantList>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/warrants",
-                new Dictionary<string, object>
-                {
-                    ["skip"] = skip,
-                    ["take"] = take,
-                    ["forAllUsers"] = forAllUsers
-                },
-                timeout: timeout);
+            int? skip = null,
+            int? take = null,
+            bool? forAllUsers = null,
+            TimeSpan? timeout = null)
+        {
+            var url = new RequestUrlBuilder($"/v1/{accountId}/warrants")
+                .AppendToQuery("skip", skip)
+                .AppendToQuery("take", take)
+                .AppendToQuery("forAllUsers", forAllUsers)
+                .Build();
+            var request = Request.Get(url);
+            return client.SendJsonRequestAsync<WarrantList>(request, timeout);
+        }
     }
 }

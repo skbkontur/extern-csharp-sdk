@@ -35,8 +35,8 @@ namespace Kontur.Extern.Client.Clients.Authentication
             var fullUrl = $"{authenticationBaseAddress}/v5.13/authenticate-by-pass?login={login}";
             var request = new HttpRequestMessage(HttpMethod.Post, fullUrl) {Content = content};
             TrySetTimeoutHeader(timeout, request);
-            var response = new ResponseMessage(await client.SendAsync(request));
-            var authResponse = JsonConvert.DeserializeObject<AuthenticationResponse>(await response.TryGetResponseAsync(logger));
+            var response = new ResponseMessage(await client.SendAsync(request).ConfigureAwait(false));
+            var authResponse = JsonConvert.DeserializeObject<AuthenticationResponse>(await response.TryGetResponseAsync(logger).ConfigureAwait(false));
             return authResponse.Sid;
         }
 
@@ -45,8 +45,8 @@ namespace Kontur.Extern.Client.Clients.Authentication
             var fullUrl = $"{authenticationBaseAddress}/v5.13/get-pass-strength";
             var request = new HttpRequestMessage(HttpMethod.Post, fullUrl) {Content = content};
             TrySetTimeoutHeader(timeout, request);
-            var responseMessage = new ResponseMessage(await client.SendAsync(request));
-            var result = await responseMessage.TryGetResponseAsync(logger);
+            var responseMessage = new ResponseMessage(await client.SendAsync(request).ConfigureAwait(false));
+            var result = await responseMessage.TryGetResponseAsync(logger).ConfigureAwait(false);
             return JsonConvert.DeserializeObject<PasswordStrength>(result);
         }
 

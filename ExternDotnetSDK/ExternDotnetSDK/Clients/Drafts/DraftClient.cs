@@ -28,16 +28,16 @@ namespace Kontur.Extern.Client.Clients.Drafts
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts",
                 contentDto: draftRequest,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task DeleteDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/drafts/{draftId}", timeout: timeout);
+            await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/drafts/{draftId}", timeout: timeout).ConfigureAwait(false);
 
         public async Task<Draft> GetDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<Draft>(HttpMethod.Get, $"/v1/{accountId}/drafts/{draftId}", timeout: timeout);
+            await client.SendRequestAsync<Draft>(HttpMethod.Get, $"/v1/{accountId}/drafts/{draftId}", timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftMeta> GetDraftMetaAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftMeta>(HttpMethod.Get, $"/v1/{accountId}/drafts/{draftId}/meta", timeout: timeout);
+            await client.SendRequestAsync<DraftMeta>(HttpMethod.Get, $"/v1/{accountId}/drafts/{draftId}/meta", timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftMeta> UpdateDraftMetaAsync(
             Guid accountId,
@@ -48,7 +48,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/meta",
                 contentDto: newMeta,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftDocument> AddDocumentAsync(
             Guid accountId,
@@ -59,13 +59,13 @@ namespace Kontur.Extern.Client.Clients.Drafts
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/documents",
                 contentDto: content,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null) =>
             await client.SendRequestAsync(
                 HttpMethod.Delete,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftDocument> GetDocumentAsync(
             Guid accountId,
@@ -75,7 +75,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
             await client.SendRequestAsync<DraftDocument>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftDocument> UpdateDocumentAsync(
             Guid accountId,
@@ -87,7 +87,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}",
                 contentDto: content,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<string> GetDocumentPrintAsync(
             Guid accountId,
@@ -97,7 +97,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
             await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/print",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<string> GetDocumentDecryptedContentAsync(
             Guid accountId,
@@ -107,7 +107,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
             await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/decrypted-content",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task UpdateDocumentDecryptedContentAsync(
             Guid accountId,
@@ -119,7 +119,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/decrypted-content",
                 contentDto: Convert.ToBase64String(content),
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<string> GetDocumentSignatureContentAsync(
             Guid accountId,
@@ -129,7 +129,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
             await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signature",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task UpdateDocumentSignatureContentAsync(
             Guid accountId,
@@ -141,7 +141,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signature",
                 contentDto: Convert.ToBase64String(content),
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<Signature> AddDocumentSignatureAsync(
             Guid accountId,
@@ -153,7 +153,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures",
                 contentDto: request,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task DeleteDocumentSignatureAsync(
             Guid accountId,
@@ -164,7 +164,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
             await client.SendRequestAsync(
                 HttpMethod.Delete,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<Signature> GetDocumentSignatureAsync(
             Guid accountId,
@@ -175,7 +175,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
             await client.SendRequestAsync<Signature>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<Signature> UpdateDocumentSignatureAsync(
             Guid accountId,
@@ -188,7 +188,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}",
                 contentDto: request,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<string> GetDocumentSignatureContentAsync(
             Guid accountId,
@@ -199,14 +199,14 @@ namespace Kontur.Extern.Client.Clients.Drafts
             await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}/content",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<CheckResult> CheckDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) =>
             await client.SendRequestAsync<CheckResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/check",
                 new Dictionary<string, object> {["deferred"] = false},
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<ApiTaskResult<CheckResult>> StartCheckDraftAsync(
             Guid accountId,
@@ -216,14 +216,14 @@ namespace Kontur.Extern.Client.Clients.Drafts
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/check",
                 new Dictionary<string, object> {["deferred"] = true},
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) =>
             await client.SendRequestAsync<PrepareResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/prepare",
                 new Dictionary<string, object> {["deferred"] = false},
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<ApiTaskResult<PrepareResult>> StartPrepareDraftAsync(
             Guid accountId,
@@ -233,7 +233,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/prepare",
                 new Dictionary<string, object> {["deferred"] = true},
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<Docflow> SendDraftAsync(Guid accountId, Guid draftId, bool force = false, TimeSpan? timeout = null) =>
             await client.SendRequestAsync<Docflow>(
@@ -244,7 +244,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
                     ["deferred"] = false,
                     [nameof(force)] = force
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<ApiTaskResult<Docflow>> StartSendDraftAsync(
             Guid accountId,
@@ -259,7 +259,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
                     ["deferred"] = true,
                     [nameof(force)] = force
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<string> GetDocumentEncryptedContentAsync(
             Guid accountId,
@@ -269,7 +269,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
             await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 "/v1/{accountId}/drafts/{draftId}/documents/{documentId}/encrypted-content",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task BuildDocumentContentAsync(
             Guid accountId,
@@ -287,7 +287,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
                     ["version"] = 1
                 },
                 content,
-                timeout);
+                timeout).ConfigureAwait(false);
 
         public async Task<DraftDocument> CreateDocumentWithContentFromFormatAsync(
             Guid accountId,
@@ -305,7 +305,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
                     ["version"] = version
                 },
                 content,
-                timeout);
+                timeout).ConfigureAwait(false);
 
         public async Task<ApiTaskPage> GetDraftTasks(
             Guid accountId,
@@ -323,7 +323,7 @@ namespace Kontur.Extern.Client.Clients.Drafts
                     ["take"] = take,
                     ["includeReleased"] = includeReleased
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<ApiTaskResult<CryptOperationStatusResult>> GetDraftTask(
             Guid accountId,
@@ -333,13 +333,13 @@ namespace Kontur.Extern.Client.Clients.Drafts
             await client.SendRequestAsync<ApiTaskResult<CryptOperationStatusResult>>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/{draftId}/tasks/{apiTaskId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<SignInitResult> CloudSignDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) =>
             await client.SendRequestAsync<SignInitResult>(
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/{draftId}/cloud-sign",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<SignResult> CloudSignConfirmDraftAsync(
             Guid accountId,
@@ -355,6 +355,6 @@ namespace Kontur.Extern.Client.Clients.Drafts
                     ["requestId"] = requestId,
                     ["code"] = code
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
     }
 }

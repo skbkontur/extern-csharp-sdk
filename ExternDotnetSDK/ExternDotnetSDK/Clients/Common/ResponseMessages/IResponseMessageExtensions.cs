@@ -12,7 +12,7 @@ namespace Kontur.Extern.Client.Clients.Common.ResponseMessages
             try
             {
                 response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsStringAsync();
+                return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             }
             catch (Exception e)
             {

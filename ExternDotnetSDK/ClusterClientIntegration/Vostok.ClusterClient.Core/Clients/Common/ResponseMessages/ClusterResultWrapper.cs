@@ -26,7 +26,7 @@ namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.R
 
         public HttpStatusCode StatusCode => (HttpStatusCode)(int)result.Response.Code;
         public IRequestMessage Request => new RequestWrapper(result.Request);
-        public string ReasonPhrase => $"{result.Status.ToString()} : {result.Response.Code.ToString()}";
+        public string ReasonPhrase => $"{result.Status} : {result.Response.Code}";
 
         public IResponseMessage EnsureSuccessStatusCode()
         {

@@ -1,4 +1,8 @@
+using System;
 using Kontur.Extern.Client.Clients.Authentication;
+using Kontur.Extern.Client.Clients.Authentication.Client.Models.Authentication.Requests;
+using Kontur.Extern.Client.Clients.Authentication.Providers;
+using Kontur.Extern.Client.Clients.Authentication.TokenAuth.Kontur.Extern.Client.Clients.Authentication;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
 {
@@ -34,7 +38,9 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
             BasePath = basePath;
             ApiKey = apiKey;
             Timeout = 100000;
-            AuthenticationProvider = new AuthenticationProvider(login, password, "https://api.testkontur.ru/auth");
+            AuthenticationProvider = new OpenIdPasswordAuthenticationProvider(
+                "https://api.testkontur.ru/auth",
+                new PasswordTokenRequest() {UserName = login, Password = password, ClientId = UserAgent, ClientSecret = apiKey});
         }
 
         public string BasePath { get; set; }

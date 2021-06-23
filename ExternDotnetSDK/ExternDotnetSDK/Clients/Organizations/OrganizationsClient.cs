@@ -34,13 +34,13 @@ namespace Kontur.Extern.Client.Clients.Organizations
                     ["skip"] = skip,
                     ["take"] = take
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<Organization> GetOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null) =>
             await client.SendRequestAsync<Organization>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/organizations/{orgId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<Organization> UpdateOrganizationAsync(
             Guid accountId,
@@ -51,7 +51,7 @@ namespace Kontur.Extern.Client.Clients.Organizations
                 HttpMethod.Put,
                 $"/v1/{accountId}/organizations/{orgId}",
                 contentDto: new UpdateOrganizationRequestDto {Name = newName},
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<Organization> CreateOrganizationAsync(
             Guid accountId,
@@ -68,9 +68,9 @@ namespace Kontur.Extern.Client.Clients.Organizations
                     Kpp = kpp,
                     Name = name
                 },
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task DeleteOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/organizations/{orgId}", timeout: timeout);
+            await client.SendRequestAsync(HttpMethod.Delete, $"/v1/{accountId}/organizations/{orgId}", timeout: timeout).ConfigureAwait(false);
     }
 }

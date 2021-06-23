@@ -28,19 +28,19 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/builders",
                 contentDto: meta,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) =>
             await client.SendRequestAsync(
                 HttpMethod.Delete,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) =>
             await client.SendRequestAsync<DraftsBuilder>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderMeta> GetDraftsBuilderMetaAsync(
             Guid accountId,
@@ -49,7 +49,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync<DraftsBuilderMeta>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderMeta> UpdateDraftsBuilderMetaAsync(
             Guid accountId,
@@ -59,7 +59,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync<DraftsBuilderMeta>(
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderBuildResult> BuildDraftsAsync(
             Guid accountId,
@@ -69,7 +69,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build",
                 new Dictionary<string, object> {["deferred"] = false},
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<ApiTaskResult<DraftsBuilderBuildResult>>
             BuildDeferredDraftsAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) =>
@@ -77,7 +77,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build",
                 new Dictionary<string, object> {["deferred"] = true},
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<ApiTaskResult<DraftsBuilderBuildResult>> GetBuildResultAsync(
             Guid accountId,
@@ -87,7 +87,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync<ApiTaskResult<DraftsBuilderBuildResult>>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/tasks/{apiTaskId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderDocumentFile[]> GetDraftsBuilderDocumentFilesAsync(
             Guid accountId,
@@ -97,7 +97,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync<DraftsBuilderDocumentFile[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderDocumentFile> CreateDraftsBuilderDocumentFileAsync(
             Guid accountId,
@@ -109,7 +109,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files",
                 contentDto: contents,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task DeleteDraftsBuilderDocumentFileAsync(
             Guid accountId,
@@ -120,7 +120,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync(
                 HttpMethod.Delete,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderDocumentFile> GetDraftsBuilderDocumentFileAsync(
             Guid accountId,
@@ -131,7 +131,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync<DraftsBuilderDocumentFile>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderDocumentFile> UpdateDraftsBuilderDocumentFileAsync(
             Guid accountId,
@@ -144,7 +144,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
                 contentDto: contents,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<string> GetDraftsBuilderDocumentFileContentAsync(
             Guid accountId,
@@ -155,7 +155,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/content",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<string> GetDraftsBuilderDocumentFileSignatureAsync(
             Guid accountId,
@@ -166,7 +166,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync<string>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/signature",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderDocumentFileMeta> GetDraftsBuilderDocumentFileMetaAsync(
             Guid accountId,
@@ -177,7 +177,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync<DraftsBuilderDocumentFileMeta>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderDocumentFileMeta> UpdateDraftsBuilderDocumentFileMetaAsync(
             Guid accountId,
@@ -190,7 +190,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta",
                 contentDto: meta,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderDocument[]> GetDraftsBuilderDocumentsAsync(
             Guid accountId,
@@ -199,7 +199,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync<DraftsBuilderDocument[]>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderDocument> CreateDraftsBuilderDocumentAsync(
             Guid accountId,
@@ -210,7 +210,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
                 HttpMethod.Post,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents",
                 contentDto: meta,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task DeleteDraftsBuilderDocumentAsync(
             Guid accountId,
@@ -220,7 +220,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync(
                 HttpMethod.Delete,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderDocument> GetDraftsBuilderDocumentAsync(
             Guid accountId,
@@ -230,7 +230,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync<DraftsBuilderDocument>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderDocumentMeta> GetDraftsBuilderDocumentMetaAsync(
             Guid accountId,
@@ -240,7 +240,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
             await client.SendRequestAsync<DraftsBuilderDocumentMeta>(
                 HttpMethod.Get,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta",
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
 
         public async Task<DraftsBuilderDocumentMeta> UpdateDraftsBuilderDocumentMetaAsync(
             Guid accountId,
@@ -252,6 +252,6 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
                 HttpMethod.Put,
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta",
                 contentDto: meta,
-                timeout: timeout);
+                timeout: timeout).ConfigureAwait(false);
     }
 }
