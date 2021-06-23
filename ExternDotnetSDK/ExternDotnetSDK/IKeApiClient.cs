@@ -3,7 +3,6 @@ using Kontur.Extern.Client.Clients.Docflows;
 using Kontur.Extern.Client.Clients.Drafts;
 using Kontur.Extern.Client.Clients.DraftsBuilders;
 using Kontur.Extern.Client.Clients.Events;
-using Kontur.Extern.Client.Clients.InventoryDocflows;
 using Kontur.Extern.Client.Clients.Organizations;
 
 namespace Kontur.Extern.Client
@@ -16,7 +15,6 @@ namespace Kontur.Extern.Client
         IDraftClient Drafts { get; }
         IDraftsBuilderClient DraftsBuilder { get; }
         IEventsClient Events { get; }
-        IInventoryDocflowsClient InventoryDocflows { get; }
         IOrganizationsClient Organizations { get; }
     }
 }

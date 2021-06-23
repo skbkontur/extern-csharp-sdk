@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model;
 using RestSharp;
+#pragma warning disable 618
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
 {
@@ -43,7 +44,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
         public async Task<ApiResponse<string>> GetConfirmationCodeAsync(string requestId)
         {
             var localPath = "/test-tools/v1/get-cloud-sign-confirmation-code";
-            var sessionId = await Configuration.AuthenticationProvider.GetSessionId();
+            var sessionId = await Configuration.AuthenticationProvider.GetSessionId().ConfigureAwait(false);
 
             var request = new RestRequest(localPath, Method.GET)
                 .AddQueryParameter("requestId", requestId)
@@ -51,7 +52,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 .AddHeader("X-Kontur-Apikey", Configuration.ApiKey)
                 .AddHeader("Authorization", $"auth.sid {sessionId}");
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             var localVarStatusCode = (int) response.StatusCode;
 
@@ -85,7 +86,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 request.AddJsonBody(createTestUsersRequestDto);
             }
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             var localVarStatusCode = (int) response.StatusCode;
 
@@ -119,7 +120,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 request.AddJsonBody(requestDto);
             }
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             var localVarStatusCode = (int) response.StatusCode;
 
@@ -144,7 +145,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
         public async Task<ApiResponse<CreateExternAccountResponseDto>> CreateExternAccountOrgAsync(CreateExternAccountOrgRequestDto accountOrgRequestDto = null)
         {
             var localPath = "/test-tools/v1/create-account-org";
-            var sessionId = await Configuration.AuthenticationProvider.GetSessionId();
+            var sessionId = await Configuration.AuthenticationProvider.GetSessionId().ConfigureAwait(false);
 
             var request = new RestRequest(localPath, Method.POST)
                 .AddHeader("Accept", "application/json")
@@ -156,7 +157,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 request.AddJsonBody(accountOrgRequestDto);
             }
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
             var localVarStatusCode = (int) response.StatusCode;
 
             if (ExceptionFactory != null)
@@ -189,7 +190,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 request.AddJsonBody(generateCertificateRequest);
             }
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             var localVarStatusCode = (int) response.StatusCode;
 
@@ -223,7 +224,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 request.AddJsonBody(generateCuLetterRequest);
             }
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             var localVarStatusCode = (int) response.StatusCode;
 
@@ -257,7 +258,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 request.AddJsonBody(generateDemandRequest);
             }
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             var localVarStatusCode = (int) response.StatusCode;
 
@@ -291,7 +292,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 request.AddJsonBody(generateDocflowsSuiteRequest);
             }
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             var localVarStatusCode = (int) response.StatusCode;
 
@@ -325,7 +326,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 request.AddJsonBody(fnsReportRequest);
             }
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
             var localVarStatusCode = (int) response.StatusCode;
 
             if (ExceptionFactory != null)
@@ -358,7 +359,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 request.AddJsonBody(generateFufRequest);
             }
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             var localVarStatusCode = (int) response.StatusCode;
 
@@ -392,7 +393,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 request.AddJsonBody(generateFufRequest);
             }
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             var localVarStatusCode = (int) response.StatusCode;
 
@@ -427,7 +428,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 request.AddJsonBody(generateFufRequest);
             }
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             var statusCode = (int) response.StatusCode;
             if (ExceptionFactory != null)
@@ -460,7 +461,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 request.AddJsonBody(generateFufRequest);
             }
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             var localVarStatusCode = (int) response.StatusCode;
 
@@ -491,7 +492,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
                 .AddHeader("X-Kontur-Apikey", Configuration.ApiKey)
                 .AddJsonBody(new GenerateXmlCalendarRequest());
 
-            var response = await restClient.ExecuteTaskAsync(request);
+            var response = await restClient.ExecuteTaskAsync(request).ConfigureAwait(false);
 
             var statusCode = (int) response.StatusCode;
             if (ExceptionFactory != null)
