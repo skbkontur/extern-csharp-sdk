@@ -43,8 +43,8 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
         public async Task<ApiResponse<string>> GetConfirmationCodeAsync(string requestId)
         {
             var localPath = "/test-tools/v1/get-cloud-sign-confirmation-code";
-            var sessionId = await Configuration.AuthenticationProvider.GetSessionId().ConfigureAwait(false);
-
+            var sessionId = await Configuration.AuthenticationProvider.AuthenticateAsync();
+            //todo to Request from kontur
             var request = new RestRequest(localPath, Method.GET)
                 .AddQueryParameter("requestId", requestId)
                 .AddHeader("Accept", "application/json")
@@ -144,8 +144,8 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
         public async Task<ApiResponse<CreateExternAccountResponseDto>> CreateExternAccountOrgAsync(CreateExternAccountOrgRequestDto accountOrgRequestDto = null)
         {
             var localPath = "/test-tools/v1/create-account-org";
-            var sessionId = await Configuration.AuthenticationProvider.GetSessionId().ConfigureAwait(false);
-
+            var sessionId = await Configuration.AuthenticationProvider.AuthenticateAsync();
+            //todo to Request from kontur
             var request = new RestRequest(localPath, Method.POST)
                 .AddHeader("Accept", "application/json")
                 .AddHeader("Authorization", $"auth.sid {sessionId}")

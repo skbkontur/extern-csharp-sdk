@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Clients.Authentication;
+using Kontur.Extern.Client.Clients.Authentication.Providers;
 using Kontur.Extern.Client.Clients.Common.RequestSenders;
 using Kontur.Extern.Client.Clients.Common.ResponseMessages;
 using Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.ResponseMessages;
@@ -27,7 +27,7 @@ namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.R
         public IAuthenticationProvider AuthenticationProvider { get; }
         public string ApiKey { get; }
 
-        public Task<IResponseMessage> SendJsonAsync(Request request, TimeSpan? timeout = null)
+        public Task<IResponseMessage> SendJsonAsync(Client.Clients.Common.Requests.Request request, TimeSpan? timeout = null)
         {
             throw new NotImplementedException();
         }
@@ -44,18 +44,21 @@ namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.R
             return new ClusterResultWrapper(response);
         }
 
-        private async Task<global::Vostok.Clusterclient.Core.Model.Request> CreateRequest(
+        //todo перейти на внутренний request 
+        private async Task<Request> CreateRequest(
             HttpMethod method,
             string uriPath,
             Dictionary<string, object> uriQueryParams,
             object content,
             TimeSpan? timeout)
         {
-            var request = new global::Vostok.Clusterclient.Core.Model.Request(
+            await AuthenticationProvider.AuthenticateAsync();
+            var request = new Request(
                     method.ToString().ToUpperInvariant(),
                     GetFullUri(uriPath, uriQueryParams),
                     new Content(Convert.FromBase64String(JsonConvert.SerializeObject(content))))
-                .WithAuthorizationHeader(SenderConstants.AuthSidHeader, await AuthenticationProvider.GetSessionId().ConfigureAwait(false))
+                //.WithAuthorizationHeader("Bearer", AuthenticationProvider.CurrentResponse.AccessToken)
+                //не работает т.к. требуется внутренний request
                 .WithHeader(SenderConstants.ApiKeyHeader, ApiKey)
                 .WithContentTypeHeader(SenderConstants.MediaType);
             return timeout != null ? request.WithHeader(SenderConstants.TimeoutHeader, timeout.Value.ToString("c")) : request;
