@@ -95,7 +95,7 @@ namespace Kontur.Extern.Client.Clients.Common.RequestSenders
 
         private static string GetFullUri(string requestUri, Dictionary<string, object> uriQueryParams) =>
             uriQueryParams != null
-                ? $"{requestUri}?{string.Join("&", uriQueryParams.Select(x => $"{x.Key}={x.Value}"))}"
+                ? $"{requestUri}?{string.Join("&", uriQueryParams.Where(x => !string.IsNullOrEmpty(x.Value?.ToString())).Select(x => $"{x.Key}={x.Value}"))}"
                 : requestUri;
     }
 }
