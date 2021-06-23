@@ -12,6 +12,7 @@ using Kontur.Extern.Client.Clients.DraftsBuilders;
 using Kontur.Extern.Client.Clients.Events;
 using Kontur.Extern.Client.Clients.Organizations;
 using Kontur.Extern.Client.Clients.Replies;
+using Kontur.Extern.Client.Cryptography;
 
 namespace Kontur.Extern.Client
 {
@@ -36,13 +37,6 @@ namespace Kontur.Extern.Client
             InitializeClients();
         }
 
-        public KeApiClient(string apiKey, IAuthenticationProvider authenticationProvider, Uri baseAddress, ILogger logger = null)
-        {
-            requestSender = new RequestSender(authenticationProvider, apiKey, new HttpClient {BaseAddress = baseAddress});
-            iLog = logger ?? new SilentLogger();
-            InitializeClients();
-        }
-
         public KeApiClient(IRequestSender requestSender, ILogger logger = null)
         {
             this.requestSender = requestSender;
@@ -57,7 +51,6 @@ namespace Kontur.Extern.Client
         public IDraftsBuilderClient DraftsBuilder { get; private set; }
         public IEventsClient Events { get; private set; }
         public IOrganizationsClient Organizations { get; private set; }
-        public ICrypt CryptoProvider { get; private set; }
 
         private void InitializeClients()
         {
@@ -68,7 +61,6 @@ namespace Kontur.Extern.Client
             Events = new EventsClient(iLog, requestSender);
             DraftsBuilder = new DraftsBuilderClient(iLog, requestSender);
             Organizations = new OrganizationsClient(iLog, requestSender);
-            CryptoProvider=new WinApiCrypt();
         }
     }
 }
