@@ -31,10 +31,10 @@
         public string PartialFactorToken { get; set; }
 
         /// <summary>
-        /// Gets or sets the scope
+        /// Получить или установить scope
         /// </summary>
         /// <value>
-        /// The scope
+        /// сфера использования токена
         /// </value>
         public string Scope { get; set; } = "extern.api";
     }

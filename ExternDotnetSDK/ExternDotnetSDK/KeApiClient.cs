@@ -2,6 +2,7 @@
 using System.Net.Http;
 using Kontur.Extern.Client.Clients.Accounts;
 using Kontur.Extern.Client.Clients.Authentication;
+using Kontur.Extern.Client.Clients.Authentication.Providers;
 using Kontur.Extern.Client.Clients.Common.Logging;
 using Kontur.Extern.Client.Clients.Common.RequestSenders;
 using Kontur.Extern.Client.Clients.Docflows;
