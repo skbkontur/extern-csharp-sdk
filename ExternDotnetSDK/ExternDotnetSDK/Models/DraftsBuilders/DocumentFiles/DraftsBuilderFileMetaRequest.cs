@@ -7,14 +7,20 @@ using Newtonsoft.Json;
 namespace Kontur.Extern.Client.Models.DraftsBuilders.DocumentFiles
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
-    public class DraftsBuilderDocumentFileMetaRequest
+    public class DraftsBuilderFileMetaRequest
     {
+        /// <summary>
+        /// Название файла
+        /// </summary>
         [Required]
         [DataMember]
         public string FileName { get; set; }
 
+        /// <summary>
+        /// Сведения о файле
+        /// </summary>
         [Required]
         [DataMember]
-        public DraftsBuilderDocumentFileData BuilderData { get; set; }
+        public DraftsBuilderFileData BuilderData { get; set; }
     }
 }

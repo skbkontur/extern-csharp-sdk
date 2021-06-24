@@ -8,6 +8,9 @@ namespace Kontur.Extern.Client.Models.DraftsBuilders.Info
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class IpInfo
     {
+        /// <summary>
+        /// ОГРНИП
+        /// </summary>
         [Required]
         [DataMember]
         public string OgrnIp { get; set; }

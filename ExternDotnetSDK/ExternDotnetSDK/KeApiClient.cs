@@ -66,9 +66,9 @@ namespace Kontur.Extern.Client
             Replies = new RepliesClient(iLog, requestSender, requestBodySerializer);
             Drafts = new DraftClient(iLog, requestSender);
             Events = new EventsClient(iLog, requestSender);
-            DraftsBuilder = new DraftsBuilderClient(iLog, requestSender);
+            DraftsBuilder = new DraftsBuilderClient(iLog, requestSender, requestBodySerializer);
             Organizations = new OrganizationsClient(iLog, requestSender);
-            CryptoProvider=new WinApiCrypt();
+            CryptoProvider = new WinApiCrypt();
         }
     }
 }
