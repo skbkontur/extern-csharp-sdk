@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
 {
     [TestFixture]
-    internal class DraftClientShould : AllTestsShould
+    internal class DraftsClientShould : AllTestsShould
     {
         private DraftMetaRequest validDraftMetaRequest;
         private Draft draft;
@@ -44,7 +44,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
             draft = await CreateDraftAsync().ConfigureAwait(false);
             someDocument = await CreateFilledDocument().ConfigureAwait(false);
             filledDocument = await CreateFilledDocument(draft).ConfigureAwait(false);
-            filledDocumentSignature = await Client.Drafts.AddDocumentSignatureAsync(
+            filledDocumentSignature = await Client.Drafts.CreateSignatureAsync(
                 Account.Id,
                 draft.Id,
                 filledDocument.Id,
@@ -54,7 +54,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         [OneTimeTearDown]
         public override async Task TearDown()
         {
-            await Client.Drafts.DeleteDocumentSignatureAsync(
+            await Client.Drafts.DeleteSignatureAsync(
                 Account.Id,
                 draft.Id,
                 filledDocument.Id,
@@ -316,20 +316,10 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public void FailToCreateDocument_WithWrongBase64Content()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.AddDocumentAsync(
+                async () => await Client.Drafts.CreateDocumentAsync(
                     Account.Id,
                     draft.Id,
-                    new DocumentContents {Base64Content = "1"}).ConfigureAwait(false));
-        }
-
-        [Test]
-        public void FailToCreateDocument_WithWrongSignature()
-        {
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.AddDocumentAsync(
-                    Account.Id,
-                    draft.Id,
-                    new DocumentContents {Signature = "1"}).ConfigureAwait(false));
+                    new DocumentRequest {Base64Content = "1"}).ConfigureAwait(false));
         }
 
         [Test]
@@ -351,23 +341,6 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         }
 
         [Test]
-        public void FailToUpdateDocument_WithBadParameters()
-        {
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.UpdateDocumentAsync(
-                    Account.Id,
-                    draft.Id,
-                    someDocument.Id,
-                    new DocumentContents {Base64Content = "1"}).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.UpdateDocumentAsync(
-                    Account.Id,
-                    draft.Id,
-                    someDocument.Id,
-                    new DocumentContents {Signature = "1"}).ConfigureAwait(false));
-        }
-
-        [Test]
         public async Task UpdateDocument_WithValidParameters()
         {
             var document = await CreateFilledDocument().ConfigureAwait(false);
@@ -376,7 +349,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
                     Account.Id,
                     draft.Id,
                     document.Id,
-                    new DocumentContents {Base64Content = Convert.ToBase64String(new byte[] {1})}).ConfigureAwait(false));
+                    new DocumentRequest {Base64Content = Convert.ToBase64String(new byte[] {1})}).ConfigureAwait(false));
             await Client.Drafts.DeleteDocumentAsync(Account.Id, draft.Id, document.Id).ConfigureAwait(false);
         }
 
@@ -384,156 +357,18 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public void FailToGetDocumentPrint_WithBadParameters()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentPrintAsync(Guid.Empty, draft.Id, someDocument.Id).ConfigureAwait(false));
+                async () => await Client.Drafts.PrintDocumentAsync(Guid.Empty, draft.Id, someDocument.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentPrintAsync(Account.Id, Guid.Empty, someDocument.Id).ConfigureAwait(false));
+                async () => await Client.Drafts.PrintDocumentAsync(Account.Id, Guid.Empty, someDocument.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentPrintAsync(Account.Id, draft.Id, Guid.Empty).ConfigureAwait(false));
+                async () => await Client.Drafts.PrintDocumentAsync(Account.Id, draft.Id, Guid.Empty).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToGetNonexistentDocumentPrint()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentPrintAsync(Account.Id, draft.Id, someDocument.Id).ConfigureAwait(false));
-        }
-
-        [Test]
-        public void FailToGetDocumentDecryptedContent_WithBadParameters()
-        {
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentDecryptedContentAsync(Guid.Empty, draft.Id, someDocument.Id).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentDecryptedContentAsync(Account.Id, Guid.Empty, someDocument.Id).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentDecryptedContentAsync(Account.Id, draft.Id, Guid.Empty).ConfigureAwait(false));
-        }
-
-        // [Test]
-        // public void FailToGetDocumentDecryptedContent_WhenItIsEmpty()
-        // {
-        //     Assert.ThrowsAsync<HttpRequestException>(
-        //         async () => await Client.Drafts.GetDocumentDecryptedContentAsync(Account.Id, draft.Id, someDocument.Id).ConfigureAwait(false));
-        // }
-
-        [Test]
-        public void GetDocumentDecryptedContent_WhenItExists()
-        {
-            Assert.DoesNotThrowAsync(
-                async () => await Client.Drafts.GetDocumentDecryptedContentAsync(Account.Id, draft.Id, filledDocument.Id).ConfigureAwait(false));
-        }
-
-        [Test]
-        public void FailToUpdateDocumentDecryptedContent_WithBadParameters()
-        {
-            var content = new byte[] {9, 1, 1};
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.UpdateDocumentDecryptedContentAsync(
-                    Guid.Empty,
-                    draft.Id,
-                    someDocument.Id,
-                    content).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.UpdateDocumentDecryptedContentAsync(
-                    Account.Id,
-                    Guid.Empty,
-                    someDocument.Id,
-                    content).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.UpdateDocumentDecryptedContentAsync(
-                    Account.Id,
-                    draft.Id,
-                    Guid.Empty,
-                    content).ConfigureAwait(false));
-            Assert.ThrowsAsync<ArgumentNullException>(
-                async () => await Client.Drafts.UpdateDocumentDecryptedContentAsync(
-                    Account.Id,
-                    draft.Id,
-                    someDocument.Id,
-                    null).ConfigureAwait(false));
-        }
-
-        // [Test]
-        // public async Task UpdateDocumentDecryptedContent_WithValidParameters()
-        // {
-        //     var content = new byte[] {1};
-        //     var document = await CreateFilledDocument().ConfigureAwait(false);
-        //     Assert.DoesNotThrowAsync(
-        //         async () => await Client.Drafts.UpdateDocumentDecryptedContentAsync(
-        //             Account.Id,
-        //             draft.Id,
-        //             document.Id,
-        //             content).ConfigureAwait(false));
-        //     await Client.Drafts.DeleteDocumentAsync(Account.Id, draft.Id, document.Id).ConfigureAwait(false);
-        // }
-
-        [Test]
-        public void FailToGetDocumentSignatureContent_WithBadParameters()
-        {
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentSignatureContentAsync(Guid.Empty, draft.Id, someDocument.Id).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentSignatureContentAsync(Account.Id, Guid.Empty, someDocument.Id).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentSignatureContentAsync(Account.Id, draft.Id, Guid.Empty).ConfigureAwait(false));
-        }
-
-        // [Test]
-        // public void FailToGetDocumentSignatureContent_WhenItIsEmpty()
-        // {
-        //     Assert.ThrowsAsync<HttpRequestException>(
-        //         async () => await Client.Drafts.GetDocumentSignatureContentAsync(Account.Id, draft.Id, someDocument.Id).ConfigureAwait(false));
-        // }
-
-        [Test]
-        public void GetDocumentSignatureContent_WhenItExists()
-        {
-            Assert.DoesNotThrowAsync(
-                async () => await Client.Drafts.GetDocumentSignatureContentAsync(Account.Id, draft.Id, filledDocument.Id).ConfigureAwait(false));
-        }
-
-        [Test]
-        public void FailToUpdateSignatureContent_WithBadParameters()
-        {
-            var content = new byte[] {1};
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.UpdateDocumentSignatureContentAsync(
-                    Guid.Empty,
-                    draft.Id,
-                    someDocument.Id,
-                    content).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.UpdateDocumentSignatureContentAsync(
-                    Account.Id,
-                    Guid.Empty,
-                    someDocument.Id,
-                    content).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.UpdateDocumentSignatureContentAsync(
-                    Account.Id,
-                    draft.Id,
-                    Guid.Empty,
-                    content).ConfigureAwait(false));
-            Assert.ThrowsAsync<ArgumentNullException>(
-                async () => await Client.Drafts.UpdateDocumentSignatureContentAsync(
-                    Account.Id,
-                    draft.Id,
-                    someDocument.Id,
-                    null).ConfigureAwait(false));
-        }
-
-        [Test]
-        public async Task UpdateSignatureContent_WithValidParameters()
-        {
-            var content = new byte[] {7};
-            var document = await CreateFilledDocument().ConfigureAwait(false);
-            Assert.DoesNotThrowAsync(
-                async () => await Client.Drafts.UpdateDocumentSignatureContentAsync(
-                    Account.Id,
-                    draft.Id,
-                    document.Id,
-                    content).ConfigureAwait(false));
-            await Client.Drafts.DeleteDocumentAsync(Account.Id, draft.Id, document.Id).ConfigureAwait(false);
+                async () => await Client.Drafts.PrintDocumentAsync(Account.Id, draft.Id, someDocument.Id).ConfigureAwait(false));
         }
 
         [Test]
@@ -542,21 +377,21 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
             var request = new SignatureRequest {Base64Content = Convert.ToBase64String(new byte[] {5})};
             var badRequest = new SignatureRequest {Base64Content = "2"};
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.AddDocumentSignatureAsync(
+                async () => await Client.Drafts.CreateSignatureAsync(
                     Guid.Empty,
                     draft.Id,
                     filledDocument.Id,
                     request).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.AddDocumentSignatureAsync(
+                async () => await Client.Drafts.CreateSignatureAsync(
                     Account.Id,
                     Guid.Empty,
                     filledDocument.Id,
                     request).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.AddDocumentSignatureAsync(Account.Id, draft.Id, Guid.Empty, request).ConfigureAwait(false));
+                async () => await Client.Drafts.CreateSignatureAsync(Account.Id, draft.Id, Guid.Empty, request).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.AddDocumentSignatureAsync(
+                async () => await Client.Drafts.CreateSignatureAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -567,25 +402,25 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public void FailToDeleteSignature_WithBadParameters()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.DeleteDocumentSignatureAsync(
+                async () => await Client.Drafts.DeleteSignatureAsync(
                     Guid.Empty,
                     draft.Id,
                     filledDocument.Id,
                     filledDocumentSignature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.DeleteDocumentSignatureAsync(
+                async () => await Client.Drafts.DeleteSignatureAsync(
                     Account.Id,
                     Guid.Empty,
                     filledDocument.Id,
                     filledDocumentSignature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.DeleteDocumentSignatureAsync(
+                async () => await Client.Drafts.DeleteSignatureAsync(
                     Account.Id,
                     draft.Id,
                     Guid.Empty,
                     filledDocumentSignature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.DeleteDocumentSignatureAsync(
+                async () => await Client.Drafts.DeleteSignatureAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -598,8 +433,8 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         //     Assert.DoesNotThrowAsync(
         //         async () =>
         //         {
-        //             var signature = await Client.Drafts.AddDocumentSignatureAsync(Account.Id, draft.Id, someDocument.Id).ConfigureAwait(false);
-        //             await Client.Drafts.DeleteDocumentSignatureAsync(Account.Id, draft.Id, someDocument.Id, signature.Id).ConfigureAwait(false);
+        //             var signature = await Client.Drafts.CreateSignatureAsync(Account.Id, draft.Id, someDocument.Id).ConfigureAwait(false);
+        //             await Client.Drafts.DeleteSignatureAsync(Account.Id, draft.Id, someDocument.Id, signature.Id).ConfigureAwait(false);
         //         });
         // }
 
@@ -607,25 +442,25 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public void FailToGetSignature_WithBadParameters()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentSignatureAsync(
+                async () => await Client.Drafts.GetSignatureAsync(
                     Guid.Empty,
                     draft.Id,
                     filledDocument.Id,
                     filledDocumentSignature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentSignatureAsync(
+                async () => await Client.Drafts.GetSignatureAsync(
                     Account.Id,
                     Guid.Empty,
                     filledDocument.Id,
                     filledDocumentSignature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentSignatureAsync(
+                async () => await Client.Drafts.GetSignatureAsync(
                     Account.Id,
                     draft.Id,
                     Guid.Empty,
                     filledDocumentSignature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentSignatureAsync(
+                async () => await Client.Drafts.GetSignatureAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -636,7 +471,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public void GetExistingSignature()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.Drafts.GetDocumentSignatureAsync(
+                async () => await Client.Drafts.GetSignatureAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -649,35 +484,35 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
             var validRequest = new SignatureRequest {Base64Content = Convert.ToBase64String(new byte[] {6, 7})};
             var invalidRequest = new SignatureRequest {Base64Content = "2"};
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.UpdateDocumentSignatureAsync(
+                async () => await Client.Drafts.UpdateSignatureAsync(
                     Guid.Empty,
                     draft.Id,
                     filledDocument.Id,
                     filledDocumentSignature.Id,
                     validRequest).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.UpdateDocumentSignatureAsync(
+                async () => await Client.Drafts.UpdateSignatureAsync(
                     Account.Id,
                     Guid.Empty,
                     filledDocument.Id,
                     filledDocumentSignature.Id,
                     validRequest).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.UpdateDocumentSignatureAsync(
+                async () => await Client.Drafts.UpdateSignatureAsync(
                     Account.Id,
                     draft.Id,
                     Guid.Empty,
                     filledDocumentSignature.Id,
                     validRequest).ConfigureAwait(false));
             // Assert.ThrowsAsync<HttpRequestException>(
-            //     async () => await Client.Drafts.UpdateDocumentSignatureAsync(
+            //     async () => await Client.Drafts.UpdateSignatureAsync(
             //         Account.Id,
             //         draft.Id,
             //         filledDocument.Id,
             //         Guid.Empty,
             //         validRequest).ConfigureAwait(false));
             // Assert.ThrowsAsync<HttpRequestException>(
-            //     async () => await Client.Drafts.UpdateDocumentSignatureAsync(
+            //     async () => await Client.Drafts.UpdateSignatureAsync(
             //         Account.Id,
             //         draft.Id,
             //         filledDocument.Id,
@@ -688,41 +523,41 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         // [Test]
         // public async Task UpdateSignature_WithValidParameters()
         // {
-        //     var signature = await Client.Drafts.AddDocumentSignatureAsync(Account.Id, draft.Id, filledDocument.Id).ConfigureAwait(false);
+        //     var signature = await Client.Drafts.CreateSignatureAsync(Account.Id, draft.Id, filledDocument.Id).ConfigureAwait(false);
         //     var newRequest = new SignatureRequest {Base64Content = Convert.ToBase64String(new byte[] {6, 7})};
         //     Assert.DoesNotThrowAsync(
-        //         async () => await Client.Drafts.UpdateDocumentSignatureAsync(
+        //         async () => await Client.Drafts.UpdateSignatureAsync(
         //             Account.Id,
         //             draft.Id,
         //             filledDocument.Id,
         //             signature.Id,
         //             newRequest).ConfigureAwait(false));
-        //     await Client.Drafts.DeleteDocumentSignatureAsync(Account.Id, draft.Id, filledDocument.Id, signature.Id).ConfigureAwait(false);
+        //     await Client.Drafts.DeleteSignatureAsync(Account.Id, draft.Id, filledDocument.Id, signature.Id).ConfigureAwait(false);
         // }
 
         [Test]
         public void FailToGetSignatureContent_WithBadParameters()
         {
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentSignatureContentAsync(
+                async () => await Client.Drafts.GetSignatureContentAsync(
                     Guid.Empty,
                     draft.Id,
                     filledDocument.Id,
                     filledDocumentSignature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentSignatureContentAsync(
+                async () => await Client.Drafts.GetSignatureContentAsync(
                     Account.Id,
                     Guid.Empty,
                     filledDocument.Id,
                     filledDocumentSignature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentSignatureContentAsync(
+                async () => await Client.Drafts.GetSignatureContentAsync(
                     Account.Id,
                     draft.Id,
                     Guid.Empty,
                     filledDocumentSignature.Id).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentSignatureContentAsync(
+                async () => await Client.Drafts.GetSignatureContentAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -733,7 +568,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public void GetExistingSignatureContent()
         {
             Assert.DoesNotThrowAsync(
-                async () => await Client.Drafts.GetDocumentSignatureContentAsync(
+                async () => await Client.Drafts.GetSignatureContentAsync(
                     Account.Id,
                     draft.Id,
                     filledDocument.Id,
@@ -794,70 +629,55 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         }
 
         [Test]
-        public void FailToGetDocumentEncryptedContent_WithBadParameters()
-        {
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentEncryptedContentAsync(Guid.Empty, draft.Id, someDocument.Id).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentEncryptedContentAsync(Account.Id, Guid.Empty, someDocument.Id).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentEncryptedContentAsync(Account.Id, draft.Id, Guid.Empty).ConfigureAwait(false));
-        }
-
-        [Test]
-        public void FailToGetDocumentEncryptedContent_WhenItIsEmpty()
-        {
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDocumentEncryptedContentAsync(Account.Id, draft.Id, someDocument.Id).ConfigureAwait(false));
-        }
-
-        [Test]
         public void FailToBuildDocument_WithBadParameters()
         {
-            var content = JsonConvert.SerializeObject(new DocumentContents());
+            var content = JsonConvert.SerializeObject(new DocumentRequest());
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.BuildDocumentContentAsync(
+                async () => await Client.Drafts.BuildDocumentAsync(
                     Guid.Empty,
                     draft.Id,
                     filledDocument.Id,
                     FormatType.uSN,
+                    1,
                     content).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.BuildDocumentContentAsync(
+                async () => await Client.Drafts.BuildDocumentAsync(
                     Account.Id,
                     Guid.Empty,
                     filledDocument.Id,
                     FormatType.uSN,
+                    1,
                     content).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.BuildDocumentContentAsync(
+                async () => await Client.Drafts.BuildDocumentAsync(
                     Account.Id,
                     draft.Id,
                     Guid.Empty,
                     FormatType.uSN,
+                    1,
                     content).ConfigureAwait(false));
         }
 
         [Test]
         public void FailToCreateDocumentWithContentFromFormat_WithBadParameters()
         {
-            var content = JsonConvert.SerializeObject(new DocumentContents());
+            var content = JsonConvert.SerializeObject(new DocumentRequest());
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.CreateDocumentWithContentFromFormatAsync(
+                async () => await Client.Drafts.BuildDocumentAsync(
                     Guid.Empty,
                     draft.Id,
                     FormatType.uSN,
                     1,
                     content).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.CreateDocumentWithContentFromFormatAsync(
+                async () => await Client.Drafts.BuildDocumentAsync(
                     Account.Id,
                     Guid.Empty,
                     FormatType.uSN,
                     1,
                     content).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.CreateDocumentWithContentFromFormatAsync(
+                async () => await Client.Drafts.BuildDocumentAsync(
                     Account.Id,
                     draft.Id,
                     FormatType.uSN,
@@ -884,10 +704,10 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
             var d = await CreateDraftAsync().ConfigureAwait(false);
             await Client.Drafts.StartCheckDraftAsync(Account.Id, d.Id).ConfigureAwait(false);
             var taskId = (await Client.Drafts.GetDraftTasks(Account.Id, d.Id).ConfigureAwait(false)).ApiTaskPageItems[0].Id;
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.GetDraftTask(Guid.Empty, d.Id, taskId).ConfigureAwait(false));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.GetDssSignTask(Guid.Empty, d.Id, taskId).ConfigureAwait(false));
             Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDraftTask(Account.Id, Guid.Empty, taskId).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.GetDraftTask(Account.Id, d.Id, Guid.Empty).ConfigureAwait(false));
+                async () => await Client.Drafts.GetDssSignTask(Account.Id, Guid.Empty, taskId).ConfigureAwait(false));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.GetDssSignTask(Account.Id, d.Id, Guid.Empty).ConfigureAwait(false));
             await Client.Drafts.DeleteDraftAsync(Account.Id, d.Id).ConfigureAwait(false);
         }
 
@@ -897,7 +717,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
             var d = await CreateDraftAsync().ConfigureAwait(false);
             await Client.Drafts.StartCheckDraftAsync(Account.Id, d.Id).ConfigureAwait(false);
             var taskId = (await Client.Drafts.GetDraftTasks(Account.Id, d.Id).ConfigureAwait(false)).ApiTaskPageItems[0].Id;
-            Assert.DoesNotThrowAsync(async () => await Client.Drafts.GetDraftTask(Account.Id, d.Id, taskId).ConfigureAwait(false));
+            Assert.DoesNotThrowAsync(async () => await Client.Drafts.GetDssSignTask(Account.Id, d.Id, taskId).ConfigureAwait(false));
             await Client.Drafts.DeleteDraftAsync(Account.Id, d.Id).ConfigureAwait(false);
         }
 
@@ -905,8 +725,8 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public async Task FailToCloudSignDraft_WithBadParameters()
         {
             var d = await CreateDraftAsync().ConfigureAwait(false);
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.CloudSignDraftAsync(Guid.Empty, d.Id).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.CloudSignDraftAsync(Account.Id, Guid.Empty).ConfigureAwait(false));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.DssSignAsync(Guid.Empty, d.Id).ConfigureAwait(false));
+            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.DssSignAsync(Account.Id, Guid.Empty).ConfigureAwait(false));
             await DeleteDraftAsync(d).ConfigureAwait(false);
         }
 
@@ -918,19 +738,19 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
             await CreateFilledDocument(draft).ConfigureAwait(false);
 
         private async Task<DraftDocument> CreateFilledDocument(Draft d) =>
-            await Client.Drafts.AddDocumentAsync(
+            await Client.Drafts.CreateDocumentAsync(
                 Account.Id,
                 d.Id,
-                new DocumentContents
+                new DocumentRequest
                 {
                     Base64Content = Convert.ToBase64String(new byte[] {1}),
-                    Description = new DocumentDescriptionRequestDto
+                    Description = new DocumentDescriptionRequest
                     {
                         ContentType = "application/json",
                         Filename = "Filename",
                         Type = new Urn("nid", "nss")
                     },
-                    Signature = Convert.ToBase64String(validDraftMetaRequest.Sender.Certificate.Content)
+                    Signature = validDraftMetaRequest.Sender.Certificate.Content
                 }).ConfigureAwait(false);
     }
 }

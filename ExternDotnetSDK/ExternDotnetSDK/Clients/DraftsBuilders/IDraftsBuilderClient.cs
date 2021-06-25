@@ -183,7 +183,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
         /// <param name="documentId">Идентификатор документа в DraftsBuilder</param>
         /// <param name="fileRequest"></param>
         /// <param name="timeout"></param>
-        /// <returns></returns>
+        /// <returns>Файл DraftsBuilder</returns>
         Task<DraftsBuilderDocumentFile> CreateFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
@@ -198,7 +198,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
         /// <param name="draftsBuilderId">Идентификатор DraftsBuilder</param>
         /// <param name="documentId">Идентификатор документа в DraftsBuilder</param>
         /// <param name="timeout"></param>
-        /// <returns></returns>
+        /// <returns>Список файлов документа DraftsBuilder</returns>
         Task<IReadOnlyCollection<DraftsBuilderDocumentFile>> GetFilesAsync(
             Guid accountId,
             Guid draftsBuilderId,

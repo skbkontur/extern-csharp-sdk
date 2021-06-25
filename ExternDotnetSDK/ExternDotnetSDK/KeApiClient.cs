@@ -53,7 +53,7 @@ namespace Kontur.Extern.Client
         public IAccountClient Accounts { get; private set; }
         public IDocflowsClient Docflows { get; private set; }
         public IRepliesClient Replies { get; private set; }
-        public IDraftClient Drafts { get; private set; }
+        public IDraftsClient Drafts { get; private set; }
         public IDraftsBuilderClient DraftsBuilder { get; private set; }
         public IEventsClient Events { get; private set; }
         public IOrganizationsClient Organizations { get; private set; }
@@ -64,7 +64,7 @@ namespace Kontur.Extern.Client
             Accounts = new AccountClient(iLog, requestSender, requestBodySerializer);
             Docflows = new DocflowsClient(iLog, requestSender, requestBodySerializer);
             Replies = new RepliesClient(iLog, requestSender, requestBodySerializer);
-            Drafts = new DraftClient(iLog, requestSender);
+            Drafts = new DraftsClient(iLog, requestSender, requestBodySerializer);
             Events = new EventsClient(iLog, requestSender);
             DraftsBuilder = new DraftsBuilderClient(iLog, requestSender, requestBodySerializer);
             Organizations = new OrganizationsClient(iLog, requestSender);
