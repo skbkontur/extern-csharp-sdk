@@ -58,11 +58,14 @@ namespace Kontur.Extern.Client.Concept
             var docflowId = Guid.NewGuid();
             var documentId = Guid.NewGuid();
             var documentCtx = accountCtx.Docflows.WithId(docflowId).Documents.WithId(documentId);
-            
-            var decrypting = await documentCtx.StartDssDecryptAsync();
+
+            var decrypting = await documentCtx.DssDecrypt.StartAsync();
             await decrypting.WaitForCompletion();
             // or
-            var decryptStatus = await documentCtx.GetDssDecryptStatusAsync(decrypting.TaskId);
+            var decryptStatus = await documentCtx.DssDecrypt.CheckStatusAsync(decrypting.TaskId);
+            // or
+            Guid restoredTaskId;
+            documentCtx.DssDecrypt.ContinueAwait(restoredTaskId).WaitForCompletion();
         }
     }
 }
