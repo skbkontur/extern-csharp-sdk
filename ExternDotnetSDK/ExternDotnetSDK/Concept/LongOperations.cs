@@ -5,25 +5,25 @@ using Kontur.Extern.Client.Models.Api.Enums;
 
 namespace Kontur.Extern.Client
 {
-    internal interface IDeferredOperation
+    internal interface ILongOperation
     { 
-        Task<IDeferred> StartAsync();
+        Task<ILongOperationAwaiter> StartAsync();
         
-        IDeferred ContinueAwait(Guid taskId);
+        ILongOperationAwaiter ContinueAwait(Guid taskId);
 
         Task<ApiTaskState> CheckStatusAsync(Guid taskId);
     }
     
-    internal interface IDeferred
+    internal interface ILongOperationAwaiter
     {
         Guid TaskId { get; }
         Task WaitForCompletion();
         
         // NOTE: this method here only to show possible extensibility for the interface
-        IObservable<DeferredProcessStatus> Observe();
+        IObservable<LongOperationStatus> Observe();
     }
 
-    internal class DeferredProcessStatus
+    internal class LongOperationStatus
     {
         public bool IsCompleted { get; }
         public Progress Progress { get; }
@@ -37,20 +37,20 @@ namespace Kontur.Extern.Client
         public double Percent { get; }
     } 
 
-    internal interface IDeferred<T>
+    internal interface ILongOperationAwaiter<T>
     {
         Guid TaskId { get; }
         Task<T> WaitForCompletion(); // return result or throw exception (ApiException or OperationCancelledException)
         
         // NOTE: this method here only to show possible extensibility for the interface
-        IObservable<DeferredProcessStatus<T>> Observe();
+        IObservable<LongOperationStatus<T>> Observe();
     }
     
-    internal class DeferredProcessStatus<T> : DeferredProcessStatus
+    internal class LongOperationStatus<T> : LongOperationStatus
     {
         private readonly T result;
 
-        public DeferredProcessStatus(T result) => this.result = result;
+        public LongOperationStatus(T result) => this.result = result;
 
         public bool TryGetResult(out T result)
         {
