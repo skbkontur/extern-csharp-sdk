@@ -77,10 +77,12 @@ All methods witch implement pagination with `Skip`/`Take` should return `IEntiry
 
 ## Deferred tasks
 
-Methods with initiate deferred tasks/processes should return `IDeferred`/`IDeferred<TResult\>`. This interface allows to implement all kind of scenarios around deferred tasks:
-- waiting task for completion,
+The interface `IDeferred`/`IDeferred<T>` is used to represent background long operations. It allows:
+- waiting background operation for completion,
 - manually check status for an initiated task,
 - track progress during task execution by implementing `IObservable<ProgressStatus>` -- it's only opportunity, it's not planned from start.
+
+To initiate deferred tasks/processes a context interface should declare a property of type `IDeferredOperation`/`IDeferredOperation<TResult>`. This interface allows to initate background operation and returns `IDeferred` instantce to obseve progress. Also, this interface allows manually observe progress or restore `IDeferred` instance.
 
 ## Errors handling
 
