@@ -1,9 +1,19 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.Models.Api.Enums;
 
 namespace Kontur.Extern.Client
 {
+    internal interface IDeferredOperation
+    { 
+        Task<IDeferred> StartAsync();
+        
+        IDeferred ContinueAwait(Guid taskId);
+
+        Task<ApiTaskState> CheckStatusAsync(Guid taskId);
+    }
+    
     internal interface IDeferred
     {
         Guid TaskId { get; }

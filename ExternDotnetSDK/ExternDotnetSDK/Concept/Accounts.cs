@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Clients.Docflows;
 using Kontur.Extern.Client.Models.Accounts;
@@ -11,7 +12,10 @@ namespace Kontur.Extern.Client
     {
         Task<Account> CreateAsync(string inn, string kpp, string organizationName);
 
-        IEntityList<Account> List(uint take = 100);
+        IEntityList<Account> List();
+
+        Task<List<Account>> FindAsync(string inn, string kpp);
+
         IAccountContext WithId(Guid accountId);
     }
 
@@ -20,8 +24,6 @@ namespace Kontur.Extern.Client
         Task DeleteAsync();
 
         Task<Account> GetAsync();
-
-        IPagination<CertificateDto> GetCertificates();
 
         /// <summary>
         /// property style entities list example.
@@ -32,9 +34,8 @@ namespace Kontur.Extern.Client
         /// method style entities list example.
         /// allows to use warrants with exposed default page size in signature
         /// </summary>
-        /// <param name="takeSize"></param>
         /// <returns></returns>
-        IEntityList<Warrant> Warrants(int take = 100);
+        IEntityList<Warrant> Warrants { get; }
         
         IOrganizationListContext Organizations { get; }
         IDocflowListContext Docflows { get; }

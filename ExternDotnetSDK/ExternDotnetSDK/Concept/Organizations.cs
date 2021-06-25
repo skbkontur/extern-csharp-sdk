@@ -15,9 +15,7 @@ namespace Kontur.Extern.Client
         /// <param name="kpp"></param>
         /// <param name="take"></param>
         /// <returns></returns>
-        IEntityList<Organization> List(string inn = null,
-                                                string kpp = null,
-                                                uint take = 100);
+        IEntityList<Organization> List(string inn = null, string kpp = null);
 
         IOrganizationContext WithId(Guid createdOrganizationId);
     }

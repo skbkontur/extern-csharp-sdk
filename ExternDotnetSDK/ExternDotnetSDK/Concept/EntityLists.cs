@@ -5,22 +5,32 @@ namespace Kontur.Extern.Client
 {
     interface IEntityList<T>
     {
-        IEntityList<T> Skip(uint skip);
+        
         /// <summary>
         /// Allows to change take items (and page size)
         /// </summary>
         /// <param name="take"></param>
         /// <returns></returns>
-        IEntityList<T> Take(uint take);
-        Task<IReadOnlyList<T>> LoadAsync();
+        IEntityListSlicing<T> SliceBy(uint take);
         
         /// <summary>
         /// return pagination interface
         /// </summary>
         /// <returns></returns>
-        IPagination<T> Paging();
+        IPagination<T> Paging(uint pageSize);        
+    }
 
-        Task<IReadOnlyList<T>> AllAsync();
+    public interface IEntityListSlicing<T>
+    {
+        IEntityListSliceLoading<T> Skip(uint skip);
+
+        Task<IReadOnlyList<T>> LoadAllAsync();
+        Task<IReadOnlyList<T>> LoadSliceAsync();
+    }
+
+    public interface IEntityListSliceLoading<T> 
+    {
+        Task<(IReadOnlyList<T> Items, bool HasNextSlice)> LoadSliceAsync();
     }
 
     public interface IPagination<T>

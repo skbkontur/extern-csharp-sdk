@@ -26,16 +26,16 @@ namespace Kontur.Extern.Client.Concept
 
             await PlayWithOrganizations(externCtx.Accounts.WithId(loadedAccount.Id));
             
-            var accounts = await externCtx.Accounts.List().AllAsync();
+            var accounts = await externCtx.Accounts.List().SliceBy(100).Skip(10).LoadSliceAsync();
             await externCtx.Accounts.WithId(loadedAccount.Id).DeleteAsync();
 
             async Task PlayWithAccountRelatedEntities(IAccountContext accountContext)
             {
-                var allCertificates = await accountContext.Certificates.AllAsync();
-                var top10Certificates = await accountContext.Certificates.Take(10).LoadAsync();
+                var allCertificates = await accountContext.Certificates.SliceBy(10).LoadAllAsync();
+                var top10Certificates = await accountContext.Certificates.SliceBy(10).LoadSliceAsync();
                 
-                var top5Warrants = await accountContext.Warrants(5).LoadAsync();
-                var secondPageOfWarrants = await accountContext.Warrants().Paging().LoadPageAsync(1);
+                var top5Warrants = await accountContext.Warrants.SliceBy(5).LoadSliceAsync();
+                var secondPageOfWarrants = await accountContext.Warrants.Paging(5).LoadPageAsync(1);
             }
         }
 
@@ -47,8 +47,8 @@ namespace Kontur.Extern.Client.Concept
             var orgCtx = organizationsCtx.WithId(createdOrganization.Id);
             var loadedOrganization = await orgCtx.GetAsync();
 
-            var topTenOrganizations = await organizationsCtx.List().Take(10).LoadAsync();
-            var allOrganizationsWithParticularInn = await organizationsCtx.List("some inn").AllAsync();
+            var topTenOrganizations = await organizationsCtx.List().SliceBy(10).LoadSliceAsync();
+            var allOrganizationsWithParticularInn = await organizationsCtx.List("some inn").SliceBy(5).LoadAllAsync();
             
             await orgCtx.DeleteAsync();
         }
