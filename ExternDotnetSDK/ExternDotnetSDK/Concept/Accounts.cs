@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Clients.Docflows;
+using Kontur.Extern.Client.Concept;
 using Kontur.Extern.Client.Models.Accounts;
 using Kontur.Extern.Client.Models.Certificates;
 using Kontur.Extern.Client.Models.Warrants;
 
 namespace Kontur.Extern.Client
 {
-    interface IAccountListContext
+    interface IAccountListContext : IExtendableContext
     {
         Task<Account> CreateAsync(string inn, string kpp, string organizationName);
 
@@ -19,7 +19,7 @@ namespace Kontur.Extern.Client
         IAccountContext WithId(Guid accountId);
     }
 
-    interface IAccountContext
+    interface IAccountContext : IExtendableContext<AccountPath>
     {
         Task DeleteAsync();
 

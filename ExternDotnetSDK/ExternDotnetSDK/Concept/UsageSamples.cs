@@ -25,6 +25,8 @@ namespace Kontur.Extern.Client.Concept
             await PlayWithAccountRelatedEntities(externCtx.Accounts.WithId(loadedAccount.Id));
 
             await PlayWithOrganizations(externCtx.Accounts.WithId(loadedAccount.Id));
+
+            await PlayWithExtensions(externCtx.Accounts.WithId(loadedAccount.Id));
             
             var accounts = await externCtx.Accounts.List().SliceBy(100).Skip(10).LoadSliceAsync();
             await externCtx.Accounts.WithId(loadedAccount.Id).DeleteAsync();
@@ -51,6 +53,14 @@ namespace Kontur.Extern.Client.Concept
             var allOrganizationsWithParticularInn = await organizationsCtx.List("some inn").SliceBy(5).LoadAllAsync();
             
             await orgCtx.DeleteAsync();
+        }
+
+
+        public static async Task PlayWithExtensions(IAccountContext accountCtx)
+        {
+            await accountCtx.SecretAccountMethodAsync("secret");
+
+            await accountCtx.Organizations.WithId(Guid.NewGuid()).UpdateOrganizationAsync("inn", "kpp", "name");
         }
 
         public static async Task PlayWithDocflowDeferredMethods(IAccountContext accountCtx)

@@ -35,6 +35,33 @@ Cons:
 - could be hard to extend,
 - could be too verbose.
 
+#### Extensibility
+
+2 ways
+1. Simple.  
+   Each context expose `IKeClient`, `Options`, `ContextPath`. Extensions is just an simple extension methods.  
+   pros:
+   - simple,
+   - no additional allocations -- just method calls  
+   
+   cons:
+   - exposed internals for each of contexts
+   ```c#
+   // make possible to write strange code like this
+   accountCtx.KeClient.Organizations.DeleteOrganizationAsync(...)
+   ```
+
+2. More controllable  
+   Expose a method witch accept an extension. A concrete extension could be presented as delegate or as class. This class or delegate expose internals.
+   pros:  
+   - exposes internals only for the extension attaching method,
+   - allows to deliver extensions as regular extension methods
+
+   cons:  
+   - little bit more ceremony code
+   - more allocations (for closures or for extension classes). 
+   
+
 ### 2. Separated context hierarchy from service functions
 
 ```c#
