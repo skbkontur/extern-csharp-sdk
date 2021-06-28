@@ -12,7 +12,7 @@ namespace Kontur.Extern.Client
     {
         IAccountClient Accounts { get; }
         IDocflowsClient Docflows { get; }
-        IDraftClient Drafts { get; }
+        IDraftsClient Drafts { get; }
         IDraftsBuilderClient DraftsBuilder { get; }
         IEventsClient Events { get; }
         IOrganizationsClient Organizations { get; }
