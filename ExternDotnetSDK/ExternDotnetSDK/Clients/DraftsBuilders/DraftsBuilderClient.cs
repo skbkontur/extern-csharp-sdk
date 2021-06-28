@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Clients.Common;
 using Kontur.Extern.Client.Clients.Common.Logging;
+using Kontur.Extern.Client.Clients.Common.Requests;
 using Kontur.Extern.Client.Clients.Common.RequestSenders;
 using Kontur.Extern.Client.Models.Api;
 using Kontur.Extern.Client.Models.DraftsBuilders.Builders;
@@ -12,246 +12,235 @@ using Kontur.Extern.Client.Models.DraftsBuilders.Documents;
 
 namespace Kontur.Extern.Client.Clients.DraftsBuilders
 {
-    //todo Сделать нормальные тесты для методов.
     public class DraftsBuilderClient : IDraftsBuilderClient
     {
         private readonly InnerCommonClient client;
+        private readonly IRequestBodySerializer requestBodySerializer;
 
-        public DraftsBuilderClient(ILogger logger, IRequestSender requestSender) =>
+        public DraftsBuilderClient(ILogger logger, IRequestSender requestSender, IRequestBodySerializer requestBodySerializer)
+        {
+            this.requestBodySerializer = requestBodySerializer;
             client = new InnerCommonClient(logger, requestSender);
+        }
 
-        public async Task<DraftsBuilder> CreateDraftsBuilderAsync(
+        public Task<DraftsBuilder> CreateDraftsBuilderAsync(
             Guid accountId,
             DraftsBuilderMetaRequest meta,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilder>(
-                HttpMethod.Post,
-                $"/v1/{accountId}/drafts/builders",
-                contentDto: meta,
-                timeout: timeout).ConfigureAwait(false);
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Post($"/v1/{accountId}/drafts/builders");
+            return client.SendJsonRequestAsync<DraftsBuilder>(request, timeout);
+        }
 
-        public async Task DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync(
-                HttpMethod.Delete,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}",
-                timeout: timeout).ConfigureAwait(false);
+        public Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/drafts/builders/{draftsBuilderId}");
+            return client.SendJsonRequestAsync<DraftsBuilder>(request, timeout);
+        }
 
-        public async Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilder>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}",
-                timeout: timeout).ConfigureAwait(false);
+        public Task DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null)
+        {
+            var request = Request.Delete($"/v1/{accountId}/drafts/builders/{draftsBuilderId}");
+            return client.SendJsonRequestAsync(request, timeout);
+        }
 
-        public async Task<DraftsBuilderMeta> GetDraftsBuilderMetaAsync(
+        public Task<DraftsBuilderMeta> GetDraftsBuilderMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderMeta>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta",
-                timeout: timeout).ConfigureAwait(false);
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta");
+            return client.SendJsonRequestAsync<DraftsBuilderMeta>(request, timeout);
+        }
 
-        public async Task<DraftsBuilderMeta> UpdateDraftsBuilderMetaAsync(
+        public Task<DraftsBuilderMeta> UpdateDraftsBuilderMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
             DraftsBuilderMetaRequest meta,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderMeta>(
-                HttpMethod.Put,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta",
-                timeout: timeout).ConfigureAwait(false);
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Put($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta");
+            return client.SendJsonRequestAsync<DraftsBuilderMeta>(request, timeout);
+        }
 
-        public async Task<DraftsBuilderBuildResult> BuildDraftsAsync(
+        public Task<DraftsBuilderBuildResult> BuildDraftsAsync(
             Guid accountId,
             Guid draftsBuilderId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderBuildResult>(
-                HttpMethod.Post,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build",
-                new Dictionary<string, object> {["deferred"] = false},
-                timeout: timeout).ConfigureAwait(false);
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Post($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build");
+            return client.SendJsonRequestAsync<DraftsBuilderBuildResult>(request, timeout);
+        }
 
-        public async Task<ApiTaskResult<DraftsBuilderBuildResult>>
-            BuildDeferredDraftsAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<ApiTaskResult<DraftsBuilderBuildResult>>(
-                HttpMethod.Post,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build",
-                new Dictionary<string, object> {["deferred"] = true},
-                timeout: timeout).ConfigureAwait(false);
+        public Task<ApiTaskResult<DraftsBuilderBuildResult>> StartBuildDraftsAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null)
+        {
+            var url = new RequestUrlBuilder($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build")
+                .AppendToQuery("deferred", true)
+                .Build();
+            var request = Request.Post(url);
+            return client.SendJsonRequestAsync<ApiTaskResult<DraftsBuilderBuildResult>>(request, timeout);
+        }
 
-        public async Task<ApiTaskResult<DraftsBuilderBuildResult>> GetBuildResultAsync(
+        public Task<ApiTaskResult<DraftsBuilderBuildResult>> GetBuildDraftsTaskAsync(
             Guid accountId,
             Guid draftsBuilderId,
-            Guid apiTaskId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<ApiTaskResult<DraftsBuilderBuildResult>>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/tasks/{apiTaskId}",
-                timeout: timeout).ConfigureAwait(false);
+            Guid taskId,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/tasks/{taskId}");
+            return client.SendJsonRequestAsync<ApiTaskResult<DraftsBuilderBuildResult>>(request, timeout);
+        }
 
-        public async Task<DraftsBuilderDocumentFile[]> GetDraftsBuilderDocumentFilesAsync(
-            Guid accountId,
-            Guid draftsBuilderId,
-            Guid documentId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderDocumentFile[]>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files",
-                timeout: timeout).ConfigureAwait(false);
-
-        public async Task<DraftsBuilderDocumentFile> CreateDraftsBuilderDocumentFileAsync(
-            Guid accountId,
-            Guid draftsBuilderId,
-            Guid documentId,
-            DraftsBuilderDocumentFileContents contents,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderDocumentFile>(
-                HttpMethod.Post,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files",
-                contentDto: contents,
-                timeout: timeout).ConfigureAwait(false);
-
-        public async Task DeleteDraftsBuilderDocumentFileAsync(
-            Guid accountId,
-            Guid draftsBuilderId,
-            Guid documentId,
-            Guid fileId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync(
-                HttpMethod.Delete,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
-                timeout: timeout).ConfigureAwait(false);
-
-        public async Task<DraftsBuilderDocumentFile> GetDraftsBuilderDocumentFileAsync(
-            Guid accountId,
-            Guid draftsBuilderId,
-            Guid documentId,
-            Guid fileId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderDocumentFile>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
-                timeout: timeout).ConfigureAwait(false);
-
-        public async Task<DraftsBuilderDocumentFile> UpdateDraftsBuilderDocumentFileAsync(
-            Guid accountId,
-            Guid draftsBuilderId,
-            Guid documentId,
-            Guid fileId,
-            DraftsBuilderDocumentFileContents contents,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderDocumentFile>(
-                HttpMethod.Put,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
-                contentDto: contents,
-                timeout: timeout).ConfigureAwait(false);
-
-        public async Task<string> GetDraftsBuilderDocumentFileContentAsync(
-            Guid accountId,
-            Guid draftsBuilderId,
-            Guid documentId,
-            Guid fileId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<string>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/content",
-                timeout: timeout).ConfigureAwait(false);
-
-        public async Task<string> GetDraftsBuilderDocumentFileSignatureAsync(
-            Guid accountId,
-            Guid draftsBuilderId,
-            Guid documentId,
-            Guid fileId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<string>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/signature",
-                timeout: timeout).ConfigureAwait(false);
-
-        public async Task<DraftsBuilderDocumentFileMeta> GetDraftsBuilderDocumentFileMetaAsync(
-            Guid accountId,
-            Guid draftsBuilderId,
-            Guid documentId,
-            Guid fileId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderDocumentFileMeta>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta",
-                timeout: timeout).ConfigureAwait(false);
-
-        public async Task<DraftsBuilderDocumentFileMeta> UpdateDraftsBuilderDocumentFileMetaAsync(
-            Guid accountId,
-            Guid draftsBuilderId,
-            Guid documentId,
-            Guid fileId,
-            DraftsBuilderDocumentFileMetaRequest meta,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderDocumentFileMeta>(
-                HttpMethod.Put,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta",
-                contentDto: meta,
-                timeout: timeout).ConfigureAwait(false);
-
-        public async Task<DraftsBuilderDocument[]> GetDraftsBuilderDocumentsAsync(
-            Guid accountId,
-            Guid draftsBuilderId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderDocument[]>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents",
-                timeout: timeout).ConfigureAwait(false);
-
-        public async Task<DraftsBuilderDocument> CreateDraftsBuilderDocumentAsync(
+        public Task<DraftsBuilderDocument> CreateDocumentAsync(
             Guid accountId,
             Guid draftsBuilderId,
             DraftsBuilderDocumentMetaRequest meta,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderDocument>(
-                HttpMethod.Post,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents",
-                contentDto: meta,
-                timeout: timeout).ConfigureAwait(false);
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Post($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents");
+            return client.SendJsonRequestAsync<DraftsBuilderDocument>(request, timeout);
+        }
 
-        public async Task DeleteDraftsBuilderDocumentAsync(
+        public Task<IReadOnlyCollection<DraftsBuilderDocument>> GetDocumentsAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents");
+            return client.SendJsonRequestAsync<IReadOnlyCollection<DraftsBuilderDocument>>(request, timeout);
+        }
+
+        public Task<DraftsBuilderDocument> GetDocumentAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync(
-                HttpMethod.Delete,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}",
-                timeout: timeout).ConfigureAwait(false);
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}");
+            return client.SendJsonRequestAsync<DraftsBuilderDocument>(request, timeout);
+        }
 
-        public async Task<DraftsBuilderDocument> GetDraftsBuilderDocumentAsync(
+        public Task DeleteDocumentAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderDocument>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}",
-                timeout: timeout).ConfigureAwait(false);
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Delete($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}");
+            return client.SendJsonRequestAsync(request, timeout);
+        }
 
-        public async Task<DraftsBuilderDocumentMeta> GetDraftsBuilderDocumentMetaAsync(
+        public Task<DraftsBuilderDocumentMeta> GetDocumentMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderDocumentMeta>(
-                HttpMethod.Get,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta",
-                timeout: timeout).ConfigureAwait(false);
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta");
+            return client.SendJsonRequestAsync<DraftsBuilderDocumentMeta>(request, timeout);
+        }
 
-        public async Task<DraftsBuilderDocumentMeta> UpdateDraftsBuilderDocumentMetaAsync(
+        public Task<DraftsBuilderDocumentMeta> UpdateDocumentMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             DraftsBuilderMetaRequest meta,
-            TimeSpan? timeout = null) =>
-            await client.SendRequestAsync<DraftsBuilderDocumentMeta>(
-                HttpMethod.Put,
-                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta",
-                contentDto: meta,
-                timeout: timeout).ConfigureAwait(false);
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Put($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta");
+            return client.SendJsonRequestAsync<DraftsBuilderDocumentMeta>(request, timeout);
+        }
+
+        public Task<DraftsBuilderDocumentFile> CreateFileAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            DraftsBuilderFileRequest fileRequest,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Post($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files")
+                .WithContent(requestBodySerializer.SerializeToJson(fileRequest));
+            return client.SendJsonRequestAsync<DraftsBuilderDocumentFile>(request, timeout);
+        }
+
+        public Task<IReadOnlyCollection<DraftsBuilderDocumentFile>> GetFilesAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files");
+            return client.SendJsonRequestAsync<IReadOnlyCollection<DraftsBuilderDocumentFile>>(request, timeout);
+        }
+
+        public Task<DraftsBuilderDocumentFile> GetFileAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            Guid fileId,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}");
+            return client.SendJsonRequestAsync<DraftsBuilderDocumentFile>(request, timeout);
+        }
+
+        public Task DeleteFileAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            Guid fileId,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Delete($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}");
+            return client.SendJsonRequestAsync(request, timeout);
+        }
+
+        public Task<DraftsBuilderDocumentFile> UpdateFileAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            Guid fileId,
+            DraftsBuilderFileRequest fileRequest,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Put($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}")
+                .WithContent(requestBodySerializer.SerializeToJson(fileRequest));
+            return client.SendJsonRequestAsync<DraftsBuilderDocumentFile>(request, timeout);
+        }
+
+        public Task<DraftsBuilderDocumentFileMeta> GetFileMetaAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            Guid fileId,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta");
+            return client.SendJsonRequestAsync<DraftsBuilderDocumentFileMeta>(request, timeout);
+        }
+
+        public Task<DraftsBuilderDocumentFileMeta> UpdateFileMetaAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            Guid fileId,
+            DraftsBuilderFileMetaRequest meta,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Put($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta")
+                .WithContent(requestBodySerializer.SerializeToJson(meta));
+            return client.SendJsonRequestAsync<DraftsBuilderDocumentFileMeta>(request, timeout);
+        }
+
+        public Task<byte[]> GetSignatureAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            Guid fileId,
+            TimeSpan? timeout = null)
+        {
+            var request = Request.Get($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/signature");
+            return client.SendJsonRequestAsync<byte[]>(request, timeout);
+        }
     }
 }

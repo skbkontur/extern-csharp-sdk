@@ -9,14 +9,23 @@ namespace Kontur.Extern.Client.Models.DraftsBuilders.Info
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ApplicantInfo
     {
+        /// <summary>
+        /// ИНН
+        /// </summary>
         [Required]
         [DataMember]
         public string Inn { get; set; }
 
+        /// <summary>
+        /// ФИО
+        /// </summary>
         [Required]
         [DataMember]
         public Fio Fio { get; set; }
 
+        /// <summary>
+        /// E-mail
+        /// </summary>
         [DataMember]
         public string Email { get; set; }
     }

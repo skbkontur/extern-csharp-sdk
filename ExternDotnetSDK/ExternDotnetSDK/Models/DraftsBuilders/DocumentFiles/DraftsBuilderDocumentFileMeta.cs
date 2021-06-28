@@ -20,6 +20,6 @@ namespace Kontur.Extern.Client.Models.DraftsBuilders.DocumentFiles
 
         [Required]
         [DataMember]
-        public DraftsBuilderDocumentFileData BuilderData { get; set; }
+        public DraftsBuilderFileData BuilderData { get; set; }
     }
 }
