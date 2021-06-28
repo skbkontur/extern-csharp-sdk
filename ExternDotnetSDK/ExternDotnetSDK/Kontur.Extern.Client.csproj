@@ -11,6 +11,7 @@
     <PackageReleaseNotes>Work in progress. Not properly tested.</PackageReleaseNotes>
     <PackageTags>kontur, skbkontur, extern, kontur-extern, SDK, API, workInProgress, technicallyTheyFiredMeAfterIMadeThis</PackageTags>
     <RepositoryUrl>https://github.com/trurl123/extern-dotnet-sdk</RepositoryUrl>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
