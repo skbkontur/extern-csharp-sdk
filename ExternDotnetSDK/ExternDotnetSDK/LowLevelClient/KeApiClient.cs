@@ -18,7 +18,7 @@ namespace Kontur.Extern.Client
     public class KeApiClient : IKeApiClient
     {
         private readonly ILogger iLog;
-        private readonly IRequestSender requestSender;
+        private readonly _IRequestSender requestSender;
         private readonly IRequestBodySerializer requestBodySerializer;
 
         public KeApiClient(
@@ -27,7 +27,7 @@ namespace Kontur.Extern.Client
             string baseAddress,
             ILogger logger = null)
         {
-            requestSender = new RequestSender(
+            requestSender = new _RequestSender(
                 authenticationProvider,
                 apiKey,
                 new HttpClient {BaseAddress = new Uri(baseAddress)});
@@ -38,12 +38,12 @@ namespace Kontur.Extern.Client
 
         public KeApiClient(string apiKey, IAuthenticationProvider authenticationProvider, Uri baseAddress, ILogger logger = null)
         {
-            requestSender = new RequestSender(authenticationProvider, apiKey, new HttpClient {BaseAddress = baseAddress});
+            requestSender = new _RequestSender(authenticationProvider, apiKey, new HttpClient {BaseAddress = baseAddress});
             iLog = logger ?? new SilentLogger();
             InitializeClients();
         }
 
-        public KeApiClient(IRequestSender requestSender, ILogger logger = null)
+        public KeApiClient(_IRequestSender requestSender, ILogger logger = null)
         {
             this.requestSender = requestSender;
             iLog = logger ?? new SilentLogger();

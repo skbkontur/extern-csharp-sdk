@@ -13,7 +13,7 @@ using Request = Kontur.Extern.Client.Clients.Common.Requests.Request;
 
 namespace Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.RequestSenders
 {
-    public class ClusterClientWrapper : IRequestSender
+    public class ClusterClientWrapper : _IRequestSender
     {
         private readonly IClusterClient client;
 

@@ -1,101 +1,59 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Clients.Authentication;
 using Kontur.Extern.Client.Clients.Common.Requests;
-using Kontur.Extern.Client.Clients.Common.ResponseMessages;
-using Newtonsoft.Json;
+using Kontur.Extern.Client.Clients.Exceptions;
+using Vostok.Clusterclient.Core;
+using Vostok.Clusterclient.Core.Model;
+using Vostok.Commons.Time;
 
 namespace Kontur.Extern.Client.Clients.Common.RequestSenders
 {
-    public class RequestSender : IRequestSender
+    internal class RequestSender : IRequestSender
     {
-        private readonly HttpClient client;
+        private readonly RequestSendingOptions options;
+        private readonly AuthenticationOptions authOption;
+        private readonly IClusterClient clusterClient;
+        private readonly IRequestBodySerializer serializer;
 
-        public RequestSender(IAuthenticationProvider authenticationProvider, string apiKey, HttpClient client)
+        public RequestSender(
+            RequestSendingOptions options, 
+            AuthenticationOptions authOption,
+            IClusterClient clusterClient,
+            IRequestBodySerializer serializer)
         {
-            AuthenticationProvider = authenticationProvider;
-            ApiKey = apiKey;
-            this.client = client;
+            this.options = options;
+            this.authOption = authOption;
+            this.clusterClient = clusterClient;
+            this.serializer = serializer;
         }
 
-        public IAuthenticationProvider AuthenticationProvider { get; }
-        public string ApiKey { get; }
+        public Task SendAsync(RequestBuilder requestBuilder, TimeSpan? timeout = null) => SendRequestAsync(requestBuilder, timeout);
 
-        public async Task<IResponseMessage> SendJsonAsync(Request request, TimeSpan? timeout = null)
+        public async Task<TResponse> SendAsync<TResponse>(RequestBuilder requestBuilder, TimeSpan? timeout = null)
         {
-            var httpRequestMessage = new HttpRequestMessage(ConvertHttpMethod(request.Method), request.Url);
-            await AddAuthHeaders(httpRequestMessage).ConfigureAwait(false);
-            AddJsonContent(httpRequestMessage, request);
-            if (timeout != null)
-                httpRequestMessage.Headers.Add(SenderConstants.TimeoutHeader, timeout.Value.ToString("c"));
-            var httpResponseMessage = await client.SendAsync(httpRequestMessage).ConfigureAwait(false);
-            return new ResponseMessage(httpResponseMessage);
+            var response = await SendRequestAsync(requestBuilder, timeout).ConfigureAwait(false);
+            if (!response.HasStream)
+                throw Errors.ResponseHasToHaveBody(requestBuilder.ToString());
+            if (response.Headers.ContentType != SenderConstants.MediaType) 
+                throw Errors.ResponseHasUnexpectedContentType(requestBuilder.ToString(), response, SenderConstants.MediaType);
+
+            var memoryStream = response.Content.ToMemoryStream();
+            return serializer.DeserializeFromJson<TResponse>(memoryStream);
         }
 
-        private async Task AddAuthHeaders(HttpRequestMessage httpRequestMessage)
+        private async Task<Response> SendRequestAsync(RequestBuilder requestBuilder, TimeSpan? timeout)
         {
-            var sessionId = await AuthenticationProvider.GetSessionId().ConfigureAwait(false);
-            httpRequestMessage.Headers.Authorization = new AuthenticationHeaderValue(SenderConstants.AuthSidHeader, sessionId);
-            httpRequestMessage.Headers.Add(SenderConstants.ApiKeyHeader, ApiKey);
-        }
+            timeout ??= requestBuilder.IsWriteRequest ? options.DefaultWriteTimeout : options.DefaultReadTimeout;
+            var timeBudget = TimeBudget.StartNew(timeout.Value);
 
-        private void AddJsonContent(HttpRequestMessage httpRequestMessage, Request request)
-        {
-            if (request.Method == RequestMethod.Get || string.IsNullOrEmpty(request.JsonContent))
-                return;
-            httpRequestMessage.Content = new StringContent(request.JsonContent);
-            httpRequestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(SenderConstants.MediaType);
-        }
+            var sessionId = await authOption.Provider.GetSessionId(timeBudget.Remaining).ConfigureAwait(false);
 
-        private static HttpMethod ConvertHttpMethod(RequestMethod method)
-        {
-            switch (method)
-            {
-                case RequestMethod.Get:
-                    return HttpMethod.Get;
-                case RequestMethod.Post:
-                    return HttpMethod.Post;
-                case RequestMethod.Put:
-                    return HttpMethod.Put;
-                case RequestMethod.Delete:
-                    return HttpMethod.Delete;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(method), method, null);
-            }
-        }
+            var leftTimeout = timeBudget.Remaining;
+            var request = requestBuilder
+                .BuildRequest(authOption.ApiKey, sessionId, leftTimeout);
 
-        public async Task<IResponseMessage> SendAsync(
-            HttpMethod method,
-            string uriPath,
-            Dictionary<string, object> uriQueryParams = null,
-            object content = null,
-            TimeSpan? timeout = null)
-        {
-            var request = new HttpRequestMessage(method, GetFullUri(uriPath, uriQueryParams));
-            request.Headers.Authorization = new AuthenticationHeaderValue(
-                SenderConstants.AuthSidHeader,
-                await AuthenticationProvider.GetSessionId().ConfigureAwait(false));
-            request.Headers.Add(SenderConstants.ApiKeyHeader, ApiKey);
-            TryAddContent(content, request);
-            if (timeout != null)
-                request.Headers.Add(SenderConstants.TimeoutHeader, timeout.Value.ToString("c"));
-            return new ResponseMessage(await client.SendAsync(request).ConfigureAwait(false));
+            var result = await clusterClient.SendAsync(request, leftTimeout).ConfigureAwait(false);
+            return result.Response.EnsureSuccessStatusCode();
         }
-
-        private static void TryAddContent(object content, HttpRequestMessage request)
-        {
-            if (content == null) return;
-            request.Content = new StringContent(JsonConvert.SerializeObject(content));
-            request.Content.Headers.ContentType = new MediaTypeHeaderValue(SenderConstants.MediaType);
-        }
-
-        private static string GetFullUri(string requestUri, Dictionary<string, object> uriQueryParams) =>
-            uriQueryParams != null
-                ? $"{requestUri}?{string.Join("&", uriQueryParams.Where(x => !string.IsNullOrEmpty(x.Value?.ToString())).Select(x => $"{x.Key}={x.Value}"))}"
-                : requestUri;
     }
 }

@@ -20,7 +20,7 @@ namespace Kontur.Extern.Client.Clients.Docflows
         private readonly InnerCommonClient client;
         private readonly IRequestBodySerializer requestBodySerializer;
 
-        public DocflowsClient(ILogger logger, IRequestSender requestSender, IRequestBodySerializer requestBodySerializer)
+        public DocflowsClient(ILogger logger, _IRequestSender requestSender, IRequestBodySerializer requestBodySerializer)
         {
             this.requestBodySerializer = requestBodySerializer;
             client = new InnerCommonClient(logger, requestSender);

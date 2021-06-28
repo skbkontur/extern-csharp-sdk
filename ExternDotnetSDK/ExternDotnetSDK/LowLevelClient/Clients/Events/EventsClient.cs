@@ -14,7 +14,7 @@ namespace Kontur.Extern.Client.Clients.Events
     {
         private readonly InnerCommonClient client;
 
-        public EventsClient(ILogger logger, IRequestSender requestSender) =>
+        public EventsClient(ILogger logger, _IRequestSender requestSender) =>
             client = new InnerCommonClient(logger, requestSender);
 
         public async Task<EventsPage> GetEventsAsync(int take, string fromId = "0_0", TimeSpan? timeout = null) =>

@@ -14,7 +14,7 @@ namespace Kontur.Extern.Client.Clients.Organizations
     {
         private readonly InnerCommonClient client;
 
-        public OrganizationsClient(ILogger logger, IRequestSender requestSender) =>
+        public OrganizationsClient(ILogger logger, _IRequestSender requestSender) =>
             client = new InnerCommonClient(logger, requestSender);
 
         public async Task<OrganizationBatch> GetAllOrganizationsAsync(
