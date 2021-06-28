@@ -65,7 +65,7 @@ namespace Kontur.Extern.Client.Concept
             var decryptStatus = await documentCtx.DssDecrypt.CheckStatusAsync(decrypting.TaskId);
             // or
             Guid restoredTaskId;
-            documentCtx.DssDecrypt.ContinueAwait(restoredTaskId).WaitForCompletion();
+            await documentCtx.DssDecrypt.ContinueAwait(restoredTaskId).WaitForCompletion();
         }
     }
 }
