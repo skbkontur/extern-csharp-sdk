@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace Kontur.Extern.Client.Concept
+namespace Kontur.Extern.Client.Concept2
 {
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -21,7 +21,7 @@ namespace Kontur.Extern.Client.Concept
             var createdAccount = await externCtx.Accounts.CreateAsync("inn", "kpp", "org");
 
             var loadedAccount = await externCtx.Accounts.WithId(createdAccount.Id).GetAsync();
-            
+
             await PlayWithAccountRelatedEntities(externCtx.Accounts.WithId(loadedAccount.Id));
 
             await PlayWithOrganizations(externCtx.Accounts.WithId(loadedAccount.Id));
@@ -29,17 +29,17 @@ namespace Kontur.Extern.Client.Concept
             var accounts = await externCtx.Accounts.List().SliceBy(100).Skip(10).LoadSliceAsync();
             await externCtx.Accounts.WithId(loadedAccount.Id).DeleteAsync();
 
-            async Task PlayWithAccountRelatedEntities(IAccountContext accountContext)
+            async Task PlayWithAccountRelatedEntities(AccountContext accountContext)
             {
-                var allCertificates = await accountContext.Certificates.SliceBy(10).LoadAllAsync();
-                var top10Certificates = await accountContext.Certificates.SliceBy(10).LoadSliceAsync();
+                var allCertificates = await accountContext.Certificates().SliceBy(10).LoadAllAsync();
+                var top10Certificates = await accountContext.Certificates().SliceBy(10).LoadSliceAsync();
                 
-                var top5Warrants = await accountContext.Warrants.SliceBy(5).LoadSliceAsync();
-                var secondPageOfWarrants = await accountContext.Warrants.Paging(5).LoadPageAsync(1);
+                var top5Warrants = await accountContext.Warrants().SliceBy(5).LoadSliceAsync();
+                var secondPageOfWarrants = await accountContext.Warrants().Paging(5).LoadPageAsync(1);
             }
         }
 
-        public static async Task PlayWithOrganizations(IAccountContext accountCtx)
+        public static async Task PlayWithOrganizations(AccountContext accountCtx)
         {
             var organizationsCtx = accountCtx.Organizations;
             var createdOrganization = await organizationsCtx.CreateAsync("inn", "kpp", "name");
@@ -53,19 +53,19 @@ namespace Kontur.Extern.Client.Concept
             await orgCtx.DeleteAsync();
         }
 
-        public static async Task PlayWithDocflowDeferredMethods(IAccountContext accountCtx)
+        public static async Task PlayWithDocflowDeferredMethods(AccountContext accountCtx)
         {
             var docflowId = Guid.NewGuid();
             var documentId = Guid.NewGuid();
             var documentCtx = accountCtx.Docflows.WithId(docflowId).Documents.WithId(documentId);
 
-            var decrypting = await documentCtx.DssDecrypt.StartAsync();
+            var decrypting = await documentCtx.DssDecrypt().StartAsync();
             await decrypting.WaitForCompletion();
             // or
-            var decryptStatus = await documentCtx.DssDecrypt.CheckStatusAsync(decrypting.TaskId);
+            var decryptStatus = await documentCtx.DssDecrypt().CheckStatusAsync(decrypting.TaskId);
             // or
             Guid restoredTaskId;
-            await documentCtx.DssDecrypt.ContinueAwait(restoredTaskId).WaitForCompletion();
+            await documentCtx.DssDecrypt().ContinueAwait(restoredTaskId).WaitForCompletion();
         }
     }
 }
