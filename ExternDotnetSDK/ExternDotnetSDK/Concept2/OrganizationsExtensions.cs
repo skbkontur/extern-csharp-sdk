@@ -7,33 +7,33 @@ namespace Kontur.Extern.Client.Concept2
 {
     internal static class OrganizationListContextExtension
     {
-        public static Task<Organization> CreateAsync(this in OrganizationListContext context, string inn, string kpp, string name)
+        public static Task<Organization> CreateAsync(this in OrganizationListPath path, string inn, string kpp, string name)
         {
-            var apiClient = context.Services.ApiClient;
-            return apiClient.Organizations.CreateOrganizationAsync(context.AccountId, inn, kpp, name);
+            var apiClient = path.Services.ApiClient;
+            return apiClient.Organizations.CreateOrganizationAsync(path.AccountId, inn, kpp, name);
         }
         
-        public static IEntityList<Account> List(this in OrganizationListContext context, string inn = null, string kpp = null) => throw new NotImplementedException();
+        public static IEntityList<Account> List(this in OrganizationListPath path, string inn = null, string kpp = null) => throw new NotImplementedException();
     }
 
     internal static class OrganizationContextExtension
     {
-        public static Task<Organization> GetAsync(this in OrganizationContext context)
+        public static Task<Organization> GetAsync(this in OrganizationPath path)
         {
-            var apiClient = context.Services.ApiClient;
-            return apiClient.Organizations.GetOrganizationAsync(context.AccountId, context.OrganizationId);
+            var apiClient = path.Services.ApiClient;
+            return apiClient.Organizations.GetOrganizationAsync(path.AccountId, path.OrganizationId);
         }
 
-        public static Task DeleteAsync(this in OrganizationContext context)
+        public static Task DeleteAsync(this in OrganizationPath path)
         {
-            var apiClient = context.Services.ApiClient;
-            return apiClient.Organizations.DeleteOrganizationAsync(context.AccountId, context.OrganizationId);
+            var apiClient = path.Services.ApiClient;
+            return apiClient.Organizations.DeleteOrganizationAsync(path.AccountId, path.OrganizationId);
         }
 
-        public static Task Rename(this in OrganizationContext context, string name)
+        public static Task Rename(this in OrganizationPath path, string name)
         {
-            var apiClient = context.Services.ApiClient;
-            return apiClient.Organizations.UpdateOrganizationAsync(context.AccountId, context.OrganizationId, name);
+            var apiClient = path.Services.ApiClient;
+            return apiClient.Organizations.UpdateOrganizationAsync(path.AccountId, path.OrganizationId, name);
         }
     }
 }

@@ -2,18 +2,18 @@ using System;
 
 namespace Kontur.Extern.Client.Concept2
 {
-    internal readonly struct AccountListContext
+    internal readonly struct AccountListPath
     {
-        public AccountListContext(IExternClientServices services) => Services = services;
+        public AccountListPath(IExternClientServices services) => Services = services;
         
         public IExternClientServices Services { get; }
 
-        public AccountContext WithId(Guid accountId) => new AccountContext(accountId, Services);
+        public AccountPath WithId(Guid accountId) => new AccountPath(accountId, Services);
     }
 
-    internal readonly struct AccountContext
+    internal readonly struct AccountPath
     {
-        public AccountContext(Guid accountId, IExternClientServices services)
+        public AccountPath(Guid accountId, IExternClientServices services)
         {
             AccountId = accountId;
             Services = services;
@@ -22,15 +22,13 @@ namespace Kontur.Extern.Client.Concept2
         public Guid AccountId { get; }
         public IExternClientServices Services { get; }
 
-        
-
-        public OrganizationListContext Organizations => new OrganizationListContext(AccountId, Services);
-        public DocflowListContext Docflows => new DocflowListContext(AccountId, Services);
+        public OrganizationListPath Organizations => new OrganizationListPath(AccountId, Services);
+        public DocflowListPath Docflows => new DocflowListPath(AccountId, Services);
     }
 
-    internal readonly struct OrganizationListContext
+    internal readonly struct OrganizationListPath
     {
-        public OrganizationListContext(Guid accountId, IExternClientServices services)
+        public OrganizationListPath(Guid accountId, IExternClientServices services)
         {
             AccountId = accountId;
             Services = services;
@@ -39,12 +37,12 @@ namespace Kontur.Extern.Client.Concept2
         public Guid AccountId { get; }
         public IExternClientServices Services { get; }
 
-        public OrganizationContext WithId(Guid organizationId) => new OrganizationContext(AccountId, organizationId, Services);
+        public OrganizationPath WithId(Guid organizationId) => new OrganizationPath(AccountId, organizationId, Services);
     }
 
-    internal readonly struct OrganizationContext
+    internal readonly struct OrganizationPath
     {
-        public OrganizationContext(Guid accountId, Guid organizationId, IExternClientServices services)
+        public OrganizationPath(Guid accountId, Guid organizationId, IExternClientServices services)
         {
             AccountId = accountId;
             OrganizationId = organizationId;
@@ -56,9 +54,9 @@ namespace Kontur.Extern.Client.Concept2
         public IExternClientServices Services { get; }
     }
 
-    internal readonly struct DocflowListContext
+    internal readonly struct DocflowListPath
     {
-        public DocflowListContext(Guid accountId, IExternClientServices services)
+        public DocflowListPath(Guid accountId, IExternClientServices services)
         {
             AccountId = accountId;
             Services = services;
@@ -67,28 +65,12 @@ namespace Kontur.Extern.Client.Concept2
         public Guid AccountId { get; }
         public IExternClientServices Services { get; }
 
-        public DocflowContext WithId(Guid docflowId) => new DocflowContext(AccountId, docflowId, Services);
+        public DocflowPath WithId(Guid docflowId) => new DocflowPath(AccountId, docflowId, Services);
     }
 
-    internal readonly struct DocflowContext
+    internal readonly struct DocflowPath
     {
-        public DocflowContext(Guid accountId, Guid docflowId, IExternClientServices services)
-        {
-            AccountId = accountId;
-            DocflowId = docflowId;
-            Services = services;
-        }
-
-        public Guid AccountId { get; }
-        public Guid DocflowId { get; }
-        public IExternClientServices Services { get; }
-
-        public DocumentListContext Documents => new DocumentListContext(AccountId, DocflowId, Services);
-    }
-
-    internal readonly struct DocumentListContext
-    {
-        public DocumentListContext(Guid accountId, Guid docflowId, IExternClientServices services)
+        public DocflowPath(Guid accountId, Guid docflowId, IExternClientServices services)
         {
             AccountId = accountId;
             DocflowId = docflowId;
@@ -99,12 +81,28 @@ namespace Kontur.Extern.Client.Concept2
         public Guid DocflowId { get; }
         public IExternClientServices Services { get; }
 
-        public DocumentContext WithId(Guid documentId) => new DocumentContext(AccountId, DocflowId, documentId, Services);
+        public DocumentListPath Documents => new DocumentListPath(AccountId, DocflowId, Services);
     }
 
-    internal readonly struct DocumentContext
+    internal readonly struct DocumentListPath
     {
-        public DocumentContext(Guid accountId, Guid docflowId, Guid documentId, IExternClientServices services)
+        public DocumentListPath(Guid accountId, Guid docflowId, IExternClientServices services)
+        {
+            AccountId = accountId;
+            DocflowId = docflowId;
+            Services = services;
+        }
+
+        public Guid AccountId { get; }
+        public Guid DocflowId { get; }
+        public IExternClientServices Services { get; }
+
+        public DocumentPath WithId(Guid documentId) => new DocumentPath(AccountId, DocflowId, documentId, Services);
+    }
+
+    internal readonly struct DocumentPath
+    {
+        public DocumentPath(Guid accountId, Guid docflowId, Guid documentId, IExternClientServices services)
         {
             AccountId = accountId;
             DocflowId = docflowId;

@@ -29,19 +29,19 @@ namespace Kontur.Extern.Client.Concept2
             var accounts = await externCtx.Accounts.List().SliceBy(100).Skip(10).LoadSliceAsync();
             await externCtx.Accounts.WithId(loadedAccount.Id).DeleteAsync();
 
-            async Task PlayWithAccountRelatedEntities(AccountContext accountContext)
+            async Task PlayWithAccountRelatedEntities(AccountPath accountPath)
             {
-                var allCertificates = await accountContext.Certificates().SliceBy(10).LoadAllAsync();
-                var top10Certificates = await accountContext.Certificates().SliceBy(10).LoadSliceAsync();
+                var allCertificates = await accountPath.Certificates().SliceBy(10).LoadAllAsync();
+                var top10Certificates = await accountPath.Certificates().SliceBy(10).LoadSliceAsync();
                 
-                var top5Warrants = await accountContext.Warrants().SliceBy(5).LoadSliceAsync();
-                var secondPageOfWarrants = await accountContext.Warrants().Paging(5).LoadPageAsync(1);
+                var top5Warrants = await accountPath.Warrants().SliceBy(5).LoadSliceAsync();
+                var secondPageOfWarrants = await accountPath.Warrants().Paging(5).LoadPageAsync(1);
             }
         }
 
-        public static async Task PlayWithOrganizations(AccountContext accountCtx)
+        public static async Task PlayWithOrganizations(AccountPath accountPath)
         {
-            var organizationsCtx = accountCtx.Organizations;
+            var organizationsCtx = accountPath.Organizations;
             var createdOrganization = await organizationsCtx.CreateAsync("inn", "kpp", "name");
 
             var orgCtx = organizationsCtx.WithId(createdOrganization.Id);
@@ -53,11 +53,11 @@ namespace Kontur.Extern.Client.Concept2
             await orgCtx.DeleteAsync();
         }
 
-        public static async Task PlayWithDocflowDeferredMethods(AccountContext accountCtx)
+        public static async Task PlayWithDocflowDeferredMethods(AccountPath accountPath)
         {
             var docflowId = Guid.NewGuid();
             var documentId = Guid.NewGuid();
-            var documentCtx = accountCtx.Docflows.WithId(docflowId).Documents.WithId(documentId);
+            var documentCtx = accountPath.Docflows.WithId(docflowId).Documents.WithId(documentId);
 
             var decrypting = await documentCtx.DssDecrypt().StartAsync();
             await decrypting.WaitForCompletion();
