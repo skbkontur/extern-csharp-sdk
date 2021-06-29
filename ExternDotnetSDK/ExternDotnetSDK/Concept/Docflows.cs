@@ -21,7 +21,7 @@ namespace Kontur.Extern.Client
 
     internal interface IDocumentContext
     {
-        IDeferredOperation DssDecrypt { get; }
+        ILongOperation DssDecrypt { get; }
 
         /// <summary>
         /// Check status of the task outside of the IDeferred instance
