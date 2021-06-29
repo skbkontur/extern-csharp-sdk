@@ -12,6 +12,6 @@ namespace Kontur.Extern.Client.Concept2
 
     interface IExternContext
     {
-        AccountListContext Accounts { get; }
+        AccountListPath Accounts { get; }
     }
 }

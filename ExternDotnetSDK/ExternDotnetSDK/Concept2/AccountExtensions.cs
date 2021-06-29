@@ -9,32 +9,32 @@ namespace Kontur.Extern.Client.Concept2
 {
     internal static class AccountListContextExtension
     {
-        public static Task<Account> CreateAsync(this in AccountListContext context, string inn, string kpp, string organizationName)
+        public static Task<Account> CreateAsync(this in AccountListPath path, string inn, string kpp, string organizationName)
         {
-            var apiClient = context.Services.ApiClient;
+            var apiClient = path.Services.ApiClient;
             return apiClient.Accounts.CreateAccountAsync(inn, kpp, organizationName);
         }
 
-        public static Task<List<Account>> FindAsync(this in AccountListContext context, string inn, string kpp) => throw new NotImplementedException();
+        public static Task<List<Account>> FindAsync(this in AccountListPath path, string inn, string kpp) => throw new NotImplementedException();
 
-        public static IEntityList<Account> List(this in AccountListContext context) => throw new NotImplementedException();
+        public static IEntityList<Account> List(this in AccountListPath path) => throw new NotImplementedException();
     }
 
     internal static class AccountContextExtension
     {
-        public static Task<Account> GetAsync(this in AccountContext context)
+        public static Task<Account> GetAsync(this in AccountPath path)
         {
-            var apiClient = context.Services.ApiClient;
-            return apiClient.Accounts.GetAccountAsync(context.AccountId);
+            var apiClient = path.Services.ApiClient;
+            return apiClient.Accounts.GetAccountAsync(path.AccountId);
         }
         
-        public static IEntityList<CertificateDto> Certificates(this in AccountContext context) => throw new NotImplementedException();
-        public static IEntityList<Warrant> Warrants(this in AccountContext context) => throw new NotImplementedException();
+        public static IEntityList<CertificateDto> Certificates(this in AccountPath path) => throw new NotImplementedException();
+        public static IEntityList<Warrant> Warrants(this in AccountPath path) => throw new NotImplementedException();
 
-        public static Task DeleteAsync(this in AccountContext context)
+        public static Task DeleteAsync(this in AccountPath path)
         {
-            var apiClient = context.Services.ApiClient;
-            return apiClient.Accounts.DeleteAccountAsync(context.AccountId);
+            var apiClient = path.Services.ApiClient;
+            return apiClient.Accounts.DeleteAccountAsync(path.AccountId);
         }
     }
 }
