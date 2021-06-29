@@ -41,31 +41,31 @@ namespace Kontur.Extern.Client.Concept2
 
         public static async Task PlayWithOrganizations(AccountPath accountPath)
         {
-            var organizationsCtx = accountPath.Organizations;
-            var createdOrganization = await organizationsCtx.CreateAsync("inn", "kpp", "name");
+            var organizationsPath = accountPath.Organizations;
+            var createdOrganization = await organizationsPath.CreateAsync("inn", "kpp", "name");
 
-            var orgCtx = organizationsCtx.WithId(createdOrganization.Id);
-            var loadedOrganization = await orgCtx.GetAsync();
+            var orgPath = organizationsPath.WithId(createdOrganization.Id);
+            var loadedOrganization = await orgPath.GetAsync();
 
-            var topTenOrganizations = await organizationsCtx.List().SliceBy(10).LoadSliceAsync();
-            var allOrganizationsWithParticularInn = await organizationsCtx.List("some inn").SliceBy(5).LoadAllAsync();
+            var topTenOrganizations = await organizationsPath.List().SliceBy(10).LoadSliceAsync();
+            var allOrganizationsWithParticularInn = await organizationsPath.List("some inn").SliceBy(5).LoadAllAsync();
             
-            await orgCtx.DeleteAsync();
+            await orgPath.DeleteAsync();
         }
 
         public static async Task PlayWithDocflowDeferredMethods(AccountPath accountPath)
         {
             var docflowId = Guid.NewGuid();
             var documentId = Guid.NewGuid();
-            var documentCtx = accountPath.Docflows.WithId(docflowId).Documents.WithId(documentId);
+            var documentPath = accountPath.Docflows.WithId(docflowId).Documents.WithId(documentId);
 
-            var decrypting = await documentCtx.DssDecrypt().StartAsync();
+            var decrypting = await documentPath.DssDecrypt().StartAsync();
             await decrypting.WaitForCompletion();
             // or
-            var decryptStatus = await documentCtx.DssDecrypt().CheckStatusAsync(decrypting.TaskId);
+            var decryptStatus = await documentPath.DssDecrypt().CheckStatusAsync(decrypting.TaskId);
             // or
             Guid restoredTaskId;
-            await documentCtx.DssDecrypt().ContinueAwait(restoredTaskId).WaitForCompletion();
+            await documentPath.DssDecrypt().ContinueAwait(restoredTaskId).WaitForCompletion();
         }
     }
 }
