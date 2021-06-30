@@ -21,7 +21,7 @@ namespace Kontur.Extern.Client.Concept
             var createdAccount = await externCtx.Accounts.CreateAsync("inn", "kpp", "org");
 
             var loadedAccount = await externCtx.Accounts.WithId(createdAccount.Id).GetAsync();
-
+            
             await PlayWithAccountRelatedEntities(externCtx.Accounts.WithId(loadedAccount.Id));
 
             await PlayWithOrganizations(externCtx.Accounts.WithId(loadedAccount.Id));
