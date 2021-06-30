@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Models.Organizations;
+using Kontur.Extern.Client.ApiLevel.Models.Organizations;
 
 namespace Kontur.Extern.Client
 {

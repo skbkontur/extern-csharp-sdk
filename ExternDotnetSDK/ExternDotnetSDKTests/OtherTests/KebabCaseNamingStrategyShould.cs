@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using FluentAssertions;
-using Kontur.Extern.Client.Models.Accounts;
-using Kontur.Extern.Client.Models.Drafts.Requests;
+using Kontur.Extern.Client.ApiLevel.Models.Accounts;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Newtonsoft.Json;
 using NUnit.Framework;
 

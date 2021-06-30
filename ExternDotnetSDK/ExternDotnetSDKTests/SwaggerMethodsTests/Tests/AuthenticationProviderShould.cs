@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Clients.Authentication;
+using Kontur.Extern.Client.ApiLevel.Clients.Authentication;
 using NUnit.Framework;
 
 #pragma warning disable 1998

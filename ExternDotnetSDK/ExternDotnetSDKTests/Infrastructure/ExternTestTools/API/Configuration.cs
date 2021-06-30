@@ -1,4 +1,4 @@
-using Kontur.Extern.Client.Clients.Authentication;
+using Kontur.Extern.Client.ApiLevel.Clients.Authentication;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
 {

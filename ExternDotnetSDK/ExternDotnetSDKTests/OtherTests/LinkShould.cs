@@ -1,6 +1,6 @@
 ﻿using System;
 using FluentAssertions;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Client.Tests.OtherTests

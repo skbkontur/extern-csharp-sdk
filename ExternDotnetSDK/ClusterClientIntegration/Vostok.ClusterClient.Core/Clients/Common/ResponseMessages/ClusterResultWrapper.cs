@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using Kontur.Extern.Client.Clients.Common.RequestMessages;
-using Kontur.Extern.Client.Clients.Common.ResponseMessages;
+using Kontur.Extern.Client.ApiLevel.Clients.Common.RequestMessages;
+using Kontur.Extern.Client.ApiLevel.Clients.Common.ResponseMessages;
 using Kontur.Extern.Client.Vostok.Vostok.ClusterClient.Core.Clients.Common.RequestMessages;
 using Vostok.Clusterclient.Core.Model;
 using StreamContent = System.Net.Http.StreamContent;

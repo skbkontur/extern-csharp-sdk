@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Models.Api.Enums;
+using Kontur.Extern.Client.ApiLevel.Models.Api.Enums;
 
 namespace Kontur.Extern.Client
 {

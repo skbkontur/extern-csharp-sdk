@@ -1,7 +1,7 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
 {
