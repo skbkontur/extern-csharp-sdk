@@ -15,7 +15,7 @@ namespace Kontur.Extern.Client.Clients.Accounts
         private readonly InnerCommonClient client;
         private readonly IRequestBodySerializer requestBodySerializer;
 
-        public AccountClient(ILogger logger, IRequestSender requestSender, IRequestBodySerializer requestBodySerializer)
+        public AccountClient(ILogger logger, _IRequestSender requestSender, IRequestBodySerializer requestBodySerializer)
         {
             this.requestBodySerializer = requestBodySerializer;
             client = new InnerCommonClient(logger, requestSender);

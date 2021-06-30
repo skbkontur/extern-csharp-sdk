@@ -17,7 +17,7 @@ namespace Kontur.Extern.Client.Clients.DraftsBuilders
         private readonly InnerCommonClient client;
         private readonly IRequestBodySerializer requestBodySerializer;
 
-        public DraftsBuilderClient(ILogger logger, IRequestSender requestSender, IRequestBodySerializer requestBodySerializer)
+        public DraftsBuilderClient(ILogger logger, _IRequestSender requestSender, IRequestBodySerializer requestBodySerializer)
         {
             this.requestBodySerializer = requestBodySerializer;
             client = new InnerCommonClient(logger, requestSender);

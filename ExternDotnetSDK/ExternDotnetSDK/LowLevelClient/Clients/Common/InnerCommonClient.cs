@@ -13,9 +13,9 @@ namespace Kontur.Extern.Client.Clients.Common
     internal class InnerCommonClient
     {
         protected readonly ILogger Logger;
-        protected readonly IRequestSender RequestSender;
+        protected readonly _IRequestSender RequestSender;
 
-        public InnerCommonClient(ILogger logger, IRequestSender requestSender)
+        public InnerCommonClient(ILogger logger, _IRequestSender requestSender)
         {
             Logger = logger;
             RequestSender = requestSender;
