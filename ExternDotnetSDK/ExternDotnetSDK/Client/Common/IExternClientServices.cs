@@ -1,7 +1,7 @@
 using Kontur.Extern.Client.ApiLevel;
 using Kontur.Extern.Client.HttpLevel;
 
-namespace Kontur.Extern.Client.Concept2
+namespace Kontur.Extern.Client.Common
 {
     public interface IExternClientServices
     {

@@ -1,8 +1,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.Paths;
 
-namespace Kontur.Extern.Client.Concept2
+namespace Kontur.Extern.Client
 {
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -10,13 +11,13 @@ namespace Kontur.Extern.Client.Concept2
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     internal class UsageSamples
     {
-        private readonly IExternContextFactory externCtxFactory;
+        private readonly IExternFactory externCtxFactory;
 
-        public UsageSamples(IExternContextFactory externCtxFactory) => this.externCtxFactory = externCtxFactory;
+        public UsageSamples(IExternFactory externCtxFactory) => this.externCtxFactory = externCtxFactory;
 
-        public IExternContext CreateContext(IExternCredentials credentials) => externCtxFactory.Create(credentials);
+        public IExtern CreateContext(IExternCredentials credentials) => externCtxFactory.Create(credentials);
 
-        public async Task PlayWithAccounts(IExternContext externCtx)
+        public async Task PlayWithAccounts(IExtern externCtx)
         {
             var createdAccount = await externCtx.Accounts.CreateAsync("inn", "kpp", "org");
 
