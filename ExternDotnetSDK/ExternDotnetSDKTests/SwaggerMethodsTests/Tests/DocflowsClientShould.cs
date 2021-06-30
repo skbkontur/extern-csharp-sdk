@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Models.Certificates;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Docflows;
-using Kontur.Extern.Client.Models.Documents;
+using Kontur.Extern.Client.ApiLevel.Models.Certificates;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.ApiLevel.Models.Documents;
 using NUnit.Framework;
 
 #pragma warning disable 1998

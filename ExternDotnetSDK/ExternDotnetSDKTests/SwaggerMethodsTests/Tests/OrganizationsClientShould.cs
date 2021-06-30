@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Models.Organizations;
+using Kontur.Extern.Client.ApiLevel.Models.Organizations;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests

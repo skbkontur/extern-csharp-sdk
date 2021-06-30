@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Kontur.Extern.Client.Clients.Common.Logging;
-using Kontur.Extern.Client.Clients.Common.ResponseMessages;
+using Kontur.Extern.Client.ApiLevel.Clients.Common.Logging;
+using Kontur.Extern.Client.ApiLevel.Clients.Common.ResponseMessages;
 
 namespace Kontur.Extern.Client.Vostok.Kontur.Logging.Clients.Common.Logging
 {

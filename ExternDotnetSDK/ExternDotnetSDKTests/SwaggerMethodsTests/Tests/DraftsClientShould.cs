@@ -2,9 +2,9 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Drafts;
-using Kontur.Extern.Client.Models.Drafts.Requests;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Newtonsoft.Json;
 using NUnit.Framework;
 

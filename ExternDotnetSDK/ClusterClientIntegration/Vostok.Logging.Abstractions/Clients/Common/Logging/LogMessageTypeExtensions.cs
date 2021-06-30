@@ -1,4 +1,4 @@
-﻿using Kontur.Extern.Client.Clients.Common.Logging;
+﻿using Kontur.Extern.Client.ApiLevel.Clients.Common.Logging;
 using Vostok.Logging.Abstractions;
 
 namespace Kontur.Extern.Client.Vostok.Vostok.Logging.Abstractions.Clients.Common.Logging

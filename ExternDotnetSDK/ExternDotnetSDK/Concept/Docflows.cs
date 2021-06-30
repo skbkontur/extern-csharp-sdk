@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Models.Documents;
 
 namespace Kontur.Extern.Client
 {
