@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Models.Accounts;
-using Kontur.Extern.Client.Models.Organizations;
+using Kontur.Extern.Client.ApiLevel.Models.Accounts;
+using Kontur.Extern.Client.ApiLevel.Models.Organizations;
 
 namespace Kontur.Extern.Client.Concept2
 {
@@ -9,7 +9,7 @@ namespace Kontur.Extern.Client.Concept2
     {
         public static Task<Organization> CreateAsync(this in OrganizationListPath path, string inn, string kpp, string name)
         {
-            var apiClient = path.Services.ApiClient;
+            var apiClient = path.Services.Api;
             return apiClient.Organizations.CreateOrganizationAsync(path.AccountId, inn, kpp, name);
         }
         
@@ -20,19 +20,19 @@ namespace Kontur.Extern.Client.Concept2
     {
         public static Task<Organization> GetAsync(this in OrganizationPath path)
         {
-            var apiClient = path.Services.ApiClient;
+            var apiClient = path.Services.Api;
             return apiClient.Organizations.GetOrganizationAsync(path.AccountId, path.OrganizationId);
         }
 
         public static Task DeleteAsync(this in OrganizationPath path)
         {
-            var apiClient = path.Services.ApiClient;
+            var apiClient = path.Services.Api;
             return apiClient.Organizations.DeleteOrganizationAsync(path.AccountId, path.OrganizationId);
         }
 
         public static Task Rename(this in OrganizationPath path, string name)
         {
-            var apiClient = path.Services.ApiClient;
+            var apiClient = path.Services.Api;
             return apiClient.Organizations.UpdateOrganizationAsync(path.AccountId, path.OrganizationId, name);
         }
     }

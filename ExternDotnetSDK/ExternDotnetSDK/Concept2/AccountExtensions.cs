@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Models.Accounts;
-using Kontur.Extern.Client.Models.Certificates;
-using Kontur.Extern.Client.Models.Warrants;
+using Kontur.Extern.Client.ApiLevel.Models.Accounts;
+using Kontur.Extern.Client.ApiLevel.Models.Certificates;
+using Kontur.Extern.Client.ApiLevel.Models.Warrants;
 
 namespace Kontur.Extern.Client.Concept2
 {
@@ -11,7 +11,7 @@ namespace Kontur.Extern.Client.Concept2
     {
         public static Task<Account> CreateAsync(this in AccountListPath path, string inn, string kpp, string organizationName)
         {
-            var apiClient = path.Services.ApiClient;
+            var apiClient = path.Services.Api;
             return apiClient.Accounts.CreateAccountAsync(inn, kpp, organizationName);
         }
 
@@ -24,7 +24,7 @@ namespace Kontur.Extern.Client.Concept2
     {
         public static Task<Account> GetAsync(this in AccountPath path)
         {
-            var apiClient = path.Services.ApiClient;
+            var apiClient = path.Services.Api;
             return apiClient.Accounts.GetAccountAsync(path.AccountId);
         }
         
@@ -33,7 +33,7 @@ namespace Kontur.Extern.Client.Concept2
 
         public static Task DeleteAsync(this in AccountPath path)
         {
-            var apiClient = path.Services.ApiClient;
+            var apiClient = path.Services.Api;
             return apiClient.Accounts.DeleteAccountAsync(path.AccountId);
         }
     }

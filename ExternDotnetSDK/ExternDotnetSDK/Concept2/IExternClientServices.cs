@@ -1,7 +1,11 @@
+using Kontur.Extern.Client.ApiLevel;
+using Kontur.Extern.Client.HttpLevel;
+
 namespace Kontur.Extern.Client.Concept2
 {
     public interface IExternClientServices
     {
-        IKeApiClient ApiClient { get; }
+        IHttpRequestsFactory Http { get; }
+        IKeApiClient Api { get; }
     }
 }
