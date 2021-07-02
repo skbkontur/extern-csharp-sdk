@@ -15,8 +15,24 @@ namespace Kontur.Extern.Client
             return apiClient.Accounts.CreateAccountAsync(inn, kpp, organizationName);
         }
 
-        public static Task<List<Account>> FindAsync(this in AccountListPath path, string inn, string kpp) => throw new NotImplementedException();
+        public static IEntityList<Account> List(this in AccountListPath path, TimeSpan? timeout = null)
+        {
+            var apiClient = path.Services.Api;
+            return new EntityList<Account>(
+                async (skip, take) =>
+                {
+                    int intSkip;
+                    int intTake;
+                    checked
+                    {
+                        intSkip = (int) skip;
+                        intTake = (int) take;
+                    }
 
-        public static IEntityList<Account> List(this in AccountListPath path) => throw new NotImplementedException();
+                    var accountList = await apiClient.Accounts.GetAccountsAsync(intSkip, intTake, timeout);
+
+                    return (accountList.Accounts, accountList.TotalCount);
+                });
+        }
     }
 }
