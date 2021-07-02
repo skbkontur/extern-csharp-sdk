@@ -5,9 +5,9 @@ namespace Kontur.Extern.Client.Primitives
 {
     public interface IEntityListSlicing<T>
     {
-        IEntityListSliceLoading<T> Skip(uint skip);
+        IEntityListSliceLoading<T> Skip(long skip);
 
         Task<IReadOnlyList<T>> LoadAllAsync();
-        Task<IReadOnlyList<T>> LoadSliceAsync();
+        Task<(IReadOnlyList<T> Items, bool HasNextSlice)> LoadSliceAsync();
     }
 }

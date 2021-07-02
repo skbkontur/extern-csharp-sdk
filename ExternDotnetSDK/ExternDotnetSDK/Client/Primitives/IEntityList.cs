@@ -1,14 +1,14 @@
 namespace Kontur.Extern.Client.Primitives
 {
-    interface IEntityList<T>
+    internal interface IEntityList<T>
     {
         
         /// <summary>
         /// Allows to change take items (and page size)
         /// </summary>
-        /// <param name="take"></param>
+        /// <param name="sliceSize"></param>
         /// <returns></returns>
-        IEntityListSlicing<T> SliceBy(uint take);
+        IEntityListSlicing<T> SliceBy(uint sliceSize);
         
         /// <summary>
         /// return pagination interface
