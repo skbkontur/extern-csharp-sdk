@@ -13,10 +13,10 @@ namespace Kontur.Extern.Client
         public static IEntityList<DocflowPageItem> List(this DocflowListPath path, DocflowFilterBuilder filterBuilder, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
+            var apiFilter = filterBuilder.CreateFilter();
             return new EntityList<DocflowPageItem>(
                 async (skip, take) =>
                 {
-                    var apiFilter = filterBuilder.CreateFilter();
                     checked
                     {
                         apiFilter.Skip = (int) skip;
