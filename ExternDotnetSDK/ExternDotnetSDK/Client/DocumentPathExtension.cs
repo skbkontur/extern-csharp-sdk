@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -12,7 +13,7 @@ namespace Kontur.Extern.Client
     [PublicAPI]
     public static class DocumentPathExtension
     {
-        public static IEntityList<DocflowPageItem> RelatedDocflowsList(this in DocumentPath path, DocflowFilterBuilder filterBuilder, TimeSpan? timeout = null)
+        public static IEntityList<DocflowPageItem> RelatedDocflowsList(this in DocumentPath path, DocflowFilterBuilder? filterBuilder = null, TimeSpan? timeout = null)
         {
             return DocflowsList(
                 path,
@@ -22,7 +23,7 @@ namespace Kontur.Extern.Client
             );
         }
         
-        public static IEntityList<DocflowPageItem> InventoryDocflowsList(this in DocumentPath path, DocflowFilterBuilder filterBuilder, TimeSpan? timeout = null)
+        public static IEntityList<DocflowPageItem> InventoryDocflowsList(this in DocumentPath path, DocflowFilterBuilder? filterBuilder = null, TimeSpan? timeout = null)
         {
             return DocflowsList(
                 path,
@@ -35,7 +36,7 @@ namespace Kontur.Extern.Client
         public static ILongOperation DssDecrypt(this in DocumentPath path) => throw new NotImplementedException();
         
         private static IEntityList<DocflowPageItem> DocflowsList(in DocumentPath path, 
-                                                                 DocflowFilterBuilder filterBuilder,
+                                                                 DocflowFilterBuilder? filterBuilder,
                                                                  LoadPage loadPage, 
                                                                  TimeSpan? timeout)
         {
@@ -45,7 +46,7 @@ namespace Kontur.Extern.Client
             var relatedDocflowId = path.DocflowId;
             var relatedDocumentId = path.DocumentId;
             
-            var docflowFilter = filterBuilder.CreateFilter();
+            var docflowFilter = filterBuilder?.CreateFilter() ?? new DocflowFilter();
             return new EntityList<DocflowPageItem>(
                 async (skip, take) =>
                 {
