@@ -70,6 +70,12 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Exceptions
                 AuthorityNumberKind.SupervisoryAuthorityPfr => "Pfr",
                 AuthorityNumberKind.SupervisoryAuthorityFss => "Fss",
                 AuthorityNumberKind.SupervisoryAuthorityRosstat => "Rosstat",
+                AuthorityNumberKind.Knd => "KND",
+                AuthorityNumberKind.Okpo => "OKPO",
+                AuthorityNumberKind.Okud => "OKUD",
+                AuthorityNumberKind.InnKpp => "INN-KPP",
+                AuthorityNumberKind.Inn => "INN",
+                AuthorityNumberKind.PfrRegNumber => "PFR reg number",
                 _ => throw UnexpectedEnumMember(nameof(numberKind), numberKind)
             };
         }
