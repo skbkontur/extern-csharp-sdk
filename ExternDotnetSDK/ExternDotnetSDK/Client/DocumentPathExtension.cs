@@ -10,7 +10,7 @@ namespace Kontur.Extern.Client
     [PublicAPI]
     internal static class DocumentPathExtension
     {
-        public static IEntityList<DocflowPageItem> GetRelatedDocflows(this in DocumentPath path, DocflowFilterBuilder filterBuilder, TimeSpan? timeout = null)
+        public static IEntityList<DocflowPageItem> RelatedDocflowsList(this in DocumentPath path, DocflowFilterBuilder filterBuilder, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
 
