@@ -7,7 +7,7 @@ using Kontur.Extern.Client.Primitives;
 
 namespace Kontur.Extern.Client
 {
-    internal static class OrganizationListPathExtension
+    public static class OrganizationListPathExtension
     {
         public static Task<Organization> CreateAsync(this in OrganizationListPath path, string inn, string kpp, string name)
         {

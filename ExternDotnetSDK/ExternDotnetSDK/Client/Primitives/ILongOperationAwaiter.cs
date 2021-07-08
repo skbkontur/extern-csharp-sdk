@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Kontur.Extern.Client.Primitives
 {
-    internal interface ILongOperationAwaiter
+    public interface ILongOperationAwaiter
     {
         Guid TaskId { get; }
         Task WaitForCompletion();

@@ -8,7 +8,7 @@ using Kontur.Extern.Client.Primitives;
 namespace Kontur.Extern.Client
 {
     [PublicAPI]
-    internal static class DocflowListPathExtension
+    public static class DocflowListPathExtension
     {
         public static IEntityList<DocflowPageItem> List(this in DocflowListPath path, DocflowFilterBuilder filterBuilder, TimeSpan? timeout = null)
         {

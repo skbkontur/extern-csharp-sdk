@@ -4,7 +4,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Api.Enums;
 
 namespace Kontur.Extern.Client.Primitives
 {
-    internal interface ILongOperation
+    public interface ILongOperation
     { 
         Task<ILongOperationAwaiter> StartAsync();
         

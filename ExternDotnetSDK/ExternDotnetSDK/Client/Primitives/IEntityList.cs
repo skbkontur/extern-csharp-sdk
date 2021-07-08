@@ -1,6 +1,6 @@
 namespace Kontur.Extern.Client.Primitives
 {
-    internal interface IEntityList<T>
+    public interface IEntityList<T>
     {
         
         /// <summary>

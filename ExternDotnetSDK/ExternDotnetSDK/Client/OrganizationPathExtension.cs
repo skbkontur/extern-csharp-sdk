@@ -4,7 +4,7 @@ using Kontur.Extern.Client.Paths;
 
 namespace Kontur.Extern.Client
 {
-    internal static class OrganizationPathExtension
+    public static class OrganizationPathExtension
     {
         public static Task<Organization> GetAsync(this in OrganizationPath path)
         {
