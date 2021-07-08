@@ -14,7 +14,7 @@ namespace Kontur.Extern.Client
         {
             var apiClient = path.Services.Api;
 
-            var pathAccountId = path.AccountId;
+            var accountId = path.AccountId;
             var relatedDocflowId = path.DocflowId;
             var relatedDocumentId = path.DocumentId;
             
@@ -27,7 +27,7 @@ namespace Kontur.Extern.Client
                         docflowFilter.Skip = (int) skip;
                         docflowFilter.Take = (int) take;
                     }
-                    var relatedDocflows = await apiClient.Docflows.GetRelatedDocflows(pathAccountId, relatedDocflowId, relatedDocumentId, docflowFilter, timeout).ConfigureAwait(false);
+                    var relatedDocflows = await apiClient.Docflows.GetRelatedDocflows(accountId, relatedDocflowId, relatedDocumentId, docflowFilter, timeout).ConfigureAwait(false);
                     
                     return (relatedDocflows.DocflowsPageItem, relatedDocflows.TotalCount);
                 });
