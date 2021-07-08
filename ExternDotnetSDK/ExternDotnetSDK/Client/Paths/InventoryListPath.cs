@@ -3,9 +3,9 @@ using Kontur.Extern.Client.Common;
 
 namespace Kontur.Extern.Client.Paths
 {
-    public readonly struct DocumentPath
+    public readonly struct InventoryListPath
     {
-        public DocumentPath(Guid accountId, Guid docflowId, Guid documentId, IExternClientServices services)
+        public InventoryListPath(Guid accountId, Guid docflowId, Guid documentId, IExternClientServices services)
         {
             AccountId = accountId;
             DocflowId = docflowId;
@@ -16,7 +16,8 @@ namespace Kontur.Extern.Client.Paths
         public Guid AccountId { get; }
         public Guid DocflowId { get; }
         public Guid DocumentId { get; }
-        public InventoryListPath Inventories => new(AccountId, DocflowId, DocumentId, Services);
         public IExternClientServices Services { get; }
+
+        public InventoryPath WithId(Guid inventoryId) => new(AccountId, DocflowId, DocumentId, inventoryId, Services);
     }
 }
