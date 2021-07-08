@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Accounts;
 using Kontur.Extern.Client.Paths;

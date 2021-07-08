@@ -1,12 +1,19 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Model.Numbers;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Exceptions
 {
     internal static class Errors
     {
+        private static ArgumentOutOfRangeException UnexpectedEnumMember<T>([InvokerParameterName] string paramName, T enumValue)
+            where T : Enum
+        {
+            return new(paramName, enumValue, null);
+        }
+
         public static Exception ResponseHasToHaveBody(string request) => 
             new ContractException($"The response on the request {request} does not have any content.");
 
@@ -30,5 +37,44 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Exceptions
         
         public static Exception ItemsOfLastPageIsGreaterThanLeftItems([InvokerParameterName] string paramName, int itemsCount, long leftItems) => 
             new ArgumentException($"The give items count {itemsCount} is greater than left for the last page {leftItems}", paramName);
+
+        public static Exception InvalidRosstatSupervisoryAuthorityNumber([InvokerParameterName] string paramName, string value) => 
+            InvalidSupervisoryAuthorityNumber(paramName, value, "Rosstat", "XX-XX");
+        
+        public static Exception InvalidFssSupervisoryAuthorityNumber([InvokerParameterName] string paramName, string value) => 
+            // ReSharper disable once StringLiteralTypo
+            InvalidSupervisoryAuthorityNumber(paramName, value, "FSS", "XXXXX");
+        
+        public static Exception InvalidFnsSupervisoryAuthorityNumber([InvokerParameterName] string paramName, string value) => 
+            // ReSharper disable once StringLiteralTypo
+            InvalidSupervisoryAuthorityNumber(paramName, value, "FNS", "ХХХХ");
+        
+        public static Exception InvalidPfrSupervisoryAuthorityNumber([InvokerParameterName] string paramName, string value) => 
+            // ReSharper disable once StringLiteralTypo
+            InvalidSupervisoryAuthorityNumber(paramName, value, "PFR", "ХХХ-ХХХ");
+
+        public static ArgumentException InvalidSupervisoryAuthorityNumber([InvokerParameterName] string paramName, string value, string formatName, string formatDetails) => 
+            new($"The given value '{value}' does not match the {formatName} format. The value should match to {formatDetails}, where X is a digit from 0 to 9", paramName);
+
+        public static ArgumentException InvalidAuthorityNumber([InvokerParameterName] string paramName, string value, AuthorityNumberKind numberKind, string format)
+        {
+            var formatName = GetFormatName(numberKind);
+            return new($"The given value '{value}' does not match the {formatName} format. The value should match to {format}, where X is a digit from 0 to 9", paramName);
+        }
+
+        private static string GetFormatName(AuthorityNumberKind numberKind)
+        {
+            return numberKind switch
+            {
+                AuthorityNumberKind.SupervisoryAuthorityFns => "Fns",
+                AuthorityNumberKind.SupervisoryAuthorityPfr => "Pfr",
+                AuthorityNumberKind.SupervisoryAuthorityFss => "Fss",
+                AuthorityNumberKind.SupervisoryAuthorityRosstat => "Rosstat",
+                _ => throw UnexpectedEnumMember(nameof(numberKind), numberKind)
+            };
+        }
+
+        public static Exception InvalidRange([InvokerParameterName] string fromParamName, [InvokerParameterName] string toParamName, DateTime from, DateTime to) => 
+            new ArgumentException($"Invalid range bounds, the value '{@from}' of '{fromParamName}' parameter is greater than the value '{to}' of '{toParamName}' parameter");
     }
 }
