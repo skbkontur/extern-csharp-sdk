@@ -9,9 +9,9 @@ using Kontur.Extern.Client.Primitives;
 namespace Kontur.Extern.Client
 {
     [PublicAPI]
-    public static class InventoryListPathExtension
+    public static class InventoryDocflowListPathExtension
     {
-        public static IEntityList<DocflowPageItem> List(this in InventoryListPath path, DocflowFilterBuilder? filterBuilder = null, TimeSpan? timeout = null)
+        public static IEntityList<DocflowPageItem> List(this in InventoryDocflowListPath path, DocflowFilterBuilder? filterBuilder = null, TimeSpan? timeout = null)
         {
             return DocflowListsHelper.DocflowsList(
                 path.Services.Api,

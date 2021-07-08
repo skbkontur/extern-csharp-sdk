@@ -7,9 +7,9 @@ using Kontur.Extern.Client.Paths;
 namespace Kontur.Extern.Client
 {
     [PublicAPI]
-    public static class InventoryPathExtension
+    public static class InventoryDocflowPathExtension
     {
-        public static Task<Docflow> GetAsync(this in InventoryPath path, TimeSpan? timeout = null)
+        public static Task<Docflow> GetAsync(this in InventoryDocflowPath path, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
             return apiClient.Docflows.GetInventoryDocflowAsync(path.AccountId, path.DocflowId, path.DocumentId, path.InventoryId, timeout);
