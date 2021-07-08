@@ -10,10 +10,12 @@ namespace Kontur.Extern.Client
     [PublicAPI]
     internal static class DocflowListPathExtension
     {
-        public static IEntityList<DocflowPageItem> List(this DocflowListPath path, DocflowFilterBuilder filterBuilder, TimeSpan? timeout = null)
+        public static IEntityList<DocflowPageItem> List(this in DocflowListPath path, DocflowFilterBuilder filterBuilder, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
             var apiFilter = filterBuilder.CreateFilter();
+            
+            var accountId = path.AccountId;
             return new EntityList<DocflowPageItem>(
                 async (skip, take) =>
                 {
@@ -23,7 +25,7 @@ namespace Kontur.Extern.Client
                         apiFilter.Take = (int) take;
                     }
 
-                    var docflowPage = await apiClient.Docflows.GetDocflowsAsync(path.AccountId, apiFilter, timeout);
+                    var docflowPage = await apiClient.Docflows.GetDocflowsAsync(accountId, apiFilter, timeout);
 
                     return (docflowPage.DocflowsPageItem, docflowPage.TotalCount);
                 }
