@@ -9,7 +9,6 @@ using Kontur.Extern.Client.Helpers;
 using Kontur.Extern.Client.Model.DocflowFiltering;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives;
-using Kontur.Extern.Client.Primitives.LongOperations;
 
 namespace Kontur.Extern.Client
 {
