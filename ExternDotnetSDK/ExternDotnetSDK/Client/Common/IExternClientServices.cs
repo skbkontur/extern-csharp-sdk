@@ -1,5 +1,6 @@
 using Kontur.Extern.Client.ApiLevel;
 using Kontur.Extern.Client.HttpLevel;
+using Kontur.Extern.Client.Primitives.Polling;
 
 namespace Kontur.Extern.Client.Common
 {
@@ -7,5 +8,6 @@ namespace Kontur.Extern.Client.Common
     {
         IHttpRequestsFactory Http { get; }
         IKeApiClient Api { get; }
+        IPollingStrategy LongOperationsPollingStrategy { get; }
     }
 }

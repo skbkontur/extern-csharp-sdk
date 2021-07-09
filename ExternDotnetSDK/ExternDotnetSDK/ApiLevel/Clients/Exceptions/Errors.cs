@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.ApiLevel.Models.Errors;
 using Kontur.Extern.Client.Model.Numbers;
 using Vostok.Clusterclient.Core.Model;
+using static System.Environment;
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Exceptions
 {
     internal static class Errors
     {
-        private static ArgumentOutOfRangeException UnexpectedEnumMember<T>([InvokerParameterName] string paramName, T enumValue)
+        public static ArgumentOutOfRangeException UnexpectedEnumMember<T>([InvokerParameterName] string paramName, T enumValue)
             where T : Enum
         {
             return new(paramName, enumValue, null);
@@ -82,5 +84,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Exceptions
 
         public static Exception InvalidRange([InvokerParameterName] string fromParamName, [InvokerParameterName] string toParamName, DateTime from, DateTime to) => 
             new ArgumentException($"Invalid range bounds, the value '{@from}' of '{fromParamName}' parameter is greater than the value '{to}' of '{toParamName}' parameter");
+
+        public static Exception LongOperationFailed(Error startError) => new ApiException($"{startError}{NewLine}{startError.Message}");
     }
 }
