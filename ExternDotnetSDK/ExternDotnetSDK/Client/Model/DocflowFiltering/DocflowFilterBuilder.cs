@@ -2,9 +2,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Clients.Exceptions;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Model.Numbers;
 
 namespace Kontur.Extern.Client.Model.DocflowFiltering

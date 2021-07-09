@@ -1,7 +1,7 @@
 #nullable enable
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Clients.Exceptions;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
+using Kontur.Extern.Client.Exceptions;
 
 namespace Kontur.Extern.Client.Primitives.LongOperations
 {

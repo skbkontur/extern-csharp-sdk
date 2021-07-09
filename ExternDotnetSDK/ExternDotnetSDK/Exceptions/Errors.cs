@@ -6,7 +6,7 @@ using Kontur.Extern.Client.Model.Numbers;
 using Vostok.Clusterclient.Core.Model;
 using static System.Environment;
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Exceptions
+namespace Kontur.Extern.Client.Exceptions
 {
     internal static class Errors
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Exceptions
+namespace Kontur.Extern.Client.Exceptions
 {
     [Serializable]
     public class ContractException : Exception

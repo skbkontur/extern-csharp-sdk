@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Clients.Exceptions;
+using Kontur.Extern.Client.Exceptions;
 
 namespace Kontur.Extern.Client.Primitives
 {

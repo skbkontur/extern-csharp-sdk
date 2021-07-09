@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Clients.Exceptions;
 using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.Api.Enums;
+using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Primitives.Polling;
 
 namespace Kontur.Extern.Client.Primitives.LongOperations

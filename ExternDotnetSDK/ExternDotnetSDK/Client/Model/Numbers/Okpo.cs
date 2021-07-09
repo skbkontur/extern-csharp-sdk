@@ -1,4 +1,4 @@
-using Kontur.Extern.Client.ApiLevel.Clients.Exceptions;
+using Kontur.Extern.Client.Exceptions;
 
 namespace Kontur.Extern.Client.Model.Numbers
 {

@@ -1,4 +1,4 @@
-using Kontur.Extern.Client.ApiLevel.Clients.Exceptions;
+using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.HttpLevel.Options;
 using Kontur.Extern.Client.HttpLevel.Serialization;
 using Vostok.Clusterclient.Core.Model;
