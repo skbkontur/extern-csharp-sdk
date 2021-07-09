@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Documents;
 using Kontur.Extern.Client.Helpers;
@@ -33,7 +34,17 @@ namespace Kontur.Extern.Client
                 timeout
             );
         }
-        
-        public static ILongOperation DssDecrypt(this in DocumentPath path) => throw new NotImplementedException();
+
+        public static Task<ApiReplyDocument> GenerateReplyAsync(this in DocumentPath path, Urn documentType, byte[] certificate, TimeSpan? timeout = null)
+        {
+            var apiClient = path.Services.Api;
+            return apiClient.Replies.GenerateReplyAsync(
+                path.AccountId,
+                path.DocflowId,
+                path.DocumentId,
+                documentType,
+                certificate,
+                timeout);
+        }
     }
 }

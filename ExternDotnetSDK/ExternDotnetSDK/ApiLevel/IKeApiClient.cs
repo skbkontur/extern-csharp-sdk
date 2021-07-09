@@ -4,6 +4,7 @@ using Kontur.Extern.Client.ApiLevel.Clients.Drafts;
 using Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders;
 using Kontur.Extern.Client.ApiLevel.Clients.Events;
 using Kontur.Extern.Client.ApiLevel.Clients.Organizations;
+using Kontur.Extern.Client.ApiLevel.Clients.Replies;
 using Kontur.Extern.Client.HttpLevel;
 
 namespace Kontur.Extern.Client.ApiLevel
@@ -14,6 +15,7 @@ namespace Kontur.Extern.Client.ApiLevel
         IHttpRequestsFactory Http { get; }
         IAccountClient Accounts { get; }
         IDocflowsClient Docflows { get; }
+        IRepliesClient Replies { get; }
         IDraftsClient Drafts { get; }
         IDraftsBuilderClient DraftsBuilder { get; }
         IEventsClient Events { get; }
