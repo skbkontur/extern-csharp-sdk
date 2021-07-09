@@ -18,6 +18,7 @@ namespace Kontur.Extern.Client.Paths
         public Guid DocumentId { get; }
         public InventoryDocflowListPath InventoryDocflows => new(AccountId, DocflowId, DocumentId, Services);
         public DocumentContentListPath Contents => new(AccountId, DocflowId, DocumentId, Services);
+        public DocumentReplyPath Reply(Guid replyId) => new(AccountId, DocflowId, DocumentId, replyId, Services);
         public IExternClientServices Services { get; }
     }
 }
