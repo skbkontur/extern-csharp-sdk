@@ -25,14 +25,16 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
 
         public TResponseMessage GetMessage<TResponseMessage>()
         {
-            if (!response.HasStream)
-                throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
-
             if (response.Headers.ContentType != ContentTypes.Json) 
                 throw Errors.ResponseHasUnexpectedContentType(request.ToString(true, false), response, ContentTypes.Json);
+            
+            if (!response.HasStream && !response.HasContent)
+                throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
 
-            var memoryStream = response.Content.ToMemoryStream();
-            return serializer.DeserializeFromJson<TResponseMessage>(memoryStream);
+            var stream = response.HasStream 
+                ? response.Stream 
+                : response.Content.ToMemoryStream();
+            return serializer.DeserializeFromJson<TResponseMessage>(stream);
         }
     }
 }
