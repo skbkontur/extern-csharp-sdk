@@ -12,7 +12,7 @@ namespace Kontur.Extern.Client.HttpLevel
         }
 
         public static Task<TResponseDto> GetAsync<TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, string url, TimeSpan? timeout = null) => 
-            GetAsync<TResponseDto>(httpRequestsFactory, new Uri(url), timeout);
+            GetAsync<TResponseDto>(httpRequestsFactory, new Uri(url, UriKind.RelativeOrAbsolute), timeout);
 
         public static async Task<TResponseDto> GetAsync<TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, Uri url, TimeSpan? timeout = null)
         {
