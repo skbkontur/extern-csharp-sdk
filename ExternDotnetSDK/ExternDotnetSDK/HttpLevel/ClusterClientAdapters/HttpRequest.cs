@@ -1,12 +1,12 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Clients.Common.Logging;
 using Kontur.Extern.Client.HttpLevel.Options;
 using Kontur.Extern.Client.HttpLevel.Serialization;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Commons.Time;
+using Vostok.Logging.Abstractions;
 using Request = Vostok.Clusterclient.Core.Model.Request;
 using StreamContent = Vostok.Clusterclient.Core.Model.StreamContent;
 
@@ -19,16 +19,16 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
         private readonly AuthenticationOptions authOptions;
         private readonly IClusterClient clusterClient;
         private readonly IRequestBodySerializer serializer;
-        private readonly ILogger logger;
+        private readonly ILog log;
 
-        public HttpRequest(Request request, RequestSendingOptions options, AuthenticationOptions authOptions, IClusterClient clusterClient, IRequestBodySerializer serializer, ILogger logger)
+        public HttpRequest(Request request, RequestSendingOptions options, AuthenticationOptions authOptions, IClusterClient clusterClient, IRequestBodySerializer serializer, ILog log)
         {
             this.request = request;
             this.options = options;
             this.authOptions = authOptions;
             this.clusterClient = clusterClient;
             this.serializer = serializer;
-            this.logger = logger;
+            this.log = log;
         }
 
         public IHttpRequest WithPayload<TRequestMessage>(TRequestMessage message)
@@ -83,10 +83,9 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             {
                 return new HttpResponse(resultRequest, result.Response.EnsureSuccessStatusCode(), serializer);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                // todo: print response here (to not expose it to ILogger interface)
-                //logger.Log(result, e);
+                log.Error(ex, $"StatusCode: {result.Response.Code} | {result.Status}");
                 throw;
             }
         }
