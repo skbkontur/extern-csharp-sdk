@@ -7,7 +7,7 @@ namespace Kontur.Extern.Client.HttpLevel
     {
         public static async Task<byte[]> GetBytesAsync(this IHttpRequestsFactory httpRequestsFactory, string url, TimeSpan? timeout = null)
         {
-            var response = await httpRequestsFactory.Get(new Uri(url)).SendAsync(timeout).ConfigureAwait(false);
+            var response = await httpRequestsFactory.Get(url.ToUrl()).SendAsync(timeout).ConfigureAwait(false);
             return response.GetBytes();
         }
 
@@ -21,7 +21,7 @@ namespace Kontur.Extern.Client.HttpLevel
         }
         
         public static Task<TResponseDto> PutAsync<TRequestDto, TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, string url, TRequestDto requestDto, TimeSpan? timeout = null) => 
-            PutAsync<TRequestDto, TResponseDto>(httpRequestsFactory, new Uri(url), requestDto, timeout);
+            PutAsync<TRequestDto, TResponseDto>(httpRequestsFactory, url.ToUrl(), requestDto, timeout);
 
         public static async Task<TResponseDto> PutAsync<TRequestDto, TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, Uri url, TRequestDto requestDto, TimeSpan? timeout = null)
         {
@@ -32,7 +32,7 @@ namespace Kontur.Extern.Client.HttpLevel
         }
 
         public static Task<TResponseDto> PostAsync<TRequestDto, TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, string url, TRequestDto requestDto, TimeSpan? timeout = null) => 
-            PostAsync<TRequestDto, TResponseDto>(httpRequestsFactory, new Uri(url), requestDto, timeout);
+            PostAsync<TRequestDto, TResponseDto>(httpRequestsFactory, url.ToUrl(), requestDto, timeout);
 
         public static async Task<TResponseDto> PostAsync<TRequestDto, TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, Uri url, TRequestDto requestDto, TimeSpan? timeout = null)
         {
@@ -43,7 +43,7 @@ namespace Kontur.Extern.Client.HttpLevel
         }
         
         public static Task<TResponseDto> PostAsync<TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, string url, TimeSpan? timeout = null) => 
-            PostAsync<TResponseDto>(httpRequestsFactory, new Uri(url), timeout);
+            PostAsync<TResponseDto>(httpRequestsFactory, url.ToUrl(), timeout);
         
         public static async Task<TResponseDto> PostAsync<TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, Uri url, TimeSpan? timeout = null)
         {
@@ -52,7 +52,7 @@ namespace Kontur.Extern.Client.HttpLevel
         }
 
         public static Task DeleteAsync(this IHttpRequestsFactory httpRequestsFactory, string url, TimeSpan? timeout = null) => 
-            DeleteAsync(httpRequestsFactory, new Uri(url), timeout);
+            DeleteAsync(httpRequestsFactory, url.ToUrl(), timeout);
 
         public static Task DeleteAsync(this IHttpRequestsFactory httpRequestsFactory, Uri url, TimeSpan? timeout = null) => 
             httpRequestsFactory.Delete(url).SendAsync(timeout);

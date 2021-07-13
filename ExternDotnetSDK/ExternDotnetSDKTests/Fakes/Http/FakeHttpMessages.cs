@@ -8,6 +8,8 @@ namespace Kontur.Extern.Client.Tests.Fakes.Http
         public FakeHttpMessages(Response expectedResponse) => ExpectedResponse = expectedResponse;
 
         public Request? SentRequest { get; set; }
-        public Response ExpectedResponse { get; }
+        public Response ExpectedResponse { get; private set; }
+
+        public void ReplaceResponseBody(byte[] body) => ExpectedResponse = new Response(ExpectedResponse.Code, new Content(body), ExpectedResponse.Headers);
     }
 }

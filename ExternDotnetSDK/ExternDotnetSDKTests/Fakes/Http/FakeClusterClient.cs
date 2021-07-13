@@ -31,6 +31,8 @@ namespace Kontur.Extern.Client.Tests.Fakes.Http
         public string BaseUrl { get; }
         public Request? SentRequest => httpMessages.SentRequest;
 
+        public void SetResponseBody(byte[] body) => httpMessages.ReplaceResponseBody(body);
+
         private class FakeTransport : ITransport
         {
             private readonly FakeHttpMessages httpMessages;
