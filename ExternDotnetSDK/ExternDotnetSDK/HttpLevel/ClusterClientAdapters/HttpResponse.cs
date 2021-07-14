@@ -90,5 +90,24 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
                 : response.Content.ToMemoryStream();
             return serializer.DeserializeFromJson<TResponseMessage>(stream);
         }
+
+        public bool TryGetMessage<TResponseMessage>(out TResponseMessage responseMessage)
+        {
+            responseMessage = default;
+            if (response.Headers.ContentType != ContentTypes.Json)
+                return false;
+            
+            if (!response.HasStream && !response.HasContent)
+                return false;
+            
+            var stream = response.HasStream 
+                ? response.Stream 
+                : response.Content.ToMemoryStream();
+            
+            responseMessage = serializer.DeserializeFromJson<TResponseMessage>(stream);
+            return true;
+        }
+
+        public HttpStatus Status => new(response.Code);
     }
 }

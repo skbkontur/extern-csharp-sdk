@@ -46,13 +46,31 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             return this;
         }
 
+        public IHttpRequest WithFormUrlEncoded(string content)
+        {
+            request = request.WithContent(content).WithContentTypeHeader(ContentTypes.FormUrlEncoded);
+            return this;
+        }
+
         public IHttpRequest WithJsonPayload(string json)
         {
             request = request.WithContent(json).WithContentTypeHeader(ContentTypes.Json);
             return this;
         }
 
+        public IHttpRequest Accept(string contentType)
+        {
+            request = request.WithAcceptHeader(contentType);
+            return this;
+        }
+
         public async Task<IHttpResponse> SendAsync(TimeSpan? timeout = null)
+        {
+            var httpResponse = await TrySendAsync(timeout).ConfigureAwait(false);
+            return EnsureSuccess(httpResponse);
+        }
+        
+        public async Task<IHttpResponse> TrySendAsync(TimeSpan? timeout = null)
         {
             timeout ??= request.IsWriteRequest() ? options.DefaultWriteTimeout : options.DefaultReadTimeout;
             var timeBudget = TimeBudget.StartNew(timeout.Value);
@@ -62,10 +80,12 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             var leftTimeout = timeBudget.Remaining;
             var resultRequest = BuildRequest(request, sessionId, authOptions.ApiKey, leftTimeout);
 
-            return await SendRequestAsync(resultRequest, leftTimeout);
+            return await TrySendRequestAsync(resultRequest, leftTimeout).ConfigureAwait(false);
 
             static Request BuildRequest(Request request, string sessionId, string apiKey, TimeSpan? timeout)
             {
+                // await AuthenticationProvider.AuthenticateAsync().ConfigureAwait(false);
+                // AuthenticationProvider.ApplyAuth(request);
                 var resultRequest = request
                     .WithAuthorizationHeader(AuthSchemes.AuthSid, sessionId)
                     .WithHeader(HttpHeaders.ApiKeyHeader, apiKey);
@@ -76,18 +96,22 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             }
         }
 
-        private async Task<IHttpResponse> SendRequestAsync(Request resultRequest, TimeSpan leftTimeout)
+        private IHttpResponse EnsureSuccess(IHttpResponse response)
+        {
+            var responseStatus = response.Status;
+            if (!responseStatus.IsSuccessful)
+            {
+                log.Error($"StatusCode: {responseStatus.StatusCode}");
+                responseStatus.EnsureSuccess();
+            }
+
+            return response;
+        }
+
+        private async Task<IHttpResponse> TrySendRequestAsync(Request resultRequest, TimeSpan leftTimeout)
         {
             var result = await clusterClient.SendAsync(resultRequest, leftTimeout).ConfigureAwait(false);
-            try
-            {
-                return new HttpResponse(resultRequest, result.Response.EnsureSuccessStatusCode(), serializer);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex, $"StatusCode: {result.Response.Code} | {result.Status}");
-                throw;
-            }
+            return new HttpResponse(resultRequest, result.Response, serializer);
         }
     }
 }

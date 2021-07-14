@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
+using Kontur.Extern.Client.Authentication.OpenId.Exceptions;
 using Kontur.Extern.Client.Model.Numbers;
 using Vostok.Clusterclient.Core.Model;
 using static System.Environment;
@@ -86,5 +87,7 @@ namespace Kontur.Extern.Client.Exceptions
             new ArgumentException($"Invalid range bounds, the value '{@from}' of '{fromParamName}' parameter is greater than the value '{to}' of '{toParamName}' parameter");
 
         public static Exception LongOperationFailed(Error startError) => new ApiException($"{startError}{NewLine}{startError.Message}");
+
+        public static Exception UnsuccessfulResponse(ResponseCode statusCode) => new ApiException($"Response status code '{statusCode}' indicates unsuccessful outcome.");
     }
 }
