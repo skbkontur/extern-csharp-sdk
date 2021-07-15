@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Vostok.Clusterclient.Core.Model;
 
-namespace Kontur.Extern.Client.Authentication
+namespace Kontur.Extern.Client.Authentication.BasicAuthorization
 {
     internal class BasicAuthenticationProvider : IAuthenticationProvider
     {
