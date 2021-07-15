@@ -1,4 +1,4 @@
-namespace Kontur.Extern.Client.Authentication
+namespace Kontur.Extern.Client.Authentication.OpenId.Provider.Models
 {
     public class Credentials
     {

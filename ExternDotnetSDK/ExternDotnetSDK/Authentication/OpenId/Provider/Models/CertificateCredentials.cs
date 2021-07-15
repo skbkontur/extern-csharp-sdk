@@ -1,6 +1,6 @@
 using System.Security.Cryptography.X509Certificates;
 
-namespace Kontur.Extern.Client.Authentication
+namespace Kontur.Extern.Client.Authentication.OpenId.Provider.Models
 {
     public class CertificateCredentials
     {

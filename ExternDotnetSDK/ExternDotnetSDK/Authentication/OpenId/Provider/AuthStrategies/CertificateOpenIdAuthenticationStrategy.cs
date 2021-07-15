@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Kontur.Extern.Client.Authentication.OpenId.Client;
 using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests;
 using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Responses;
+using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
 using Kontur.Extern.Client.Cryptography;
 
 namespace Kontur.Extern.Client.Authentication.OpenId.Provider.AuthStrategies

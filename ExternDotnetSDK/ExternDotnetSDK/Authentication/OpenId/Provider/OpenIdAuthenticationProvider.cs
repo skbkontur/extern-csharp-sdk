@@ -6,6 +6,7 @@ using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Responses;
 using Kontur.Extern.Client.Authentication.OpenId.Exceptions;
 using Kontur.Extern.Client.Authentication.OpenId.Provider.AuthStrategies;
 using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
+using Kontur.Extern.Client.Authentication.OpenId.Time;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client.Authentication.OpenId.Provider
@@ -16,15 +17,18 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider
         private readonly IOpenIdClient openId;
         private readonly IOpenIdAuthenticationStrategy authenticationStrategy;
         private readonly OpenIdAuthenticationContext context = new();
+        private readonly IStopwatchFactory stopwatchFactory;
 
         public OpenIdAuthenticationProvider(
             OpenIdAuthenticationOptions options, 
             IOpenIdClient openId,
-            IOpenIdAuthenticationStrategy authenticationStrategy)
+            IOpenIdAuthenticationStrategy authenticationStrategy,
+            IStopwatchFactory stopwatchFactory)
         {
             this.options = options;
             this.openId = openId;
             this.authenticationStrategy = authenticationStrategy;
+            this.stopwatchFactory = stopwatchFactory;
         }
         
         public async Task<IAuthenticationResult> AuthenticateAsync(TimeSpan? timeout = null)
@@ -36,7 +40,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider
             {
                 if (token.WillExpireAfter(options.ProactiveAuthTokenRefreshInterval))
                 {
-                    var accessTokenFactory = new AccessTokenFactory();
+                    var accessTokenFactory = new AccessTokenFactory(stopwatchFactory);
                     var tokenResponse = await RefreshTokenAsync(token, timeout).ConfigureAwait(false);
                     token = CreateAccessToken(accessTokenFactory, tokenResponse);
                     context.SetAccessToken(token);
@@ -44,7 +48,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider
             }
             else
             {
-                var accessTokenFactory = new AccessTokenFactory();
+                var accessTokenFactory = new AccessTokenFactory(stopwatchFactory);
                 var tokenResponse = await authenticationStrategy.AuthenticateAsync(openId, options, timeout).ConfigureAwait(false);
                 token = CreateAccessToken(accessTokenFactory, tokenResponse);
                 context.SetAccessToken(token);
@@ -54,7 +58,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider
 
             static AccessToken CreateAccessToken(AccessTokenFactory accessTokenFactory, TokenResponse tokenResponse)
             {
-                var token = accessTokenFactory.TryCreate(tokenResponse);
+                var token = accessTokenFactory.CreateIfNotExpired(tokenResponse);
                 if (token == null)
                     throw OpenIdErrors.AuthTokenHasAlreadyExpired();
                 return token;
