@@ -15,16 +15,13 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider.AuthStrategies
 
         public Task<TokenResponse> AuthenticateAsync(IOpenIdClient openId, OpenIdAuthenticationOptions options, TimeSpan? timeout)
         {
-            return openId.RequestTokenAsync(
-                new PasswordTokenRequest
-                {
-                    UserName = credentials.UserName,
-                    Password = credentials.Password,
-                    ClientId = options.ClientId,
-                    ClientSecret = options.ApiKey,
-                    Scope = options.Scope
-                },
-                timeout);
+            var request = new PasswordTokenRequest(
+                credentials,
+                options.Scope,
+                options.ClientId,
+                options.ApiKey
+            );
+            return openId.RequestTokenAsync(request, timeout);
         }
     }
 }

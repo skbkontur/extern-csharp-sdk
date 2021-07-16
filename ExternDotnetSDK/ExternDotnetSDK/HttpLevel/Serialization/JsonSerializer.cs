@@ -17,10 +17,24 @@ namespace Kontur.Extern.Client.HttpLevel.Serialization
             using var streamWriter = new StreamWriter(stream, Utf8NoBom, 1024, true);
             jsonSerializer.Serialize(streamWriter, body);
         }
+        
+        public string SerializeToJsonString<T>(T body)
+        {
+            using var stringWriter = new StringWriter();
+            jsonSerializer.Serialize(stringWriter, body);
+            stringWriter.Flush();
+            return stringWriter.ToString();
+        }
 
         public TResult DeserializeFromJson<TResult>(Stream stream)
         {
             using var streamReader = new StreamReader(stream, Utf8NoBom);
+            return jsonSerializer.Deserialize<TResult>(new JsonTextReader(streamReader));
+        }
+        
+        public TResult DeserializeFromJson<TResult>(string json)
+        {
+            using var streamReader = new StringReader(json);
             return jsonSerializer.Deserialize<TResult>(new JsonTextReader(streamReader));
         }
     }

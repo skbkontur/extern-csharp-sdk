@@ -39,12 +39,6 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client
 
         public async Task<TokenResponse> RequestTokenAsync(PasswordTokenRequest request, TimeSpan? timeout = null)
         {
-            if (string.IsNullOrWhiteSpace(request.ClientId))
-                throw new ArgumentNullException(nameof(request.ClientId));
-
-            if (string.IsNullOrWhiteSpace(request.UserName))
-                throw new ArgumentNullException(nameof(request.UserName));
-
             var content = new FormUrlEncodedContentBuilder()
                 .AddGrantType(ContractConstants.GrantTypes.Password)
                 .AddScope(request.Scope)
@@ -57,15 +51,6 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client
 
         public async Task<TokenResponse> RequestTokenAsync(CertificateTokenRequest request, TimeSpan? timeout = null)
         {
-            if (string.IsNullOrWhiteSpace(request.ClientId))
-                throw new ArgumentNullException(nameof(request.ClientId));
-
-            if (string.IsNullOrWhiteSpace(request.Thumbprint))
-                throw new ArgumentNullException(nameof(request.Thumbprint));
-
-            if (request.DecryptedKey == null)
-                throw new ArgumentNullException(nameof(request.DecryptedKey));
-
             var content = new FormUrlEncodedContentBuilder()
                 .AddGrantType(ContractConstants.GrantTypes.Certificate)
                 .AddScope(request.Scope)
@@ -75,14 +60,8 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client
             return await PostToOpenIdServerAsync<TokenResponse>("/connect/token", content, timeout).ConfigureAwait(false);
         }
 
-        public async Task<TokenResponse> RequestTokenAsync(TrustedTokenRequest request, TimeSpan? timeout = null)
+        public async Task<TokenResponse> RequestTokenAsync(JwtTrustedTokenRequest request, TimeSpan? timeout = null)
         {
-            if (string.IsNullOrWhiteSpace(request.ClientId))
-                throw new ArgumentNullException(nameof(request.ClientId));
-
-            if (string.IsNullOrWhiteSpace(request.Token))
-                throw new ArgumentNullException(nameof(request.Token));
-
             var content = new FormUrlEncodedContentBuilder()
                 .AddGrantType(ContractConstants.GrantTypes.Trusted)
                 .AddScope(request.Scope)
@@ -93,12 +72,6 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client
 
         public async Task<CertificateAuthenticationResponse> CertificateAuthenticationAsync(CertificateAuthenticationRequest request, TimeSpan? timeout = null)
         {
-            if (string.IsNullOrWhiteSpace(request.ClientId))
-                throw new ArgumentNullException(nameof(request.ClientId));
-
-            if (request.PublicKey == null)
-                throw new ArgumentNullException(nameof(request.PublicKey));
-
             var content = new FormUrlEncodedContentBuilder()
                 .Add(
                     ContractConstants.CertificateAuthenticationRequest.PublicKey,

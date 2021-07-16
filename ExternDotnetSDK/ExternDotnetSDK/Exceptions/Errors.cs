@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
-using Kontur.Extern.Client.Authentication.OpenId.Exceptions;
 using Kontur.Extern.Client.Model.Numbers;
 using Vostok.Clusterclient.Core.Model;
 using static System.Environment;
@@ -103,5 +102,8 @@ namespace Kontur.Extern.Client.Exceptions
 
         public static Exception AccessTokenAlreadyExpired([InvokerParameterName] string paramName) => 
             new ArgumentException("The access token has been expired already", paramName);
+
+        public static Exception ArrayCannotBeEmpty([InvokerParameterName] string paramName) =>
+            new ArgumentException("Value cannot be an empty collection.", paramName);
     }
 }

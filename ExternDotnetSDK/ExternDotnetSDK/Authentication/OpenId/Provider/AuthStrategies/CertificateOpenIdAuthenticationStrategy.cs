@@ -27,30 +27,24 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider.AuthStrategies
 
         private Task<TokenResponse> AuthorizeByHandshakeSecretAsync(CertificateAuthenticationResponse authResponse, IOpenIdClient openId, OpenIdAuthenticationOptions options, TimeSpan? timeout)
         {
-            return openId.RequestTokenAsync(
-                new CertificateTokenRequest
-                {
-                    DecryptedKey = cryptoProvider.Decrypt(authResponse.EncryptedKey),
-                    Thumbprint = credentials.PublicKey.Thumbprint,
-                    Scope = options.Scope,
-                    ClientId = options.ClientId,
-                    ClientSecret = options.ApiKey,
-                },
-                timeout);
+            var request = new CertificateTokenRequest(
+                cryptoProvider.Decrypt(authResponse.EncryptedKey),
+                credentials.PublicKey.Thumbprint,
+                options.Scope,
+                options.ClientId,
+                options.ApiKey);
+            return openId.RequestTokenAsync(request, timeout);
         }
 
         private Task<CertificateAuthenticationResponse> AuthorizeByPublicKeyAsync(IOpenIdClient openId, OpenIdAuthenticationOptions options, TimeSpan? timeout)
         {
-            return openId.CertificateAuthenticationAsync(
-                new CertificateAuthenticationRequest
-                {
-                    Free = credentials.Free,
-                    PublicKey = credentials.PublicKey,
-                    ClientId = options.ClientId,
-                    ClientSecret = options.ApiKey,
-                    PartialFactorToken = options.Scope
-                },
-                timeout);
+            var request = new CertificateAuthenticationRequest(
+                credentials.PublicKey,
+                credentials.Free,
+                options.Scope,
+                options.ClientId,
+                options.ApiKey);
+            return openId.CertificateAuthenticationAsync(request, timeout);
         }
     }
 }

@@ -1,18 +1,42 @@
-﻿namespace Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests
+﻿#nullable enable
+using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
+using Kontur.Extern.Client.Exceptions;
+using Newtonsoft.Json;
+
+namespace Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests
 {
     /// <summary>
     /// Запрос для получения токена по средствам связки логин пароль
     /// </summary>
-    /// <seealso cref="ClientAuthenticatedRequest" />
-    public class PasswordTokenRequest : ClientAuthenticatedRequest
+    /// <seealso cref="ScopedAuthenticatedRequest" />
+    public class PasswordTokenRequest : ScopedAuthenticatedRequest
     {
+        public PasswordTokenRequest(Credentials credentials, string scope, string clientId, string clientSecret)
+            : this(credentials.UserName, credentials.Password, scope, clientId, clientSecret)
+        {
+        }
+        
+        [JsonConstructor]
+        public PasswordTokenRequest(string userName, string password, string scope, string clientId, string clientSecret)
+            : base(scope, clientId, clientSecret)
+        {
+            if (string.IsNullOrWhiteSpace(userName))
+                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(userName));
+            
+            if (string.IsNullOrWhiteSpace(password))
+                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(password));
+            
+            UserName = userName;
+            Password = password;
+        }
+        
         /// <summary>
         /// Получить или установить логин пользователя
         /// </summary>
         /// <value>
         /// Логин пользователя
         /// </value>
-        public string UserName { get; set; }
+        public string UserName { get; }
 
         /// <summary>
         /// Получить или установить пароль пользователя
@@ -20,7 +44,7 @@
         /// <value>
         /// Пароль пользователя.
         /// </value>
-        public string Password { get; set; }
+        public string Password { get; }
 
         /// <summary>
         /// Получить или установить токен для двуфакторной аутентификации
@@ -28,14 +52,6 @@
         /// <value>
         /// Токен для 2FA.
         /// </value>
-        public string PartialFactorToken { get; set; }
-
-        /// <summary>
-        /// Получить или установить scope
-        /// </summary>
-        /// <value>
-        /// сфера использования токена
-        /// </value>
-        public string Scope { get; set; } = "extern.api";
+        public string? PartialFactorToken { get; set; }
     }
 }

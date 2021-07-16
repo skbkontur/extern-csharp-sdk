@@ -13,7 +13,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client
 
         Task<TokenResponse> RequestTokenAsync(CertificateTokenRequest request, TimeSpan? timeout = null);
 
-        Task<TokenResponse> RequestTokenAsync(TrustedTokenRequest request, TimeSpan? timeout = null);
+        Task<TokenResponse> RequestTokenAsync(JwtTrustedTokenRequest request, TimeSpan? timeout = null);
 
         Task<CertificateAuthenticationResponse> CertificateAuthenticationAsync(CertificateAuthenticationRequest request, TimeSpan? timeout = null);
     }

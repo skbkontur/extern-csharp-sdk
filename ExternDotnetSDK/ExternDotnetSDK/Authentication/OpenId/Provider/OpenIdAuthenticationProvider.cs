@@ -64,16 +64,15 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider
             }
         }
 
-        private Task<TokenResponse> RefreshTokenAsync(AccessToken accessToken, TimeSpan? timeout) =>
-            openId.RequestTokenAsync(
-                new RefreshTokenRequest
-                {
-                    ClientId = options.ClientId,
-                    ClientSecret = options.ApiKey,
-                    RefreshToken = accessToken.RefreshToken,
-                    Scope = options.Scope
-                },
-                timeout
+        private Task<TokenResponse> RefreshTokenAsync(AccessToken accessToken, TimeSpan? timeout)
+        {
+            var request = new RefreshTokenRequest(
+                accessToken.RefreshToken,
+                options.ClientId,
+                options.ApiKey,
+                options.Scope
             );
+            return openId.RequestTokenAsync(request, timeout);
+        }
     }
 }
