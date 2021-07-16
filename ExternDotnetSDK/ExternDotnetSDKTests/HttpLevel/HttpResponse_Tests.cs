@@ -171,7 +171,7 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             return new HttpResponse(
                 dummyRequest,
                 new Response(ResponseCode.Ok, content, headers, stream),
-                new RequestBodySerializer()
+                new JsonSerializer()
             );
         }
 

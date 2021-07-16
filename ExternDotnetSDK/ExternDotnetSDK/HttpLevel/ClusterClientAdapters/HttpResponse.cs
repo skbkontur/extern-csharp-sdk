@@ -14,9 +14,9 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
         private static readonly Encoding DefaultEncoding = Encoding.UTF8;
         private readonly Request request;
         private readonly Response response;
-        private readonly IRequestBodySerializer serializer;
+        private readonly IJsonSerializer serializer;
 
-        public HttpResponse(Request request, Response response, IRequestBodySerializer serializer)
+        public HttpResponse(Request request, Response response, IJsonSerializer serializer)
         {
             this.request = request;
             this.response = response;

@@ -18,10 +18,10 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
         private readonly RequestSendingOptions options;
         private readonly AuthenticationOptions authOptions;
         private readonly IClusterClient clusterClient;
-        private readonly IRequestBodySerializer serializer;
+        private readonly IJsonSerializer serializer;
         private readonly ILog log;
 
-        public HttpRequest(Request request, RequestSendingOptions options, AuthenticationOptions authOptions, IClusterClient clusterClient, IRequestBodySerializer serializer, ILog log)
+        public HttpRequest(Request request, RequestSendingOptions options, AuthenticationOptions authOptions, IClusterClient clusterClient, IJsonSerializer serializer, ILog log)
         {
             this.request = request;
             this.options = options;

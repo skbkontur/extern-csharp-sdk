@@ -5,12 +5,12 @@ using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.HttpLevel.Serialization
 {
-    public class RequestBodySerializer : IRequestBodySerializer
+    public class JsonSerializer : IJsonSerializer
     {
         private static  readonly UTF8Encoding Utf8NoBom = new(false, true);
-        private readonly JsonSerializer jsonSerializer;
+        private readonly Newtonsoft.Json.JsonSerializer jsonSerializer;
 
-        public RequestBodySerializer() => jsonSerializer = new JsonSerializer();
+        public JsonSerializer() => jsonSerializer = new Newtonsoft.Json.JsonSerializer();
 
         public void SerializeToJsonStream<T>(T body, Stream stream)
         {

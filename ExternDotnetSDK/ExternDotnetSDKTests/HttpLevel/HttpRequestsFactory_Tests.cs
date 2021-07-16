@@ -189,7 +189,7 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
                 new RequestSendingOptions(),
                 new AuthenticationOptions("apiKey", new FakeAuthProvider()),
                 clusterClient,
-                new RequestBodySerializer(),
+                new JsonSerializer(),
                 new TestLog()
             );
         }
