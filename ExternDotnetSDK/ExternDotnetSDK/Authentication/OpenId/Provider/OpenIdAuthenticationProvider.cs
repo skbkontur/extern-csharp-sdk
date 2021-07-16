@@ -7,7 +7,6 @@ using Kontur.Extern.Client.Authentication.OpenId.Exceptions;
 using Kontur.Extern.Client.Authentication.OpenId.Provider.AuthStrategies;
 using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
 using Kontur.Extern.Client.Authentication.OpenId.Time;
-using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client.Authentication.OpenId.Provider
 {
@@ -54,7 +53,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider
                 context.SetAccessToken(token);
             }
 
-            return new OpenIdAuthenticationResult(token);
+            return new OpenIdAuthenticationResult(token.ToString());
 
             static AccessToken CreateAccessToken(AccessTokenFactory accessTokenFactory, TokenResponse tokenResponse)
             {
@@ -76,14 +75,5 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider
                 },
                 timeout
             );
-
-        private class OpenIdAuthenticationResult : IAuthenticationResult
-        {
-            private readonly AccessToken accessToken;
-
-            public OpenIdAuthenticationResult(AccessToken accessToken) => this.accessToken = accessToken;
-
-            public Request Apply(Request request) => request.WithAuthorizationHeader("Bearer", accessToken.ToString());
-        }
     }
 }

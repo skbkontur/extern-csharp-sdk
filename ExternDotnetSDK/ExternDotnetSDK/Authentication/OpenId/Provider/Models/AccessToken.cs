@@ -30,7 +30,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider.Models
 
         public bool HasNotExpired => !timeToLive.HasExpired;
 
-        public bool WillExpireAfter(TimeSpan interval) => timeToLive.WillExpireAfter(interval);
+        public bool WillExpireAfter(TimeInterval interval) => timeToLive.WillExpireAfter(interval);
 
         public override string ToString() => value;
     }
