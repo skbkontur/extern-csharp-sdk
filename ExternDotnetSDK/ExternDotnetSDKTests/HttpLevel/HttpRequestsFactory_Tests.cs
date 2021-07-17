@@ -83,7 +83,7 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             [Test]
             public async Task SendAsync_should_serialize_request_DTO()
             {
-                await http.Post("/some-resource").WithPayload(new {Data = "some request data"}).SendAsync();
+                await http.Post("/some-resource").WithObject(new {Data = "some request data"}).SendAsync();
 
                 clusterClient.SentRequest?.Content?.ToString().Should().Be(@"{Data:""some request data""}");
             }
@@ -126,7 +126,7 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             [Test]
             public async Task Put_should_serialize_request_DTO()
             {
-                await http.Put("/some-resource").WithPayload(new {Data = "some request data"}).SendAsync();
+                await http.Put("/some-resource").WithObject(new {Data = "some request data"}).SendAsync();
 
                 clusterClient.SentRequest?.Content?.ToString().Should().Be(@"{Data:""some request data""}");
             }

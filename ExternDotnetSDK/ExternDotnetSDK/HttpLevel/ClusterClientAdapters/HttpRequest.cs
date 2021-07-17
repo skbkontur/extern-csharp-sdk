@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.HttpLevel.Options;
 using Kontur.Extern.Client.HttpLevel.Serialization;
@@ -8,7 +7,6 @@ using Vostok.Clusterclient.Core.Model;
 using Vostok.Commons.Time;
 using Vostok.Logging.Abstractions;
 using Request = Vostok.Clusterclient.Core.Model.Request;
-using StreamContent = Vostok.Clusterclient.Core.Model.StreamContent;
 
 namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
 {
@@ -31,30 +29,9 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             this.log = log;
         }
 
-        public IHttpRequest WithPayload<TRequestMessage>(TRequestMessage message)
+        public IHttpRequest WithPayload(IHttpContent content)
         {
-            if (message is byte[] bytes)
-            {
-                request = request.WithContent(bytes);
-                return this;
-            }
-            
-            var memoryStream = new MemoryStream();
-            serializer.SerializeToJsonStream(message, memoryStream);
-            memoryStream.Position = 0;
-            request = request.WithContent(new StreamContent(memoryStream)).WithContentTypeHeader(ContentTypes.Json);
-            return this;
-        }
-
-        public IHttpRequest WithFormUrlEncoded(string content)
-        {
-            request = request.WithContent(content).WithContentTypeHeader(ContentTypes.FormUrlEncoded);
-            return this;
-        }
-
-        public IHttpRequest WithJsonPayload(string json)
-        {
-            request = request.WithContent(json).WithContentTypeHeader(ContentTypes.Json);
+            request = content.Apply(request, serializer);
             return this;
         }
 

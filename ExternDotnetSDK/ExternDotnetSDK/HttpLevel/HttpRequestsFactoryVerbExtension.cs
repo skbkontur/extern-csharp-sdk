@@ -1,5 +1,3 @@
-using System;
-
 namespace Kontur.Extern.Client.HttpLevel
 {
     public static class HttpRequestsFactoryVerbExtension

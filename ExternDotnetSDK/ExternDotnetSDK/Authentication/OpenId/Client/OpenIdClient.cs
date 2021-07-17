@@ -1,10 +1,12 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Authentication.OpenId.Client.Models;
 using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests;
 using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Responses;
 using Kontur.Extern.Client.Authentication.OpenId.Exceptions;
 using Kontur.Extern.Client.HttpLevel;
+using Kontur.Extern.Client.HttpLevel.Contents;
 using Kontur.Extern.Client.HttpLevel.Options;
 using Vostok.Logging.Abstractions;
 
@@ -29,9 +31,9 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client
             if (string.IsNullOrWhiteSpace(tokenRequest.RefreshToken))
                 throw new ArgumentNullException(nameof(tokenRequest.RefreshToken));
             
-            var content = new FormUrlEncodedContentBuilder()
+            var content = new FormUrlEncodedContent()
                 .AddGrantType(ContractConstants.GrantTypes.RefreshToken)
-                .Add(ContractConstants.RefreshTokenRequest.RefreshToken, tokenRequest.RefreshToken)
+                .AddEntry(ContractConstants.RefreshTokenRequest.RefreshToken, tokenRequest.RefreshToken)
                 .AddScope(tokenRequest.Scope);
 
             return await PostToOpenIdServerAsync<TokenResponse>("/connect/token", content, timeout).ConfigureAwait(false);
@@ -39,53 +41,52 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client
 
         public async Task<TokenResponse> RequestTokenAsync(PasswordTokenRequest request, TimeSpan? timeout = null)
         {
-            var content = new FormUrlEncodedContentBuilder()
+            var content = new FormUrlEncodedContent()
                 .AddGrantType(ContractConstants.GrantTypes.Password)
                 .AddScope(request.Scope)
-                .AddIfNotNull(ContractConstants.PasswordTokenRequest.UserName, request.UserName)
-                .AddIfNotNull(ContractConstants.PasswordTokenRequest.Password, request.Password)
-                .AddIfNotNull(ContractConstants.PasswordTokenRequest.PartialFactorToken, request.PartialFactorToken);
+                .AddEntryIfNotEmpty(ContractConstants.PasswordTokenRequest.UserName, request.UserName)
+                .AddEntryIfNotEmpty(ContractConstants.PasswordTokenRequest.Password, request.Password)
+                .AddEntryIfNotEmpty(ContractConstants.PasswordTokenRequest.PartialFactorToken, request.PartialFactorToken);
 
             return await PostToOpenIdServerAsync<TokenResponse>("/connect/token", content, timeout).ConfigureAwait(false);
         }
 
         public async Task<TokenResponse> RequestTokenAsync(CertificateTokenRequest request, TimeSpan? timeout = null)
         {
-            var content = new FormUrlEncodedContentBuilder()
+            var content = new FormUrlEncodedContent()
                 .AddGrantType(ContractConstants.GrantTypes.Certificate)
                 .AddScope(request.Scope)
-                .AddIfNotNull(ContractConstants.CertificateTokenRequest.DecryptedKey, Convert.ToBase64String(request.DecryptedKey))
-                .AddIfNotNull(ContractConstants.CertificateTokenRequest.Thumbprint, request.Thumbprint);
+                .AddEntryIfNotEmpty(ContractConstants.CertificateTokenRequest.DecryptedKey, Convert.ToBase64String(request.DecryptedKey))
+                .AddEntryIfNotEmpty(ContractConstants.CertificateTokenRequest.Thumbprint, request.Thumbprint);
 
             return await PostToOpenIdServerAsync<TokenResponse>("/connect/token", content, timeout).ConfigureAwait(false);
         }
 
         public async Task<TokenResponse> RequestTokenAsync(JwtTrustedTokenRequest request, TimeSpan? timeout = null)
         {
-            var content = new FormUrlEncodedContentBuilder()
+            var content = new FormUrlEncodedContent()
                 .AddGrantType(ContractConstants.GrantTypes.Trusted)
                 .AddScope(request.Scope)
-                .Add(ContractConstants.TrustedTokenRequest.Token, request.Token);
+                .AddEntry(ContractConstants.TrustedTokenRequest.Token, request.Token);
 
             return await PostToOpenIdServerAsync<TokenResponse>("/connect/token", content, timeout).ConfigureAwait(false);
         }
 
         public async Task<CertificateAuthenticationResponse> CertificateAuthenticationAsync(CertificateAuthenticationRequest request, TimeSpan? timeout = null)
         {
-            var content = new FormUrlEncodedContentBuilder()
-                .Add(
-                    ContractConstants.CertificateAuthenticationRequest.PublicKey,
-                    Convert.ToBase64String(request.PublicKey.GetRawCertData()))
-                .Add(ContractConstants.CertificateAuthenticationRequest.IsFree, request.Free.ToString())
-                .AddIfNotNull(ContractConstants.CertificateAuthenticationRequest.PartialFactorToken, request.PartialFactorToken);
+            var content = new FormUrlEncodedContent()
+                .AddEntry(ContractConstants.CertificateAuthenticationRequest.PublicKey, request.PublicKey.GetRawCertData())
+                .AddEntry(ContractConstants.CertificateAuthenticationRequest.IsFree, request.Free.ToString())
+                .AddEntryIfNotEmpty(ContractConstants.CertificateAuthenticationRequest.PartialFactorToken, request.PartialFactorToken);
 
             return await PostToOpenIdServerAsync<CertificateAuthenticationResponse>("/authentication/certificate", content, timeout).ConfigureAwait(false);
         }
 
-        private async Task<TResult> PostToOpenIdServerAsync<TResult>(string url, FormUrlEncodedContentBuilder content, TimeSpan? timeout)
+        [SuppressMessage("ReSharper", "SuggestBaseTypeForParameter")]
+        private async Task<TResult> PostToOpenIdServerAsync<TResult>(string url, FormUrlEncodedContent content, TimeSpan? timeout)
         {
             var httpRequest = http.Post(url)
-                .WithFormUrlEncoded(content.ToString())
+                .WithPayload(content)
                 .Accept(ContentTypes.Json);
             return await SendRequestAsync<TResult>(httpRequest, timeout).ConfigureAwait(false);
         }

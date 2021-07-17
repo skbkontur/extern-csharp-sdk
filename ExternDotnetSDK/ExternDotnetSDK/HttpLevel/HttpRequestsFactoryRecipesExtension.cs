@@ -26,7 +26,7 @@ namespace Kontur.Extern.Client.HttpLevel
         public static async Task<TResponseDto> PutAsync<TRequestDto, TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, Uri url, TRequestDto requestDto, TimeSpan? timeout = null)
         {
             var response = await httpRequestsFactory.Put(url)
-                .WithPayload(requestDto)
+                .WithObject(requestDto)
                 .SendAsync(timeout).ConfigureAwait(false);
             return response.GetMessage<TResponseDto>();
         }
@@ -37,7 +37,7 @@ namespace Kontur.Extern.Client.HttpLevel
         public static async Task<TResponseDto> PostAsync<TRequestDto, TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, Uri url, TRequestDto requestDto, TimeSpan? timeout = null)
         {
             var response = await httpRequestsFactory.Post(url)
-                .WithPayload(requestDto)
+                .WithObject(requestDto)
                 .SendAsync(timeout).ConfigureAwait(false);
             return response.GetMessage<TResponseDto>();
         }

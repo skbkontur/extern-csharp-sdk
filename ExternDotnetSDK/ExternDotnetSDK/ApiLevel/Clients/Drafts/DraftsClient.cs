@@ -220,7 +220,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
                 .AppendToQuery("type", type)
                 .AppendToQuery("version", version)
                 .Build();
-            return http.Post(url).WithJsonPayload(contract).SendAsync(timeout);
+            return http.Post(url).WithJson(contract).SendAsync(timeout);
         }
 
         public async Task<DraftDocument> BuildDocumentAsync(
@@ -236,7 +236,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
                 .AppendToQuery("version", version)
                 .Build();
             var response = await http.Post(url)
-                .WithJsonPayload(contract)
+                .WithJson(contract)
                 .SendAsync(timeout).ConfigureAwait(false);
             return response.GetMessage<DraftDocument>();
         }
