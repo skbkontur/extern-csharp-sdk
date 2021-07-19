@@ -43,6 +43,12 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             return this;
         }
 
+        public IHttpRequest Authorization(string scheme, in Base64String parameter)
+        {
+            request = request.WithAuthorizationHeader(scheme, parameter.ToString());
+            return this;
+        }
+
         public async Task<IHttpResponse> SendAsync(TimeSpan? timeout = null)
         {
             var httpResponse = await TrySendAsync(timeout).ConfigureAwait(false);

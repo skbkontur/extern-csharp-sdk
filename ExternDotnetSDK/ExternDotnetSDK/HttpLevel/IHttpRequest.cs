@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.HttpLevel.Models;
 
 namespace Kontur.Extern.Client.HttpLevel
 {
@@ -11,6 +12,8 @@ namespace Kontur.Extern.Client.HttpLevel
         /// <param name="contentType"></param>
         /// <returns></returns>
         IHttpRequest Accept(string contentType);
+
+        IHttpRequest Authorization(string scheme, in Base64String parameter);
         
         /// <summary>
         /// Send a request and ensures successful response 
