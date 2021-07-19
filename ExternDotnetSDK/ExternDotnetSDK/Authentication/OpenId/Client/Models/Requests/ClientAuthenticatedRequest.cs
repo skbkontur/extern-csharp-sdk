@@ -1,4 +1,5 @@
-﻿using Kontur.Extern.Client.Exceptions;
+﻿using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
+using Kontur.Extern.Client.Exceptions;
 
 namespace Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests
 {
@@ -31,5 +32,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests
         /// ApiKey
         /// </value>
         public string ClientSecret { get; }
+
+        public Credentials ToRequestAuthCredentials() => new(ClientId, ClientSecret);
     }
 }
