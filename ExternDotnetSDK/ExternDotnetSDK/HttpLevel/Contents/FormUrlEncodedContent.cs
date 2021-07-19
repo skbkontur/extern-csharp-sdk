@@ -1,8 +1,8 @@
 using System;
 using System.Text;
 using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.HttpLevel.Constants;
 using Kontur.Extern.Client.HttpLevel.Models;
-using Kontur.Extern.Client.HttpLevel.Options;
 using Kontur.Extern.Client.HttpLevel.Serialization;
 using Vostok.Clusterclient.Core.Model;
 
@@ -13,7 +13,7 @@ namespace Kontur.Extern.Client.HttpLevel.Contents
         private readonly StringBuilder contentBuilder = new();
 
         public FormUrlEncodedContent AddEntryIfNotEmpty(in UrlEncodedString name, in UrlEncodedString value)
-            => value.IsEmpty ? this : AddEntry(name, value);
+            => value.IsEmpty ? this : AddEntryCore(name.ToString(), value.ToString());
 
         public FormUrlEncodedContent AddEntry(in UrlEncodedString name, byte[] value) => 
             AddEntryCore(name.ToString(), Convert.ToBase64String(value));

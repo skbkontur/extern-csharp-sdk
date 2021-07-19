@@ -1,4 +1,4 @@
-using Kontur.Extern.Client.HttpLevel.Options;
+using Kontur.Extern.Client.HttpLevel.Constants;
 using Kontur.Extern.Client.HttpLevel.Serialization;
 using Vostok.Clusterclient.Core.Model;
 

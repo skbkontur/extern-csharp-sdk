@@ -1,4 +1,4 @@
-namespace Kontur.Extern.Client.HttpLevel.Options
+namespace Kontur.Extern.Client.HttpLevel.Constants
 {
     public static class ContentTypes
     {

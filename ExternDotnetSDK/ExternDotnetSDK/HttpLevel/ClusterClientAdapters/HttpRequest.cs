@@ -1,5 +1,7 @@
 using System;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.HttpLevel.Constants;
+using Kontur.Extern.Client.HttpLevel.Models;
 using Kontur.Extern.Client.HttpLevel.Options;
 using Kontur.Extern.Client.HttpLevel.Serialization;
 using Vostok.Clusterclient.Core;

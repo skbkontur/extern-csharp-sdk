@@ -1,7 +1,7 @@
 #nullable enable
 using System;
 using System.Text;
-using Kontur.Extern.Client.HttpLevel.Options;
+using Kontur.Extern.Client.HttpLevel.Constants;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client.Tests.Fakes.Http

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.HttpLevel.Options;
+using Kontur.Extern.Client.HttpLevel.Constants;
 using Kontur.Extern.Client.HttpLevel.Serialization;
 using Vostok.Clusterclient.Core.Model;
 using Request = Vostok.Clusterclient.Core.Model.Request;

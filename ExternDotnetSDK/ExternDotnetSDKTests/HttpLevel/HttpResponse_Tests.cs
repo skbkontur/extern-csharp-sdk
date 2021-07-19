@@ -6,7 +6,7 @@ using FluentAssertions;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.HttpLevel.ClusterClientAdapters;
-using Kontur.Extern.Client.HttpLevel.Options;
+using Kontur.Extern.Client.HttpLevel.Constants;
 using Kontur.Extern.Client.HttpLevel.Serialization;
 using NUnit.Framework;
 using Vostok.Clusterclient.Core.Model;
