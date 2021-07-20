@@ -27,6 +27,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\ExternDotnetSDK\Kontur.Extern.Client.csproj" />
+        <ProjectReference Include="..\Kontur.Extern.Client.Testing\Kontur.Extern.Client.Testing.csproj" />
     </ItemGroup>
 
     <ItemGroup>

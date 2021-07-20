@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
+using Kontur.Extern.Client.ApiLevel.Models.Errors;
 using Kontur.Extern.Client.Authentication.OpenId.Time;
+using Kontur.Extern.Client.Exceptions;
 
 namespace Kontur.Extern.Client.Authentication.OpenId.Provider
 {
@@ -13,12 +15,18 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider
         /// </summary>
         /// <param name="apiKey">ApiKey which will be send as the client secret to the auth server.</param>
         /// <param name="proactiveAuthTokenRefreshInterval">The interval before the current access token expires to refresh the current access token. By default equal to 5 seconds.</param>
-        /// <param name="clientId">Client id which will be sent to the auth server. If the value is <c>null</c> then client id will be a current process name.</param>
-        public OpenIdAuthenticationOptions(string apiKey, TimeInterval? proactiveAuthTokenRefreshInterval = null, string clientId = null)
+        /// <param name="clientId">Client id which will be sent to the auth server.</param>
+        public OpenIdAuthenticationOptions(string apiKey, string clientId, TimeInterval? proactiveAuthTokenRefreshInterval = null)
         {
+            if (string.IsNullOrWhiteSpace(apiKey))
+                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(apiKey));
+
+            if (string.IsNullOrWhiteSpace(clientId))
+                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(clientId));
+
             ApiKey = apiKey;
             ProactiveAuthTokenRefreshInterval = proactiveAuthTokenRefreshInterval ?? DefaultInterval;
-            ClientId = clientId ?? Process.GetCurrentProcess().ProcessName;
+            ClientId = clientId;
         }
 
         public TimeInterval ProactiveAuthTokenRefreshInterval { get; }
