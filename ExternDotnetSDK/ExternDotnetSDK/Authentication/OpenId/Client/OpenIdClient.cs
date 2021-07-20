@@ -89,13 +89,13 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client
         }
 
         [SuppressMessage("ReSharper", "SuggestBaseTypeForParameter")]
-        private async Task<TResult> PostToOpenIdServerAsync<TResult>(string url, Credentials basicAuthCredentials, FormUrlEncodedContent content, TimeSpan? timeout)
+        private Task<TResult> PostToOpenIdServerAsync<TResult>(string url, Credentials basicAuthCredentials, FormUrlEncodedContent content, TimeSpan? timeout)
         {
             var httpRequest = http.Post(url)
                 .WithPayload(content)
                 .Accept(ContentTypes.Json)
                 .Authorization(AuthSchemes.Basic, basicAuthCredentials.ToBasicAuthenticationParameter());
-            return await SendRequestAsync<TResult>(httpRequest, timeout).ConfigureAwait(false);
+            return SendRequestAsync<TResult>(httpRequest, timeout);
         }
 
         private static async Task<TResult> SendRequestAsync<TResult>(IHttpRequest httpRequest, TimeSpan? timeout)
