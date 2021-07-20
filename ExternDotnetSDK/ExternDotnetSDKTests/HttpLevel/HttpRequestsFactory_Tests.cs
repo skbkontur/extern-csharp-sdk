@@ -7,7 +7,6 @@ using Kontur.Extern.Client.HttpLevel;
 using Kontur.Extern.Client.HttpLevel.ClusterClientAdapters;
 using Kontur.Extern.Client.HttpLevel.Options;
 using Kontur.Extern.Client.HttpLevel.Serialization;
-using Kontur.Extern.Client.Tests.Fakes.Auth;
 using Kontur.Extern.Client.Tests.Fakes.Http;
 using Kontur.Extern.Client.Tests.Fakes.Logging;
 using NUnit.Framework;
@@ -187,7 +186,6 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
 
             private static HttpRequestsFactory CreateHttp(IClusterClient clusterClient) => new(
                 new RequestSendingOptions(),
-                new AuthenticationOptions("apiKey", new FakeAuthProvider()),
                 clusterClient,
                 new JsonSerializer(),
                 new TestLog()
