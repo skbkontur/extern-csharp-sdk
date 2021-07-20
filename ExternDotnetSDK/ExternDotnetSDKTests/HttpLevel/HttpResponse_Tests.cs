@@ -5,6 +5,7 @@ using System.Text;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.HttpLevel;
 using Kontur.Extern.Client.HttpLevel.ClusterClientAdapters;
 using Kontur.Extern.Client.HttpLevel.Constants;
 using Kontur.Extern.Client.HttpLevel.Serialization;
@@ -134,6 +135,73 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             Action action = () => httpResponse.GetMessage<Dto>();
 
             action.Should().Throw<ContractException>();
+        }
+        
+        [Test]
+        public void TryGetMessage_should_return_error_when_response_has_no_body()
+        {
+            var httpResponse = CreateHttpResponse(
+                headers: new Headers(1).Set(HeaderNames.ContentType, ContentTypes.Json));
+
+            ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
+        }
+
+        [Test]
+        public void TryGetMessage_should_deserialize_response_stream_to_DTO()
+        {
+            const string json = @"{""data"":""some data""}";
+            var expectedDto = new Dto {Data = "some data"};
+            var httpResponse = CreateHttpResponse(
+                stream: ToStream(json),
+                headers: new Headers(1).Set(HeaderNames.ContentType, ContentTypes.Json));
+
+            var success = httpResponse.TryGetMessage<Dto>(out var dto);
+
+            success.Should().BeTrue();
+            dto.Should().BeEquivalentTo(expectedDto);
+        }
+        
+        [Test]
+        public void TryGetMessage_should_return_error_when_content_type_is_not_a_json()
+        {
+            const string json = @"{""data"":""some data""}";
+            var httpResponse = CreateHttpResponse(
+                ToContent(json),
+                headers: new Headers(1).Set(HeaderNames.ContentType, "application/pdf"));
+
+            ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
+        }
+        
+        [Test]
+        public void TryGetMessage_should_deserialize_response_content_to_DTO_if_content_type_is_json_with_charset()
+        {
+            const string json = @"{""data"":""some data""}";
+            var expectedDto = new Dto {Data = "some data"};
+            var httpResponse = CreateHttpResponse(
+                ToContent(json),
+                headers: new Headers(1).Set(HeaderNames.ContentType, "application/json; charset=utf-8"));
+
+            var success = httpResponse.TryGetMessage<Dto>(out var dto);
+
+            success.Should().BeTrue();
+            dto.Should().BeEquivalentTo(expectedDto);
+        }
+        
+        [Test]
+        public void TryGetMessage_should_return_error_when_content_type_is_absent()
+        {
+            const string json = @"{""data"":""some data""}";
+            var httpResponse = CreateHttpResponse(ToContent(json));
+
+            ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
+        }
+
+        private static void ShouldReturnErrorWhenTryGetMessageOfDto(IHttpResponse httpResponse)
+        {
+            var success = httpResponse.TryGetMessage<Dto>(out var dto);
+
+            success.Should().BeFalse();
+            dto.Should().BeNull();
         }
         
         [Test]

@@ -94,7 +94,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
         public bool TryGetMessage<TResponseMessage>(out TResponseMessage responseMessage)
         {
             responseMessage = default;
-            if (response.Headers.ContentType != ContentTypes.Json)
+            if (response.Headers.ContentType?.StartsWith(ContentTypes.Json) != true)
                 return false;
             
             if (!response.HasStream && !response.HasContent)
