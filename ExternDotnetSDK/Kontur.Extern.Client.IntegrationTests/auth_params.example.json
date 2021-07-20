@@ -1,0 +1,8 @@
+{
+  "username": "REQUIRED",
+  "password": "REQUIRED",
+  "scope": "REQUIRED",
+  "clientId": "REQUIRED",
+  "apiKey": "REQUIRED",
+  "openIdServer" : "OPTIONAL -- by default it is https://identity.testkontur.ru"
+}
