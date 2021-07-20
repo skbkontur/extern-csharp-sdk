@@ -79,7 +79,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
 
         public TResponseMessage GetMessage<TResponseMessage>()
         {
-            if (response.Headers.ContentType != ContentTypes.Json) 
+            if (response.Headers.ContentType?.StartsWith(ContentTypes.Json) != true)
                 throw Errors.ResponseHasUnexpectedContentType(request.ToString(true, false), response, ContentTypes.Json);
             
             if (!response.HasStream && !response.HasContent)

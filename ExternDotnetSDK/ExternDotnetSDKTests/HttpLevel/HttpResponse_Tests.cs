@@ -112,6 +112,20 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
         }
         
         [Test]
+        public void GetMessage_should_deserialize_response_content_to_DTO_if_content_type_is_json_with_charset()
+        {
+            const string json = @"{""data"":""some data""}";
+            var expectedDto = new Dto {Data = "some data"};
+            var httpResponse = CreateHttpResponse(
+                ToContent(json),
+                headers: new Headers(1).Set(HeaderNames.ContentType, "application/json; charset=utf-8"));
+
+            var dto = httpResponse.GetMessage<Dto>();
+            
+            dto.Should().BeEquivalentTo(expectedDto);
+        }
+        
+        [Test]
         public void GetMessage_should_fail_when_content_type_is_absent()
         {
             const string json = @"{""data"":""some data""}";
