@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
 using Newtonsoft.Json;
 
-namespace Kontur.Extern.Client.IntegrationTests.TestEnvironment
+namespace Kontur.Extern.Client.End2EndTests.TestEnvironment
 {
     internal class AuthTestData
     {

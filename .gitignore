@@ -328,4 +328,4 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
-/ExternDotnetSDK/Kontur.Extern.Client.IntegrationTests/auth_params.json
+/ExternDotnetSDK/Kontur.Extern.Client.End2EndTests/auth_params.json

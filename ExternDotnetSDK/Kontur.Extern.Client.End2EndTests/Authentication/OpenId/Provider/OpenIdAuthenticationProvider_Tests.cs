@@ -4,19 +4,19 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Client.Authentication.OpenId.Provider;
 using Kontur.Extern.Client.Authentication.OpenId.Provider.AuthStrategies;
-using Kontur.Extern.Client.IntegrationTests.TestEnvironment;
-using Kontur.Extern.Client.IntegrationTests.TestLogging;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment;
+using Kontur.Extern.Client.End2EndTests.TestLogging;
 using Kontur.Extern.Client.Testing.Fakes.Time;
 using Vostok.Commons.Time;
 using Vostok.Logging.Abstractions;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Kontur.Extern.Client.IntegrationTests.Authentication.OpenId.Provider
+namespace Kontur.Extern.Client.End2EndTests.Authentication.OpenId.Provider
 {
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public class OpenIdAuthenticationProvider_IntegrationTests
+    public class OpenIdAuthenticationProvider_Tests
     {
         public class Authenticate_By_Password : BaseTests
         {

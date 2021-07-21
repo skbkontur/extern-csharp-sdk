@@ -3,7 +3,7 @@ using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Transport;
 using Vostok.Logging.Abstractions;
 
-namespace Kontur.Extern.Client.IntegrationTests.TestClusterClient
+namespace Kontur.Extern.Client.End2EndTests.TestClusterClient
 {
     internal static class ClusterClientFactory
     {

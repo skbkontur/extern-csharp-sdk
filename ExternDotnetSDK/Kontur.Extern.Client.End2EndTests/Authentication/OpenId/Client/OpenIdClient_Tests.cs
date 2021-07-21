@@ -5,16 +5,16 @@ using FluentAssertions;
 using Kontur.Extern.Client.Authentication.OpenId.Client;
 using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests;
 using Kontur.Extern.Client.Authentication.OpenId.Exceptions;
-using Kontur.Extern.Client.IntegrationTests.TestEnvironment;
-using Kontur.Extern.Client.IntegrationTests.TestLogging;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment;
+using Kontur.Extern.Client.End2EndTests.TestLogging;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Kontur.Extern.Client.IntegrationTests.Authentication.OpenId.Client
+namespace Kontur.Extern.Client.End2EndTests.Authentication.OpenId.Client
 {
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public class OpenIdClient_IntegrationTests
+    public class OpenIdClient_Tests
     {
         public class RequestToken_By_PasswordTokenRequest : BaseTests
         {

@@ -4,7 +4,7 @@ using Vostok.Logging.Abstractions.Wrappers;
 using Vostok.Logging.Formatting;
 using Xunit.Abstractions;
 
-namespace Kontur.Extern.Client.IntegrationTests.TestLogging
+namespace Kontur.Extern.Client.End2EndTests.TestLogging
 {
     internal class TestLog : ILog
     {

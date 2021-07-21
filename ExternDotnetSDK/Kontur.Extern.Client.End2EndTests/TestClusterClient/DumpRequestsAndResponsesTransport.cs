@@ -6,7 +6,7 @@ using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Core.Transport;
 using Vostok.Logging.Abstractions;
 
-namespace Kontur.Extern.Client.IntegrationTests.TestClusterClient
+namespace Kontur.Extern.Client.End2EndTests.TestClusterClient
 {
     internal class DumpRequestsAndResponsesTransport : ITransport
     {
