@@ -12,7 +12,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests
             : base(scope, clientId, clientSecret)
         {
             if (string.IsNullOrWhiteSpace(jwtToken))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(jwtToken));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(jwtToken));
             
             Token = jwtToken;
         }

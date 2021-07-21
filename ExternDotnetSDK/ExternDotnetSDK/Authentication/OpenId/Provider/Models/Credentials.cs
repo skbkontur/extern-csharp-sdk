@@ -7,10 +7,10 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider.Models
         public Credentials(string userName, string password)
         {
             if (string.IsNullOrWhiteSpace(userName))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(userName));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(userName));
             
             if (string.IsNullOrWhiteSpace(password))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(password));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(password));
             
             UserName = userName;
             Password = password;

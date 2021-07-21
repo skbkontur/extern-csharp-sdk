@@ -12,7 +12,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests
             : base(scope, clientId, clientSecret)
         {
             if (string.IsNullOrWhiteSpace(refreshToken))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(refreshToken));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(refreshToken));
             
             RefreshToken = refreshToken;
         }

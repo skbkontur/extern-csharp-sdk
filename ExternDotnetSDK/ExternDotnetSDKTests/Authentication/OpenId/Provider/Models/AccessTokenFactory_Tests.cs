@@ -1,3 +1,4 @@
+#nullable enable
 using FluentAssertions;
 using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Responses;
 using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
@@ -61,7 +62,21 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
 
                 accessToken.Should().NotBeNull();
                 accessToken!.ToString().Should().Be("access-token");
-                accessToken!.RefreshToken.Should().Be("refresh_token");
+                accessToken.TryGetRefreshToken(out var refreshToken).Should().BeTrue();
+                refreshToken.Should().Be("refresh_token");
+            }
+            
+            [Test]
+            public void Should_initialize_token_with_values_from_the_response_has_not_expired_yet_but_without_refresh_token()
+            {
+                var factory = new AccessTokenFactory(stopwatchFactory);
+                stopwatch.Elapsed.Returns(1.Seconds());
+                
+                var accessToken = factory.CreateIfNotExpired(CreateTokenResponse(2, "access-token", null));
+
+                accessToken.Should().NotBeNull();
+                accessToken!.ToString().Should().Be("access-token");
+                accessToken.TryGetRefreshToken(out _).Should().BeFalse();
             }
             
             [Test]
@@ -75,7 +90,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
                 accessToken.Should().BeNull();
             }
 
-            private static TokenResponse CreateTokenResponse(int expiresInSeconds, string accessToken = "123", string refreshToken = "123") => new()
+            private static TokenResponse CreateTokenResponse(int expiresInSeconds, string accessToken = "123", string? refreshToken = "123") => new()
             {
                 ExpiresInSeconds = expiresInSeconds, 
                 AccessToken = accessToken, 

@@ -7,11 +7,11 @@ using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
 
 namespace Kontur.Extern.Client.Authentication.OpenId.Provider.AuthStrategies
 {
-    internal class CredentialsOpenIdAuthenticationStrategy : IOpenIdAuthenticationStrategy
+    internal class PasswordOpenIdAuthenticationStrategy : IOpenIdAuthenticationStrategy
     {
         private readonly Credentials credentials;
 
-        public CredentialsOpenIdAuthenticationStrategy(Credentials credentials) => this.credentials = credentials;
+        public PasswordOpenIdAuthenticationStrategy(Credentials credentials) => this.credentials = credentials;
 
         public Task<TokenResponse> AuthenticateAsync(IOpenIdClient openId, OpenIdAuthenticationOptions options, TimeSpan? timeout)
         {

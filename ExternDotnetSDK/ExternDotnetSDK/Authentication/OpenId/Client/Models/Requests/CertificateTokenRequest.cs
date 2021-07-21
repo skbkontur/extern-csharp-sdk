@@ -20,7 +20,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests
                 throw Errors.ArrayCannotBeEmpty(nameof(decryptedKey));
 
             if (string.IsNullOrWhiteSpace(thumbprint))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(thumbprint));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(thumbprint));
 
             DecryptedKey = decryptedKey;
             Thumbprint = thumbprint;

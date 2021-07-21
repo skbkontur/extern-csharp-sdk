@@ -14,7 +14,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests
             : base(clientId, clientSecret)
         {
             if (string.IsNullOrWhiteSpace(partialFactorToken))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(partialFactorToken));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(partialFactorToken));
             
             PublicKey = publicKey ?? throw new ArgumentNullException(nameof(publicKey));
             Free = free;

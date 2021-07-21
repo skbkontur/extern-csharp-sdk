@@ -11,10 +11,10 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests
         protected ClientAuthenticatedRequest(string clientId, string clientSecret)
         {
             if (string.IsNullOrWhiteSpace(clientId))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(clientId));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(clientId));
 
             if (string.IsNullOrWhiteSpace(clientSecret))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(clientSecret));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(clientSecret));
             
             ClientId = clientId;
             ClientSecret = clientSecret;

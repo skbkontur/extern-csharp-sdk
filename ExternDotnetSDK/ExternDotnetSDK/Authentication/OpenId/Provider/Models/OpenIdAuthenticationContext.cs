@@ -5,7 +5,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider.Models
     {
         private readonly object syncObject = new();
         private AccessToken? accessToken;
-        
+
         public bool TryGetAccessToken(out AccessToken token)
         {
             lock (syncObject)

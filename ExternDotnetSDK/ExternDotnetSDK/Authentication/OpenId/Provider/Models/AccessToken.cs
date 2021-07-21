@@ -8,27 +8,40 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider.Models
     internal class AccessToken
     {
         private readonly string value;
+        private readonly string? refreshToken;
         private readonly ITimeToLive timeToLive;
         
-        public AccessToken(string value, string refreshToken, ITimeToLive timeToLive)
+        public AccessToken(string value, string? refreshToken, ITimeToLive timeToLive)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(value));
-            if (string.IsNullOrWhiteSpace(refreshToken))
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(value));
+            if (refreshToken != null && string.IsNullOrWhiteSpace(refreshToken))
                 throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(refreshToken));
+            
             if (ReferenceEquals(timeToLive, null))
                 throw new ArgumentNullException(nameof(timeToLive));
             if (timeToLive.HasExpired)
                 throw Errors.AccessTokenAlreadyExpired(nameof(timeToLive));
             
-            RefreshToken = refreshToken;
             this.value = value;
+            this.refreshToken = refreshToken;
             this.timeToLive = timeToLive;
         }
 
-        public string RefreshToken { get; }
+        public bool TryGetRefreshToken(out string token)
+        {
+            if (refreshToken != null)
+            {
+                token = refreshToken;
+                return true;
+            }
+
+            token = default!;
+            return false;
+        }
 
         public bool HasNotExpired => !timeToLive.HasExpired;
+        public bool HasExpired => timeToLive.HasExpired;
 
         public bool WillExpireAfter(TimeInterval interval) => timeToLive.WillExpireAfter(interval);
 

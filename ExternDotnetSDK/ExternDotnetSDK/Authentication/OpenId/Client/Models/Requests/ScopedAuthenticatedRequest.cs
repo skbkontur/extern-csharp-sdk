@@ -12,7 +12,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests
             : base(clientId, clientSecret)
         {
             if (string.IsNullOrWhiteSpace(scope))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(scope));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(scope));
 
             Scope = scope;
         }

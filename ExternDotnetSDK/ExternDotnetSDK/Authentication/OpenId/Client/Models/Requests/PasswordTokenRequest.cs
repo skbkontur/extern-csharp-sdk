@@ -21,10 +21,10 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests
             : base(scope, clientId, clientSecret)
         {
             if (string.IsNullOrWhiteSpace(userName))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(userName));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(userName));
             
             if (string.IsNullOrWhiteSpace(password))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(password));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(password));
             
             UserName = userName;
             Password = password;

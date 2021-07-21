@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics;
-using Kontur.Extern.Client.ApiLevel.Models.Errors;
 using Kontur.Extern.Client.Authentication.OpenId.Time;
 using Kontur.Extern.Client.Exceptions;
 
@@ -19,10 +17,10 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider
         public OpenIdAuthenticationOptions(string apiKey, string clientId, TimeInterval? proactiveAuthTokenRefreshInterval = null)
         {
             if (string.IsNullOrWhiteSpace(apiKey))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(apiKey));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(apiKey));
 
             if (string.IsNullOrWhiteSpace(clientId))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(clientId));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(clientId));
 
             ApiKey = apiKey;
             ProactiveAuthTokenRefreshInterval = proactiveAuthTokenRefreshInterval ?? DefaultInterval;

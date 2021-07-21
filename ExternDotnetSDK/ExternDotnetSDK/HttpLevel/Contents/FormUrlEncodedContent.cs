@@ -27,7 +27,7 @@ namespace Kontur.Extern.Client.HttpLevel.Contents
         private FormUrlEncodedContent AddEntryCore(string name, string value)
         {
             if (string.IsNullOrEmpty(name))
-                throw Errors.StringShouldNotBeEmptyOrWhiteSpace(nameof(name));
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(name));
             if (contentBuilder.Length > 0)
                 contentBuilder.Append('&');
 

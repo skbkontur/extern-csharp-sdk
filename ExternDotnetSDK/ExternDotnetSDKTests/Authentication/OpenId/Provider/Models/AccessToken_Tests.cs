@@ -22,7 +22,6 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
                 ShouldFail(invalidToken, "123", AliveTTL);
             }
             
-            [TestCase(null)]
             [TestCase("")]
             [TestCase(" ")]
             public void Should_fail_when_given_the_invalid_refresh_token(string invalidToken)
@@ -47,7 +46,18 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
             {
                 var accessToken = new AccessToken("123", "1234", AliveTTL);
 
-                accessToken.RefreshToken.Should().Be("1234");
+                accessToken.TryGetRefreshToken(out var refreshToken).Should().BeTrue();
+                refreshToken.Should().Be("1234");
+                accessToken.ToString().Should().Be("123");
+            }
+
+            [Test]
+            public void Should_initialize_without_refresh_token_tokens()
+            {
+                var accessToken = new AccessToken("123", null, AliveTTL);
+
+                accessToken.TryGetRefreshToken(out var refreshToken).Should().BeFalse();
+                refreshToken.Should().BeNull();
                 accessToken.ToString().Should().Be("123");
             }
 
