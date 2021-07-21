@@ -1,6 +1,8 @@
 #nullable enable
+using System;
 using FluentAssertions;
 using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Responses;
+using Kontur.Extern.Client.Authentication.OpenId.Exceptions;
 using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
 using Kontur.Extern.Client.Authentication.OpenId.Time;
 using NSubstitute;
@@ -27,10 +29,10 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
         }
         
         [TestFixture]
-        internal class CreateIfNotExpired
+        internal class CreateAccessToken
         {
-            private IStopwatchFactory stopwatchFactory;
-            private IStopwatch stopwatch;
+            private IStopwatchFactory stopwatchFactory = null!;
+            private IStopwatch stopwatch = null!;
 
             [SetUp]
             public void SetUp()
@@ -46,7 +48,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
                 var factory = new AccessTokenFactory(stopwatchFactory);
                 stopwatch.Elapsed.Returns(1.Seconds());
                 
-                var accessToken = factory.CreateIfNotExpired(CreateTokenResponse(2));
+                var accessToken = factory.CreateAccessToken(CreateTokenResponse(2));
 
                 accessToken.Should().NotBeNull();
                 accessToken!.HasNotExpired.Should().BeTrue();
@@ -58,7 +60,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
                 var factory = new AccessTokenFactory(stopwatchFactory);
                 stopwatch.Elapsed.Returns(1.Seconds());
                 
-                var accessToken = factory.CreateIfNotExpired(CreateTokenResponse(2, "access-token", "refresh_token"));
+                var accessToken = factory.CreateAccessToken(CreateTokenResponse(2, "access-token", "refresh_token"));
 
                 accessToken.Should().NotBeNull();
                 accessToken!.ToString().Should().Be("access-token");
@@ -72,7 +74,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
                 var factory = new AccessTokenFactory(stopwatchFactory);
                 stopwatch.Elapsed.Returns(1.Seconds());
                 
-                var accessToken = factory.CreateIfNotExpired(CreateTokenResponse(2, "access-token", null));
+                var accessToken = factory.CreateAccessToken(CreateTokenResponse(2, "access-token", null));
 
                 accessToken.Should().NotBeNull();
                 accessToken!.ToString().Should().Be("access-token");
@@ -84,10 +86,10 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
             {
                 var factory = new AccessTokenFactory(stopwatchFactory);
                 stopwatch.Elapsed.Returns(1.Seconds());
-                
-                var accessToken = factory.CreateIfNotExpired(CreateTokenResponse(1));
 
-                accessToken.Should().BeNull();
+                Action action = () => factory.CreateAccessToken(CreateTokenResponse(1));
+
+                action.Should().Throw<OpenIdException>();
             }
 
             private static TokenResponse CreateTokenResponse(int expiresInSeconds, string accessToken = "123", string? refreshToken = "123") => new()
