@@ -1,12 +1,14 @@
 using System;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Accounts;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives;
 
 namespace Kontur.Extern.Client
 {
-    internal static class AccountListPathExtension
+    [PublicAPI]
+    public static class AccountListPathExtension
     {
         public static Task<Account> CreateAsync(this in AccountListPath path, string inn, string kpp, string organizationName)
         {

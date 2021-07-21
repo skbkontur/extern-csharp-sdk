@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel;
 using Kontur.Extern.Client.Authentication;
 using Kontur.Extern.Client.Authentication.OpenId.Builder;
-using Kontur.Extern.Client.Authentication.OpenId.Provider.AuthStrategies;
 using Kontur.Extern.Client.Common;
 using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Exceptions;
@@ -31,7 +30,8 @@ namespace Kontur.Extern.Client
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
 
-            var clusterClient = new ClusterClient(log,
+            var clusterClient = new ClusterClient(
+                log,
                 cfg =>
                 {
                     cfg.SetupUniversalTransport();
@@ -40,25 +40,21 @@ namespace Kontur.Extern.Client
             return new ExternFactory(clusterClient, log);
         }
         
-        public static ISpecifyAuthProviderExternFactory WithClusterClient(IClusterClient clusterClient, ILog log)
-        {
-            return new ExternFactory(clusterClient, log);
-        }
+        public static ISpecifyAuthProviderExternFactory WithClusterClient(IClusterClient clusterClient, ILog log) => 
+            new ExternFactory(clusterClient, log);
 
         private ICrypt? cryptoProvider;
         private IPollingStrategy? pollingStrategy;
         private readonly ILog log;
         private readonly IClusterClient clusterClient;
-        private readonly IOpenIdAuthenticationStrategy authenticationStrategy;
         private RequestSendingOptions? requestSendingOptions;
         // NOTE: nullable because here could be implementations of another auth providers 
-        private Func<ISpecifyClientIdOpenIdAuthenticationProviderBuilder,IOpenIdAuthenticationProviderBuilder>? openIdAuthProviderSetup;
+        private OpenIdSetup? openIdAuthProviderSetup;
 
         private ExternFactory(IClusterClient clusterClient, ILog log)
         {
             this.log = log ?? throw new ArgumentNullException(nameof(log));
             this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
-            authenticationStrategy = authenticationStrategy ?? throw new ArgumentNullException(nameof(authenticationStrategy));
         }
 
         public ExternFactory WithCryptoProvider(ICrypt crypt)
@@ -79,7 +75,7 @@ namespace Kontur.Extern.Client
             return this;
         }
 
-        IExternFactory ISpecifyAuthProviderExternFactory.WithOpenIdAuthProvider(Func<ISpecifyClientIdOpenIdAuthenticationProviderBuilder, IOpenIdAuthenticationProviderBuilder> setup)
+        IExternFactory ISpecifyAuthProviderExternFactory.WithOpenIdAuthProvider(OpenIdSetup setup)
         {
             openIdAuthProviderSetup = setup ?? throw new ArgumentNullException(nameof(setup));
             return this;
@@ -92,7 +88,7 @@ namespace Kontur.Extern.Client
             requestSendingOptions ??= new RequestSendingOptions();
             
             var jsonSerializer = new JsonSerializer();
-            var authProvider = CreateAuthProvider(requestSendingOptions, jsonSerializer);
+            var authProvider = CreateAuthProvider(jsonSerializer);
 
             var http = new HttpRequestsFactory(requestSendingOptions, authProvider.AuthenticateRequestAsync, clusterClient, jsonSerializer, log);
             var api = new KeApiClient(http, cryptoProvider);
@@ -100,11 +96,11 @@ namespace Kontur.Extern.Client
             return new Extern(services);
         }
 
-        private IAuthenticationProvider CreateAuthProvider(RequestSendingOptions httpOptions, IJsonSerializer jsonSerializer)
+        private IAuthenticationProvider CreateAuthProvider(IJsonSerializer jsonSerializer)
         {
             if (openIdAuthProviderSetup != null)
             {
-                var builder = new OpenIdAuthenticationProviderBuilder(httpOptions, clusterClient, jsonSerializer, log);
+                var builder = new OpenIdAuthenticationProviderBuilder(jsonSerializer, log);
                 var configuredBuilder = openIdAuthProviderSetup(builder);
                 return configuredBuilder.Build();
             }

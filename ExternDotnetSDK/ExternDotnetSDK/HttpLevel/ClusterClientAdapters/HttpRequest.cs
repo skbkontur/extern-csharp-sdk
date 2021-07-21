@@ -30,12 +30,12 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             IJsonSerializer serializer,
             ILog log)
         {
-            this.request = request;
-            this.options = options;
+            this.request = request ?? throw new ArgumentNullException(nameof(request));
+            this.options = options ?? throw new ArgumentNullException(nameof(options));
             this.requestTransformAsync = requestTransformAsync;
-            this.clusterClient = clusterClient;
-            this.serializer = serializer;
-            this.log = log;
+            this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
+            this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            this.log = log ?? throw new ArgumentNullException(nameof(log));
         }
 
         public IHttpRequest WithPayload(IHttpContent content)
@@ -98,4 +98,4 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             return new HttpResponse(resultRequest, result.Response, serializer);
         }
     }
-    }
+}

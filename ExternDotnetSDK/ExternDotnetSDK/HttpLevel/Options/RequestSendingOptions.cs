@@ -4,7 +4,7 @@ using Vostok.Commons.Time;
 
 namespace Kontur.Extern.Client.HttpLevel.Options
 {
-    internal class RequestSendingOptions
+    public class RequestSendingOptions
     {
         private static readonly TimeSpan MinTimeout = 1.Seconds();
         private static readonly TimeSpan MaxTimeout = 1.Hours();

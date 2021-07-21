@@ -75,7 +75,8 @@ namespace Kontur.Extern.Client.End2EndTests.Authentication.OpenId.Provider
                 var testData = AuthTestData.LoadFromJsonFile();
                 
                 var clusterClient = ClusterClientFactory.CreateTestClient(testData.OpenIdServer, log);
-                var authenticationProvider = new OpenIdAuthenticationProviderBuilder(new RequestSendingOptions(), clusterClient, new JsonSerializer(), log)
+                var authenticationProvider = new OpenIdAuthenticationProviderBuilder(new JsonSerializer(), log)
+                    .WithClusterClient(clusterClient)
                     .WithClientIdentification(testData.ClientId, testData.ApiKey)
                     .WithAuthenticationStrategy(x => strategyFactory(x, testData))
                     .SubstituteStopwatch(stopwatchMock.StopwatchFactory)

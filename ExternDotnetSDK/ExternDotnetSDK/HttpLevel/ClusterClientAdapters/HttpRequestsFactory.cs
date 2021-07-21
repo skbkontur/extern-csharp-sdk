@@ -18,29 +18,26 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
         private readonly ILog log;
 
         public HttpRequestsFactory(
+            RequestSendingOptions options,
+            IClusterClient clusterClient,
+            IJsonSerializer serializer,
+            ILog log)
+            : this(options, null, clusterClient, serializer, log)
+        {
+        }
+
+        public HttpRequestsFactory(
             RequestSendingOptions options, 
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
             IClusterClient clusterClient,
             IJsonSerializer serializer,
             ILog log)
         {
-            this.options = options;
+            this.options = options ?? throw new ArgumentNullException(nameof(options));
             this.requestTransformAsync = requestTransformAsync;
-            this.clusterClient = clusterClient;
-            this.serializer = serializer;
-            this.log = log;
-        }
-        
-        public HttpRequestsFactory(
-            RequestSendingOptions options,
-            IClusterClient clusterClient,
-            IJsonSerializer serializer,
-            ILog log)
-        {
-            this.options = options;
-            this.clusterClient = clusterClient;
-            this.serializer = serializer;
-            this.log = log;
+            this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
+            this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            this.log = log ?? throw new ArgumentNullException(nameof(log));;
         }
         
         public IHttpRequest Get(Uri url) => CreateHttpRequest(Request.Get(url));
