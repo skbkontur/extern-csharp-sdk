@@ -30,6 +30,20 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Builder
             this.log = log;
             http = new HttpRequestsFactory(requestSendingOptions, clusterClient, serializer, log);
         }
+        
+        [SuppressMessage("ReSharper", "ParameterHidesMember")]
+        public ISpecifyAuthStrategyOpenIdAuthenticationProviderBuilder WithClientIdentification(string clientId, string apiKey)
+        {
+            if (string.IsNullOrWhiteSpace(apiKey))
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(apiKey));
+            if (string.IsNullOrWhiteSpace(clientId))
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(clientId));
+            
+            this.apiKey = apiKey;
+            this.clientId = clientId;
+
+            return this;
+        }
 
         IAuthenticationProvider IOpenIdAuthenticationProviderBuilder.Build()
         {
@@ -50,20 +64,6 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Builder
         IOpenIdAuthenticationProviderBuilder IOpenIdAuthenticationProviderBuilder.RefreshAccessTokensBeforeExpirationsProactivelyWithinInterval(TimeSpan interval)
         {
             proactiveAuthTokenRefreshInterval = interval;
-            return this;
-        }
-
-        [SuppressMessage("ReSharper", "ParameterHidesMember")]
-        ISpecifyAuthStrategyOpenIdAuthenticationProviderBuilder ISpecifyClientIdOpenIdAuthenticationProviderBuilder.WithClientIdentification(string clientId, string apiKey)
-        {
-            if (string.IsNullOrWhiteSpace(apiKey))
-                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(apiKey));
-            if (string.IsNullOrWhiteSpace(clientId))
-                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(clientId));
-            
-            this.apiKey = apiKey;
-            this.clientId = clientId;
-
             return this;
         }
 

@@ -2,10 +2,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Kontur.Extern.Client.Authentication;
+using Kontur.Extern.Client.Authentication.OpenId.Builder;
 using Kontur.Extern.Client.Authentication.OpenId.Provider;
-using Kontur.Extern.Client.Authentication.OpenId.Provider.AuthStrategies;
+using Kontur.Extern.Client.End2EndTests.TestClusterClient;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Client.End2EndTests.TestLogging;
+using Kontur.Extern.Client.HttpLevel.Options;
+using Kontur.Extern.Client.HttpLevel.Serialization;
 using Kontur.Extern.Client.Testing.Fakes.Time;
 using Vostok.Commons.Time;
 using Vostok.Logging.Abstractions;
@@ -51,8 +55,8 @@ namespace Kontur.Extern.Client.End2EndTests.Authentication.OpenId.Provider
                 authResult.AccessToken.Should().NotBeNullOrWhiteSpace().And.NotBe(firstTimeAccessToken);
             }
 
-            private static IOpenIdAuthenticationStrategy CreateStrategy(AuthTestData testData) => 
-                new PasswordOpenIdAuthenticationStrategy(testData.UserCredentials);
+            private static IOpenIdAuthenticationProviderBuilder CreateStrategy(ISpecifyAuthStrategyOpenIdAuthenticationProviderBuilder builder, AuthTestData authTestData) => 
+                builder.WithAuthenticationByPassword(authTestData.UserName, authTestData.Password);
         }
 
         public abstract class BaseTests
@@ -66,17 +70,18 @@ namespace Kontur.Extern.Client.End2EndTests.Authentication.OpenId.Provider
                 log = new TestLog(output);
             }
 
-            protected private OpenIdAuthenticationProvider CreateAuthProvider(Func<AuthTestData, IOpenIdAuthenticationStrategy> strategyFactory)
+            protected private IAuthenticationProvider CreateAuthProvider(Func<ISpecifyAuthStrategyOpenIdAuthenticationProviderBuilder, AuthTestData, IOpenIdAuthenticationProviderBuilder> strategyFactory)
             {
                 var testData = AuthTestData.LoadFromJsonFile();
-                var openId = OpenIdClientFactory.CreateTestClient(testData.OpenIdServer, log);
-                var options = new OpenIdAuthenticationOptions(testData.ApiKey, testData.ClientId);
-                return new OpenIdAuthenticationProvider(
-                    options,
-                    openId,
-                    strategyFactory(testData),
-                    stopwatchMock.StopwatchFactory
-                );
+                
+                var clusterClient = ClusterClientFactory.CreateTestClient(testData.OpenIdServer, log);
+                var authenticationProvider = new OpenIdAuthenticationProviderBuilder(new RequestSendingOptions(), clusterClient, new JsonSerializer(), log)
+                    .WithClientIdentification(testData.ClientId, testData.ApiKey)
+                    .WithAuthenticationStrategy(x => strategyFactory(x, testData))
+                    .SubstituteStopwatch(stopwatchMock.StopwatchFactory)
+                    .Build();
+
+                return authenticationProvider;
             }
         }
     }
