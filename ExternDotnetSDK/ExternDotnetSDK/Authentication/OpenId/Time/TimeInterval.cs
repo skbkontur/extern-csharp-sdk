@@ -6,7 +6,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Time
     /// <summary>
     /// Represents a positive time interval
     /// </summary>
-    internal readonly struct TimeInterval
+    public readonly struct TimeInterval
     {
         private readonly TimeSpan timeSpan;
 

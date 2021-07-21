@@ -1,7 +1,10 @@
+using JetBrains.Annotations;
+
 namespace Kontur.Extern.Client
 {
-    internal interface IExternFactory
+    [PublicAPI]
+    public interface IExternFactory
     {
-        IExtern Create(IExternCredentials credentials);
+        IExtern Create();
     }
 }

@@ -1,6 +1,6 @@
 namespace Kontur.Extern.Client.Authentication.OpenId.Time
 {
-    internal interface IStopwatch
+    public interface IStopwatch
     {
         TimeInterval Elapsed { get; }
     }

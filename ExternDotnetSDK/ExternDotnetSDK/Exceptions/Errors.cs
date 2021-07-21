@@ -32,7 +32,10 @@ namespace Kontur.Extern.Client.Exceptions
             new ArgumentOutOfRangeException(paramName, actualValue, $"The value should be greater than {nonInclusiveLowerBound}");
         
         public static Exception TimeSpanShouldBePositive([InvokerParameterName] string paramName, TimeSpan actualValue) => 
-            new ArgumentOutOfRangeException(paramName, actualValue, $"The duration interval should be positive");
+            new ArgumentOutOfRangeException(paramName, actualValue, "The duration interval should be positive");
+
+        public static Exception TimeSpanOutOfRange([InvokerParameterName] string paramName, TimeSpan actualValue, TimeSpan lowBound, TimeSpan highBound) =>
+            new ArgumentOutOfRangeException(paramName, actualValue, $"The duration interval should be within range [{lowBound}, {highBound}]");
 
         public static Exception ListCannotBeGreaterThanParamSpecify<T>([InvokerParameterName] string listParamName, [InvokerParameterName] string boundParamName, IReadOnlyList<T> list, long maxSize) => 
             new ArgumentException($"The list have {list.Count} items, but it exceeds maximum size {maxSize} specified by the '{boundParamName}' parameter", listParamName);
@@ -108,5 +111,8 @@ namespace Kontur.Extern.Client.Exceptions
 
         public static Exception ArrayCannotBeEmpty([InvokerParameterName] string paramName) =>
             new ArgumentException("Value cannot be an empty collection.", paramName);
+
+        public static Exception TheAuthProviderNotSpecifiedOrUnsupported() => 
+            new InvalidOperationException("There is no specified an authentication provider or the specified one is not suppoted");
     }
 }

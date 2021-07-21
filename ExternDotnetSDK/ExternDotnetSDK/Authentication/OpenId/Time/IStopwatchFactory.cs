@@ -1,6 +1,6 @@
 namespace Kontur.Extern.Client.Authentication.OpenId.Time
 {
-    internal interface IStopwatchFactory
+    public interface IStopwatchFactory
     {
         IStopwatch Start();
     }
