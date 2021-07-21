@@ -4,9 +4,9 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Builder
 {
     public static class SpecifyAuthStrategyOpenIdAuthenticationProviderBuilderExtension
     {
-        public static IOpenIdAuthenticationProviderBuilder WithAuthenticationStrategy(
-            this ISpecifyAuthStrategyOpenIdAuthenticationProviderBuilder builder,
-            Func<ISpecifyAuthStrategyOpenIdAuthenticationProviderBuilder, IOpenIdAuthenticationProviderBuilder> setupStrategy)
+        public static OpenIdAuthenticationProviderBuilder.Configured WithAuthenticationStrategy(
+            this OpenIdAuthenticationProviderBuilder.SpecifyAuthStrategy builder,
+            Func<OpenIdAuthenticationProviderBuilder.SpecifyAuthStrategy, OpenIdAuthenticationProviderBuilder.Configured> setupStrategy)
         {
             return setupStrategy(builder);
         }

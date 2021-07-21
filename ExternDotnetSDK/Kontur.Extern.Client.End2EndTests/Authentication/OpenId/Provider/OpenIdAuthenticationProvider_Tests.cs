@@ -55,7 +55,7 @@ namespace Kontur.Extern.Client.End2EndTests.Authentication.OpenId.Provider
                 authResult.AccessToken.Should().NotBeNullOrWhiteSpace().And.NotBe(firstTimeAccessToken);
             }
 
-            private static IOpenIdAuthenticationProviderBuilder CreateStrategy(ISpecifyAuthStrategyOpenIdAuthenticationProviderBuilder builder, AuthTestData authTestData) => 
+            private static OpenIdAuthenticationProviderBuilder.Configured CreateStrategy(OpenIdAuthenticationProviderBuilder.SpecifyAuthStrategy builder, AuthTestData authTestData) => 
                 builder.WithAuthenticationByPassword(authTestData.UserName, authTestData.Password);
         }
 
@@ -70,7 +70,7 @@ namespace Kontur.Extern.Client.End2EndTests.Authentication.OpenId.Provider
                 log = new TestLog(output);
             }
 
-            protected private IAuthenticationProvider CreateAuthProvider(Func<ISpecifyAuthStrategyOpenIdAuthenticationProviderBuilder, AuthTestData, IOpenIdAuthenticationProviderBuilder> strategyFactory)
+            protected private IAuthenticationProvider CreateAuthProvider(Func<OpenIdAuthenticationProviderBuilder.SpecifyAuthStrategy, AuthTestData, OpenIdAuthenticationProviderBuilder.Configured> strategyFactory)
             {
                 var testData = AuthTestData.LoadFromJsonFile();
                 
