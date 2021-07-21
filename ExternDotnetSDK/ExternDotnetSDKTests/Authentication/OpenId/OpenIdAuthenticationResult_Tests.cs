@@ -2,6 +2,7 @@ using FluentAssertions;
 using Kontur.Extern.Client.Authentication.OpenId.Provider;
 using NUnit.Framework;
 using Vostok.Clusterclient.Core.Model;
+using Vostok.Commons.Time;
 
 namespace Kontur.Extern.Client.Tests.Authentication.OpenId
 {
@@ -11,7 +12,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
         [Test]
         public void Should_set_auth_header_to_the_request()
         {
-            var authResult = new OpenIdAuthenticationResult("access-token");
+            var authResult = new OpenIdAuthenticationResult("access-token", 1.Seconds());
 
             var request = authResult.Apply(Request.Get("/some-url"));
 

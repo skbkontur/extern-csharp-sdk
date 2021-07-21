@@ -30,6 +30,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Time
         }
         
         public bool HasExpired => stopwatch.HasPassed(amount);
+        public TimeInterval Remaining => amount - stopwatch.Elapsed;
 
         public bool WillExpireAfter(TimeInterval interval) => stopwatch.HasPassed(amount - interval);
     }

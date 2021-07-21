@@ -21,11 +21,11 @@ namespace Kontur.Extern.Client.IntegrationTests.TestClusterClient
 
         public async Task<Response> SendAsync(Request request, TimeSpan? connectionTimeout, TimeSpan timeout, CancellationToken cancellationToken)
         {
-            log.Debug(DumpRequest(request));
+            log.Debug($"Request: {DumpRequest(request)}");
 
             var response = await transport.SendAsync(request, connectionTimeout, timeout, cancellationToken);
 
-            log.Debug(DumpResponse(response));
+            log.Debug($"Response: {DumpResponse(response)}");
 
             return response;
 

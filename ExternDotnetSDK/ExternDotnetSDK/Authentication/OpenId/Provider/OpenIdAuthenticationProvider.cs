@@ -42,7 +42,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider
             accessToken ??= await ObtainNewAccessTokenAsync().ConfigureAwait(false);
 
             context.SetAccessToken(accessToken);
-            return new OpenIdAuthenticationResult(accessToken.ToString());
+            return new OpenIdAuthenticationResult(accessToken.ToString(), accessToken.RemainingTime);
 
             async Task<AccessToken?> ActualizeCurrentAccessTokenAsync(AccessToken token)
             {

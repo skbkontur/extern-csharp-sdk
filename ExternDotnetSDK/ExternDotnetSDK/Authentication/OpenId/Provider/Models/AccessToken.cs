@@ -42,6 +42,7 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Provider.Models
 
         public bool HasNotExpired => !timeToLive.HasExpired;
         public bool HasExpired => timeToLive.HasExpired;
+        public TimeInterval RemainingTime => timeToLive.Remaining;
 
         public bool WillExpireAfter(TimeInterval interval) => timeToLive.WillExpireAfter(interval);
 

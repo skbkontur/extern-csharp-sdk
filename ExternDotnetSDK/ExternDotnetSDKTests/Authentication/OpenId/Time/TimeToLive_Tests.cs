@@ -115,5 +115,38 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 timeToLive.Should().BeNull();
             }
         }
+
+        [TestFixture]
+        internal class Remaining
+        {
+            [Test]
+            public void Should_return_whole_TTL_time_if_the_time_has_not_advanced_yet()
+            {
+                var stopwatch = Substitute.For<IStopwatch>();
+                var timeToLive = new TimeToLive(10.Seconds(), stopwatch);
+
+                timeToLive.Remaining.Should().Be(new TimeInterval(10.Seconds()));
+            }
+            
+            [Test]
+            public void Should_return_remaining_time_of_the_TTL()
+            {
+                var stopwatch = Substitute.For<IStopwatch>();
+                stopwatch.Elapsed.Returns(3.Seconds());
+                var timeToLive = new TimeToLive(10.Seconds(), stopwatch);
+
+                timeToLive.Remaining.Should().Be(new TimeInterval(7.Seconds()));
+            }
+
+            [Test]
+            public void Should_return_zero_if_the_time_advanced_more_then_the_TTL()
+            {
+                var stopwatch = Substitute.For<IStopwatch>();
+                stopwatch.Elapsed.Returns(11.Seconds());
+                var timeToLive = new TimeToLive(10.Seconds(), stopwatch);
+
+                timeToLive.Remaining.Should().Be(new TimeInterval());
+            }
+        }
     }
 }
