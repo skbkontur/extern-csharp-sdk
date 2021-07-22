@@ -85,8 +85,7 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             {
                 await CreateHttp().Post("/some-resource").WithObject(new {Data = "some request data"}).SendAsync();
 
-                var sendContent = ClusterClient.SentRequest?.Content?.ToString();
-                sendContent.Should().Be(@"{Data:""some request data""}");
+                ClusterClient.SentContentString.Should().Be(@"{""Data"":""some request data""}");
             }
 
             [Test]
@@ -107,8 +106,7 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
                 var messageDto = await CreateHttp().PostAsync<RequestDto, ResponseDto>("/some-resource", new RequestDto {Data = "sent data"});
 
                 messageDto.Should().BeEquivalentTo(expectedResponseDto);
-                var sendContent = ClusterClient.SentRequest?.Content?.ToString();
-                sendContent.Should().Be(@"{Data:""sent data""}");
+                ClusterClient.SentContentString.Should().Be(@"{""Data"":""sent data""}");
             }
 
             protected override IHttpRequest MakeRequestForCommonTests(HttpRequestsFactory http) => http.Post("/some-resource");
@@ -132,8 +130,7 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             {
                 await CreateHttp().Put("/some-resource").WithObject(new {Data = "some request data"}).SendAsync();
 
-                var sendContent = ClusterClient.SentRequest?.Content?.ToString();
-                sendContent.Should().Be(@"{Data:""some request data""}");
+                ClusterClient.SentContentString.Should().Be(@"{""Data"":""some request data""}");
             }
 
             [Test]
@@ -144,8 +141,7 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
                 var messageDto = await CreateHttp().PutAsync<RequestDto, ResponseDto>("/some-resource", new RequestDto {Data = "sent data"});
 
                 messageDto.Should().BeEquivalentTo(expectedResponseDto);
-                var sendContent = ClusterClient.SentRequest?.Content?.ToString();
-                sendContent.Should().Be(@"{Data:""sent data""}");
+                ClusterClient.SentContentString.Should().Be(@"{""Data"":""sent data""}");
             }
             
             protected override IHttpRequest MakeRequestForCommonTests(HttpRequestsFactory http) => http.Put("/some-resource");

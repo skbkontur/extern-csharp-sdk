@@ -1,5 +1,7 @@
 #nullable enable
 using System;
+using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Tests.Fakes.Logging;
@@ -30,6 +32,26 @@ namespace Kontur.Extern.Client.Tests.Fakes.Http
 
         public string BaseUrl { get; }
         public Request? SentRequest => httpMessages.SentRequest;
+        public string? SentContentString
+        {
+            get
+            {
+                var request = httpMessages.SentRequest;
+                if (request == null)
+                    return null;
+
+                if (request.Content != null)
+                    return request.Content.ToString();
+
+                if (request.StreamContent != null)
+                {
+                    var memoryStream = (MemoryStream) request.StreamContent.Stream;
+                    return Encoding.UTF8.GetString(memoryStream.ToArray());
+                }
+
+                return null;
+            }
+        }
 
         public void SetResponseBody(byte[] body) => httpMessages.ReplaceResponseBody(body);
 
