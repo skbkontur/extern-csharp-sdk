@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Accounts;
 using Kontur.Extern.Client.End2EndTests.Client.TestAuthProvider;
 using Kontur.Extern.Client.End2EndTests.TestClusterClient;
-using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.End2EndTests.TestLogging;
 using Vostok.Logging.Abstractions;
+using Xunit.Abstractions;
 
 namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
 {
@@ -13,6 +12,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
     {
         private readonly ILog log;
         private readonly IExtern konturExtern;
+
+        public KonturExternTestContext(ITestOutputHelper output)
+            : this(new TestLog(output))
+        {
+        }
 
         public KonturExternTestContext(ILog log)
         {
@@ -26,20 +30,9 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
 
         public IExtern Extern => konturExtern;
 
-        public ValueTask<EntityScope<Account>> CreateAccount(LegalEntityInn inn, Kpp kpp, string organizationName) =>
-            Scope<Account>(
-                () => konturExtern.Accounts.CreateAsync(inn, kpp, organizationName),
-                account => konturExtern.Accounts.WithId(account.Id).DeleteAsync()
-            );
+        public AccountTestContext Accounts => new(konturExtern, CreateScope);
 
-        public Task<Account> GetAccount(Guid id) => konturExtern.Accounts.WithId(id).GetAsync(); 
-        
-        public Task<Account?> GetAccountOrNull(Guid id) => konturExtern.Accounts.WithId(id).TryGetAsync(); 
-        
-        public Task<IReadOnlyList<Account>> LoadAllAccountsAsync() => 
-            konturExtern.Accounts.List().SliceBy(100).LoadAllAsync();
-
-        private ValueTask<EntityScope<TEntity>> Scope<TEntity>(
+        private ValueTask<EntityScope<TEntity>> CreateScope<TEntity>(
             Func<Task<TEntity>> entityCreate,
             Func<TEntity, Task> entityDelete)
         {
