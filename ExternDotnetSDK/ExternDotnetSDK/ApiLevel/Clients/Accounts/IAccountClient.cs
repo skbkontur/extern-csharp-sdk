@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Accounts;
 using Kontur.Extern.Client.ApiLevel.Models.Certificates;
@@ -24,6 +25,14 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Accounts
         /// <param name="timeout"></param>
         /// <returns>Учетная запись</returns>
         Task<Account> GetAccountAsync(Guid accountId, TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Получение учетной записи по ее идентификатору
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="timeout"></param>
+        /// <returns>Учетная запись или <code>null</code> если учетная запись с указанным <paramref name="accountId"/> отсутствует.</returns>
+        Task<Account?> TryGetAccountAsync(Guid accountId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Удаление учетной записи

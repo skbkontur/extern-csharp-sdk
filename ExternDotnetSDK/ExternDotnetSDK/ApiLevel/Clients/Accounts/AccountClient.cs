@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Accounts;
 using Kontur.Extern.Client.ApiLevel.Models.Certificates;
@@ -25,6 +26,9 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Accounts
 
         public Task<Account> GetAccountAsync(Guid accountId, TimeSpan? timeout = null) => 
             http.GetAsync<Account>($"v1/{accountId}", timeout);
+
+        public Task<Account?> TryGetAccountAsync(Guid accountId, TimeSpan? timeout = null) => 
+            http.TryGetAsync<Account>($"v1/{accountId}", timeout);
 
         public Task DeleteAccountAsync(Guid accountId, TimeSpan? timeout = null) => 
             http.DeleteAsync($"v1/{accountId}", timeout);
