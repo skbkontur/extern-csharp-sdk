@@ -25,7 +25,7 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
         }
 
         public bool IsFailed => error != null;
-        public bool IsCompleted => ReferenceEquals(result, null);
+        public bool IsCompleted => !ReferenceEquals(result, null);
 
         public bool TryGetResult(out T completionResult)
         {
