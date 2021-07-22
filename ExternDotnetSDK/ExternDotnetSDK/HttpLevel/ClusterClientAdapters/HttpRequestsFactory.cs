@@ -13,7 +13,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
     {
         private readonly RequestSendingOptions options;
         private readonly Func<Request, TimeSpan, Task<Request>>? requestTransformAsync;
-        private readonly Action<IHttpResponse>? errorResponseHandler;
+        private readonly Func<IHttpResponse, bool>? errorResponseHandler;
         private readonly IClusterClient clusterClient;
         private readonly IJsonSerializer serializer;
         private readonly ILog log;
@@ -40,7 +40,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
         public HttpRequestsFactory(
             RequestSendingOptions options, 
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
-            Action<IHttpResponse>? errorResponseHandler,
+            Func<IHttpResponse, bool>? errorResponseHandler,
             IClusterClient clusterClient,
             IJsonSerializer serializer,
             ILog log)

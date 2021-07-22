@@ -18,7 +18,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
         private Request request;
         private readonly RequestSendingOptions options;
         private readonly Func<Request, TimeSpan, Task<Request>>? requestTransformAsync;
-        private readonly Action<IHttpResponse>? errorResponseHandler;
+        private readonly Func<IHttpResponse, bool>? errorResponseHandler;
         private readonly IClusterClient clusterClient;
         private readonly IJsonSerializer serializer;
         private readonly ILog log;
@@ -27,7 +27,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             Request request,
             RequestSendingOptions options,
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
-            Action<IHttpResponse>? errorResponseHandler,
+            Func<IHttpResponse, bool>? errorResponseHandler,
             IClusterClient clusterClient,
             IJsonSerializer serializer,
             ILog log)
@@ -59,7 +59,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             return this;
         }
 
-        public async Task<IHttpResponse> SendAsync(TimeSpan? timeout = null)
+        public async Task<IHttpResponse> SendAsync(TimeSpan? timeout = null, Func<IHttpResponse, bool>? ignoreResponseErrors = null)
         {
             timeout ??= request.IsWriteRequest() ? options.DefaultWriteTimeout : options.DefaultReadTimeout;
             var timeBudget = TimeBudget.StartNew(timeout.Value);
@@ -73,19 +73,26 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             resultRequest = AddTimeout(resultRequest, timeBudget.Remaining);
             var httpResponse = await TrySendRequestAsync(resultRequest, timeBudget.Remaining).ConfigureAwait(false);
             
-            return EnsureSuccess(httpResponse);
+            return EnsureSuccess(httpResponse, ignoreResponseErrors);
 
             static Request AddTimeout(Request resultRequest, TimeSpan timeout) =>
                 resultRequest.WithHeader(HttpHeaders.TimeoutHeader, timeout.ToString("c"));
         }
 
-        private IHttpResponse EnsureSuccess(IHttpResponse response)
+        private IHttpResponse EnsureSuccess(IHttpResponse response, Func<IHttpResponse, bool>? ignoreResponseErrors)
         {
             var responseStatus = response.Status;
             if (!responseStatus.IsSuccessful)
             {
-                errorResponseHandler?.Invoke(response);
-                responseStatus.EnsureSuccess();
+                if (ignoreResponseErrors != null && ignoreResponseErrors(response))
+                {
+                    return response;
+                }
+
+                if (errorResponseHandler == null || !errorResponseHandler(response))
+                {
+                    responseStatus.EnsureSuccess();
+                }
             }
 
             return response;

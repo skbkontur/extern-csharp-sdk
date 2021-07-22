@@ -1,5 +1,8 @@
+#nullable enable
 using System;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
+using Kontur.Extern.Client.ApiLevel.Models.Errors;
 
 namespace Kontur.Extern.Client.HttpLevel
 {
@@ -11,8 +14,20 @@ namespace Kontur.Extern.Client.HttpLevel
             return response.GetBytes();
         }
 
+        [ItemCanBeNull]
+        public static Task<TResponseDto?> TryGetAsync<TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, string url, TimeSpan? timeout = null) => 
+            TryGetAsync<TResponseDto>(httpRequestsFactory, url.ToUrl(), timeout);
+
+        public static async Task<TResponseDto?> TryGetAsync<TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, Uri url, TimeSpan? timeout = null)
+        {
+            var response = await httpRequestsFactory.Get(url).SendAsync(timeout, IgnoreNotFoundApiErrors).ConfigureAwait(false);
+            return response.Status.IsNotFound 
+                ? default 
+                : response.GetMessage<TResponseDto>();
+        }
+
         public static Task<TResponseDto> GetAsync<TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, string url, TimeSpan? timeout = null) => 
-            GetAsync<TResponseDto>(httpRequestsFactory, new Uri(url, UriKind.RelativeOrAbsolute), timeout);
+            GetAsync<TResponseDto>(httpRequestsFactory, url.ToUrl(), timeout);
 
         public static async Task<TResponseDto> GetAsync<TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, Uri url, TimeSpan? timeout = null)
         {
@@ -56,5 +71,10 @@ namespace Kontur.Extern.Client.HttpLevel
 
         public static Task DeleteAsync(this IHttpRequestsFactory httpRequestsFactory, Uri url, TimeSpan? timeout = null) => 
             httpRequestsFactory.Delete(url).SendAsync(timeout);
+
+        private static bool IgnoreNotFoundApiErrors(IHttpResponse response) =>
+            response.Status.IsNotFound && 
+            response.TryGetMessage<Error>(out var errorResponse) && 
+            errorResponse.IsNotEmpty;
     }
 }

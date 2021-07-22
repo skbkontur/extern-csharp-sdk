@@ -105,13 +105,15 @@ namespace Kontur.Extern.Client
             return new Extern(services);
         }
 
-        private void HandleApiErrors(IHttpResponse response)
+        private bool HandleApiErrors(IHttpResponse response)
         {
             var status = response.Status;
-            if (status.IsBadRequest && response.TryGetMessage<Error>(out var errorResponse) && errorResponse.IsNotEmpty)
+            if (status.IsClientError && response.TryGetMessage<Error>(out var errorResponse) && errorResponse.IsNotEmpty)
             {
                 throw Errors.UnsuccessfulApiResponse(errorResponse);
             }
+
+            return false;
         }
 
         private IAuthenticationProvider CreateAuthProvider(IJsonSerializer jsonSerializer)

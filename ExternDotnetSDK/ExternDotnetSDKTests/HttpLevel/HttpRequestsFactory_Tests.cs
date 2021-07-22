@@ -187,9 +187,9 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
                 var http = CreateHttp(errorResponseHandler: response =>
                 {
                     if (!response.Status.IsSuccessful)
-                    {
                         throw new ApplicationException(expectedErrorMessage);
-                    }
+
+                    return false;
                 });
                 var request = MakeRequestForCommonTests(http);
                 Func<Task> sendRequest = async () => await request.SendAsync();
@@ -200,6 +200,36 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
                 sendRequest.Should()
                     .Throw<ApplicationException>("the response is not successful and handled by the specified error response handler")
                     .WithMessage(expectedErrorMessage);
+            }
+            
+            [Test]
+            public async Task Should_allow_to_ignore_response_with_error_by_the_given_error_handler()
+            {
+                var http = CreateHttp(errorResponseHandler: response => response.Status.IsBadRequest);
+                var request = MakeRequestForCommonTests(http);
+                ClusterClient.SetResponseCode(ResponseCode.BadRequest);
+
+                var httpResponse = await request.SendAsync();
+
+                httpResponse.Status.IsBadRequest.Should().BeTrue();
+            }
+            
+            [Test]
+            public async Task Should_allow_to_ignore_response_with_error_by_the_given_filtering_delegate()
+            {
+                var http = CreateHttp(errorResponseHandler: response =>
+                {
+                    if (!response.Status.IsSuccessful)
+                        throw new ApplicationException("Unexpected");
+
+                    return false;
+                });
+                var request = MakeRequestForCommonTests(http);
+                ClusterClient.SetResponseCode(ResponseCode.BadRequest);
+
+                var httpResponse = await request.SendAsync(ignoreResponseErrors: response => response.Status.IsBadRequest);
+
+                httpResponse.Status.IsBadRequest.Should().BeTrue();
             }
 
             [Test]
@@ -220,7 +250,7 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
 
             protected HttpRequestsFactory CreateHttp(
                 Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
-                Action<IHttpResponse>? errorResponseHandler = null)
+                Func<IHttpResponse, bool>? errorResponseHandler = null)
             {
                 return new(
                     new RequestSendingOptions(),

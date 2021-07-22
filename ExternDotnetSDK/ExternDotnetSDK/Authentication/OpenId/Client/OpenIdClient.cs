@@ -115,12 +115,14 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client
             return httpResponse.GetMessage<TResult>();
         }
 
-        private static void HandleOpenIdErrorResponse(IHttpResponse httpResponse)
+        private static bool HandleOpenIdErrorResponse(IHttpResponse httpResponse)
         {
             if (httpResponse.Status.IsBadRequest && httpResponse.TryGetMessage<ErrorResponse>(out var errorResponse))
             {
                 throw new OpenIdException(errorResponse);
             }
+
+            return false;
         }
     }
 }

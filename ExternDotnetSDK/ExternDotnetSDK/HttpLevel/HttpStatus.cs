@@ -14,6 +14,17 @@ namespace Kontur.Extern.Client.HttpLevel
 
         public bool IsSuccessful => statusCode == null || statusCode.Value.IsSuccessful();
         public bool IsBadRequest => statusCode == ResponseCode.BadRequest;
+        public bool IsNotFound => statusCode == ResponseCode.NotFound;
+        
+        public bool IsClientError
+        {
+            get
+            {
+                if (statusCode == null)
+                    return false;
+                return (int) statusCode.Value is >= 400 and < 500;
+            }
+        }
 
         public void EnsureSuccess()
         {
