@@ -11,5 +11,7 @@ namespace Kontur.Extern.Client.Tests.Fakes.Http
         public Response ExpectedResponse { get; private set; }
 
         public void ReplaceResponseBody(byte[] body) => ExpectedResponse = new Response(ExpectedResponse.Code, new Content(body), ExpectedResponse.Headers);
+
+        public void ReplaceResponseCode(ResponseCode responseCode) => ExpectedResponse = new Response(responseCode, ExpectedResponse.Content, ExpectedResponse.Headers);
     }
 }

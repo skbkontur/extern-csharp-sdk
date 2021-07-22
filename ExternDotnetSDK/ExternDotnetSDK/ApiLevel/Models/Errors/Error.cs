@@ -30,6 +30,8 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Errors
         public string TrackId { get; set; }
         public Dictionary<string, string> Properties { get; set; }
 
+        public bool IsNotEmpty => !string.IsNullOrWhiteSpace(Message);
+
         public override string ToString() => $"[id: \"{Id}\", status: {StatusCode}, track-id: \"{TrackId}\"]";
     }
 }

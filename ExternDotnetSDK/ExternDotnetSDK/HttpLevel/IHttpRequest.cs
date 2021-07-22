@@ -21,12 +21,5 @@ namespace Kontur.Extern.Client.HttpLevel
         /// <param name="timeout"></param>
         /// <returns></returns>
         Task<IHttpResponse> SendAsync(TimeSpan? timeout = null);
-
-        /// <summary>
-        /// Send a request and return successful or failed response 
-        /// </summary>
-        /// <param name="timeout"></param>
-        /// <returns></returns>
-        Task<IHttpResponse> TrySendAsync(TimeSpan? timeout = null);
     }
 }

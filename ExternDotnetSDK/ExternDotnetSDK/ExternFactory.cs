@@ -2,11 +2,13 @@
 using System;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel;
+using Kontur.Extern.Client.ApiLevel.Models.Errors;
 using Kontur.Extern.Client.Authentication;
 using Kontur.Extern.Client.Authentication.OpenId.Builder;
 using Kontur.Extern.Client.Common;
 using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.HttpLevel;
 using Kontur.Extern.Client.HttpLevel.ClusterClientAdapters;
 using Kontur.Extern.Client.HttpLevel.Options;
 using Kontur.Extern.Client.HttpLevel.Serialization;
@@ -90,10 +92,26 @@ namespace Kontur.Extern.Client
             var jsonSerializer = new JsonSerializer();
             var authProvider = CreateAuthProvider(jsonSerializer);
 
-            var http = new HttpRequestsFactory(requestSendingOptions, authProvider.AuthenticateRequestAsync, clusterClient, jsonSerializer, log);
+            var http = new HttpRequestsFactory(
+                requestSendingOptions,
+                authProvider.AuthenticateRequestAsync,
+                HandleApiErrors,
+                clusterClient,
+                jsonSerializer,
+                log
+            );
             var api = new KeApiClient(http, cryptoProvider);
             var services = new ExternClientServices(http, api, pollingStrategy);
             return new Extern(services);
+        }
+
+        private void HandleApiErrors(IHttpResponse response)
+        {
+            var status = response.Status;
+            if (status.IsBadRequest && response.TryGetMessage<Error>(out var errorResponse) && errorResponse.IsNotEmpty)
+            {
+                throw Errors.UnsuccessfulApiResponse(errorResponse);
+            }
         }
 
         private IAuthenticationProvider CreateAuthProvider(IJsonSerializer jsonSerializer)

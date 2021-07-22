@@ -114,5 +114,9 @@ namespace Kontur.Extern.Client.Exceptions
 
         public static Exception TheAuthProviderNotSpecifiedOrUnsupported() => 
             new InvalidOperationException("There is no specified an authentication provider or the specified one is not suppoted");
+
+        public static Exception UnsuccessfulApiResponse(Error errorResponse) =>
+            new ApiException($"[id: \"{errorResponse.Id}\", status: {errorResponse.StatusCode}, track-id: \"{errorResponse.TrackId}\"]{NewLine}" +
+                             errorResponse.Message);
     }
 }

@@ -33,6 +33,8 @@ namespace Kontur.Extern.Client.Tests.Fakes.Http
 
         public void SetResponseBody(byte[] body) => httpMessages.ReplaceResponseBody(body);
 
+        public void SetResponseCode(ResponseCode responseCode) => httpMessages.ReplaceResponseCode(responseCode);
+
         private class FakeTransport : ITransport
         {
             private readonly FakeHttpMessages httpMessages;

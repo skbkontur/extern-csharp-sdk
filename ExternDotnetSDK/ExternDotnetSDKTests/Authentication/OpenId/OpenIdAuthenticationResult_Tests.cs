@@ -16,7 +16,8 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
 
             var request = authResult.Apply(Request.Get("/some-url"));
 
-            request.Headers?.Authorization.Should().Be("Bearer access-token");
+            var authorizationHeader = request.Headers?.Authorization;
+            authorizationHeader?.Should().Be("Bearer access-token");
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
         private Request request;
         private readonly RequestSendingOptions options;
         private readonly Func<Request, TimeSpan, Task<Request>>? requestTransformAsync;
+        private readonly Action<IHttpResponse>? errorResponseHandler;
         private readonly IClusterClient clusterClient;
         private readonly IJsonSerializer serializer;
         private readonly ILog log;
@@ -26,6 +27,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             Request request,
             RequestSendingOptions options,
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
+            Action<IHttpResponse>? errorResponseHandler,
             IClusterClient clusterClient,
             IJsonSerializer serializer,
             ILog log)
@@ -33,6 +35,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             this.request = request ?? throw new ArgumentNullException(nameof(request));
             this.options = options ?? throw new ArgumentNullException(nameof(options));
             this.requestTransformAsync = requestTransformAsync;
+            this.errorResponseHandler = errorResponseHandler;
             this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
             this.log = log ?? throw new ArgumentNullException(nameof(log));
@@ -58,12 +61,6 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
 
         public async Task<IHttpResponse> SendAsync(TimeSpan? timeout = null)
         {
-            var httpResponse = await TrySendAsync(timeout).ConfigureAwait(false);
-            return EnsureSuccess(httpResponse);
-        }
-
-        public async Task<IHttpResponse> TrySendAsync(TimeSpan? timeout = null)
-        {
             timeout ??= request.IsWriteRequest() ? options.DefaultWriteTimeout : options.DefaultReadTimeout;
             var timeBudget = TimeBudget.StartNew(timeout.Value);
 
@@ -74,7 +71,9 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             }
 
             resultRequest = AddTimeout(resultRequest, timeBudget.Remaining);
-            return await TrySendRequestAsync(resultRequest, timeBudget.Remaining).ConfigureAwait(false);
+            var httpResponse = await TrySendRequestAsync(resultRequest, timeBudget.Remaining).ConfigureAwait(false);
+            
+            return EnsureSuccess(httpResponse);
 
             static Request AddTimeout(Request resultRequest, TimeSpan timeout) =>
                 resultRequest.WithHeader(HttpHeaders.TimeoutHeader, timeout.ToString("c"));
@@ -85,7 +84,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             var responseStatus = response.Status;
             if (!responseStatus.IsSuccessful)
             {
-                log.Error($"StatusCode: {responseStatus.StatusCode}");
+                errorResponseHandler?.Invoke(response);
                 responseStatus.EnsureSuccess();
             }
 

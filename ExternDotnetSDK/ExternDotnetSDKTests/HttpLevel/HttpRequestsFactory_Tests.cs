@@ -10,7 +10,6 @@ using Kontur.Extern.Client.HttpLevel.Serialization;
 using Kontur.Extern.Client.Tests.Fakes.Http;
 using Kontur.Extern.Client.Tests.Fakes.Logging;
 using NUnit.Framework;
-using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client.Tests.HttpLevel
@@ -24,11 +23,11 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             [Test]
             public async Task Get_should_send_GET_request_to_absolute_URI()
             {
-                await http.Get("/some-resource").SendAsync();
+                await CreateHttp().Get("/some-resource").SendAsync();
 
-                clusterClient.SentRequest.Should().NotBeNull();
-                clusterClient.SentRequest!.Url.Should().Be(new Uri("https://test/some-resource"));
-                clusterClient.SentRequest!.Method.Should().Be("GET");
+                ClusterClient.SentRequest.Should().NotBeNull();
+                ClusterClient.SentRequest!.Url.Should().Be(new Uri("https://test/some-resource"));
+                ClusterClient.SentRequest!.Method.Should().Be("GET");
             }
 
             [Test]
@@ -36,7 +35,7 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             {
                 var expectedResponseDto = new ResponseDto {Data = "expected data"};
 
-                var messageDto = await http.GetAsync<ResponseDto>("/some-resource");
+                var messageDto = await CreateHttp().GetAsync<ResponseDto>("/some-resource");
 
                 messageDto.Should().BeEquivalentTo(expectedResponseDto);
             }
@@ -45,25 +44,27 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             public async Task GetBytesAsync_should_send_GET_request_to_absolute_URI()
             {
                 var responseBytes = new byte[] {1, 2, 3};
-                clusterClient.SetResponseBody(responseBytes);
+                ClusterClient.SetResponseBody(responseBytes);
                 
-                await http.GetBytesAsync("/some-resource");
+                await CreateHttp().GetBytesAsync("/some-resource");
 
-                clusterClient.SentRequest.Should().NotBeNull();
-                clusterClient.SentRequest!.Url.Should().Be(new Uri("https://test/some-resource"));
-                clusterClient.SentRequest!.Method.Should().Be("GET");
+                ClusterClient.SentRequest.Should().NotBeNull();
+                ClusterClient.SentRequest!.Url.Should().Be(new Uri("https://test/some-resource"));
+                ClusterClient.SentRequest!.Method.Should().Be("GET");
             }
 
             [Test]
             public async Task GetBytesAsync_should_deserialize_bytes_from_response()
             {
                 var responseBytes = new byte[] {1, 2, 3};
-                clusterClient.SetResponseBody(responseBytes);
+                ClusterClient.SetResponseBody(responseBytes);
                 
-                var bytes = await http.GetBytesAsync("/some-resource");
+                var bytes = await CreateHttp().GetBytesAsync("/some-resource");
 
                 bytes.Should().BeEquivalentTo(responseBytes);
             }
+
+            protected override IHttpRequest MakeRequestForCommonTests(HttpRequestsFactory http) => http.Get("/some-resource");
         }
 
         [TestFixture]
@@ -72,19 +73,20 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             [Test]
             public async Task SendAsync_should_send_POST_request_to_absolute_URI()
             {
-                await http.Post("/some-resource").SendAsync();
+                await CreateHttp().Post("/some-resource").SendAsync();
 
-                clusterClient.SentRequest.Should().NotBeNull();
-                clusterClient.SentRequest!.Url.Should().Be(new Uri("https://test/some-resource"));
-                clusterClient.SentRequest!.Method.Should().Be("POST");
+                ClusterClient.SentRequest.Should().NotBeNull();
+                ClusterClient.SentRequest!.Url.Should().Be(new Uri("https://test/some-resource"));
+                ClusterClient.SentRequest!.Method.Should().Be("POST");
             }
 
             [Test]
             public async Task SendAsync_should_serialize_request_DTO()
             {
-                await http.Post("/some-resource").WithObject(new {Data = "some request data"}).SendAsync();
+                await CreateHttp().Post("/some-resource").WithObject(new {Data = "some request data"}).SendAsync();
 
-                clusterClient.SentRequest?.Content?.ToString().Should().Be(@"{Data:""some request data""}");
+                var sendContent = ClusterClient.SentRequest?.Content?.ToString();
+                sendContent.Should().Be(@"{Data:""some request data""}");
             }
 
             [Test]
@@ -92,7 +94,7 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             {
                 var expectedResponseDto = new ResponseDto {Data = "expected data"};
 
-                var messageDto = await http.PostAsync<ResponseDto>("/some-resource");
+                var messageDto = await CreateHttp().PostAsync<ResponseDto>("/some-resource");
 
                 messageDto.Should().BeEquivalentTo(expectedResponseDto);
             }
@@ -102,11 +104,14 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             {
                 var expectedResponseDto = new ResponseDto {Data = "expected data"};
 
-                var messageDto = await http.PostAsync<RequestDto, ResponseDto>("/some-resource", new RequestDto {Data = "sent data"});
+                var messageDto = await CreateHttp().PostAsync<RequestDto, ResponseDto>("/some-resource", new RequestDto {Data = "sent data"});
 
                 messageDto.Should().BeEquivalentTo(expectedResponseDto);
-                clusterClient.SentRequest?.Content?.ToString().Should().Be(@"{Data:""sent data""}");
+                var sendContent = ClusterClient.SentRequest?.Content?.ToString();
+                sendContent.Should().Be(@"{Data:""sent data""}");
             }
+
+            protected override IHttpRequest MakeRequestForCommonTests(HttpRequestsFactory http) => http.Post("/some-resource");
         }
 
         [TestFixture]
@@ -115,19 +120,20 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             [Test]
             public async Task SendAsync_should_send_PUT_request_to_absolute_URI()
             {
-                await http.Put("/some-resource").SendAsync();
+                await CreateHttp().Put("/some-resource").SendAsync();
 
-                clusterClient.SentRequest.Should().NotBeNull();
-                clusterClient.SentRequest!.Url.Should().Be(new Uri("https://test/some-resource"));
-                clusterClient.SentRequest!.Method.Should().Be("PUT");
+                ClusterClient.SentRequest.Should().NotBeNull();
+                ClusterClient.SentRequest!.Url.Should().Be(new Uri("https://test/some-resource"));
+                ClusterClient.SentRequest!.Method.Should().Be("PUT");
             }
 
             [Test]
             public async Task Put_should_serialize_request_DTO()
             {
-                await http.Put("/some-resource").WithObject(new {Data = "some request data"}).SendAsync();
+                await CreateHttp().Put("/some-resource").WithObject(new {Data = "some request data"}).SendAsync();
 
-                clusterClient.SentRequest?.Content?.ToString().Should().Be(@"{Data:""some request data""}");
+                var sendContent = ClusterClient.SentRequest?.Content?.ToString();
+                sendContent.Should().Be(@"{Data:""some request data""}");
             }
 
             [Test]
@@ -135,11 +141,14 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             {
                 var expectedResponseDto = new ResponseDto {Data = "expected data"};
 
-                var messageDto = await http.PutAsync<RequestDto, ResponseDto>("/some-resource", new RequestDto {Data = "sent data"});
+                var messageDto = await CreateHttp().PutAsync<RequestDto, ResponseDto>("/some-resource", new RequestDto {Data = "sent data"});
 
                 messageDto.Should().BeEquivalentTo(expectedResponseDto);
-                clusterClient.SentRequest?.Content?.ToString().Should().Be(@"{Data:""sent data""}");
+                var sendContent = ClusterClient.SentRequest?.Content?.ToString();
+                sendContent.Should().Be(@"{Data:""sent data""}");
             }
+            
+            protected override IHttpRequest MakeRequestForCommonTests(HttpRequestsFactory http) => http.Put("/some-resource");
         }
 
         [TestFixture]
@@ -148,34 +157,83 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
             [Test]
             public async Task SendAsync_should_send_DELETE_request_to_absolute_URI()
             {
-                await http.Delete("/some-resource").SendAsync();
+                await CreateHttp().Delete("/some-resource").SendAsync();
 
-                clusterClient.SentRequest.Should().NotBeNull();
-                clusterClient.SentRequest!.Url.Should().Be(new Uri("https://test/some-resource"));
-                clusterClient.SentRequest!.Method.Should().Be("DELETE");
+                ClusterClient.SentRequest.Should().NotBeNull();
+                ClusterClient.SentRequest!.Url.Should().Be(new Uri("https://test/some-resource"));
+                ClusterClient.SentRequest!.Method.Should().Be("DELETE");
             }
 
             [Test]
             public async Task DeleteAsync_should_send_DELETE_request_to_absolute_URI()
             {
-                await http.DeleteAsync("/some-resource");
+                await CreateHttp().DeleteAsync("/some-resource");
 
-                clusterClient.SentRequest.Should().NotBeNull();
-                clusterClient.SentRequest!.Url.Should().Be(new Uri("https://test/some-resource"));
-                clusterClient.SentRequest!.Method.Should().Be("DELETE");
+                ClusterClient.SentRequest.Should().NotBeNull();
+                ClusterClient.SentRequest!.Url.Should().Be(new Uri("https://test/some-resource"));
+                ClusterClient.SentRequest!.Method.Should().Be("DELETE");
             }
+            
+            protected override IHttpRequest MakeRequestForCommonTests(HttpRequestsFactory http) => http.Delete("/some-resource");
         }
 
         public abstract class Base
         {
-            internal FakeClusterClient clusterClient = null!;
-            internal HttpRequestsFactory http = null!;
+            internal FakeClusterClient ClusterClient = null!;
 
             [SetUp]
-            public void SetUp()
+            public void SetUp() => ClusterClient = CreateFakeClusterClient();
+
+            [Test]
+            public void Should_handle_wrong_response_by_the_given_error_handler()
             {
-                clusterClient = CreateFakeClusterClient();
-                http = CreateHttp(clusterClient);
+                const string expectedErrorMessage = "Expected exception";
+                var http = CreateHttp(errorResponseHandler: response =>
+                {
+                    if (!response.Status.IsSuccessful)
+                    {
+                        throw new ApplicationException(expectedErrorMessage);
+                    }
+                });
+                var request = MakeRequestForCommonTests(http);
+                Func<Task> sendRequest = async () => await request.SendAsync();
+
+                sendRequest.Should().NotThrow("the response is successful");
+
+                ClusterClient.SetResponseCode(ResponseCode.BadRequest);
+                sendRequest.Should()
+                    .Throw<ApplicationException>("the response is not successful and handled by the specified error response handler")
+                    .WithMessage(expectedErrorMessage);
+            }
+
+            [Test]
+            public async Task Should_transform_sent_request_by_the_given_transformation_function()
+            {
+                const string expectedUserAgent = "the-expected-user-agent";
+                var http = CreateHttp((r, _) => Task.FromResult(r.WithUserAgentHeader(expectedUserAgent)));
+                var request = MakeRequestForCommonTests(http);
+
+                await request.SendAsync();
+
+                ClusterClient.SentRequest.Should().NotBeNull();
+                var userAgent = ClusterClient.SentRequest!.Headers?.UserAgent;
+                userAgent.Should().Be(expectedUserAgent);
+            }
+
+            protected abstract IHttpRequest MakeRequestForCommonTests(HttpRequestsFactory http);
+
+            protected HttpRequestsFactory CreateHttp(
+                Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
+                Action<IHttpResponse>? errorResponseHandler = null)
+            {
+                return new(
+                    new RequestSendingOptions(),
+                    requestTransformAsync,
+                    errorResponseHandler,
+                    ClusterClient,
+                    new JsonSerializer(),
+                    new TestLog()
+                );
             }
 
             private static FakeClusterClient CreateFakeClusterClient() =>
@@ -183,13 +241,6 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
                     .WithBaseUrl("https://test/")
                     .WithJsonResponse(ResponseCode.Ok, @"{""Data"": ""expected data""}")
                     .CreateFakeClusterClient();
-
-            private static HttpRequestsFactory CreateHttp(IClusterClient clusterClient) => new(
-                new RequestSendingOptions(),
-                clusterClient,
-                new JsonSerializer(),
-                new TestLog()
-            );
         }
 
         private class ResponseDto

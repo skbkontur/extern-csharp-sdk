@@ -13,6 +13,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
     {
         private readonly RequestSendingOptions options;
         private readonly Func<Request, TimeSpan, Task<Request>>? requestTransformAsync;
+        private readonly Action<IHttpResponse>? errorResponseHandler;
         private readonly IClusterClient clusterClient;
         private readonly IJsonSerializer serializer;
         private readonly ILog log;
@@ -27,14 +28,26 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
         }
 
         public HttpRequestsFactory(
+            RequestSendingOptions options,
+            Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
+            IClusterClient clusterClient,
+            IJsonSerializer serializer,
+            ILog log)
+            : this(options, requestTransformAsync, null, clusterClient, serializer, log)
+        {
+        }
+
+        public HttpRequestsFactory(
             RequestSendingOptions options, 
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
+            Action<IHttpResponse>? errorResponseHandler,
             IClusterClient clusterClient,
             IJsonSerializer serializer,
             ILog log)
         {
             this.options = options ?? throw new ArgumentNullException(nameof(options));
             this.requestTransformAsync = requestTransformAsync;
+            this.errorResponseHandler = errorResponseHandler;
             this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
             this.log = log ?? throw new ArgumentNullException(nameof(log));;
@@ -48,6 +61,6 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
 
         public IHttpRequest Delete(Uri url) => CreateHttpRequest(Request.Delete(url));
 
-        private HttpRequest CreateHttpRequest(Request request) => new(request, options, requestTransformAsync, clusterClient, serializer, log);
+        private HttpRequest CreateHttpRequest(Request request) => new(request, options, requestTransformAsync, errorResponseHandler, clusterClient, serializer, log);
     }
 }

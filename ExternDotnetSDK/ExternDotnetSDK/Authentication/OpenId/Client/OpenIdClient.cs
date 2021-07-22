@@ -7,18 +7,29 @@ using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Responses;
 using Kontur.Extern.Client.Authentication.OpenId.Exceptions;
 using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
 using Kontur.Extern.Client.HttpLevel;
+using Kontur.Extern.Client.HttpLevel.ClusterClientAdapters;
 using Kontur.Extern.Client.HttpLevel.Constants;
 using Kontur.Extern.Client.HttpLevel.Contents;
+using Kontur.Extern.Client.HttpLevel.Options;
+using Kontur.Extern.Client.HttpLevel.Serialization;
+using Vostok.Clusterclient.Core;
 using Vostok.Logging.Abstractions;
 
 namespace Kontur.Extern.Client.Authentication.OpenId.Client
 {
     public class OpenIdClient : IOpenIdClient
     {
+        public static OpenIdClient Create(RequestSendingOptions requestSendingOptions, IClusterClient clusterClient, IJsonSerializer serializer, ILog log)
+        {
+            var http = new HttpRequestsFactory(requestSendingOptions, null, HandleOpenIdErrorResponse, clusterClient, serializer, log);
+            var openIdClient = new OpenIdClient(http, log);
+            return openIdClient;
+        }
+
         private readonly IHttpRequestsFactory http;
         private readonly ILog log;
 
-        public OpenIdClient(IHttpRequestsFactory http, ILog log)
+        private OpenIdClient(IHttpRequestsFactory http, ILog log)
         {
             this.http = http;
             this.log = log;
@@ -100,19 +111,16 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client
 
         private static async Task<TResult> SendRequestAsync<TResult>(IHttpRequest httpRequest, TimeSpan? timeout)
         {
-            var httpResponse = await httpRequest.TrySendAsync(timeout).ConfigureAwait(false);
-
-            if (!httpResponse.Status.IsSuccessful)
-            {
-                if (httpResponse.Status.IsBadRequest && httpResponse.TryGetMessage<ErrorResponse>(out var errorResponse))
-                {
-                    throw new OpenIdException(errorResponse);
-                }
-
-                httpResponse.Status.EnsureSuccess();
-            }
-
+            var httpResponse = await httpRequest.SendAsync(timeout).ConfigureAwait(false);
             return httpResponse.GetMessage<TResult>();
+        }
+
+        private static void HandleOpenIdErrorResponse(IHttpResponse httpResponse)
+        {
+            if (httpResponse.Status.IsBadRequest && httpResponse.TryGetMessage<ErrorResponse>(out var errorResponse))
+            {
+                throw new OpenIdException(errorResponse);
+            }
         }
     }
 }

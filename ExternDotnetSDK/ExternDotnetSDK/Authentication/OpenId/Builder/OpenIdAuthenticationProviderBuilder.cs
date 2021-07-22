@@ -8,7 +8,6 @@ using Kontur.Extern.Client.Authentication.OpenId.Provider.AuthStrategies;
 using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
 using Kontur.Extern.Client.Authentication.OpenId.Time;
 using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.HttpLevel.ClusterClientAdapters;
 using Kontur.Extern.Client.HttpLevel.Options;
 using Kontur.Extern.Client.HttpLevel.Serialization;
 using Vostok.Clusterclient.Core;
@@ -137,9 +136,8 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Builder
                 var apiKey = specifyAuthStrategy.ApiKey;
                 var clientId = specifyAuthStrategy.ClientId;
 
-                var http = new HttpRequestsFactory(requestSendingOptions, clusterClient, serializer, log);
                 var options = new OpenIdAuthenticationOptions(apiKey, clientId, proactiveAuthTokenRefreshInterval);
-                var openIdClient = new OpenIdClient(http, log);
+                var openIdClient = OpenIdClient.Create(requestSendingOptions, clusterClient, serializer, log);
                 return new OpenIdAuthenticationProvider(options, openIdClient, authenticationStrategy, stopwatchFactory);
             }
         }
