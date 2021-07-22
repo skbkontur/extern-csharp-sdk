@@ -83,6 +83,8 @@ namespace Kontur.Extern.Client.Exceptions
                 AuthorityNumberKind.Okud => "OKUD",
                 AuthorityNumberKind.InnKpp => "INN-KPP",
                 AuthorityNumberKind.Inn => "INN",
+                AuthorityNumberKind.Kpp => "Kpp",
+                AuthorityNumberKind.LegalEntityInn => "INN of legal entity",
                 AuthorityNumberKind.PfrRegNumber => "PFR reg number",
                 _ => throw UnexpectedEnumMember(nameof(numberKind), numberKind)
             };

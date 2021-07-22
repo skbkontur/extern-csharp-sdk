@@ -54,6 +54,8 @@ namespace Kontur.Extern.Client.Model.Numbers
 
         public string Value { get; }
         public AuthorityNumberKind Kind { get; }
+        
+        public override string ToString() => Value;
 
         private static RegexBasedParser<SupervisoryAuthorityNumber> CreateNumber(AuthorityNumberKind kind, string format, [RegexPattern] string regexPattern)
         {

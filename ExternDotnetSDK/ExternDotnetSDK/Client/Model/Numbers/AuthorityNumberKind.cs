@@ -10,6 +10,8 @@ namespace Kontur.Extern.Client.Model.Numbers
         Okpo,
         Okud,
         InnKpp,
+        LegalEntityInn,
+        Kpp,
         Inn,
         PfrRegNumber
     }

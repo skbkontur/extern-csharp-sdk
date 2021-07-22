@@ -15,5 +15,7 @@ namespace Kontur.Extern.Client.Model.Numbers
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.PfrRegNumber;
+        
+        public override string ToString() => Value;
     }
 }
