@@ -1,6 +1,5 @@
 using Kontur.Extern.Client.Authentication.OpenId.Client;
 using Kontur.Extern.Client.End2EndTests.TestClusterClient;
-using Kontur.Extern.Client.HttpLevel.ClusterClientAdapters;
 using Kontur.Extern.Client.HttpLevel.Options;
 using Kontur.Extern.Client.HttpLevel.Serialization;
 using Vostok.Logging.Abstractions;
