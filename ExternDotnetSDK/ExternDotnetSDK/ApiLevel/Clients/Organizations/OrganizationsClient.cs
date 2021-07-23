@@ -61,7 +61,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Organizations
             Guid accountId,
             string inn,
             string? kpp,
-            string? name,
+            string name,
             TimeSpan? timeout = null)
         {
             return http.PostAsync<CreateOrganizationRequestDto, Organization>(

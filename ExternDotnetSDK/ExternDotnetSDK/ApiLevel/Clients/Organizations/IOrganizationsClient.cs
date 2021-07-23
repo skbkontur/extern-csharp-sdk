@@ -18,7 +18,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Organizations
         Task<Organization> GetOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null);
         Task<Organization?> TryGetOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null);
         Task<Organization> UpdateOrganizationAsync(Guid accountId, Guid orgId, string newName, TimeSpan? timeout = null);
-        Task<Organization> CreateOrganizationAsync(Guid accountId, string inn, string kpp, string name, TimeSpan? timeout = null);
+        Task<Organization> CreateOrganizationAsync(Guid accountId, string inn, string? kpp, string name, TimeSpan? timeout = null);
         Task DeleteOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null);
     }
 }
