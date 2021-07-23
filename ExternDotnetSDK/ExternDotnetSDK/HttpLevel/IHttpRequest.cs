@@ -25,9 +25,9 @@ namespace Kontur.Extern.Client.HttpLevel
         /// <summary>
         /// Send a request and ensures successful response 
         /// </summary>
-        /// <param name="timeout"></param>
+        /// <param name="timeoutSpecification">A timeout specification: concrete, default timeout or default long operation timeout</param>
         /// <param name="ignoreResponseErrors">a delegate that allows you to avoid throwing an exception in case of a response with errors.</param>
         /// <returns>a successful response or response with errors which allowed by an inner error handler or by <paramref name="ignoreResponseErrors"/>.</returns>
-        Task<IHttpResponse> SendAsync(TimeSpan? timeout = null, Func<IHttpResponse, bool>? ignoreResponseErrors = null);
+        Task<IHttpResponse> SendAsync(TimeoutSpecification timeoutSpecification = default, Func<IHttpResponse, bool>? ignoreResponseErrors = null);
     }
 }

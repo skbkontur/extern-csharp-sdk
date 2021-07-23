@@ -55,10 +55,10 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             return this;
         }
 
-        public async Task<IHttpResponse> SendAsync(TimeSpan? timeout = null, Func<IHttpResponse, bool>? ignoreResponseErrors = null)
+        public async Task<IHttpResponse> SendAsync(TimeoutSpecification timeoutSpecification = default, Func<IHttpResponse, bool>? ignoreResponseErrors = null)
         {
-            timeout ??= request.IsWriteRequest() ? requestTimeouts.DefaultWriteTimeout : requestTimeouts.DefaultReadTimeout;
-            var timeBudget = TimeBudget.StartNew(timeout.Value);
+            var timeout = timeoutSpecification.GetTimeout(request, requestTimeouts);
+            var timeBudget = TimeBudget.StartNew(timeout);
 
             var resultRequest = request;
             if (requestTransformAsync != null)

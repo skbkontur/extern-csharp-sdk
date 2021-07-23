@@ -73,9 +73,9 @@ namespace Kontur.Extern.Client
             return this;
         }
 
-        public ExternFactory WithDefaultRequestTimeouts(TimeSpan defaultReadTimeout, TimeSpan defaultWriteTimeout)
+        public ExternFactory WithDefaultRequestTimeouts(TimeSpan defaultReadTimeout, TimeSpan defaultWriteTimeout, TimeSpan defaultLongOperationTimeout)
         {
-            requestTimeouts = new RequestTimeouts(defaultReadTimeout, defaultWriteTimeout);
+            requestTimeouts = new RequestTimeouts(defaultReadTimeout, defaultWriteTimeout, defaultLongOperationTimeout);
             return this;
         }
 
