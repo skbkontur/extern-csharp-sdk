@@ -6,13 +6,13 @@ namespace Kontur.Extern.Client.HttpLevel.Options
 {
     public class RequestTimeouts
     {
-        private static readonly TimeSpan MinTimeout = 1.Seconds();
-        private static readonly TimeSpan MaxTimeout = 1.Hours();
+        private static readonly TimeSpan MinTimeout = 5.Seconds();
+        private static readonly TimeSpan MaxTimeout = 3.Minutes();
         
         public RequestTimeouts()
         {
-            DefaultReadTimeout = TimeSpan.FromSeconds(5);
-            DefaultWriteTimeout = TimeSpan.FromSeconds(5);
+            DefaultReadTimeout = 40.Seconds();
+            DefaultWriteTimeout = 40.Seconds();
         }
 
         public RequestTimeouts(TimeSpan defaultReadTimeout, TimeSpan defaultWriteTimeout)
