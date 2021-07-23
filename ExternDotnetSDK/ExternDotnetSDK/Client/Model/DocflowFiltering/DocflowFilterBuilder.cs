@@ -135,9 +135,9 @@ namespace Kontur.Extern.Client.Model.DocflowFiltering
         /// <summary>
         /// Контролирующий орган.
         /// </summary>
-        public DocflowFilterBuilder WithSupervisoryAuthority(SupervisoryAuthorityNumber number)
+        public DocflowFilterBuilder WithAuthorityCode(AuthorityCode code)
         {
-            filter.Cu = number.Value;
+            filter.AuthorityCode = code.Value;
             return this;
         }
 

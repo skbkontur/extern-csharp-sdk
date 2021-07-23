@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
 {
     [TestFixture]
-    internal class SupervisoryAuthorityNumber_Tests
+    internal class AuthorityCode_Tests
     {
         [TestFixture]
         internal class Pfr
@@ -15,7 +15,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
             [TestCaseSource(nameof(InvalidStrings))]
             public void Should_fail_when_the_given_number_string_is_invalid(string value)
             {
-                Action action = () => SupervisoryAuthorityNumber.Pfr.Parse(value);
+                Action action = () => AuthorityCode.Pfr.Parse(value);
 
                 action.Should().Throw<ArgumentException>();
             }
@@ -23,9 +23,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
             [TestCaseSource(nameof(ValidStrings))]
             public void Should_successfully_return_a_number_when_the_given_value_is_valid(string value)
             {
-                var parsedValue = SupervisoryAuthorityNumber.Pfr.Parse(value);
+                var parsedValue = AuthorityCode.Pfr.Parse(value);
 
-                parsedValue.Kind.Should().Be(AuthorityNumberKind.SupervisoryAuthorityPfr);
+                parsedValue.Kind.Should().Be(AuthorityNumberKind.PfrAuthorityCode);
                 parsedValue.Value.Should().Be(value);
             }
 
@@ -59,7 +59,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
             [TestCaseSource(nameof(InvalidStrings))]
             public void Should_fail_when_the_given_number_string_is_invalid(string value)
             {
-                Action action = () => SupervisoryAuthorityNumber.Fns.Parse(value);
+                Action action = () => AuthorityCode.Fns.Parse(value);
 
                 action.Should().Throw<ArgumentException>();
             }
@@ -67,9 +67,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
             [TestCaseSource(nameof(ValidStrings))]
             public void Should_successfully_return_a_number_when_the_given_value_is_valid(string value)
             {
-                var parsedValue = SupervisoryAuthorityNumber.Fns.Parse(value);
+                var parsedValue = AuthorityCode.Fns.Parse(value);
 
-                parsedValue.Kind.Should().Be(AuthorityNumberKind.SupervisoryAuthorityFns);
+                parsedValue.Kind.Should().Be(AuthorityNumberKind.FnsAuthorityCode);
                 parsedValue.Value.Should().Be(value);
             }
 
@@ -103,7 +103,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
             [TestCaseSource(nameof(InvalidStrings))]
             public void Should_fail_when_the_given_number_string_is_invalid(string value)
             {
-                Action action = () => SupervisoryAuthorityNumber.Fss.Parse(value);
+                Action action = () => AuthorityCode.Fss.Parse(value);
 
                 action.Should().Throw<ArgumentException>();
             }
@@ -111,9 +111,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
             [TestCaseSource(nameof(ValidStrings))]
             public void Should_successfully_return_a_number_when_the_given_value_is_valid(string value)
             {
-                var parsedValue = SupervisoryAuthorityNumber.Fss.Parse(value);
+                var parsedValue = AuthorityCode.Fss.Parse(value);
 
-                parsedValue.Kind.Should().Be(AuthorityNumberKind.SupervisoryAuthorityFss);
+                parsedValue.Kind.Should().Be(AuthorityNumberKind.FssAuthorityCode);
                 parsedValue.Value.Should().Be(value);
             }
 
@@ -147,7 +147,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
             [TestCaseSource(nameof(InvalidStrings))]
             public void Should_fail_when_the_given_number_string_is_invalid(string value)
             {
-                Action action = () => SupervisoryAuthorityNumber.Rosstat.Parse(value);
+                Action action = () => AuthorityCode.Rosstat.Parse(value);
 
                 action.Should().Throw<ArgumentException>();
             }
@@ -155,9 +155,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
             [TestCaseSource(nameof(ValidStrings))]
             public void Should_successfully_return_a_number_when_the_given_value_is_valid(string value)
             {
-                var parsedValue = SupervisoryAuthorityNumber.Rosstat.Parse(value);
+                var parsedValue = AuthorityCode.Rosstat.Parse(value);
 
-                parsedValue.Kind.Should().Be(AuthorityNumberKind.SupervisoryAuthorityRosstat);
+                parsedValue.Kind.Should().Be(AuthorityNumberKind.RosstatAuthorityCode);
                 parsedValue.Value.Should().Be(value);
             }
 

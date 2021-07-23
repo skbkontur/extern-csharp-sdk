@@ -2,10 +2,10 @@ namespace Kontur.Extern.Client.Model.Numbers
 {
     public enum AuthorityNumberKind
     {
-        SupervisoryAuthorityFns,
-        SupervisoryAuthorityPfr,
-        SupervisoryAuthorityFss,
-        SupervisoryAuthorityRosstat,
+        FnsAuthorityCode,
+        PfrAuthorityCode,
+        FssAuthorityCode,
+        RosstatAuthorityCode,
         Knd,
         Okpo,
         Okud,

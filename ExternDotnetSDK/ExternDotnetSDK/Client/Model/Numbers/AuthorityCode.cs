@@ -8,13 +8,13 @@ namespace Kontur.Extern.Client.Model.Numbers
     /// Контролирующий орган. Формат данных: ФНС — ХХХХ, ПФР — ХХХ-ХХХ, ФСС — ХХХХХ, Росстат — ХХ-ХХ, где Х — это цифра от 0 до 9
     /// </summary>
     [PublicAPI]
-    public record SupervisoryAuthorityNumber
+    public record AuthorityCode
     {
         /// <summary>
         /// Контролирующий орган ФНС. Формат данных: ХХХХ, где Х — это цифра от 0 до 9
         /// </summary>
-        public static readonly RegexBasedParser<SupervisoryAuthorityNumber> Fns = CreateNumber(
-            AuthorityNumberKind.SupervisoryAuthorityFns,
+        public static readonly RegexBasedParser<AuthorityCode> Fns = CreateNumber(
+            AuthorityNumberKind.FnsAuthorityCode,
             "ХХХХ",
             @"^\d{4}$" 
         );
@@ -22,8 +22,8 @@ namespace Kontur.Extern.Client.Model.Numbers
         /// <summary>
         /// Контролирующий орган ПФР. Формат данных: ХХХ-ХХХ, где Х — это цифра от 0 до 9
         /// </summary>
-        public static readonly RegexBasedParser<SupervisoryAuthorityNumber> Pfr = CreateNumber(
-            AuthorityNumberKind.SupervisoryAuthorityPfr,
+        public static readonly RegexBasedParser<AuthorityCode> Pfr = CreateNumber(
+            AuthorityNumberKind.PfrAuthorityCode,
             "ХХХ-ХХХ",
             @"^\d{3}-\d{3}$"
         );
@@ -31,8 +31,8 @@ namespace Kontur.Extern.Client.Model.Numbers
         /// <summary>
         /// Контролирующий орган ФСС. Формат данных: ХХХХХ, где Х — это цифра от 0 до 9
         /// </summary>
-        public static readonly RegexBasedParser<SupervisoryAuthorityNumber> Fss = CreateNumber(
-            AuthorityNumberKind.SupervisoryAuthorityFss,
+        public static readonly RegexBasedParser<AuthorityCode> Fss = CreateNumber(
+            AuthorityNumberKind.FssAuthorityCode,
             "ХХХХХ",
             @"^\d{5}$"
         );
@@ -40,13 +40,13 @@ namespace Kontur.Extern.Client.Model.Numbers
         /// <summary>
         /// Контролирующий орган Росстат. Формат данных: ХХ-ХХ, где Х — это цифра от 0 до 9
         /// </summary>
-        public static readonly RegexBasedParser<SupervisoryAuthorityNumber> Rosstat = CreateNumber(
-            AuthorityNumberKind.SupervisoryAuthorityRosstat,
+        public static readonly RegexBasedParser<AuthorityCode> Rosstat = CreateNumber(
+            AuthorityNumberKind.RosstatAuthorityCode,
             "ХХ-ХХ",
             @"^\d{2}-\d{2}$"
         );
 
-        private SupervisoryAuthorityNumber(string value, AuthorityNumberKind kind)
+        private AuthorityCode(string value, AuthorityNumberKind kind)
         {
             Value = value;
             Kind = kind;
@@ -57,11 +57,11 @@ namespace Kontur.Extern.Client.Model.Numbers
         
         public override string ToString() => Value;
 
-        private static RegexBasedParser<SupervisoryAuthorityNumber> CreateNumber(AuthorityNumberKind kind, string format, [RegexPattern] string regexPattern)
+        private static RegexBasedParser<AuthorityCode> CreateNumber(AuthorityNumberKind kind, string format, [RegexPattern] string regexPattern)
         {
             return new(
                 new Regex(regexPattern, RegexOptions.Compiled),
-                v => new SupervisoryAuthorityNumber(v, kind),
+                v => new AuthorityCode(v, kind),
                 (param, value) => Errors.InvalidAuthorityNumber(param, value, kind, format) 
             );
         }
