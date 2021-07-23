@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Exceptions;
+using Vostok.Commons.Time;
 
 namespace Kontur.Extern.Client.Primitives
 {
@@ -35,13 +36,14 @@ namespace Kontur.Extern.Client.Primitives
                 this.getSliceAsync = getSliceAsync;
             }
 
-            public async Task<IReadOnlyList<T>> LoadAllAsync()
+            public async Task<IReadOnlyList<T>> LoadAllAsync(TimeSpan? timeout = null)
             {
+                var timeBudget = timeout == null ? null : TimeBudget.StartNew(timeout.Value);
                 var data = new List<T>();
                 var pageIndex = 0L;
                 while (true)
                 {
-                    var page = await LoadPageAsync(pageIndex).ConfigureAwait(false);
+                    var page = await LoadPageAsync(pageIndex, timeBudget?.Remaining).ConfigureAwait(false);
                     if (!page.IsEmpty)
                     {
                         pageIndex++;
@@ -55,9 +57,9 @@ namespace Kontur.Extern.Client.Primitives
                 return data;
             }
 
-            public async Task<Page<T>> LoadPageAsync(long pageIndex)
+            public async Task<Page<T>> LoadPageAsync(long pageIndex, TimeSpan? timeout = null)
             {
-                var (items, totalItems) = await getSliceAsync(pageIndex*pageSize, pageSize).ConfigureAwait(false);
+                var (items, totalItems) = await getSliceAsync(pageIndex*pageSize, pageSize, timeout).ConfigureAwait(false);
                 return new Page<T>(items, pageSize, pageIndex, totalItems);
             }
         }
@@ -82,13 +84,14 @@ namespace Kontur.Extern.Client.Primitives
             public IEntityListSliceLoading<T> Skip(long skip) => 
                 new Slicing(sliceSize, skip, getSliceAsync);
 
-            public async Task<IReadOnlyList<T>> LoadAllAsync()
+            public async Task<IReadOnlyList<T>> LoadAllAsync(TimeSpan? timeout = null)
             {
+                var timeBudget = timeout == null ? null : TimeBudget.StartNew(timeout.Value);
                 var data = new List<T>();
                 var skip = 0L;
                 while (true)
                 {
-                    var (items, hasNextSlice) = await LoadSliceAsync(skip, sliceSize).ConfigureAwait(false);
+                    var (items, hasNextSlice) = await LoadSliceAsync(skip, sliceSize, timeBudget?.Remaining).ConfigureAwait(false);
                     if (items.Count > 0)
                     {
                         skip += sliceSize;
@@ -102,11 +105,11 @@ namespace Kontur.Extern.Client.Primitives
                 return data;
             }
 
-            public Task<(IReadOnlyList<T> Items, bool HasNextSlice)> LoadSliceAsync() => LoadSliceAsync(skipItems, sliceSize);
+            public Task<(IReadOnlyList<T> Items, bool HasNextSlice)> LoadSliceAsync(TimeSpan? timeout = null) => LoadSliceAsync(skipItems, sliceSize, timeout);
 
-            private async Task<(IReadOnlyList<T> Items, bool HasNextSlice)> LoadSliceAsync(long skip, long take)
+            private async Task<(IReadOnlyList<T> Items, bool HasNextSlice)> LoadSliceAsync(long skip, long take, TimeSpan? timeout = null)
             {
-                var (items, totalItems) = await getSliceAsync(skip, take).ConfigureAwait(false);
+                var (items, totalItems) = await getSliceAsync(skip, take, timeout).ConfigureAwait(false);
                 return (items, items.Count > 0 && totalItems > take + skip);
             }
         }

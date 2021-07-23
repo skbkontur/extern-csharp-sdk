@@ -21,7 +21,7 @@ namespace Kontur.Extern.Client
             return apiClient.Docflows.GetDocumentAsync(path.AccountId, path.DocflowId, path.DocumentId, timeout);
         }
         
-        public static IEntityList<DocflowPageItem> RelatedDocflowsList(this in DocumentPath path, DocflowFilterBuilder? filterBuilder = null, TimeSpan? timeout = null)
+        public static IEntityList<DocflowPageItem> RelatedDocflowsList(this in DocumentPath path, DocflowFilterBuilder? filterBuilder = null)
         {
             return DocflowListsHelper.DocflowsList(
                 path.Services.Api,
@@ -29,8 +29,7 @@ namespace Kontur.Extern.Client
                 path.DocflowId,
                 path.DocumentId,
                 filterBuilder,
-                (apiClient, accountId, relatedDocflowId, relatedDocumentId, filter, tm) => apiClient.Docflows.GetRelatedDocflows(accountId, relatedDocflowId, relatedDocumentId, filter, tm),
-                timeout
+                (apiClient, accountId, relatedDocflowId, relatedDocumentId, filter, tm) => apiClient.Docflows.GetRelatedDocflows(accountId, relatedDocflowId, relatedDocumentId, filter, tm)
             );
         }
 

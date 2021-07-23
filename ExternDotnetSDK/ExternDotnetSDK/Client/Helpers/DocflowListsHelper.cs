@@ -16,12 +16,11 @@ namespace Kontur.Extern.Client.Helpers
             Guid docflowId,
             Guid documentId,
             DocflowFilterBuilder? filterBuilder,
-            LoadPage loadPage,
-            TimeSpan? timeout)
+            LoadPage loadPage)
         {
             var docflowFilter = filterBuilder?.CreateFilter() ?? new DocflowFilter();
             return new EntityList<DocflowPageItem>(
-                async (skip, take) =>
+                async (skip, take, timeout) =>
                 {
                     checked
                     {

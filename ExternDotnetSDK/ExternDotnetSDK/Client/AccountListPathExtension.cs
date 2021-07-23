@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Accounts;
@@ -20,11 +19,11 @@ namespace Kontur.Extern.Client
             return apiClient.Accounts.CreateAccountAsync(inn.ToString(), kpp.ToString(), organizationName);
         }
 
-        public static IEntityList<Account> List(this in AccountListPath path, TimeSpan? timeout = null)
+        public static IEntityList<Account> List(this in AccountListPath path)
         {
             var apiClient = path.Services.Api;
             return new EntityList<Account>(
-                async (skip, take) =>
+                async (skip, take, timeout) =>
                 {
                     int intSkip;
                     int intTake;

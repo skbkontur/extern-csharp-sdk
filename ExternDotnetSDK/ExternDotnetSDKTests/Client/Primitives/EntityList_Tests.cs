@@ -268,7 +268,7 @@ namespace Kontur.Extern.Client.Tests.Client.Primitives
             public EntityListCase()
             {
                 data = new int[0];
-                EntityList = new EntityList<int>((skip, take) =>
+                EntityList = new EntityList<int>((skip, take, _) =>
                 {
                     loadCount++;
                     var slice = data.Skip((int) skip).Take((int) take).ToArray();

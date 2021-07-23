@@ -1,5 +1,4 @@
 #nullable enable
-using System;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.Helpers;
@@ -12,7 +11,7 @@ namespace Kontur.Extern.Client
     [PublicAPI]
     public static class InventoryDocflowListPathExtension
     {
-        public static IEntityList<DocflowPageItem> List(this in InventoryDocflowListPath path, DocflowFilterBuilder? filterBuilder = null, TimeSpan? timeout = null)
+        public static IEntityList<DocflowPageItem> List(this in InventoryDocflowListPath path, DocflowFilterBuilder? filterBuilder = null)
         {
             return DocflowListsHelper.DocflowsList(
                 path.Services.Api,
@@ -20,8 +19,7 @@ namespace Kontur.Extern.Client
                 path.DocflowId,
                 path.DocumentId,
                 filterBuilder,
-                (apiClient, accountId, relatedDocflowId, relatedDocumentId, filter, tm) => apiClient.Docflows.GetInventoryDocflowsAsync(accountId, relatedDocflowId, relatedDocumentId, filter, tm),
-                timeout
+                (apiClient, accountId, relatedDocflowId, relatedDocumentId, filter, tm) => apiClient.Docflows.GetInventoryDocflowsAsync(accountId, relatedDocflowId, relatedDocumentId, filter, tm)
             );
         }
     }
