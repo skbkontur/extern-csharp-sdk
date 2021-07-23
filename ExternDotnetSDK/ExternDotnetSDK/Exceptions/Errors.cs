@@ -102,5 +102,8 @@ namespace Kontur.Extern.Client.Exceptions
         public static Exception UnsuccessfulApiResponse(Error errorResponse) =>
             new ApiException($"[id: \"{errorResponse.Id}\", status: {errorResponse.StatusCode}, track-id: \"{errorResponse.TrackId}\"]{NewLine}" +
                              errorResponse.Message);
+
+        public static Exception UrlShouldBeAbsolute([InvokerParameterName] string paramName, Uri uri) => 
+            new ArgumentException($"The value '{uri}' is not be absolute url", paramName);
     }
 }

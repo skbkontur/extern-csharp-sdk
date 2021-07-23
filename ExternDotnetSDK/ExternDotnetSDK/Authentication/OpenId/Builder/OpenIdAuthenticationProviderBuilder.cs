@@ -33,6 +33,8 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Builder
         {
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
+            if (!url.IsAbsoluteUri)
+                throw Errors.UrlShouldBeAbsolute(nameof(url), url);
 
             var clusterClient = new ClusterClient(
                 Log,
