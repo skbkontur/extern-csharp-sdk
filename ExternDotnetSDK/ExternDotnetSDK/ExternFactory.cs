@@ -49,7 +49,7 @@ namespace Kontur.Extern.Client
         private IPollingStrategy? pollingStrategy;
         private readonly ILog log;
         private readonly IClusterClient clusterClient;
-        private RequestSendingOptions? requestSendingOptions;
+        private RequestTimeouts? requestTimeouts;
         // NOTE: nullable because here could be implementations of another auth providers 
         private OpenIdSetup? openIdAuthProviderSetup;
 
@@ -73,7 +73,7 @@ namespace Kontur.Extern.Client
 
         public ExternFactory WithDefaultRequestTimeouts(TimeSpan defaultReadTimeout, TimeSpan defaultWriteTimeout)
         {
-            requestSendingOptions = new RequestSendingOptions(defaultReadTimeout, defaultWriteTimeout);
+            requestTimeouts = new RequestTimeouts(defaultReadTimeout, defaultWriteTimeout);
             return this;
         }
 
@@ -87,13 +87,13 @@ namespace Kontur.Extern.Client
         {
             pollingStrategy ??= DefaultDelayPollingStrategy;
             cryptoProvider ??= DefaultCryptoProvider;
-            requestSendingOptions ??= new RequestSendingOptions();
+            requestTimeouts ??= new RequestTimeouts();
             
             var jsonSerializer = new JsonSerializer();
             var authProvider = CreateAuthProvider(jsonSerializer);
 
             var http = new HttpRequestsFactory(
-                requestSendingOptions,
+                requestTimeouts,
                 authProvider.AuthenticateRequestAsync,
                 HandleApiErrors,
                 clusterClient,

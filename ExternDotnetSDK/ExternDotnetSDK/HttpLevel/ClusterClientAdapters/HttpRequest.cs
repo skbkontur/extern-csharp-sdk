@@ -15,7 +15,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
     internal class HttpRequest : IPayloadHttpRequest
     {
         private Request request;
-        private readonly RequestSendingOptions options;
+        private readonly RequestTimeouts requestTimeouts;
         private readonly Func<Request, TimeSpan, Task<Request>>? requestTransformAsync;
         private readonly Func<IHttpResponse, bool>? errorResponseHandler;
         private readonly IClusterClient clusterClient;
@@ -23,14 +23,14 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
 
         public HttpRequest(
             Request request,
-            RequestSendingOptions options,
+            RequestTimeouts requestTimeouts,
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
             Func<IHttpResponse, bool>? errorResponseHandler,
             IClusterClient clusterClient,
             IJsonSerializer serializer)
         {
             this.request = request ?? throw new ArgumentNullException(nameof(request));
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            this.requestTimeouts = requestTimeouts ?? throw new ArgumentNullException(nameof(requestTimeouts));
             this.requestTransformAsync = requestTransformAsync;
             this.errorResponseHandler = errorResponseHandler;
             this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
@@ -57,7 +57,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
 
         public async Task<IHttpResponse> SendAsync(TimeSpan? timeout = null, Func<IHttpResponse, bool>? ignoreResponseErrors = null)
         {
-            timeout ??= request.IsWriteRequest() ? options.DefaultWriteTimeout : options.DefaultReadTimeout;
+            timeout ??= request.IsWriteRequest() ? requestTimeouts.DefaultWriteTimeout : requestTimeouts.DefaultReadTimeout;
             var timeBudget = TimeBudget.StartNew(timeout.Value);
 
             var resultRequest = request;

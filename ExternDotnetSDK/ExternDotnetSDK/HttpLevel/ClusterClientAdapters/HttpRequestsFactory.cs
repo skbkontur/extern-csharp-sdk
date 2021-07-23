@@ -10,20 +10,20 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
 {
     internal class HttpRequestsFactory : IHttpRequestsFactory
     {
-        private readonly RequestSendingOptions options;
+        private readonly RequestTimeouts requestTimeouts;
         private readonly Func<Request, TimeSpan, Task<Request>>? requestTransformAsync;
         private readonly Func<IHttpResponse, bool>? errorResponseHandler;
         private readonly IClusterClient clusterClient;
         private readonly IJsonSerializer serializer;
 
         public HttpRequestsFactory(
-            RequestSendingOptions options, 
+            RequestTimeouts requestTimeouts, 
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
             Func<IHttpResponse, bool>? errorResponseHandler,
             IClusterClient clusterClient,
             IJsonSerializer serializer)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            this.requestTimeouts = requestTimeouts ?? throw new ArgumentNullException(nameof(requestTimeouts));
             this.requestTransformAsync = requestTransformAsync;
             this.errorResponseHandler = errorResponseHandler;
             this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
@@ -38,6 +38,6 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
 
         public IHttpRequest Delete(Uri url) => CreateHttpRequest(Request.Delete(url));
 
-        private HttpRequest CreateHttpRequest(Request request) => new(request, options, requestTransformAsync, errorResponseHandler, clusterClient, serializer);
+        private HttpRequest CreateHttpRequest(Request request) => new(request, requestTimeouts, requestTransformAsync, errorResponseHandler, clusterClient, serializer);
     }
 }

@@ -19,9 +19,9 @@ namespace Kontur.Extern.Client.Authentication.OpenId.Client
 {
     public class OpenIdClient : IOpenIdClient
     {
-        public static OpenIdClient Create(RequestSendingOptions requestSendingOptions, IClusterClient clusterClient, IJsonSerializer serializer, ILog log)
+        public static OpenIdClient Create(RequestTimeouts requestTimeouts, IClusterClient clusterClient, IJsonSerializer serializer, ILog log)
         {
-            var http = new HttpRequestsFactory(requestSendingOptions, null, HandleOpenIdErrorResponse, clusterClient, serializer);
+            var http = new HttpRequestsFactory(requestTimeouts, null, HandleOpenIdErrorResponse, clusterClient, serializer);
             return new OpenIdClient(http, log);
         }
 

@@ -4,18 +4,18 @@ using Vostok.Commons.Time;
 
 namespace Kontur.Extern.Client.HttpLevel.Options
 {
-    public class RequestSendingOptions
+    public class RequestTimeouts
     {
         private static readonly TimeSpan MinTimeout = 1.Seconds();
         private static readonly TimeSpan MaxTimeout = 1.Hours();
         
-        public RequestSendingOptions()
+        public RequestTimeouts()
         {
             DefaultReadTimeout = TimeSpan.FromSeconds(5);
             DefaultWriteTimeout = TimeSpan.FromSeconds(5);
         }
 
-        public RequestSendingOptions(TimeSpan defaultReadTimeout, TimeSpan defaultWriteTimeout)
+        public RequestTimeouts(TimeSpan defaultReadTimeout, TimeSpan defaultWriteTimeout)
         {
             if (defaultReadTimeout < MinTimeout || defaultReadTimeout > MaxTimeout)
                 throw Errors.TimeSpanOutOfRange(nameof(defaultReadTimeout), defaultReadTimeout, MinTimeout, MaxTimeout);

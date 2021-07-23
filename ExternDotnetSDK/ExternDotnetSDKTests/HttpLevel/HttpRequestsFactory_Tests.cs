@@ -252,7 +252,7 @@ namespace Kontur.Extern.Client.Tests.HttpLevel
                 Func<IHttpResponse, bool>? errorResponseHandler = null)
             {
                 return new(
-                    new RequestSendingOptions(),
+                    new RequestTimeouts(),
                     requestTransformAsync,
                     errorResponseHandler,
                     ClusterClient,
