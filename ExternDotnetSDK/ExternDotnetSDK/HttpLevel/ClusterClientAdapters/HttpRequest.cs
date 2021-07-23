@@ -8,7 +8,6 @@ using Kontur.Extern.Client.HttpLevel.Serialization;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Commons.Time;
-using Vostok.Logging.Abstractions;
 using Request = Vostok.Clusterclient.Core.Model.Request;
 
 namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
@@ -21,7 +20,6 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
         private readonly Func<IHttpResponse, bool>? errorResponseHandler;
         private readonly IClusterClient clusterClient;
         private readonly IJsonSerializer serializer;
-        private readonly ILog log;
 
         public HttpRequest(
             Request request,
@@ -29,8 +27,7 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
             Func<IHttpResponse, bool>? errorResponseHandler,
             IClusterClient clusterClient,
-            IJsonSerializer serializer,
-            ILog log)
+            IJsonSerializer serializer)
         {
             this.request = request ?? throw new ArgumentNullException(nameof(request));
             this.options = options ?? throw new ArgumentNullException(nameof(options));
@@ -38,7 +35,6 @@ namespace Kontur.Extern.Client.HttpLevel.ClusterClientAdapters
             this.errorResponseHandler = errorResponseHandler;
             this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
-            this.log = log ?? throw new ArgumentNullException(nameof(log));
         }
 
         public IHttpRequest WithPayload(IHttpContent content)

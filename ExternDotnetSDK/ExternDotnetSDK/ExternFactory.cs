@@ -97,8 +97,7 @@ namespace Kontur.Extern.Client
                 authProvider.AuthenticateRequestAsync,
                 HandleApiErrors,
                 clusterClient,
-                jsonSerializer,
-                log
+                jsonSerializer
             );
             var api = new KeApiClient(http, cryptoProvider);
             var services = new ExternClientServices(http, api, pollingStrategy);
