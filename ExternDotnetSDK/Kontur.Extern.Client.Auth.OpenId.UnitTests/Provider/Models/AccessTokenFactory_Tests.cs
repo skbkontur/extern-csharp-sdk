@@ -1,10 +1,9 @@
-#nullable enable
 using System;
 using FluentAssertions;
 using Kontur.Extern.Client.Auth.OpenId.Client.Models.Responses;
 using Kontur.Extern.Client.Auth.OpenId.Exceptions;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
-using Kontur.Extern.Client.Auth.OpenId.Time;
+using Kontur.Extern.Client.Common.Time;
 using NSubstitute;
 using Vostok.Commons.Time;
 using Xunit;

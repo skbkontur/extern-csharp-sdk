@@ -1,11 +1,11 @@
 using System;
 using FluentAssertions;
 using FluentAssertions.Extensions;
-using Kontur.Extern.Client.Auth.OpenId.Time;
+using Kontur.Extern.Client.Common.Time;
 using NSubstitute;
 using Xunit;
 
-namespace Kontur.Extern.Client.Auth.OpenId.UnitTests.Time
+namespace Kontur.Extern.Client.Common.UnitTests.Time
 {
     public static class TimeToLive_Tests
     {

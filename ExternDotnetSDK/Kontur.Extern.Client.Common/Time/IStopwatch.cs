@@ -1,4 +1,4 @@
-namespace Kontur.Extern.Client.Auth.OpenId.Time
+namespace Kontur.Extern.Client.Common.Time
 {
     public interface IStopwatch
     {

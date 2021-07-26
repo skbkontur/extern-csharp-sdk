@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Client.Crypto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Client.Auth.OpenId.UnitTests", "Kontur.Extern.Client.Auth.OpenId.UnitTests\Kontur.Extern.Client.Auth.OpenId.UnitTests.csproj", "{658DE758-F775-411B-886A-A072861645FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Client.Common", "Kontur.Extern.Client.Common\Kontur.Extern.Client.Common.csproj", "{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Client.Common.UnitTests", "Kontur.Extern.Client.Common.UnitTests\Kontur.Extern.Client.Common.UnitTests.csproj", "{2729C3A1-965A-47EB-BEDB-9BAE34B45430}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,14 @@ Global
 		{658DE758-F775-411B-886A-A072861645FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{658DE758-F775-411B-886A-A072861645FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{658DE758-F775-411B-886A-A072861645FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2729C3A1-965A-47EB-BEDB-9BAE34B45430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2729C3A1-965A-47EB-BEDB-9BAE34B45430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2729C3A1-965A-47EB-BEDB-9BAE34B45430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2729C3A1-965A-47EB-BEDB-9BAE34B45430}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

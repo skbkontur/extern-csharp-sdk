@@ -1,7 +1,7 @@
 using System;
-using Kontur.Extern.Client.Auth.OpenId.Exceptions;
+using Kontur.Extern.Client.Common.Exceptions;
 
-namespace Kontur.Extern.Client.Auth.OpenId.Time
+namespace Kontur.Extern.Client.Common.Time
 {
     /// <summary>
     /// Represents a positive time interval

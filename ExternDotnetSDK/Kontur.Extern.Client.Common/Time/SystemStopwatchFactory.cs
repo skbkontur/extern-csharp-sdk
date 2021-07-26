@@ -1,8 +1,8 @@
 using System.Diagnostics;
 
-namespace Kontur.Extern.Client.Auth.OpenId.Time
+namespace Kontur.Extern.Client.Common.Time
 {
-    internal class SystemStopwatchFactory : IStopwatchFactory
+    public class SystemStopwatchFactory : IStopwatchFactory
     {
         public IStopwatch Start() => new SystemStopwatch(Stopwatch.StartNew());
     }

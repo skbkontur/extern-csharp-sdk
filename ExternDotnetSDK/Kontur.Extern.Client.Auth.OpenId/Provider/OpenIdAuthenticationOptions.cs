@@ -1,12 +1,12 @@
 using System;
 using Kontur.Extern.Client.Auth.OpenId.Exceptions;
-using Kontur.Extern.Client.Auth.OpenId.Time;
+using Kontur.Extern.Client.Common.Time;
 
 namespace Kontur.Extern.Client.Auth.OpenId.Provider
 {
     internal class OpenIdAuthenticationOptions
     {
-        public readonly static TimeInterval DefaultInterval = TimeSpan.FromSeconds(5);
+        public static readonly TimeInterval DefaultInterval = TimeSpan.FromSeconds(5);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenIdAuthenticationOptions" /> class with the specified parameters.

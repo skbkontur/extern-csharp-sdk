@@ -1,11 +1,11 @@
 using System;
 using FluentAssertions;
-using Kontur.Extern.Client.Auth.OpenId.Time;
-using Kontur.Extern.Client.Auth.OpenId.UnitTests.TestAssertions;
-using Vostok.Commons.Time;
+using FluentAssertions.Extensions;
+using Kontur.Extern.Client.Common.Time;
+using Kontur.Extern.Client.Common.UnitTests.TestAssertions;
 using Xunit;
 
-namespace Kontur.Extern.Client.Auth.OpenId.UnitTests.Time
+namespace Kontur.Extern.Client.Common.UnitTests.Time
 {
     public static class TimeInterval_Tests
     {

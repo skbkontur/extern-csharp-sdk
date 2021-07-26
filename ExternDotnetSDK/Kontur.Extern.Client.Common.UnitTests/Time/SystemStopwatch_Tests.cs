@@ -2,11 +2,11 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using FluentAssertions;
-using Kontur.Extern.Client.Auth.OpenId.Time;
-using Vostok.Commons.Time;
+using FluentAssertions.Extensions;
+using Kontur.Extern.Client.Common.Time;
 using Xunit;
 
-namespace Kontur.Extern.Client.Auth.OpenId.UnitTests.Time
+namespace Kontur.Extern.Client.Common.UnitTests.Time
 {
     public static class SystemStopwatch_Tests
     {

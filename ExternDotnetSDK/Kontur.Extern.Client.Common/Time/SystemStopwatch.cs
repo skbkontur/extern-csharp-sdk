@@ -1,9 +1,9 @@
 using System.Diagnostics;
-using Kontur.Extern.Client.Auth.OpenId.Exceptions;
+using Kontur.Extern.Client.Common.Exceptions;
 
-namespace Kontur.Extern.Client.Auth.OpenId.Time
+namespace Kontur.Extern.Client.Common.Time
 {
-    internal class SystemStopwatch : IStopwatch
+    public class SystemStopwatch : IStopwatch
     {
         private readonly Stopwatch stopwatch;
 

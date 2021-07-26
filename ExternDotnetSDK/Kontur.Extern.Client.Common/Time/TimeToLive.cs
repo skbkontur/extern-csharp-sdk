@@ -1,9 +1,8 @@
-#nullable enable
-using Kontur.Extern.Client.Auth.OpenId.Exceptions;
+using Kontur.Extern.Client.Common.Exceptions;
 
-namespace Kontur.Extern.Client.Auth.OpenId.Time
+namespace Kontur.Extern.Client.Common.Time
 {
-    internal class TimeToLive : ITimeToLive
+    public class TimeToLive : ITimeToLive
     {
         public static bool TryCreateActive(TimeInterval timeInterval, IStopwatch stopwatch, out TimeToLive timeToLive)
         {

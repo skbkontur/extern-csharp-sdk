@@ -1,6 +1,6 @@
-namespace Kontur.Extern.Client.Auth.OpenId.Time
+namespace Kontur.Extern.Client.Common.Time
 {
-    internal interface ITimeToLive
+    public interface ITimeToLive
     {
         bool HasExpired { get; }
         TimeInterval Remaining { get; }

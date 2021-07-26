@@ -8,7 +8,7 @@ using Kontur.Extern.Client.Auth.OpenId.Exceptions;
 using Kontur.Extern.Client.Auth.OpenId.Provider;
 using Kontur.Extern.Client.Auth.OpenId.Provider.AuthStrategies;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
-using Kontur.Extern.Client.Auth.OpenId.Time;
+using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
 using Vostok.Clusterclient.Core;

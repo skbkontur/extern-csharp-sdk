@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Kontur.Extern.Client.Auth.OpenId.Time;
+using Kontur.Extern.Client.Common.Time;
 using NSubstitute;
 
 namespace Kontur.Extern.Client.Testing.Fakes.Time

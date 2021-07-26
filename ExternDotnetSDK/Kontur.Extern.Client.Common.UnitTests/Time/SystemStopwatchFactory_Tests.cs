@@ -1,8 +1,8 @@
 using FluentAssertions;
-using Kontur.Extern.Client.Auth.OpenId.Time;
+using Kontur.Extern.Client.Common.Time;
 using Xunit;
 
-namespace Kontur.Extern.Client.Auth.OpenId.UnitTests.Time
+namespace Kontur.Extern.Client.Common.UnitTests.Time
 {
     public class SystemStopwatchFactory_Tests
     {
