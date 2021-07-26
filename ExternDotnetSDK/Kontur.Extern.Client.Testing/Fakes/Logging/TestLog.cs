@@ -6,7 +6,7 @@ using Xunit.Abstractions;
 
 namespace Kontur.Extern.Client.Testing.Fakes.Logging
 {
-    internal class TestLog : ILog
+    public class TestLog : ILog
     {
         private readonly ITestOutputHelper output;
 

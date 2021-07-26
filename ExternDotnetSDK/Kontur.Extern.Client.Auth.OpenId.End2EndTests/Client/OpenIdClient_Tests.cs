@@ -4,13 +4,14 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Client.Auth.OpenId.Client;
 using Kontur.Extern.Client.Auth.OpenId.Client.Models.Requests;
+using Kontur.Extern.Client.Auth.OpenId.End2EndTests.TestFactories;
 using Kontur.Extern.Client.Auth.OpenId.Exceptions;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment;
-using Kontur.Extern.Client.End2EndTests.TestLogging;
+using Kontur.Extern.Client.Testing.End2End.Environment;
+using Kontur.Extern.Client.Testing.Fakes.Logging;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Kontur.Extern.Client.End2EndTests.Authentication.OpenId.Client
+namespace Kontur.Extern.Client.Auth.OpenId.End2EndTests.Client
 {
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]

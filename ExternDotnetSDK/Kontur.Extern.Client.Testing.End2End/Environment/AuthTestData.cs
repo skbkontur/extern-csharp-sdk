@@ -5,9 +5,9 @@ using JetBrains.Annotations;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Newtonsoft.Json;
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment
+namespace Kontur.Extern.Client.Testing.End2End.Environment
 {
-    internal class AuthTestData
+    public class AuthTestData
     {
         private const string DefaultOpenIdServer = "https://identity.testkontur.ru";
         

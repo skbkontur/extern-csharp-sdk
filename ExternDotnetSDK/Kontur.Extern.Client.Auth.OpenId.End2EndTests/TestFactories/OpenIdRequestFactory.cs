@@ -1,8 +1,8 @@
 using Kontur.Extern.Client.Auth.OpenId.Client.Models.Requests;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment;
+using Kontur.Extern.Client.Testing.End2End.Environment;
 
-namespace Kontur.Extern.Client.End2EndTests.Authentication.OpenId
+namespace Kontur.Extern.Client.Auth.OpenId.End2EndTests.TestFactories
 {
     internal class OpenIdRequestFactory
     {

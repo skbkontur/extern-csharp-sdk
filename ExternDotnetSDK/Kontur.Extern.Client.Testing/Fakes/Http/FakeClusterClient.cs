@@ -12,7 +12,7 @@ using Vostok.Logging.Abstractions;
 
 namespace Kontur.Extern.Client.Testing.Fakes.Http
 {
-    internal class FakeClusterClient : ClusterClient
+    public class FakeClusterClient : ClusterClient
     {
         private readonly FakeHttpMessages httpMessages;
 

@@ -1,10 +1,10 @@
 using Kontur.Extern.Client.Auth.OpenId.Client;
-using Kontur.Extern.Client.End2EndTests.TestClusterClient;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
+using Kontur.Extern.Client.Testing.End2End.ClusterClient;
 using Vostok.Logging.Abstractions;
 
-namespace Kontur.Extern.Client.End2EndTests.Authentication.OpenId
+namespace Kontur.Extern.Client.Auth.OpenId.End2EndTests.TestFactories
 {
     internal static class OpenIdClientFactory
     {

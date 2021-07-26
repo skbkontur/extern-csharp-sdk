@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.End2EndTests.Client.TestAuthProvider;
-using Kontur.Extern.Client.End2EndTests.TestClusterClient;
-using Kontur.Extern.Client.End2EndTests.TestLogging;
+using Kontur.Extern.Client.Testing.End2End.ClusterClient;
+using Kontur.Extern.Client.Testing.Fakes.Logging;
 using Vostok.Logging.Abstractions;
 using Xunit.Abstractions;
 

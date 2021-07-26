@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="FluentAssertions" Version="5.10.3" />
       <PackageReference Include="NSubstitute" Version="4.2.2" />
       <PackageReference Include="Vostok.Commons.Threading" Version="0.1.1" />
       <PackageReference Include="Vostok.Logging.Formatting" Version="1.0.5" />

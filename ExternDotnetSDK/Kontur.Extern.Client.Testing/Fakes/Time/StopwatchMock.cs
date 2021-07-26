@@ -5,7 +5,7 @@ using NSubstitute;
 
 namespace Kontur.Extern.Client.Testing.Fakes.Time
 {
-    internal class StopwatchMock
+    public class StopwatchMock
     {
         private readonly TimeInterval proactiveAuthTokenRefreshInterval;
         private readonly List<IStopwatch> stopwatches;

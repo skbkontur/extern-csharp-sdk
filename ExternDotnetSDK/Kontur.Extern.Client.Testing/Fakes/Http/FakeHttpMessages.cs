@@ -3,7 +3,7 @@ using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client.Testing.Fakes.Http
 {
-    internal class FakeHttpMessages
+    public class FakeHttpMessages
     {
         public FakeHttpMessages(Response expectedResponse) => ExpectedResponse = expectedResponse;
 

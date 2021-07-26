@@ -1,5 +1,5 @@
-using Kontur.Extern.Client.End2EndTests.TestClusterClient;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment;
+using Kontur.Extern.Client.Testing.End2End.ClusterClient;
+using Kontur.Extern.Client.Testing.End2End.Environment;
 
 namespace Kontur.Extern.Client.End2EndTests.Client.TestAuthProvider
 {

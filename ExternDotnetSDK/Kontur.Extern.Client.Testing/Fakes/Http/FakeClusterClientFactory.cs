@@ -7,7 +7,7 @@ using Vostok.Logging.Abstractions;
 
 namespace Kontur.Extern.Client.Testing.Fakes.Http
 {
-    internal class FakeClusterClientFactory
+    public class FakeClusterClientFactory
     {
         public static FakeClusterClientFactory WithDefaultBaseUrl() => WithBaseUrl("https://test/");
         public static FakeClusterClientFactory WithBaseUrl(string baseUrl) => new(baseUrl);
