@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Accounts;
 using Kontur.Extern.Client.ApiLevel.Models.Certificates;
 using Kontur.Extern.Client.ApiLevel.Models.Warrants;
-using Kontur.Extern.Client.HttpLevel;
+using Kontur.Extern.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Accounts
@@ -35,7 +35,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Accounts
 
         public Task<Account> CreateAccountAsync(
             string inn,
-            string kpp,
+            string? kpp,
             string organizationName,
             TimeSpan? timeout = null)
         {

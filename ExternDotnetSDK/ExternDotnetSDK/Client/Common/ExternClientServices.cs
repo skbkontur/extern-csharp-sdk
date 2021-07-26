@@ -1,5 +1,5 @@
 using Kontur.Extern.Client.ApiLevel;
-using Kontur.Extern.Client.HttpLevel;
+using Kontur.Extern.Client.Http;
 using Kontur.Extern.Client.Primitives.Polling;
 
 namespace Kontur.Extern.Client.Common

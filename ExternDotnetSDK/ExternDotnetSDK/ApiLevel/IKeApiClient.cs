@@ -5,7 +5,7 @@ using Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders;
 using Kontur.Extern.Client.ApiLevel.Clients.Events;
 using Kontur.Extern.Client.ApiLevel.Clients.Organizations;
 using Kontur.Extern.Client.ApiLevel.Clients.Replies;
-using Kontur.Extern.Client.HttpLevel;
+using Kontur.Extern.Client.Http;
 
 namespace Kontur.Extern.Client.ApiLevel
 {

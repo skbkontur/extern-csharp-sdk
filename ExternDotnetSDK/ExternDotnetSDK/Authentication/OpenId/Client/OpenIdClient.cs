@@ -6,12 +6,12 @@ using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests;
 using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Responses;
 using Kontur.Extern.Client.Authentication.OpenId.Exceptions;
 using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
-using Kontur.Extern.Client.HttpLevel;
-using Kontur.Extern.Client.HttpLevel.ClusterClientAdapters;
-using Kontur.Extern.Client.HttpLevel.Constants;
-using Kontur.Extern.Client.HttpLevel.Contents;
-using Kontur.Extern.Client.HttpLevel.Options;
-using Kontur.Extern.Client.HttpLevel.Serialization;
+using Kontur.Extern.Client.Http;
+using Kontur.Extern.Client.Http.ClusterClientAdapters;
+using Kontur.Extern.Client.Http.Constants;
+using Kontur.Extern.Client.Http.Contents;
+using Kontur.Extern.Client.Http.Options;
+using Kontur.Extern.Client.Http.Serialization;
 using Vostok.Clusterclient.Core;
 using Vostok.Logging.Abstractions;
 

@@ -1,6 +1,6 @@
 ﻿using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests;
-using Kontur.Extern.Client.HttpLevel.Contents;
-using Kontur.Extern.Client.HttpLevel.Models;
+using Kontur.Extern.Client.Http.Contents;
+using Kontur.Extern.Client.Http.Models;
 
 namespace Kontur.Extern.Client.Authentication.OpenId.Client.Models
 {

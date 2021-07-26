@@ -10,7 +10,6 @@
     <Copyright></Copyright>
     <PackageReleaseNotes>Work in progress. Not properly tested.</PackageReleaseNotes>
     <PackageTags>kontur, skbkontur, extern, kontur-extern, SDK, API, workInProgress, technicallyTheyFiredMeAfterIMadeThis</PackageTags>
-    <RepositoryUrl>https://github.com/trurl123/extern-dotnet-sdk</RepositoryUrl>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -26,5 +25,9 @@
     <PackageReference Include="Vostok.ClusterClient.Core" Version="0.1.30" />
     <PackageReference Include="Vostok.ClusterClient.Transport" Version="0.1.17" />
     <PackageReference Include="Vostok.Commons.Time" Version="0.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kontur.Extern.Client.Http\Kontur.Extern.Client.Http.csproj" />
   </ItemGroup>  
 </Project>

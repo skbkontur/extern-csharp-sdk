@@ -8,7 +8,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Prepare;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
-using Kontur.Extern.Client.HttpLevel;
+using Kontur.Extern.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts

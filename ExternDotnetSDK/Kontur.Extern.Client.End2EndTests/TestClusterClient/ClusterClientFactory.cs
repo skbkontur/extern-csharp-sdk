@@ -1,4 +1,4 @@
-using Kontur.Extern.Client.HttpLevel;
+using Kontur.Extern.Client.Http;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Transport;
 using Vostok.Logging.Abstractions;

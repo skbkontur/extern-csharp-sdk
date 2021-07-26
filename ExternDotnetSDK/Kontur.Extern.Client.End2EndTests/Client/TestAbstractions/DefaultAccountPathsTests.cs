@@ -17,6 +17,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestAbstractions
         {
             this.output = output;
             Context = new KonturExternTestContext(output);
+            DefaultAccount = null!; // suppress compiler warning -- it will be initialized during InitializeAsync
         }
 
         protected Account DefaultAccount { get; private set; }

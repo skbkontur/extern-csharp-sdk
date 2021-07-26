@@ -5,7 +5,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents;
-using Kontur.Extern.Client.HttpLevel;
+using Kontur.Extern.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders

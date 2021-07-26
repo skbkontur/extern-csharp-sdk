@@ -8,7 +8,7 @@ using Kontur.Extern.Client.Authentication.OpenId.Provider;
 using Kontur.Extern.Client.End2EndTests.TestClusterClient;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Client.End2EndTests.TestLogging;
-using Kontur.Extern.Client.HttpLevel.Serialization;
+using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Testing.Fakes.Time;
 using Vostok.Commons.Time;
 using Vostok.Logging.Abstractions;

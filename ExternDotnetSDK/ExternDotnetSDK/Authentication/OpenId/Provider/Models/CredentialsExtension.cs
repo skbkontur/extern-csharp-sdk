@@ -1,4 +1,4 @@
-using Kontur.Extern.Client.HttpLevel.Models;
+using Kontur.Extern.Client.Http.Models;
 
 namespace Kontur.Extern.Client.Authentication.OpenId.Provider.Models
 {
