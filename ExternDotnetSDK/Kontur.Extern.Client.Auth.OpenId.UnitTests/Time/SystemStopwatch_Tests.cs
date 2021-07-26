@@ -3,18 +3,16 @@ using System.Diagnostics;
 using System.Threading;
 using FluentAssertions;
 using Kontur.Extern.Client.Auth.OpenId.Time;
-using NUnit.Framework;
 using Vostok.Commons.Time;
+using Xunit;
 
-namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
+namespace Kontur.Extern.Client.Auth.OpenId.UnitTests.Time
 {
-    [TestFixture]
-    internal class SystemStopwatch_Tests
+    public static class SystemStopwatch_Tests
     {
-        [TestFixture]
-        internal class Ctor
+        public class Ctor
         {
-            [Test]
+            [Fact]
             public void Should_fail_when_create_with_inactive_stopwatch()
             {
                 Action action = () => _ = new SystemStopwatch(new Stopwatch());
@@ -23,10 +21,9 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
             }
         }
 
-        [TestFixture]
-        internal class HasPassed
+        public class HasPassed
         {
-            [Test]
+            [Fact]
             public void Should_indicate_that_elapsed_time_is_less_than_in_the_given_interval()
             {
                 var systemStopwatch = new SystemStopwatch(Stopwatch.StartNew());
@@ -36,7 +33,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 hasPassed.Should().BeFalse();
             }
             
-            [Test]
+            [Fact]
             public void Should_indicate_that_elapsed_time_is_more_or_equal_than_in_the_given_interval()
             {
                 var systemStopwatch = new SystemStopwatch(Stopwatch.StartNew());
@@ -47,7 +44,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 hasPassed.Should().BeTrue();
             }
 
-            [Test]
+            [Fact]
             public void Should_always_return_true_if_the_given_interval_is_empty()
             {
                 var systemStopwatch = new SystemStopwatch(Stopwatch.StartNew());
@@ -58,7 +55,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 systemStopwatch.HasPassed(TimeSpan.Zero).Should().BeTrue();
             }
 
-            [Test]
+            [Fact]
             public void Should_fail_when_the_given_interval_is_negative()
             {
                 var systemStopwatch = new SystemStopwatch(Stopwatch.StartNew());

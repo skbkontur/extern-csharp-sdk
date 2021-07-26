@@ -9,33 +9,31 @@ using Kontur.Extern.Client.Auth.OpenId.Provider;
 using Kontur.Extern.Client.Auth.OpenId.Provider.AuthStrategies;
 using Kontur.Extern.Client.Testing.Fakes.Time;
 using NSubstitute;
-using NUnit.Framework;
 using Vostok.Commons.Time;
+using Xunit;
 
-namespace Kontur.Extern.Client.Tests.Authentication.OpenId
+namespace Kontur.Extern.Client.Auth.OpenId.UnitTests
 {
-    [TestFixture]
-    internal class OpenIdAuthenticationProvider_Tests
+    public class OpenIdAuthenticationProvider_Tests
     {
-        private OpenIdAuthenticationProvider authenticationProvider;
-        private AuthenticationStrategyMock authStrategyMock;
-        private OpenIdClientMock openIdMock;
-        private StopwatchMock stopwatchMock;
+        private readonly OpenIdAuthenticationProvider authenticationProvider;
+        private readonly AuthenticationStrategyMock authStrategyMock;
+        private readonly OpenIdClientMock openIdMock;
+        private readonly StopwatchMock stopwatchMock;
 
-        [SetUp]
-        public void SetUp()
+        public OpenIdAuthenticationProvider_Tests()
         {
             var proactiveAuthTokenRefreshInterval = 5.Seconds();
             var options = new OpenIdAuthenticationOptions("123", "client_id", proactiveAuthTokenRefreshInterval);
             openIdMock = new OpenIdClientMock();
-            
+
             authStrategyMock = new AuthenticationStrategyMock();
             stopwatchMock = new StopwatchMock(proactiveAuthTokenRefreshInterval);
-            
+
             authenticationProvider = new OpenIdAuthenticationProvider(options, openIdMock.Instance, authStrategyMock.Instance, stopwatchMock.StopwatchFactory);
         }
 
-        [Test]
+        [Fact]
         public async Task Should_authenticate_for_the_first_time()
         {
             await authenticationProvider.AuthenticateAsync();
@@ -43,7 +41,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
             authStrategyMock.ReceivedAuthenticateOnce();
         }
 
-        [Test]
+        [Fact]
         public async Task Should_return_auth_result_with_apply_open_id_to_request()
         {
             var authenticationResult = await authenticationProvider.AuthenticateAsync();
@@ -51,7 +49,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
             authenticationResult.Should().BeOfType<OpenIdAuthenticationResult>();
         }
 
-        [Test]
+        [Fact]
         public void Should_fail_when_the_authentication_token_has_expired()
         {
             authStrategyMock.AuthTokenExpiresInSeconds(10);
@@ -62,7 +60,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
             action.Should().Throw<OpenIdException>();
         }
 
-        [Test]
+        [Fact]
         public async Task Should_just_return_result_when_authorization_has_been_made_and_token_is_still_active()
         {
             authStrategyMock.AuthTokenExpiresInSeconds(40);
@@ -77,7 +75,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
             openIdMock.DidNotReceiveRefreshToken();
         }
         
-        [Test]
+        [Fact]
         public async Task Should_remember_access_token_of_first_time_authentication()
         {
             const string firstTimeAccessToken = "token1";
@@ -90,7 +88,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
             openIdAuthResult.AccessToken.Should().Be(firstTimeAccessToken);
         }
 
-        [Test]
+        [Fact]
         public async Task Should_refresh_token_when_authorization_has_been_made_and_token_is_expired()
         {
             const string firstTimeRefreshToken = "refresh1";
@@ -107,7 +105,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
             openIdMock.ReceiveRefreshTokenOnce(firstTimeRefreshToken);
         }
 
-        [Test]
+        [Fact]
         public async Task Should_remember_refreshed_access_token()
         {
             authStrategyMock.AuthenticateReturnsToken("token1", "refresh1", 40);
@@ -123,7 +121,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
             openIdAuthResult.AccessToken.Should().Be("token2");
         }
 
-        [Test]
+        [Fact]
         public async Task Should_remember_refresh_tokens_and_set_new_TTL_for_the_refreshed_access_token()
         {
             authStrategyMock.AuthenticateReturnsToken("token1", "refresh1", 40);
@@ -145,7 +143,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
             openIdMock.ReceiveRefreshTokens("refresh1", "refresh2");
         }
         
-        [Test]
+        [Fact]
         public async Task Should_fail_when_the_refreshed_token_has_expired()
         {
             authStrategyMock.AuthenticateReturnsToken("token1", "refresh1", 40);
@@ -162,7 +160,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
             action.Should().Throw<OpenIdException>();
         }
 
-        [Test]
+        [Fact]
         public async Task Should_reauthenticate_if_TTL_of_the_current_token_expired()
         {
             authStrategyMock.AuthenticateReturnsToken("token1", "refresh1", 40);
@@ -179,7 +177,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
             openIdAuthResult.AccessToken.Should().Be("token2");
         }
         
-        [Test]
+        [Fact]
         public async Task Should_reauthenticate_when_there_is_no_a_refresh_token_and_the_access_token_will_expire_in_proactive_period()
         {
             authStrategyMock.AuthenticateReturnsToken("token1", null, 40);
@@ -198,7 +196,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
             authStrategyMock.ReceivedAuthenticateOfTimes(3);
         }
 
-        [Test]
+        [Fact]
         public async Task Should_each_successful_authentication_attempt_updates_TTL()
         {
             authStrategyMock.AuthenticateReturnsToken("token1", "refresh1", 40);
@@ -277,7 +275,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId
 
             public void AuthTokenExpiresInSeconds(int expiresInSeconds) => AuthenticateReturnsToken(AuthAccessToken, AuthRefreshToken, expiresInSeconds);
 
-            public void AuthenticateReturnsToken(string accessToken, string refreshToken, int expiresInSeconds)
+            public void AuthenticateReturnsToken(string accessToken, string? refreshToken, int expiresInSeconds)
             {
                 Instance
                     .AuthenticateAsync(Arg.Any<IOpenIdClient>(), Arg.Any<OpenIdAuthenticationOptions>(), Arg.Any<TimeSpan?>())

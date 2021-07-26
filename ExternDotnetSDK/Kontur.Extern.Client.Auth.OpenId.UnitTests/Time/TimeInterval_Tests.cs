@@ -1,19 +1,17 @@
 using System;
 using FluentAssertions;
 using Kontur.Extern.Client.Auth.OpenId.Time;
-using Kontur.Extern.Client.Tests.Assertions;
-using NUnit.Framework;
+using Kontur.Extern.Client.Auth.OpenId.UnitTests.TestAssertions;
 using Vostok.Commons.Time;
+using Xunit;
 
-namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
+namespace Kontur.Extern.Client.Auth.OpenId.UnitTests.Time
 {
-    [TestFixture]
-    internal class TimeInterval_Tests
+    public static class TimeInterval_Tests
     {
-        [TestFixture]
-        internal class Ctor
+        public class Ctor
         {
-            [Test]
+            [Fact]
             public void Should_fail_if_created_with_a_negative_time_span()
             {
                 Action action = () => _ = new TimeInterval((-1).Seconds());
@@ -22,10 +20,9 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
             }
         }
 
-        [TestFixture]
-        internal class Unwrap
+        public class Unwrap
         {
-            [Test]
+            [Fact]
             public void Should_expose_the_given_time_span()
             {
                 var givenTimeSpan = 101.Seconds();
@@ -36,7 +33,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 timeSpan.Should().Be(givenTimeSpan);
             }
 
-            [Test]
+            [Fact]
             public void Should_expose_zero_time_span_for_default_instance()
             {
                 TimeInterval interval = default;
@@ -47,10 +44,9 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
             }
         }
 
-        [TestFixture]
-        internal class Formatting
+        public class Formatting
         {
-            [Test]
+            [Fact]
             public void Should_format_the_wrapped_time_span()
             {
                 var timeSpan = 101.Seconds();
@@ -61,7 +57,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 formattedValue.Should().Be(timeSpan.ToString());
             }
 
-            [Test]
+            [Fact]
             public void Should_format_default_interval_as_zero_interval()
             {
                 TimeInterval defaultInstance = default;
@@ -70,10 +66,9 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
             }
         }
 
-        [TestFixture]
-        internal class EqualityComparison
+        public class EqualityComparison
         {
-            [Test]
+            [Fact]
             public void Should_be_equality_comparable_with_another_time_interval()
             {
                 TimeInterval interval = 101.Seconds();
@@ -84,7 +79,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 interval.Should().NotBeEqualAndHaveDifferentHashCodes(notEqual);
             }
             
-            [Test]
+            [Fact]
             public void Should_be_equality_comparable_with_default_interval()
             {
                 TimeInterval defaultInstance = default;
@@ -96,10 +91,9 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
             }
         }
 
-        [TestFixture]
-        internal class InteroperabilityWithTimeSpans
+        public class InteroperabilityWithTimeSpans
         {
-            [Test]
+            [Fact]
             public void Should_convert_from_time_span_implicitly()
             {
                 var givenTimeSpan = 101.Seconds();
@@ -110,7 +104,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 timeSpan.Should().Be(givenTimeSpan);
             }
 
-            [Test]
+            [Fact]
             public void Should_subtract_a_timespan_from_the_interval()
             {
                 TimeInterval expectedInterval = 100.Seconds();
@@ -121,7 +115,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 resultInterval.Should().Be(expectedInterval);
             }
 
-            [Test]
+            [Fact]
             public void Should_return_empty_interval_when_subtract_a_timespan_greater_than_the_interval()
             {
                 TimeInterval expectedInterval = default;

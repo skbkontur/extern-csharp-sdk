@@ -3,17 +3,15 @@ using FluentAssertions;
 using FluentAssertions.Extensions;
 using Kontur.Extern.Client.Auth.OpenId.Time;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
-namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
+namespace Kontur.Extern.Client.Auth.OpenId.UnitTests.Time
 {
-    [TestFixture]
-    internal class TimeToLive_Tests
+    public static class TimeToLive_Tests
     {
-        [TestFixture]
-        internal class Ctor
+        public class Ctor
         {
-            [Test]
+            [Fact]
             public void Should_fail_when_given_the_empty_interval()
             {
                 Action action = () => _ = new TimeToLive(default, Substitute.For<IStopwatch>());
@@ -22,10 +20,9 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
             }
         }
 
-        [TestFixture]
-        internal class HasPassed
+        public class HasPassed
         {
-            [Test]
+            [Fact]
             public void Should_indicate_that_TTL_has_not_been_passed_yet()
             {
                 var stopwatch = Substitute.For<IStopwatch>();
@@ -34,7 +31,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 timeToLive.HasExpired.Should().BeFalse();
             }
             
-            [Test]
+            [Fact]
             public void Should_indicate_that_TTL_has_been_passed()
             {
                 var stopwatch = Substitute.For<IStopwatch>();
@@ -45,10 +42,9 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
             }
         }
 
-        [TestFixture]
-        internal class WillExpireAfter
+        public class WillExpireAfter
         {
-            [Test]
+            [Fact]
             public void Should_indicate_that_TTL_will_not_pass_after_specified_interval()
             {
                 var stopwatch = Substitute.For<IStopwatch>();
@@ -58,7 +54,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 timeToLive.WillExpireAfter(8.Seconds()).Should().BeFalse();
             }
             
-            [Test]
+            [Fact]
             public void Should_indicate_that_TTL_will_pass_after_specified_interval()
             {
                 var stopwatch = Substitute.For<IStopwatch>();
@@ -68,7 +64,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 timeToLive.WillExpireAfter(9.Seconds()).Should().BeTrue();
             }
             
-            [Test]
+            [Fact]
             public void Should_indicate_that_TTL_will_pass_after_the_given_interval_when_the_time_is_not_elapsed_yet()
             {
                 var stopwatch = Substitute.For<IStopwatch>();
@@ -77,7 +73,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 timeToLive.WillExpireAfter(10.Seconds()).Should().BeTrue();
             }
             
-            [Test]
+            [Fact]
             public void Should_indicate_that_TTL_will_pass_after_the_given_interval_when_elapsed_only_part_of_the_TTL()
             {
                 var stopwatch = Substitute.For<IStopwatch>();
@@ -88,10 +84,9 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
             }
         }
 
-        [TestFixture]
-        internal class TryCreateActive
+        public class TryCreateActive
         {
-            [Test]
+            [Fact]
             public void Should_successfully_create_TTL_when_it_is_not_expired()
             {
                 var stopwatch = Substitute.For<IStopwatch>();
@@ -103,7 +98,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 timeToLive.HasExpired.Should().BeFalse();
             }
 
-            [Test]
+            [Fact]
             public void Should_return_error_when_the_given_interval_has_been_passed_already()
             {
                 var stopwatch = Substitute.For<IStopwatch>();
@@ -116,10 +111,9 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
             }
         }
 
-        [TestFixture]
-        internal class Remaining
+        public class Remaining
         {
-            [Test]
+            [Fact]
             public void Should_return_whole_TTL_time_if_the_time_has_not_advanced_yet()
             {
                 var stopwatch = Substitute.For<IStopwatch>();
@@ -128,7 +122,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 timeToLive.Remaining.Should().Be(new TimeInterval(10.Seconds()));
             }
             
-            [Test]
+            [Fact]
             public void Should_return_remaining_time_of_the_TTL()
             {
                 var stopwatch = Substitute.For<IStopwatch>();
@@ -138,7 +132,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
                 timeToLive.Remaining.Should().Be(new TimeInterval(7.Seconds()));
             }
 
-            [Test]
+            [Fact]
             public void Should_return_zero_if_the_time_advanced_more_then_the_TTL()
             {
                 var stopwatch = Substitute.For<IStopwatch>();

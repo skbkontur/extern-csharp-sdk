@@ -1,13 +1,12 @@
 using FluentAssertions;
 using Kontur.Extern.Client.Auth.OpenId.Time;
-using NUnit.Framework;
+using Xunit;
 
-namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Time
+namespace Kontur.Extern.Client.Auth.OpenId.UnitTests.Time
 {
-    [TestFixture]
-    internal class SystemStopwatchFactory_Tests
+    public class SystemStopwatchFactory_Tests
     {
-        [Test]
+        [Fact]
         public void Should_create_a_running_stopwatch()
         {
             var stopwatchFactory = new SystemStopwatchFactory();

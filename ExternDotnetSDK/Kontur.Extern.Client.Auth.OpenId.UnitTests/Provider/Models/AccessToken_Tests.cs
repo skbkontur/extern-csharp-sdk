@@ -3,45 +3,45 @@ using FluentAssertions;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Client.Auth.OpenId.Time;
 using NSubstitute;
-using NUnit.Framework;
 using Vostok.Commons.Time;
+using Xunit;
 
-namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
+namespace Kontur.Extern.Client.Auth.OpenId.UnitTests.Provider.Models
 {
-    [TestFixture]
-    internal class AccessToken_Tests
+    public static class AccessToken_Tests
     {
-        [TestFixture]
-        internal class Ctor
+        public class Ctor
         {
-            [TestCase(null)]
-            [TestCase("")]
-            [TestCase(" ")]
+            [Theory]
+            [InlineData(null)]
+            [InlineData("")]
+            [InlineData(" ")]
             public void Should_fail_when_given_the_invalid_access_token(string invalidToken)
             {
                 ShouldFail(invalidToken, "123", AliveTTL);
             }
             
-            [TestCase("")]
-            [TestCase(" ")]
+            [Theory]
+            [InlineData("")]
+            [InlineData(" ")]
             public void Should_fail_when_given_the_invalid_refresh_token(string invalidToken)
             {
                 ShouldFail("123", invalidToken, AliveTTL);
             }
             
-            [Test]
+            [Fact]
             public void Should_fail_when_given_the_null_TTL()
             {
-                ShouldFail("123", "123", null);
+                ShouldFail("123", "123", null!);
             }
 
-            [Test]
+            [Fact]
             public void Should_fail_when_the_given_TTL_has_been_already_expired()
             {
                 ShouldFail("123", "123", ExpiredTTL);
             }
 
-            [Test]
+            [Fact]
             public void Should_initialize_with_given_tokens()
             {
                 var accessToken = new AccessToken("123", "1234", AliveTTL);
@@ -51,7 +51,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
                 accessToken.ToString().Should().Be("123");
             }
 
-            [Test]
+            [Fact]
             public void Should_initialize_without_refresh_token_tokens()
             {
                 var accessToken = new AccessToken("123", null, AliveTTL);
@@ -62,6 +62,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
             }
 
             private ITimeToLive AliveTTL => new TimeToLive(10.Seconds(), Substitute.For<IStopwatch>());
+            
             private ITimeToLive ExpiredTTL
             {
                 get

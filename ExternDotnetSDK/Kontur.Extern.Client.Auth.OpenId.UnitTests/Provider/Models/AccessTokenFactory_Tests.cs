@@ -6,18 +6,16 @@ using Kontur.Extern.Client.Auth.OpenId.Exceptions;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Client.Auth.OpenId.Time;
 using NSubstitute;
-using NUnit.Framework;
 using Vostok.Commons.Time;
+using Xunit;
 
-namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
+namespace Kontur.Extern.Client.Auth.OpenId.UnitTests.Provider.Models
 {
-    [TestFixture]
-    internal class AccessTokenFactory_Tests
+    public static class AccessTokenFactory_Tests
     {
-        [TestFixture]
-        internal class Ctor
+        public class Ctor
         {
-            [Test]
+            [Fact]
             public void Should_start_a_new_stopwatch()
             {
                 var stopwatchFactory = Substitute.For<IStopwatchFactory>();
@@ -28,21 +26,19 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
             }
         }
         
-        [TestFixture]
-        internal class CreateAccessToken
+        public class CreateAccessToken
         {
-            private IStopwatchFactory stopwatchFactory = null!;
-            private IStopwatch stopwatch = null!;
+            private readonly IStopwatchFactory stopwatchFactory;
+            private readonly IStopwatch stopwatch;
 
-            [SetUp]
-            public void SetUp()
+            public CreateAccessToken()
             {
                 stopwatchFactory = Substitute.For<IStopwatchFactory>();
                 stopwatch = Substitute.For<IStopwatch>();
                 stopwatchFactory.Start().Returns(stopwatch);
             }
             
-            [Test]
+            [Fact]
             public void Should_return_a_new_access_token_if_the_response_has_not_expired_yet()
             {
                 var factory = new AccessTokenFactory(stopwatchFactory);
@@ -54,7 +50,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
                 accessToken!.HasNotExpired.Should().BeTrue();
             }
             
-            [Test]
+            [Fact]
             public void Should_initialize_token_with_values_from_the_response_has_not_expired_yet()
             {
                 var factory = new AccessTokenFactory(stopwatchFactory);
@@ -68,7 +64,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
                 refreshToken.Should().Be("refresh_token");
             }
             
-            [Test]
+            [Fact]
             public void Should_initialize_token_with_values_from_the_response_has_not_expired_yet_but_without_refresh_token()
             {
                 var factory = new AccessTokenFactory(stopwatchFactory);
@@ -81,7 +77,7 @@ namespace Kontur.Extern.Client.Tests.Authentication.OpenId.Provider.Models
                 accessToken.TryGetRefreshToken(out _).Should().BeFalse();
             }
             
-            [Test]
+            [Fact]
             public void Should_return_null_access_token_if_the_response_has_already_expired()
             {
                 var factory = new AccessTokenFactory(stopwatchFactory);

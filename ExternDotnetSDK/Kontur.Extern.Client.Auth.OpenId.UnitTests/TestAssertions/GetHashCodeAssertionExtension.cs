@@ -2,7 +2,7 @@ using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 
-namespace Kontur.Extern.Client.Tests.Assertions
+namespace Kontur.Extern.Client.Auth.OpenId.UnitTests.TestAssertions
 {
     public static class GetHashCodeAssertionExtension
     {
