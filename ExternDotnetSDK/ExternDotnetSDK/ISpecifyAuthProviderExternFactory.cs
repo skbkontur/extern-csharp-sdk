@@ -1,5 +1,5 @@
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Authentication.OpenId.Builder;
+using Kontur.Extern.Client.Auth.OpenId.Builder;
 
 namespace Kontur.Extern.Client
 {

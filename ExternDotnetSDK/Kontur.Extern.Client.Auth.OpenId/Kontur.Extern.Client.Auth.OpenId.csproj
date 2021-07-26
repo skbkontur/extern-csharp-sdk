@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Kontur.Extern.Client.Auth.Abstractions\Kontur.Extern.Client.Auth.Abstractions.csproj" />
+      <ProjectReference Include="..\Kontur.Extern.Client.Cryptography\Kontur.Extern.Client.Cryptography.csproj" />
+      <ProjectReference Include="..\Kontur.Extern.Client.Http\Kontur.Extern.Client.Http.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Vostok.ClusterClient.Transport" Version="0.1.17" />
+    </ItemGroup>
+
+</Project>

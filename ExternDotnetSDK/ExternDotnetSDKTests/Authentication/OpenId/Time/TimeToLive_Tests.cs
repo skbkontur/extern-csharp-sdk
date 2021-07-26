@@ -1,7 +1,7 @@
 using System;
 using FluentAssertions;
 using FluentAssertions.Extensions;
-using Kontur.Extern.Client.Authentication.OpenId.Time;
+using Kontur.Extern.Client.Auth.OpenId.Time;
 using NSubstitute;
 using NUnit.Framework;
 

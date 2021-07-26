@@ -1,4 +1,4 @@
-using Kontur.Extern.Client.Authentication.OpenId.Client;
+using Kontur.Extern.Client.Auth.OpenId.Client;
 using Kontur.Extern.Client.End2EndTests.TestClusterClient;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;

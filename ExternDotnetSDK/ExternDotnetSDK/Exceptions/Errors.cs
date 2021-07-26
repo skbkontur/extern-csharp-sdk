@@ -24,9 +24,6 @@ namespace Kontur.Extern.Client.Exceptions
         public static Exception ValueShouldBeGreaterThan([InvokerParameterName] string paramName, long actualValue, long nonInclusiveLowerBound) => 
             new ArgumentOutOfRangeException(paramName, actualValue, $"The value should be greater than {nonInclusiveLowerBound}");
         
-        public static Exception TimeSpanShouldBePositive([InvokerParameterName] string paramName, TimeSpan actualValue) => 
-            new ArgumentOutOfRangeException(paramName, actualValue, "The duration interval should be positive");
-
         public static Exception ListCannotBeGreaterThanParamSpecify<T>([InvokerParameterName] string listParamName, [InvokerParameterName] string boundParamName, IReadOnlyList<T> list, long maxSize) => 
             new ArgumentException($"The list have {list.Count} items, but it exceeds maximum size {maxSize} specified by the '{boundParamName}' parameter", listParamName);
 
@@ -67,22 +64,8 @@ namespace Kontur.Extern.Client.Exceptions
 
         public static Exception LongOperationFailed(Error startError) => new ApiException($"{startError}{NewLine}{startError.Message}");
 
-        public static Exception StopwatchHaveToBeRunning([InvokerParameterName] string paramName) => new ArgumentException("The stopwatch have to be running", paramName);
-        
-        public static Exception TimeIntervalShouldBeNonEmpty([InvokerParameterName] string paramName) => 
-            new ArgumentException("The duration interval should not be empty", paramName);
-
         public static Exception StringShouldNotBeNullOrWhiteSpace([InvokerParameterName] string paramName) => 
             new ArgumentException("The given value cannot be null, or empty, or a whitespace string.", paramName);
-        
-        public static Exception StringShouldNotBeEmptyOrWhiteSpace([InvokerParameterName] string paramName) => 
-            new ArgumentException("The given value cannot an empty or a whitespace string.", paramName);
-
-        public static Exception AccessTokenAlreadyExpired([InvokerParameterName] string paramName) => 
-            new ArgumentException("The access token has been expired already", paramName);
-
-        public static Exception ArrayCannotBeEmpty([InvokerParameterName] string paramName) =>
-            new ArgumentException("Value cannot be an empty collection.", paramName);
 
         public static Exception TheAuthProviderNotSpecifiedOrUnsupported() => 
             new InvalidOperationException("There is no specified an authentication provider or the specified one is not suppoted");

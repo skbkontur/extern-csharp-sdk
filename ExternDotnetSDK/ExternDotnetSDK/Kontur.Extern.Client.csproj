@@ -29,6 +29,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Kontur.Extern.Client.Auth.Abstractions\Kontur.Extern.Client.Auth.Abstractions.csproj" />
+    <ProjectReference Include="..\Kontur.Extern.Client.Auth.OpenId\Kontur.Extern.Client.Auth.OpenId.csproj" />
+    <ProjectReference Include="..\Kontur.Extern.Client.Cryptography\Kontur.Extern.Client.Cryptography.csproj" />
     <ProjectReference Include="..\Kontur.Extern.Client.Http\Kontur.Extern.Client.Http.csproj" />
   </ItemGroup>  
 </Project>

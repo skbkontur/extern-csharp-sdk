@@ -1,5 +1,5 @@
 using FluentAssertions;
-using Kontur.Extern.Client.Authentication.OpenId.Provider;
+using Kontur.Extern.Client.Auth.OpenId.Provider;
 using NUnit.Framework;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Commons.Time;

@@ -1,6 +1,6 @@
 using System;
 using FluentAssertions;
-using Kontur.Extern.Client.Authentication.OpenId.Time;
+using Kontur.Extern.Client.Auth.OpenId.Time;
 using Kontur.Extern.Client.Tests.Assertions;
 using NUnit.Framework;
 using Vostok.Commons.Time;

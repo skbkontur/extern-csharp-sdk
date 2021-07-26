@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using FluentAssertions;
-using Kontur.Extern.Client.Authentication.OpenId.Time;
+using Kontur.Extern.Client.Auth.OpenId.Time;
 using NUnit.Framework;
 using Vostok.Commons.Time;
 

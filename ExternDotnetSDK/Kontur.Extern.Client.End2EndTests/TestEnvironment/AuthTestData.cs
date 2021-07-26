@@ -2,7 +2,7 @@ using System.IO;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Authentication.OpenId.Provider.Models;
+using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.End2EndTests.TestEnvironment
