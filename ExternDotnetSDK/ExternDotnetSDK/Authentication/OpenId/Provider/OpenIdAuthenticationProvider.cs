@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.Auth.Abstractions;
 using Kontur.Extern.Client.Authentication.OpenId.Client;
 using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Requests;
 using Kontur.Extern.Client.Authentication.OpenId.Client.Models.Responses;

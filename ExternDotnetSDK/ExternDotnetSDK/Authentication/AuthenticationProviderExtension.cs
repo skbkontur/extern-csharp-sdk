@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.Auth.Abstractions;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client.Authentication

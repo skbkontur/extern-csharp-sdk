@@ -1,6 +1,6 @@
 using Vostok.Clusterclient.Core.Model;
 
-namespace Kontur.Extern.Client.Authentication
+namespace Kontur.Extern.Client.Auth.Abstractions
 {
     public interface IAuthenticationResult
     {

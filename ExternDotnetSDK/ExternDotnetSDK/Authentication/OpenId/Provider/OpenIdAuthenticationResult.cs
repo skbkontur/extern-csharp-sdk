@@ -1,3 +1,4 @@
+using Kontur.Extern.Client.Auth.Abstractions;
 using Kontur.Extern.Client.Authentication.OpenId.Time;
 using Vostok.Clusterclient.Core.Model;
 

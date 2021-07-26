@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Kontur.Extern.Client.Auth.Abstractions;
 using Kontur.Extern.Client.Authentication;
 using Kontur.Extern.Client.Authentication.OpenId.Builder;
 using Kontur.Extern.Client.Authentication.OpenId.Provider;

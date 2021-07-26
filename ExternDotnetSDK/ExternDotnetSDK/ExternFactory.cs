@@ -3,6 +3,7 @@ using System;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
+using Kontur.Extern.Client.Auth.Abstractions;
 using Kontur.Extern.Client.Authentication;
 using Kontur.Extern.Client.Authentication.OpenId.Builder;
 using Kontur.Extern.Client.Common;

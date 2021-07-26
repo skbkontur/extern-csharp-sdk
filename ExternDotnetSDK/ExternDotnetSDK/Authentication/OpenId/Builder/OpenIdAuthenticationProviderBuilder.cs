@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Auth.Abstractions;
 using Kontur.Extern.Client.Authentication.OpenId.Client;
 using Kontur.Extern.Client.Authentication.OpenId.Provider;
 using Kontur.Extern.Client.Authentication.OpenId.Provider.AuthStrategies;
