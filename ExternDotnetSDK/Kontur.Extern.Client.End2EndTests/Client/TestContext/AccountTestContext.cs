@@ -17,9 +17,15 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
             this.scopeFactory = scopeFactory;
         }
         
+        public ValueTask<EntityScope<Account>> CreateAccount(Inn inn, string organizationName) =>
+            scopeFactory(
+                () => konturExtern.Accounts.CreateIndividualEntrepreneurAccountAsync(inn, organizationName),
+                account => konturExtern.Accounts.WithId(account.Id).DeleteAsync()
+            );
+        
         public ValueTask<EntityScope<Account>> CreateAccount(LegalEntityInn inn, Kpp kpp, string organizationName) =>
             scopeFactory(
-                () => konturExtern.Accounts.CreateAsync(inn, kpp, organizationName),
+                () => konturExtern.Accounts.CreateLegalEntityAccountAsync(inn, kpp, organizationName),
                 account => konturExtern.Accounts.WithId(account.Id).DeleteAsync()
             );
 

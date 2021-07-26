@@ -1,3 +1,4 @@
+#nullable enable
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Accounts;
@@ -11,7 +12,15 @@ namespace Kontur.Extern.Client
     [PublicAPI]
     public static class AccountListPathExtension
     {
-        public static Task<Account> CreateAsync(this in AccountListPath path, LegalEntityInn inn, Kpp kpp, string organizationName)
+        public static Task<Account> CreateIndividualEntrepreneurAccountAsync(this in AccountListPath path, Inn inn, string organizationName)
+        {
+            if (string.IsNullOrWhiteSpace(organizationName))
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(organizationName);
+            var apiClient = path.Services.Api;
+            return apiClient.Accounts.CreateAccountAsync(inn.ToString(), null, organizationName);
+        }
+        
+        public static Task<Account> CreateLegalEntityAccountAsync(this in AccountListPath path, LegalEntityInn inn, Kpp kpp, string organizationName)
         {
             if (string.IsNullOrWhiteSpace(organizationName))
                 throw Errors.StringShouldNotBeNullOrWhiteSpace(organizationName);

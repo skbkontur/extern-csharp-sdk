@@ -44,12 +44,12 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Accounts
         /// <summary>
         /// Создание новой учетной записи
         /// </summary>
-        /// <param name="inn">ИНН организации</param>
-        /// <param name="kpp">КПП организации</param>
+        /// <param name="inn">ИНН организации (10 цифр для ЮЛ, 12 цифр для ИП)</param>
+        /// <param name="kpp">КПП организации (только для ЮЛ)</param>
         /// <param name="organizationName">Название организации</param>
         /// <param name="timeout"></param>
         /// <returns>Учетная запись</returns>
-        Task<Account> CreateAccountAsync(string inn, string kpp, string organizationName, TimeSpan? timeout = null);
+        Task<Account> CreateAccountAsync(string inn, string? kpp, string organizationName, TimeSpan? timeout = null);
 
         /// <summary>
         /// Получение списка сертификатов

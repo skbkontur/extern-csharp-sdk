@@ -39,7 +39,19 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         }
 
         [Fact]
-        public async Task Should_create_a_new_account_and_read_it()
+        public async Task Should_create_a_new_individual_entrepreneur_account_and_read_it()
+        {
+            var context = new KonturExternTestContext(log);
+            await using var accountScope = await context.Accounts.CreateAccount(Inn.Parse("678050110389"), "org");
+            
+            var account = accountScope.Entity;
+            var loadedAccount = await context.Accounts.GetAccount(account.Id);
+            
+            loadedAccount.Should().BeEquivalentTo(account);
+        }
+
+        [Fact]
+        public async Task Should_create_a_new_legal_entity_account_and_read_it()
         {
             var context = new KonturExternTestContext(log);
             await using var accountScope = await context.Accounts.CreateAccount(LegalEntityInn.Parse("1754462785"), Kpp.Parse("515744582"), "org");
@@ -55,7 +67,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         {
             var context = new KonturExternTestContext(log);
             await using var accountScope1 = await context.Accounts.CreateAccount(LegalEntityInn.Parse("1754462785"), Kpp.Parse("515744582"), "org");
-            await using var accountScope2 = await context.Accounts.CreateAccount(LegalEntityInn.Parse("1754462785"), Kpp.Parse("515744582"), "org");
+            await using var accountScope2 = await context.Accounts.CreateAccount(Inn.Parse("678050110389"), "org");
             await using var accountScope3 = await context.Accounts.CreateAccount(LegalEntityInn.Parse("1754462785"), Kpp.Parse("515744582"), "org");
             
             var accountsAfterCreate = await context.Accounts.LoadAllAccountsAsync();
