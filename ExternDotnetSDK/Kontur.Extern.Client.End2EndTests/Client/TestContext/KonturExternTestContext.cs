@@ -18,15 +18,20 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
         {
         }
 
-        public KonturExternTestContext(ILog log)
+        public KonturExternTestContext(ILog log, bool tryResolveUnauthorizedResponsesAutomatically = true)
         {
             this.log = log;
             var clusterClient = ClusterClientFactory.CreateTestClient("https://extern-api.testkontur.ru/", log);
-            konturExtern = ExternBuilder
+            var externBuilder = ExternBuilder
                 .WithClusterClient(clusterClient, log)
-                .WithTestOpenIdAuthProvider()
-                .TryResolveUnauthorizedResponsesAutomatically()
-                .Create();
+                .WithTestOpenIdAuthProvider();
+
+            if (tryResolveUnauthorizedResponsesAutomatically)
+            {
+                externBuilder.TryResolveUnauthorizedResponsesAutomatically();
+            }
+
+            konturExtern = externBuilder.Create();
         }
 
         public IExtern Extern => konturExtern;

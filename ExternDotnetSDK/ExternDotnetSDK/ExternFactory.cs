@@ -33,7 +33,7 @@ namespace Kontur.Extern.Client
         {
             var http = CreateHttp(clusterClient, requestTimeouts, authProvider, jsonSerializer);
             var api = new KeApiClient(http, cryptoProvider);
-            var services = new ExternClientServices(http, api, pollingStrategy);
+            var services = new ExternClientServices(http, api, pollingStrategy, authProvider);
             return new Extern(services);
         }
 
@@ -87,6 +87,9 @@ namespace Kontur.Extern.Client
             private readonly IExternClientServices services;
 
             public Extern(IExternClientServices services) => this.services = services;
+
+            public Task ReauthenticateAsync(TimeSpan? timeout) => 
+                services.AuthProvider.AuthenticateAsync(true, timeout);
 
             public AccountListPath Accounts => new(services);
         }
