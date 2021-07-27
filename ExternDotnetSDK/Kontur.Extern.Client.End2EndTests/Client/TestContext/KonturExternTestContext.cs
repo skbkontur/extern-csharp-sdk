@@ -25,6 +25,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
             konturExtern = ExternBuilder
                 .WithClusterClient(clusterClient, log)
                 .WithTestOpenIdAuthProvider()
+                .TryResolveUnauthorizedResponsesAutomatically()
                 .Create();
         }
 

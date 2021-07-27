@@ -48,6 +48,7 @@ namespace Kontur.Extern.Client
         private RequestTimeouts? requestTimeouts;
         // NOTE: nullable because here could be implementations of another auth providers 
         private OpenIdSetup? openIdAuthProviderSetup;
+        private bool enableUnauthorizedFailover;
 
         private ExternBuilder(IClusterClient clusterClient, ILog log)
         {
@@ -79,19 +80,29 @@ namespace Kontur.Extern.Client
             return this;
         }
 
+        public IExternBuilder TryResolveUnauthorizedResponsesAutomatically()
+        {
+            enableUnauthorizedFailover = true;
+            return this;
+        }
+
         public IExtern Create()
         {
             var jsonSerializer = new JsonSerializer();
             var authProvider = CreateAuthProvider(jsonSerializer);
 
-            return ExternFactory.Create(
-                clusterClient,
-                pollingStrategy ?? DefaultDelayPollingStrategy,
-                cryptoProvider ?? DefaultCryptoProvider,
-                requestTimeouts ?? new RequestTimeouts(),
-                authProvider,
-                jsonSerializer
-            );
+            return new ExternFactory
+                {
+                    EnableUnauthorizedFailover = enableUnauthorizedFailover
+                }
+                .Create(
+                    clusterClient,
+                    pollingStrategy ?? DefaultDelayPollingStrategy,
+                    cryptoProvider ?? DefaultCryptoProvider,
+                    requestTimeouts ?? new RequestTimeouts(),
+                    authProvider,
+                    jsonSerializer
+                );
         }
 
         private IAuthenticationProvider CreateAuthProvider(IJsonSerializer jsonSerializer)

@@ -19,9 +19,11 @@ using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client
 {
-    internal static class ExternFactory
+    internal class ExternFactory
     {
-        public static IExtern Create(
+        public bool EnableUnauthorizedFailover { get; set; }
+        
+        public IExtern Create(
             IClusterClient clusterClient, 
             IPollingStrategy pollingStrategy, 
             ICrypt cryptoProvider, 
@@ -35,13 +37,17 @@ namespace Kontur.Extern.Client
             return new Extern(services);
         }
 
-        private static HttpRequestsFactory CreateHttp(IClusterClient clusterClient, RequestTimeouts requestTimeouts, IAuthenticationProvider authenticationProvider, JsonSerializer jsonSerializer)
+        private HttpRequestsFactory CreateHttp(IClusterClient clusterClient, RequestTimeouts requestTimeouts, IAuthenticationProvider authenticationProvider, JsonSerializer jsonSerializer)
         {
+            FailoverAsync? unauthorizedFailover =
+                EnableUnauthorizedFailover
+                    ? (response, attempt) => AuthorizationErrorsFailover(requestTimeouts, authenticationProvider, response, attempt)
+                    : null;
             return new HttpRequestsFactory(
                 requestTimeouts,
                 (request, span) => AuthenticateRequestAsync(authenticationProvider, request, span),
                 HandleApiErrors,
-                (response, attempt) => AuthorizationErrorsFailover(requestTimeouts, authenticationProvider, response, attempt),
+                unauthorizedFailover,
                 clusterClient,
                 jsonSerializer
             );
