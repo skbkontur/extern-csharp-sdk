@@ -94,7 +94,6 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
             internal RequestTimeouts? RequestTimeouts => specifyClient.RequestTimeouts;
             internal IClusterClient ClusterClient => specifyClient.ClusterClient;
             internal IJsonSerializer Serializer => specifyClient.Serializer;
-            internal ILog Log => specifyClient.Log;
             internal string ApiKey { get; }
             internal string ClientId { get; }
 
@@ -133,14 +132,13 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
             {
                 stopwatchFactory ??= new SystemStopwatchFactory();
                 var requestTimeouts = specifyAuthStrategy.RequestTimeouts ?? new RequestTimeouts();
-                var log = specifyAuthStrategy.Log;
                 var clusterClient = specifyAuthStrategy.ClusterClient;
                 var serializer = specifyAuthStrategy.Serializer;
                 var apiKey = specifyAuthStrategy.ApiKey;
                 var clientId = specifyAuthStrategy.ClientId;
 
                 var options = new OpenIdAuthenticationOptions(apiKey, clientId, proactiveAuthTokenRefreshInterval);
-                var openIdClient = OpenIdClient.Create(requestTimeouts, clusterClient, serializer, log);
+                var openIdClient = OpenIdClient.Create(requestTimeouts, clusterClient, serializer);
                 return new OpenIdAuthenticationProvider(options, openIdClient, authenticationStrategy, stopwatchFactory);
             }
         }

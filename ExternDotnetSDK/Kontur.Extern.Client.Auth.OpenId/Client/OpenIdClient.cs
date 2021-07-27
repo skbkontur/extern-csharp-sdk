@@ -13,13 +13,12 @@ using Kontur.Extern.Client.Http.Contents;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
 using Vostok.Clusterclient.Core;
-using Vostok.Logging.Abstractions;
 
 namespace Kontur.Extern.Client.Auth.OpenId.Client
 {
     public class OpenIdClient : IOpenIdClient
     {
-        public static OpenIdClient Create(RequestTimeouts requestTimeouts, IClusterClient clusterClient, IJsonSerializer serializer, ILog log)
+        public static OpenIdClient Create(RequestTimeouts requestTimeouts, IClusterClient clusterClient, IJsonSerializer serializer)
         {
             var http = new HttpRequestsFactory(
                 requestTimeouts,
