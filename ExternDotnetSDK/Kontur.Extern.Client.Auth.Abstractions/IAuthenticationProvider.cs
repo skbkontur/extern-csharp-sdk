@@ -5,6 +5,6 @@ namespace Kontur.Extern.Client.Auth.Abstractions
 {
     public interface IAuthenticationProvider
     {
-        Task<IAuthenticationResult> AuthenticateAsync(TimeSpan? timeout = null);
+        Task<IAuthenticationResult> AuthenticateAsync(bool force = false, TimeSpan? timeout = null);
     }
 }

@@ -53,6 +53,21 @@ namespace Kontur.Extern.Client.Auth.OpenId.End2EndTests.Provider
                 var authResult = result.Should().BeOfType<OpenIdAuthenticationResult>().Subject;
                 authResult.AccessToken.Should().NotBeNullOrWhiteSpace().And.NotBe(firstTimeAccessToken);
             }
+            
+            [Fact]
+            public async Task Should_reauthenticate_if_the_access_token_is_valid_but_the_force_flag_is_enabled()
+            {
+                var provider = CreateAuthProvider(CreateStrategy);
+            
+                var firstTimeResult = (await provider.AuthenticateAsync()).As<OpenIdAuthenticationResult>();
+                var firstTimeAccessToken = firstTimeResult.AccessToken;
+                stopwatchMock.ActiveStopwatchAdvancedTo(0.Seconds());
+                
+                var result = await provider.AuthenticateAsync(true);
+
+                var authResult = result.Should().BeOfType<OpenIdAuthenticationResult>().Subject;
+                authResult.AccessToken.Should().NotBeNullOrWhiteSpace().And.NotBe(firstTimeAccessToken);
+            }
 
             private static OpenIdAuthenticationProviderBuilder.Configured CreateStrategy(OpenIdAuthenticationProviderBuilder.SpecifyAuthStrategy builder, AuthTestData authTestData) => 
                 builder.WithAuthenticationByPassword(authTestData.UserName, authTestData.Password);

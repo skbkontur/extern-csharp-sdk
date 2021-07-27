@@ -197,7 +197,7 @@ namespace Kontur.Extern.Client.Auth.OpenId.UnitTests
         }
 
         [Fact]
-        public async Task Should_each_successful_authentication_attempt_updates_TTL()
+        public async Task Should_updates_TTL_on_each_successful_authentication_attempt()
         {
             authStrategyMock.AuthenticateReturnsToken("token1", "refresh1", 40);
 
@@ -213,6 +213,22 @@ namespace Kontur.Extern.Client.Auth.OpenId.UnitTests
             stopwatchMock.ActiveStopwatchAdvancedTo(50.Seconds());
             await authenticationProvider.AuthenticateAsync();
             authStrategyMock.ReceivedAuthenticateOfTimes(3);
+        }
+        
+        [Fact]
+        public async Task Should_reauthenticate_when_the_token_is_not_expired_but_the_force_flag_is_enabled()
+        {
+            authStrategyMock.AuthTokenExpiresInSeconds(40);
+            
+            await authenticationProvider.AuthenticateAsync();
+            authStrategyMock.ReceivedAuthenticateOnce();
+            
+            authStrategyMock.AuthTokenExpiresInSeconds(40);
+            stopwatchMock.ActiveStopwatchAdvancedTo(10.Seconds());
+
+            await authenticationProvider.AuthenticateAsync(true);
+            
+            authStrategyMock.ReceivedAuthenticateTwice();
         }
 
         private class OpenIdClientMock

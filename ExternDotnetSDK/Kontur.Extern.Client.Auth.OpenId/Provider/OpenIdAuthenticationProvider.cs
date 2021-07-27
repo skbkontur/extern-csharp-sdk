@@ -31,12 +31,13 @@ namespace Kontur.Extern.Client.Auth.OpenId.Provider
             this.stopwatchFactory = stopwatchFactory;
         }
         
-        public async Task<IAuthenticationResult> AuthenticateAsync(TimeSpan? timeout = null)
+        public async Task<IAuthenticationResult> AuthenticateAsync(bool force = false, TimeSpan? timeout = null)
         {
             // NOTE: if two threads will do the same operation it's not a problem -- eventually there will be only one token.
             //       if getting two authentications/refreshments is very inefficient or results with errors,
             //       there should be somehow async locking (e.g. SemaphoreSlim)
-            if (context.TryGetAccessToken(out var accessToken))
+            AccessToken? accessToken = null;
+            if (!force && context.TryGetAccessToken(out accessToken))
             {
                 accessToken = await ActualizeCurrentAccessTokenAsync(accessToken).ConfigureAwait(false);
             }
