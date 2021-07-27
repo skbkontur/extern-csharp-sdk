@@ -7,8 +7,11 @@ namespace Kontur.Extern.Client.Model.Numbers
     /// </summary>
     public record Kpp
     {
-        public static readonly RegexBasedParser<Kpp> Parser = 
-            new(@"^\d{9}$", v => new Kpp(v), (param, value) => Errors.InvalidAuthorityNumber(param, value, AuthorityNumberKind.Kpp, "XXXXXXXXX"));
+        public static readonly RegexBasedParser<Kpp> Parser = new(
+            @"^(\d{4})((\d|[A..Z]){2})(\d{3})$",
+            v => new Kpp(v),
+            (param, value) => Errors.InvalidKppAuthorityNumber(param, value)
+        );
 
         /// <summary>
         /// Формат данных: 123456789
