@@ -6,8 +6,8 @@ namespace Kontur.Extern.Client
     public delegate OpenIdAuthenticationProviderBuilder.Configured OpenIdSetup(OpenIdAuthenticationProviderBuilder builder);
     
     [PublicAPI]
-    public interface ISpecifyAuthProviderExternFactory
+    public interface ISpecifyAuthProviderExternBuilder
     {
-        IExternFactory WithOpenIdAuthProvider(OpenIdSetup setup);
+        IExternBuilder WithOpenIdAuthProvider(OpenIdSetup setup);
     }
 }

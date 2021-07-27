@@ -3,10 +3,10 @@ using Kontur.Extern.Client.Testing.End2End.Environment;
 
 namespace Kontur.Extern.Client.End2EndTests.Client.TestAuthProvider
 {
-    internal static class SpecifyAuthProviderExternFactoryExtension
+    internal static class SpecifyAuthProviderExternBuilderExtension
     {
-        public static IExternFactory WithTestOpenIdAuthProvider(this ISpecifyAuthProviderExternFactory externFactory) =>
-            externFactory.WithOpenIdAuthProvider(builder =>
+        public static IExternBuilder WithTestOpenIdAuthProvider(this ISpecifyAuthProviderExternBuilder externBuilder) =>
+            externBuilder.WithOpenIdAuthProvider(builder =>
             {
                 var authTestData = AuthTestData.LoadFromJsonFile();
                 return builder

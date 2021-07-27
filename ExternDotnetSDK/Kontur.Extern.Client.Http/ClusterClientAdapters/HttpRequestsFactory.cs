@@ -13,6 +13,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
         private readonly RequestTimeouts requestTimeouts;
         private readonly Func<Request, TimeSpan, Task<Request>>? requestTransformAsync;
         private readonly Func<IHttpResponse, bool>? errorResponseHandler;
+        private readonly FailoverAsync? failover;
         private readonly IClusterClient clusterClient;
         private readonly IJsonSerializer serializer;
 
@@ -20,12 +21,14 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             RequestTimeouts requestTimeouts, 
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
             Func<IHttpResponse, bool>? errorResponseHandler,
+            FailoverAsync? failover,
             IClusterClient clusterClient,
             IJsonSerializer serializer)
         {
             this.requestTimeouts = requestTimeouts ?? throw new ArgumentNullException(nameof(requestTimeouts));
             this.requestTransformAsync = requestTransformAsync;
             this.errorResponseHandler = errorResponseHandler;
+            this.failover = failover;
             this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         }
@@ -38,6 +41,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
 
         public IHttpRequest Delete(Uri url) => CreateHttpRequest(Request.Delete(url));
 
-        private HttpRequest CreateHttpRequest(Request request) => new(request, requestTimeouts, requestTransformAsync, errorResponseHandler, clusterClient, serializer);
+        private HttpRequest CreateHttpRequest(Request request) => 
+            new(request, requestTimeouts, requestTransformAsync, errorResponseHandler, failover, clusterClient, serializer);
     }
 }

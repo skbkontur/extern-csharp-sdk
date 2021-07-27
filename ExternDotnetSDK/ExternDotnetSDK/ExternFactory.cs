@@ -1,10 +1,9 @@
 #nullable enable
 using System;
-using JetBrains.Annotations;
+using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
 using Kontur.Extern.Client.Auth.Abstractions;
-using Kontur.Extern.Client.Auth.OpenId.Builder;
 using Kontur.Extern.Client.Authentication;
 using Kontur.Extern.Client.Common;
 using Kontur.Extern.Client.Cryptography;
@@ -16,118 +15,65 @@ using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives.Polling;
 using Vostok.Clusterclient.Core;
-using Vostok.Clusterclient.Transport;
-using Vostok.Commons.Time;
-using Vostok.Logging.Abstractions;
+using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client
 {
-    [PublicAPI]
-    public class ExternFactory : IExternFactory, ISpecifyAuthProviderExternFactory
+    internal static class ExternFactory
     {
-        private static IPollingStrategy DefaultDelayPollingStrategy => new ConstantDelayPollingStrategy(5.Seconds());
-        private static ICrypt DefaultCryptoProvider => new WinApiCrypt();
-        
-        public static ISpecifyAuthProviderExternFactory WithExternApiUrl(Uri url, ILog log)
+        public static IExtern Create(
+            IClusterClient clusterClient, 
+            IPollingStrategy pollingStrategy, 
+            ICrypt cryptoProvider, 
+            RequestTimeouts requestTimeouts, 
+            IAuthenticationProvider authProvider, 
+            JsonSerializer jsonSerializer)
         {
-            if (url == null)
-                throw new ArgumentNullException(nameof(url));
-            if (!url.IsAbsoluteUri)
-                throw Errors.UrlShouldBeAbsolute(nameof(url), url);
-
-            var clusterClient = new ClusterClient(
-                log,
-                cfg =>
-                {
-                    cfg.SetupUniversalTransport();
-                    cfg.SetupExternalUrl(url);
-                });
-            return new ExternFactory(clusterClient, log);
-        }
-        
-        public static ISpecifyAuthProviderExternFactory WithClusterClient(IClusterClient clusterClient, ILog log) => 
-            new ExternFactory(clusterClient, log);
-
-        private ICrypt? cryptoProvider;
-        private IPollingStrategy? pollingStrategy;
-        private readonly ILog log;
-        private readonly IClusterClient clusterClient;
-        private RequestTimeouts? requestTimeouts;
-        // NOTE: nullable because here could be implementations of another auth providers 
-        private OpenIdSetup? openIdAuthProviderSetup;
-
-        private ExternFactory(IClusterClient clusterClient, ILog log)
-        {
-            this.log = log ?? throw new ArgumentNullException(nameof(log));
-            this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
-        }
-
-        public ExternFactory WithCryptoProvider(ICrypt crypt)
-        {
-            cryptoProvider = crypt ?? throw new ArgumentNullException(nameof(crypt));
-            return this;
-        }
-        
-        public ExternFactory WithLongOperationsPollingStrategy(IPollingStrategy strategy)
-        {
-            pollingStrategy = strategy ?? throw new ArgumentNullException(nameof(strategy));
-            return this;
-        }
-
-        public ExternFactory WithDefaultRequestTimeouts(TimeSpan defaultReadTimeout, TimeSpan defaultWriteTimeout, TimeSpan defaultLongOperationTimeout)
-        {
-            requestTimeouts = new RequestTimeouts(defaultReadTimeout, defaultWriteTimeout, defaultLongOperationTimeout);
-            return this;
-        }
-
-        IExternFactory ISpecifyAuthProviderExternFactory.WithOpenIdAuthProvider(OpenIdSetup setup)
-        {
-            openIdAuthProviderSetup = setup ?? throw new ArgumentNullException(nameof(setup));
-            return this;
-        }
-
-        public IExtern Create()
-        {
-            pollingStrategy ??= DefaultDelayPollingStrategy;
-            cryptoProvider ??= DefaultCryptoProvider;
-            requestTimeouts ??= new RequestTimeouts();
-            
-            var jsonSerializer = new JsonSerializer();
-            var authProvider = CreateAuthProvider(jsonSerializer);
-
-            var http = new HttpRequestsFactory(
-                requestTimeouts,
-                authProvider.AuthenticateRequestAsync,
-                HandleApiErrors,
-                clusterClient,
-                jsonSerializer
-            );
+            var http = CreateHttp(clusterClient, requestTimeouts, authProvider, jsonSerializer);
             var api = new KeApiClient(http, cryptoProvider);
             var services = new ExternClientServices(http, api, pollingStrategy);
             return new Extern(services);
         }
 
-        private bool HandleApiErrors(IHttpResponse response)
+        private static HttpRequestsFactory CreateHttp(IClusterClient clusterClient, RequestTimeouts requestTimeouts, IAuthenticationProvider authenticationProvider, JsonSerializer jsonSerializer)
         {
-            var status = response.Status;
-            if (status.IsClientError && response.TryGetMessage<Error>(out var errorResponse) && errorResponse.IsNotEmpty)
+            return new HttpRequestsFactory(
+                requestTimeouts,
+                (request, span) => AuthenticateRequestAsync(authenticationProvider, request, span),
+                HandleApiErrors,
+                (response, attempt) => AuthorizationErrorsFailover(requestTimeouts, authenticationProvider, response, attempt),
+                clusterClient,
+                jsonSerializer
+            );
+            
+            static async Task<Request> AuthenticateRequestAsync(IAuthenticationProvider authProvider, Request request, TimeSpan timeout)
             {
-                throw Errors.UnsuccessfulApiResponse(errorResponse);
+                return await authProvider.AuthenticateRequestAsync(request, false, timeout).ConfigureAwait(false);
             }
 
-            return false;
-        }
-
-        private IAuthenticationProvider CreateAuthProvider(IJsonSerializer jsonSerializer)
-        {
-            if (openIdAuthProviderSetup != null)
+            static bool HandleApiErrors(IHttpResponse response)
             {
-                var builder = new OpenIdAuthenticationProviderBuilder(jsonSerializer, log);
-                var configuredBuilder = openIdAuthProviderSetup(builder);
-                return configuredBuilder.Build();
+                var status = response.Status;
+                if (status.IsClientError && response.TryGetMessage<Error>(out var errorResponse) && errorResponse.IsNotEmpty)
+                {
+                    throw Errors.UnsuccessfulApiResponse(errorResponse);
+                }
+
+                return false;
             }
 
-            throw Errors.TheAuthProviderNotSpecifiedOrUnsupported();
+            static async Task<FailoverDecision> AuthorizationErrorsFailover(RequestTimeouts timeouts, IAuthenticationProvider authProvider, IHttpResponse response, uint attempt)
+            {
+                switch (attempt)
+                {
+                    case 0 when response.Status.IsUnauthorized:
+                        await authProvider.AuthenticateAsync(true, timeouts.DefaultReadTimeout).ConfigureAwait(false);
+                        return FailoverDecision.RepeatRequest;
+
+                    default:
+                        return FailoverDecision.LetItFail;
+                }
+            }
         }
 
         private class Extern : IExtern

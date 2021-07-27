@@ -77,7 +77,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             accountsAfterCreate.Should().ContainEquivalentOf(accountScope3.Entity);
         }
 
-        [Fact(Skip = "after deletion the Unauthorized occured")]
+        [Fact]
         public async Task Should_not_list_deleted_account()
         {
             var context = new KonturExternTestContext(log);
@@ -93,7 +93,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             accountsAfterDelete.Select(x => x.Id).Should().NotContain(account.Id);
         }
 
-        [Fact(Skip = "after deletion the Unauthorized occured")]
+        [Fact]
         public async Task Should_unable_to_read_deleted_account()
         {
             var context = new KonturExternTestContext(log);

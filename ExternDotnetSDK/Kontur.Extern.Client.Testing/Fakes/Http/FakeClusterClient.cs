@@ -1,6 +1,8 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,12 +33,14 @@ namespace Kontur.Extern.Client.Testing.Fakes.Http
         }
 
         public string BaseUrl { get; }
-        public Request? SentRequest => httpMessages.SentRequest;
+        public Request? SentRequest => httpMessages.SentRequests.LastOrDefault();
+        public IEnumerable<Request> SentRequests => httpMessages.SentRequests;
+        
         public string? SentContentString
         {
             get
             {
-                var request = httpMessages.SentRequest;
+                var request = SentRequest;
                 if (request == null)
                     return null;
 
@@ -72,7 +76,7 @@ namespace Kontur.Extern.Client.Testing.Fakes.Http
 
             public Task<Response> SendAsync(Request request, TimeSpan? connectionTimeout, TimeSpan timeout, CancellationToken cancellationToken)
             {
-                httpMessages.SentRequest = request;
+                httpMessages.TheRequestWasSent(request);
                 return Task.FromResult(httpMessages.ExpectedResponse);
             }
         }

@@ -21,19 +21,21 @@ namespace Kontur.Extern.Client.Auth.OpenId.Client
     {
         public static OpenIdClient Create(RequestTimeouts requestTimeouts, IClusterClient clusterClient, IJsonSerializer serializer, ILog log)
         {
-            var http = new HttpRequestsFactory(requestTimeouts, null, HandleOpenIdErrorResponse, clusterClient, serializer);
-            return new OpenIdClient(http, log);
+            var http = new HttpRequestsFactory(
+                requestTimeouts,
+                null,
+                HandleOpenIdErrorResponse,
+                null,
+                clusterClient,
+                serializer
+            );
+            return new OpenIdClient(http);
         }
 
         private readonly IHttpRequestsFactory http;
-        private readonly ILog log;
 
-        private OpenIdClient(IHttpRequestsFactory http, ILog log)
-        {
-            this.http = http;
-            this.log = log;
-        }
-        
+        private OpenIdClient(IHttpRequestsFactory http) => this.http = http;
+
         public async Task<TokenResponse> RequestTokenAsync(RefreshTokenRequest tokenRequest, TimeSpan? timeout = null)
         {
             if (string.IsNullOrWhiteSpace(tokenRequest.ClientId))

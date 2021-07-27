@@ -15,6 +15,7 @@ namespace Kontur.Extern.Client.Http
         public bool IsSuccessful => statusCode == null || statusCode.Value.IsSuccessful();
         public bool IsBadRequest => statusCode == ResponseCode.BadRequest;
         public bool IsNotFound => statusCode == ResponseCode.NotFound;
+        public bool IsUnauthorized => statusCode == ResponseCode.Unauthorized;
         
         public bool IsClientError
         {

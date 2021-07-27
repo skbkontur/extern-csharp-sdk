@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Http.ClusterClientAdapters;
+using Kontur.Extern.Client.Http.Exceptions;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Testing.Fakes.Http;
 using Kontur.Extern.Client.Testing.Fakes.Logging;
+using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Logging.Abstractions;
 using Xunit;
@@ -15,9 +17,9 @@ using Xunit.Abstractions;
 
 namespace Kontur.Extern.Client.Http.UnitTests
 {
-    public class HttpRequestsFactory_Tests
+    public static class HttpRequestsFactory_Tests
     {
-        public class Get : Base
+        public class Get : VerbTestBase
         {
 
             public Get(ITestOutputHelper output)
@@ -72,7 +74,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
             protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestsFactory http) => http.Get("/some-resource");
         }
 
-        public class Post : Base
+        public class Post : VerbTestBase
         {
             public Post(ITestOutputHelper output)
                 : base(output)
@@ -121,7 +123,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
             protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestsFactory http) => http.Post("/some-resource");
         }
 
-        public class Put : Base
+        public class Put : VerbTestBase
         {
             public Put(ITestOutputHelper output)
                 : base(output)
@@ -160,7 +162,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
             protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestsFactory http) => http.Put("/some-resource");
         }
 
-        public class Delete : Base
+        public class Delete : VerbTestBase
         {
             public Delete(ITestOutputHelper output)
                 : base(output)
@@ -189,16 +191,73 @@ namespace Kontur.Extern.Client.Http.UnitTests
             
             protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestsFactory http) => http.Delete("/some-resource");
         }
+        
+        public class Failover
+        {
+            private readonly FakeClusterClient clusterClient;
 
-        public abstract class Base
+            public Failover(ITestOutputHelper output)
+            {
+                var log = new TestLog(output);
+                clusterClient = CreateFakeClusterClient(log);
+            }
+
+            [Fact]
+            public void Should_repeat_failed_requests_while_failover_prescribes_it()
+            {
+                var expectedUrl = new Uri("https://test/some");
+                var http = CreateHttp(
+                    (_, attempt) => Task.FromResult(attempt < 3
+                        ? FailoverDecision.RepeatRequest
+                        : FailoverDecision.LetItFail)
+                );
+                clusterClient.SetResponseCode(ResponseCode.BadRequest);
+
+                Func<Task> func = async () => await http.Get("/some").SendAsync();
+
+                func.Should().Throw<ContractException>();
+                clusterClient.SentRequests.Should().HaveCount(4);
+                clusterClient.SentRequests.Should()
+                    .OnlyContain(request => request.Url == expectedUrl &&
+                                            request.Method == RequestMethods.Get);
+            }
+
+            [Fact]
+            public async Task Should_repeat_the_request_by_failover_decision_until_response_is_unsuccessful()
+            {
+                var http = CreateHttp((_, attempt) =>
+                {
+                    if (attempt >= 3)
+                    {
+                        clusterClient.SetResponseCode(ResponseCode.Ok);
+                    }
+                    return Task.FromResult(FailoverDecision.RepeatRequest);
+                });
+                
+                clusterClient.SetResponseCode(ResponseCode.BadRequest);
+
+                var response = await http.Post("/some").SendAsync();
+
+                response.Status.IsSuccessful.Should().BeTrue();
+            }
+
+            private HttpRequestsFactory CreateHttp(
+                FailoverAsync failover,
+                Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
+                Func<IHttpResponse, bool>? errorResponseHandler = null)
+            {
+                return HttpRequestsFactory_Tests.CreateHttp(clusterClient, requestTransformAsync, errorResponseHandler, failover);
+            }
+        }
+
+        public abstract class VerbTestBase
         {
             internal readonly FakeClusterClient ClusterClient;
-            private readonly ILog log;
 
-            public Base(ITestOutputHelper output)
+            protected VerbTestBase(ITestOutputHelper output)
             {
-                log = new TestLog(output);
-                ClusterClient = CreateFakeClusterClient();
+                var log = new TestLog(output);
+                ClusterClient = CreateFakeClusterClient(log);
             }
 
             [Fact]
@@ -273,21 +332,31 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
                 Func<IHttpResponse, bool>? errorResponseHandler = null)
             {
-                return new(
-                    new RequestTimeouts(),
-                    requestTransformAsync,
-                    errorResponseHandler,
-                    ClusterClient,
-                    new JsonSerializer()
-                );
+                return HttpRequestsFactory_Tests.CreateHttp(ClusterClient, requestTransformAsync, errorResponseHandler);
             }
-
-            private FakeClusterClient CreateFakeClusterClient() =>
-                FakeClusterClientFactory
-                    .WithBaseUrl("https://test/")
-                    .WithJsonResponse(ResponseCode.Ok, @"{""Data"": ""expected data""}")
-                    .CreateFakeClusterClient(log);
         }
+
+        private static HttpRequestsFactory CreateHttp(
+            IClusterClient clusterClient,
+            Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
+            Func<IHttpResponse, bool>? errorResponseHandler = null,
+            FailoverAsync? failover = null)
+        {
+            return new(
+                new RequestTimeouts(),
+                requestTransformAsync,
+                errorResponseHandler,
+                failover,
+                clusterClient,
+                new JsonSerializer()
+            );
+        }
+
+        private static FakeClusterClient CreateFakeClusterClient(ILog log) =>
+            FakeClusterClientFactory
+                .WithBaseUrl("https://test/")
+                .WithJsonResponse(ResponseCode.Ok, @"{""Data"": ""expected data""}")
+                .CreateFakeClusterClient(log);
 
         private class ResponseDto
         {

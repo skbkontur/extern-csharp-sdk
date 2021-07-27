@@ -22,7 +22,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
         {
             this.log = log;
             var clusterClient = ClusterClientFactory.CreateTestClient("https://extern-api.testkontur.ru/", log);
-            konturExtern = ExternFactory
+            konturExtern = ExternBuilder
                 .WithClusterClient(clusterClient, log)
                 .WithTestOpenIdAuthProvider()
                 .Create();
