@@ -26,7 +26,7 @@ namespace Kontur.Extern.Client
             return apiClient.Organizations.DeleteOrganizationAsync(path.AccountId, path.OrganizationId, timeout);
         }
 
-        public static Task Rename(this in OrganizationPath path, string name, TimeSpan? timeout = null)
+        public static Task RenameAsync(this in OrganizationPath path, string name, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
             return apiClient.Organizations.UpdateOrganizationAsync(path.AccountId, path.OrganizationId, name, timeout);

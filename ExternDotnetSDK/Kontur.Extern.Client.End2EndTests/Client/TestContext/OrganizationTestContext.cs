@@ -37,5 +37,14 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
 
         public Task<IReadOnlyList<Organization>> LoadAll(Guid accountId) => 
             konturExtern.Accounts.WithId(accountId).Organizations.List().SliceBy(100).LoadAllAsync();
+        
+        public Task<IReadOnlyList<Organization>> FilterByInn(Guid accountId, string inn) => 
+            konturExtern.Accounts.WithId(accountId).Organizations.List(inn: inn).SliceBy(100).LoadAllAsync();
+        
+        public Task<IReadOnlyList<Organization>> FilterByInnKpp(Guid accountId, string inn, string kpp) => 
+            konturExtern.Accounts.WithId(accountId).Organizations.List(inn, kpp).SliceBy(100).LoadAllAsync();
+
+        public Task Rename(Guid accountId, Guid organizationId, string newName) => 
+            konturExtern.Accounts.WithId(accountId).Organizations.WithId(organizationId).RenameAsync(newName);
     }
 }
