@@ -41,4 +41,8 @@
         </None>
     </ItemGroup>
 
+    <ItemGroup>
+        <Compile Include="..\Kontur.Extern.Client.Testing.End2End\XUnitSetup.cs" Link="XUnitSetup.cs" />
+    </ItemGroup>
+
 </Project>
