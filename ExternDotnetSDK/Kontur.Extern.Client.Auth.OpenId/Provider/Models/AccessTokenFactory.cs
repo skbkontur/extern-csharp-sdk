@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Kontur.Extern.Client.Auth.OpenId.Client.Models.Responses;
 using Kontur.Extern.Client.Auth.OpenId.Exceptions;

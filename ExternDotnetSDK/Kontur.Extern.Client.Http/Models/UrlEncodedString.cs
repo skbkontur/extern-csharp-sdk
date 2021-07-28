@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 
 namespace Kontur.Extern.Client.Http.Models

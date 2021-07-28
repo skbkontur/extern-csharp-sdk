@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Kontur.Extern.Client.Auth.OpenId.Exceptions;
+﻿using Kontur.Extern.Client.Auth.OpenId.Exceptions;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Newtonsoft.Json;
 

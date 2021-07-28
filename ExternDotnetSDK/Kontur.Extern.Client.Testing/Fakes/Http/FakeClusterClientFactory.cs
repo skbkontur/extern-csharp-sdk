@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Text;
 using Kontur.Extern.Client.Http.Constants;

@@ -1,4 +1,3 @@
-#nullable enable
 using Kontur.Extern.Client.Http.Exceptions;
 using Vostok.Clusterclient.Core.Model;
 

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.IO;
+﻿using System.IO;
 
 namespace Kontur.Extern.Client.Http.Serialization
 {

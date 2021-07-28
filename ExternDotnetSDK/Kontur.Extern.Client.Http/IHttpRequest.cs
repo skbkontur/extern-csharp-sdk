@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Http.Models;

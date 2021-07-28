@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Kontur.Extern.Client.Auth.OpenId.Exceptions;
 using Kontur.Extern.Client.Common.Time;
