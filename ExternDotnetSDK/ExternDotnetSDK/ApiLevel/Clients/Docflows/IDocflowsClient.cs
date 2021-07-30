@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Api;
@@ -17,7 +18,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
         /// <param name="filter">Параметры поиска</param>
         /// <param name="timeout"></param>
         /// <returns>Список документооборотов</returns>
-        Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter filter = null, TimeSpan? timeout = null);
+        Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter? filter = null, TimeSpan? timeout = null);
 
         /// <summary>
         /// Получение связанных документооборотов
@@ -32,7 +33,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
-            DocflowFilter filter = null,
+            DocflowFilter? filter = null,
             TimeSpan? timeout = null);
 
         /// <summary>
@@ -59,6 +60,15 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
         /// <param name="timeout"></param>
         /// <returns>Документооборот</returns>
         Task<Docflow> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null);
+        
+        /// <summary>
+        /// Получение документооборота по идентификатору
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="docflowId">Идентификатор документооборота</param>
+        /// <param name="timeout"></param>
+        /// <returns>Документооборот или null, если документооброт с указанными ID не существует</returns>
+        Task<Docflow?> TryGetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Получение документооборота описи по идентификатору

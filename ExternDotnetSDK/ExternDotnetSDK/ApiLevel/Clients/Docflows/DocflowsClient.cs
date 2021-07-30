@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
 
         public DocflowsClient(IHttpRequestsFactory http) => this.http = http;
 
-        public Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter filter = null, TimeSpan? timeout = null)
+        public Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter? filter = null, TimeSpan? timeout = null)
         {
             var urlBuilder = new RequestUrlBuilder($"/v1/{accountId}/docflows");
             if (filter != null)
@@ -35,7 +36,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
-            DocflowFilter filter = null,
+            DocflowFilter? filter = null,
             TimeSpan? timeout = null)
         {
             var urlBuilder = new RequestUrlBuilder($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/related");
@@ -51,7 +52,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
-            DocflowFilter filter = null,
+            DocflowFilter? filter = null,
             TimeSpan? timeout = null)
         {
             var urlBuilder = new RequestUrlBuilder($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories");
@@ -65,6 +66,9 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
 
         public Task<Docflow> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) => 
             GetDocflowAsync($"/v1/{accountId}/docflows/{docflowId}", timeout);
+
+        public Task<Docflow?> TryGetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) => 
+            http.TryGetAsync<Docflow>($"/v1/{accountId}/docflows/{docflowId}", timeout);
 
         public Task<Docflow> GetInventoryDocflowAsync(
             Guid accountId,

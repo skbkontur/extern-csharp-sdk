@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -13,6 +14,12 @@ namespace Kontur.Extern.Client
         {
             var apiClient = path.Services.Api;
             return apiClient.Docflows.GetDocflowAsync(path.AccountId, path.DocflowId, timeout);
+        }
+        
+        public static Task<Docflow?> TryGetAsync(this in DocflowPath path, TimeSpan? timeout = null)
+        {
+            var apiClient = path.Services.Api;
+            return apiClient.Docflows.TryGetDocflowAsync(path.AccountId, path.DocflowId, timeout);
         }
     }
 }
