@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
@@ -24,6 +25,9 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
 
         public Task<Draft> GetDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
             http.GetAsync<Draft>($"/v1/{accountId}/drafts/{draftId}", timeout);
+
+        public Task<Draft?> TryGetDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
+            http.TryGetAsync<Draft>($"/v1/{accountId}/drafts/{draftId}", timeout);
 
         public Task DeleteDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
             http.DeleteAsync($"/v1/{accountId}/drafts/{draftId}", timeout);

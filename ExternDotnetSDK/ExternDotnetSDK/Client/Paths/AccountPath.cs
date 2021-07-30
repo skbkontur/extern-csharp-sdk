@@ -16,5 +16,6 @@ namespace Kontur.Extern.Client.Paths
 
         public OrganizationListPath Organizations => new(AccountId, Services);
         public DocflowListPath Docflows => new(AccountId, Services);
+        public DraftListPath Drafts => new(AccountId, Services);
     }
 }

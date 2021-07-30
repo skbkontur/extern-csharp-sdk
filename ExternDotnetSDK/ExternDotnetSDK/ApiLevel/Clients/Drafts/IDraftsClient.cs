@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
@@ -30,6 +31,15 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         /// <param name="timeout"></param>
         /// <returns>Черновик</returns>
         Task<Draft> GetDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
+        
+        /// <summary>
+        /// Получение черновика по идентификатору
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftId">Идентификатор черновика</param>
+        /// <param name="timeout"></param>
+        /// <returns>Черновик или null, если черновик с указанными идентификаторами не существует</returns>
+        Task<Draft?> TryGetDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Удаление черновика
