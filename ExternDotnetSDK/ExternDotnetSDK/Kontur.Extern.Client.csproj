@@ -2,19 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Version>0.1.0-alpha</Version>
     <Description>Public SDK for Ke.API.</Description>
     <Authors>trubitsin</Authors>
     <Company>SKB Kontur</Company>
-    <Product>Kontur.Extern.Client</Product>
-    <Copyright></Copyright>
+    <Product>Kontur.Extern.Client</Product>    
     <PackageReleaseNotes>Work in progress. Not properly tested.</PackageReleaseNotes>
     <PackageTags>kontur, skbkontur, extern, kontur-extern, SDK, API, workInProgress, technicallyTheyFiredMeAfterIMadeThis</PackageTags>
     <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
