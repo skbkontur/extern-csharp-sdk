@@ -4,12 +4,12 @@ using Kontur.Extern.Client.Model.Numbers;
 
 namespace Kontur.Extern.Client.Testing.Generators
 {
-    public class AuthoritiesCodesGenerators
+    public class AuthoritiesCodesGenerator
     {
         private readonly Randomizer randomizer = new();
 
         [UsedImplicitly]
-        public AuthoritiesCodesGenerators()
+        public AuthoritiesCodesGenerator()
         {
         }
 
@@ -49,6 +49,13 @@ namespace Kontur.Extern.Client.Testing.Generators
             }
 
             return Inn.Parse($"{innWithControlSum}{finalControlSum%11%10}");
+        }
+        
+        public FssRegNumber FssRegNumber() => Model.Numbers.FssRegNumber.Parse(randomizer.DigitsString(10));
+        public PfrRegNumber PfrRegNumber()
+        {
+            var value = $"{randomizer.DigitsString(3)}-{randomizer.DigitsString(3)}-{randomizer.DigitsString(6)}";
+            return Model.Numbers.PfrRegNumber.Parse(value);
         }
     }
 }

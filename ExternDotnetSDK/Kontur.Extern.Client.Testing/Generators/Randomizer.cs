@@ -9,6 +9,13 @@ namespace Kontur.Extern.Client.Testing.Generators
 
         public int Int(int min, int max) => random.Next(min, max);
 
+        public byte[] Bytes(int length)
+        {
+            var bytes = new byte[length];
+            random.NextBytes(bytes);
+            return bytes;
+        }
+
         public string DigitsString(int length, params int[] excludeDigits)
         {
             var result = string.Empty;

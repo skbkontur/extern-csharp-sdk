@@ -1,0 +1,147 @@
+using System;
+using FluentAssertions;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
+using Kontur.Extern.Client.Model.Drafts;
+using Kontur.Extern.Client.Testing.Generators;
+using NUnit.Framework;
+
+namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
+{
+    public class NewDraftPayer_Tests
+    {
+        private readonly AuthoritiesCodesGenerator codesGenerator = new();
+
+        [Test]
+        public void IndividualEntrepreneur_should_fail_when_given_null_inn()
+        {
+            Action action = () => NewDraftPayer.IndividualEntrepreneur(null!);
+
+            action.Should().Throw<ArgumentException>();
+        }
+        
+        [Test]
+        public void IndividualEntrepreneur_should_create_payer_with_person_inn()
+        {
+            var inn = codesGenerator.PersonInn();
+            var expectedRequest = new AccountInfoRequest
+            {
+                Inn = inn.ToString()
+            };
+
+            var request = NewDraftPayer.IndividualEntrepreneur(inn).ToRequest();
+            
+            request.Should().BeEquivalentTo(expectedRequest);
+        }
+
+        [Test]
+        public void LegalEntityPayer_should_fail_when_given_null_inn()
+        {
+            var kpp = codesGenerator.Kpp();
+            
+            Action action = () => NewDraftPayer.LegalEntityPayer(null!, kpp);
+
+            action.Should().Throw<ArgumentException>();
+        }
+
+        [Test]
+        public void LegalEntityPayer_should_fail_when_given_null_kpp()
+        {
+            var inn = codesGenerator.LegalEntityInn();
+            
+            Action action = () => NewDraftPayer.LegalEntityPayer(inn, null!);
+
+            action.Should().Throw<ArgumentException>();
+        }
+
+        [Test]
+        public void LegalEntityPayer_should_create_payer_with_legal_entity_inn_and_kpp()
+        {
+            var inn = codesGenerator.LegalEntityInn();
+            var kpp = codesGenerator.Kpp();
+            var expectedRequest = new AccountInfoRequest
+            {
+                Inn = inn.ToString(),
+                Organization = new OrganizationInfoRequest
+                {
+                    Kpp = kpp.ToString()
+                }
+            };
+
+            var request = NewDraftPayer.LegalEntityPayer(inn, kpp).ToRequest();
+            
+            request.Should().BeEquivalentTo(expectedRequest);
+        }
+
+        [Test]
+        public void WithFssRegNumber_should_fail_when_given_null_fss_reg_number()
+        {
+            var inn = codesGenerator.LegalEntityInn();
+            var kpp = codesGenerator.Kpp();
+            var payer = NewDraftPayer.LegalEntityPayer(inn, kpp);
+
+            Action action = () => payer.WithFssRegNumber(null!);
+
+            action.Should().Throw<ArgumentException>();
+        }
+        
+        [Test]
+        public void WithFssRegNumber_should_set_fss_reg_number_to_payer()
+        {
+            var inn = codesGenerator.LegalEntityInn();
+            var kpp = codesGenerator.Kpp();
+            var fssRegNumber = codesGenerator.FssRegNumber();
+            var expectedRequest = new AccountInfoRequest
+            {
+                Inn = inn.ToString(),
+                Organization = new OrganizationInfoRequest
+                {
+                    Kpp = kpp.ToString()
+                },
+                RegistrationNumberFss = fssRegNumber.ToString()
+            };
+            var payer = NewDraftPayer
+                .LegalEntityPayer(inn, kpp)
+                .WithFssRegNumber(fssRegNumber);
+
+            var request = payer.ToRequest();
+            
+            request.Should().BeEquivalentTo(expectedRequest);
+        }
+
+        [Test]
+        public void WithPfrRegNumber_should_fail_when_given_null_pfr_reg_number()
+        {
+            var inn = codesGenerator.LegalEntityInn();
+            var kpp = codesGenerator.Kpp();
+            var payer = NewDraftPayer.LegalEntityPayer(inn, kpp);
+
+            Action action = () => payer.WithPfrRegNumber(null!);
+
+            action.Should().Throw<ArgumentException>();
+        }
+        
+        [Test]
+        public void WithPfrRegNumber_should_set_pfr_reg_number_to_payer()
+        {
+            var inn = codesGenerator.LegalEntityInn();
+            var kpp = codesGenerator.Kpp();
+            var pfrRegNumber = codesGenerator.PfrRegNumber();
+            var expectedRequest = new AccountInfoRequest
+            {
+                Inn = inn.ToString(),
+                Organization = new OrganizationInfoRequest
+                {
+                    Kpp = kpp.ToString()
+                },
+                RegistrationNumberPfr = pfrRegNumber.ToString()
+            };
+            var payer = NewDraftPayer
+                .LegalEntityPayer(inn, kpp)
+                .WithPfrRegNumber(pfrRegNumber);
+
+            var request = payer.ToRequest();
+            
+            request.Should().BeEquivalentTo(expectedRequest);
+        }
+    }
+}

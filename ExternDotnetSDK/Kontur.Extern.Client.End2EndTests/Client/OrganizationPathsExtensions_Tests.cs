@@ -12,14 +12,14 @@ using Xunit.Abstractions;
 
 namespace Kontur.Extern.Client.End2EndTests.Client
 {
-    public class OrganizationPathsExtensions_Tests : DefaultAccountPathsTests, IClassFixture<AuthoritiesCodesGenerators>
+    public class OrganizationPathsExtensions_Tests : DefaultAccountPathsTests, IClassFixture<AuthoritiesCodesGenerator>
     {
-        private readonly AuthoritiesCodesGenerators codesGenerators;
+        private readonly AuthoritiesCodesGenerator codesGenerator;
 
-        public OrganizationPathsExtensions_Tests(ITestOutputHelper output, AuthoritiesCodesGenerators codesGenerators)
+        public OrganizationPathsExtensions_Tests(ITestOutputHelper output, AuthoritiesCodesGenerator codesGenerator)
             : base(output)
         {
-            this.codesGenerators = codesGenerators;
+            this.codesGenerator = codesGenerator;
         }
         
         [Fact]
@@ -42,7 +42,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         public async Task Should_add_a_new_org_of_individual_entrepreneur()
         {
             await using var organizationScope = await Context.Organizations
-                .AddIndividualEntrepreneurOrganization(DefaultAccount.Id, codesGenerators.PersonInn(), "the org");
+                .AddIndividualEntrepreneurOrganization(DefaultAccount.Id, codesGenerator.PersonInn(), "the org");
             var organization = organizationScope.Entity;
 
             var loadedOrganization = await Context.Organizations.GetOrganization(DefaultAccount.Id, organization.Id);
@@ -54,7 +54,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         public async Task Should_add_a_new_org_of_legal_entity()
         {
             await using var organizationScope = await Context.Organizations
-                .AddLegalEntityOrganization(DefaultAccount.Id, codesGenerators.LegalEntityInn(), codesGenerators.Kpp(), "the org");
+                .AddLegalEntityOrganization(DefaultAccount.Id, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org");
             var organization = organizationScope.Entity;
 
             var loadedOrganization = await Context.Organizations.GetOrganization(DefaultAccount.Id, organization.Id);
@@ -67,7 +67,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         {
             Organization createdOrganization;
             await using(var organizationScope = await Context.Organizations
-                .AddLegalEntityOrganization(DefaultAccount.Id, codesGenerators.LegalEntityInn(), codesGenerators.Kpp(), "the org"))
+                .AddLegalEntityOrganization(DefaultAccount.Id, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org"))
             {
                 createdOrganization = organizationScope.Entity;
                 var loadedOrganization = await Context.Organizations.GetOrganization(DefaultAccount.Id, createdOrganization.Id);
@@ -92,9 +92,9 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         public async Task List_should_load_all_organizations_of_the_account()
         {
             await using var organizationScope1 = await Context.Organizations
-                .AddIndividualEntrepreneurOrganization(DefaultAccount.Id, codesGenerators.PersonInn(), "the org");
+                .AddIndividualEntrepreneurOrganization(DefaultAccount.Id, codesGenerator.PersonInn(), "the org");
             await using var organizationScope2 = await Context.Organizations
-                .AddLegalEntityOrganization(DefaultAccount.Id, codesGenerators.LegalEntityInn(), codesGenerators.Kpp(), "the org");
+                .AddLegalEntityOrganization(DefaultAccount.Id, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org");
             
             var organizationsOfAccount = await Context.Organizations.LoadAll(DefaultAccount.Id);
             
@@ -109,7 +109,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         {
             Organization createdOrganization;
             await using(var organizationScope = await Context.Organizations
-                .AddLegalEntityOrganization(DefaultAccount.Id, codesGenerators.LegalEntityInn(), codesGenerators.Kpp(), "the org"))
+                .AddLegalEntityOrganization(DefaultAccount.Id, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org"))
             {
                 createdOrganization = organizationScope.Entity;
                 var organizationsAfterCreate = await Context.Organizations.LoadAll(DefaultAccount.Id);
@@ -123,11 +123,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         [Fact]
         public async Task List_should_filter_organization_by_inn()
         {
-            var personInn = codesGenerators.PersonInn();
+            var personInn = codesGenerator.PersonInn();
             await using var organizationScope1 = await Context.Organizations
                 .AddIndividualEntrepreneurOrganization(DefaultAccount.Id, personInn, "the org");
             await using var organizationScope2 = await Context.Organizations
-                .AddLegalEntityOrganization(DefaultAccount.Id, codesGenerators.LegalEntityInn(), codesGenerators.Kpp(), "the org");
+                .AddLegalEntityOrganization(DefaultAccount.Id, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org");
             
             var organizationsOfAccount = await Context.Organizations.FilterByInn(DefaultAccount.Id, personInn.ToString());
             
@@ -139,12 +139,12 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         public async Task List_should_filter_organization_by_inn_and_kpp()
         {
             await using var organizationScope1 = await Context.Organizations
-                .AddIndividualEntrepreneurOrganization(DefaultAccount.Id, codesGenerators.PersonInn(), "the org");
-            var legalEntityInn = codesGenerators.LegalEntityInn();
+                .AddIndividualEntrepreneurOrganization(DefaultAccount.Id, codesGenerator.PersonInn(), "the org");
+            var legalEntityInn = codesGenerator.LegalEntityInn();
             await using var organizationScope2 = await Context.Organizations
-                .AddLegalEntityOrganization(DefaultAccount.Id, legalEntityInn, codesGenerators.Kpp(), "the org");
+                .AddLegalEntityOrganization(DefaultAccount.Id, legalEntityInn, codesGenerator.Kpp(), "the org");
             await using var organizationScope3 = await Context.Organizations
-                .AddLegalEntityOrganization(DefaultAccount.Id, legalEntityInn, codesGenerators.Kpp(), "the org");
+                .AddLegalEntityOrganization(DefaultAccount.Id, legalEntityInn, codesGenerator.Kpp(), "the org");
             
             var organizationsOfAccount = await Context.Organizations
                 .FilterByInnKpp(DefaultAccount.Id, legalEntityInn.ToString(), organizationScope2.Entity.General.Kpp);
@@ -157,7 +157,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         public async Task Should_rename_an_organization()
         {
             await using var organizationScope = await Context.Organizations
-                .AddLegalEntityOrganization(DefaultAccount.Id, codesGenerators.LegalEntityInn(), codesGenerators.Kpp(), "the org");
+                .AddLegalEntityOrganization(DefaultAccount.Id, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org");
 
             var organization = organizationScope.Entity;
             const string newName = "the new name";

@@ -60,6 +60,7 @@ namespace Kontur.Extern.Client.Exceptions
                 AuthorityNumberKind.Kpp => "Kpp",
                 AuthorityNumberKind.LegalEntityInn => "INN of legal entity",
                 AuthorityNumberKind.PfrRegNumber => "PFR reg number",
+                AuthorityNumberKind.FssRegNumber => "FSS reg number",
                 _ => throw UnexpectedEnumMember(nameof(numberKind), numberKind)
             };
         }
@@ -81,5 +82,14 @@ namespace Kontur.Extern.Client.Exceptions
 
         public static Exception UrlShouldBeAbsolute([InvokerParameterName] string paramName, Uri uri) => 
             new ArgumentException($"The value '{uri}' is not be absolute url", paramName);
+
+        public static Exception ArrayCannotBeEmpty([InvokerParameterName] string paramName) =>
+            new ArgumentException("Value cannot be an empty array.", paramName);
+
+        public static Exception BytesArrayCannotContainsOnlyZeros(string paramName) => 
+            new ArgumentException("The array cannot contains only zero bytes.", paramName);
+        
+        public static Exception StringsCannotContainNullOrWhitespace(string paramName) => 
+            new ArgumentException("The collection cannot contains null, or empty, or whitespace strings.", paramName);
     }
 }

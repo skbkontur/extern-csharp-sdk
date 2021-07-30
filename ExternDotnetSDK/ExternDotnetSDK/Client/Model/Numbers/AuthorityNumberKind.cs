@@ -13,6 +13,7 @@ namespace Kontur.Extern.Client.Model.Numbers
         LegalEntityInn,
         Kpp,
         Inn,
-        PfrRegNumber
+        PfrRegNumber,
+        FssRegNumber
     }
 }
