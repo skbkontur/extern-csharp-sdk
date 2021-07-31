@@ -9,7 +9,7 @@ namespace Kontur.Extern.Client.Model.Drafts
 {
     public class NewDraftSender
     {
-        public static NewDraftSender LegalEntityPayer(LegalEntityInn inn, Kpp kpp, CertificateContent certificate)
+        public static NewDraftSender LegalEntity(LegalEntityInn inn, Kpp kpp, CertificateContent certificate)
         {
             if (inn is null)
                 throw new ArgumentNullException(nameof(inn));

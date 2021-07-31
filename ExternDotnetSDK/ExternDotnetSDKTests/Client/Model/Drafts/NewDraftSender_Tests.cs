@@ -55,40 +55,40 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
         }
 
         [Test]
-        public void LegalEntityPayer_should_fail_when_given_certificate_is_null()
+        public void LegalEntity_should_fail_when_given_certificate_is_null()
         {
             var inn = codesGenerator.LegalEntityInn();
             var kpp = codesGenerator.Kpp();
             
-            Action action = () => NewDraftSender.LegalEntityPayer(inn, kpp, null!);
+            Action action = () => NewDraftSender.LegalEntity(inn, kpp, null!);
 
             action.Should().Throw<ArgumentException>();
         }
 
         [Test]
-        public void LegalEntityPayer_should_fail_when_given_inn_is_null()
+        public void LegalEntity_should_fail_when_given_inn_is_null()
         {
             var kpp = codesGenerator.Kpp();
             CertificateContent certificate = randomizer.Bytes(10);
             
-            Action action = () => NewDraftSender.LegalEntityPayer(null!, kpp, certificate);
+            Action action = () => NewDraftSender.LegalEntity(null!, kpp, certificate);
 
             action.Should().Throw<ArgumentException>();
         }
 
         [Test]
-        public void LegalEntityPayer_should_fail_when_given_kpp_is_null()
+        public void LegalEntity_should_fail_when_given_kpp_is_null()
         {
             var inn = codesGenerator.LegalEntityInn();
             CertificateContent certificate = randomizer.Bytes(10);
             
-            Action action = () => NewDraftSender.LegalEntityPayer(inn, null!, certificate);
+            Action action = () => NewDraftSender.LegalEntity(inn, null!, certificate);
 
             action.Should().Throw<ArgumentException>();
         }
 
         [Test]
-        public void LegalEntityPayer_should_create_a_sender_with_person_inn()
+        public void LegalEntity_should_create_a_sender_with_person_inn()
         {
             var certificate = randomizer.Bytes(10);
             var inn = codesGenerator.LegalEntityInn();
@@ -103,7 +103,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 Kpp = kpp.ToString()
             };
 
-            var request = NewDraftSender.LegalEntityPayer(inn, kpp, certificate).ToRequest();
+            var request = NewDraftSender.LegalEntity(inn, kpp, certificate).ToRequest();
 
             request.Should().BeEquivalentTo(expectedRequest);
         }
@@ -126,7 +126,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             };
 
             var request = NewDraftSender
-                .LegalEntityPayer(inn, kpp, certificate)
+                .LegalEntity(inn, kpp, certificate)
                 .WithIpAddress(IPAddress.Parse("127.0.0.1"))
                 .ToRequest();
 
@@ -141,7 +141,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             var kpp = codesGenerator.Kpp();
 
             var sender = NewDraftSender
-                .LegalEntityPayer(inn, kpp, certificate);
+                .LegalEntity(inn, kpp, certificate);
 
             Action action = () => sender.WithIpAddress(null!);
 
