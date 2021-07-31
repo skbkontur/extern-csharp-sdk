@@ -57,5 +57,7 @@ namespace Kontur.Extern.Client.Testing.Generators
             var value = $"{randomizer.DigitsString(3)}-{randomizer.DigitsString(3)}-{randomizer.DigitsString(6)}";
             return Model.Numbers.PfrRegNumber.Parse(value);
         }
+
+        public IfnsCode IfnsCode() => Model.Numbers.IfnsCode.Parse(randomizer.DigitsString(4));
     }
 }

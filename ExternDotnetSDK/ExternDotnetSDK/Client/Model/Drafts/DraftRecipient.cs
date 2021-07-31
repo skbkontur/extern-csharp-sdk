@@ -1,34 +1,56 @@
 #nullable enable
+using System;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
+using Kontur.Extern.Client.Model.Numbers;
 
 namespace Kontur.Extern.Client.Model.Drafts
 {
     public class DraftRecipient
     {
-        public static DraftRecipient Ifns(string ifnsCode, string? mriCode = null) =>
-            new(new RecipientInfoRequest
+        public static DraftRecipient Ifns(IfnsCode ifnsCode, MriCode? mriCode = null)
+        {
+            if (ifnsCode is null)
+                throw new ArgumentNullException(nameof(ifnsCode));
+            
+            return new(new RecipientInfoRequest
             {
-                IfnsCode = ifnsCode,
-                MriCode = mriCode
+                IfnsCode = ifnsCode.ToString(),
+                MriCode = mriCode?.ToString()
             });
+        }
 
-        public static DraftRecipient Fss(string fssCode) =>
-            new(new RecipientInfoRequest
+        public static DraftRecipient Fss(FssCode fssCode)
+        {
+            if (fssCode is null)
+                throw new ArgumentNullException(nameof(fssCode));
+            
+            return new(new RecipientInfoRequest
             {
-                FssCode = fssCode
+                FssCode = fssCode?.ToString()
             });
-        
-        public static DraftRecipient Togs(string togsCode) =>
-            new(new RecipientInfoRequest
+        }
+
+        public static DraftRecipient Togs(TogsCode togsCode)
+        {
+            if (togsCode is null)
+                throw new ArgumentNullException(nameof(togsCode));
+            
+            return new(new RecipientInfoRequest
             {
-                TogsCode = togsCode
+                TogsCode = togsCode?.ToString()
             });
-        
-        public static DraftRecipient Upfr(string upfrCode) =>
-            new(new RecipientInfoRequest
+        }
+
+        public static DraftRecipient Upfr(PfrCode upfrCode)
+        {
+            if (upfrCode is null)
+                throw new ArgumentNullException(nameof(upfrCode));
+            
+            return new(new RecipientInfoRequest
             {
-                UpfrCode = upfrCode
+                UpfrCode = upfrCode.ToString()
             });
+        }
 
         private readonly RecipientInfoRequest request;
 

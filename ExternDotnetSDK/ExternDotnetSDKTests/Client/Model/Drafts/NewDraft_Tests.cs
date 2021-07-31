@@ -1,8 +1,10 @@
+#nullable enable
 using System;
 using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.Model.Drafts;
+using Kontur.Extern.Client.Model.Numbers;
 using Kontur.Extern.Client.Testing.Generators;
 using NUnit.Framework;
 
@@ -36,14 +38,15 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 },
                 Recipient = new RecipientInfoRequest
                 {
-                    MriCode = "mri-code"
+                    IfnsCode = "1234",
+                    MriCode = "5678"
                 }
             };
 
             var request = new NewDraft(
                     NewDraftPayer.IndividualEntrepreneur(payerInn),
                     NewDraftSender.IndividualEntrepreneur(senderInn, senderCert),
-                    DraftRecipient.Ifns("ifns-code")
+                    DraftRecipient.Ifns(IfnsCode.Parse("1234"), MriCode.Parse("5678"))
                 )
                 .ToRequest();
 
@@ -219,21 +222,21 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 },
                 Recipient = new RecipientInfoRequest
                 {
-                    MriCode = "mri-code"
+                    IfnsCode = "1234"
                 }
             };
 
             var newDraft = new NewDraft(
                 NewDraftPayer.IndividualEntrepreneur(payerInn),
                 NewDraftSender.IndividualEntrepreneur(senderInn, senderCert),
-                DraftRecipient.Ifns("ifns-code")
+                DraftRecipient.Ifns(IfnsCode.Parse("1234"))
             );
             return (newDraft, expectedRequest);
         }
 
-        private static DraftRecipient RandomRecipient() => DraftRecipient.Ifns("ifns-code");
+        private DraftRecipient RandomRecipient() => DraftRecipient.Ifns(codesGenerator.IfnsCode());
 
-        private NewDraftSender RandomSender() => NewDraftSender.IndividualEntrepreneur(codesGenerator.PersonInn(), (byte[]) randomizer.Bytes(10));
+        private NewDraftSender RandomSender() => NewDraftSender.IndividualEntrepreneur(codesGenerator.PersonInn(), randomizer.Bytes(10));
 
         private NewDraftPayer RandomPayer() => NewDraftPayer.IndividualEntrepreneur(codesGenerator.PersonInn());
     }

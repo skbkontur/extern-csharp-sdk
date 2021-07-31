@@ -12,7 +12,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
         [TestCaseSource(nameof(InvalidStrings))]
         public void Should_fail_when_the_given_number_string_is_invalid(string value)
         {
-            Action action = () => Togs.Parser.Parse(value);
+            Action action = () => TogsCode.Parser.Parse(value);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -20,7 +20,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
         [TestCaseSource(nameof(ValidStrings))]
         public void Should_successfully_return_a_number_when_the_given_value_is_valid(string value)
         {
-            var parsedValue = Togs.Parser.Parse(value);
+            var parsedValue = TogsCode.Parser.Parse(value);
 
             parsedValue.Kind.Should().Be(AuthorityNumberKind.Togs);
             parsedValue.Value.Should().Be(value);
