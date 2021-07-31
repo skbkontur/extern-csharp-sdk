@@ -24,10 +24,21 @@ namespace Kontur.Extern.Client.Testing.Lifetimes
 
         public void Add(Func<Task> resource) => resources.Push(resource);
 
+        /// <inheritdoc />
         public T Add<T>(T resource)
-            where T : IDisposable
         {
-            resources.Push(resource);
+            switch (resource)
+            {
+                case IDisposable disposable:
+                    resources.Push(disposable);
+                    break;
+                case IAsyncDisposable asyncDisposable:
+                    resources.Push(asyncDisposable);
+                    break;
+                default:
+                    throw new ArgumentException($"The given resource is not implement {typeof(IDisposable)} or {typeof(IAsyncDisposable)}");
+            }
+
             return resource;
         }
 
@@ -55,6 +66,9 @@ namespace Kontur.Extern.Client.Testing.Lifetimes
                             break;
                         case IDisposable disposable:
                             disposable.Dispose();
+                            break;
+                        case IAsyncDisposable disposable:
+                            await disposable.DisposeAsync().ConfigureAwait(false);
                             break;
                     }
                 }

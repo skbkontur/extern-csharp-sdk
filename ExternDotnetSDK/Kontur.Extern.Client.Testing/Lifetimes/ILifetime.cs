@@ -13,7 +13,13 @@ namespace Kontur.Extern.Client.Testing.Lifetimes
         
         void Add(Action resource);
 
-        T Add<T>(T resource)
-            where T : IDisposable;
+        /// <summary>
+        /// Add new resource of <typeparamref name="T"/> which is implements <see cref="IDisposable"/> or <see cref="IAsyncDisposable"/> 
+        /// </summary>
+        /// <param name="resource">The resource</param>
+        /// <typeparam name="T">The resource type which implements <see cref="IDisposable"/> or <see cref="IAsyncDisposable"/></typeparam>
+        /// <returns>Returns <paramref name="resource"/></returns>
+        /// <exception cref="ArgumentException">If <paramref name="resource"/> does not implement <see cref="IDisposable"/> or <see cref="IAsyncDisposable"/></exception>
+        T Add<T>(T resource);
     }
 }
