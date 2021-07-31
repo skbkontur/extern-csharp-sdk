@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Accounts;
+using Kontur.Extern.Client.ApiLevel.Models.Certificates;
 using Kontur.Extern.Client.Model.Numbers;
 
 namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
@@ -35,5 +36,8 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
         
         public Task<IReadOnlyList<Account>> LoadAllAccountsAsync() => 
             konturExtern.Accounts.List().SliceBy(100).LoadAllAsync();
+
+        public Task<IReadOnlyList<CertificateDto>> GetAccountCertificatesAsync(Guid accountId) => 
+            konturExtern.Accounts.WithId(accountId).Certificates().SliceBy(100).LoadAllAsync();
     }
 }
