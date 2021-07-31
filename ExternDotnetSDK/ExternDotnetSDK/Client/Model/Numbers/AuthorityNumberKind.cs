@@ -14,6 +14,11 @@ namespace Kontur.Extern.Client.Model.Numbers
         Kpp,
         Inn,
         PfrRegNumber,
-        FssRegNumber
+        FssRegNumber,
+        IfnsCode,
+        MriCode,
+        FssCode,
+        Togs,
+        PfrCode
     }
 }

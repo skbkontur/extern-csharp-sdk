@@ -61,6 +61,11 @@ namespace Kontur.Extern.Client.Exceptions
                 AuthorityNumberKind.LegalEntityInn => "INN of legal entity",
                 AuthorityNumberKind.PfrRegNumber => "PFR reg number",
                 AuthorityNumberKind.FssRegNumber => "FSS reg number",
+                AuthorityNumberKind.IfnsCode => "IFNS code",
+                AuthorityNumberKind.MriCode => "MRI code",
+                AuthorityNumberKind.FssCode => "FSS code",
+                AuthorityNumberKind.Togs => "TOGS",
+                AuthorityNumberKind.PfrCode => "PFR code",
                 _ => throw UnexpectedEnumMember(nameof(numberKind), numberKind)
             };
         }
