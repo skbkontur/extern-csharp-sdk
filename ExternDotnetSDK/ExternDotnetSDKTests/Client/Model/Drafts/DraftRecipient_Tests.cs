@@ -59,7 +59,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 };
                     
                 var request = DraftRecipient
-                    .Upfr(PfrCode.Parse("123-456"))
+                    .Upfr(UpfrCode.Parse("123-456"))
                     .ToRequest();
                 
                 request.Should().BeEquivalentTo(expectedRequest);

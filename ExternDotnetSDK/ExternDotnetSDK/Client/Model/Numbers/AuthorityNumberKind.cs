@@ -19,6 +19,6 @@ namespace Kontur.Extern.Client.Model.Numbers
         MriCode,
         FssCode,
         Togs,
-        PfrCode
+        UpfrCode
     }
 }

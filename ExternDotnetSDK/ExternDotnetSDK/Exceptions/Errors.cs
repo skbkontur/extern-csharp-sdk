@@ -65,7 +65,7 @@ namespace Kontur.Extern.Client.Exceptions
                 AuthorityNumberKind.MriCode => "MRI code",
                 AuthorityNumberKind.FssCode => "FSS code",
                 AuthorityNumberKind.Togs => "TOGS",
-                AuthorityNumberKind.PfrCode => "PFR code",
+                AuthorityNumberKind.UpfrCode => "UPFR code",
                 _ => throw UnexpectedEnumMember(nameof(numberKind), numberKind)
             };
         }

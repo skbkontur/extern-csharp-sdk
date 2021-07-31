@@ -7,12 +7,12 @@ using NUnit.Framework;
 namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
 {
     [TestFixture]
-    internal class PfrCode_Tests
+    internal class UpfrCode_Tests
     {
         [TestCaseSource(nameof(InvalidStrings))]
         public void Should_fail_when_the_given_number_string_is_invalid(string value)
         {
-            Action action = () => PfrCode.Parser.Parse(value);
+            Action action = () => UpfrCode.Parser.Parse(value);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -20,9 +20,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
         [TestCaseSource(nameof(ValidStrings))]
         public void Should_successfully_return_a_number_when_the_given_value_is_valid(string value)
         {
-            var parsedValue = PfrCode.Parser.Parse(value);
+            var parsedValue = UpfrCode.Parser.Parse(value);
 
-            parsedValue.Kind.Should().Be(AuthorityNumberKind.PfrCode);
+            parsedValue.Kind.Should().Be(AuthorityNumberKind.UpfrCode);
             parsedValue.Value.Should().Be(value);
         }
             

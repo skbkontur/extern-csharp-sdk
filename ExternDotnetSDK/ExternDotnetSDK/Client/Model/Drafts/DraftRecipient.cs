@@ -41,7 +41,7 @@ namespace Kontur.Extern.Client.Model.Drafts
             });
         }
 
-        public static DraftRecipient Upfr(PfrCode upfrCode)
+        public static DraftRecipient Upfr(UpfrCode upfrCode)
         {
             if (upfrCode is null)
                 throw new ArgumentNullException(nameof(upfrCode));
