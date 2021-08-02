@@ -17,7 +17,7 @@ namespace Kontur.Extern.Client.Testing.End2End.Environment
             return JsonConvert.DeserializeObject<AuthTestData>(json);
         }
 
-        public AuthTestData(string userName, string password, string scope, string apiKey, string clientId, string? openIdServer = DefaultOpenIdServer)
+        public AuthTestData(string userName, string password, string scope, string apiKey, string clientId, TestDataGenerationLevel testDataGenerateLevel, string? openIdServer = DefaultOpenIdServer)
         {
             openIdServer ??= DefaultOpenIdServer;
             ShouldNotBeNullOrEmpty(userName, nameof(userName));
@@ -32,6 +32,7 @@ namespace Kontur.Extern.Client.Testing.End2End.Environment
             Scope = scope;
             ApiKey = apiKey;
             ClientId = clientId;
+            TestDataGenerateLevel = testDataGenerateLevel;
             OpenIdServer = openIdServer;
         }
 
@@ -42,6 +43,7 @@ namespace Kontur.Extern.Client.Testing.End2End.Environment
         public string ApiKey { get; }
         public string ClientId { get; }
         public string OpenIdServer { get; }
+        public TestDataGenerationLevel TestDataGenerateLevel { get; } 
 
         private static void ShouldNotBeNullOrEmpty(string value, [InvokerParameterName] string paramName)
         {
