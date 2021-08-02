@@ -7,7 +7,8 @@ using Xunit.Abstractions;
 
 namespace Kontur.Extern.Client.End2EndTests.Client.TestAbstractions
 {
-    public abstract class GeneratedAccountTests : IClassFixture<IsolatedAccountEnvironment> 
+    [Collection(IsolatedAccountEnvironmentCollection.Name)]
+    public abstract class GeneratedAccountTests 
     {
         private readonly IsolatedAccountEnvironment environment;
         private readonly ITestOutputHelper output;
