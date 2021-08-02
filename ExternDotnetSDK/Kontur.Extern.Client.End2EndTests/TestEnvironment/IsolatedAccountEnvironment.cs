@@ -5,6 +5,7 @@ using Kontur.Extern.Client.End2EndTests.TestEnvironment.Models;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool;
 using Kontur.Extern.Client.Testing.End2End.Environment;
 using Kontur.Extern.Client.Testing.Fakes.Logging;
+using Kontur.Extern.Client.Testing.Lifetimes;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -15,6 +16,7 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment
         private readonly AuthTestData authTestData;
         private readonly ExternTestTool externTestTool;
         private GeneratedAccount generatedAccount = null!;
+        private readonly Lifetime lifetime;
 
         [UsedImplicitly]
         public IsolatedAccountEnvironment(IMessageSink messageSink)
@@ -27,7 +29,8 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment
                 TestDataGenerationLevel.CurrentDirectory => JsonFileResponseCache.InCurrentFolder(),
                 _ => throw new ArgumentOutOfRangeException(nameof(authTestData.TestDataGenerateLevel), authTestData.TestDataGenerateLevel, null)
             };
-            externTestTool = new ExternTestTool(authTestData.ApiKey, responseCache, new TestLog(messageSink));
+            lifetime = new Lifetime(new TestLog(messageSink));
+            externTestTool = new ExternTestTool(authTestData.ApiKey, responseCache, lifetime);
         }
 
         internal GeneratedAccount GeneratedAccount => generatedAccount;
@@ -36,6 +39,6 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment
         public async Task InitializeAsync() => 
             generatedAccount = await externTestTool.GenerateLegalEntityAccountAsync("the_org");
 
-        public Task DisposeAsync() => Task.CompletedTask;
+        public async Task DisposeAsync() => await lifetime.DisposeAsync();
     }
 }

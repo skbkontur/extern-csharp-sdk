@@ -21,10 +21,13 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
         public async Task<byte[]> GetPublicPartOfCertificate(string driveCertificateUrl)
         {
             var positionOfFileName = driveCertificateUrl.LastIndexOf("/", StringComparison.Ordinal) + 1;
+            
             var fileName = driveCertificateUrl.Substring(positionOfFileName);
+            lifetime.Add(() => DeleteFileIfExists(fileName));
+            
             var directoryName = Path.GetFileNameWithoutExtension(fileName);
             lifetime.Add(() => DeleteDirectoryIfExists(directoryName));
-                
+
             if (!File.Exists(fileName))
             {
                 await DownloadToFile(driveCertificateUrl, fileName);
@@ -46,11 +49,23 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
             }
         }
 
-        private static void DeleteDirectoryIfExists(string? directoryName)
+        private static void DeleteDirectoryIfExists(string directoryName)
         {
             try
             {
-                Directory.Delete(directoryName);
+                Directory.Delete(directoryName, true);
+            }
+            catch (Exception)
+            {
+                /* IGNORE */
+            }
+        }
+
+        private static void DeleteFileIfExists(string fileName)
+        {
+            try
+            {
+                File.Delete(fileName);
             }
             catch (Exception)
             {

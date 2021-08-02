@@ -8,21 +8,18 @@ using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.Models;
 using Kontur.Extern.Client.Testing.Lifetimes;
 using Newtonsoft.Json;
-using Vostok.Logging.Abstractions;
 
 namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
 {
-    internal class ExternTestTool : IDisposable
+    internal class ExternTestTool
     {
         private readonly IResponseCache cache;
         private readonly HttpClient httpClient;
-        private readonly Lifetime lifetime;
         private readonly DriveCertificatesReader driveCertificatesReader;
 
-        public ExternTestTool(string apiKey, IResponseCache cache, ILog log)
+        public ExternTestTool(string apiKey, IResponseCache cache, ILifetime lifetime)
         {
             this.cache = cache;
-            lifetime = new Lifetime(log);
             httpClient = lifetime.Add(new HttpClient
             {
                 BaseAddress = new Uri("https://extern-api.testkontur.ru/test-tools/v1/", UriKind.Absolute)
@@ -71,8 +68,6 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
                 return await responseMessage.Content.ReadAsStringAsync();
             }
         }
-        
-        public void Dispose() => lifetime.Dispose();
 
 #pragma warning disable 8618
         private class NewLegalEntityAccountRequest
