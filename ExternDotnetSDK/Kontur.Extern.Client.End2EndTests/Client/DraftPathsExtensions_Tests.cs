@@ -1,9 +1,10 @@
 using System;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using JetBrains.Annotations;
 using Kontur.Extern.Client.End2EndTests.Client.TestAbstractions;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Model.Drafts;
 using Kontur.Extern.Client.Model.Numbers;
@@ -12,17 +13,17 @@ using Xunit.Abstractions;
 
 namespace Kontur.Extern.Client.End2EndTests.Client
 {
-    public class DraftPathsExtensions_Tests : DefaultAccountPathsTests
+    public class DraftPathsExtensions_Tests : GeneratedAccountTests
     {
-        public DraftPathsExtensions_Tests([NotNull] ITestOutputHelper output)
-            : base(output)
+        public DraftPathsExtensions_Tests(ITestOutputHelper output, IsolatedAccountEnvironment environment)
+            : base(output, environment)
         {
         }
-
+        
         [Fact]
         public void Get_should_fail_when_try_to_read_non_existent_draft()
         {
-            Func<Task> func = async () => await Context.Drafts.GetDraft(DefaultAccount.Id, Guid.NewGuid());
+            Func<Task> func = async () => await Context.Drafts.GetDraft(AccountId, Guid.NewGuid());
 
             func.Should().Throw<ApiException>();
         }
@@ -30,7 +31,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         [Fact]
         public async Task TryGet_should_return_null_when_try_to_read_non_existent_draft()
         {
-            var draft = await Context.Drafts.GetDraftOrNull(DefaultAccount.Id, Guid.NewGuid());
+            var draft = await Context.Drafts.GetDraftOrNull(AccountId, Guid.NewGuid());
 
             draft.Should().BeNull();
         }
@@ -40,19 +41,19 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         {
             var newDraft = NewDraftOfDefaultAccount();
 
-            await using var entityScope = await Context.Drafts.CreateNew(DefaultAccount.Id, newDraft);
+            await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
 
             var createdDraft = entityScope.Entity;
-            var loadedDraft = await Context.Drafts.GetDraft(DefaultAccount.Id, createdDraft.Id);
+            var loadedDraft = await Context.Drafts.GetDraft(AccountId, createdDraft.Id);
             
             loadedDraft.Should().BeEquivalentTo(createdDraft);
         }
 
         private NewDraft NewDraftOfDefaultAccount()
         {
-            var certInn = LegalEntityInn.Parse(AccountCertificate.Inn);
-            var certKpp = Kpp.Parse(AccountCertificate.Kpp);
-            var senderCert = AccountCertificate.Content;
+            var certInn = GeneratedAccount.Inn;
+            var certKpp = GeneratedAccount.Kpp;
+            var senderCert = GeneratedAccount.CertificatePublicPart;
 
             return new NewDraft(
                 NewDraftPayer.LegalEntityPayer(certInn, certKpp),
