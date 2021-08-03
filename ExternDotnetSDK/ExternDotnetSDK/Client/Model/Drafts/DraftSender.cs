@@ -7,9 +7,9 @@ using Kontur.Extern.Client.Model.Numbers;
 
 namespace Kontur.Extern.Client.Model.Drafts
 {
-    public class NewDraftSender
+    public class DraftSender
     {
-        public static NewDraftSender LegalEntity(LegalEntityInn inn, Kpp kpp, CertificateContent certificate)
+        public static DraftSender LegalEntity(LegalEntityInn inn, Kpp kpp, CertificateContent certificate)
         {
             if (inn is null)
                 throw new ArgumentNullException(nameof(inn));
@@ -21,7 +21,7 @@ namespace Kontur.Extern.Client.Model.Drafts
             return new(inn.ToString(), kpp.ToString(), certificate);
         }
 
-        public static NewDraftSender IndividualEntrepreneur(Inn inn, CertificateContent certificate)
+        public static DraftSender IndividualEntrepreneur(Inn inn, CertificateContent certificate)
         {
             if (inn is null)
                 throw new ArgumentNullException(nameof(inn));
@@ -37,14 +37,14 @@ namespace Kontur.Extern.Client.Model.Drafts
         private bool isRepresentative;
         private readonly CertificateContent certificate;
 
-        private NewDraftSender(string inn, string? kpp, CertificateContent certificate)
+        private DraftSender(string inn, string? kpp, CertificateContent certificate)
         {
             this.inn = inn;
             this.kpp = kpp;
             this.certificate = certificate;
         }
 
-        public NewDraftSender WithIpAddress(IPAddress ipAddress)
+        public DraftSender WithIpAddress(IPAddress ipAddress)
         {
             if (ipAddress is null!)
                 throw new ArgumentNullException(nameof(ipAddress));
@@ -52,7 +52,7 @@ namespace Kontur.Extern.Client.Model.Drafts
             return this;
         }
 
-        public NewDraftSender Representative(bool value = true)
+        public DraftSender Representative(bool value = true)
         {
             isRepresentative = value;
             return this;

@@ -3,6 +3,8 @@ using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
+using Kontur.Extern.Client.Model.Drafts;
 using Kontur.Extern.Client.Paths;
 
 namespace Kontur.Extern.Client
@@ -26,6 +28,12 @@ namespace Kontur.Extern.Client
         {
             var apiClient = path.Services.Api;
             return apiClient.Drafts.DeleteDraftAsync(path.AccountId, path.DraftId, timeout);
+        }
+        
+        public static Task<DraftMeta> UpdateMetadataAsync(this in DraftPath path, DraftMetadata metadata, TimeSpan? timeout = null)
+        {
+            var apiClient = path.Services.Api;
+            return apiClient.Drafts.UpdateDraftMetaAsync(path.AccountId, path.DraftId, metadata.ToRequest(), timeout);
         }
     }
 }

@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
 {
-    public class NewDraftSender_Tests
+    public class DraftSender_Tests
     {
         private readonly Randomizer randomizer = new();
         private readonly AuthoritiesCodesGenerator codesGenerator = new();
@@ -20,7 +20,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
         {
             var inn = codesGenerator.PersonInn();
             
-            Action action = () => NewDraftSender.IndividualEntrepreneur(inn, null!);
+            Action action = () => DraftSender.IndividualEntrepreneur(inn, null!);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -30,7 +30,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
         {
             CertificateContent certificate = randomizer.Bytes(10);
             
-            Action action = () => NewDraftSender.IndividualEntrepreneur(null!, certificate);
+            Action action = () => DraftSender.IndividualEntrepreneur(null!, certificate);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -49,7 +49,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 Inn = inn.ToString()
             };
 
-            var request = NewDraftSender.IndividualEntrepreneur(inn, certificate).ToRequest();
+            var request = DraftSender.IndividualEntrepreneur(inn, certificate).ToRequest();
 
             request.Should().BeEquivalentTo(expectedRequest);
         }
@@ -60,7 +60,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             var inn = codesGenerator.LegalEntityInn();
             var kpp = codesGenerator.Kpp();
             
-            Action action = () => NewDraftSender.LegalEntity(inn, kpp, null!);
+            Action action = () => DraftSender.LegalEntity(inn, kpp, null!);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -71,7 +71,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             var kpp = codesGenerator.Kpp();
             CertificateContent certificate = randomizer.Bytes(10);
             
-            Action action = () => NewDraftSender.LegalEntity(null!, kpp, certificate);
+            Action action = () => DraftSender.LegalEntity(null!, kpp, certificate);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -82,7 +82,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             var inn = codesGenerator.LegalEntityInn();
             CertificateContent certificate = randomizer.Bytes(10);
             
-            Action action = () => NewDraftSender.LegalEntity(inn, null!, certificate);
+            Action action = () => DraftSender.LegalEntity(inn, null!, certificate);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -103,7 +103,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 Kpp = kpp.ToString()
             };
 
-            var request = NewDraftSender.LegalEntity(inn, kpp, certificate).ToRequest();
+            var request = DraftSender.LegalEntity(inn, kpp, certificate).ToRequest();
 
             request.Should().BeEquivalentTo(expectedRequest);
         }
@@ -125,7 +125,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 IpAddress = "127.0.0.1"
             };
 
-            var request = NewDraftSender
+            var request = DraftSender
                 .LegalEntity(inn, kpp, certificate)
                 .WithIpAddress(IPAddress.Parse("127.0.0.1"))
                 .ToRequest();
@@ -140,7 +140,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             var inn = codesGenerator.LegalEntityInn();
             var kpp = codesGenerator.Kpp();
 
-            var sender = NewDraftSender
+            var sender = DraftSender
                 .LegalEntity(inn, kpp, certificate);
 
             Action action = () => sender.WithIpAddress(null!);
@@ -163,7 +163,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 IsRepresentative = true
             };
 
-            var request = NewDraftSender.IndividualEntrepreneur(inn, certificate)
+            var request = DraftSender.IndividualEntrepreneur(inn, certificate)
                 .Representative()
                 .ToRequest();
 

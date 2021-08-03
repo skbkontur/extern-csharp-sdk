@@ -5,9 +5,9 @@ using Kontur.Extern.Client.Model.Numbers;
 
 namespace Kontur.Extern.Client.Model.Drafts
 {
-    public class NewDraftPayer
+    public class DraftPayer
     {
-        public static NewDraftPayer LegalEntityPayer(LegalEntityInn inn, Kpp kpp)
+        public static DraftPayer LegalEntityPayer(LegalEntityInn inn, Kpp kpp)
         {
             if (inn is null)
                 throw new ArgumentNullException(nameof(inn));
@@ -17,7 +17,7 @@ namespace Kontur.Extern.Client.Model.Drafts
             return new(inn.ToString(), kpp.ToString());
         }
 
-        public static NewDraftPayer IndividualEntrepreneur(Inn inn)
+        public static DraftPayer IndividualEntrepreneur(Inn inn)
         {
             if (inn is null)
                 throw new ArgumentNullException(nameof(inn));
@@ -31,19 +31,19 @@ namespace Kontur.Extern.Client.Model.Drafts
         private readonly string inn;
         private readonly string? kpp;
 
-        private NewDraftPayer(string inn, string? kpp)
+        private DraftPayer(string inn, string? kpp)
         {
             this.inn = inn;
             this.kpp = kpp;
         }
 
-        public NewDraftPayer WithFssRegNumber(FssRegNumber value)
+        public DraftPayer WithFssRegNumber(FssRegNumber value)
         {
             fssRegNumber = value ?? throw new ArgumentNullException(nameof(value));
             return this;
         }
 
-        public NewDraftPayer WithPfrRegNumber(PfrRegNumber value)
+        public DraftPayer WithPfrRegNumber(PfrRegNumber value)
         {
             pfrRegNumber = value ?? throw new ArgumentNullException(nameof(value));
             return this;

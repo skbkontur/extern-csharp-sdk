@@ -10,12 +10,10 @@ namespace Kontur.Extern.Client
     [PublicAPI]
     public static class DraftListPathExtension
     {
-        public static Task<Draft> CreateDraftAsync(this in DraftListPath path, NewDraft newDraft, TimeSpan? timeout = null)
+        public static Task<Draft> CreateDraftAsync(this in DraftListPath path, DraftMetadata draftMetadata, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
-            var accountId = path.AccountId;
-
-            return apiClient.Drafts.CreateDraftAsync(accountId, newDraft.ToRequest(), timeout);
+            return apiClient.Drafts.CreateDraftAsync(path.AccountId, draftMetadata.ToRequest(), timeout);
         }
     }
 }

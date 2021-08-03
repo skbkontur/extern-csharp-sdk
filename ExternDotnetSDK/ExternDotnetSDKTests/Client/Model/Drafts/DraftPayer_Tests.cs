@@ -7,14 +7,14 @@ using NUnit.Framework;
 
 namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
 {
-    public class NewDraftPayer_Tests
+    public class DraftPayer_Tests
     {
         private readonly AuthoritiesCodesGenerator codesGenerator = new();
 
         [Test]
         public void IndividualEntrepreneur_should_fail_when_given_null_inn()
         {
-            Action action = () => NewDraftPayer.IndividualEntrepreneur(null!);
+            Action action = () => DraftPayer.IndividualEntrepreneur(null!);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -28,7 +28,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 Inn = inn.ToString()
             };
 
-            var request = NewDraftPayer.IndividualEntrepreneur(inn).ToRequest();
+            var request = DraftPayer.IndividualEntrepreneur(inn).ToRequest();
             
             request.Should().BeEquivalentTo(expectedRequest);
         }
@@ -38,7 +38,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
         {
             var kpp = codesGenerator.Kpp();
             
-            Action action = () => NewDraftPayer.LegalEntityPayer(null!, kpp);
+            Action action = () => DraftPayer.LegalEntityPayer(null!, kpp);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -48,7 +48,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
         {
             var inn = codesGenerator.LegalEntityInn();
             
-            Action action = () => NewDraftPayer.LegalEntityPayer(inn, null!);
+            Action action = () => DraftPayer.LegalEntityPayer(inn, null!);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -67,7 +67,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 }
             };
 
-            var request = NewDraftPayer.LegalEntityPayer(inn, kpp).ToRequest();
+            var request = DraftPayer.LegalEntityPayer(inn, kpp).ToRequest();
             
             request.Should().BeEquivalentTo(expectedRequest);
         }
@@ -77,7 +77,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
         {
             var inn = codesGenerator.LegalEntityInn();
             var kpp = codesGenerator.Kpp();
-            var payer = NewDraftPayer.LegalEntityPayer(inn, kpp);
+            var payer = DraftPayer.LegalEntityPayer(inn, kpp);
 
             Action action = () => payer.WithFssRegNumber(null!);
 
@@ -99,7 +99,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 },
                 RegistrationNumberFss = fssRegNumber.ToString()
             };
-            var payer = NewDraftPayer
+            var payer = DraftPayer
                 .LegalEntityPayer(inn, kpp)
                 .WithFssRegNumber(fssRegNumber);
 
@@ -113,7 +113,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
         {
             var inn = codesGenerator.LegalEntityInn();
             var kpp = codesGenerator.Kpp();
-            var payer = NewDraftPayer.LegalEntityPayer(inn, kpp);
+            var payer = DraftPayer.LegalEntityPayer(inn, kpp);
 
             Action action = () => payer.WithPfrRegNumber(null!);
 
@@ -135,7 +135,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 },
                 RegistrationNumberPfr = pfrRegNumber.ToString()
             };
-            var payer = NewDraftPayer
+            var payer = DraftPayer
                 .LegalEntityPayer(inn, kpp)
                 .WithPfrRegNumber(pfrRegNumber);
 

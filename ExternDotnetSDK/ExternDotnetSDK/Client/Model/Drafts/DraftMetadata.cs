@@ -6,24 +6,24 @@ using Kontur.Extern.Client.Exceptions;
 
 namespace Kontur.Extern.Client.Model.Drafts
 {
-    public class NewDraft
+    public class DraftMetadata
     {
-        private readonly NewDraftPayer payer;
-        private readonly NewDraftSender sender;
+        private readonly DraftPayer payer;
+        private readonly DraftSender sender;
         private readonly DraftRecipient recipient;
         private string? subject;
         private string[]? additionalCertificates;
         private Guid? relatedDocflowId;
         private Guid? relatedDocumentId;
 
-        public NewDraft(NewDraftPayer payer, NewDraftSender sender, DraftRecipient recipient)
+        public DraftMetadata(DraftPayer payer, DraftSender sender, DraftRecipient recipient)
         {
             this.payer = payer ?? throw new ArgumentNullException(nameof(payer));
             this.sender = sender ?? throw new ArgumentNullException(nameof(sender));
             this.recipient = recipient ?? throw new ArgumentNullException(nameof(recipient));
         }
 
-        public NewDraft WithSubject(string value)
+        public DraftMetadata WithSubject(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(value));
@@ -31,7 +31,7 @@ namespace Kontur.Extern.Client.Model.Drafts
             return this;
         }
 
-        public NewDraft WithAdditionalCertificates(string[] certificates)
+        public DraftMetadata WithAdditionalCertificates(string[] certificates)
         {
             if (certificates is null)
                 throw new ArgumentNullException(nameof(certificates));
@@ -44,7 +44,7 @@ namespace Kontur.Extern.Client.Model.Drafts
             return this;
         }
 
-        public NewDraft WithRelatedDocument(Guid docflowId, Guid documentId)
+        public DraftMetadata WithRelatedDocument(Guid docflowId, Guid documentId)
         {
             relatedDocflowId = docflowId;
             relatedDocumentId = documentId;

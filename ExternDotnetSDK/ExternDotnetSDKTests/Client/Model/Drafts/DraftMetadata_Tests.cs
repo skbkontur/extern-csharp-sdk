@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
 {
     [TestFixture]
-    internal class NewDraft_Tests
+    internal class DraftMetadata_Tests
     {
         private readonly Randomizer randomizer = new();
         private readonly AuthoritiesCodesGenerator codesGenerator = new();
@@ -43,9 +43,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 }
             };
 
-            var request = new NewDraft(
-                    NewDraftPayer.IndividualEntrepreneur(payerInn),
-                    NewDraftSender.IndividualEntrepreneur(senderInn, senderCert),
+            var request = new DraftMetadata(
+                    DraftPayer.IndividualEntrepreneur(payerInn),
+                    DraftSender.IndividualEntrepreneur(senderInn, senderCert),
                     DraftRecipient.Ifns(IfnsCode.Parse("1234"), MriCode.Parse("5678"))
                 )
                 .ToRequest();
@@ -59,7 +59,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             var sender = RandomSender();
             var recipient = RandomRecipient();
 
-            Action action = () => _ = new NewDraft(null!, sender, recipient);
+            Action action = () => _ = new DraftMetadata(null!, sender, recipient);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -70,7 +70,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             var payer = RandomPayer();
             var recipient = RandomRecipient();
 
-            Action action = () => _ = new NewDraft(payer, null!, recipient);
+            Action action = () => _ = new DraftMetadata(payer, null!, recipient);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -81,7 +81,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             var payer = RandomPayer();
             var sender = RandomSender();
             
-            Action action = () => _ = new NewDraft(payer, sender, null!);
+            Action action = () => _ = new DraftMetadata(payer, sender, null!);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -201,7 +201,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             request.Should().BeEquivalentTo(expectedRequest);
         }
 
-        private (NewDraft newDraft, DraftMetaRequest expectedRequest) RandomDraft()
+        private (DraftMetadata newDraft, DraftMetaRequest expectedRequest) RandomDraft()
         {
             var payerInn = codesGenerator.PersonInn();
             var senderInn = codesGenerator.PersonInn();
@@ -226,9 +226,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                 }
             };
 
-            var newDraft = new NewDraft(
-                NewDraftPayer.IndividualEntrepreneur(payerInn),
-                NewDraftSender.IndividualEntrepreneur(senderInn, senderCert),
+            var newDraft = new DraftMetadata(
+                DraftPayer.IndividualEntrepreneur(payerInn),
+                DraftSender.IndividualEntrepreneur(senderInn, senderCert),
                 DraftRecipient.Ifns(IfnsCode.Parse("1234"))
             );
             return (newDraft, expectedRequest);
@@ -236,8 +236,8 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
 
         private DraftRecipient RandomRecipient() => DraftRecipient.Ifns(codesGenerator.IfnsCode());
 
-        private NewDraftSender RandomSender() => NewDraftSender.IndividualEntrepreneur(codesGenerator.PersonInn(), randomizer.Bytes(10));
+        private DraftSender RandomSender() => DraftSender.IndividualEntrepreneur(codesGenerator.PersonInn(), randomizer.Bytes(10));
 
-        private NewDraftPayer RandomPayer() => NewDraftPayer.IndividualEntrepreneur(codesGenerator.PersonInn());
+        private DraftPayer RandomPayer() => DraftPayer.IndividualEntrepreneur(codesGenerator.PersonInn());
     }
 }
