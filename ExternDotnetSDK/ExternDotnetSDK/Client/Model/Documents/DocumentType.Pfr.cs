@@ -15,187 +15,187 @@ namespace Kontur.Extern.Client.Model.Documents
             /// Сведения ПФР
             /// </summary>
             [PublicAPI]
-            public static class PftInfo
+            public static class PfrReport
             {
                 /// <summary>
                 /// Пачка или пачки отчетности (установленный формат)	
                 /// Имя (согласно нормативным документам): Тип пачки
                 /// </summary>
-                public static readonly DocumentType PfrReport = "urn:document:pfr-report";
+                public static readonly DocumentType Report = "urn:document:pfr-report";
 
                 /// <summary>
                 /// Описание передаваемых сведений (установленный формат)	
                 /// Имя (согласно нормативным документам): ОписаниеСведений
                 /// </summary>
-                public static readonly DocumentType PfrReportDescription = "urn:document:pfr-report-description";
+                public static readonly DocumentType Description = "urn:document:pfr-report-description";
 
                 /// <summary>
                 /// Неформализованное приложение к сведениям	
                 /// Имя (согласно нормативным документам): СведенияПриложение
                 /// </summary>
-                public static readonly DocumentType PfrReportAttachment = "urn:document:pfr-report-attachment";
+                public static readonly DocumentType Attachment = "urn:document:pfr-report-attachment";
 
                 /// <summary>
                 /// Уведомление о доставке сведений в орган ПФР (установленный формат)	
                 /// Имя (согласно нормативным документам): ПодтверждениеПолучения
                 /// </summary>
-                public static readonly DocumentType PfrReportAcknowledgement = "urn:document:pfr-report-acknowledgement";
+                public static readonly DocumentType Acknowledgement = "urn:document:pfr-report-acknowledgement";
 
                 /// <summary>
                 /// Протокол входного контроля, содержит информацию о том, приняты отправленные сведения или нет (установленный формат)	
                 /// Имя (согласно нормативным документам): Протокол
                 /// </summary>
-                public static readonly DocumentType PfrReportProtocol = "urn:document:pfr-report-protocol";
+                public static readonly DocumentType Protocol = "urn:document:pfr-report-protocol";
 
                 /// <summary>
                 /// Приложение к протоколу (обычно это результаты проверки проверочных программ ПФР)	
                 /// Имя (согласно нормативным документам): ПротоколПриложение
                 /// </summary>
-                public static readonly DocumentType PfrReportProtocolAppendix = "urn:document:pfr-report-protocol-appendix";
+                public static readonly DocumentType ProtocolAppendix = "urn:document:pfr-report-protocol-appendix";
 
                 /// <summary>
                 /// Описание ошибки, возникшей в ходе ДО	
                 /// Имя (согласно нормативным документам): описаниеОшибки
                 /// </summary>
-                public static readonly DocumentType PfrReportErrorDescription = "urn:document:pfr-report-error-description";
+                public static readonly DocumentType ErrorDescription = "urn:document:pfr-report-error-description";
             }
 
             /// <summary>
             /// Сведения ПФР (для ЭДОК)
             /// </summary>
             [PublicAPI]
-            public static class PftInfoEdoc
+            public static class PfrReportV2
             {
                 /// <summary>
                 /// Отчет с подписью формата XMLDSig для отправки в ЭДОК	
                 /// Имя (согласно нормативным документам): Отчетность
                 /// </summary>
-                public static readonly DocumentType PfrReportReportV2 = "urn:document:pfr-report-report-v2";
+                public static readonly DocumentType Report = "urn:document:pfr-report-report-v2";
 
                 /// <summary>
                 /// Неформализованное приложение к пакету	
                 /// Имя (согласно нормативным документам): Приложение
                 /// </summary>
-                public static readonly DocumentType PfrReportAttachment = PftInfo.PfrReportAttachment;
+                public static readonly DocumentType Attachment = PfrReport.Attachment;
 
                 /// <summary>
                 /// Подтверждение доставки пакета в ЭДОК	
                 /// Имя (согласно нормативным документам): Уведомление о доставке
                 /// </summary>
-                public static readonly DocumentType PfrReportAcknowledgementV2 = "urn:document:pfr-report-acknowledgement-v2";
+                public static readonly DocumentType AcknowledgementV2 = "urn:document:pfr-report-acknowledgement-v2";
 
                 /// <summary>
                 /// Отказ в приеме пакета по технологическим причинам	
                 /// Имя (согласно нормативным документам): Уведомление об отказе в приеме пакета
                 /// </summary>
-                public static readonly DocumentType PfrReportDeclineNotice = "urn:document:pfr-report-decline-notice";
+                public static readonly DocumentType DeclineNotice = "urn:document:pfr-report-decline-notice";
 
                 /// <summary>
                 /// Результат успешно пройденных проверок	
                 /// Имя (согласно нормативным документам): Унифицированный протокол проверок
                 /// </summary>
-                public static readonly DocumentType PfrReportProtocolCheck = "urn:document:pfr-report-protocol-check";
+                public static readonly DocumentType ProtocolCheck = "urn:document:pfr-report-protocol-check";
 
                 /// <summary>
                 /// Результат выявленных ошибок при проверке отчетности	
                 /// Имя (согласно нормативным документам): Уведомление об устранении ошибок и (или) несоответствий
                 /// </summary>
-                public static readonly DocumentType PfrReportProtocolRefinementNotice = "urn:document:pfr-report-protocol-refinement-notice";
+                public static readonly DocumentType ProtocolRefinementNotice = "urn:document:pfr-report-protocol-refinement-notice";
 
                 /// <summary>
                 /// Приложение к протоколу (к Positive либо Suppositive)	
                 /// Имя (согласно нормативным документам): Приложение
                 /// </summary>
-                public static readonly DocumentType PfrReportProtocolAppendix = PftInfo.PfrReportProtocolAppendix;
+                public static readonly DocumentType ProtocolAppendix = PfrReport.ProtocolAppendix;
 
                 /// <summary>
                 /// Подтверждение получения уведомления об устранении ошибок и (или) несоответствий оператором	
                 /// Имя (согласно нормативным документам): Уведомление о доставке
                 /// </summary>
-                public static readonly DocumentType PfrReportProtocolRefinementNoticeReceipt = "urn:document:pfr-report-protocol-refinement-notice-receipt";
+                public static readonly DocumentType ProtocolRefinementNoticeReceipt = "urn:document:pfr-report-protocol-refinement-notice-receipt";
             }
 
             /// <summary>
             /// Письмо в ПФР
             /// </summary>
             [PublicAPI]
-            public static class LetterToPfr
+            public static class PfrLetter
             {
                 /// <summary>
                 /// Текст письма	
                 /// Имя (согласно нормативным документам): Письмо
                 /// </summary>
-                public static readonly DocumentType PfrLetter = "urn:document:pfr-letter";
+                public static readonly DocumentType Letter = "urn:document:pfr-letter";
                 /// <summary>
                 /// Описание передаваемого письма (установленный формат)	
                 /// Имя (согласно нормативным документам): ОписаниеПисьма
                 /// </summary>
-                public static readonly DocumentType PfrLetterDescription = "urn:document:pfr-letter-description";
+                public static readonly DocumentType Description = "urn:document:pfr-letter-description";
                 /// <summary>
                 /// Произвольное приложение к письму	
                 /// Имя (согласно нормативным документам): ПисьмоПриложение
                 /// </summary>
-                public static readonly DocumentType PfrLetterAttachment = "urn:document:pfr-letter-attachment";
+                public static readonly DocumentType Attachment = "urn:document:pfr-letter-attachment";
                 /// <summary>
                 /// Транспортная информация о передаваемом письме (установленный формат)	
                 /// Имя (согласно нормативным документам): ТранспортнаяИнформация
                 /// </summary>
-                public static readonly DocumentType PfrLetterTransportInfo = "urn:document:pfr-letter-transport-info";
+                public static readonly DocumentType TransportInfo = "urn:document:pfr-letter-transport-info";
                 /// <summary>
                 /// Документ, подтверждающий получение письма и приложений к нему УПФР	
                 /// Имя (согласно нормативным документам): ПодтверждениеПолучения
                 /// </summary>
-                public static readonly DocumentType PfrLetterLetterAcknowledgement = "urn:document:pfr-letter-letter-acknowledgement";
+                public static readonly DocumentType LetterAcknowledgement = "urn:document:pfr-letter-letter-acknowledgement";
                 /// <summary>
                 /// Описание ошибки, возникшей в ходе ДО	
                 /// Имя (согласно нормативным документам): описаниеОшибки
                 /// </summary>
-                public static readonly DocumentType PfrLetterErrorDescription = "urn:document:pfr-letter-error-description";
+                public static readonly DocumentType ErrorDescription = "urn:document:pfr-letter-error-description";
             }
 
             /// <summary>
             /// Письмо из ПФР
             /// </summary>
             [PublicAPI]
-            public static class LetterFromPfr
+            public static class CuLetter
             {
                 /// <summary>
                 /// Текст письма	
                 /// Имя (согласно нормативным документам): Письмо
                 /// </summary>
-                public static readonly DocumentType PfrCuLetter = "urn:document:pfr-cu-letter";
+                public static readonly DocumentType Letter = "urn:document:pfr-cu-letter";
                 /// <summary>
                 /// Описание передаваемого письма (установленный формат)	
                 /// Имя (согласно нормативным документам): ОписаниеПисьма
                 /// </summary>
-                public static readonly DocumentType PfrCuLetterDescription = "urn:document:pfr-cu-letter-description";
+                public static readonly DocumentType Description = "urn:document:pfr-cu-letter-description";
                 /// <summary>
                 /// Произвольное приложение к письму	
                 /// Имя (согласно нормативным документам): ПисьмоПриложение
                 /// </summary>
-                public static readonly DocumentType PfrCuLetterAttachment = "urn:document:pfr-cu-letter-attachment";
+                public static readonly DocumentType Attachment = "urn:document:pfr-cu-letter-attachment";
                 /// <summary>
                 /// Транспортная информация о передаваемом письме (установленный формат)	
                 /// Имя (согласно нормативным документам): ТранспортнаяИнформация
                 /// </summary>
-                public static readonly DocumentType PfrCuLetterTransportInfo = "urn:document:pfr-cu-letter-transport-info";
+                public static readonly DocumentType TransportInfo = "urn:document:pfr-cu-letter-transport-info";
                 /// <summary>
                 /// Документ, подтверждающий получение письма и приложений к нему абонентом	
                 /// Имя (согласно нормативным документам): ПодтверждениеПолучения
                 /// </summary>
-                public static readonly DocumentType PfrCuLetterLetterAcknowledgement = "urn:document:pfr-cu-letter-letter-acknowledgement";
+                public static readonly DocumentType LetterAcknowledgement = "urn:document:pfr-cu-letter-letter-acknowledgement";
                 /// <summary>
                 /// Описание ошибки, возникшей в ходе ДО	
                 /// Имя (согласно нормативным документам): описаниеОшибки
                 /// </summary>
-                public static readonly DocumentType PfrCuLetterErrorDescription = "urn:document:pfr-cu-letter-error-description";
+                public static readonly DocumentType ErrorDescription = "urn:document:pfr-cu-letter-error-description";
             }
 
             /// <summary>
             /// Уточнение платежей
             /// </summary>
             [PublicAPI]
-            public static class PaymentClarification
+            public static class Ios
             {
                 /// <summary>
                 /// Документ с запросом информации по платежам в орган ПФР (установленный формат)	

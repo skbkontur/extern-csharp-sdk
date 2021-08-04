@@ -13,445 +13,457 @@ namespace Kontur.Extern.Client.Model.Documents
         public static class Fns
         {
             /// <summary>
+            /// Сообщение об ошибке от КО
+            /// Имя (согласно нормативным документам): СообщениеОбОшибке
+            ///</summary>
+            public static readonly DocumentType Error = "urn:document:error";
+            
+            /// <summary>
+            /// Описание действий для абонента для решения причины ошибки
+            ///</summary>
+            public static readonly DocumentType ErrorDescriptionForAbonent = "urn:document:error-description-for-abonent";
+            
+            /// <summary>
             /// Декларация и 2-НДФЛ
             /// </summary>
             [PublicAPI]
-            public static class DeclarationAnd2Ndfl
+            public static class Fns534Report
             {
                 /// <summary>                
                 /// Налоговая декларация или бухгалтерская отчетность (установленный формат).
                 /// Декларация
                 /// </summary>
-                public static readonly DocumentType Fns534Report = "urn:document:fns534-report";
+                public static readonly DocumentType Report = "urn:document:fns534-report";
 
                 /// <summary>
                 /// Служебный документ, в котором передается описание декларации (установленный формат).
                 /// Имя (согласно нормативным документам): Описание
                 /// Формирует оператор ЭДО при отправке документооборота.
                 /// </summary>
-                public static readonly DocumentType Fns534ReportDescription = "urn:document:fns534-report-description";
+                public static readonly DocumentType Description = "urn:document:fns534-report-description";
 
                 /// Информационное сообщение о доверенности уполномоченного лица (установленный формат).
                 /// Имя (согласно нормативным документам): Доверенность
-                public static readonly DocumentType Fns534ReportWarrant = "urn:document:fns534-report-warrant";
+                public static readonly DocumentType Warrant = "urn:document:fns534-report-warrant";
 
                 /// Подтверждение даты отправки документа (установленный формат).
                 /// Имя (согласно нормативным документам): ПодтверждениеДатыОтправки
                 /// Формирует оператор ЭДО при отправке документооборота.
-                public static readonly DocumentType Fns534ReportDateConfirmation = "urn:document:fns534-report-date-confirmation";
+                public static readonly DocumentType DateConfirmation = "urn:document:fns534-report-date-confirmation";
 
                 /// <summary>
                 /// Квитанция о приеме налоговой декларации (установленный формат).
                 /// Имя (согласно нормативным документам): КвитанцияОПриеме
                 /// </summary>
-                public static readonly DocumentType Fns534ReportAcceptanceResultPositive = "urn:document:fns534-report-acceptance-result-positive";
+                public static readonly DocumentType AcceptanceResultPositive = "urn:document:fns534-report-acceptance-result-positive";
 
                 /// <summary>
                 /// Уведомление об отказе в приеме налоговой декларации (установленный формат).
                 /// Имя (согласно нормативным документам): УведомлениеОбОтказе
                 /// </summary>
-                public static readonly DocumentType Fns534ReportAcceptanceResultNegative = "urn:document:fns534-report-acceptance-result-negative";
+                public static readonly DocumentType ReportAcceptanceResultNegative = "urn:document:fns534-report-acceptance-result-negative";
 
                 /// <summary>
                 /// Извещение о вводе декларации в информационную систему налогового органа (установленный формат).
                 /// Имя (согласно нормативным документам): ИзвещениеОВводе
                 /// </summary>
-                public static readonly DocumentType Fns534ReportProcessingResultOk = "urn:document:fns534-report-processing-result-ok";
+                public static readonly DocumentType ProcessingResultOk = "urn:document:fns534-report-processing-result-ok";
 
                 /// <summary>
                 /// Уведомление о необходимости внесения уточнений (установленный формат).
                 /// Имя (согласно нормативным документам): УведомлениеОбУточнении
                 /// </summary>
-                public static readonly DocumentType Fns534ReportProcessingResultPrecise = "urn:document:fns534-report-processing-result-precise";
+                public static readonly DocumentType ProcessingResultPrecise = "urn:document:fns534-report-processing-result-precise";
 
                 /// <summary>
                 /// Извещение о получении документа его получателем (установленный формат).
                 /// Имя (согласно нормативным документам): ИзвещениеОПолучении
                 /// </summary>
-                public static readonly DocumentType Fns534ReportReceipt = "urn:document:fns534-report-receipt";
+                public static readonly DocumentType Receipt = "urn:document:fns534-report-receipt";
 
                 /// <summary>
                 /// Протокол приема сведений о доходах физических лиц от налоговых агентов (установленный формат).
                 /// Имя (согласно нормативным документам): ПротоколПриема2НДФЛ
                 /// </summary>
-                public static readonly DocumentType Fns534ReportAcceptanceResult2NdflProtocol = "urn:document:fns534-report-acceptance-result-2ndfl-protocol";
+                public static readonly DocumentType AcceptanceResult2NdflProtocol = "urn:document:fns534-report-acceptance-result-2ndfl-protocol";
 
                 /// <summary>
                 /// Реестр сведений о доходах физических лиц (установленный формат).
                 /// Имя (согласно нормативным документам): РеестрПринятыхДокументов
                 /// </summary>
-                public static readonly DocumentType Fns534ReportAcceptanceResult2NdflRegistry = "urn:document:fns534-report-acceptance-result-2ndfl-registry";
+                public static readonly DocumentType AcceptanceResult2NdflRegistry = "urn:document:fns534-report-acceptance-result-2ndfl-registry";
 
                 /// <summary>
                 /// Неформализованное приложение или формализованное приложение (установленный формат).
                 /// Имя (согласно нормативным документам): Приложение
                 /// </summary>
-                public static readonly DocumentType Fns534ReportAttachment = "urn:document:fns534-report-attachment";
+                public static readonly DocumentType Attachment = "urn:document:fns534-report-attachment";
             }
 
             /// <summary>
             /// ИОН
             /// </summary>
             [PublicAPI]
-            public static class Ion
+            public static class Fns534Ion
             {
                 /// <summary>
                 /// Запрос на предоставление информации (установленный формат).
                 /// Имя (согласно нормативным документам): Запрос
                 /// </summary>
-                public static readonly DocumentType Fns534IonRequest = "urn:document:fns534-ion-request";
+                public static readonly DocumentType Request = "urn:document:fns534-ion-request";
                 /// <summary>
                 /// Подтверждение даты отправки (установленный формат).
                 /// Имя (согласно нормативным документам): ПодтверждениеДатыОтправки
                 /// Формирует оператор ЭДО при отправке документооборота.
                 /// </summary>
-                public static readonly DocumentType Fns534IonDateConfirmation = "urn:document:fns534-ion-date-confirmation";
+                public static readonly DocumentType DateConfirmation = "urn:document:fns534-ion-date-confirmation";
                 /// <summary>
                 /// Служебный документ, в котором передается описание запроса (установленный формат).
                 /// Имя (согласно нормативным документам): Описание
                 /// Формирует оператор ЭДО при отправке документооборота.
                 /// </summary>
-                public static readonly DocumentType Fns534IonDescription = "urn:document:fns534-ion-description";
+                public static readonly DocumentType Description = "urn:document:fns534-ion-description";
                 /// <summary>
                 /// Квитанция о приеме (установленный формат).
                 /// Имя (согласно нормативным документам): КвитанцияОПриеме
                 /// </summary>
-                public static readonly DocumentType Fns534IonAcceptanceResultPositive = "urn:document:fns534-ion-acceptance-result-positive";
+                public static readonly DocumentType AcceptanceResultPositive = "urn:document:fns534-ion-acceptance-result-positive";
                 /// <summary>
                 /// Уведомление, содержащее отказ абоненту в предоставлении запрошенных сведений с описанием выявленных ошибок и причин отказа в приеме (установленный формат).
                 /// Имя (согласно нормативным документам): УведомлениеОбОтказе
                 /// </summary>
-                public static readonly DocumentType Fns534IonAcceptanceResultNegative = "urn:document:fns534-ion-acceptance-result-negative";
+                public static readonly DocumentType AcceptanceResultNegative = "urn:document:fns534-ion-acceptance-result-negative";
                 /// <summary>
                 /// Документ, содержащий запрошенный абонентом документ (установленный формат) и/или Уведомление об отказе, как ответ об отсутствии данных по запрашиваемому абоненту (установленный формат).
                 /// Имя (согласно нормативным документам): Ответ
                 /// </summary>
-                public static readonly DocumentType Fns534IonResponse = "urn:document:fns534-ion-response";
+                public static readonly DocumentType Response = "urn:document:fns534-ion-response";
                 /// <summary>
                 /// Информационное сообщение о доверенности уполномоченного лица (установленный формат).
                 /// Имя (согласно нормативным документам): Доверенность
                 /// </summary>
-                public static readonly DocumentType Fns534IonWarrant = "urn:document:fns534-ion-warrant";
+                public static readonly DocumentType Warrant = "urn:document:fns534-ion-warrant";
                 /// <summary>
                 /// Извещение о получении документа его получателем (установленный формат).
                 /// Имя (согласно нормативным документам): ИзвещениеОПолучении
                 /// </summary>
-                public static readonly DocumentType Fns534IonReceipt = "urn:document:fns534-ion-receipt";
+                public static readonly DocumentType Receipt = "urn:document:fns534-ion-receipt";
             }
 
             /// <summary>
             /// Письмо в ФНС
             /// </summary>
             [PublicAPI]
-            public static class LetterToFns
+            public static class Fns534Letter
             {
                 /// <summary>
                 /// Текст обращения (установленный формат).	
                 /// Имя (согласно нормативным документам): Обращение
                 /// </summary>
-                public static readonly DocumentType Fns534Letter = "urn:document:fns534-letter";
+                public static readonly DocumentType Letter = "urn:document:fns534-letter";
                 /// <summary>
                 /// Служебный документ, в котором передается описание (установленный формат).	
                 /// Имя (согласно нормативным документам): Описание
                 /// Формирует оператор ЭДО при отправке документооборота.
                 /// </summary>
-                public static readonly DocumentType Fns534LetterDescription = "urn:document:fns534-letter-description";
+                public static readonly DocumentType Description = "urn:document:fns534-letter-description";
                 /// <summary>
                 /// Неформализованное приложение к письму.	
                 /// Имя (согласно нормативным документам): Приложение
                 /// </summary>
-                public static readonly DocumentType Fns534LetterAttachment = "urn:document:fns534-letter-attachment";
+                public static readonly DocumentType Attachment = "urn:document:fns534-letter-attachment";
                 /// <summary>
                 /// Подтверждение даты отправки документа (установленный формат).	
                 /// Имя (согласно нормативным документам): ПодтверждениеДатыОтправки
                 /// Формирует оператор ЭДО при отправке документооборота.
                 /// </summary>
-                public static readonly DocumentType Fns534LetterDateConfirmation = "urn:document:fns534-letter-date-confirmation";
+                public static readonly DocumentType DateConfirmation = "urn:document:fns534-letter-date-confirmation";
                 /// <summary>
                 /// Уведомление об отказе в приеме обращения (установленный формат).	
                 /// Имя (согласно нормативным документам): УведомлениеОбОтказе
                 /// </summary>
-                public static readonly DocumentType Fns534LetterDeclineNotice = "urn:document:fns534-letter-decline-notice";
+                public static readonly DocumentType DeclineNotice = "urn:document:fns534-letter-decline-notice";
                 /// <summary>
                 /// Извещение о получении документа его получателем (установленный формат).	
                 /// Имя (согласно нормативным документам): ИзвещениеОПолучении
                 /// </summary>
-                public static readonly DocumentType Fns534LetterReceipt = "urn:document:fns534-letter-receipt";
+                public static readonly DocumentType Receipt = "urn:document:fns534-letter-receipt";
                 /// <summary>
                 /// Информационное сообщение о доверенности уполномоченного лица (установленный формат).	
                 /// Имя (согласно нормативным документам): Доверенность
                 /// </summary>
-                public static readonly DocumentType Fns534LetterWarrant = "urn:document:fns534-letter-warrant";
+                public static readonly DocumentType Warrant = "urn:document:fns534-letter-warrant";
             }
 
             /// <summary>
             /// Письмо из ФНС
             /// </summary>
             [PublicAPI]
-            public static class LetterFromFns
+            public static class Fns534CuLetter
             {
                 /// <summary>
                 /// Текст письма (установленный формат).	
                 /// Имя (согласно нормативным документам): Письмо
                 /// </summary>
-                public static readonly DocumentType Fns534CuLetter = "urn:document:fns534-cu-letter";
+                public static readonly DocumentType Letter = "urn:document:fns534-cu-letter";
 
                 /// <summary>
                 /// Служебный документ, в котором передается описание (установленный формат).	
                 /// Имя (согласно нормативным документам): Описание
                 /// </summary>
-                public static readonly DocumentType Fns534CuLetterDescription = "urn:document:fns534-cu-letter-description";
+                public static readonly DocumentType Description = "urn:document:fns534-cu-letter-description";
 
                 /// <summary>
                 /// Неформализованное приложение к письму.	
                 /// Имя (согласно нормативным документам): Приложение
                 /// </summary>
-                public static readonly DocumentType Fns534CuLetterAttachment = "urn:document:fns534-cu-letter-attachment";
+                public static readonly DocumentType Attachment = "urn:document:fns534-cu-letter-attachment";
 
                 /// <summary>
                 /// Подтверждение даты отправки документа (установленный формат).	
                 /// Имя (согласно нормативным документам): ПодтверждениеДатыОтправки
                 /// Формирует оператор ЭДО при отправке документооборота.
                 /// </summary>
-                public static readonly DocumentType Fns534CuLetterDateConfirmation = "urn:document:fns534-cu-letter-date-confirmation";
+                public static readonly DocumentType DateConfirmation = "urn:document:fns534-cu-letter-date-confirmation";
 
                 /// <summary>
                 /// Извещение о получении документа его получателем (установленный формат).	
                 /// Имя (согласно нормативным документам): ИзвещениеОПолучении
                 /// </summary>
-                public static readonly DocumentType Fns534CuLetterReceipt = "urn:document:fns534-cu-letter-receipt";
+                public static readonly DocumentType Receipt = "urn:document:fns534-cu-letter-receipt";
             }
 
             /// <summary>
             /// Представление
             /// </summary>
             [PublicAPI]
-            public static class Representation
+            public static class Fns534Submission
             {
                 /// <summary>
                 /// Документ (установленный формат).	
                 /// Имя (согласно нормативным документам): Представление
                 ///</summary>
-                public static readonly DocumentType Fns534SubmissionMessage = "urn:document:fns534-submission-message";
+                public static readonly DocumentType Message = "urn:document:fns534-submission-message";
 
                 /// <summary>
                 /// Служебный документ, в котором передается описание документа представление (установленный формат).	
                 /// Имя (согласно нормативным документам): Описание
                 /// Формирует оператор ЭДО при отправке документооборота.
                 ///</summary>
-                public static readonly DocumentType Fns534SubmissionDescription = "urn:document:fns534-submission-description";
+                public static readonly DocumentType Description = "urn:document:fns534-submission-description";
 
                 /// <summary>
                 /// Документы, которые могут идти в составе с основным документом.	
                 /// Имя (согласно нормативным документам): Приложение
                 ///</summary>
-                public static readonly DocumentType Fns534SubmissionAttachment = "urn:document:fns534-submission-attachment";
+                public static readonly DocumentType Attachment = "urn:document:fns534-submission-attachment";
 
                 /// <summary>
                 /// Информационное сообщение о доверенности уполномоченного лица (установленный формат).	
                 /// Имя (согласно нормативным документам): Доверенность
                 ///</summary>
-                public static readonly DocumentType Fns534SubmissionWarrant = "urn:document:fns534-submission-warrant";
+                public static readonly DocumentType Warrant = "urn:document:fns534-submission-warrant";
 
                 /// <summary>
                 /// Подтверждение даты отправки документа (установленный формат).	
                 /// Имя (согласно нормативным документам): ПодтверждениеДатыОтправки
                 /// Формирует оператор ЭДО при отправке документооборота.
                 ///</summary>
-                public static readonly DocumentType Fns534SubmissionDateConfirmation = "urn:document:fns534-submission-date-confirmation";
+                public static readonly DocumentType DateConfirmation = "urn:document:fns534-submission-date-confirmation";
 
                 /// <summary>
                 /// Извещение о получении документа его получателем (установленный формат).	
                 /// Имя (согласно нормативным документам): ИзвещениеОПолучении
                 ///</summary>
-                public static readonly DocumentType Fns534SubmissionReceipt = "urn:document:fns534-submission-receipt";
+                public static readonly DocumentType Receipt = "urn:document:fns534-submission-receipt";
 
                 /// <summary>
                 /// Квитанция о приеме налоговой декларации (установленный формат).	
                 /// Имя (согласно нормативным документам): КвитанцияОПриеме
                 ///</summary>
-                public static readonly DocumentType Fns534SubmissionAcceptanceResultPositive = "urn:document:fns534-submission-acceptance-result-positive";
+                public static readonly DocumentType AcceptanceResultPositive = "urn:document:fns534-submission-acceptance-result-positive";
 
                 /// <summary>
                 /// Уведомление об отказе в приеме налоговой декларации (установленный формат).	
                 /// Имя (согласно нормативным документам): УведомлениеОбОтказе
                 ///</summary>
-                public static readonly DocumentType Fns534SubmissionAcceptanceResultNegative = "urn:document:fns534-submission-acceptance-result-negative";
+                public static readonly DocumentType AcceptanceResultNegative = "urn:document:fns534-submission-acceptance-result-negative";
             }
 
             /// <summary>
             /// Документ (Требование)
             /// </summary>
             [PublicAPI]
-            public static class Claim
+            public static class Fns534Demand
             {
                 /// <summary>
                 /// Файл-описание к требованиям (установленный формат).	
                 /// Имя (согласно нормативным документам): Документ
                 /// </summary>
-                public static readonly DocumentType Fns534Demand = "urn:document:fns534-demand";
+                public static readonly DocumentType Demand = "urn:document:fns534-demand";
 
                 /// <summary>
                 /// Служебный документ, в котором передается описание документа (установленный формат).	
                 /// Имя (согласно нормативным документам): Описание
                 /// </summary>
-                public static readonly DocumentType Fns534DemandDescription = "urn:document:fns534-demand-description";
+                public static readonly DocumentType Description = "urn:document:fns534-demand-description";
 
                 /// <summary>
                 /// Требование.	
                 /// Имя (согласно нормативным документам): Приложение
                 /// </summary>
-                public static readonly DocumentType Fns534DemandAttachment = "urn:document:fns534-demand-attachment";
+                public static readonly DocumentType Attachment = "urn:document:fns534-demand-attachment";
 
                 /// <summary>
                 /// Подтверждение даты отправки документа (установленный формат).	
                 /// Имя (согласно нормативным документам): ПодтверждениеДатыОтправки
                 /// Формирует оператор ЭДО при отправке документооборота.
                 /// </summary>
-                public static readonly DocumentType Fns534DemandDateConfirmation = "urn:document:fns534-demand-date-confirmation";
+                public static readonly DocumentType DateConfirmation = "urn:document:fns534-demand-date-confirmation";
 
                 /// <summary>
                 /// Извещение о получении документа его получателем (установленный формат).	
                 /// Имя (согласно нормативным документам): ИзвещениеОПолучении
                 /// </summary>
-                public static readonly DocumentType Fns534DemandReceipt = "urn:document:fns534-demand-receipt";
+                public static readonly DocumentType Receipt = "urn:document:fns534-demand-receipt";
 
                 /// <summary>
                 /// Уведомление об отказе в приеме документа (установленный формат).	
                 /// Имя (согласно нормативным документам): УведомлениеОбОтказе
                 /// </summary>
-                public static readonly DocumentType Fns534DemandAcceptanceResultNegative = "urn:document:fns534-demand-acceptance-result-negative";
+                public static readonly DocumentType AcceptanceResultNegative = "urn:document:fns534-demand-acceptance-result-negative";
 
                 /// <summary>
                 /// Квитанция о приеме документа (установленный формат).	
                 /// Имя (согласно нормативным документам): КвитанцияОПриеме
                 /// </summary>
-                public static readonly DocumentType Fns534DemandAcceptanceResultPositive = "urn:document:fns534-demand-acceptance-result-positive";
+                public static readonly DocumentType AcceptanceResultPositive = "urn:document:fns534-demand-acceptance-result-positive";
             }
 
             /// <summary>
             /// Опись (Ответ на требование)
             /// </summary>
             [PublicAPI]
-            public static class Reply
+            public static class Fns534Inventory
             {
                 /// <summary>
                 /// Документ(установленный формат).
                 /// Имя (согласно нормативным документам): Представление
                 ///</summary>
-                public static readonly DocumentType Fns534InventoryMessage = "urn:document:fns534-inventory-message";
+                public static readonly DocumentType Message = "urn:document:fns534-inventory-message";
 
                 /// <summary>
                 /// Служебный документ, в котором передается описание документа представление(установленный формат).
                 /// Имя (согласно нормативным документам): Описание
                 /// Формирует оператор ЭДО при отправке документооборота.
                 ///</summary>
-                public static readonly DocumentType Fns534InventoryDescription = "urn:document:fns534-inventory-description";
+                public static readonly DocumentType Description = "urn:document:fns534-inventory-description";
 
                 /// <summary>
                 /// Документы, которые могут идти в составе с основным документом.
                 /// Имя (согласно нормативным документам): Приложение
                 ///</summary>
-                public static readonly DocumentType Fns534InventoryAttachment = "urn:document:fns534-inventory-attachment";
+                public static readonly DocumentType Attachment = "urn:document:fns534-inventory-attachment";
 
                 /// <summary>
                 /// Информационное сообщение о представительстве уполномоченного лица(установленный формат).
                 /// Имя (согласно нормативным документам): Доверенность
                 ///</summary>
-                public static readonly DocumentType Fns534InventoryWarrant = "urn:document:fns534-inventory-warrant";
+                public static readonly DocumentType Warrant = "urn:document:fns534-inventory-warrant";
 
                 /// <summary>
                 /// Подтверждение даты отправки документа(установленный формат).
                 /// Имя (согласно нормативным документам): ПодтверждениеДатыОтправки
                 /// Формирует оператор ЭДО при отправке документооборота.
                 ///</summary>
-                public static readonly DocumentType Fns534InventoryDateConfirmation = "urn:document:fns534-inventory-date-confirmation";
+                public static readonly DocumentType DateConfirmation = "urn:document:fns534-inventory-date-confirmation";
 
                 /// <summary>
                 /// Извещение о получении документа его получателем(установленный формат).
                 /// Имя (согласно нормативным документам): ИзвещениеОПолучении
                 ///</summary>
-                public static readonly DocumentType Fns534InventoryReceipt = "urn:document:fns534-inventory-receipt";
+                public static readonly DocumentType Receipt = "urn:document:fns534-inventory-receipt";
 
                 /// <summary>
                 /// Квитанция о приеме налоговой декларации(установленный формат).
                 /// Имя (согласно нормативным документам): КвитанцияОПриеме
                 ///</summary>
-                public static readonly DocumentType Fns534InventoryAcceptanceResultPositive = "urn:document:fns534-inventory-acceptance-result-positive";
+                public static readonly DocumentType AcceptanceResultPositive = "urn:document:fns534-inventory-acceptance-result-positive";
 
                 /// <summary>
                 /// Уведомление об отказе в приеме налоговой декларации(установленный формат).
                 /// Имя (согласно нормативным документам): УведомлениеОбОтказе
                 ///</summary>
-                public static readonly DocumentType Fns534InventoryAcceptanceResultNegative = "urn:document:fns534-inventory-acceptance-result-negative";
+                public static readonly DocumentType AcceptanceResultNegative = "urn:document:fns534-inventory-acceptance-result-negative";
             }
 
             /// <summary>
             /// Заявление
             /// </summary>
             [PublicAPI]
-            public static class Statement
+            public static class Fns534Application
             {
                 /// <summary>
                 /// Заявление российского покупателя о ввозе товаров и уплате косвенных налогов(установленный формат).
                 /// Имя (согласно нормативным документам): Заявление
                 ///</summary>
-                public static readonly DocumentType Fns534Application = "urn:document:fns534-application";
+                public static readonly DocumentType Application = "urn:document:fns534-application";
 
                 /// <summary>
                 /// Служебный документ, в котором передается описание заявления(установленный формат).
                 /// Имя (согласно нормативным документам): Описание
                 /// Формирует оператор ЭДО при отправке документооборота.
                 ///</summary>
-                public static readonly DocumentType Fns534ApplicationDescription = "urn:document:fns534-application-description";
+                public static readonly DocumentType Description = "urn:document:fns534-application-description";
 
                 /// <summary>
                 /// Информационное сообщение о доверенности уполномоченного лица(установленный формат).
                 /// Имя (согласно нормативным документам): Доверенность
                 ///</summary>
-                public static readonly DocumentType Fns534ApplicationWarrant = "urn:document:fns534-application-warrant";
+                public static readonly DocumentType Warrant = "urn:document:fns534-application-warrant";
 
                 /// <summary>
                 /// Подтверждение даты отправки документа(установленный формат).
                 /// Имя (согласно нормативным документам): ПодтверждениеДатыОтправки
                 /// Формирует оператор ЭДО при отправке документооборота.
                 ///</summary>
-                public static readonly DocumentType Fns534ApplicationDateConfirmation = "urn:document:fns534-application-date-confirmation";
+                public static readonly DocumentType DateConfirmation = "urn:document:fns534-application-date-confirmation";
 
                 /// <summary>
                 /// Уведомление об отказе в приеме заявления(установленный формат).
                 /// Имя (согласно нормативным документам): УведомлениеОбОтказе
                 ///</summary>
-                public static readonly DocumentType Fns534ApplicationAcceptanceResultNegative = "urn:document:fns534-application-acceptance-result-negative";
+                public static readonly DocumentType AcceptanceResultNegative = "urn:document:fns534-application-acceptance-result-negative";
 
                 /// <summary>
                 /// Квитанция о приеме заявления(установленный формат).
                 /// Имя (согласно нормативным документам): КвитанцияОПриеме
                 ///</summary>
-                public static readonly DocumentType Fns534ApplicationAcceptanceResultPositive = "urn:document:fns534-application-acceptance-result-positive";
+                public static readonly DocumentType AcceptanceResultPositive = "urn:document:fns534-application-acceptance-result-positive";
 
                 /// <summary>
                 /// Извещение о получении документа его получателем(установленный формат).
                 /// Имя (согласно нормативным документам): ИзвещениеОПолучении
                 ///</summary>
-                public static readonly DocumentType Fns534ApplicationReceipt = "urn:document:fns534-application-receipt";
+                public static readonly DocumentType Receipt = "urn:document:fns534-application-receipt";
 
                 /// <summary>
                 /// Сообщение о проставлении отметки налогового органа(установленный формат).
                 /// Имя (согласно нормативным документам): СообщениеОПростОтметки
                 ///</summary>
-                public static readonly DocumentType Fns534ApplicationProcessingResultPositive = "urn:document:fns534-application-processing-result-positive";
+                public static readonly DocumentType ProcessingResultPositive = "urn:document:fns534-application-processing-result-positive";
 
                 /// <summary>
                 /// Уведомление об отказе в проставлении на заявлении о ввозе товаров и уплате косвенных налогов отметки налогового органа об уплате косвенных налогов(установленный формат).
                 /// Имя (согласно нормативным документам): УведомлениеОбОтказеОтметки
                 ///</summary>
-                public static readonly DocumentType Fns534ApplicationProcessingResultNegative = "urn:document:fns534-application-processing-result-negative";
+                public static readonly DocumentType ProcessingResultNegative = "urn:document:fns534-application-processing-result-negative";
             }
 
             /// <summary>
             /// Регистрация бизнеса
             /// </summary>
+            [PublicAPI]
             public static class BusinessRegistration
             {
                 /// <summary>
@@ -562,44 +574,33 @@ namespace Kontur.Extern.Client.Model.Documents
             /// Массовая рассылка от ФНС
             /// </summary>
             [PublicAPI]
-            public static class Broadcast
+            public static class Fns534CuBroadcast
             {
-                /// <summary>
-                /// Сообщение об ошибке от КО
-                /// Имя (согласно нормативным документам): СообщениеОбОшибке
-                ///</summary>
-                public static readonly DocumentType Error = "urn:document:error";
-
                 /// <summary>
                 /// Неформализованный текст информационной рассылки налогового органа
                 /// Имя (согласно нормативным документам): Рассылка
                 ///</summary>
-                public static readonly DocumentType Fns534CuBroadcast = "urn:document:fns534-cu-broadcast";
+                public static readonly DocumentType Broadcast = "urn:document:fns534-cu-broadcast";
 
                 /// <summary>
                 /// Неформализованное приложение к рассылке
                 /// Имя (согласно нормативным документам): Приложение
                 ///</summary>
-                public static readonly DocumentType Fns534CuBroadcastAttachment = "urn:document:fns534-cu-broadcast-attachment";
+                public static readonly DocumentType Attachment = "urn:document:fns534-cu-broadcast-attachment";
 
                 /// <summary>
                 /// Подтверждение даты отправки рассылки (установленный формат)
                 /// Имя (согласно нормативным документам): ПодтверждениеДатыОтправки
                 /// Формирует оператор ЭДО при отправке документооборота.
                 ///</summary>
-                public static readonly DocumentType Fns534СuBroadcastDateConfirmation = "urn:document:fns534-cu-broadcast-date-confirmation";
+                public static readonly DocumentType DateConfirmation = "urn:document:fns534-cu-broadcast-date-confirmation";
 
                 /// <summary>
                 /// Служебный документ, в котором передается описание (установленный формат)
                 /// Имя (согласно нормативным документам): Описание
                 /// Формирует оператор ЭДО при отправке документооборота.
                 ///</summary>
-                public static readonly DocumentType Fns534CuBroadcastDescription = "urn:document:fns534-cu-broadcast-description";
-
-                /// <summary>
-                /// Описание действий для абонента для решения причины ошибки
-                ///</summary>
-                public static readonly DocumentType ErrorDescriptionForAbonent = "urn:document:error-description-for-abonent";
+                public static readonly DocumentType Description = "urn:document:fns534-cu-broadcast-description";
             }
         }
     }

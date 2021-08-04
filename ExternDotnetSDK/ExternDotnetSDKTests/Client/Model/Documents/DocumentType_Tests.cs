@@ -50,10 +50,10 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             {
                 var ignoredFields = new Dictionary<Type, string[]>
                 {
-                    [typeof (DocumentType.Pfr.PftInfoEdoc)] = new[]
+                    [typeof (DocumentType.Pfr.PfrReportV2)] = new[]
                     {
-                        nameof(DocumentType.Pfr.PftInfoEdoc.PfrReportAttachment),
-                        nameof(DocumentType.Pfr.PftInfoEdoc.PfrReportProtocolAppendix)
+                        nameof(DocumentType.Pfr.PfrReportV2.Attachment),
+                        nameof(DocumentType.Pfr.PfrReportV2.ProtocolAppendix)
                     }
                 };
                 bool FieldIsIgnored(FieldInfo fieldInfo) => 

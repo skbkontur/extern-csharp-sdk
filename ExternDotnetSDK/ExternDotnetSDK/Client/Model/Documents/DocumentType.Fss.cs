@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 // ReSharper disable CommentTypo
@@ -16,44 +17,44 @@ namespace Kontur.Extern.Client.Model.Documents
             /// Расчёт 4-ФСС
             /// </summary>
             [PublicAPI]
-            public static class Calculation4Fss
+            public static class Report
             {
                 /// <summary>
                 /// Исходный отчет с присоединенной подписью
                 /// Имя (согласно нормативным документам): Файл Расчета
                 /// </summary>
-                public static readonly DocumentType FssReport = "urn:document:fss-report";
+                public static readonly DocumentType ReportFile = "urn:document:fss-report";
 
                 /// <summary>
                 /// Подтверждение спецоператора (не утверждено форматом, формирует Контур.Экстерн при отправке из веб-приложения, юридической силы не имеет)
                 /// Имя (согласно нормативным документам): нет соответствия
                 /// </summary>
-                public static readonly DocumentType FssReportDateConfirmation = "urn:document:fss-report-date-confirmation";
+                public static readonly DocumentType DateConfirmation = "urn:document:fss-report-date-confirmation";
 
                 /// <summary>
                 /// Сообщение об ошибке при проверке отчета, возможные типы указаны на Портале ФСС (ошибки на стадии криптографических проверок)
                 /// Имя (согласно нормативным документам): нет соответствия
                 /// </summary>
-                public static readonly DocumentType FssReportError = "urn:document:fss-report-error";
+                public static readonly DocumentType Error = "urn:document:fss-report-error";
 
                 /// <summary>
                 /// Сообщение об ошибке при проверке отчета (ошибки форматно-логического контроля)
                 /// Имя (согласно нормативным документам): Квитанция о получении Расчета с ошибками
                 /// </summary>
-                public static readonly DocumentType FssReportErrorReceipt = "urn:document:fss-report-error-receipt";
+                public static readonly DocumentType ErrorReceipt = "urn:document:fss-report-error-receipt";
 
                 /// <summary>
                 /// Квитанция
                 /// Имя (согласно нормативным документам): Квитанция о получении Расчета
                 /// </summary>
-                public static readonly DocumentType FssReportReceipt = "urn:document:fss-report-receipt";
+                public static readonly DocumentType Receipt = "urn:document:fss-report-receipt";
             }
 
             /// <summary>
             /// Подтверждение основного вида экономической деятельности
             /// </summary>
             [PublicAPI]
-            public static class Confirmation
+            public static class OvedConfirmation
             {
                 /// <summary>
                 /// xml-файл отчета (не зашифрован и не сжат)
@@ -85,7 +86,7 @@ namespace Kontur.Extern.Client.Model.Documents
             /// Подписка оператора на документооборот с ФСС по абоненту
             /// </summary>
             [PublicAPI]
-            public static class ProviderSubscription
+            public static class SedoProviderSubscription
             {
                 /// <summary>
                 /// Подписка оператора на страхователя для получения документов из СЭДО
@@ -117,7 +118,7 @@ namespace Kontur.Extern.Client.Model.Documents
             /// Подписка страхователя на документооборот с ФСС
             /// </summary>
             [PublicAPI]
-            public static class AbonSubscription
+            public static class SedoAbonentSubscription
             {
                 /// <summary>
                 /// Подписка работника(-ов) страхователя на оповещение по изменению статуса ЭЛН
@@ -155,41 +156,44 @@ namespace Kontur.Extern.Client.Model.Documents
                 /// Ошибка взаимодействия с СЭДО (синхронная ошибка обработки запроса в СЭДО)
                 /// </summary>
                 public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-abonent-subscription-exchange-error";
-            }
-
-            /// <summary>
-            /// Результат приема подписки страхователя
-            /// </summary>
-            [PublicAPI]
-            public static class AbonSubscriptionResult
-            {
+                
                 /// <summary>
-                /// Запрос на получение результата подписки абонента
+                /// Результат приема подписки страхователя
                 /// </summary>
-                public static readonly DocumentType ResultStatusRequestMessage = "urn:document:fss-sedo-abonent-subscription-result-status-request-message";
-                /// <summary>
-                /// Результат подписки/отписки страхователя на оповещение об ЭЛН работника
-                /// </summary>
-                public static readonly DocumentType ResultSubscribeStatusForSnils = "urn:document:fss-sedo-abonent-subscription-result-subscribe-status-for-snils";
-                /// <summary>
-                /// Результат подписки/отписки работника(-ов) страхователя на уведомления по ЭЛН
-                /// </summary>
-                public static readonly DocumentType ResultSubscribeStatusForRegistrationNumber = "urn:document:fss-sedo-abonent-subscription-result-subscribe-status-for-registration-number";
-                /// <summary>
-                /// Ошибка обработки документа (асинхронная ошибка, приходит в urn:docflow:fss-sedo-error)
-                /// </summary>
-                public static readonly DocumentType ResultErrorMessage = "urn:document:fss-sedo-abonent-subscription-result-error-message";
-                /// <summary>
-                /// Ошибка взаимодействия с СЭДО (синхронная ошибка обработки запроса в СЭДО)
-                /// </summary>
-                public static readonly DocumentType ResultExchangeError = "urn:document:fss-sedo-abonent-subscription-result-exchange-error";
+                [PublicAPI]
+                public static class Result
+                {
+                    /// <summary>
+                    /// Запрос на получение результата подписки абонента
+                    /// </summary>
+                    public static readonly DocumentType StatusRequestMessage = "urn:document:fss-sedo-abonent-subscription-result-status-request-message";
+                    /// <summary>
+                    /// Результат подписки/отписки страхователя на оповещение об ЭЛН работника
+                    /// </summary>
+                    public static readonly DocumentType SubscribeStatusForSnils = "urn:document:fss-sedo-abonent-subscription-result-subscribe-status-for-snils";
+                    /// <summary>
+                    /// Результат подписки/отписки работника(-ов) страхователя на уведомления по ЭЛН
+                    /// </summary>
+                    public static readonly DocumentType SubscribeStatusForRegistrationNumber = "urn:document:fss-sedo-abonent-subscription-result-subscribe-status-for-registration-number";
+                    /// <summary>
+                    /// Ошибка обработки документа (асинхронная ошибка, приходит в urn:docflow:fss-sedo-error)
+                    /// </summary>
+                    [SuppressMessage("ReSharper", "MemberHidesStaticFromOuterClass")]
+                    public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-abonent-subscription-result-error-message";
+                    
+                    /// <summary>
+                    /// Ошибка взаимодействия с СЭДО (синхронная ошибка обработки запроса в СЭДО)
+                    /// </summary>
+                    [SuppressMessage("ReSharper", "MemberHidesStaticFromOuterClass")]
+                    public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-abonent-subscription-result-exchange-error";
+                }
             }
 
             /// <summary>
             /// Извещение о прямых выплатах мер социального обеспечения
             /// </summary>
             [PublicAPI]
-            public static class PvsoNotification
+            public static class SedoPvsoNotification
             {
                 /// <summary>
                 /// Запрос на получение контента извещения ПВСО
@@ -221,7 +225,7 @@ namespace Kontur.Extern.Client.Model.Documents
             /// Уведомления об изменении статуса электронного больничного листа
             /// </summary>
             [PublicAPI]
-            public static class SickReportChangeNotification
+            public static class SedoSickReportChangeNotification
             {
                 /// <summary>
                 /// Запрос на получение контента уведомления об изменении статуса ЭЛН
@@ -253,7 +257,7 @@ namespace Kontur.Extern.Client.Model.Documents
             /// Сообщения об ошибках в ДО ФСС через СЭДО
             /// </summary>
             [PublicAPI]
-            public static class SedoErrors
+            public static class SedoError
             {
                 /// <summary>
                 /// Запрос на получение сообщения об ошибке
