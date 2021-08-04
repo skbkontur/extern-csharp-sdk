@@ -45,6 +45,21 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
                 documentType.ToUrn().Should().NotBeNull();
             }
 
+            [Test]
+            [Ignore("Some duplicates found")]
+            public void Should_be_unique()
+            {
+                var predefinedTypes = AllPredefinedDocumentTypes.Select(x => x.ToString());
+
+                var valuesFrequencies = predefinedTypes.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count())
+                    .As<IEnumerable<KeyValuePair<string, int>>>();
+
+                valuesFrequencies.Should().OnlyContain(x => x.Value == 1);
+            }
+
+            private static IEnumerable<DocumentType> AllPredefinedDocumentTypes => 
+                PredefinedTypeFields().Select(x => (DocumentType) x.GetValue(null!)!);
+
             public static IEnumerable<FieldInfo> PredefinedTypeFields() =>
                 from nestedType in GetNestedTypes() 
                 from fieldInfo in nestedType.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField) 
