@@ -33,7 +33,7 @@ namespace Kontur.Extern.Client
         {
             var http = CreateHttp(clusterClient, requestTimeouts, authProvider, jsonSerializer);
             var api = new KeApiClient(http, cryptoProvider);
-            var services = new ExternClientServices(http, api, pollingStrategy, authProvider);
+            var services = new ExternClientServices(http, api, pollingStrategy, authProvider, cryptoProvider);
             return new Extern(services);
         }
 
