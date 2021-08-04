@@ -46,10 +46,22 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             }
 
             [Test]
-            [Ignore("Some duplicates found")]
             public void Should_be_unique()
             {
-                var predefinedTypes = AllPredefinedDocumentTypes.Select(x => x.ToString());
+                var ignoredFields = new Dictionary<Type, string[]>
+                {
+                    [typeof (DocumentType.Pfr.PftInfoEdoc)] = new[]
+                    {
+                        nameof(DocumentType.Pfr.PftInfoEdoc.PfrReportAttachment),
+                        nameof(DocumentType.Pfr.PftInfoEdoc.PfrReportProtocolAppendix)
+                    }
+                };
+                bool FieldIsIgnored(FieldInfo fieldInfo) => 
+                    ignoredFields.TryGetValue(fieldInfo.DeclaringType!, out var fields) && fields.Contains(fieldInfo.Name);
+                
+                var predefinedTypes = AllPredefinedDocumentTypes
+                    .Where(x => !FieldIsIgnored(x.field))
+                    .Select(x => x.documentType.ToString());
 
                 var valuesFrequencies = predefinedTypes.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count())
                     .As<IEnumerable<KeyValuePair<string, int>>>();
@@ -57,8 +69,8 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
                 valuesFrequencies.Should().OnlyContain(x => x.Value == 1);
             }
 
-            private static IEnumerable<DocumentType> AllPredefinedDocumentTypes => 
-                PredefinedTypeFields().Select(x => (DocumentType) x.GetValue(null!)!);
+            private static IEnumerable<(FieldInfo field, DocumentType documentType)> AllPredefinedDocumentTypes => 
+                PredefinedTypeFields().Select(x => (x, (DocumentType) x.GetValue(null!)!));
 
             public static IEnumerable<FieldInfo> PredefinedTypeFields() =>
                 from nestedType in GetNestedTypes() 

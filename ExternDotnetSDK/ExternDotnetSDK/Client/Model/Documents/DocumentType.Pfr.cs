@@ -76,7 +76,7 @@ namespace Kontur.Extern.Client.Model.Documents
                 /// Неформализованное приложение к пакету	
                 /// Имя (согласно нормативным документам): Приложение
                 /// </summary>
-                public static readonly DocumentType PfrReportAttachment = "urn:document:pfr-report-attachment";
+                public static readonly DocumentType PfrReportAttachment = PftInfo.PfrReportAttachment;
 
                 /// <summary>
                 /// Подтверждение доставки пакета в ЭДОК	
@@ -106,7 +106,7 @@ namespace Kontur.Extern.Client.Model.Documents
                 /// Приложение к протоколу (к Positive либо Suppositive)	
                 /// Имя (согласно нормативным документам): Приложение
                 /// </summary>
-                public static readonly DocumentType PfrReportProtocolAppendix = "urn:document:pfr-report-protocol-appendix";
+                public static readonly DocumentType PfrReportProtocolAppendix = PftInfo.PfrReportProtocolAppendix;
 
                 /// <summary>
                 /// Подтверждение получения уведомления об устранении ошибок и (или) несоответствий оператором	
