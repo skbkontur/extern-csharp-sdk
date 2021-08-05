@@ -72,11 +72,18 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             private static IEnumerable<(FieldInfo field, DocumentType documentType)> AllPredefinedDocumentTypes => 
                 PredefinedTypeFields().Select(x => (x, (DocumentType) x.GetValue(null!)!));
 
-            public static IEnumerable<FieldInfo> PredefinedTypeFields() =>
-                from nestedType in GetNestedTypes() 
-                from fieldInfo in nestedType.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField) 
-                where fieldInfo.FieldType == typeof (DocumentType) 
-                select fieldInfo;
+            public static IEnumerable<FieldInfo> PredefinedTypeFields()
+            {
+                var fields = (from nestedType in GetNestedTypes()
+                             from fieldInfo in nestedType.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField)
+                             where fieldInfo.FieldType == typeof (DocumentType)
+                             select fieldInfo).ToArray();
+
+                if (fields.Length == 0)
+                    throw new InvalidOperationException($"Type {typeof(DocumentType)} does not contain predefined document types");
+                
+                return fields;
+            }
 
             private static IEnumerable<Type> GetNestedTypes()
             {
