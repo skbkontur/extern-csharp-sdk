@@ -2,6 +2,8 @@ namespace Kontur.Extern.Client.Http
 {
     public interface IPayloadHttpRequest : IHttpRequest
     {
-        IHttpRequest WithPayload(IHttpContent content);
+        IPayloadHttpRequest WithPayload(IHttpContent content);
+        IHttpRequest ContentRange(long from, long to);
+        IHttpRequest ContentRange(long from, long to, long length);
     }
 }

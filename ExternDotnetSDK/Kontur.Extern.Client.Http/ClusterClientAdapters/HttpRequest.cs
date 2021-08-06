@@ -39,7 +39,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         }
 
-        public IHttpRequest WithPayload(IHttpContent content)
+        public IPayloadHttpRequest WithPayload(IHttpContent content)
         {
             request = content.Apply(request, serializer);
             return this;
@@ -54,6 +54,24 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
         public IHttpRequest Authorization(string scheme, in Base64String parameter)
         {
             request = request.WithAuthorizationHeader(scheme, parameter.ToString());
+            return this;
+        }
+
+        public IHttpRequest Range(long from, long? to)
+        {
+            request = request.WithRangeHeader(from, to);
+            return this;
+        }
+
+        public IHttpRequest ContentRange(long from, long to)
+        {
+            request = request.WithContentRangeHeader(from, to);
+            return this;
+        }
+
+        public IHttpRequest ContentRange(long from, long to, long length)
+        {
+            request = request.WithContentRangeHeader(from, to, length);
             return this;
         }
 
