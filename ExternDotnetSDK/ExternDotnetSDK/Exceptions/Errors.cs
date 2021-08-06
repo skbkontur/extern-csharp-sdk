@@ -78,6 +78,9 @@ namespace Kontur.Extern.Client.Exceptions
         public static Exception StringShouldNotBeNullOrWhiteSpace([InvokerParameterName] string paramName) => 
             new ArgumentException("The given value cannot be null, or empty, or a whitespace string.", paramName);
 
+        public static Exception ValueShouldNotBeEmpty([InvokerParameterName] string paramName) => 
+            new ArgumentException("The given value cannot be empty.", paramName);
+
         public static Exception TheAuthProviderNotSpecifiedOrUnsupported() => 
             new InvalidOperationException("There is no specified an authentication provider or the specified one is not suppoted");
 

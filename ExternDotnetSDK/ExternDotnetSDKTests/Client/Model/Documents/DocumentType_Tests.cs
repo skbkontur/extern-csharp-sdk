@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Kontur.Extern.Client.Tests.Client.Model.Documents
 {
     [TestFixture]
-    public class DocumentType_Tests
+    internal class DocumentType_Tests
     {
         [TestFixture]
         internal class Ctor
