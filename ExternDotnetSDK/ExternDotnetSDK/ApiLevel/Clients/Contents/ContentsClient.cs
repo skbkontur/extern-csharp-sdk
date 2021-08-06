@@ -12,10 +12,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Contents
 
         public ContentsClient(IHttpRequestsFactory http) => this.http = http;
 
-        public Task<ContentResponse> UploadAsync(Guid accountId, byte[] content, string contentType = null, TimeSpan? timeout = null)
-        {
-            return StartUploadAsync(accountId, content, 0, content.Length - 1, content.Length, contentType, timeout);
-        }
+        public Task<ContentResponse> UploadAsync(Guid accountId, byte[] content, string contentType = null, TimeSpan? timeout = null) => 
+            StartUploadAsync(accountId, content, 0, content.Length - 1, content.Length, contentType, timeout);
 
         public Task<ContentResponse> StartUploadAsync(Guid accountId, byte[] contentChunk, long from, long to, long contentLength, string contentType = null, TimeSpan? timeout = null)
         {
@@ -35,15 +33,12 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Contents
             return SendRequestAsync<UploadChunkResponse>(request, timeout);
         }
 
-        public Task<byte[]> DownloadAsync(Guid accountId, Guid contentId, TimeSpan? timeout = null)
-        {
-            return http.GetBytesAsync($"v1/{accountId}/contents/{contentId}");
-        }
+        public Task<byte[]> DownloadAsync(Guid accountId, Guid contentId, TimeSpan? timeout = null) => 
+            http.GetBytesAsync($"v1/{accountId}/contents/{contentId}");
 
         public async Task<byte[]> DownloadAsync(Guid accountId, Guid contentId, int from, int to, TimeSpan? timeout = null)
         {
-            var request = http.Get($"v1/{accountId}/contents/{contentId}")
-                .Range(from, to);
+            var request = http.Get($"v1/{accountId}/contents/{contentId}").Range(from, to);
             var httpResponse = await request.SendAsync(timeout).ConfigureAwait(false);
             return httpResponse.GetBytes();
         }

@@ -1,4 +1,5 @@
 ﻿using Kontur.Extern.Client.ApiLevel.Clients.Accounts;
+using Kontur.Extern.Client.ApiLevel.Clients.Contents;
 using Kontur.Extern.Client.ApiLevel.Clients.Docflows;
 using Kontur.Extern.Client.ApiLevel.Clients.Drafts;
 using Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders;
@@ -20,5 +21,6 @@ namespace Kontur.Extern.Client.ApiLevel
         IDraftsBuilderClient DraftsBuilder { get; }
         IEventsClient Events { get; }
         IOrganizationsClient Organizations { get; }
+        IContentsClient Contents { get; }
     }
 }

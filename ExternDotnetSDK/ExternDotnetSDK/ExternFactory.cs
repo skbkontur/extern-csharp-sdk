@@ -32,7 +32,7 @@ namespace Kontur.Extern.Client
             JsonSerializer jsonSerializer)
         {
             var http = CreateHttp(clusterClient, requestTimeouts, authProvider, jsonSerializer);
-            var api = new KeApiClient(http, cryptoProvider);
+            var api = new KeApiClient(http);
             var services = new ExternClientServices(http, api, pollingStrategy, authProvider, cryptoProvider);
             return new Extern(services);
         }

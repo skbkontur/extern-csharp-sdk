@@ -2,13 +2,13 @@
 using Kontur.Extern.Client.ApiLevel.Clients.Accounts;
 using Kontur.Extern.Client.ApiLevel.Clients.Authentication;
 using Kontur.Extern.Client.ApiLevel.Clients.Common.Logging;
+using Kontur.Extern.Client.ApiLevel.Clients.Contents;
 using Kontur.Extern.Client.ApiLevel.Clients.Docflows;
 using Kontur.Extern.Client.ApiLevel.Clients.Drafts;
 using Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders;
 using Kontur.Extern.Client.ApiLevel.Clients.Events;
 using Kontur.Extern.Client.ApiLevel.Clients.Organizations;
 using Kontur.Extern.Client.ApiLevel.Clients.Replies;
-using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Http;
 
 namespace Kontur.Extern.Client.ApiLevel
@@ -24,7 +24,7 @@ namespace Kontur.Extern.Client.ApiLevel
             throw new NotSupportedException();
         }
 
-        internal KeApiClient(IHttpRequestsFactory httpRequestsFactory, ICrypt cryptoProvider)
+        internal KeApiClient(IHttpRequestsFactory httpRequestsFactory)
         {
             Http = httpRequestsFactory;
             Accounts = new AccountClient(httpRequestsFactory);
@@ -32,9 +32,9 @@ namespace Kontur.Extern.Client.ApiLevel
             Replies = new RepliesClient(httpRequestsFactory);
             Drafts = new DraftsClient(httpRequestsFactory);
             Events = new EventsClient(httpRequestsFactory);
+            Contents = new ContentsClient(httpRequestsFactory);
             DraftsBuilder = new DraftsBuilderClient(httpRequestsFactory);
             Organizations = new OrganizationsClient(httpRequestsFactory);
-            CryptoProvider = cryptoProvider;
         }
 
         public IHttpRequestsFactory Http { get; }
@@ -45,6 +45,6 @@ namespace Kontur.Extern.Client.ApiLevel
         public IDraftsBuilderClient DraftsBuilder { get; }
         public IEventsClient Events { get; }
         public IOrganizationsClient Organizations { get; }
-        public ICrypt CryptoProvider { get; }
+        public IContentsClient Contents { get; }
     }
 }
