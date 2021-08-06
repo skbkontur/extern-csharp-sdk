@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Http.Constants;
+using Kontur.Extern.Client.Http.Exceptions;
 using Kontur.Extern.Client.Http.Models;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
@@ -11,7 +12,7 @@ using Request = Vostok.Clusterclient.Core.Model.Request;
 
 namespace Kontur.Extern.Client.Http.ClusterClientAdapters
 {
-    internal class HttpRequest : IPayloadHttpRequest
+    internal class HttpRequest : IPayloadHttpRequest, IPayloadSpecifiedRequest
     {
         private Request request;
         private readonly RequestTimeouts requestTimeouts;
@@ -39,7 +40,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         }
 
-        public IPayloadHttpRequest WithPayload(IHttpContent content)
+        public IPayloadSpecifiedRequest WithPayload(IHttpContent content)
         {
             request = content.Apply(request, serializer);
             return this;
@@ -63,15 +64,29 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             return this;
         }
 
-        public IHttpRequest ContentRange(long from, long to)
+        public IHttpRequest ContentRange(long from, long to, long? totalLength)
         {
-            request = request.WithContentRangeHeader(from, to);
-            return this;
-        }
+            if (request.Content == null)
+                throw Errors.ContentMustBeSpecifiedBeforeSetRangeHeader();
+            
+            var contentLength = request.Content.Length;
+            if (from > to)
+                throw Errors.ContentRangeMustHaveValidBounds(nameof(to), from, to);
+            if (to - from != contentLength)
+                throw Errors.ContentRangeMustHaveEqualBytesAsContentLength(nameof(to), from, to, contentLength);
+            
+            if (totalLength.HasValue)
+            {
+                if (totalLength < contentLength)
+                    throw Errors.TotalLengthMustBeGreaterOrEqualToContentLength(nameof(totalLength), totalLength.Value, contentLength);
 
-        public IHttpRequest ContentRange(long from, long to, long length)
-        {
-            request = request.WithContentRangeHeader(from, to, length);
+                request = request.WithContentRangeHeader(from, to, totalLength.Value);
+            }
+            else
+            {
+                request = request.WithContentRangeHeader(from, to);
+            }
+
             return this;
         }
 

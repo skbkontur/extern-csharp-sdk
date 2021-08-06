@@ -19,5 +19,17 @@ namespace Kontur.Extern.Client.Http.Exceptions
 
         public static Exception StringShouldNotBeNullOrWhiteSpace([InvokerParameterName] string paramName) => 
             new ArgumentException("The given value cannot be null, or empty, or a whitespace string.", paramName);
+
+        public static Exception ContentMustBeSpecifiedBeforeSetRangeHeader() => 
+            new InvalidOperationException("A content must be specified in the request before setting the range header");
+
+        public static Exception TotalLengthMustBeGreaterOrEqualToContentLength([InvokerParameterName] string paramName, long totalLength, int contentLength) => 
+            new ArgumentOutOfRangeException(paramName, totalLength, $"The total length must be greater or equal to content-length value, which is {contentLength}");
+
+        public static Exception ContentRangeMustHaveValidBounds([InvokerParameterName] string paramName, long from, long to) => 
+            new ArgumentException($"The specified content-range have wrong bounds: it starts from {@from} and ends on {to}", paramName);
+        
+        public static Exception ContentRangeMustHaveEqualBytesAsContentLength([InvokerParameterName] string paramName, long from, long to, long contentLength) => 
+            new ArgumentException($"The specified content-range [{from}, {to}] have contains different bytes as the CONTENT-LENGTH {contentLength}", paramName);
     }
 }

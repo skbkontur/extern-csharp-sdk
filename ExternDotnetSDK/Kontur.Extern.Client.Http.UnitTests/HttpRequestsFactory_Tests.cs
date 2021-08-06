@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Http.ClusterClientAdapters;
+using Kontur.Extern.Client.Http.Contents;
 using Kontur.Extern.Client.Http.Exceptions;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Testing.Fakes.Http;
 using Kontur.Extern.Client.Testing.Fakes.Logging;
+using NSubstitute;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Logging.Abstractions;
@@ -99,7 +101,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
             }
 
             [Fact]
-            public async Task should_deserialize_response_as_specified_DTO()
+            public async Task Should_deserialize_response_as_specified_DTO()
             {
                 var expectedResponseDto = new ResponseDto {Data = "expected data"};
 
@@ -247,6 +249,67 @@ namespace Kontur.Extern.Client.Http.UnitTests
             {
                 return HttpRequestsFactory_Tests.CreateHttp(clusterClient, requestTransformAsync, errorResponseHandler, failover);
             }
+        }
+
+        public class ContentRange
+        {
+            private readonly FakeClusterClient clusterClient;
+
+            public ContentRange(ITestOutputHelper output)
+            {
+                var log = new TestLog(output);
+                clusterClient = CreateFakeClusterClient(log);
+            }
+            
+            [Fact]
+            public async Task Should_set_content_type_range_into_request()
+            {
+                await CreateHttp().Put("/some-resource")
+                    .WithBytes(new byte[100])
+                    .ContentRange(100, 200)
+                    .SendAsync();
+
+                clusterClient.SentRequest!.Headers!.ContentRange.Should().Be("bytes 100-200/*");
+            }
+            
+            [Fact]
+            public async Task Should_set_content_type_range_with_total_length_into_request()
+            {
+                await CreateHttp().Post("/some-resource")
+                    .WithBytes(new byte[100])
+                    .ContentRange(100, 200, 3000)
+                    .SendAsync();
+
+                clusterClient.SentRequest!.Headers!.ContentRange.Should().Be("bytes 100-200/3000");
+            }
+            
+            [Theory]
+            [InlineData(100, 200, 200)]
+            [InlineData(100, 200, 50)]
+            public void Should_fail_when_given_inconsistent_range_to_content_length(int rangeStart, int rangeEnd, int contentLength)
+            {
+                var payloadSpecifiedRequest = CreateHttp().Post("/some-resource").WithBytes(new byte[contentLength]);
+
+                Action action = () => payloadSpecifiedRequest.ContentRange(rangeStart, rangeEnd);
+
+                action.Should().Throw<ArgumentException>();
+            }
+            
+            [Theory]
+            [InlineData(100, 200, 200, 300)]
+            [InlineData(100, 200, 50, 300)]
+            [InlineData(100, 200, 100, 50)]
+            [InlineData(150, 50, 100, 300)]
+            public void Should_fail_when_given_inconsistent_range_to_content_length_and_total_length(int rangeStart, int rangeEnd, int contentLength, int totalLength)
+            {
+                var payloadSpecifiedRequest = CreateHttp().Put("/some-resource").WithBytes(new byte[contentLength]);
+
+                Action action = () => payloadSpecifiedRequest.ContentRange(rangeStart, rangeEnd, totalLength);
+
+                action.Should().Throw<ArgumentException>();
+            }
+
+            private HttpRequestsFactory CreateHttp() => HttpRequestsFactory_Tests.CreateHttp(clusterClient);
         }
 
         public abstract class VerbTestBase

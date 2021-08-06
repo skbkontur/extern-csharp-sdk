@@ -8,7 +8,8 @@
         <Company>SKB Kontur</Company>
         <Product>Kontur.Extern.Client.Http</Product>
         <PackageTags>kontur, skbkontur, extern, kontur-extern, SDK, API</PackageTags>        
-        <LangVersion>latest</LangVersion>
+        <LangVersion>latest</LangVersion>        
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
