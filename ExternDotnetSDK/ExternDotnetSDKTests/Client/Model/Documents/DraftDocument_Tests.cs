@@ -5,6 +5,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Http.Constants;
+using Kontur.Extern.Client.Model;
 using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Model.Drafts;
 using NSubstitute;
@@ -19,7 +20,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         [Test]
         public void WithId_should_return_a_document_with_given_id()
         {
-            var content = CreateEmptyContent();
+            var content = CreateContent();
             var id = Guid.NewGuid();
 
             var document = DraftDocument.WithId(id, content);
@@ -40,7 +41,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         [Test]
         public void WithNewId_should_return_a_document_with_given_id()
         {
-            var content = CreateEmptyContent();
+            var content = CreateContent();
 
             var document = DraftDocument.WithNewId(content);
 
@@ -58,7 +59,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         [Test]
         public void OfType_should_fail_when_given_empty_type()
         {
-            var document = DraftDocument.WithNewId(CreateEmptyContent());
+            var document = DraftDocument.WithNewId(CreateContent());
 
             Action action = () => document.OfType(default);
 
@@ -68,7 +69,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         [Test]
         public void WithSignature_should_fail_when_given_null_signature()
         {
-            var document = DraftDocument.WithNewId(CreateEmptyContent());
+            var document = DraftDocument.WithNewId(CreateContent());
 
             Action action = () => document.WithSignature(null!);
 
@@ -78,7 +79,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         [Test]
         public void WithCertificate_should_fail_when_given_null_certificate()
         {
-            var document = DraftDocument.WithNewId(CreateEmptyContent());
+            var document = DraftDocument.WithNewId(CreateContent());
 
             Action action = () => document.WithCertificate(null!);
 
@@ -88,7 +89,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         [Test]
         public void WithSignature_should_fail_when_given_null_certificate()
         {
-            var document = DraftDocument.WithNewId(CreateEmptyContent());
+            var document = DraftDocument.WithNewId(CreateContent());
 
             Action action = () => document.WithSignature(null!);
 
@@ -100,7 +101,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         [TestCase(" ")]
         public void WithSvdregCode_should_fail_when_given_invalid_code(string code)
         {
-            var document = DraftDocument.WithNewId(CreateEmptyContent());
+            var document = DraftDocument.WithNewId(CreateContent());
 
             Action action = () => document.WithSvdregCode(code);
 
@@ -112,7 +113,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         [TestCase(" ")]
         public void WithFileName_should_fail_when_given_invalid_file_name(string fileName)
         {
-            var document = DraftDocument.WithNewId(CreateEmptyContent());
+            var document = DraftDocument.WithNewId(CreateContent());
 
             Action action = () => document.WithFileName(fileName);
 
@@ -123,7 +124,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         public void CreateSignedRequestAsync_should_fail_when_given_null_crypt()
         {
             var contentId = Guid.NewGuid();
-            var document = DraftDocument.WithNewId(CreateEmptyContent());
+            var document = DraftDocument.WithNewId(CreateContent());
 
             Func<Task> func = async () => await document.CreateSignedRequestAsync(contentId, null!);
 
@@ -141,7 +142,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
                 ContentId = contentId
             };
             
-            var content = CreateEmptyContent(contentType);
+            var content = CreateContent(contentType);
             var document = DraftDocument.WithNewId(content);
 
             await CreateSignedRequestAsync_should_return_request(document, contentId, expectedRequest);
@@ -156,7 +157,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
                 ContentId = contentId
             };
             
-            var document = DraftDocument.WithNewId(CreateEmptyContent(null));
+            var document = DraftDocument.WithNewId(CreateContent(null));
 
             await CreateSignedRequestAsync_should_return_request(document, contentId, expectedRequest);
         }
@@ -175,7 +176,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
                 }
             };
 
-            var document = DraftDocument.WithNewId(CreateEmptyContent(null))
+            var document = DraftDocument.WithNewId(CreateContent(null))
                 .WithSvdregCode(svdregCode);
 
             await CreateSignedRequestAsync_should_return_request(document, contentId, expectedRequest);
@@ -195,7 +196,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
                 }
             };
             
-            var document = DraftDocument.WithNewId(CreateEmptyContent(null))
+            var document = DraftDocument.WithNewId(CreateContent(null))
                 .OfType(documentType);
 
             await CreateSignedRequestAsync_should_return_request(document, contentId, expectedRequest);
@@ -215,7 +216,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
                 }
             };
             
-            var document = DraftDocument.WithNewId(CreateEmptyContent(null))
+            var document = DraftDocument.WithNewId(CreateContent(null))
                 .WithFileName(filename);
 
             await CreateSignedRequestAsync_should_return_request(document, contentId, expectedRequest);
@@ -235,7 +236,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         {
             var crypt = Substitute.For<ICrypt>();
             var contentId = Guid.NewGuid();
-            var document = DraftDocument.WithNewId(CreateEmptyContent());
+            var document = DraftDocument.WithNewId(CreateContent());
 
             var request = await document.CreateSignedRequestAsync(contentId, crypt);
 
@@ -249,13 +250,14 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             var crypt = Substitute.For<ICrypt>();
             var contentId = Guid.NewGuid();
             var expectedSignature = new byte[] {1, 2, 3};
-            var document = DraftDocument.WithNewId(CreateEmptyContent())
+            var documentContent = CreateContent();
+            var document = DraftDocument.WithNewId(documentContent)
                 .WithSignature(expectedSignature);
 
             var request = await document.CreateSignedRequestAsync(contentId, crypt);
 
             request.Signature.Should().BeEquivalentTo(expectedSignature);
-            crypt.DidNotReceive().Sign(Arg.Any<byte[]>(), Arg.Any<byte[]>());
+            _ = documentContent.DidNotReceive().SignAsync(Arg.Any<CertificateContent>(), Arg.Any<ICrypt>());
         }
 
         [Test]
@@ -264,10 +266,11 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             var crypt = Substitute.For<ICrypt>();
             var contentId = Guid.NewGuid();
             var expectedSignature = new byte[] {1, 2, 3};
-            var document = DraftDocument.WithNewId(CreateEmptyContent())
+            var documentContent = CreateContent();
+            var document = DraftDocument.WithNewId(documentContent)
                 .WithCertificate(new byte[] {1, 2, 3, 4});
 
-            crypt.Sign(Arg.Any<byte[]>(), Arg.Any<byte[]>())
+            documentContent.SignAsync(Arg.Any<CertificateContent>(), Arg.Any<ICrypt>())
                 .Returns(expectedSignature);
 
             var request = await document.CreateSignedRequestAsync(contentId, crypt);
@@ -275,10 +278,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             request.Signature.Should().BeEquivalentTo(expectedSignature);
         }
 
-        private static IDocumentContent CreateEmptyContent(string contentType = ContentTypes.Json)
+        private static IDocumentContent CreateContent(string contentType = ContentTypes.Json)
         {
             var content = Substitute.For<IDocumentContent>();
-            content.GetBytesAsync().Returns(new byte[0]);
             content.ContentType.Returns(contentType);
             return content;
         }

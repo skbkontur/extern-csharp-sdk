@@ -104,14 +104,9 @@ namespace Kontur.Extern.Client.Model.Drafts
 
             async Task<Signature?> SignContentAsync()
             {
-                if (certificate != null)
-                {
-                    var contentBytes = await DocumentContent.GetBytesAsync().ConfigureAwait(false);
-                    var signatureBytes = crypt.Sign(contentBytes, certificate.ToBytes());
-                    return Signature.FromBytes(signatureBytes);
-                }
-
-                return signature;
+                return certificate == null 
+                    ? signature 
+                    : await DocumentContent.SignAsync(certificate, crypt).ConfigureAwait(false);
             }
         }
     }
