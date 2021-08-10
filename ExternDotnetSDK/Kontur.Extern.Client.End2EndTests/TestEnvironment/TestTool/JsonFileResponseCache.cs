@@ -47,7 +47,7 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
 
         public async Task SetValueAsync(string key, string value)
         {
-            await using var jsonFile = File.OpenWrite(GetFilePath());
+            await using var jsonFile = File.Open(GetFilePath(), FileMode.Open);
             Dictionary<string,string>? dictionary = null;
             if (jsonFile.Length > 0)
             {
