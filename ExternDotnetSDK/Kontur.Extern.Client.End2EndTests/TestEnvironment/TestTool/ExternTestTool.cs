@@ -32,17 +32,18 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
 
         public async Task<GeneratedAccount> GenerateLegalEntityAccountAsync(string organizationName)
         {
-            var responseBody = await cache.TryGetAsync(organizationName);
-            if (responseBody == null)
-            {
-                responseBody = await GenerateNewAccount();
-                await cache.SetValueAsync(organizationName, responseBody);
-            }
-
-            var response = JsonConvert.DeserializeObject<NewAccountResponse>(responseBody) ??
-                           throw new InvalidOperationException("Cannot deserialize response");
+            var responseBody = await cache.TryGetAsync(organizationName) ?? await GenerateNewAccount();
+            var response = DeserializeAccount(responseBody);
 
             var publicPartOfCertificate = await driveCertificatesReader.GetPublicPartOfCertificate(response.CertificateInfo.CertificateDrivePath);
+            if (publicPartOfCertificate == null)
+            {
+                responseBody = await GenerateNewAccount();
+                response = DeserializeAccount(responseBody);
+                publicPartOfCertificate = await driveCertificatesReader.GetPublicPartOfCertificate(response.CertificateInfo.CertificateDrivePath) ??
+                                          throw new InvalidOperationException("The content of newly generated account was not found");
+            }
+
             return ToGeneratedAccount(response, publicPartOfCertificate);
 
             static GeneratedAccount ToGeneratedAccount(NewAccountResponse response, byte[] certificatePublicPart) => new(
@@ -65,7 +66,15 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
                 );
                 responseMessage.EnsureSuccessStatusCode();
 
-                return await responseMessage.Content.ReadAsStringAsync();
+                var responseJson = await responseMessage.Content.ReadAsStringAsync();
+                await cache.SetValueAsync(organizationName, responseJson);
+                return responseJson;
+            }
+
+            static NewAccountResponse DeserializeAccount(string responseBody)
+            {
+                return JsonConvert.DeserializeObject<NewAccountResponse>(responseBody) ??
+                       throw new InvalidOperationException("Cannot deserialize response");
             }
         }
 

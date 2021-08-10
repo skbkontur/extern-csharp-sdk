@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Testing.Lifetimes;
@@ -18,7 +19,7 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
             httpClient = lifetime.Add(new HttpClient());
         }
 
-        public async Task<byte[]> GetPublicPartOfCertificate(string driveCertificateUrl)
+        public async Task<byte[]?> GetPublicPartOfCertificate(string driveCertificateUrl)
         {
             var positionOfFileName = driveCertificateUrl.LastIndexOf("/", StringComparison.Ordinal) + 1;
             
@@ -30,7 +31,9 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
 
             if (!File.Exists(fileName))
             {
-                await DownloadToFile(driveCertificateUrl, fileName);
+                var downloaded = await DownloadToFile(driveCertificateUrl, fileName);
+                if (!downloaded)
+                    return null;
             }
 
             if (!Directory.Exists(directoryName) || Directory.GetFiles(directoryName).Length == 0)
@@ -41,11 +44,19 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
             var publicPartOfCert = Path.Combine(directoryName, "cert.cer");
             return await File.ReadAllBytesAsync(publicPartOfCert);
 
-            async Task DownloadToFile(string url, string path)
+            async Task<bool> DownloadToFile(string url, string path)
             {
-                await using var stream = await httpClient.GetStreamAsync(new Uri(url, UriKind.Absolute));
+                var responseMessage = await httpClient.GetAsync(new Uri(url, UriKind.Absolute));
+                if (responseMessage.StatusCode == HttpStatusCode.NotFound)
+                    return false;
+                responseMessage.EnsureSuccessStatusCode();
+                
+                var content = responseMessage.Content;
+                await using var stream = await content.ReadAsStreamAsync().ConfigureAwait(false);
                 await using var fileStream = File.OpenWrite(path);
                 await stream.CopyToAsync(fileStream);
+
+                return true;
             }
         }
 
