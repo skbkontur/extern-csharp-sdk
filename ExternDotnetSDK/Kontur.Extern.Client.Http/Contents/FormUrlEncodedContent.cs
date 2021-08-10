@@ -11,6 +11,10 @@ namespace Kontur.Extern.Client.Http.Contents
     public class FormUrlEncodedContent : IHttpContent
     {
         private readonly StringBuilder contentBuilder = new();
+        private readonly Lazy<string> content;
+
+        public FormUrlEncodedContent() => 
+            content = new Lazy<string>(() => contentBuilder.ToString(), true);
 
         public FormUrlEncodedContent AddEntryIfNotEmpty(in UrlEncodedString name, in UrlEncodedString value)
             => value.IsEmpty ? this : AddEntryCore(name.ToString(), value.ToString());
@@ -35,8 +39,10 @@ namespace Kontur.Extern.Client.Http.Contents
 
             return this;
         }
+        
+        long? IHttpContent.Length => Encoding.UTF8.GetByteCount(content.Value);
 
         Request IHttpContent.Apply(Request request, IJsonSerializer serializer) => 
-            request.WithContent(contentBuilder.ToString()).WithContentTypeHeader(ContentTypes.FormUrlEncoded);
+            request.WithContent(content.Value).WithContentTypeHeader(ContentTypes.FormUrlEncoded);
     }
 }

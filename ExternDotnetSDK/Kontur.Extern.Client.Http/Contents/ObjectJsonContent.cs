@@ -16,6 +16,8 @@ namespace Kontur.Extern.Client.Http.Contents
 
         public ObjectJsonContent(T message) => this.message = message;
 
+        public long? Length => null;
+
         public Request Apply(Request request, IJsonSerializer serializer)
         {
             var memoryStream = new MemoryStream();

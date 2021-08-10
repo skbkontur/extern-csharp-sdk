@@ -5,6 +5,8 @@ namespace Kontur.Extern.Client.Http
 {
     public interface IHttpContent
     {
+        long? Length { get; }
+        
         Request Apply(Request request, IJsonSerializer serializer);
     }
 }

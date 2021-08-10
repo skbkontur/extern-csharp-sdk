@@ -21,6 +21,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
         private readonly FailoverAsync? failoverAsync;
         private readonly IClusterClient clusterClient;
         private readonly IJsonSerializer serializer;
+        private IHttpContent? payload;
 
         public HttpRequest(
             Request request,
@@ -42,7 +43,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
 
         public IPayloadSpecifiedRequest WithPayload(IHttpContent content)
         {
-            request = content.Apply(request, serializer);
+            payload = content;
             return this;
         }
 
@@ -66,19 +67,19 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
 
         public IHttpRequest ContentRange(long from, long to, long? totalLength)
         {
-            if (request.Content == null)
+            if (payload == null)
                 throw Errors.ContentMustBeSpecifiedBeforeSetRangeHeader();
             
-            var contentLength = request.Content.Length;
+            var contentLength = payload.Length;
             if (from > to)
                 throw Errors.ContentRangeMustHaveValidBounds(nameof(to), from, to);
-            if (to - from != contentLength)
-                throw Errors.ContentRangeMustHaveEqualBytesAsContentLength(nameof(to), from, to, contentLength);
+            if (contentLength.HasValue && to - from != contentLength)
+                throw Errors.ContentRangeMustHaveEqualBytesAsContentLength(nameof(to), from, to, contentLength.Value);
             
             if (totalLength.HasValue)
             {
                 if (totalLength < contentLength)
-                    throw Errors.TotalLengthMustBeGreaterOrEqualToContentLength(nameof(totalLength), totalLength.Value, contentLength);
+                    throw Errors.TotalLengthMustBeGreaterOrEqualToContentLength(nameof(totalLength), totalLength.Value, contentLength.Value);
 
                 request = request.WithContentRangeHeader(from, to, totalLength.Value);
             }
@@ -119,6 +120,11 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
                 }
 
                 resultRequest = AddTimeout(resultRequest, timeBudget.Remaining);
+                if (payload != null)
+                {
+                    resultRequest = payload.Apply(resultRequest, serializer);
+                }
+
                 return await TrySendRequestAsync(resultRequest, timeBudget.Remaining).ConfigureAwait(false);
             }
         }

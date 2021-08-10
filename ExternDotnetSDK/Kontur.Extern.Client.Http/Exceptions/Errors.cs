@@ -23,7 +23,7 @@ namespace Kontur.Extern.Client.Http.Exceptions
         public static Exception ContentMustBeSpecifiedBeforeSetRangeHeader() => 
             new InvalidOperationException("A content must be specified in the request before setting the range header");
 
-        public static Exception TotalLengthMustBeGreaterOrEqualToContentLength([InvokerParameterName] string paramName, long totalLength, int contentLength) => 
+        public static Exception TotalLengthMustBeGreaterOrEqualToContentLength([InvokerParameterName] string paramName, long totalLength, long contentLength) => 
             new ArgumentOutOfRangeException(paramName, totalLength, $"The total length must be greater or equal to content-length value, which is {contentLength}");
 
         public static Exception ContentRangeMustHaveValidBounds([InvokerParameterName] string paramName, long from, long to) => 

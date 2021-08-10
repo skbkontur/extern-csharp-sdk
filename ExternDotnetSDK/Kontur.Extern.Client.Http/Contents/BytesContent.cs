@@ -9,6 +9,8 @@ namespace Kontur.Extern.Client.Http.Contents
 
         public BytesContent(byte[] bytes) => this.bytes = bytes;
 
+        public long? Length => bytes.Length;
+
         public Request Apply(Request request, IJsonSerializer serializer) => request.WithContent(bytes);
     }
 }

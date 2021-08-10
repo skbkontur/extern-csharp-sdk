@@ -3,13 +3,11 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Http.ClusterClientAdapters;
-using Kontur.Extern.Client.Http.Contents;
 using Kontur.Extern.Client.Http.Exceptions;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Testing.Fakes.Http;
 using Kontur.Extern.Client.Testing.Fakes.Logging;
-using NSubstitute;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Logging.Abstractions;
@@ -22,7 +20,6 @@ namespace Kontur.Extern.Client.Http.UnitTests
     {
         public class Get : VerbTestBase
         {
-
             public Get(ITestOutputHelper output)
                 : base(output)
             {
