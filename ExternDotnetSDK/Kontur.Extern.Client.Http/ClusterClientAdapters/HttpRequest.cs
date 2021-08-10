@@ -73,7 +73,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             var contentLength = payload.Length;
             if (from > to)
                 throw Errors.ContentRangeMustHaveValidBounds(nameof(to), from, to);
-            if (contentLength.HasValue && to - from != contentLength)
+            if (contentLength.HasValue && to - from + 1 != contentLength)
                 throw Errors.ContentRangeMustHaveEqualBytesAsContentLength(nameof(to), from, to, contentLength.Value);
             
             if (totalLength.HasValue)

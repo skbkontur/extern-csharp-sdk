@@ -263,24 +263,28 @@ namespace Kontur.Extern.Client.Http.UnitTests
             {
                 await CreateHttp().Put("/some-resource")
                     .WithBytes(new byte[100])
-                    .ContentRange(100, 200)
+                    .ContentRange(100, 199)
                     .SendAsync();
 
-                clusterClient.SentRequest!.Headers!.ContentRange.Should().Be("bytes 100-200/*");
-            }
-            
-            [Fact]
-            public async Task Should_set_content_type_range_with_total_length_into_request()
-            {
-                await CreateHttp().Post("/some-resource")
-                    .WithBytes(new byte[100])
-                    .ContentRange(100, 200, 3000)
-                    .SendAsync();
-
-                clusterClient.SentRequest!.Headers!.ContentRange.Should().Be("bytes 100-200/3000");
+                clusterClient.SentRequest!.Headers!.ContentRange.Should().Be("bytes 100-199/*");
             }
             
             [Theory]
+            [InlineData(0, 2, 3, "bytes 0-2/3")]
+            [InlineData(100, 200, 3000, "bytes 100-200/3000")]
+            public async Task Should_set_content_type_range_with_total_length_into_request(int from, int to, int total, string expectedValue)
+            {
+                await CreateHttp().Post("/some-resource")
+                    .WithBytes(new byte[to - from + 1])
+                    .ContentRange(from, to, total)
+                    .SendAsync();
+
+                clusterClient.SentRequest!.Headers!.ContentRange.Should().Be(expectedValue);
+            }
+            
+            [Theory]
+            [InlineData(0, 2, 4)]
+            [InlineData(0, 2, 2)]
             [InlineData(100, 200, 200)]
             [InlineData(100, 200, 50)]
             public void Should_fail_when_given_inconsistent_range_to_content_length(int rangeStart, int rangeEnd, int contentLength)
