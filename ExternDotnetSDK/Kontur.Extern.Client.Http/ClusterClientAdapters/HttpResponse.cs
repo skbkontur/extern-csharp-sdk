@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Text;
 using Kontur.Extern.Client.Http.Constants;
 using Kontur.Extern.Client.Http.Exceptions;
@@ -24,6 +25,9 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
         }
 
         public bool HasPayload => response.HasContent || response.HasStream;
+
+        public ContentRangeHeaderValue ContentRange =>
+            ContentRangeHeaderValue.Parse(response.Headers.ContentRange);
 
         public byte[] GetBytes()
         {
