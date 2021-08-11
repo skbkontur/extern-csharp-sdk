@@ -62,5 +62,11 @@ namespace Kontur.Extern.Client
             var apiClient = path.Services.Api;
             return apiClient.Drafts.GetDocumentAsync(path.AccountId, path.DraftId, documentId, timeout);
         }
+        
+        public static Task DeleteDocumentAsync(this DraftPath path, Guid documentId, TimeSpan? timeout = null)
+        {
+            var apiClient = path.Services.Api;
+            return apiClient.Drafts.DeleteDocumentAsync(path.AccountId, path.DraftId, documentId, timeout);
+        }
     }
 }

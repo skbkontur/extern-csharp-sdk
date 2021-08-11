@@ -130,7 +130,19 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         }
         
         [Fact]
-        public async Task Should_get_a_document_with_stream_content_from_a_draft()
+        public async Task Should_fail_when_getting_not_exists_document()
+        {
+            var newDraft = CreateDraftOfDefaultAccount();
+            await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
+            var createdDraft = entityScope.Entity;
+
+            Func<Task> func = async () => await Context.Drafts.GetDocument(AccountId, createdDraft.Id, Guid.NewGuid());
+
+            func.Should().Throw<ApiException>().And.Message.Should().Contain("NotFound");
+        }
+        
+        [Fact]
+        public async Task Should_get_a_created_document()
         {
             var newDraft = CreateDraftOfDefaultAccount();
             await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
@@ -190,6 +202,25 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var allBytes = await stream.ReadAllBytesAsync();
 
             allBytes.ShouldHaveExpectedBytes(contentBytes);
+        }
+
+        [Fact]
+        public async Task Should_remove_a_document_from_a_draft()
+        {
+            var newDraft = CreateDraftOfDefaultAccount();
+            await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
+            var createdDraft = entityScope.Entity;
+            
+            var document = DraftDocument
+                .WithNewId(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
+                .OfType(DocumentType.Fns.Fns534Report.Report);
+            var documentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
+
+            await Context.Drafts.DeleteDocument(AccountId, createdDraft.Id, documentId);
+
+            Func<Task> func = async () => await Context.Drafts.GetDocument(AccountId, createdDraft.Id, documentId);
+
+            func.Should().Throw<ApiException>().And.Message.Should().Contain("NotFound");
         }
 
         private DraftMetadata CreateDraftOfDefaultAccount(DraftRecipient? recipient = null)
