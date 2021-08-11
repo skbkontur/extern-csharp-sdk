@@ -11,6 +11,8 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
 {
     public class DumpRequestsAndResponsesTransport : ITransport
     {
+        private const int LimitDumpContent = 512;
+        private const string TooBigContentPlaceholder = "<content>";
         private readonly ITransport transport;
         private readonly ILog log;
 
@@ -19,6 +21,8 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
             this.transport = transport;
             this.log = log;
         }
+        
+        public TransportCapabilities Capabilities => transport.Capabilities;
 
         public async Task<Response> SendAsync(Request request, TimeSpan? connectionTimeout, TimeSpan timeout, CancellationToken cancellationToken)
         {
@@ -35,9 +39,16 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
             {
                 var responseDump = new StringBuilder();
                 responseDump.AppendLine(response.ToString(true));
-                if (response.HasContent && response.Headers.ContentType?.StartsWith("application/octet-stream") != true)
+                if (response.HasContent)
                 {
-                    responseDump.AppendLine(response.Content.ToString());
+                    if (response.Headers.ContentType?.StartsWith("application/octet-stream") != true)
+                    {
+                        DumpContent(responseDump, response.Content);
+                    }
+                    else
+                    {
+                        responseDump.AppendLine(TooBigContentPlaceholder);
+                    }
                 }
 
                 return responseDump.ToString();
@@ -52,14 +63,29 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
                 {
                     if (request.Content != null)
                     {
-                        requestDump.AppendLine(request.Content.ToString());
+                        DumpContent(requestDump, request.Content);
                     }
-                    else if (request.StreamContent?.Stream is MemoryStream memoryStream)
+                    else if (request.StreamContent != null)
                     {
-                        requestDump.AppendLine(DumpStreamAndRewind(memoryStream));
-                        requestDump.AppendLine();
+                        if (request.StreamContent.Length < LimitDumpContent)
+                        {
+                            requestDump.AppendLine(TooBigContentPlaceholder);
+                        }
+                        else
+                        {
+                            var stream = request.StreamContent.Stream;
+                            if (stream is MemoryStream {Length: < LimitDumpContent} memoryStream)
+                            {
+                                requestDump.AppendLine(DumpStreamAndRewind(memoryStream));
+                                requestDump.AppendLine();
+                            }
+                            else
+                            {
+                                requestDump.AppendLine(TooBigContentPlaceholder);
+                            }
 
-                        recreatedRequest = new Request(request.Method, request.Url, new StreamContent(memoryStream, request.StreamContent.Length), request.Headers);
+                            recreatedRequest = new Request(request.Method, request.Url, new StreamContent(stream, request.StreamContent.Length), request.Headers);
+                        }
                     }
                 }
 
@@ -80,7 +106,8 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
                 memoryStream.Position = position;
             }
         }
-
-        public TransportCapabilities Capabilities => transport.Capabilities;
+        
+        private static void DumpContent(StringBuilder dump, Content content) => 
+            dump.AppendLine(content.Length > LimitDumpContent ? TooBigContentPlaceholder : content.ToString());
     }
 }
