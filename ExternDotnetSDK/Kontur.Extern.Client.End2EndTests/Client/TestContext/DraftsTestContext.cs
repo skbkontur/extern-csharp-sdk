@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.Model.Drafts;
+using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
 
 namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
 {
@@ -31,5 +32,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
         
         public Task<DraftMeta> UpdateDraftMetadata(Guid accountId, Guid draftId, DraftMetadata metadata) => 
             konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).UpdateMetadataAsync(metadata);
+
+        public Task<Guid> SetDocument(Guid accountId, Guid draftId, DraftDocument document) => 
+            konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).SetDocumentAsync(document);
+
+        public Task<ApiLevel.Models.Drafts.DraftDocument> GetDocument(Guid accountId, Guid draftId, Guid documentId) =>
+            konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).GetDocumentAsync(documentId);
     }
 }

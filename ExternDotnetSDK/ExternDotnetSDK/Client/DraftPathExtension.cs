@@ -4,8 +4,11 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
+using Kontur.Extern.Client.Model.Documents.Contents;
 using Kontur.Extern.Client.Model.Drafts;
 using Kontur.Extern.Client.Paths;
+using Kontur.Extern.Client.Uploading;
+using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
 
 namespace Kontur.Extern.Client
 {
@@ -34,6 +37,30 @@ namespace Kontur.Extern.Client
         {
             var apiClient = path.Services.Api;
             return apiClient.Drafts.UpdateDraftMetaAsync(path.AccountId, path.DraftId, metadata.ToRequest(), timeout);
+        }
+
+        public static async Task<Guid> SetDocumentAsync(
+            this DraftPath path,
+            DraftDocument document,
+            TimeSpan? uploadTimeout = null,
+            TimeSpan? putTimeout = null)
+        {
+            var apiClient = path.Services.Api;
+            var uploader = path.Services.ContentService;
+
+            var contentId = await UploadContent(path.AccountId, uploader, document.DocumentContent).ConfigureAwait(false);
+            var documentRequest = await document.CreateSignedRequestAsync(contentId, path.Services.Crypt).ConfigureAwait(false);
+            var createdDocument = await apiClient.Drafts.UpdateDocumentAsync(path.AccountId, path.DraftId, document.DocumentId, documentRequest, putTimeout).ConfigureAwait(false);
+            return createdDocument.Id;
+
+            Task<Guid> UploadContent(Guid accountId, IContentService contentUploader, IDocumentContent content) =>
+                content.UploadAsync(contentUploader, accountId, uploadTimeout);
+        }
+
+        public static Task<ApiLevel.Models.Drafts.DraftDocument> GetDocumentAsync(this DraftPath path, Guid documentId, TimeSpan? timeout = null)
+        {
+            var apiClient = path.Services.Api;
+            return apiClient.Drafts.GetDocumentAsync(path.AccountId, path.DraftId, documentId, timeout);
         }
     }
 }
