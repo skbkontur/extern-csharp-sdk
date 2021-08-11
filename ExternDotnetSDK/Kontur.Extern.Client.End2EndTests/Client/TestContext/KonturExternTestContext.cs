@@ -22,23 +22,25 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
         {
         }
 
-        public KonturExternTestContext(ILog log, AuthTestData authTestData, bool tryResolveUnauthorizedResponsesAutomatically = true)
-            : this(log, authTestData, authTestData.UserCredentials, tryResolveUnauthorizedResponsesAutomatically)
+        public KonturExternTestContext(ILog log, AuthTestData authTestData, Action<IExternBuilder>? overrideOptions = null)
+            : this(log, authTestData, authTestData.UserCredentials, overrideOptions)
         {
         }
 
-        public KonturExternTestContext(ITestOutputHelper output, AuthTestData authTestData, Credentials credentials)
-            : this(new TestLog(output), authTestData, credentials)
+        public KonturExternTestContext(ITestOutputHelper output, AuthTestData authTestData, Credentials credentials, Action<IExternBuilder>? overrideOptions = null)
+            : this(new TestLog(output), authTestData, credentials, overrideOptions)
         {
         }
 
-        public KonturExternTestContext(ILog log, AuthTestData authTestData, Credentials credentials, bool tryResolveUnauthorizedResponsesAutomatically = true)
+        public KonturExternTestContext(ILog log, AuthTestData authTestData, Credentials credentials, Action<IExternBuilder>? overrideOptions = null)
         {
             this.log = log;
             this.authTestData = authTestData;
             this.credentials = credentials;
-            konturExtern = CreateExtern(tryResolveUnauthorizedResponsesAutomatically);
+            konturExtern = CreateExtern(overrideOptions);
         }
+        
+        internal KonturExternTestContext OverrideExternOptions(Action<IExternBuilder> overrideOptions) => new(log, authTestData, credentials, overrideOptions);
 
         public IExtern Extern => konturExtern;
 
@@ -48,11 +50,6 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
         public DraftsTestContext Drafts => new(konturExtern, CreateScope);
         public ContentsContext Contents => new(konturExtern);
 
-        public KonturExternTestContext WithoutAutoUnauthorizedResponsesResolving()
-        {
-            return new KonturExternTestContext(log, authTestData, credentials, false);
-        }
-
         private ValueTask<EntityScope<TEntity>> CreateScope<TEntity>(
             Func<Task<TEntity>> entityCreate,
             Func<TEntity, Task> entityDelete)
@@ -60,17 +57,15 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
             return EntityScope<TEntity>.Create(entityCreate, entityDelete, log);
         }
 
-        private IExtern CreateExtern(bool tryResolveUnauthorizedResponsesAutomatically)
+        private IExtern CreateExtern(Action<IExternBuilder>? overrideOptions = null)
         {
             var clusterClient = ClusterClientFactory.CreateTestClient("https://extern-api.testkontur.ru/", log);
             var externBuilder = ExternBuilder
                 .WithClusterClient(clusterClient, log)
                 .WithTestOpenIdAuthProvider(authTestData, credentials);
 
-            if (tryResolveUnauthorizedResponsesAutomatically)
-            {
-                externBuilder.TryResolveUnauthorizedResponsesAutomatically();
-            }
+            externBuilder.TryResolveUnauthorizedResponsesAutomatically();
+            overrideOptions?.Invoke(externBuilder);
 
             return externBuilder.Create();
         }

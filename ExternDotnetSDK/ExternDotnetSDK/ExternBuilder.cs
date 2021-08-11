@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Auth.Abstractions;
 using Kontur.Extern.Client.Auth.OpenId.Builder;
@@ -7,6 +8,7 @@ using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
+using Kontur.Extern.Client.Model.Configuration;
 using Kontur.Extern.Client.Primitives.Polling;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Transport;
@@ -49,6 +51,7 @@ namespace Kontur.Extern.Client
         // NOTE: nullable because here could be implementations of another auth providers 
         private OpenIdSetup? openIdAuthProviderSetup;
         private bool enableUnauthorizedFailover;
+        private ContentManagementOptions? options;
 
         private ExternBuilder(IClusterClient clusterClient, ILog log)
         {
@@ -80,9 +83,16 @@ namespace Kontur.Extern.Client
             return this;
         }
 
-        public IExternBuilder TryResolveUnauthorizedResponsesAutomatically()
+        public IExternBuilder TryResolveUnauthorizedResponsesAutomatically(bool enabled = true)
         {
-            enableUnauthorizedFailover = true;
+            enableUnauthorizedFailover = enabled;
+            return this;
+        }
+
+        [SuppressMessage("ReSharper", "ParameterHidesMember")]
+        public IExternBuilder OverrideContentsOptions(ContentManagementOptions options)
+        {
+            this.options = options ?? throw new ArgumentNullException(nameof(options));
             return this;
         }
 
@@ -96,6 +106,7 @@ namespace Kontur.Extern.Client
                     EnableUnauthorizedFailover = enableUnauthorizedFailover
                 }
                 .Create(
+                    options ?? ContentManagementOptions.Default,
                     clusterClient,
                     pollingStrategy ?? DefaultDelayPollingStrategy,
                     cryptoProvider ?? DefaultCryptoProvider,

@@ -12,6 +12,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.Model.Configuration;
 using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Model.Documents.Contents;
 using Kontur.Extern.Client.Model.Drafts;
@@ -27,7 +28,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
 {
     public class DraftPathsExtensions_Tests : GeneratedAccountTests
     {
-        private Randomizer randomizer = new();
+        private readonly Randomizer randomizer = new();
         
         public DraftPathsExtensions_Tests(ITestOutputHelper output, IsolatedAccountEnvironment environment)
             : base(output, environment)
@@ -169,20 +170,22 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         [Fact]
         public async Task Should_download_a_content_of_a_document()
         {
+            var context = Context.OverrideExternOptions(x => x.OverrideContentsOptions(new ContentManagementOptions(downloadChunkSize: 80*1024)));
+            
             var newDraft = CreateDraftOfDefaultAccount();
-            await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
+            await using var entityScope = await context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
 
             var contentBytes = randomizer.Bytes(500*1024);
             var document = DraftDocument
                 .WithNewId(new StreamDocumentContent(new MemoryStream(contentBytes)))
                 .OfType(DocumentType.Fns.Fns534Report.Report);
-            var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
+            var addedDocumentId = await context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
             
-            var draftDocument = await Context.Drafts.GetDocument(AccountId, createdDraft.Id, addedDocumentId);
+            var draftDocument = await context.Drafts.GetDocument(AccountId, createdDraft.Id, addedDocumentId);
 
             var contentId = draftDocument.Contents.Single().ContentId;
-            await using var stream = await Context.Contents.GetContentStream(AccountId, contentId);
+            await using var stream = await context.Contents.GetContentStream(AccountId, contentId);
             
             var allBytes = await stream.ReadAllBytesAsync();
 

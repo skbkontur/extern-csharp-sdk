@@ -11,7 +11,7 @@ namespace Kontur.Extern.Client.Common
     internal class ExternClientServices : IExternClientServices
     {
         public ExternClientServices(
-            ExternClientOptions options,
+            ContentManagementOptions contentManagementOptions,
             IHttpRequestsFactory http,
             IKeApiClient api,
             IPollingStrategy longOperationsPollingStrategy,
@@ -23,7 +23,7 @@ namespace Kontur.Extern.Client.Common
             LongOperationsPollingStrategy = longOperationsPollingStrategy;
             AuthProvider = authProvider;
             Crypt = crypt;
-            ContentService = new ContentService(api.Contents, options);
+            ContentService = new ContentService(api.Contents, contentManagementOptions);
         }
         
         public IHttpRequestsFactory Http { get; }

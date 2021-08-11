@@ -25,6 +25,7 @@ namespace Kontur.Extern.Client
         public bool EnableUnauthorizedFailover { get; set; }
         
         public IExtern Create(
+            ContentManagementOptions contentManagementOptions,
             IClusterClient clusterClient, 
             IPollingStrategy pollingStrategy, 
             ICrypt cryptoProvider, 
@@ -34,8 +35,7 @@ namespace Kontur.Extern.Client
         {
             var http = CreateHttp(clusterClient, requestTimeouts, authProvider, jsonSerializer);
             var api = new KeApiClient(http);
-            var options = new ExternClientOptions();
-            var services = new ExternClientServices(options, http, api, pollingStrategy, authProvider, cryptoProvider);
+            var services = new ExternClientServices(contentManagementOptions, http, api, pollingStrategy, authProvider, cryptoProvider);
             return new Extern(services);
         }
 

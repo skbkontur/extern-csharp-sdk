@@ -75,7 +75,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
         public async Task Should_sign_off_user_after_deletion_an_account()
         {
-            var context = Context.WithoutAutoUnauthorizedResponsesResolving();
+            var context = Context.OverrideExternOptions(x => x.TryResolveUnauthorizedResponsesAutomatically(false));
             var konturExtern = context.Extern;
 
             var account = await konturExtern.Accounts.CreateLegalEntityAccountAsync(LegalEntityInn.Parse("1754462785"), Kpp.Parse("515744582"), "org");

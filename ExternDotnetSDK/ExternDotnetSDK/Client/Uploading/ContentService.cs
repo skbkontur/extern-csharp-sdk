@@ -12,7 +12,7 @@ namespace Kontur.Extern.Client.Uploading
         private readonly IContentsClient contents;
         private readonly int downloadChunkSize;
 
-        public ContentService(IContentsClient contents, ExternClientOptions options)
+        public ContentService(IContentsClient contents, ContentManagementOptions options)
         {
             UploadChunkSize = options.UploadChunkSize;
             downloadChunkSize = options.DownloadChunkSize;
