@@ -37,9 +37,9 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
             konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).SetDocumentAsync(document);
         
         public Task DeleteDocument(Guid accountId, Guid draftId, Guid documentId) => 
-            konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).DeleteDocumentAsync(documentId);
+            konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).Document(documentId).DeleteAsync();
 
         public Task<ApiLevel.Models.Drafts.DraftDocument> GetDocument(Guid accountId, Guid draftId, Guid documentId) =>
-            konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).GetDocumentAsync(documentId);
+            konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).Document(documentId).GetAsync();
     }
 }

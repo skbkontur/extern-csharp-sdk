@@ -56,17 +56,5 @@ namespace Kontur.Extern.Client
             Task<Guid> UploadContent(Guid accountId, IContentService contentUploader, IDocumentContent content) =>
                 content.UploadAsync(contentUploader, accountId, uploadTimeout);
         }
-
-        public static Task<ApiLevel.Models.Drafts.DraftDocument> GetDocumentAsync(this DraftPath path, Guid documentId, TimeSpan? timeout = null)
-        {
-            var apiClient = path.Services.Api;
-            return apiClient.Drafts.GetDocumentAsync(path.AccountId, path.DraftId, documentId, timeout);
-        }
-        
-        public static Task DeleteDocumentAsync(this DraftPath path, Guid documentId, TimeSpan? timeout = null)
-        {
-            var apiClient = path.Services.Api;
-            return apiClient.Drafts.DeleteDocumentAsync(path.AccountId, path.DraftId, documentId, timeout);
-        }
     }
 }
