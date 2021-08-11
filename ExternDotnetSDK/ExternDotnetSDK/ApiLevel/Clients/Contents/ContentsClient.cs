@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Contents;
+using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http;
 using Kontur.Extern.Client.Http.Constants;
+using Kontur.Extern.Client.Http.Contents;
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Contents
 {
@@ -12,35 +15,47 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Contents
 
         public ContentsClient(IHttpRequestsFactory http) => this.http = http;
 
-        public Task<ContentResponse> UploadAsync(Guid accountId, byte[] content, string contentType = null, TimeSpan? timeout = null) => 
-            StartUploadAsync(accountId, content, 0, content.Length - 1, content.Length, contentType, timeout);
-
-        public Task<ContentResponse> StartUploadAsync(Guid accountId, byte[] contentChunk, long from, long to, long contentLength, string contentType = null, TimeSpan? timeout = null)
+        public Task<ContentResponse> StartUploadAsync(Guid accountId, byte[] content, long from, long to, long? contentLength = null, TimeSpan? timeout = null)
         {
             var request = http.Post($"v1/{accountId}/contents")
-                .WithBytes(contentChunk)
+                .WithBytes(content)
                 .ContentRange(from, to, contentLength)
                 .Accept(ContentTypes.Json);
             return SendRequestAsync<ContentResponse>(request, timeout);
         }
 
-        public Task<UploadChunkResponse> UploadChunkAsync(Guid accountId, Guid contentId, byte[] contentChunk, int from, int to, TimeSpan? timeout = null)
+        public Task<ContentResponse> StartUploadAsync(Guid accountId, Stream stream, long from, long to, long? contentLength, TimeSpan? timeout = null)
+        {
+            var request = http.Post($"v1/{accountId}/contents")
+                .WithPayload(new StreamPayload(stream))
+                .ContentRange(from, to, contentLength)
+                .Accept(ContentTypes.Json);
+            return SendRequestAsync<ContentResponse>(request, timeout);
+        }
+
+        public Task<UploadChunkResponse> UploadChunkAsync(Guid accountId, Guid contentId, byte[] contentChunk, long from, long to, long? contentLength = null, TimeSpan? timeout = null)
         {
             var request = http.Put($"v1/{accountId}/contents/{contentId}")
                 .WithBytes(contentChunk)
-                .ContentRange(from, to)
+                .ContentRange(from, to, contentLength)
                 .Accept(ContentTypes.Json);
             return SendRequestAsync<UploadChunkResponse>(request, timeout);
         }
 
-        public Task<byte[]> DownloadAsync(Guid accountId, Guid contentId, TimeSpan? timeout = null) => 
+        public Task<Stream> DownloadStreamAsync(Guid accountId, Guid contentId, int downloadChunkSize, TimeSpan? timeout = null) => 
+            ChunkContentStream.CreateAsync(range => DownloadAsBytesAsync(accountId, contentId, range.from, range.to, timeout), downloadChunkSize);
+
+        public Task<byte[]> DownloadAsBytesAsync(Guid accountId, Guid contentId, TimeSpan? timeout = null) => 
             http.GetBytesAsync($"v1/{accountId}/contents/{contentId}");
 
-        public async Task<byte[]> DownloadAsync(Guid accountId, Guid contentId, int from, int to, TimeSpan? timeout = null)
+        public async Task<(ArraySegment<byte> contentPart, long totalLength)> DownloadAsBytesAsync(Guid accountId, Guid contentId, long @from, long to, TimeSpan? timeout = null)
         {
             var request = http.Get($"v1/{accountId}/contents/{contentId}").Range(from, to);
             var httpResponse = await request.SendAsync(timeout).ConfigureAwait(false);
-            return httpResponse.GetBytes();
+            var totalLength = httpResponse.ContentRange.Length;
+            if (totalLength == null)
+                throw Errors.TheResponseDoesNotHaveContentRangeHeader();
+            return (httpResponse.GetBytesSegment(), totalLength.Value);
         }
 
         private static async Task<TResult> SendRequestAsync<TResult>(IHttpRequest httpRequest, TimeSpan? timeout)

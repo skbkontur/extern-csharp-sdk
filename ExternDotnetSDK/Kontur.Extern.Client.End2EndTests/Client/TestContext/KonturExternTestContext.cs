@@ -46,6 +46,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
         public OrganizationTestContext Organizations => new(konturExtern, CreateScope);
         public DocflowsTestContext Docflows => new(konturExtern, CreateScope);
         public DraftsTestContext Drafts => new(konturExtern, CreateScope);
+        public ContentsContext Contents => new(konturExtern);
 
         public KonturExternTestContext WithoutAutoUnauthorizedResponsesResolving()
         {

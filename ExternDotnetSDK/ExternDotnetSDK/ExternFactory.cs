@@ -12,6 +12,7 @@ using Kontur.Extern.Client.Http;
 using Kontur.Extern.Client.Http.ClusterClientAdapters;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
+using Kontur.Extern.Client.Model.Configuration;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives.Polling;
 using Vostok.Clusterclient.Core;
@@ -33,7 +34,8 @@ namespace Kontur.Extern.Client
         {
             var http = CreateHttp(clusterClient, requestTimeouts, authProvider, jsonSerializer);
             var api = new KeApiClient(http);
-            var services = new ExternClientServices(http, api, pollingStrategy, authProvider, cryptoProvider);
+            var options = new ExternClientOptions();
+            var services = new ExternClientServices(options, http, api, pollingStrategy, authProvider, cryptoProvider);
             return new Extern(services);
         }
 

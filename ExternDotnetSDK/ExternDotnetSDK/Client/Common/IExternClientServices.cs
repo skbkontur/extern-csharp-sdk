@@ -3,6 +3,7 @@ using Kontur.Extern.Client.Auth.Abstractions;
 using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Http;
 using Kontur.Extern.Client.Primitives.Polling;
+using Kontur.Extern.Client.Uploading;
 
 namespace Kontur.Extern.Client.Common
 {
@@ -13,5 +14,6 @@ namespace Kontur.Extern.Client.Common
         IPollingStrategy LongOperationsPollingStrategy { get; }
         IAuthenticationProvider AuthProvider { get; }
         ICrypt Crypt { get; }
+        IContentService ContentService { get; }
     }
 }
