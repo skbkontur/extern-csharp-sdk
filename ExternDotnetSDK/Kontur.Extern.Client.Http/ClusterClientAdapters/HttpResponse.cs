@@ -34,22 +34,28 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
                 return ToArray(response.Stream);
 
             throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
+        }
+        
+        public ArraySegment<byte> GetBytesSegment()
+        {
+            if (response.HasContent)
+                return response.Content.ToArraySegment();
+            
+            if (response.HasStream)
+                return new ArraySegment<byte>(ToArray(response.Stream));
 
-            static byte[] ToArray(Stream stream)
-            {
-                if (stream is MemoryStream memoryStream)
-                    return memoryStream.ToArray();
-                
-                var count = stream.Length - stream.Position;
-                if (count == 0)
-                    return Array.Empty<byte>();
-                // todo: apply an uninitialized array creation
-                //byte[] copy = GC.AllocateUninitializedArray<byte>(count);
-                var copy = new byte[count];
-                // todo: read asynchronously (this should be rare case) and use ValueTask to avoid allocation in the other cases
-                stream.Read(copy, 0, copy.Length);
-                return copy;
-            }
+            throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
+        }
+        
+        public Stream GetStream()
+        {
+            if (response.HasContent)
+                return response.Content.ToMemoryStream();
+            
+            if (response.HasStream)
+                return response.Stream;
+
+            throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
         }
 
         public string GetString()
@@ -111,5 +117,21 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
         }
 
         public HttpStatus Status => new(response.Code);
+
+        private static byte[] ToArray(Stream stream)
+        {
+            if (stream is MemoryStream memoryStream)
+                return memoryStream.ToArray();
+                
+            var count = stream.Length - stream.Position;
+            if (count == 0)
+                return Array.Empty<byte>();
+            // todo: apply an uninitialized array creation
+            //byte[] copy = GC.AllocateUninitializedArray<byte>(count);
+            var copy = new byte[count];
+            // todo: read asynchronously (this should be rare case) and use ValueTask to avoid allocation in the other cases
+            stream.Read(copy, 0, copy.Length);
+            return copy;
+        }
     }
 }

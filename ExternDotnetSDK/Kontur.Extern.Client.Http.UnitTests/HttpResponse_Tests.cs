@@ -7,6 +7,7 @@ using Kontur.Extern.Client.Http.ClusterClientAdapters;
 using Kontur.Extern.Client.Http.Constants;
 using Kontur.Extern.Client.Http.Exceptions;
 using Kontur.Extern.Client.Http.Serialization;
+using Kontur.Extern.Client.Testing.Helpers;
 using Vostok.Clusterclient.Core.Model;
 using Xunit;
 
@@ -55,6 +56,72 @@ namespace Kontur.Extern.Client.Http.UnitTests
             var actualBytes = httpResponse.GetBytes();
             
             actualBytes.Should().BeEquivalentTo(bytes);
+        }
+        
+        [Fact]
+        public void GetBytesSegment_should_fail_when_response_has_no_body()
+        {
+            var httpResponse = CreateHttpResponse();
+
+            Action action = () => httpResponse.GetBytesSegment();
+
+            action.Should().Throw<ContractException>();
+        }
+        
+        [Fact]
+        public void GetBytesSegment_should_extract_bytes_from_content()
+        {
+            var bytes = new byte[] {0, 1, 2, 3, 4};
+            var expectedBytes = new byte[] {1, 2, 3};
+            var httpResponse = CreateHttpResponse(new Content(new ArraySegment<byte>(bytes, 1, 3)));
+
+            var actualBytes = httpResponse.GetBytesSegment();
+            
+            actualBytes.ToArray().Should().BeEquivalentTo(expectedBytes);
+        }
+        
+        [Fact]
+        public void GetBytesSegment_should_extract_bytes_from_memory_stream()
+        {
+            var bytes = new byte[] {1, 2, 3};
+            var httpResponse = CreateHttpResponse(stream: new MemoryStream(bytes));
+
+            var actualBytes = httpResponse.GetBytesSegment();
+            
+            actualBytes.ToArray().Should().BeEquivalentTo(bytes);
+        }
+        
+        [Fact]
+        public void GetBytesSegment_should_extract_bytes_from_stream()
+        {
+            var bytes = new byte[] {1, 2, 3};
+            var httpResponse = CreateHttpResponse(stream: new BufferedStream(new MemoryStream(bytes)));
+
+            var actualBytes = httpResponse.GetBytesSegment();
+            
+            actualBytes.ToArray().Should().BeEquivalentTo(bytes);
+        }
+        
+        [Fact]
+        public void GetStream_should_return_response_stream()
+        {
+            var bytes = new byte[] {1, 2, 3};
+            var httpResponse = CreateHttpResponse(stream: new BufferedStream(new MemoryStream(bytes)));
+
+            var actualStream = httpResponse.GetStream();
+            
+            actualStream.ReadAllBytes().Should().BeEquivalentTo(bytes);
+        }
+        
+        [Fact]
+        public void GetStream_should_return_stream_from_buffered_content()
+        {
+            var bytes = new byte[] {1, 2, 3};
+            var httpResponse = CreateHttpResponse(new Content(bytes));
+
+            var stream = httpResponse.GetStream();
+            
+            stream.ReadAllBytes().Should().BeEquivalentTo(bytes);
         }
         
         [Fact]
