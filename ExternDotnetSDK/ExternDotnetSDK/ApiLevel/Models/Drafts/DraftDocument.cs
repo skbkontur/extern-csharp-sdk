@@ -15,5 +15,6 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Drafts
         public Link SignatureContentLink { get; set; }
         public List<Signature> Signatures { get; set; }
         public DocumentDescription Description { get; set; }
+        public List<DocumentContent> Contents { get; set; }
     }
 }
