@@ -6,6 +6,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Model.Documents;
+using Kontur.Extern.Client.Model.Documents.Contents;
 
 namespace Kontur.Extern.Client.Model.Drafts
 {
