@@ -7,7 +7,7 @@ using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Http.Constants;
 using Kontur.Extern.Client.Model;
 using Kontur.Extern.Client.Model.Documents;
-using Kontur.Extern.Client.Model.Drafts;
+using Kontur.Extern.Client.Model.Documents.Contents;
 using NSubstitute;
 using NUnit.Framework;
 using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
