@@ -21,7 +21,7 @@ namespace Kontur.Extern.Client
             var apiClient = path.Services.Api;
             return apiClient.Drafts.DeleteDocumentAsync(path.AccountId, path.DraftId, path.DocumentId, timeout);
         }
-        
+
         public static async Task<Guid> AddSignatureAsync(this DraftDocumentPath path, Base64String signature, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;

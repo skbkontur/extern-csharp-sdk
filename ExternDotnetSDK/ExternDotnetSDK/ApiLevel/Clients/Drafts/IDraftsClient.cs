@@ -236,6 +236,16 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         Task<ApiTaskResult<CheckResult>> StartCheckDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
 
         /// <summary>
+        /// Проверка статуса задачи черновика по <paramref name="taskId"/>
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftId">Идентификатор черновика</param>
+        /// <param name="taskId">Идентификатор задачи</param>
+        /// <param name="timeout"></param>
+        /// <returns>Статус задачи проверки черновика</returns>
+        Task<ApiTaskResult<CheckResult>> GetCheckDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null);
+
+        /// <summary>
         /// Подготовка документов в черновике к отправке
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>

@@ -3,10 +3,12 @@ using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.Model.Documents.Contents;
 using Kontur.Extern.Client.Model.Drafts;
 using Kontur.Extern.Client.Paths;
+using Kontur.Extern.Client.Primitives.LongOperations;
 using Kontur.Extern.Client.Uploading;
 using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
 
@@ -55,6 +57,19 @@ namespace Kontur.Extern.Client
 
             Task<Guid> UploadContent(Guid accountId, IContentService contentUploader, IDocumentContent content) =>
                 content.UploadAsync(contentUploader, accountId, uploadTimeout);
+        }
+
+        public static ILongOperation<CheckResult> Check(this DraftPath path, TimeSpan? timeout = null)
+        {
+            var apiClient = path.Services.Api;
+            var accountId = path.AccountId;
+            var draftId = path.DraftId;
+
+            return new LongOperation<CheckResult>(
+                () => apiClient.Drafts.StartCheckDraftAsync(accountId, draftId, timeout),
+                taskId => apiClient.Drafts.GetCheckDraftTaskStatusAsync(accountId, draftId, taskId, timeout),
+                path.Services.LongOperationsPollingStrategy
+            );
         }
     }
 }

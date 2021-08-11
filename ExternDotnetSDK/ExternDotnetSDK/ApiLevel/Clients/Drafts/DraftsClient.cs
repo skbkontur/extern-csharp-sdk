@@ -175,6 +175,18 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
                 .Build();
             return http.PostAsync<ApiTaskResult<CheckResult>>(url);
         }
+        
+        public Task<ApiTaskResult<CheckResult>> GetCheckDraftTaskStatusAsync(
+            Guid accountId,
+            Guid draftId,
+            Guid taskId,
+            TimeSpan? timeout = null)
+        {
+            return http.GetAsync<ApiTaskResult<CheckResult>>(
+                $"/v1/{accountId}/drafts/{draftId}/tasks/{taskId}",
+                timeout
+            );
+        }
 
         public Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
             http.PostAsync<PrepareResult>($"/v1/{accountId}/drafts/{draftId}/prepare", timeout);
