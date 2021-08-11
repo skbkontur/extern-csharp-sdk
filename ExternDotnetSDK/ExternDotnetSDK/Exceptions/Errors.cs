@@ -15,11 +15,23 @@ namespace Kontur.Extern.Client.Exceptions
             return new(paramName, enumValue, null);
         }
 
-        public static Exception ValueShouldBeGreaterOrEqualTo([InvokerParameterName] string paramName, uint actualValue, int minimumValue) => 
+        public static Exception ValueShouldBeGreaterOrEqualTo([InvokerParameterName] string paramName, long actualValue, long minimumValue) => 
             new ArgumentOutOfRangeException(paramName, actualValue, $"The value should be greater or equal to {minimumValue}");
         
-        public static Exception ValueShouldBeGreaterThanZero([InvokerParameterName] string paramName, uint actualValue) => 
+        public static Exception ValueShouldBeGreaterThanZero([InvokerParameterName] string paramName, long actualValue) => 
             ValueShouldBeGreaterThan(paramName, actualValue, 0);
+
+        public static Exception ValueShouldBePositive([InvokerParameterName] string paramName, long actualValue) =>
+            new ArgumentOutOfRangeException(paramName, actualValue, "The value cannot be less then zero");
+        
+        public static Exception ValueCannotBeLessThenAnother([InvokerParameterName] string paramName, [InvokerParameterName] string comparableParamName, long actualValue, long comparableValue) =>
+            new ArgumentOutOfRangeException(paramName, actualValue, $"The value cannot be less then the value {comparableValue} of the parameter {comparableParamName}");
+        
+        public static Exception ValueCannotBeLessOrEqualThenAnother([InvokerParameterName] string paramName, [InvokerParameterName] string comparableParamName, long actualValue, long comparableValue) =>
+            new ArgumentOutOfRangeException(paramName, actualValue, $"The value cannot be less or equal then the value {comparableValue} of the parameter {comparableParamName}");
+        
+        public static Exception ValueCannotBeGreaterOrEqualThenAnother([InvokerParameterName] string paramName, [InvokerParameterName] string comparableParamName, long actualValue, long comparableValue) =>
+            new ArgumentOutOfRangeException(paramName, actualValue, $"The value cannot be greater or equal then the value {comparableValue} of the parameter {comparableParamName}");
         
         public static Exception ValueShouldBeGreaterThan([InvokerParameterName] string paramName, long actualValue, long nonInclusiveLowerBound) => 
             new ArgumentOutOfRangeException(paramName, actualValue, $"The value should be greater than {nonInclusiveLowerBound}");
@@ -99,5 +111,23 @@ namespace Kontur.Extern.Client.Exceptions
         
         public static Exception StringsCannotContainNullOrWhitespace(string paramName) => 
             new ArgumentException("The collection cannot contains null, or empty, or whitespace strings.", paramName);
+
+        public static Exception ContentHasChangedDuringReading() => 
+            new ApiException("Content has changed during download");
+
+        public static Exception TheOffsetCannotExceedBufferLength([InvokerParameterName] string paramName, int offset, int bufferLength) => 
+            new ArgumentOutOfRangeException(paramName, offset, $"The offset cannot exceed the buffer length, which is {bufferLength}");
+
+        public static Exception TheCountCannotBeOutOfBuffer([InvokerParameterName] string paramName, int count, int bufferLength) => 
+            new ArgumentOutOfRangeException(paramName, count, $"Count cannot be out of buffer range, which length is {bufferLength}");
+
+        public static Exception TheResponseDoesNotHaveContentRangeHeader() => 
+            new ApiException("The response does not have CONTENT-RANGE header");
+
+        public static Exception ContentPartCannotHaveEmptyBytes([InvokerParameterName] string paramName) => 
+            new ArgumentException("The content part cannot have empty bytes", paramName);
+
+        public static Exception TheContentIsAlreadyEndedAndNextPartCannotBeLoaded() => 
+            new ApiException("The content is already ended and there is no next part of it to download");
     }
 }
