@@ -12,8 +12,8 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
         private readonly IPollingStrategy pollingStrategy;
 
         public LongOperation(
-            Func<Task<(Guid id, LongOperationStatus Status)>> startAsync, 
-            Func<Guid, Task<LongOperationStatus>> checkStatusAsync, 
+            Func<Task<(Guid id, LongOperationStatus Status)>> startAsync,
+            Func<Guid, Task<LongOperationStatus>> checkStatusAsync,
             IPollingStrategy pollingStrategy)
         {
             this.startAsync = startAsync;
@@ -24,8 +24,8 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
         public async Task<ILongOperationAwaiter> StartAsync()
         {
             var (id, status) = await startAsync().ConfigureAwait(false);
-            return status.EnsureSuccess().IsCompleted 
-                ? new AlreadyCompletedAwaiter(id) 
+            return status.EnsureSuccess().IsCompleted
+                ? new AlreadyCompletedAwaiter(id)
                 : ContinueAwait(id);
         }
 
@@ -44,7 +44,7 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
                 this.pollingStrategy = pollingStrategy;
                 TaskId = taskId;
             }
-            
+
             public Guid TaskId { get; }
 
             public async Task WaitForCompletion()
@@ -55,12 +55,12 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
                     var status = await checkStatusAsync(TaskId).ConfigureAwait(false);
                     if (status.EnsureSuccess().IsCompleted)
                         return;
-                    
+
                     await polling.WaitForNextAttempt().ConfigureAwait(false);
                 }
             }
         }
-        
+
         private class AlreadyCompletedAwaiter : ILongOperationAwaiter
         {
             public AlreadyCompletedAwaiter(Guid taskId) => TaskId = taskId;
