@@ -42,14 +42,18 @@ namespace Kontur.Extern.Client.Http
             return response.GetMessage<TResponseDto>();
         }
 
-        public static Task<TResponseDto> PostAsync<TRequestDto, TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, string url, TRequestDto requestDto, in TimeoutSpecification timeout = default) => 
+        public static Task<TResponseDto> PostAsync<TRequestDto, TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, string url, TRequestDto? requestDto, in TimeoutSpecification timeout = default) => 
             PostAsync<TRequestDto, TResponseDto>(httpRequestsFactory, url.ToUrl(), requestDto, timeout);
 
-        public static async Task<TResponseDto> PostAsync<TRequestDto, TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, Uri url, TRequestDto requestDto, TimeoutSpecification timeout = default)
+        public static async Task<TResponseDto> PostAsync<TRequestDto, TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, Uri url, TRequestDto? requestDto, TimeoutSpecification timeout = default)
         {
-            var response = await httpRequestsFactory.Post(url)
-                .WithObject(requestDto)
-                .SendAsync(timeout).ConfigureAwait(false);
+            var request = httpRequestsFactory.Post(url);
+            
+            var sendTask = requestDto is not null 
+                ? request.WithObject(requestDto).SendAsync(timeout) 
+                : request.SendAsync(timeout);
+
+            var response = await sendTask.ConfigureAwait(false);
             return response.GetMessage<TResponseDto>();
         }
         
