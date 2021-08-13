@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.Http.Constants;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Core.Transport;
 using Vostok.Logging.Abstractions;
@@ -11,7 +12,7 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
 {
     public class DumpRequestsAndResponsesTransport : ITransport
     {
-        private const int LimitDumpContent = 512;
+        private const int LimitDumpContent = 4096;
         private const string TooBigContentPlaceholder = "<content>";
         private readonly ITransport transport;
         private readonly ILog log;
@@ -41,7 +42,7 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
                 responseDump.AppendLine(response.ToString(true));
                 if (response.HasContent)
                 {
-                    if (response.Headers.ContentType?.StartsWith("application/octet-stream") != true)
+                    if (response.Headers.ContentType?.StartsWith(ContentTypes.Json) == true)
                     {
                         DumpContent(responseDump, response.Content);
                     }
@@ -59,38 +60,49 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
                 var recreatedRequest = request;
                 var requestDump = new StringBuilder();
                 requestDump.AppendLine(request.ToString(true, true));
-                if (request.Headers?.ContentType?.StartsWith("application/octet-stream") != true)
+                if (recreatedRequest.Headers?.ContentType?.StartsWith(ContentTypes.Json) == true)
                 {
-                    if (request.Content != null)
+                    if (recreatedRequest.Content != null)
                     {
-                        DumpContent(requestDump, request.Content);
+                        DumpContent(requestDump, recreatedRequest.Content);
                     }
-                    else if (request.StreamContent != null)
+                    else if (recreatedRequest.StreamContent != null)
                     {
-                        if (request.StreamContent.Length < LimitDumpContent)
-                        {
-                            requestDump.AppendLine(TooBigContentPlaceholder);
-                        }
-                        else
-                        {
-                            var stream = request.StreamContent.Stream;
-                            if (stream is MemoryStream {Length: < LimitDumpContent} memoryStream)
-                            {
-                                requestDump.AppendLine(DumpStreamAndRewind(memoryStream));
-                                requestDump.AppendLine();
-                            }
-                            else
-                            {
-                                requestDump.AppendLine(TooBigContentPlaceholder);
-                            }
-
-                            recreatedRequest = new Request(request.Method, request.Url, new StreamContent(stream, request.StreamContent.Length), request.Headers);
-                        }
+                        recreatedRequest = DumpRequestStream(requestDump, recreatedRequest);
                     }
+                }
+                else if (recreatedRequest.HasBody)
+                {
+                    requestDump.AppendLine(TooBigContentPlaceholder);
                 }
 
                 return (requestDump.ToString(), recreatedRequest);
             }
+        }
+
+        private static Request DumpRequestStream(StringBuilder dump, Request request)
+        {
+            if (request.StreamContent == null)
+                return request;
+            
+            if (request.StreamContent.Length < LimitDumpContent)
+            {
+                dump.AppendLine(TooBigContentPlaceholder);
+                return request;
+            }
+
+            var stream = request.StreamContent.Stream;
+            if (stream is MemoryStream {Length: < LimitDumpContent} memoryStream)
+            {
+                dump.AppendLine(DumpStreamAndRewind(memoryStream));
+                dump.AppendLine();
+            }
+            else
+            {
+                dump.AppendLine(TooBigContentPlaceholder);
+            }
+
+            return new Request(request.Method, request.Url, new StreamContent(stream, request.StreamContent.Length), request.Headers);
         }
 
         private static string DumpStreamAndRewind(MemoryStream memoryStream)
