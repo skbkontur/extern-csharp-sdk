@@ -33,10 +33,11 @@ namespace Kontur.Extern.Client
             return apiClient.Drafts.UpdateSignatureAsync(path.AccountId, path.DraftId, path.DocumentId, path.SignatureId, signatureRequest, timeout);
         }
         
-        public static Task<byte[]> DownloadAsync(this DraftDocumentSignaturePath path, TimeSpan? timeout = null)
+        public static async Task<Base64String> DownloadAsync(this DraftDocumentSignaturePath path, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
-            return apiClient.Drafts.GetSignatureContentAsync(path.AccountId, path.DraftId, path.DocumentId, path.SignatureId, timeout);
+            var signatureInBase64 = await apiClient.Drafts.GetSignatureContentAsync(path.AccountId, path.DraftId, path.DocumentId, path.SignatureId, timeout).ConfigureAwait(false);
+            return Base64String.FromEncoded(signatureInBase64);
         }
     }
 }

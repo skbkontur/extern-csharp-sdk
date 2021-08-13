@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
@@ -23,6 +24,7 @@ using Kontur.Extern.Client.Testing.Helpers;
 using Xunit;
 using Xunit.Abstractions;
 using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
+using Signature = Kontur.Extern.Client.Model.Signature;
 
 namespace Kontur.Extern.Client.End2EndTests.Client
 {
@@ -150,7 +152,8 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             
             var document = DraftDocument
                 .WithNewId(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
-                .OfType(DocumentType.Fns.Fns534Report.Report);
+                .OfType(DocumentType.Fns.Fns534Report.Report)
+                .WithSignature(GeneratedAccount.CertificatePublicPart);
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
             var expectedDocument = new ApiLevel.Models.Drafts.DraftDocument
@@ -176,7 +179,50 @@ namespace Kontur.Extern.Client.End2EndTests.Client
 
             var draftDocument = await Context.Drafts.GetDocument(AccountId, createdDraft.Id, addedDocumentId);
 
-            draftDocument.Should().BeEquivalentTo(expectedDocument, c => c.Excluding(x => x.DecryptedContentLink).Excluding(x => x.Contents));
+            draftDocument.Should().BeEquivalentTo(expectedDocument, c => c.Excluding(x => x.DecryptedContentLink).Excluding(x => x.SignatureContentLink).Excluding(x => x.Contents));
+        }
+        
+        [Fact]
+        public async Task Should_add_a_signature_to_a_drafts_document()
+        {
+            var newDraft = CreateDraftOfDefaultAccount();
+            await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
+            var createdDraft = entityScope.Entity;
+
+            var document = DraftDocument
+                .WithNewId(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
+                .OfType(DocumentType.Fns.Fns534Report.Report);
+            var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
+            
+            var addedSignatureId = await Context.Drafts.AddSignature(AccountId, createdDraft.Id, addedDocumentId, GeneratedAccount.CertificatePublicPart);
+            addedSignatureId.Should().NotBeEmpty();
+            
+            await DocumentShouldContainSignatureWithId(addedSignatureId);
+
+            async Task DocumentShouldContainSignatureWithId(Guid signatureId)
+            {
+                var draftDocument = await Context.Drafts.GetDocument(AccountId, createdDraft.Id, addedDocumentId);
+                draftDocument.Signatures.Should().ContainSingle(s => s.Id == signatureId);
+            }
+        }
+        
+        [Fact]
+        public async Task Should_download_a_signature_of_a_drafts_document()
+        {
+            var newDraft = CreateDraftOfDefaultAccount();
+            await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
+            var createdDraft = entityScope.Entity;
+
+            Signature documentSignature = new byte[] {1, 2, 3};
+            var document = DraftDocument
+                .WithNewId(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
+                .OfType(DocumentType.Fns.Fns534Report.Report);
+            var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
+            var signatureId = await Context.Drafts.AddSignature(AccountId, createdDraft.Id, addedDocumentId, documentSignature);
+
+            var signature = await Context.Drafts.GetSignature(AccountId, createdDraft.Id, document.DocumentId, signatureId);
+
+            signature.ToBytes().Should().BeEquivalentTo(documentSignature.ToBytes());
         }
 
         [Fact]

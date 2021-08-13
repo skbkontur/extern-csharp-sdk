@@ -41,5 +41,13 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
 
         public Task<ApiLevel.Models.Drafts.DraftDocument> GetDocument(Guid accountId, Guid draftId, Guid documentId) =>
             konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).Document(documentId).GetAsync();
+        
+        public async Task<Signature> GetSignature(Guid accountId, Guid draftId, Guid documentId, Guid signatureId) =>
+            await konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).Document(documentId).Signature(signatureId).DownloadAsync().ConfigureAwait(false);
+
+        public Task<Guid> AddSignature(Guid accountId, Guid draftId, Guid documentId, Signature signature) =>
+            konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId)
+                .Document(documentId)
+                .AddSignatureAsync(signature.ToBase64String());
     }
 }

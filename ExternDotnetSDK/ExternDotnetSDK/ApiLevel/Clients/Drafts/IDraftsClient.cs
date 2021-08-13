@@ -9,6 +9,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Prepare;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
 {
@@ -148,7 +149,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             Guid accountId,
             Guid draftId,
             Guid documentId,
-            SignatureRequest signatureRequest = null,
+            SignatureRequest? signatureRequest = null,
             TimeSpan? timeout = null);
 
         /// <summary>
@@ -209,8 +210,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         /// <param name="documentId">Идентификатор документа</param>
         /// <param name="signatureId">Идентификатор подписи</param>
         /// <param name="timeout"></param>
-        /// <returns>Контент подписи документа</returns>
-        Task<byte[]> GetSignatureContentAsync(
+        /// <returns>Контент подписи документа в формате Base64</returns>
+        Task<string> GetSignatureContentAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
@@ -236,7 +237,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         Task<ApiTaskResult<CheckResult>> StartCheckDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
 
         /// <summary>
-        /// Проверка статуса задачи черновика по <paramref name="taskId"/>
+        /// Получение статуса задачи проверки черновика по <paramref name="taskId"/>
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="draftId">Идентификатор черновика</param>

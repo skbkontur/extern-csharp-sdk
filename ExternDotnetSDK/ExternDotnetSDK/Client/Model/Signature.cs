@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using Kontur.Extern.Client.Common;
 using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.Http.Models;
 
 namespace Kontur.Extern.Client.Model
 {
@@ -26,5 +28,9 @@ namespace Kontur.Extern.Client.Model
         public byte[] ToBytes() => bytes;
 
         public static implicit operator Signature(byte[] bytes) => FromBytes(bytes);
+        
+        public static implicit operator Signature(Base64String base64String) => FromBytes(base64String.Decode());
+
+        public Base64String ToBase64String() => Base64String.Encode(bytes);
     }
 }

@@ -104,7 +104,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             Guid accountId,
             Guid draftId,
             Guid documentId,
-            SignatureRequest signatureRequest = null,
+            SignatureRequest? signatureRequest = null,
             TimeSpan? timeout = null)
         {
             return http.PostAsync<SignatureRequest, Signature>(
@@ -149,17 +149,15 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             );
         }
 
-        public Task<byte[]> GetSignatureContentAsync(
+        public async Task<string> GetSignatureContentAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
             Guid signatureId,
             TimeSpan? timeout = null)
         {
-            return http.GetBytesAsync(
-                $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}/content",
-                timeout
-            );
+            var response = await http.Get($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}/content".ToUrl()).SendAsync(timeout).ConfigureAwait(false);
+            return response.GetMessage<string>();
         }
 
         public Task<CheckResult> CheckDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
