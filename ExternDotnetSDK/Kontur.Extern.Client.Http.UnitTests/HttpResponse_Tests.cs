@@ -177,6 +177,32 @@ namespace Kontur.Extern.Client.Http.UnitTests
         }
         
         [Fact]
+        public void GetMessage_should_fail_when_content_type_is_plain_text()
+        {
+            const string json = @"{""data"":""some data""}";
+            var httpResponse = CreateHttpResponse(
+                ToContent(json),
+                headers: new Headers(1).Set(HeaderNames.ContentType, "plain/text"));
+
+            Action action = () => httpResponse.GetMessage<Dto>();
+
+            action.Should().Throw<ContractException>();
+        }
+        
+        [Fact]
+        public void GetMessage_should_return_body_string_when_a_content_type_is_plain_text_but_the_return_type_is_a_string()
+        {
+            const string json = @"{""data"":""some data""}";
+            var httpResponse = CreateHttpResponse(
+                ToContent(json),
+                headers: new Headers(1).Set(HeaderNames.ContentType, "plain/text;encoding=utf-8"));
+
+            var message = httpResponse.GetMessage<string>();
+
+            message.Should().Be(json);
+        }
+        
+        [Fact]
         public void GetMessage_should_deserialize_response_content_to_DTO_if_content_type_is_json_with_charset()
         {
             const string json = @"{""data"":""some data""}";
@@ -258,6 +284,57 @@ namespace Kontur.Extern.Client.Http.UnitTests
             var httpResponse = CreateHttpResponse(ToContent(json));
 
             ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
+        }
+        
+        [Fact]
+        public void TryGetMessage_should_return_error_when_a_content_type_is_plain_text()
+        {
+            const string json = @"{""data"":""some data""}";
+            var httpResponse = CreateHttpResponse(
+                ToContent(json),
+                headers: new Headers(1).Set(HeaderNames.ContentType, "plain/text;charset=utf-8"));
+
+            ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
+        }
+        
+        [Fact]
+        public void TryGetMessage_should_return_body_string_when_a_content_type_is_plain_text_but_the_return_type_is_a_string_and_response_has_content()
+        {
+            const string json = @"{""data"":""some data""}";
+            var httpResponse = CreateHttpResponse(
+                ToContent(json),
+                headers: new Headers(1).Set(HeaderNames.ContentType, "plain/text;charset=utf-8"));
+
+            var success = httpResponse.TryGetMessage<string>(out var message);
+
+            success.Should().BeTrue();
+            message.Should().Be(json);
+        }
+        
+        [Fact]
+        public void TryGetMessage_should_return_body_string_when_a_content_type_is_plain_text_but_the_return_type_is_a_string_and_response_has_stream()
+        {
+            const string json = @"{""data"":""some data""}";
+            var httpResponse = CreateHttpResponse(
+                stream: ToStream(json),
+                headers: new Headers(1).Set(HeaderNames.ContentType, "plain/text;charset=utf-8"));
+
+            var success = httpResponse.TryGetMessage<string>(out var message);
+
+            success.Should().BeTrue();
+            message.Should().Be(json);
+        }
+        
+        [Fact]
+        public void TryGetMessage_should_return_error_when_a_content_type_is_plain_text_and_return_type_string_but_response_has_no_body()
+        {
+            var httpResponse = CreateHttpResponse(
+                headers: new Headers(1).Set(HeaderNames.ContentType, "plain/text;charset=utf-8"));
+
+            var success = httpResponse.TryGetMessage<string>(out var message);
+
+            success.Should().BeFalse();
+            message.Should().BeNull();
         }
 
         private static void ShouldReturnErrorWhenTryGetMessageOfDto(IHttpResponse httpResponse)

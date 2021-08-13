@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net.Http.Headers;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Http.Models.Headers;
 
 namespace Kontur.Extern.Client.Http
 {
@@ -11,6 +12,7 @@ namespace Kontur.Extern.Client.Http
         HttpStatus Status { get; }
         bool HasPayload { get; }
         ContentRangeHeaderValue ContentRange { get; }
+        ContentType ContentType { get; }
 
         byte[] GetBytes();
         ArraySegment<byte> GetBytesSegment();

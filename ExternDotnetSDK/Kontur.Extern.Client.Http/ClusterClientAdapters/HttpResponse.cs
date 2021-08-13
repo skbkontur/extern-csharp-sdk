@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using Kontur.Extern.Client.Http.Constants;
 using Kontur.Extern.Client.Http.Exceptions;
+using Kontur.Extern.Client.Http.Models.Headers;
 using Kontur.Extern.Client.Http.Serialization;
 using Vostok.Clusterclient.Core.Model;
 using Request = Vostok.Clusterclient.Core.Model.Request;
@@ -28,6 +29,15 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
 
         public ContentRangeHeaderValue ContentRange =>
             ContentRangeHeaderValue.Parse(response.Headers.ContentRange);
+        
+        public ContentType ContentType
+        {
+            get
+            {
+                var contentTypeHeaderValue = response.Headers?.ContentType;
+                return contentTypeHeaderValue is null ? default : new ContentType(contentTypeHeaderValue);
+            }
+        }
 
         public byte[] GetBytes()
         {
@@ -91,7 +101,11 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
 
         public TResponseMessage GetMessage<TResponseMessage>()
         {
-            if (response.Headers.ContentType?.StartsWith(ContentTypes.Json) != true)
+            var contentType = ContentType;
+            if (typeof (TResponseMessage) == typeof (string) && contentType.IsPlainText)
+                return (TResponseMessage) (object) GetString();
+                
+            if (!contentType.IsJson)
                 throw Errors.ResponseHasUnexpectedContentType(request.ToString(true, false), response, ContentTypes.Json);
             
             if (!response.HasStream && !response.HasContent)
@@ -105,8 +119,15 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
 
         public bool TryGetMessage<TResponseMessage>(out TResponseMessage responseMessage)
         {
-            responseMessage = default;
-            if (response.Headers.ContentType?.StartsWith(ContentTypes.Json) != true)
+            var contentType = ContentType;
+            if (typeof (TResponseMessage) == typeof (string) && contentType.IsPlainText && (response.HasContent || response.HasStream))
+            {
+                responseMessage = (TResponseMessage) (object) GetString();
+                return true;
+            }
+            
+            responseMessage = default!;
+            if (!contentType.IsJson)
                 return false;
             
             if (!response.HasStream && !response.HasContent)
