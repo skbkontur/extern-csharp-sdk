@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
+using Kontur.Extern.Client.Model;
 using Kontur.Extern.Client.Model.Drafts;
 using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
 

@@ -34,14 +34,6 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
         public Task<GeneratedAccount> GenerateLegalEntityAccountAsync(string organizationName) => 
             RunAsync(new GenerateLegalEntityAccountCommand(organizationName, driveCertificatesReader));
 
-            async Task<string> GenerateNewAccount()
-            {
-                var responseMessage = await httpClient.PostAsJsonAsync(
-                    "create-account-org",
-                    new NewLegalEntityAccountRequest {OrganizationName = organizationName}
-                );
-                responseMessage.EnsureSuccessStatusCode();
-
         /// <summary>
         /// Метод генерации тестового сертификата Сгенерированный сертификат не является КЭП.
         /// Им можно подписывать документы для отправки документооборота на тестовой площадке или тестовому роботу на боевой.
