@@ -1,62 +1,38 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
-using System.Net.Http.Json;
+using System.Text;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
-using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.Models;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests;
 using Kontur.Extern.Client.Testing.Lifetimes;
-using Newtonsoft.Json;
+
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
 {
     internal class ExternTestTool
     {
         private readonly IResponseCache cache;
-        private readonly HttpClient httpClient;
+        private readonly IHttpClient httpClient;
         private readonly DriveCertificatesReader driveCertificatesReader;
 
         public ExternTestTool(string apiKey, IResponseCache cache, ILifetime lifetime)
         {
             this.cache = cache;
-            httpClient = lifetime.Add(new HttpClient
-            {
-                BaseAddress = new Uri("https://extern-api.testkontur.ru/test-tools/v1/", UriKind.Absolute)
-            });
-            
-            httpClient.DefaultRequestHeaders.Add("X-Kontur-Apikey", apiKey);
+            httpClient = new HttpClientImplementation("https://extern-api.testkontur.ru/test-tools/v1/", apiKey, lifetime);
             
             driveCertificatesReader = new DriveCertificatesReader(lifetime);
         }
 
-        public async Task<GeneratedAccount> GenerateLegalEntityAccountAsync(string organizationName)
-        {
-            var responseBody = await cache.TryGetAsync(organizationName) ?? await GenerateNewAccount();
-            var response = DeserializeAccount(responseBody);
-
-            var publicPartOfCertificate = await driveCertificatesReader.GetPublicPartOfCertificate(response.CertificateInfo.CertificateDrivePath);
-            if (publicPartOfCertificate == null)
-            {
-                responseBody = await GenerateNewAccount();
-                response = DeserializeAccount(responseBody);
-                publicPartOfCertificate = await driveCertificatesReader.GetPublicPartOfCertificate(response.CertificateInfo.CertificateDrivePath) ??
-                                          throw new InvalidOperationException("The content of newly generated account was not found");
-            }
-
-            return ToGeneratedAccount(response, publicPartOfCertificate);
-
-            static GeneratedAccount ToGeneratedAccount(NewAccountResponse response, byte[] certificatePublicPart) => new(
-                response.AccountId,
-                response.OrganizationId,
-                response.PortalUserId,
-                response.RefinedRequest.Inn,
-                response.RefinedRequest.Kpp,
-                response.RefinedRequest.OrganizationName,
-                new Credentials(response.PortalLogin, response.PortalPassword),
-                response.CertificateInfo.Thumbprint,
-                certificatePublicPart
-            );
+        /// <summary>
+        /// Создание учетной записи экстерна для ЮЛ
+        /// </summary>
+        /// <param name="organizationName">Имя организации ЮЛ и выпускаемого сертификата</param>
+        /// <returns>Сгенерированный аккаунт</returns>
+        public Task<GeneratedAccount> GenerateLegalEntityAccountAsync(string organizationName) => 
+            RunAsync(new GenerateLegalEntityAccountCommand(organizationName, driveCertificatesReader));
 
             async Task<string> GenerateNewAccount()
             {
@@ -66,59 +42,15 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
                 );
                 responseMessage.EnsureSuccessStatusCode();
 
-                var responseJson = await responseMessage.Content.ReadAsStringAsync();
-                await cache.SetValueAsync(organizationName, responseJson);
-                return responseJson;
-            }
+        /// <summary>
+        /// Метод генерации тестового сертификата Сгенерированный сертификат не является КЭП.
+        /// Им можно подписывать документы для отправки документооборота на тестовой площадке или тестовому роботу на боевой.
+        /// </summary>
+        /// <param name="data"></param>
+        public Task<GeneratedCertificate> GenerateCertificateAsync(CertificateGenerationData data) =>
+            RunAsync(new GenerateCertificateCommand(data));
 
-            static NewAccountResponse DeserializeAccount(string responseBody)
-            {
-                return JsonConvert.DeserializeObject<NewAccountResponse>(responseBody) ??
-                       throw new InvalidOperationException("Cannot deserialize response");
-            }
-        }
-
-#pragma warning disable 8618
-        private class NewLegalEntityAccountRequest
-        {
-            public string OrganizationName { [UsedImplicitly] get; init; }
-        }
-
-        [UsedImplicitly]
-        [SuppressMessage("ReSharper", "UnusedMember.Global")]
-        public class NewAccountResponse
-        {
-            public RefinedRequest RefinedRequest { get; [UsedImplicitly] set; }
-            public string PortalLogin { get; [UsedImplicitly] set; }
-            public string PortalPassword { get; [UsedImplicitly] set; }
-            public CertificateInfo CertificateInfo { get; [UsedImplicitly] set; }
-            public Guid PortalUserId { get; [UsedImplicitly] set; }
-            public Guid OrganizationId { get; [UsedImplicitly] set; }
-            public Guid AccountId { get; [UsedImplicitly] set; }
-            public Guid UserId { get; set; }
-            public Guid AbonId { get; set; }
-        }
-
-        [UsedImplicitly]
-        [SuppressMessage("ReSharper", "UnusedMember.Global")]
-        public class RefinedRequest
-        {
-            public string Inn { get; [UsedImplicitly] set; }
-            public string Kpp { get; [UsedImplicitly] set; }
-            public string Innfl { get; set; }
-            public string FirstName { get; set; }
-            public string Surname { get; set; }
-            public string Patronymic { get; set; }
-            public string OrganizationName { get; [UsedImplicitly] set; }
-        }
-
-        [UsedImplicitly]
-        [SuppressMessage("ReSharper", "UnusedMember.Global")]
-        public class CertificateInfo
-        {
-            public string Thumbprint { get; [UsedImplicitly] set; }
-            public string CertificateDrivePath { get; set; }
-        }
-#pragma warning restore 8618
+        private Task<T> RunAsync<T>(IExternTestToolCommand<T> command) => 
+            command.ExecuteAsync(httpClient, cache);
     }
 }
