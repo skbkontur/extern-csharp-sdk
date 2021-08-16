@@ -3,18 +3,18 @@ using Kontur.Extern.Client.Exceptions;
 namespace Kontur.Extern.Client.Model.Numbers
 {
     /// <summary>
-    /// Код ФСС. Формат данных: 12345
+    /// Код ФСС. Формат данных: пятизначный цифровой код, последняя цифра 1 или 2
     /// </summary>
     public record FssCode
     {
         public static readonly RegexBasedParser<FssCode> Parser = new(
-            @"^\d{5}$",
+            @"^\d{4}[1..2]$",
             v => new FssCode(v),
             (param, value) => Errors.InvalidAuthorityNumber(param, value, AuthorityNumberKind.FssCode, "XXXXX")
         );
 
         /// <summary>
-        /// Формат данных: 12345
+        /// Пятизначный цифровой код, последняя цифра 1 или 2
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
