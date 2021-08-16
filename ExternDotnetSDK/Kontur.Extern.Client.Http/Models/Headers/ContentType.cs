@@ -9,7 +9,7 @@ namespace Kontur.Extern.Client.Http.Models.Headers
     {
         private readonly string? value;
 
-        public ContentType(string value) => this.value = value;
+        public ContentType(string value) => this.value = value ?? throw new ArgumentNullException(nameof(value));
 
         public bool IsJson => IsContentType(ContentTypes.Json);
         public bool IsPlainText => IsContentType(ContentTypes.PlainText);
