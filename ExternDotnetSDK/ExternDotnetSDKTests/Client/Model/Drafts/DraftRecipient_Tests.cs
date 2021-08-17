@@ -109,11 +109,11 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             {
                 var expectedRequest = new RecipientInfoRequest
                 {
-                    FssCode = "12345"
+                    FssCode = "12341"
                 };
                     
                 var request = DraftRecipient
-                    .Fss(FssCode.Parse("12345"))
+                    .Fss(FssCode.Parse("12341"))
                     .ToRequest();
                 
                 request.Should().BeEquivalentTo(expectedRequest);
