@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Http.ClusterClientAdapters;
@@ -20,40 +21,40 @@ namespace Kontur.Extern.Client.Http.UnitTests
         {
             var httpResponse = CreateHttpResponse();
 
-            Action action = () => httpResponse.GetBytes();
+            Func<Task> func = async () => await httpResponse.GetBytesAsync();
 
-            action.Should().Throw<ContractException>();
+            func.Should().Throw<ContractException>();
         }
         
         [Fact]
-        public void GetBytes_should_extract_bytes_from_content()
+        public async Task GetBytes_should_extract_bytes_from_content()
         {
             var bytes = new byte[] {1, 2, 3};
             var httpResponse = CreateHttpResponse(new Content(bytes));
 
-            var actualBytes = httpResponse.GetBytes();
+            var actualBytes = await httpResponse.GetBytesAsync();
             
             actualBytes.Should().BeEquivalentTo(bytes);
         }
         
         [Fact]
-        public void GetBytes_should_extract_bytes_from_memory_stream()
+        public async Task GetBytes_should_extract_bytes_from_memory_stream()
         {
             var bytes = new byte[] {1, 2, 3};
             var httpResponse = CreateHttpResponse(stream: new MemoryStream(bytes));
 
-            var actualBytes = httpResponse.GetBytes();
+            var actualBytes = await httpResponse.GetBytesAsync();
             
             actualBytes.Should().BeEquivalentTo(bytes);
         }
         
         [Fact]
-        public void GetBytes_should_extract_bytes_from_stream()
+        public async Task GetBytes_should_extract_bytes_from_stream()
         {
             var bytes = new byte[] {1, 2, 3};
             var httpResponse = CreateHttpResponse(stream: new BufferedStream(new MemoryStream(bytes)));
 
-            var actualBytes = httpResponse.GetBytes();
+            var actualBytes = await httpResponse.GetBytesAsync();
             
             actualBytes.Should().BeEquivalentTo(bytes);
         }
@@ -63,41 +64,41 @@ namespace Kontur.Extern.Client.Http.UnitTests
         {
             var httpResponse = CreateHttpResponse();
 
-            Action action = () => httpResponse.GetBytesSegment();
+            Func<Task> func = async () => await httpResponse.GetBytesSegmentAsync();
 
-            action.Should().Throw<ContractException>();
+            func.Should().Throw<ContractException>();
         }
         
         [Fact]
-        public void GetBytesSegment_should_extract_bytes_from_content()
+        public async Task GetBytesSegment_should_extract_bytes_from_content()
         {
             var bytes = new byte[] {0, 1, 2, 3, 4};
             var expectedBytes = new byte[] {1, 2, 3};
             var httpResponse = CreateHttpResponse(new Content(new ArraySegment<byte>(bytes, 1, 3)));
 
-            var actualBytes = httpResponse.GetBytesSegment();
+            var actualBytes = await httpResponse.GetBytesSegmentAsync();
             
             actualBytes.ToArray().Should().BeEquivalentTo(expectedBytes);
         }
         
         [Fact]
-        public void GetBytesSegment_should_extract_bytes_from_memory_stream()
+        public async Task GetBytesSegment_should_extract_bytes_from_memory_stream()
         {
             var bytes = new byte[] {1, 2, 3};
             var httpResponse = CreateHttpResponse(stream: new MemoryStream(bytes));
 
-            var actualBytes = httpResponse.GetBytesSegment();
+            var actualBytes = await httpResponse.GetBytesSegmentAsync();
             
             actualBytes.ToArray().Should().BeEquivalentTo(bytes);
         }
         
         [Fact]
-        public void GetBytesSegment_should_extract_bytes_from_stream()
+        public async Task GetBytesSegment_should_extract_bytes_from_stream()
         {
             var bytes = new byte[] {1, 2, 3};
             var httpResponse = CreateHttpResponse(stream: new BufferedStream(new MemoryStream(bytes)));
 
-            var actualBytes = httpResponse.GetBytesSegment();
+            var actualBytes = await httpResponse.GetBytesSegmentAsync();
             
             actualBytes.ToArray().Should().BeEquivalentTo(bytes);
         }
@@ -130,13 +131,13 @@ namespace Kontur.Extern.Client.Http.UnitTests
             var httpResponse = CreateHttpResponse(
                 headers: new Headers(1).Set(HeaderNames.ContentType, ContentTypes.Json));
 
-            Action action = () => httpResponse.GetMessage<Dto>();
+            Func<Task> func = async () => await httpResponse.GetMessageAsync<Dto>();
 
-            action.Should().Throw<ContractException>();
+            func.Should().Throw<ContractException>();
         }
         
         [Fact]
-        public void GetMessage_should_deserialize_response_stream_to_DTO()
+        public async Task GetMessage_should_deserialize_response_stream_to_DTO()
         {
             const string json = @"{""data"":""some data""}";
             var expectedDto = new Dto {Data = "some data"};
@@ -144,13 +145,13 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 stream: ToStream(json),
                 headers: new Headers(1).Set(HeaderNames.ContentType, ContentTypes.Json));
 
-            var dto = httpResponse.GetMessage<Dto>();
+            var dto = await httpResponse.GetMessageAsync<Dto>();
             
             dto.Should().BeEquivalentTo(expectedDto);
         }
         
         [Fact]
-        public void GetMessage_should_deserialize_response_content_to_DTO()
+        public async Task GetMessage_should_deserialize_response_content_to_DTO()
         {
             const string json = @"{""data"":""some data""}";
             var expectedDto = new Dto {Data = "some data"};
@@ -158,7 +159,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 ToContent(json),
                 headers: new Headers(1).Set(HeaderNames.ContentType, ContentTypes.Json));
 
-            var dto = httpResponse.GetMessage<Dto>();
+            var dto = await httpResponse.GetMessageAsync<Dto>();
             
             dto.Should().BeEquivalentTo(expectedDto);
         }
@@ -171,9 +172,9 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 ToContent(json),
                 headers: new Headers(1).Set(HeaderNames.ContentType, "application/pdf"));
 
-            Action action = () => httpResponse.GetMessage<Dto>();
+            Func<Task> func = async () => await httpResponse.GetMessageAsync<Dto>();
 
-            action.Should().Throw<ContractException>();
+            func.Should().Throw<ContractException>();
         }
         
         [Fact]
@@ -184,26 +185,26 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 ToContent(json),
                 headers: new Headers(1).Set(HeaderNames.ContentType, "plain/text"));
 
-            Action action = () => httpResponse.GetMessage<Dto>();
+            Func<Task> func = async () => await httpResponse.GetMessageAsync<Dto>();
 
-            action.Should().Throw<ContractException>();
+            func.Should().Throw<ContractException>();
         }
         
         [Fact]
-        public void GetMessage_should_return_body_string_when_a_content_type_is_plain_text_but_the_return_type_is_a_string()
+        public async Task GetMessage_should_return_body_string_when_a_content_type_is_plain_text_but_the_return_type_is_a_string()
         {
             const string json = @"{""data"":""some data""}";
             var httpResponse = CreateHttpResponse(
                 ToContent(json),
                 headers: new Headers(1).Set(HeaderNames.ContentType, "plain/text;encoding=utf-8"));
 
-            var message = httpResponse.GetMessage<string>();
+            var message = await httpResponse.GetMessageAsync<string>();
 
             message.Should().Be(json);
         }
         
         [Fact]
-        public void GetMessage_should_deserialize_response_content_to_DTO_if_content_type_is_json_with_charset()
+        public async Task GetMessage_should_deserialize_response_content_to_DTO_if_content_type_is_json_with_charset()
         {
             const string json = @"{""data"":""some data""}";
             var expectedDto = new Dto {Data = "some data"};
@@ -211,7 +212,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 ToContent(json),
                 headers: new Headers(1).Set(HeaderNames.ContentType, "application/json; charset=utf-8"));
 
-            var dto = httpResponse.GetMessage<Dto>();
+            var dto = await httpResponse.GetMessageAsync<Dto>();
             
             dto.Should().BeEquivalentTo(expectedDto);
         }
@@ -222,22 +223,22 @@ namespace Kontur.Extern.Client.Http.UnitTests
             const string json = @"{""data"":""some data""}";
             var httpResponse = CreateHttpResponse(ToContent(json));
 
-            Action action = () => httpResponse.GetMessage<Dto>();
+            Func<Task> func = async () => await httpResponse.GetMessageAsync<Dto>();
 
-            action.Should().Throw<ContractException>();
+            func.Should().Throw<ContractException>();
         }
         
         [Fact]
-        public void TryGetMessage_should_return_error_when_response_has_no_body()
+        public async Task TryGetMessage_should_return_error_when_response_has_no_body()
         {
             var httpResponse = CreateHttpResponse(
                 headers: new Headers(1).Set(HeaderNames.ContentType, ContentTypes.Json));
 
-            ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
+            await ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
         }
 
         [Fact]
-        public void TryGetMessage_should_deserialize_response_stream_to_DTO()
+        public async Task TryGetMessage_should_deserialize_response_stream_to_DTO()
         {
             const string json = @"{""data"":""some data""}";
             var expectedDto = new Dto {Data = "some data"};
@@ -245,25 +246,24 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 stream: ToStream(json),
                 headers: new Headers(1).Set(HeaderNames.ContentType, ContentTypes.Json));
 
-            var success = httpResponse.TryGetMessage<Dto>(out var dto);
+            var dto = await httpResponse.TryGetMessageAsync<Dto>();
 
-            success.Should().BeTrue();
-            dto.Should().BeEquivalentTo(expectedDto);
+            dto.Should().NotBeNull().And.BeEquivalentTo(expectedDto);
         }
         
         [Fact]
-        public void TryGetMessage_should_return_error_when_content_type_is_not_a_json()
+        public async Task TryGetMessage_should_return_error_when_content_type_is_not_a_json()
         {
             const string json = @"{""data"":""some data""}";
             var httpResponse = CreateHttpResponse(
                 ToContent(json),
                 headers: new Headers(1).Set(HeaderNames.ContentType, "application/pdf"));
 
-            ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
+            await ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
         }
         
         [Fact]
-        public void TryGetMessage_should_deserialize_response_content_to_DTO_if_content_type_is_json_with_charset()
+        public async Task TryGetMessage_should_deserialize_response_content_to_DTO_if_content_type_is_json_with_charset()
         {
             const string json = @"{""data"":""some data""}";
             var expectedDto = new Dto {Data = "some data"};
@@ -271,77 +271,72 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 ToContent(json),
                 headers: new Headers(1).Set(HeaderNames.ContentType, "application/json; charset=utf-8"));
 
-            var success = httpResponse.TryGetMessage<Dto>(out var dto);
+            var dto = await httpResponse.TryGetMessageAsync<Dto>();
 
-            success.Should().BeTrue();
-            dto.Should().BeEquivalentTo(expectedDto);
+            dto.Should().NotBeNull().And.BeEquivalentTo(expectedDto);
         }
         
         [Fact]
-        public void TryGetMessage_should_return_error_when_content_type_is_absent()
+        public async Task TryGetMessage_should_return_error_when_content_type_is_absent()
         {
             const string json = @"{""data"":""some data""}";
             var httpResponse = CreateHttpResponse(ToContent(json));
 
-            ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
+            await ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
         }
         
         [Fact]
-        public void TryGetMessage_should_return_error_when_a_content_type_is_plain_text()
+        public async Task TryGetMessage_should_return_error_when_a_content_type_is_plain_text()
         {
             const string json = @"{""data"":""some data""}";
             var httpResponse = CreateHttpResponse(
                 ToContent(json),
                 headers: new Headers(1).Set(HeaderNames.ContentType, "plain/text;charset=utf-8"));
 
-            ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
+            await ShouldReturnErrorWhenTryGetMessageOfDto(httpResponse);
         }
         
         [Fact]
-        public void TryGetMessage_should_return_body_string_when_a_content_type_is_plain_text_but_the_return_type_is_a_string_and_response_has_content()
+        public async Task TryGetMessage_should_return_body_string_when_a_content_type_is_plain_text_but_the_return_type_is_a_string_and_response_has_content()
         {
             const string json = @"{""data"":""some data""}";
             var httpResponse = CreateHttpResponse(
                 ToContent(json),
                 headers: new Headers(1).Set(HeaderNames.ContentType, "plain/text;charset=utf-8"));
 
-            var success = httpResponse.TryGetMessage<string>(out var message);
+            var message = await httpResponse.TryGetMessageAsync<string>();
 
-            success.Should().BeTrue();
-            message.Should().Be(json);
+            message.Should().NotBeNull().And.Be(json);
         }
         
         [Fact]
-        public void TryGetMessage_should_return_body_string_when_a_content_type_is_plain_text_but_the_return_type_is_a_string_and_response_has_stream()
+        public async Task TryGetMessage_should_return_body_string_when_a_content_type_is_plain_text_but_the_return_type_is_a_string_and_response_has_stream()
         {
             const string json = @"{""data"":""some data""}";
             var httpResponse = CreateHttpResponse(
                 stream: ToStream(json),
                 headers: new Headers(1).Set(HeaderNames.ContentType, "plain/text;charset=utf-8"));
 
-            var success = httpResponse.TryGetMessage<string>(out var message);
+            var message = await httpResponse.TryGetMessageAsync<string>();
 
-            success.Should().BeTrue();
-            message.Should().Be(json);
+            message.Should().NotBeNull().And.Be(json);
         }
         
         [Fact]
-        public void TryGetMessage_should_return_error_when_a_content_type_is_plain_text_and_return_type_string_but_response_has_no_body()
+        public async Task TryGetMessage_should_return_error_when_a_content_type_is_plain_text_and_return_type_string_but_response_has_no_body()
         {
             var httpResponse = CreateHttpResponse(
                 headers: new Headers(1).Set(HeaderNames.ContentType, "plain/text;charset=utf-8"));
 
-            var success = httpResponse.TryGetMessage<string>(out var message);
+            var message = await httpResponse.TryGetMessageAsync<string>();
 
-            success.Should().BeFalse();
             message.Should().BeNull();
         }
 
-        private static void ShouldReturnErrorWhenTryGetMessageOfDto(IHttpResponse httpResponse)
+        private static async Task ShouldReturnErrorWhenTryGetMessageOfDto(IHttpResponse httpResponse)
         {
-            var success = httpResponse.TryGetMessage<Dto>(out var dto);
+            var dto = await httpResponse.TryGetMessageAsync<Dto>();
 
-            success.Should().BeFalse();
             dto.Should().BeNull();
         }
         
@@ -350,40 +345,40 @@ namespace Kontur.Extern.Client.Http.UnitTests
         {
             var httpResponse = CreateHttpResponse(headers: new Headers(1).Set(HeaderNames.ContentType, ContentTypes.Json));
 
-            Action action = () => httpResponse.GetString();
+            Func<Task> func = async () => await httpResponse.GetStringAsync();
 
-            action.Should().Throw<ContractException>();
+            func.Should().Throw<ContractException>();
         }
         
         [Fact]
-        public void GetString_should_deserialize_response_memory_stream_to_DTO()
+        public async Task GetString_should_deserialize_response_memory_stream_to_DTO()
         {
             const string expectedBody = "some data";
             var httpResponse = CreateHttpResponse(stream: ToStream(expectedBody));
 
-            var body = httpResponse.GetString();
+            var body = await httpResponse.GetStringAsync();
             
             body.Should().BeEquivalentTo(expectedBody);
         }
         
         [Fact]
-        public void GetString_should_deserialize_response_stream_to_DTO()
+        public async Task GetString_should_deserialize_response_stream_to_DTO()
         {
             const string expectedBody = "some data";
             var httpResponse = CreateHttpResponse(stream: new BufferedStream(ToStream(expectedBody)));
 
-            var body = httpResponse.GetString();
+            var body = await httpResponse.GetStringAsync();
             
             body.Should().BeEquivalentTo(expectedBody);
         }
         
         [Fact]
-        public void GetString_should_deserialize_response_content_to_DTO()
+        public async Task GetString_should_deserialize_response_content_to_DTO()
         {
             const string expectedBody = "some data";
             var httpResponse = CreateHttpResponse(ToContent(expectedBody));
 
-            var body = httpResponse.GetString();
+            var body = await httpResponse.GetStringAsync();
             
             body.Should().BeEquivalentTo(expectedBody);
         }

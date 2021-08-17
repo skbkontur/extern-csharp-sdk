@@ -59,12 +59,16 @@ namespace Kontur.Extern.Client
                 return await authProvider.AuthenticateRequestAsync(request, false, timeout).ConfigureAwait(false);
             }
 
-            static bool HandleApiErrors(IHttpResponse response)
+            static async ValueTask<bool> HandleApiErrors(IHttpResponse response)
             {
                 var status = response.Status;
-                if (status.IsClientError && response.TryGetMessage<Error>(out var errorResponse) && errorResponse.IsNotEmpty)
+                if (status.IsClientError)
                 {
-                    throw Errors.UnsuccessfulApiResponse(errorResponse);
+                    var errorResponse = await response.TryGetMessageAsync<Error>().ConfigureAwait(false);
+                    if (errorResponse is not null && errorResponse.IsNotEmpty)
+                    {
+                        throw Errors.UnsuccessfulApiResponse(errorResponse);
+                    }
                 }
 
                 return false;

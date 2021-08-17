@@ -112,14 +112,18 @@ namespace Kontur.Extern.Client.Auth.OpenId.Client
         private static async Task<TResult> SendRequestAsync<TResult>(IHttpRequest httpRequest, TimeSpan? timeout)
         {
             var httpResponse = await httpRequest.SendAsync(timeout).ConfigureAwait(false);
-            return httpResponse.GetMessage<TResult>();
+            return await httpResponse.GetMessageAsync<TResult>().ConfigureAwait(false);
         }
 
-        private static bool HandleOpenIdErrorResponse(IHttpResponse httpResponse)
+        private static async ValueTask<bool> HandleOpenIdErrorResponse(IHttpResponse httpResponse)
         {
-            if (httpResponse.Status.IsBadRequest && httpResponse.TryGetMessage<ErrorResponse>(out var errorResponse))
+            if (httpResponse.Status.IsBadRequest)
             {
-                throw new OpenIdException(errorResponse);
+                var errorResponse = await httpResponse.TryGetMessageAsync<ErrorResponse>().ConfigureAwait(false);
+                if (errorResponse is not null)
+                {
+                    throw new OpenIdException(errorResponse);
+                }
             }
 
             return false;

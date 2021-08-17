@@ -29,7 +29,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Organizations
                 .AppendToQuery("take", take)
                 .Build();
             var response = await http.Get(url).SendAsync(timeout).ConfigureAwait(false);
-            return response.GetMessage<OrganizationBatch>();
+            return await response.GetMessageAsync<OrganizationBatch>().ConfigureAwait(false);
         }
 
         public Task<Organization> GetOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null) =>

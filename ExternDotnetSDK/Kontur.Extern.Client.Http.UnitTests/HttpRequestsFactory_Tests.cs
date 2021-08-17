@@ -242,7 +242,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
             private HttpRequestsFactory CreateHttp(
                 FailoverAsync failover,
                 Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
-                Func<IHttpResponse, bool>? errorResponseHandler = null)
+                Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler = null)
             {
                 return HttpRequestsFactory_Tests.CreateHttp(clusterClient, requestTransformAsync, errorResponseHandler, failover);
             }
@@ -332,7 +332,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
                     if (!response.Status.IsSuccessful)
                         throw new ApplicationException(expectedErrorMessage);
 
-                    return false;
+                    return new(false);
                 });
                 var request = MakeRequestForCommonTests(http);
                 Func<Task> sendRequest = async () => await request.SendAsync();
@@ -348,7 +348,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
             [Fact]
             public async Task Should_allow_to_ignore_response_with_error_by_the_given_error_handler()
             {
-                var http = CreateHttp(errorResponseHandler: response => response.Status.IsBadRequest);
+                var http = CreateHttp(errorResponseHandler: response => new(response.Status.IsBadRequest));
                 var request = MakeRequestForCommonTests(http);
                 ClusterClient.SetResponseCode(ResponseCode.BadRequest);
 
@@ -365,7 +365,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
                     if (!response.Status.IsSuccessful)
                         throw new ApplicationException("Unexpected");
 
-                    return false;
+                    return new(false);
                 });
                 var request = MakeRequestForCommonTests(http);
                 ClusterClient.SetResponseCode(ResponseCode.BadRequest);
@@ -393,7 +393,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
 
             protected HttpRequestsFactory CreateHttp(
                 Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
-                Func<IHttpResponse, bool>? errorResponseHandler = null)
+                Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler = null)
             {
                 return HttpRequestsFactory_Tests.CreateHttp(ClusterClient, requestTransformAsync, errorResponseHandler);
             }
@@ -402,7 +402,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
         private static HttpRequestsFactory CreateHttp(
             IClusterClient clusterClient,
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
-            Func<IHttpResponse, bool>? errorResponseHandler = null,
+            Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler = null,
             FailoverAsync? failover = null)
         {
             return new(

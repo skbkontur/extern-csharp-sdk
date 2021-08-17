@@ -55,13 +55,13 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Contents
             var totalLength = httpResponse.ContentRange.Length;
             if (totalLength == null)
                 throw Errors.TheResponseDoesNotHaveContentRangeHeader();
-            return (httpResponse.GetBytesSegment(), totalLength.Value);
+            return (await httpResponse.GetBytesSegmentAsync().ConfigureAwait(false), totalLength.Value);
         }
 
         private static async Task<TResult> SendRequestAsync<TResult>(IHttpRequest httpRequest, TimeSpan? timeout)
         {
             var httpResponse = await httpRequest.SendAsync(timeout).ConfigureAwait(false);
-            return httpResponse.GetMessage<TResult>();
+            return await httpResponse.GetMessageAsync<TResult>().ConfigureAwait(false);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using Kontur.Extern.Client.Http.Constants;
 using Kontur.Extern.Client.Http.Exceptions;
 using Kontur.Extern.Client.Http.Models.Headers;
@@ -34,29 +35,32 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
         {
             get
             {
-                var contentTypeHeaderValue = response.Headers?.ContentType;
+                var contentTypeHeaderValue = response.Headers.ContentType;
                 return contentTypeHeaderValue is null ? default : new ContentType(contentTypeHeaderValue);
             }
         }
 
-        public byte[] GetBytes()
+        public async ValueTask<byte[]> GetBytesAsync()
         {
             if (response.HasContent)
                 return response.Content.ToArray();
             
             if (response.HasStream)
-                return ToArray(response.Stream);
+                return await ToArrayAsync(response.Stream).ConfigureAwait(false);
 
             throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
         }
         
-        public ArraySegment<byte> GetBytesSegment()
+        public async ValueTask<ArraySegment<byte>> GetBytesSegmentAsync()
         {
             if (response.HasContent)
                 return response.Content.ToArraySegment();
             
             if (response.HasStream)
-                return new ArraySegment<byte>(ToArray(response.Stream));
+            {
+                var bytes = await ToArrayAsync(response.Stream).ConfigureAwait(false);
+                return new ArraySegment<byte>(bytes);
+            }
 
             throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
         }
@@ -72,16 +76,16 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
         }
 
-        public string GetString()
+        public async ValueTask<string> GetStringAsync()
         {
             if (response.HasContent)
                 return response.Content.ToString(DefaultEncoding);
 
             return response.HasStream 
-                ? GetStringFromStream(response.Stream) 
+                ? await GetStringFromStream(response.Stream).ConfigureAwait(false) 
                 : throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
 
-            static string GetStringFromStream(Stream stream)
+            static async ValueTask<string> GetStringFromStream(Stream stream)
             {
                 if (stream is MemoryStream memoryStream)
                 {
@@ -94,16 +98,15 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
                 }
 
                 using var streamReader = new StreamReader(stream);
-                // todo: read asynchronously (this should be rare case) and use ValueTask to avoid allocation in the other cases
-                return streamReader.ReadToEnd();
+                return await streamReader.ReadToEndAsync().ConfigureAwait(false);
             }
         }
 
-        public TResponseMessage GetMessage<TResponseMessage>()
+        public async ValueTask<TResponseMessage> GetMessageAsync<TResponseMessage>()
         {
             var contentType = ContentType;
             if (typeof (TResponseMessage) == typeof (string) && contentType.IsPlainText)
-                return (TResponseMessage) (object) GetString();
+                return (TResponseMessage) (object) await GetStringAsync().ConfigureAwait(false);
                 
             if (!contentType.IsJson)
                 throw Errors.ResponseHasUnexpectedContentType(request.ToString(true, false), response, ContentTypes.Json);
@@ -117,33 +120,28 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             return serializer.DeserializeFromJson<TResponseMessage>(stream);
         }
 
-        public bool TryGetMessage<TResponseMessage>(out TResponseMessage responseMessage)
+        public async ValueTask<TResponseMessage?> TryGetMessageAsync<TResponseMessage>()
         {
             var contentType = ContentType;
             if (typeof (TResponseMessage) == typeof (string) && contentType.IsPlainText && (response.HasContent || response.HasStream))
-            {
-                responseMessage = (TResponseMessage) (object) GetString();
-                return true;
-            }
-            
-            responseMessage = default!;
+                return (TResponseMessage)(object)await GetStringAsync().ConfigureAwait(false);
+
             if (!contentType.IsJson)
-                return false;
-            
+                return default;
+
             if (!response.HasStream && !response.HasContent)
-                return false;
+                return default;
             
             var stream = response.HasStream 
                 ? response.Stream 
                 : response.Content.ToMemoryStream();
             
-            responseMessage = serializer.DeserializeFromJson<TResponseMessage>(stream);
-            return true;
+            return serializer.DeserializeFromJson<TResponseMessage>(stream);
         }
 
         public HttpStatus Status => new(response.Code);
 
-        private static byte[] ToArray(Stream stream)
+        private static async ValueTask<byte[]> ToArrayAsync(Stream stream)
         {
             if (stream is MemoryStream memoryStream)
                 return memoryStream.ToArray();
@@ -154,8 +152,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             // todo: apply an uninitialized array creation
             //byte[] copy = GC.AllocateUninitializedArray<byte>(count);
             var copy = new byte[count];
-            // todo: read asynchronously (this should be rare case) and use ValueTask to avoid allocation in the other cases
-            stream.Read(copy, 0, copy.Length);
+            await stream.ReadAsync(copy, 0, copy.Length).ConfigureAwait(false);
             return copy;
         }
     }

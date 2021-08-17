@@ -157,7 +157,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             TimeSpan? timeout = null)
         {
             var response = await http.Get($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}/content".ToUrl()).SendAsync(timeout).ConfigureAwait(false);
-            return response.GetMessage<string>();
+            return await response.GetMessageAsync<string>().ConfigureAwait(false);
         }
 
         public Task<CheckResult> CheckDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
@@ -252,7 +252,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             var response = await http.Post(url)
                 .WithJson(contract)
                 .SendAsync(timeout).ConfigureAwait(false);
-            return response.GetMessage<DraftDocument>();
+            return await response.GetMessageAsync<DraftDocument>().ConfigureAwait(false);
         }
 
         public Task<ApiTaskPage> GetDraftTasks(

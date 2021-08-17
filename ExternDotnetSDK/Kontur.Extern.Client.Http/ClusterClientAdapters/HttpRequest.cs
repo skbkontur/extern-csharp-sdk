@@ -17,7 +17,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
         private Request request;
         private readonly RequestTimeouts requestTimeouts;
         private readonly Func<Request, TimeSpan, Task<Request>>? requestTransformAsync;
-        private readonly Func<IHttpResponse, bool>? errorResponseHandler;
+        private readonly Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler;
         private readonly FailoverAsync? failoverAsync;
         private readonly IClusterClient clusterClient;
         private readonly IJsonSerializer serializer;
@@ -27,7 +27,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             Request request,
             RequestTimeouts requestTimeouts,
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
-            Func<IHttpResponse, bool>? errorResponseHandler,
+            Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler,
             FailoverAsync? failoverAsync,
             IClusterClient clusterClient,
             IJsonSerializer serializer)
@@ -144,7 +144,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
                     return ErrorHandlingResult.RepeatRequest;
             }
 
-            if (errorResponseHandler == null || !errorResponseHandler(response))
+            if (errorResponseHandler == null || !await errorResponseHandler(response).ConfigureAwait(false))
             {
                 responseStatus.EnsureSuccess();
             }
