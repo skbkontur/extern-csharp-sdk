@@ -263,6 +263,16 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         /// <param name="timeout"></param>
         /// <returns>Задача подготовки черновика</returns>
         Task<ApiTaskResult<PrepareResult>> StartPrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
+        
+        /// <summary>
+        /// Проверка статуса задачи подготовки черновика к отправке
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftId">Идентификатор черновика</param>
+        /// <param name="taskId">Идентификатор задачи</param>
+        /// <param name="timeout"></param>
+        /// <returns>Статус задачи подготовки черновика</returns>
+        Task<ApiTaskResult<PrepareResult>> GetPrepareDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Отправка документов черновика
