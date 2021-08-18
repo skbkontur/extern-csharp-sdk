@@ -13,7 +13,6 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
     }
     
     public interface ILongOperation<TResult>
-        where TResult : class
     { 
         Task<ILongOperationAwaiter<TResult>> StartAsync();
         

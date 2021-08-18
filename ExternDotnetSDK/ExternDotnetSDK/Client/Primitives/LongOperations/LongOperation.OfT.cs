@@ -9,7 +9,6 @@ using Kontur.Extern.Client.Primitives.Polling;
 namespace Kontur.Extern.Client.Primitives.LongOperations
 {
     internal class LongOperation<T> : ILongOperation<T>
-        where T : class
     {
         private readonly Func<Guid, Task<ApiTaskResult<T>>> checkStatusAsync;
         private readonly Func<Task<ApiTaskResult<T>>> startAsync;
