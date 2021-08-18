@@ -29,15 +29,17 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment
                 TestDataGenerationLevel.CurrentDirectory => JsonFileResponseCache.InCurrentFolder(),
                 _ => throw new ArgumentOutOfRangeException(nameof(authTestData.TestDataGenerateLevel), authTestData.TestDataGenerateLevel, null)
             };
-            lifetime = new Lifetime(new TestLog(messageSink));
-            externTestTool = new ExternTestTool(authTestData.ApiKey, responseCache, lifetime);
+            var log = new TestLog(messageSink);
+            lifetime = new Lifetime(log);
+            externTestTool = new ExternTestTool(authTestData.ApiKey, responseCache, lifetime, log);
         }
 
+        internal ExternTestTool ExternTestTool => externTestTool;
         internal GeneratedAccount GeneratedAccount => generatedAccount;
         public AuthTestData TestData => authTestData;
 
         public async Task InitializeAsync() => 
-            generatedAccount = await externTestTool.GenerateLegalEntityAccountAsync("the_org");
+            generatedAccount = await externTestTool.GenerateLegalEntityAccountAsync("the_org", GeneratedAccount.DefaultChiefName);
 
         public async Task DisposeAsync() => await lifetime.DisposeAsync();
     }

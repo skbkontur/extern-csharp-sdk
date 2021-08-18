@@ -12,11 +12,16 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands
     internal class GenerateLegalEntityAccountCommand : IExternTestToolCommand<GeneratedAccount>
     {
         private readonly string organizationName;
+        private readonly (string surname, string firstName, string partonymicName) chiefName;
         private readonly DriveCertificatesReader driveCertificatesReader;
 
-        public GenerateLegalEntityAccountCommand(string organizationName, DriveCertificatesReader driveCertificatesReader)
+        public GenerateLegalEntityAccountCommand(
+            string organizationName, 
+            (string surname, string firstName, string partonymicName) chiefName, 
+            DriveCertificatesReader driveCertificatesReader)
         {
             this.organizationName = organizationName;
+            this.chiefName = chiefName;
             this.driveCertificatesReader = driveCertificatesReader;
         }
         
@@ -52,7 +57,13 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands
             {
                 var responseMessage = await httpClient.PostAsJsonAsync(
                     "create-account-org",
-                    new NewLegalEntityAccountRequest {OrganizationName = organizationName}
+                    new NewLegalEntityAccountRequest
+                    {
+                        OrganizationName = organizationName,
+                        FirstName = chiefName.firstName,
+                        Surname = chiefName.surname,
+                        Patronymic = chiefName.partonymicName
+                    }
                 );
                 
                 var responseJson = await responseMessage.Content.ReadAsStringAsync();
@@ -71,6 +82,9 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands
         private class NewLegalEntityAccountRequest
         {
             public string OrganizationName { [UsedImplicitly] get; init; }
+            public string FirstName { [UsedImplicitly] get; set; }
+            public string Surname { [UsedImplicitly] get; set; }
+            public string Patronymic { [UsedImplicitly] get; set; }
         }
 
         [UsedImplicitly]

@@ -6,6 +6,14 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.Models
 {
     internal class GeneratedAccount
     {
+        // ReSharper disable StringLiteralTypo
+        public static readonly (string surname, string firstName, string partonymicName) DefaultChiefName = (
+            "Афанасьев",
+            "Сергей",
+            "Робертович"
+        );
+        // ReSharper restore StringLiteralTypo
+        
         public GeneratedAccount(
             Guid accountId,
             Guid organizationId,
@@ -26,7 +34,10 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.Models
             Credentials = credentials;
             CertificateThumbprint = certificateThumbprint;
             CertificatePublicPart = certificatePublicPart;
+            ChiefName = DefaultChiefName;
         }
+
+        public (string surname, string firstName, string patronymicName) ChiefName { get; set; }
 
         public Guid AccountId { get; }
         public Guid OrganizationId { get; }
