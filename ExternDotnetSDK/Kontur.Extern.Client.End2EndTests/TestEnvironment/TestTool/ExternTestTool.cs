@@ -52,7 +52,7 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
         /// <param name="generateCertificateIfAbsentInSender">Генерировать сертификат на основе данных организации-отпарвителе (<paramref name="sender"/>) и организации-объкте (<paramref name="payer"/>), если в организации-отпарвителе (<paramref name="sender"/>) не задан сертифиткат явно</param>
         /// <param name="transformFromUtf8ToCp1251">Рассматривать сгенерированный с сервером документ как UTF-8 и принудительно перекодировать его в window-1251</param>
         public Task<byte[]> GenerateFufSschFileContentAsync(Sender sender, Payer? payer = null, WarrantInfo? warrant = null, bool generateCertificateIfAbsentInSender = false, bool transformFromUtf8ToCp1251 = false) =>
-            RunAsync(new GenerateFufSschXmlFileCommand(sender, payer, warrant, generateCertificateIfAbsentInSender));
+            RunAsync(new GenerateFufSschXmlFileCommand(sender, payer, warrant, generateCertificateIfAbsentInSender, transformFromUtf8ToCp1251));
 
         /// <summary>
         /// Метод генерации тестового сертификата Сгенерированный сертификат не является КЭП.
