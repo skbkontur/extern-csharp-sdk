@@ -44,6 +44,17 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
             RunAsync(new GenerateLegalEntityAccountCommand(organizationName, chiefName, driveCertificatesReader));
 
         /// <summary>
+        /// Генерация ФУФ ССЧ
+        /// </summary>
+        /// <param name="sender">Организация, которая будет оправлять документ в налоговый орган (required).</param>
+        /// <param name="payer">Организация, за которую отправляется документ.</param>
+        /// <param name="warrant">Сведения о доверенности.</param>
+        /// <param name="generateCertificateIfAbsentInSender">Генерировать сертификат на основе данных организации-отпарвителе (<paramref name="sender"/>) и организации-объкте (<paramref name="payer"/>), если в организации-отпарвителе (<paramref name="sender"/>) не задан сертифиткат явно</param>
+        /// <param name="transformFromUtf8ToCp1251">Рассматривать сгенерированный с сервером документ как UTF-8 и принудительно перекодировать его в window-1251</param>
+        public Task<byte[]> GenerateFufSschFileContentAsync(Sender sender, Payer? payer = null, WarrantInfo? warrant = null, bool generateCertificateIfAbsentInSender = false, bool transformFromUtf8ToCp1251 = false) =>
+            RunAsync(new GenerateFufSschXmlFileCommand(sender, payer, warrant, generateCertificateIfAbsentInSender));
+
+        /// <summary>
         /// Метод генерации тестового сертификата Сгенерированный сертификат не является КЭП.
         /// Им можно подписывать документы для отправки документооборота на тестовой площадке или тестовому роботу на боевой.
         /// </summary>
