@@ -9,7 +9,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Errors
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class Error
     {
-        public static readonly Urn Namespace = new Urn("urn:error");
+        public static readonly Urn Namespace = new("urn:error");
 
         public Error()
             : this(Namespace)
