@@ -208,7 +208,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             return http.PostAsync<Docflow>(url, timeout);
         }
 
-        public Task<ApiTaskResult<Docflow>> StartSendDraftAsync(
+        public Task<ApiTaskResult<Docflow>> _StartSendDraftAsync(
             Guid accountId,
             Guid draftId,
             bool? force = null,
@@ -219,6 +219,34 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
                 .AppendToQuery("force", force)
                 .Build();
             return http.PostAsync<ApiTaskResult<Docflow>>(url, timeout);
+        }
+        
+        public async Task<ApiTaskResult<Docflow, CheckResult>> StartSendDraftAsync(
+            Guid accountId,
+            Guid draftId,
+            bool? force = null,
+            TimeSpan? timeout = null)
+        {
+            var url = new RequestUrlBuilder($"/v1/{accountId}/drafts/{draftId}/send")
+                .AppendToQuery("deferred", true)
+                .AppendToQuery("force", force)
+                .Build();
+
+            var response = await http.Post(url).SendAsync(timeout, DoNotFailOnBadRequestsWithPayloads).ConfigureAwait(false);
+
+            if (response.Status.IsSuccessful)
+                return await response.GetMessageAsync<ApiTaskResult<Docflow>>().ConfigureAwait(false);
+            return await response.GetMessageAsync<ApiTaskResult<CheckResult>>().ConfigureAwait(false);
+        }
+
+        public async Task<ApiTaskResult<Docflow, CheckResult>> GetSendDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null)
+        {
+            var url = $"/v1/{accountId}/drafts/{draftId}/tasks/{taskId}";
+            var response = await http.Get(url).SendAsync(timeout, DoNotFailOnBadRequestsWithPayloads).ConfigureAwait(false);
+            
+            if (response.Status.IsSuccessful)
+                return await response.GetMessageAsync<ApiTaskResult<Docflow>>().ConfigureAwait(false);
+            return await response.GetMessageAsync<ApiTaskResult<CheckResult>>().ConfigureAwait(false);
         }
 
         public Task BuildDocumentAsync(
@@ -282,5 +310,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         {
             return http.GetAsync<ApiTaskResult<CryptOperationStatusResult>>($"/v1/{accountId}/drafts/{draftId}/tasks/{taskId}", timeout);
         }
+
+        private static bool DoNotFailOnBadRequestsWithPayloads(IHttpResponse httpResponse) => 
+            httpResponse.Status.IsBadRequest && httpResponse.HasPayload && httpResponse.ContentType.IsJson;
     }
 }
