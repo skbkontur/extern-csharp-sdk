@@ -60,9 +60,12 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands
             
             GenerateFufRequest CreateGenerateFufRequest()
             {
+                var certificateDto = senderToSend.Certificate == null 
+                    ? null 
+                    : new CertificateDto(senderToSend.Certificate.Value.ToString());
                 var senderDto = new SenderDto(
                     senderToSend.Inn,
-                    new CertificateDto(senderToSend.Certificate!.Value.ToString()),
+                    certificateDto,
                     senderToSend.Kpp,
                     senderToSend.OrgName
                 );
