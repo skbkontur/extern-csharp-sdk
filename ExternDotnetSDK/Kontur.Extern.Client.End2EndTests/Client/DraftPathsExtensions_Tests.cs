@@ -35,8 +35,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
     public class DraftPathsExtensions_Tests : GeneratedAccountTests
     {
         private readonly Randomizer randomizer = new();
-        private readonly AuthoritiesCodesGenerator codesGenerator = new();
-        
+
         public DraftPathsExtensions_Tests(ITestOutputHelper output, IsolatedAccountEnvironment environment)
             : base(output, environment)
         {
