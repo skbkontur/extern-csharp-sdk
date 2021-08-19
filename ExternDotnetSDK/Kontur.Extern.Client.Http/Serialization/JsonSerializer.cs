@@ -8,8 +8,17 @@ namespace Kontur.Extern.Client.Http.Serialization
     {
         private static  readonly UTF8Encoding Utf8NoBom = new(false, true);
         private readonly Newtonsoft.Json.JsonSerializer jsonSerializer;
+        private readonly Newtonsoft.Json.JsonSerializer indentedJsonSerializer;
 
-        public JsonSerializer() => jsonSerializer = new Newtonsoft.Json.JsonSerializer();
+        public JsonSerializer()
+        {
+            jsonSerializer = new Newtonsoft.Json.JsonSerializer();
+            indentedJsonSerializer = new Newtonsoft.Json.JsonSerializer
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore
+            };
+        }
 
         public void SerializeToJsonStream<T>(T body, Stream stream)
         {
@@ -21,6 +30,12 @@ namespace Kontur.Extern.Client.Http.Serialization
         {
             using var streamReader = new StreamReader(stream, Utf8NoBom);
             return jsonSerializer.Deserialize<TResult>(new JsonTextReader(streamReader));
+        }
+
+        public void SerializeToIndentedString<T>(T instance, StringBuilder stringBuilder)
+        {
+            using var streamWriter = new StringWriter(stringBuilder);
+            indentedJsonSerializer.Serialize(streamWriter, instance);
         }
     }
 }
