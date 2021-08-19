@@ -6,6 +6,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Documents;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
 {
@@ -49,7 +50,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
-            DocflowFilter filter = null,
+            DocflowFilter? filter = null,
             TimeSpan? timeout = null);
 
         /// <summary>
@@ -85,6 +86,22 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
             Guid relatedDocumentId,
             Guid inventoryId,
             TimeSpan? timeout = null);
+        
+        /// <summary>
+        /// Получение документооборота описи по идентификатору
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
+        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
+        /// <param name="inventoryId">Идентификатор документооборота описи</param>
+        /// <param name="timeout"></param>
+        /// <returns>Документооборот описи или null</returns>
+        Task<Docflow?> TryGetInventoryDocflowAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            TimeSpan? timeout = null);
 
         /// <summary>
         /// Получение всех документов в документообороте
@@ -104,6 +121,16 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
         /// <param name="timeout"></param>
         /// <returns>Документ из документооборота</returns>
         Task<Document> GetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null);
+        
+        /// <summary>
+        /// Получение документа из документооборота по его идентификатору
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="docflowId">Идентификатор документооборота</param>
+        /// <param name="documentId">Идентификатор документа</param>
+        /// <param name="timeout"></param>
+        /// <returns>Документ из документооборота или null</returns>
+        Task<Document?> TryGetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Получение описания документа
