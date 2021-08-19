@@ -1,9 +1,12 @@
 using System;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.Model;
 using Kontur.Extern.Client.Model.Drafts;
+using Kontur.Extern.Client.Model.Drafts.LongOperationStatuses;
+using OneOf;
 using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
 
 namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
@@ -50,5 +53,23 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
             konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId)
                 .Document(documentId)
                 .AddSignatureAsync(signature.ToBase64String());
+        
+        public async Task<DraftCheckingStatus> CheckDraft(Guid accountId, Guid draftId)
+        {
+            var awaiter = await konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).Check().StartAsync();
+            return await awaiter.WaitForCompletion();
+        }
+        
+        public async Task<OneOf<Docflow, DraftSendingFailure>> TrySendDraft(Guid accountId, Guid draftId)
+        {
+            var awaiter = await konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).TrySend().StartAsync();
+            return await awaiter.WaitForCompletion();
+        }
+        
+        public async Task<Docflow> SendDraftOrFail(Guid accountId, Guid draftId)
+        {
+            var awaiter = await konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).Send().StartAsync();
+            return await awaiter.WaitForCompletion();
+        }
     }
 }

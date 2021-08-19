@@ -16,6 +16,13 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Errors
         {
         }
 
+        public Error(HttpStatusCode statusCode, string message)
+        {
+            StatusCode = statusCode;
+            Message = message;
+            Properties = new Dictionary<string, string>();
+        }
+        
         public Error(Urn id, HttpStatusCode statusCode = HttpStatusCode.InternalServerError, string message = null)
         {
             Id = id;
@@ -33,5 +40,20 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Errors
         public bool IsNotEmpty => !string.IsNullOrWhiteSpace(Message);
 
         public override string ToString() => $"[id: \"{Id}\", status: {StatusCode}, track-id: \"{TrackId}\"]";
+
+        public Error ReplaceMessage(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+                throw Exceptions.Errors.StringShouldNotBeNullOrWhiteSpace(nameof(message));
+
+            return new Error
+            {
+                Id = Id,
+                Message = message,
+                Properties = Properties,
+                StatusCode = StatusCode,
+                TrackId = TrackId
+            };
+        }
     }
 }

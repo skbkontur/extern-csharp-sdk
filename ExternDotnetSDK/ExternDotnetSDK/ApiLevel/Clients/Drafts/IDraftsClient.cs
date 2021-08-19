@@ -9,6 +9,8 @@ using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Prepare;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Send;
+
 // ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
@@ -298,13 +300,21 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             Guid draftId,
             bool? force = null,
             TimeSpan? timeout = null);
-        
-        Task<ApiTaskResult<Docflow, CheckResult>> StartSendDraftAsync(
+
+        /// <summary>
+        /// Отправка документов черновика
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftId">Идентификатор черновика</param>
+        /// <param name="force">Флаг отправки в ПФР отчета с ошибками</param>
+        /// <param name="timeout"></param>
+        /// <returns>Состояние созданной задачи отправки черновика. В случае успешного завершения возвращает созданный <see cref="Docflow">документооборот</see></returns>
+        Task<ApiTaskResult<Docflow, SendFailure>> StartSendDraftAsync(
             Guid accountId,
             Guid draftId,
             bool? force = null,
             TimeSpan? timeout = null);
-        
+
         /// <summary>
         /// Проверка статуса задачи отправки черновика
         /// </summary>
@@ -313,7 +323,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         /// <param name="taskId">Идентификатор задачи</param>
         /// <param name="timeout"></param>
         /// <returns>Состояние задачи отправки черновика. В случае успешного завершения возвращает созданный <see cref="Docflow">документооборот</see></returns>
-        Task<ApiTaskResult<Docflow, CheckResult>> GetSendDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null);
+        Task<ApiTaskResult<Docflow, SendFailure>> GetSendDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Создание файла в документе по контракту (УСН, ИОН, ЭДОК)

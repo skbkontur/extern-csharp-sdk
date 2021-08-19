@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Api.Enums;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
@@ -77,6 +78,53 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Api
                 TaskResult = apiTaskResult.TaskResult;
             }
         }
+
+        private ApiTaskResult()
+        {
+        }
+
+        public T GetResultAs<T>(Func<TResult1, T> firstResultConvert, Func<TResult2, T> secondResultConvert) => 
+            TaskResult.Match(firstResultConvert, secondResultConvert);
+        
+        public ApiTaskResult<TResult1, T> ConvertSecondResult<T>(Func<TResult2, T> secondResultConvert) => 
+            Convert(x => x, secondResultConvert);
+        
+        public ApiTaskResult<TResult1> ConsiderSecondAsError(Func<TResult2, Error> convertSecondResultToError)
+        {
+            var result = new ApiTaskResult<TResult1>
+            {
+                Error = Error,
+                Id = Id,
+                TaskState = TaskState,
+                TaskType = TaskType
+            };
+
+            if (TaskState == ApiTaskState.Succeed)
+            {
+                if (TaskResult.IsT0)
+                {
+                    result.TaskResult = TaskResult.AsT0;
+                }
+                else
+                {
+                    result.TaskState = ApiTaskState.Failed;
+                    result.Error = convertSecondResultToError(TaskResult.AsT1);
+                }
+            }
+
+            return result;
+        }
+
+        public ApiTaskResult<TConverted1, TConverted2> Convert<TConverted1, TConverted2>(Func<TResult1, TConverted1> convertFirst, Func<TResult2, TConverted2> convertSecond) => new()
+        {
+            Error = Error,
+            Id = Id,
+            TaskState = TaskState,
+            TaskType = TaskType,
+            TaskResult = TaskState == ApiTaskState.Succeed
+                ? TaskResult.IsT0 ? convertFirst(TaskResult.AsT0) : convertSecond(TaskResult.AsT1)
+                : default
+        };
 
         public static implicit operator ApiTaskResult<TResult1, TResult2>(ApiTaskResult<TResult1> apiTaskResult) => new(apiTaskResult);
         

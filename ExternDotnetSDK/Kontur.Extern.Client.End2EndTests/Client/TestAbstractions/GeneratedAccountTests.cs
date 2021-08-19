@@ -12,7 +12,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestAbstractions
     public abstract class GeneratedAccountTests 
     {
         private readonly IsolatedAccountEnvironment environment;
-        private readonly ITestOutputHelper output;
+        protected readonly ITestOutputHelper output;
 
         protected GeneratedAccountTests(ITestOutputHelper output, IsolatedAccountEnvironment environment)
         {

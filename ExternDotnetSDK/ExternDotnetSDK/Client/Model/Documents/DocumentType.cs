@@ -10,6 +10,8 @@ namespace Kontur.Extern.Client.Model.Documents
         private readonly Urn? urn;
 
         public DocumentType(string urn) => this.urn = new Urn(urn);
+        
+        public DocumentType(Urn urn) => this.urn = urn;
 
         public Urn? ToUrn() => urn;
 

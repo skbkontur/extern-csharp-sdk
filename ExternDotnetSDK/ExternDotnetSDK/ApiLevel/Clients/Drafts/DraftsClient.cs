@@ -9,6 +9,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Prepare;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Send;
 using Kontur.Extern.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 
@@ -229,7 +230,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             return http.PostAsync<ApiTaskResult<Docflow>>(url, timeout);
         }
         
-        public async Task<ApiTaskResult<Docflow, CheckResult>> StartSendDraftAsync(
+        public async Task<ApiTaskResult<Docflow, SendFailure>> StartSendDraftAsync(
             Guid accountId,
             Guid draftId,
             bool? force = null,
@@ -244,17 +245,19 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
 
             if (response.Status.IsSuccessful)
                 return await response.GetMessageAsync<ApiTaskResult<Docflow>>().ConfigureAwait(false);
-            return await response.GetMessageAsync<ApiTaskResult<CheckResult>>().ConfigureAwait(false);
+            
+            return await response.GetMessageAsync<ApiTaskResult<SendFailure>>().ConfigureAwait(false);
         }
 
-        public async Task<ApiTaskResult<Docflow, CheckResult>> GetSendDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null)
+        public async Task<ApiTaskResult<Docflow, SendFailure>> GetSendDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null)
         {
             var url = $"/v1/{accountId}/drafts/{draftId}/tasks/{taskId}";
             var response = await http.Get(url).SendAsync(timeout, DoNotFailOnBadRequestsWithPayloads).ConfigureAwait(false);
             
             if (response.Status.IsSuccessful)
                 return await response.GetMessageAsync<ApiTaskResult<Docflow>>().ConfigureAwait(false);
-            return await response.GetMessageAsync<ApiTaskResult<CheckResult>>().ConfigureAwait(false);
+            
+            return await response.GetMessageAsync<ApiTaskResult<SendFailure>>().ConfigureAwait(false);
         }
 
         public Task BuildDocumentAsync(

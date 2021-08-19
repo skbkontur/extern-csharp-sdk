@@ -1,7 +1,9 @@
 #nullable enable
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Cryptography;
+using Kontur.Extern.Client.Http.Constants;
 using Kontur.Extern.Client.Uploading;
 
 namespace Kontur.Extern.Client.Model.Documents.Contents
@@ -10,9 +12,20 @@ namespace Kontur.Extern.Client.Model.Documents.Contents
     {
         private readonly byte[] bytes;
 
-        public ByteDocumentContent(byte[] bytes, string? contentType = null)
+        public ByteDocumentContent(string content, string? contentType = null)
+            : this(Encoding.UTF8.GetBytes(content), contentType, Encoding.UTF8.WebName)
+        {
+        }
+
+        public ByteDocumentContent(byte[] bytes, string? contentType = null, string? charset = null)
         {
             this.bytes = bytes;
+            if (string.IsNullOrWhiteSpace(charset))
+            {
+                contentType ??= ContentTypes.PlainText;
+                contentType = $"{contentType};charset={charset}";
+            }
+
             ContentType = contentType;
         }
 

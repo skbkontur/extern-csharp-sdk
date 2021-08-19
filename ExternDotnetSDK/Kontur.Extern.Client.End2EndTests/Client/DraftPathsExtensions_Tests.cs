@@ -12,7 +12,10 @@ using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment.Models;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests;
 using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.Http.Models;
 using Kontur.Extern.Client.Model.Configuration;
 using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Model.Documents.Contents;
@@ -24,6 +27,7 @@ using Kontur.Extern.Client.Testing.Helpers;
 using Xunit;
 using Xunit.Abstractions;
 using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
+using Sender = Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta.Sender;
 using Signature = Kontur.Extern.Client.Model.Signature;
 
 namespace Kontur.Extern.Client.End2EndTests.Client
@@ -31,6 +35,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
     public class DraftPathsExtensions_Tests : GeneratedAccountTests
     {
         private readonly Randomizer randomizer = new();
+        private readonly AuthoritiesCodesGenerator codesGenerator = new();
         
         public DraftPathsExtensions_Tests(ITestOutputHelper output, IsolatedAccountEnvironment environment)
             : base(output, environment)
@@ -269,6 +274,166 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             func.Should().Throw<ApiException>().And.Message.Should().Contain("NotFound");
         }
 
+        [Fact]
+        public async Task Should_check_a_correct_draft()
+        {
+            var newDraft = CreateDraftOfDefaultAccount();
+            await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
+            var createdDraft = entityScope.Entity;
+
+            var fufSschContent = await GenerateCorrectFufSschContent();
+            var document = DraftDocument
+                .WithNewId(new ByteDocumentContent(fufSschContent, "application/xml"));
+            await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
+
+            var checkingStatus = await Context.Drafts.CheckDraft(AccountId, createdDraft.Id);
+
+            checkingStatus.IsSuccessful.Should().BeTrue();
+
+            async Task<byte[]> GenerateCorrectFufSschContent()
+            {
+                var inn = GeneratedAccount.Inn.ToString();
+                var kpp = GeneratedAccount.Kpp.ToString();
+                var orgName = GeneratedAccount.OrganizationName;// "the_org";
+                var (surname, firstName, patronymicName) = GeneratedAccount.ChiefName;
+                return await ExternTestTool.GenerateFufSschFileContentAsync(
+                    generateCertificateIfAbsentInSender: true,
+                    sender: new TestEnvironment.TestTool.Models.Requests.Sender(inn, Kpp: kpp, OrgName: orgName),
+                    payer: new Payer(inn, orgName, kpp, new PersonFullName(surname, firstName, patronymicName))
+                );
+            }
+        }
+
+        [Fact]
+        public async Task Should_check_an_incorrect_draft_withing_document_failures()
+        {
+            var newDraft = CreateDraftOfDefaultAccount();
+            await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
+            var createdDraft = entityScope.Entity;
+
+            var fufSschContent = await GenerateInCorrectFufSschContent();
+            var document = DraftDocument
+                .WithNewId(new ByteDocumentContent(fufSschContent, "application/xml"))
+                .WithFileName("invalid.xml");
+            await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
+
+            var checkingStatus = await Context.Drafts.CheckDraft(AccountId, createdDraft.Id);
+
+            checkingStatus.IsSuccessful.Should().BeFalse();
+
+            async Task<byte[]> GenerateInCorrectFufSschContent()
+            {
+                var inn = GeneratedAccount.Inn.ToString();
+                return await ExternTestTool.GenerateFufSschFileContentAsync(
+                    new TestEnvironment.TestTool.Models.Requests.Sender(inn),
+                    generateCertificateIfAbsentInSender: true
+                );
+            }
+        }
+        
+        [Fact(Skip = "Illegal signature")]
+        public async Task Should_send_a_correct_draft()
+        {
+            var newDraft = CreateDraftOfDefaultAccount();
+            await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
+            var createdDraft = entityScope.Entity;
+
+            var (fufSschContent, cert) = await GenerateCorrectFufSschContent();
+            var document = DraftDocument
+                .WithNewId(new ByteDocumentContent(fufSschContent, "application/xml"))
+                .OfType(new DocumentType(new Urn("nid", "nss")));
+            await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
+            await Context.Drafts.AddSignature(AccountId, createdDraft.Id, document.DocumentId, cert.PublicKey);
+
+            var docflow = await Context.Drafts.SendDraftOrFail(AccountId, createdDraft.Id);
+
+            docflow.Should().NotBeNull();
+
+            async Task<(byte[] content, GeneratedCertificate certificate)> GenerateCorrectFufSschContent()
+            {
+                var inn = GeneratedAccount.Inn.ToString();
+                var kpp = GeneratedAccount.Kpp.ToString();
+                var orgName = GeneratedAccount.OrganizationName;
+                var (surname, firstName, patronymicName) = GeneratedAccount.ChiefName;
+
+                var certificate = await ExternTestTool.GenerateCertificateAsync(new CertificateGenerationData(
+                    inn,
+                    kpp,
+                    orgName,
+                    Surname: surname,
+                    FirstName: firstName,
+                    Patronymic: patronymicName
+                ));
+
+                var content = await ExternTestTool.GenerateFufSschFileContentAsync(
+                    new TestEnvironment.TestTool.Models.Requests.Sender(inn, Kpp: kpp, OrgName: orgName, Certificate: Base64String.Encode(certificate.PublicKey)),
+                    new Payer(inn, orgName, kpp, new PersonFullName(surname, firstName, patronymicName))
+                );
+                
+                return (content, certificate);
+            }
+        }
+        
+        [Fact]
+        public async Task Should_fail_if_send_an_incorrect_draft()
+        {
+            var newDraft = CreateDraftOfDefaultAccount();
+            await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
+            var createdDraft = entityScope.Entity;
+
+            var fufSschContent = await GenerateIncorrectFufSschContent();
+            var document = DraftDocument
+                .WithNewId(new ByteDocumentContent(fufSschContent, "application/xml"))
+                .WithFileName("invalid.xml")
+                .OfType(new DocumentType(new Urn("nid", "nss")));
+            await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
+
+            Func<Task> func = async () => await Context.Drafts.SendDraftOrFail(AccountId, createdDraft.Id);
+
+            var exception = func.Should().Throw<ApiException>().Which;
+            exception.Message.Should().Contain(document.DocumentId.ToString()).And.Contain(createdDraft.Id.ToString());
+            
+            output.WriteLine("Thrown error:");
+            output.WriteLine(exception.ToString());
+
+            async Task<byte[]> GenerateIncorrectFufSschContent()
+            {
+                var inn = GeneratedAccount.Inn.ToString();
+                return await ExternTestTool.GenerateFufSschFileContentAsync(
+                    new TestEnvironment.TestTool.Models.Requests.Sender(inn),
+                    generateCertificateIfAbsentInSender: true
+                );
+            }
+        }
+        
+        [Fact]
+        public async Task Should_return_error_if_trying_to_send_an_incorrect_draft()
+        {
+            var newDraft = CreateDraftOfDefaultAccount();
+            await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
+            var createdDraft = entityScope.Entity;
+
+            var fufSschContent = await GenerateIncorrectFufSschContent();
+            var document = DraftDocument
+                .WithNewId(new ByteDocumentContent(fufSschContent, "application/xml"))
+                .WithFileName("invalid.xml")
+                .OfType(new DocumentType(new Urn("nid", "nss")));
+            await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
+
+            var result = await Context.Drafts.TrySendDraft(AccountId, createdDraft.Id);
+
+            result.AsT1.CheckStatus.Should().NotBeNull();
+
+            async Task<byte[]> GenerateIncorrectFufSschContent()
+            {
+                var inn = GeneratedAccount.Inn.ToString();
+                return await ExternTestTool.GenerateFufSschFileContentAsync(
+                    new TestEnvironment.TestTool.Models.Requests.Sender(inn),
+                    generateCertificateIfAbsentInSender: true
+                );
+            }
+        }
+        
         private DraftMetadata CreateDraftOfDefaultAccount(DraftRecipient? recipient = null)
         {
             var certInn = GeneratedAccount.Inn;
