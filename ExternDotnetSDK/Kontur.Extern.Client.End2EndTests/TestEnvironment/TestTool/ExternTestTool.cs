@@ -1,5 +1,6 @@
-using System.Text;
+using System;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.Models;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http;
@@ -61,6 +62,21 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
         /// <param name="data"></param>
         public Task<GeneratedCertificate> GenerateCertificateAsync(CertificateGenerationData data) =>
             RunAsync(new GenerateCertificateCommand(data));
+
+        /// <summary>
+        /// Генерация входящего письма
+        /// </summary>
+        /// <remarks>
+        ///  Метод обращается к тестовому роботу, который генерирует письмо. Вы увидите входящий документооборот через 20 минут.  Достаточно отправить запрос один раз. Не нужно вызывать метод часто, это нагружает робота и увеличивает время получения письма.
+        /// </remarks>
+        /// <param name="accountId">Id учетной записи, на которую будет направлено письмо (required).</param>
+        /// <param name="sender">Организация, которая будет отвечать на письмо в налоговый орган (required).</param>
+        /// <param name="payer">Организация, на которую приходит письмо и за которую будет отправляться отчетность (required).</param>
+        /// <param name="textOfLetter">Текст письма (required).</param>
+        /// <param name="ifnsCode">Код тестовой инспекции, от которой придет требование. Возможные значения: 0007, 0008, 0084, 0085, 0087, 0088, 0093, 0094, 0096, 9979, 7702.</param>
+        /// <returns>Документооборот</returns>
+        public Task<Docflow> GenerateCuLetterAsync(Guid accountId, Sender? sender = null, Payer? payer = null, string? textOfLetter = null, TestIfnsCode? ifnsCode = null) => 
+            RunAsync(new GenerateCuLetterCommand(accountId, sender, payer, textOfLetter, ifnsCode));
 
         private Task<T> RunAsync<T>(IExternTestToolCommand<T> command) => 
             command.ExecuteAsync(httpClient, cache);
