@@ -36,6 +36,7 @@ namespace Kontur.Extern.Client
                 {
                     cfg.SetupUniversalTransport();
                     cfg.SetupExternalUrl(url);
+                    cfg.MaxReplicasUsedPerRequest = 1;
                 });
             return new ExternBuilder(clusterClient, log);
         }
