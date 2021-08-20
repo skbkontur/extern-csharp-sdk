@@ -20,7 +20,7 @@ namespace Kontur.Extern.Client.Model.Documents.Contents
         public ByteDocumentContent(byte[] bytes, string? contentType = null, string? charset = null)
         {
             this.bytes = bytes;
-            if (string.IsNullOrWhiteSpace(charset))
+            if (!string.IsNullOrWhiteSpace(charset))
             {
                 contentType ??= ContentTypes.PlainText;
                 contentType = $"{contentType};charset={charset}";
