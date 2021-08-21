@@ -12,10 +12,8 @@ using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.Models;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests;
 using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Http.Models;
 using Kontur.Extern.Client.Model.Configuration;
 using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Model.Documents.Contents;
@@ -35,6 +33,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
     public class DraftPathsExtensions_Tests : GeneratedAccountTests
     {
         private readonly Randomizer randomizer = new();
+        private readonly AuthoritiesCodesGenerator codesGenerator = new AuthoritiesCodesGenerator();
 
         public DraftPathsExtensions_Tests(ITestOutputHelper output, IsolatedAccountEnvironment environment)
             : base(output, environment)
@@ -330,47 +329,23 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             }
         }
         
-        [Fact(Skip = "Illegal signature")]
+        [Fact]
         public async Task Should_send_a_correct_draft()
         {
-            var newDraft = CreateDraftOfDefaultAccount();
+            var fssRegNumber = codesGenerator.FssRegNumber();
+            var newDraft = CreateDraftOfDefaultAccount(DraftRecipient.Fss(FssCode.Parse("12341")), fssRegNumber);
             await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
 
-            var (fufSschContent, cert) = await GenerateCorrectFufSschContent();
             var document = DraftDocument
-                .WithNewId(new ByteDocumentContent(fufSschContent, "application/xml"))
-                .OfType(new DocumentType(new Urn("nid", "nss")));
+                    // todo: ignore content for this document type
+                .WithNewId(new ByteDocumentContent(new byte[] {1, 2, 3}, "application/xml"))
+                .OfType(DocumentType.Fss.SedoProviderSubscription.SubscribeRequestForRegistrationNumber);
             await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
-            await Context.Drafts.AddSignature(AccountId, createdDraft.Id, document.DocumentId, cert.PublicKey);
 
             var docflow = await Context.Drafts.SendDraftOrFail(AccountId, createdDraft.Id);
 
             docflow.Should().NotBeNull();
-
-            async Task<(byte[] content, GeneratedCertificate certificate)> GenerateCorrectFufSschContent()
-            {
-                var inn = GeneratedAccount.Inn.ToString();
-                var kpp = GeneratedAccount.Kpp.ToString();
-                var orgName = GeneratedAccount.OrganizationName;
-                var (surname, firstName, patronymicName) = GeneratedAccount.ChiefName;
-
-                var certificate = await ExternTestTool.GenerateCertificateAsync(new CertificateGenerationData(
-                    inn,
-                    kpp,
-                    orgName,
-                    Surname: surname,
-                    FirstName: firstName,
-                    Patronymic: patronymicName
-                ));
-
-                var content = await ExternTestTool.GenerateFufSschFileContentAsync(
-                    new TestEnvironment.TestTool.Models.Requests.Sender(inn, Kpp: kpp, OrgName: orgName, Certificate: Base64String.Encode(certificate.PublicKey)),
-                    new Payer(inn, orgName, kpp, new PersonFullName(surname, firstName, patronymicName))
-                );
-                
-                return (content, certificate);
-            }
         }
         
         [Fact]
@@ -433,14 +408,20 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             }
         }
         
-        private DraftMetadata CreateDraftOfDefaultAccount(DraftRecipient? recipient = null)
+        private DraftMetadata CreateDraftOfDefaultAccount(DraftRecipient? recipient = null, FssRegNumber? fssRegNumber = null)
         {
             var certInn = GeneratedAccount.Inn;
             var certKpp = GeneratedAccount.Kpp;
             var senderCert = GeneratedAccount.CertificatePublicPart;
 
+            var payer = DraftPayer.LegalEntityPayer(certInn, certKpp);
+            if (fssRegNumber != null)
+            {
+                payer.WithFssRegNumber(fssRegNumber);
+            }
+
             return new DraftMetadata(
-                DraftPayer.LegalEntityPayer(certInn, certKpp),
+                payer,
                 DraftSender.LegalEntity(certInn, certKpp, senderCert).WithIpAddress(IPAddress.Parse("8.8.8.8")),
                 recipient ?? DraftRecipient.Ifns(IfnsCode.Parse("0087"), MriCode.Parse("9660"))
             );
@@ -458,7 +439,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
                 };
             }
 
-            RelatedDocument relatedDocumentRequest = null;
+            RelatedDocument? relatedDocumentRequest = null;
             if (request.RelatedDocument != null)
             {
                 relatedDocumentRequest = new RelatedDocument

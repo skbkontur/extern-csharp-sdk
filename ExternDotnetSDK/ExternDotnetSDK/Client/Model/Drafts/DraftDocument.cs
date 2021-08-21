@@ -12,6 +12,7 @@ namespace Kontur.Extern.Client.Model.Drafts
 {
     public class DraftDocument
     {
+        // todo: add method without document
         public static DraftDocument WithNewId(IDocumentContent documentContent) => 
             WithId(Guid.NewGuid(), documentContent);
 
