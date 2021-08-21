@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
 using Newtonsoft.Json;
@@ -35,11 +36,27 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Errors
         public HttpStatusCode StatusCode { get; set; }
         public string Message { get; set; }
         public string TrackId { get; set; }
+        public string TraceId { get; set; }
         public Dictionary<string, string> Properties { get; set; }
 
         public bool IsNotEmpty => !string.IsNullOrWhiteSpace(Message);
 
-        public override string ToString() => $"[id: \"{Id}\", status: {StatusCode}, track-id: \"{TrackId}\"]";
+        public override string ToString()
+        {
+            var text = new StringBuilder();
+            text.Append($"[id: \"{Id}\", status: {StatusCode}");
+            if (!string.IsNullOrWhiteSpace(TrackId))
+            {
+                text.Append($", track-id: \"{TrackId}\"");
+            }
+            if (!string.IsNullOrWhiteSpace(TraceId))
+            {
+                text.Append($", trace-id: \"{TraceId}\"");
+            }
+            text.AppendLine("]");
+            text.Append(Message);
+            return text.ToString();
+        }
 
         public Error ReplaceMessage(string message)
         {

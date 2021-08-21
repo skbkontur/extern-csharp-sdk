@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.Testing.End2End.JsonHelpers;
 using Kontur.Extern.Client.Testing.Lifetimes;
 using Vostok.Logging.Abstractions;
 using static System.Environment;
@@ -53,7 +54,7 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http
             if (responseMessage.Content.Headers.ContentLength > 0 && responseMessage.Content.Headers.ContentType?.MediaType == "application/json")
             {
                 var json = await responseMessage.Content.ReadAsStringAsync();
-                builder.AppendLine(json);
+                builder.AppendLine(json.EllipsisLongStringValuesInJson());
             }
 
             log.Debug(builder.ToString());
@@ -63,7 +64,8 @@ namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http
         {
             var dump = new StringBuilder();
             dump.AppendLine($"TestTool request: {httpMethod} {relativeUrl}");
-            dump.AppendLine(await jsonContent.ReadAsStringAsync());
+            var json = await jsonContent.ReadAsStringAsync();
+            dump.AppendLine(json.EllipsisLongStringValuesInJson());
             log.Debug(dump.ToString());
         }
 

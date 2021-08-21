@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Http.Constants;
+using Kontur.Extern.Client.Testing.End2End.JsonHelpers;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Core.Transport;
 using Vostok.Logging.Abstractions;
@@ -45,7 +46,7 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
                 {
                     if (response.Headers.ContentType?.StartsWith(ContentTypes.Json) == true)
                     {
-                        DumpContent(responseDump, response.Content, LimitDumpResponseContent);
+                        DumpJsonContent(responseDump, response.Content, LimitDumpResponseContent);
                     }
                     else
                     {
@@ -65,7 +66,7 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
                 {
                     if (recreatedRequest.Content != null)
                     {
-                        DumpContent(requestDump, recreatedRequest.Content, LimitDumpRequestContent);
+                        DumpJsonContent(requestDump, recreatedRequest.Content, LimitDumpRequestContent);
                     }
                     else if (recreatedRequest.StreamContent != null)
                     {
@@ -95,7 +96,7 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
             var stream = request.StreamContent.Stream;
             if (stream is MemoryStream {Length: < LimitDumpRequestContent} memoryStream)
             {
-                dump.AppendLine(DumpStreamAndRewind(memoryStream));
+                dump.AppendLine(DumpJsonStreamAndRewind(memoryStream));
                 dump.AppendLine();
             }
             else
@@ -106,13 +107,14 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
             return new Request(request.Method, request.Url, new StreamContent(stream, request.StreamContent.Length), request.Headers);
         }
 
-        private static string DumpStreamAndRewind(MemoryStream memoryStream)
+        private static string DumpJsonStreamAndRewind(MemoryStream memoryStream)
         {
             var position = memoryStream.Position;
             try
             {
                 using var streamReader = new StreamReader(memoryStream, leaveOpen: true);
-                return streamReader.ReadToEnd();
+                var json = streamReader.ReadToEnd();
+                return json.EllipsisLongStringValuesInJson();
             }
             finally
             {
@@ -120,7 +122,7 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
             }
         }
         
-        private static void DumpContent(StringBuilder dump, Content content, int limit) => 
-            dump.AppendLine(content.Length > limit ? PayloadStub : content.ToString());
+        private static void DumpJsonContent(StringBuilder dump, Content content, int limit) => 
+            dump.AppendLine(content.Length > limit ? PayloadStub : content.ToString().EllipsisLongStringValuesInJson());
     }
 }
