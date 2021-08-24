@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Documents;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
-using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Docflows
 {
-    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class Docflow : IDocflowDto
     {
         public Guid Id { get; set; }

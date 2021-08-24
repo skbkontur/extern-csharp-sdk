@@ -2,12 +2,9 @@
 using System.Net;
 using System.Text;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
-using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Errors
 {
-    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ApiError
     {
         public static readonly Urn Namespace = new("urn:error");

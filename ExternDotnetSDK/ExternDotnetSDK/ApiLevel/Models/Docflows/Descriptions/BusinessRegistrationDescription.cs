@@ -1,12 +1,10 @@
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
-using Newtonsoft.Json;
+
 // ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions
 {
-    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class BusinessRegistrationDescription : DocflowDescription
     {
         /// <summary>
@@ -26,7 +24,6 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions
         /// </summary>
         public RegistrationInfoDescription RegistrationInfo { get; set; }
 
-        [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
         public class RegistrationInfoDescription
         {
             /// <summary>
@@ -51,7 +48,6 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions
             Ul
         }
     
-        [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
         public class ApplicantInfoDescription
         {
             /// <summary>
@@ -64,7 +60,6 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions
             public string Inn { get; set; }
         }
     
-        [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
         public class UlInfoDescription
         {
             /// <summary>

@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders
 {
-    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class DraftsBuilderMeta
     {
         [Required]

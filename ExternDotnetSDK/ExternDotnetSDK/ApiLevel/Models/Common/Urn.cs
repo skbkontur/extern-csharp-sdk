@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Common
 {
-    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     [JsonConverter(typeof (UrnJsonConverter))]
     public sealed class Urn : IComparable<Urn>, IEquatable<Urn>
     {

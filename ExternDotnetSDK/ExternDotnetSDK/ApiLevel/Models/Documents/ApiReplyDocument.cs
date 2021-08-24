@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
-using Newtonsoft.Json;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Documents
 {
-    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ApiReplyDocument
     {
         public Guid Id { get; set; }

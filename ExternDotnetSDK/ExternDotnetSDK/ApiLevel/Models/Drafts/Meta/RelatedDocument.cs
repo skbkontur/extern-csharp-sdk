@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta
 {
-    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class RelatedDocument
     {
         public Guid RelatedDocflowId { get; set; }

@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data
 {
-    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class FnsInventoryDraftsBuilderData : DraftsBuilderData
     {
         [Required]

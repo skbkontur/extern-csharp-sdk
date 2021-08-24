@@ -5,8 +5,6 @@ using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta
 {
-    [DataContract]
-    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class AccountInfo
     {
         private OrganizationInfo organization;

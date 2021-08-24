@@ -4,14 +4,11 @@ using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Api.Enums;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
-using Newtonsoft.Json;
 using OneOf;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Api
 {
     [PublicAPI]
-    [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
     public class ApiTaskResult<TResult>
     {
         public static ApiTaskResult<TResult> Running(Guid taskId, Urn taskType) => new()
