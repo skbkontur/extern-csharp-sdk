@@ -6,7 +6,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
@@ -391,7 +390,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var document = DraftDocument
                 .WithNewId(new ByteDocumentContent(fufSschContent, "application/xml"))
                 .WithFileName("invalid.xml")
-                .OfType(new DocumentType(new Urn("nid", "nss")));
+                .OfType(DocumentType.Fns.Fns534.Report);
             await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
             var result = await Context.Drafts.TrySendDraft(AccountId, createdDraft.Id);
