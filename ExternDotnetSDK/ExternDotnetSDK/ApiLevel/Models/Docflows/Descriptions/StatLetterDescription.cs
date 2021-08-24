@@ -6,13 +6,22 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions
 {
     public class StatLetterDescription : DocflowDescription
     {
-        /// <summary>field CU is deprecated and ought to be not used</summary>
-        public string Cu { get; set; }
-
         public string FinalRecipient { get; set; }
+        /// <summary>
+        /// Код ТОГС, куда направляется письмо
+        /// </summary>
         public string Recipient { get; set; }
+        /// <summary>
+        /// Тема письма
+        /// </summary>
         public string Subject { get; set; }
+        /// <summary>
+        /// Идентификатор связанного документооборота, на который отправлен ответ
+        /// </summary>
         public Guid? RelatedDocflowId { get; set; }
+        /// <summary>
+        ///  Код ОКПО
+        /// </summary>
         public string Okpo { get; set; }
     }
 }
