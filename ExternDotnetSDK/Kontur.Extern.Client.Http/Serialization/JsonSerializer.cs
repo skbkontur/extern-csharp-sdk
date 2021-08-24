@@ -32,10 +32,23 @@ namespace Kontur.Extern.Client.Http.Serialization
             return jsonSerializer.Deserialize<TResult>(new JsonTextReader(streamReader));
         }
 
+        public TResult DeserializeFromJson<TResult>(string jsonText)
+        {
+            using var stringReader = new StringReader(jsonText);
+            return jsonSerializer.Deserialize<TResult>(new JsonTextReader(stringReader));
+        }
+
         public void SerializeToIndentedString<T>(T instance, StringBuilder stringBuilder)
         {
-            using var streamWriter = new StringWriter(stringBuilder);
-            indentedJsonSerializer.Serialize(streamWriter, instance);
+            using var stringWriter = new StringWriter(stringBuilder);
+            indentedJsonSerializer.Serialize(stringWriter, instance);
+        }
+
+        public string SerializeToIndentedString<T>(T instance)
+        {
+            using var stringWriter = new StringWriter();
+            indentedJsonSerializer.Serialize(stringWriter, instance);
+            return stringWriter.ToString();
         }
     }
 }
