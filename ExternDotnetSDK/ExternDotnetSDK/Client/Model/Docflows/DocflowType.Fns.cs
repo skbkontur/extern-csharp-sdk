@@ -18,7 +18,7 @@ namespace Kontur.Extern.Client.Model.Docflows
             /// <summary>
             /// Декларация и 2-НДФЛ
             /// </summary>
-            public class Fns534Report
+            public static class Fns534
             {
                 /// <summary>
                 /// Тип документооборота:
