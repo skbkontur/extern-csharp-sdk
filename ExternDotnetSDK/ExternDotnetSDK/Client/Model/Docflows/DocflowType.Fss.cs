@@ -21,6 +21,11 @@ namespace Kontur.Extern.Client.Model.Docflows
             /// Подтверждение основного вида экономической деятельности
             /// </summary>
             public static readonly DocflowType OvedConfirmation = "urn:docflow:oved-confirmation";
+            
+            /// <summary>
+            /// Листки нетрудоспособности ФСС
+            /// </summary>
+            public static readonly DocflowType SickReport = "urn:docflow:fss-sick-report";
 
             /// <summary>
             /// Социальный Электронный Документооборот 
@@ -58,18 +63,6 @@ namespace Kontur.Extern.Client.Model.Docflows
                 /// </summary>
                 public static readonly DocflowType AbonentSubscriptionResult = "urn:docflow:fss-sedo-abonent-subscription-result";
             }
-
-            /// <summary>
-            /// Тип документооборота:
-            /// Листки нетрудоспособности ФСС
-            /// </summary>
-            public static readonly DocflowType SickReport = "urn:docflow:fss-sick-report";
-
-            /// <summary>
-            /// Тип документооборота:
-            /// Стимулирующие выплаты
-            /// </summary>
-            public static readonly DocflowType StimulativePayment = "urn:docflow:fss-stimulative-payment";
         }
     }
 }
