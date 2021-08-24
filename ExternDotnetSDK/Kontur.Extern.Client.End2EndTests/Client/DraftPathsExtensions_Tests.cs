@@ -338,7 +338,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var createdDraft = entityScope.Entity;
 
             var document = DraftDocument
-                    // todo: ignore content for this document type
+                // todo: ignore content for this document type
                 .WithNewId(new ByteDocumentContent(new byte[] {1, 2, 3}, "application/xml"))
                 .OfType(DocumentType.Fss.SedoProviderSubscription.SubscribeRequestForRegistrationNumber);
             await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
