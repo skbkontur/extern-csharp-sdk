@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Kontur.Extern.Client.Common;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http.Models;

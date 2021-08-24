@@ -2,7 +2,6 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Documents;
 using Kontur.Extern.Client.Helpers;

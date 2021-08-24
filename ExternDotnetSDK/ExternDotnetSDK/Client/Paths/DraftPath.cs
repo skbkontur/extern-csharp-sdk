@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using Kontur.Extern.Client.Common;
 
 namespace Kontur.Extern.Client.Paths
