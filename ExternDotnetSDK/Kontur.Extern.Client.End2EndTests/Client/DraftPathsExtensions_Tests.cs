@@ -110,7 +110,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
 
             var document = DraftDocument
                 .WithId(documentId, new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3})))
-                .OfType(DocumentType.Fns.Fns534Report.Report);
+                .OfType(DocumentType.Fns.Fns534.Report);
 
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
@@ -127,7 +127,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
 
             var document = DraftDocument
                 .WithId(documentId, new ByteDocumentContent(new byte[]{1, 2, 3}))
-                .OfType(DocumentType.Fns.Fns534Report.Report);
+                .OfType(DocumentType.Fns.Fns534.Report);
 
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
@@ -155,7 +155,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             
             var document = DraftDocument
                 .WithNewId(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
-                .OfType(DocumentType.Fns.Fns534Report.Report)
+                .OfType(DocumentType.Fns.Fns534.Report)
                 .WithSignature(GeneratedAccount.CertificatePublicPart);
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
@@ -165,7 +165,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
                 Description = new DocumentDescription
                 {
                     ContentType = "application/pdf",
-                    Type = DocumentType.Fns.Fns534Report.Report.ToUrn(),
+                    Type = DocumentType.Fns.Fns534.Report.ToUrn(),
                     Properties = new Dictionary<string, string?>
                     {
                         ["Encoding"] = null,
@@ -194,7 +194,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
 
             var document = DraftDocument
                 .WithNewId(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
-                .OfType(DocumentType.Fns.Fns534Report.Report);
+                .OfType(DocumentType.Fns.Fns534.Report);
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
             
             var addedSignatureId = await Context.Drafts.AddSignature(AccountId, createdDraft.Id, addedDocumentId, GeneratedAccount.CertificatePublicPart);
@@ -219,7 +219,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             Signature documentSignature = new byte[] {1, 2, 3};
             var document = DraftDocument
                 .WithNewId(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
-                .OfType(DocumentType.Fns.Fns534Report.Report);
+                .OfType(DocumentType.Fns.Fns534.Report);
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
             var signatureId = await Context.Drafts.AddSignature(AccountId, createdDraft.Id, addedDocumentId, documentSignature);
 
@@ -240,7 +240,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var contentBytes = randomizer.Bytes(500*1024);
             var document = DraftDocument
                 .WithNewId(new StreamDocumentContent(new MemoryStream(contentBytes)))
-                .OfType(DocumentType.Fns.Fns534Report.Report);
+                .OfType(DocumentType.Fns.Fns534.Report);
             var addedDocumentId = await context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
             
             var draftDocument = await context.Drafts.GetDocument(AccountId, createdDraft.Id, addedDocumentId);
@@ -262,7 +262,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             
             var document = DraftDocument
                 .WithNewId(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
-                .OfType(DocumentType.Fns.Fns534Report.Report);
+                .OfType(DocumentType.Fns.Fns534.Report);
             var documentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
             await Context.Drafts.DeleteDocument(AccountId, createdDraft.Id, documentId);
@@ -359,7 +359,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var document = DraftDocument
                 .WithNewId(new ByteDocumentContent(fufSschContent, "application/xml"))
                 .WithFileName("invalid.xml")
-                .OfType(new DocumentType(new Urn("nid", "nss")));
+                .OfType(DocumentType.Fns.Fns534.Report);
             await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
             Func<Task> func = async () => await Context.Drafts.SendDraftOrFail(AccountId, createdDraft.Id);
