@@ -5,7 +5,7 @@ using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Tests.Client.Model.TestAssertions;
-using Kontur.Extern.Client.Tests.Client.Model.TestHelpers;
+using Kontur.Extern.Client.Tests.TestHelpers;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Client.Tests.Client.Model.Docflows

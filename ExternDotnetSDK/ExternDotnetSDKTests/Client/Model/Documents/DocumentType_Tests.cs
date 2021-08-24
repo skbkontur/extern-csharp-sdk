@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Documents;
-using Kontur.Extern.Client.Testing.Helpers;
 using Kontur.Extern.Client.Tests.Client.Model.TestAssertions;
-using Kontur.Extern.Client.Tests.Client.Model.TestHelpers;
+using Kontur.Extern.Client.Tests.TestHelpers;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Client.Tests.Client.Model.Documents

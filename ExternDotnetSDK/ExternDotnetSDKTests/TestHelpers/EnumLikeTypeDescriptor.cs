@@ -6,10 +6,19 @@ using System.Reflection;
 using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Testing.Helpers;
 
-namespace Kontur.Extern.Client.Tests.Client.Model.TestHelpers
+namespace Kontur.Extern.Client.Tests.TestHelpers
 {
-    internal class EnumLikeType
+    internal static class EnumLikeType
     {
+        public static IEnumerable<T> AllEnumValuesFromNestedTypesOfStruct<T>()
+            where T : struct
+        {
+            return AllEnumMembersFromNestedTypesOfStruct<T>()
+                .Select(x => x.value)
+                .Where(x => x.HasValue)
+                .Select(x => x!.Value);
+        }
+        
         public static IEnumerable<(FieldInfo field, T? value)> AllEnumMembersFromNestedTypesOfStruct<T>()
             where T : struct
         {
