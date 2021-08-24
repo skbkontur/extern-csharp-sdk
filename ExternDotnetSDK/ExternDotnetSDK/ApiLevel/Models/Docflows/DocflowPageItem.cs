@@ -8,12 +8,11 @@ using Newtonsoft.Json;
 namespace Kontur.Extern.Client.ApiLevel.Models.Docflows
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
-    public class DocflowPageItem
+    public class DocflowPageItem : IDocflowDto
     {
         public Guid Id { get; set; }
         public Guid OrganizationId { get; set; }
 
-        [JsonConverter(typeof (DocflowDescriptionConverter))]
         public DocflowDescription Description { get; set; }
 
         [UsedImplicitly]

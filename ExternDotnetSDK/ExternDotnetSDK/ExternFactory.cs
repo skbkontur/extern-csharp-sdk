@@ -31,7 +31,7 @@ namespace Kontur.Extern.Client
             ICrypt cryptoProvider, 
             RequestTimeouts requestTimeouts, 
             IAuthenticationProvider authProvider, 
-            JsonSerializer jsonSerializer)
+            IJsonSerializer jsonSerializer)
         {
             var http = CreateHttp(clusterClient, requestTimeouts, authProvider, jsonSerializer);
             var api = new KeApiClient(http);
@@ -39,7 +39,7 @@ namespace Kontur.Extern.Client
             return new Extern(services);
         }
 
-        private HttpRequestsFactory CreateHttp(IClusterClient clusterClient, RequestTimeouts requestTimeouts, IAuthenticationProvider authenticationProvider, JsonSerializer jsonSerializer)
+        private HttpRequestsFactory CreateHttp(IClusterClient clusterClient, RequestTimeouts requestTimeouts, IAuthenticationProvider authenticationProvider, IJsonSerializer jsonSerializer)
         {
             FailoverAsync? unauthorizedFailover =
                 EnableUnauthorizedFailover

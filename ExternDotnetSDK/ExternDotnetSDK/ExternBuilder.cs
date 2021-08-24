@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.ApiLevel.Json;
 using Kontur.Extern.Client.Auth.Abstractions;
 using Kontur.Extern.Client.Auth.OpenId.Builder;
 using Kontur.Extern.Client.Cryptography;
@@ -99,8 +100,9 @@ namespace Kontur.Extern.Client
 
         public IExtern Create()
         {
-            var jsonSerializer = new JsonSerializer();
-            var authProvider = CreateAuthProvider(jsonSerializer);
+            var jsonSerializerFactory = new JsonSerializerFactory();
+            var apiJsonSerializer = jsonSerializerFactory.CreateApiJsonSerializer();
+            var authProvider = CreateAuthProvider(jsonSerializerFactory.CreateDefaultJsonSerializer());
 
             return new ExternFactory
                 {
@@ -113,7 +115,7 @@ namespace Kontur.Extern.Client
                     cryptoProvider ?? DefaultCryptoProvider,
                     requestTimeouts ?? new RequestTimeouts(),
                     authProvider,
-                    jsonSerializer
+                    apiJsonSerializer
                 );
         }
 
