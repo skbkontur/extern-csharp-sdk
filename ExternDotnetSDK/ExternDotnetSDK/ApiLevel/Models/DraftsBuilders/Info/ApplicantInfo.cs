@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
+﻿using Kontur.Extern.Client.ApiLevel.Models.Common;
+using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
 {
@@ -9,21 +8,18 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
         /// <summary>
         /// ИНН
         /// </summary>
-        [Required]
-        [DataMember]
+        [JsonProperty(Required = Required.Always)]
         public string Inn { get; set; }
 
         /// <summary>
         /// ФИО
         /// </summary>
-        [Required]
-        [DataMember]
+        [JsonProperty(Required = Required.Always)]
         public Fio Fio { get; set; }
 
         /// <summary>
         /// E-mail
         /// </summary>
-        [DataMember]
         public string Email { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
 {
@@ -8,8 +7,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
         /// <summary>
         /// ОГРНИП
         /// </summary>
-        [Required]
-        [DataMember]
+        [JsonProperty(Required = Required.Always)]
         public string OgrnIp { get; set; }
     }
 }

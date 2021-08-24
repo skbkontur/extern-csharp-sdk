@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
 {
@@ -14,20 +13,17 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
         /// <summary>
         /// Информация о заявителе
         /// </summary>
-        [Required]
-        [DataMember]
+        [JsonProperty(Required = Required.Always)]
         public IReadOnlyCollection<ApplicantInfo> ApplicantInfos { get; set; }
 
         /// <summary>
         /// Информация об ИП
         /// </summary>
-        [DataMember]
         public IpInfo IpInfo { get; set; }
 
         /// <summary>
         /// Информация о ЮЛ
         /// </summary>
-        [DataMember]
         public UlInfo UlInfo { get; set; }
     }
 }

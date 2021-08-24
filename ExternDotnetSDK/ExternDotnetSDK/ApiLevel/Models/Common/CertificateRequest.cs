@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Common
 {
-    [DataContract]
     public class CertificateRequest
     {
-        [DataMember]
-        [Required]
+        [JsonProperty(Required = Required.Always)]
         public byte[] Content { get; set; }
     }
 }
