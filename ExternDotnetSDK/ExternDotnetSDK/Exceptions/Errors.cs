@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
 using Kontur.Extern.Client.Model.Numbers;
 using static System.Environment;
@@ -128,5 +129,8 @@ namespace Kontur.Extern.Client.Exceptions
 
         public static Exception TheContentIsAlreadyEndedAndNextPartCannotBeLoaded() => 
             new ApiException("The content is already ended and there is no next part of it to download");
+
+        public static Exception UrnDoesNotBelongToNamespace(string paramName, Urn urn, Urn ns) => 
+            new ArgumentOutOfRangeException(paramName, urn, $"The given URN does not belong to the namespace '{ns}'");
     }
 }
