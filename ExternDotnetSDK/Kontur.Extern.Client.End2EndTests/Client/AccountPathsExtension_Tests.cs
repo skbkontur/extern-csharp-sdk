@@ -1,12 +1,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Model.Numbers;
+using Vostok.Commons.Time;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -109,6 +111,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var account = accountScope.Entity;
             await using (accountScope)
             {
+                await Task.Delay(1.Seconds());
                 var accountsAfterCreate = await Context.Accounts.LoadAllAccountsAsync();
                 accountsAfterCreate.Should().ContainEquivalentOf(account);
             }
