@@ -64,7 +64,7 @@ namespace Kontur.Extern.Client
                 var status = response.Status;
                 if (status.IsClientError)
                 {
-                    var errorResponse = await response.TryGetMessageAsync<Error>().ConfigureAwait(false);
+                    var errorResponse = await response.TryGetMessageAsync<ApiError>().ConfigureAwait(false);
                     if (errorResponse is not null && errorResponse.IsNotEmpty)
                     {
                         throw Errors.UnsuccessfulApiResponse(errorResponse);

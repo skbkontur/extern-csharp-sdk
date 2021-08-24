@@ -26,7 +26,7 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
             var startResult = await startAsync().ConfigureAwait(false);
             return startResult.TaskState switch
             {
-                ApiTaskState.Failed => throw Errors.LongOperationFailed(startResult.Error),
+                ApiTaskState.Failed => throw Errors.LongOperationFailed(startResult.ApiError),
                 ApiTaskState.Succeed => new AlreadyCompletedAwaiter(startResult.Id, startResult.TaskResult),
                 _ => ContinueAwait(startResult.Id)
             };
@@ -41,7 +41,7 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
             {
                 ApiTaskState.Running => LongOperationStatus<T>.InProgress,
                 ApiTaskState.Succeed => LongOperationStatus<T>.Completed(taskResult.TaskResult),
-                ApiTaskState.Failed => LongOperationStatus<T>.Failed(taskResult.Error),
+                ApiTaskState.Failed => LongOperationStatus<T>.Failed(taskResult.ApiError),
                 _ => throw Errors.UnexpectedEnumMember(nameof(taskResult.TaskState), taskResult.TaskState)
             };
         }
@@ -74,7 +74,7 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
                         case ApiTaskState.Succeed:
                             return taskResult.TaskResult;
                         case ApiTaskState.Failed:
-                            throw Errors.LongOperationFailed(taskResult.Error);
+                            throw Errors.LongOperationFailed(taskResult.ApiError);
                         default:
                             throw Errors.UnexpectedEnumMember(nameof(taskResult.TaskState), taskResult.TaskState);
                     }

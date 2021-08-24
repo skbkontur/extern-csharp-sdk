@@ -8,23 +8,23 @@ using Newtonsoft.Json;
 namespace Kontur.Extern.Client.ApiLevel.Models.Errors
 {
     [JsonObject(NamingStrategyType = typeof (KebabCaseNamingStrategy))]
-    public class Error
+    public class ApiError
     {
         public static readonly Urn Namespace = new("urn:error");
 
-        public Error()
+        public ApiError()
             : this(Namespace)
         {
         }
 
-        public Error(HttpStatusCode statusCode, string message)
+        public ApiError(HttpStatusCode statusCode, string message)
         {
             StatusCode = statusCode;
             Message = message;
             Properties = new Dictionary<string, string>();
         }
         
-        public Error(Urn id, HttpStatusCode statusCode = HttpStatusCode.InternalServerError, string message = null)
+        public ApiError(Urn id, HttpStatusCode statusCode = HttpStatusCode.InternalServerError, string message = null)
         {
             Id = id;
             StatusCode = statusCode;

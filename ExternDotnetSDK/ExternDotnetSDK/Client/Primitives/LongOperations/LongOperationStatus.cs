@@ -12,12 +12,12 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
         
         public static LongOperationStatus<T> Completed(T result) => new(result, null, true);
         
-        public static LongOperationStatus<T> Failed(Error error) => new(default, error, false);
+        public static LongOperationStatus<T> Failed(ApiError apiError) => new(default, apiError, false);
 
         private readonly T? result;
-        private readonly Error? error;
+        private readonly ApiError? error;
 
-        private LongOperationStatus(T? result, Error? error, bool isCompleted)
+        private LongOperationStatus(T? result, ApiError? error, bool isCompleted)
         {
             this.result = result;
             this.error = error;
@@ -38,15 +38,15 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
             return false;
         }
 
-        public bool TryGetError(out Error failureError)
+        public bool TryGetError(out ApiError failureApiError)
         {
             if (error != null)
             {
-                failureError = error;
+                failureApiError = error;
                 return true;
             }
 
-            failureError = default!;
+            failureApiError = default!;
             return false;
         }
 
@@ -65,11 +65,11 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
         
         public static readonly LongOperationStatus Completed = new(true, null);
         
-        public static LongOperationStatus Failed(Error error) => new(false, error);
+        public static LongOperationStatus Failed(ApiError apiError) => new(false, apiError);
 
-        private readonly Error? error;
+        private readonly ApiError? error;
 
-        private LongOperationStatus(bool completed, Error? error)
+        private LongOperationStatus(bool completed, ApiError? error)
         {
             IsCompleted = completed;
             this.error = error;
@@ -78,15 +78,15 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
         public bool IsFailed => error != null;
         public bool IsCompleted { get; }
 
-        public bool TryGetError(out Error failureError)
+        public bool TryGetError(out ApiError failureApiError)
         {
             if (error != null)
             {
-                failureError = error;
+                failureApiError = error;
                 return true;
             }
 
-            failureError = default!;
+            failureApiError = default!;
             return false;
         }
 

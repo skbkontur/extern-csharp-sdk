@@ -34,7 +34,7 @@ namespace Kontur.Extern.Client.Model.Drafts.LongOperationStatuses
         public string Status { get; }
         public DraftCheckingStatus? CheckStatus { get; }
 
-        public Error ToApiError(Guid draftId, IJsonSerializer serializer)
+        public ApiError ToApiError(Guid draftId, IJsonSerializer serializer)
         {
             var messageBuilder = new StringBuilder();
             messageBuilder.Append($"Failed to send draft {draftId}.");
@@ -51,7 +51,7 @@ namespace Kontur.Extern.Client.Model.Drafts.LongOperationStatuses
             }
             
             var message = messageBuilder.ToString();
-            return new Error(Id, StatusCode, message);
+            return new ApiError(Id, StatusCode, message);
         }
     }
 }

@@ -29,23 +29,23 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Api
             TaskResult = result
         };
 
-        public static ApiTaskResult<TResult> Failure(Guid taskId, Urn taskType, Error error) => new()
+        public static ApiTaskResult<TResult> Failure(Guid taskId, Urn taskType, ApiError apiError) => new()
         {
             Id = taskId,
             TaskType = taskType,
             TaskState = ApiTaskState.Failed,
-            Error = error
+            ApiError = apiError
         };
 
         public Guid Id { get; set; }
         public ApiTaskState TaskState { get; set; }
         public Urn TaskType { get; set; }
         public TResult TaskResult { get; set; }
-        public Error Error { get; set; }
+        public ApiError ApiError { get; set; }
 
         public ApiTaskResult<TOtherResult> Convert<TOtherResult>(Func<TResult, TOtherResult> converter) => new()
         {
-            Error = Error,
+            ApiError = ApiError,
             Id = Id,
             TaskState = TaskState,
             TaskType = TaskType,
@@ -57,7 +57,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Api
     {
         public ApiTaskResult(ApiTaskResult<TResult1> apiTaskResult)
         {
-            Error = apiTaskResult.Error;
+            ApiError = apiTaskResult.ApiError;
             Id = apiTaskResult.Id;
             TaskState = apiTaskResult.TaskState;
             TaskType = apiTaskResult.TaskType;
@@ -69,7 +69,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Api
 
         public ApiTaskResult(ApiTaskResult<TResult2> apiTaskResult)
         {
-            Error = apiTaskResult.Error;
+            ApiError = apiTaskResult.ApiError;
             Id = apiTaskResult.Id;
             TaskState = apiTaskResult.TaskState;
             TaskType = apiTaskResult.TaskType;
@@ -89,11 +89,11 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Api
         public ApiTaskResult<TResult1, T> ConvertSecondResult<T>(Func<TResult2, T> secondResultConvert) => 
             Convert(x => x, secondResultConvert);
         
-        public ApiTaskResult<TResult1> ConsiderSecondAsError(Func<TResult2, Error> convertSecondResultToError)
+        public ApiTaskResult<TResult1> ConsiderSecondAsError(Func<TResult2, ApiError> convertSecondResultToError)
         {
             var result = new ApiTaskResult<TResult1>
             {
-                Error = Error,
+                ApiError = ApiError,
                 Id = Id,
                 TaskState = TaskState,
                 TaskType = TaskType
@@ -108,7 +108,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Api
                 else
                 {
                     result.TaskState = ApiTaskState.Failed;
-                    result.Error = convertSecondResultToError(TaskResult.AsT1);
+                    result.ApiError = convertSecondResultToError(TaskResult.AsT1);
                 }
             }
 
@@ -117,7 +117,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Api
 
         public ApiTaskResult<TConverted1, TConverted2> Convert<TConverted1, TConverted2>(Func<TResult1, TConverted1> convertFirst, Func<TResult2, TConverted2> convertSecond) => new()
         {
-            Error = Error,
+            ApiError = ApiError,
             Id = Id,
             TaskState = TaskState,
             TaskType = TaskType,
