@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Kontur.Extern.Client.Http.Serialization
 {
@@ -11,6 +13,16 @@ namespace Kontur.Extern.Client.Http.Serialization
         private readonly Newtonsoft.Json.JsonSerializer indentedJsonSerializer;
 
         public JsonSerializer()
+            : this(Array.Empty<JsonConverter>(), null)
+        {
+        }
+
+        public JsonSerializer(NamingStrategy namingStrategy, JsonConverter[] converters)
+            : this(converters, namingStrategy ?? throw new ArgumentNullException(nameof(namingStrategy)))
+        {
+        }
+        
+        private JsonSerializer(JsonConverter[] converters, NamingStrategy? namingStrategy)
         {
             jsonSerializer = new Newtonsoft.Json.JsonSerializer();
             indentedJsonSerializer = new Newtonsoft.Json.JsonSerializer
@@ -18,6 +30,24 @@ namespace Kontur.Extern.Client.Http.Serialization
                 Formatting = Formatting.Indented,
                 NullValueHandling = NullValueHandling.Ignore
             };
+            
+            foreach (var converter in converters)
+            {
+                jsonSerializer.Converters.Add(converter);
+                indentedJsonSerializer.Converters.Add(converter);
+            }
+            
+            if (namingStrategy != null)
+            {
+                jsonSerializer.ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = namingStrategy
+                };
+                indentedJsonSerializer.ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = namingStrategy
+                };
+            }
         }
 
         public void SerializeToJsonStream<T>(T body, Stream stream)
