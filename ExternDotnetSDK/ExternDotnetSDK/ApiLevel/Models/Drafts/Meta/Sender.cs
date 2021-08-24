@@ -1,33 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta
 {
     public class Sender
     {
-        [DataMember]
-        [Required]
+        [JsonProperty(Required = Required.Always)]
         public string Inn { get; set; }
 
-        [DataMember]
         public string Kpp { get; set; }
 
-        [DataMember]
         public string Name { get; set; }
 
-        [DataMember]
-        [Required]
+        [JsonProperty(Required = Required.Always)]
         public Certificate Certificate { get; set; }
 
-        [DataMember]
-        [Required]
+        [JsonProperty(Required = Required.Always)]
         public bool IsRepresentative { get; set; }
 
-        [DataMember]
-        [Required]
-        [JsonProperty("ipaddress")]
+        [JsonProperty("ipaddress", Required = Required.Always)]
         public string IpAddress { get; set; }
     }
 }

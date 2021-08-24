@@ -1,19 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
+﻿using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data
 {
     public class FnsInventoryDraftsBuilderData : DraftsBuilderData
     {
-        [Required]
-        [DataMember]
+        [JsonProperty(Required = Required.Always)]
         public string ClaimItemNumber { get; set; }
 
-        [Required]
-        [DataMember]
+        [JsonProperty(Required = Required.Always)]
         public RelatedDocumentRequest RelatedDocument { get; set; }
     }
 }

@@ -1,15 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents.Data;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
+﻿using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents.Data;
 using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents
 {
     public class DraftsBuilderDocumentMetaRequest
     {
-        [Required]
-        [DataMember]
+        [JsonProperty(Required = Required.Always)]
         public DraftsBuilderDocumentData BuilderData { get; set; }
     }
 }

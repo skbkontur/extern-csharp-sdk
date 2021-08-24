@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
 using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data
@@ -12,8 +9,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data
         /// <summary>
         /// Сведения для регистрации бизнеса
         /// </summary>
-        [Required]
-        [DataMember]
+        [JsonProperty(Required = Required.Always)]
         public RegistrationInfo RegistrationInfo { get; set; }
 
         /// <summary>

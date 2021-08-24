@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles.Data;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
+﻿using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles.Data;
 using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles
@@ -11,15 +8,13 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles
         /// <summary>
         /// Название файла
         /// </summary>
-        [Required]
-        [DataMember]
+        [JsonProperty(Required = Required.Always)]
         public string FileName { get; set; }
 
         /// <summary>
         /// Сведения о файле
         /// </summary>
-        [Required]
-        [DataMember]
+        [JsonProperty(Required = Required.Always)]
         public DraftsBuilderFileData BuilderData { get; set; }
     }
 }

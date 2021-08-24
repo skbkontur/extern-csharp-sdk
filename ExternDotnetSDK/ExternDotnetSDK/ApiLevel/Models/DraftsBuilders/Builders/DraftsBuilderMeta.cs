@@ -1,33 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.Serialization;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
+﻿using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
 using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders
 {
     public class DraftsBuilderMeta
     {
-        [Required]
-        [DataMember]
+        [JsonProperty(Required = Required.Always)]
         public Sender Sender { get; set; }
-
-        [Required]
-        [DataMember]
+        
+        [JsonProperty(Required = Required.Always)]
         public AccountInfo Payer { get; set; }
-
-        [Required]
-        [DataMember]
+        
+        [JsonProperty(Required = Required.Always)]
         public RecipientInfo Recipient { get; set; }
-
-        [Required]
-        [DataMember]
+        
+        [JsonProperty(Required = Required.Always)]
         public Urn BuilderType { get; set; }
-
-        [Required]
-        [DataMember]
+        
+        [JsonProperty(Required = Required.Always)]
         public DraftsBuilderData BuilderData { get; set; }
     }
 }
