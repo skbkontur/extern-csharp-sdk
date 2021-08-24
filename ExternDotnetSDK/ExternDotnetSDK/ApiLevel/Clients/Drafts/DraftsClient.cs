@@ -7,7 +7,6 @@ using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Prepare;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Send;
 using Kontur.Extern.Client.Http;
@@ -182,28 +181,6 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             TimeSpan? timeout = null)
         {
             return http.GetAsync<ApiTaskResult<CheckResult>>(
-                $"/v1/{accountId}/drafts/{draftId}/tasks/{taskId}",
-                timeout
-            );
-        }
-
-        public Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
-            http.PostAsync<PrepareResult>($"/v1/{accountId}/drafts/{draftId}/prepare", timeout);
-
-        public Task<ApiTaskResult<PrepareResult>> StartPrepareDraftAsync(
-            Guid accountId,
-            Guid draftId,
-            TimeSpan? timeout = null)
-        {
-            var url = new RequestUrlBuilder($"/v1/{accountId}/drafts/{draftId}/prepare")
-                .AppendToQuery("deferred", true)
-                .Build();
-            return http.PostAsync<ApiTaskResult<PrepareResult>>(url);
-        }
-
-        public Task<ApiTaskResult<PrepareResult>> GetPrepareDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null)
-        {
-            return http.GetAsync<ApiTaskResult<PrepareResult>>(
                 $"/v1/{accountId}/drafts/{draftId}/tasks/{taskId}",
                 timeout
             );

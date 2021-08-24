@@ -7,7 +7,6 @@ using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Prepare;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Send;
 
@@ -247,34 +246,6 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         /// <param name="timeout"></param>
         /// <returns>Статус задачи проверки черновика</returns>
         Task<ApiTaskResult<CheckResult>> GetCheckDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null);
-
-        /// <summary>
-        /// Подготовка документов в черновике к отправке
-        /// </summary>
-        /// <param name="accountId">Идентификатор учетной записи</param>
-        /// <param name="draftId">Идентификатор черновика</param>
-        /// <param name="timeout"></param>
-        /// <returns>Результат подготовки черновика</returns>
-        Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
-
-        /// <summary>
-        /// Подготовка документов в черновике к отправке
-        /// </summary>
-        /// <param name="accountId">Идентификатор учетной записи</param>
-        /// <param name="draftId">Идентификатор черновика</param>
-        /// <param name="timeout"></param>
-        /// <returns>Задача подготовки черновика</returns>
-        Task<ApiTaskResult<PrepareResult>> StartPrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
-        
-        /// <summary>
-        /// Проверка статуса задачи подготовки черновика к отправке
-        /// </summary>
-        /// <param name="accountId">Идентификатор учетной записи</param>
-        /// <param name="draftId">Идентификатор черновика</param>
-        /// <param name="taskId">Идентификатор задачи</param>
-        /// <param name="timeout"></param>
-        /// <returns>Статус задачи подготовки черновика</returns>
-        Task<ApiTaskResult<PrepareResult>> GetPrepareDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Отправка документов черновика
