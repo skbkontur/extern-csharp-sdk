@@ -186,7 +186,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         public async Task CreateSignedRequestAsync_should_return_request_with_document_type()
         {
             var contentId = Guid.NewGuid();
-            var documentType = DocumentType.Fns.Fns534Report.Report;
+            var documentType = DocumentType.Fns.Fns534.Report;
             var expectedRequest = new DocumentRequest
             {
                 ContentId = contentId,

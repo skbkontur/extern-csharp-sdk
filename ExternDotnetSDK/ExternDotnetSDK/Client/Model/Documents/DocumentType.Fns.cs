@@ -27,7 +27,7 @@ namespace Kontur.Extern.Client.Model.Documents
             /// Декларация и 2-НДФЛ
             /// </summary>
             [PublicAPI]
-            public static class Fns534Report
+            public static class Fns534
             {
                 /// <summary>                
                 /// Налоговая декларация или бухгалтерская отчетность (установленный формат).
