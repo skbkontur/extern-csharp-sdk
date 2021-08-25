@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -8,7 +7,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Информация о наборе документооборотов, которые были отправлены на учетную запись
     /// </summary>
-    [DataContract]
     public class DocflowsSuite
     {
         /// <summary>
@@ -26,14 +24,12 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// Id учетной записи
         /// </summary>
         /// <value>Id учетной записи</value>
-        [DataMember(Name = "accountId", EmitDefaultValue = false)]
         public Guid? AccountId { get; set; }
 
         /// <summary>
         /// Перечисление Id документооборотов
         /// </summary>
         /// <value>Перечисление Id документооборотов</value>
-        [DataMember(Name = "docflowIds", EmitDefaultValue = false)]
         public List<Guid?> DocflowIds { get; set; }
 
         public override string ToString()

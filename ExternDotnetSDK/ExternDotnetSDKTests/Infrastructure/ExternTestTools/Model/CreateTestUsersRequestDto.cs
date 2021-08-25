@@ -1,5 +1,4 @@
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -7,7 +6,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Информация для генерации пользователя
     /// </summary>
-    [DataContract]
     public class CreateTestUsersRequestDto
     {
         /// <param name="phone">Номер телефона. Параметр обязательный, так как на данный номер будет приходить смс сообщение для подтверждения подписания документов (required).</param>
@@ -32,49 +30,42 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// Номер телефона. Параметр обязательный, так как на данный номер будет приходить смс сообщение для подтверждения подписания документов
         /// </summary>
         /// <value>Номер телефона. Параметр обязательный, так как на данный номер будет приходить смс сообщение для подтверждения подписания документов</value>
-        [DataMember(Name = "phone", EmitDefaultValue = false)]
         public string Phone { get; set; }
 
         /// <summary>
         /// ИНН организации. Нужен для выпуска сертификата. Если не передать, он будет сгенерирован
         /// </summary>
         /// <value>ИНН организации. Нужен для выпуска сертификата. Если не передать, он будет сгенерирован</value>
-        [DataMember(Name = "inn", EmitDefaultValue = false)]
         public string Inn { get; set; }
 
         /// <summary>
         /// КПП. Нужен для выпуска сертификата, если его нет, он будет сгенерирован
         /// </summary>
         /// <value>КПП. Нужен для выпуска сертификата, если его нет, он будет сгенерирован</value>
-        [DataMember(Name = "kpp", EmitDefaultValue = false)]
         public string Kpp { get; set; }
 
         /// <summary>
         /// Имя
         /// </summary>
         /// <value>Имя</value>
-        [DataMember(Name = "firstName", EmitDefaultValue = false)]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Фамилия
         /// </summary>
         /// <value>Фамилия</value>
-        [DataMember(Name = "surname", EmitDefaultValue = false)]
         public string Surname { get; set; }
 
         /// <summary>
         /// Отчество
         /// </summary>
         /// <value>Отчество</value>
-        [DataMember(Name = "patronymic", EmitDefaultValue = false)]
         public string Patronymic { get; set; }
 
         /// <summary>
         /// Наименование организации пользователя
         /// </summary>
         /// <value>Наименование организации пользователя</value>
-        [DataMember(Name = "organizationName", EmitDefaultValue = false)]
         public string OrganizationName { get; set; }
 
         public override string ToString()

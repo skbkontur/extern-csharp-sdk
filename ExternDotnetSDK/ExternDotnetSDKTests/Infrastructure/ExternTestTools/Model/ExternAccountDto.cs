@@ -1,9 +1,7 @@
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
 {
-    [DataContract]
     public class ExternAccountDto
     {
         /// <summary>
@@ -29,42 +27,36 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// ИНН (сгенерирован, если в запросе не задан)
         /// </summary>
         /// <value>ИНН (сгенерирован, если в запросе не задан)</value>
-        [DataMember(Name = "inn", EmitDefaultValue = false)]
         public string Inn { get; set; }
 
         /// <summary>
         /// КПП (сгенерирован, если в запросе не задан)
         /// </summary>
         /// <value>КПП (сгенерирован, если в запросе не задан)</value>
-        [DataMember(Name = "kpp", EmitDefaultValue = false)]
         public string Kpp { get; set; }
 
         /// <summary>
         /// Имя владельца сертификата (сгенерировано, если в запросе не задано)
         /// </summary>
         /// <value>Имя владельца сертификата (сгенерировано, если в запросе не задано)</value>
-        [DataMember(Name = "firstName", EmitDefaultValue = false)]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Фамилия владельца сертификата (сгенерирована, если в запросе не задана)
         /// </summary>
         /// <value>Фамилия владельца сертификата (сгенерирована, если в запросе не задана)</value>
-        [DataMember(Name = "surname", EmitDefaultValue = false)]
         public string Surname { get; set; }
 
         /// <summary>
         /// Отчество владельца сертификата
         /// </summary>
         /// <value>Отчество владельца сертификата</value>
-        [DataMember(Name = "patronymic", EmitDefaultValue = false)]
         public string Patronymic { get; set; }
 
         /// <summary>
         /// Название организации (сгенерировано, если в запросе не задано)
         /// </summary>
         /// <value>Название организации (сгенерировано, если в запросе не задано)</value>
-        [DataMember(Name = "organizationName", EmitDefaultValue = false)]
         public string OrganizationName { get; set; }
 
         public override string ToString()

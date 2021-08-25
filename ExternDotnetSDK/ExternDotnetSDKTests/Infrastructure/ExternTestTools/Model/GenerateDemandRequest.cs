@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -9,7 +8,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Данные для генерации требования
     /// </summary>
-    [DataContract]
     public class GenerateDemandRequest
     {
         /// <summary>
@@ -38,35 +36,30 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// Id учетной записи, на которую придет требование
         /// </summary>
         /// <value>Id учетной записи, на которую придет требование</value>
-        [DataMember(Name = "accountId", EmitDefaultValue = false)]
         public Guid? AccountId { get; set; }
 
         /// <summary>
         /// Организация, которая будет отвечать на требование в налоговый орган
         /// </summary>
         /// <value>Организация, которая будет отвечать на требование в налоговый орган</value>
-        [DataMember(Name = "sender", EmitDefaultValue = false)]
         public Sender Sender { get; set; }
 
         /// <summary>
         /// Организация, на которую приходит письмо и за которую будет отправляться отчетность
         /// </summary>
         /// <value>Организация, на которую приходит письмо и за которую будет отправляться отчетность</value>
-        [DataMember(Name = "payer", EmitDefaultValue = false)]
         public Payer Payer { get; set; }
 
         /// <summary>
         /// Перечисление кодов налоговой декларации требований, которые будут содержаться в документообороте
         /// </summary>
         /// <value>Перечисление кодов налоговой декларации требований, которые будут содержаться в документообороте</value>
-        [DataMember(Name = "knds", EmitDefaultValue = false)]
         public List<string> Knds { get; set; }
 
         /// <summary>
         /// Код тестовой инспекции, от которой придет требование.  Возможные значения: 0007, 0008, 0084, 0085, 0087, 0088, 0093, 0094, 0096, 9979, 7702
         /// </summary>
         /// <value>Код тестовой инспекции, от которой придет требование.  Возможные значения: 0007, 0008, 0084, 0085, 0087, 0088, 0093, 0094, 0096, 9979, 7702</value>
-        [DataMember(Name = "ifnsCode", EmitDefaultValue = false)]
         public string IfnsCode { get; set; }
 
         public override string ToString()

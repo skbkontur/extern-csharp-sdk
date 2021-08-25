@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -8,7 +7,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Данные для генерации исходящего ДО (отчет ФНС)
     /// </summary>
-    [DataContract]
     public class GenerateFnsReportRequest
     {
         /// <summary>
@@ -37,35 +35,30 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// Id учетной записи, для которой необходимо сформировать ДО
         /// </summary>
         /// <value>Id учетной записи, для которой необходимо сформировать ДО</value>
-        [DataMember(Name = "accountId", EmitDefaultValue = false)]
         public Guid? AccountId { get; set; }
 
         /// <summary>
         /// Организация, которая будет отправителем отчета
         /// </summary>
         /// <value>Организация, которая будет отправителем отчета</value>
-        [DataMember(Name = "sender", EmitDefaultValue = false)]
         public Sender Sender { get; set; }
 
         /// <summary>
         /// Организация, за которую отправляется отчетность
         /// </summary>
         /// <value>Организация, за которую отправляется отчетность</value>
-        [DataMember(Name = "payer", EmitDefaultValue = false)]
         public Payer Payer { get; set; }
 
         /// <summary>
         /// Код тестовой инспекции, в которую отправляется отчет.  Возможные значения: 0007, 0008, 0084, 0085, 0087, 0088, 0093, 0094, 0096, 9979, 7702
         /// </summary>
         /// <value>Код тестовой инспекции, в которую отправляется отчет.  Возможные значения: 0007, 0008, 0084, 0085, 0087, 0088, 0093, 0094, 0096, 9979, 7702</value>
-        [DataMember(Name = "ifnsCode", EmitDefaultValue = false)]
         public string IfnsCode { get; set; }
 
         /// <summary>
         /// Статус документооборота. Подробнее о значении статуса читай в [документации](https://docs-ke.readthedocs.io/ru/latest/specification/%D1%81%D1%82%D0%B0%D1%82%D1%83%D1%81%D1%8B%20%D0%94%D0%9E.html)  Возможные значения: \&quot;urn:docflow-common-status:sent\&quot;, \&quot;urn:docflow-common-status:response-arrived\&quot;, \&quot;urn:docflow-common-status:response-processed\&quot;, \&quot;urn:docflow-common-status:finished\&quot;
         /// </summary>
         /// <value>Статус документооборота. Подробнее о значении статуса читай в [документации](https://docs-ke.readthedocs.io/ru/latest/specification/%D1%81%D1%82%D0%B0%D1%82%D1%83%D1%81%D1%8B%20%D0%94%D0%9E.html)  Возможные значения: \&quot;urn:docflow-common-status:sent\&quot;, \&quot;urn:docflow-common-status:response-arrived\&quot;, \&quot;urn:docflow-common-status:response-processed\&quot;, \&quot;urn:docflow-common-status:finished\&quot;</value>
-        [DataMember(Name = "state", EmitDefaultValue = false)]
         public string State { get; set; }
 
         public override string ToString()

@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -6,7 +5,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Реквизиты, специфичные для ЮЛ
     /// </summary>
-    [DataContract]
     public class OrganizationInfo
     {
         /// <summary>
@@ -22,7 +20,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// КПП
         /// </summary>
         /// <value>КПП</value>
-        [DataMember(Name = "kpp", EmitDefaultValue = false)]
         public string Kpp { get; set; }
 
         public override string ToString()

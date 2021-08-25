@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -6,7 +5,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Фуф НДС с приложениями - книгой покупок и книгой продаж
     /// </summary>
-    [DataContract]
     public class NdsWithAttachments
     {
         /// <summary>
@@ -26,21 +24,18 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// Главный документ
         /// </summary>
         /// <value>Главный документ</value>
-        [DataMember(Name = "mainDocument", EmitDefaultValue = false)]
         public string MainDocument { get; set; }
 
         /// <summary>
         /// Книга покупок
         /// </summary>
         /// <value>Книга покупок</value>
-        [DataMember(Name = "fnsBookPurchases", EmitDefaultValue = false)]
         public string FnsBookPurchases { get; set; }
 
         /// <summary>
         /// Книга продаж
         /// </summary>
         /// <value>Книга продаж</value>
-        [DataMember(Name = "fnsBookSales", EmitDefaultValue = false)]
         public string FnsBookSales { get; set; }
 
         public override string ToString()

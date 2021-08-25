@@ -1,5 +1,4 @@
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -7,7 +6,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Организация, которая общается с налоговым органом (отправляет и получает документы).  Payer и Sender могут совпадать.
     /// </summary>
-    [DataContract]
     public class Sender
     {
         /// <param name="inn">ИНН (required).</param>
@@ -26,28 +24,24 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// ИНН
         /// </summary>
         /// <value>ИНН</value>
-        [DataMember(Name = "inn", EmitDefaultValue = false)]
         public string Inn { get; set; }
 
         /// <summary>
         /// КПП
         /// </summary>
         /// <value>КПП</value>
-        [DataMember(Name = "kpp", EmitDefaultValue = false)]
         public string Kpp { get; set; }
 
         /// <summary>
         /// Название организации
         /// </summary>
         /// <value>Название организации</value>
-        [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; }
 
         /// <summary>
         /// Сертификат
         /// </summary>
         /// <value>Сертификат</value>
-        [DataMember(Name = "certificate", EmitDefaultValue = false)]
         public Certificate Certificate { get; set; }
 
         public override string ToString()

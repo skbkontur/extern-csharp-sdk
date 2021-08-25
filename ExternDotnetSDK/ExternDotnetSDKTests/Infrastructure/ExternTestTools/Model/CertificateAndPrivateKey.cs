@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -6,7 +5,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Тестовый сертификат
     /// </summary>
-    [DataContract]
     public class CertificateAndPrivateKey
     {
         /// <summary>
@@ -26,21 +24,18 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// Публичная часть сертификата
         /// </summary>
         /// <value>Публичная часть сертификата</value>
-        [DataMember(Name = "certificate", EmitDefaultValue = false)]
         public byte[] Certificate { get; set; }
 
         /// <summary>
         /// Закрытый ключ
         /// </summary>
         /// <value>Закрытый ключ</value>
-        [DataMember(Name = "privateKey", EmitDefaultValue = false)]
         public string PrivateKey { get; set; }
 
         /// <summary>
         /// Pfx (Pkcs12) сертификат с закрытым ключом, пароль по умолчанию - \&quot;1\&quot;, если был сгенерирован pfx формат сертификата с закрытым ключом.
         /// </summary>
         /// <value>Pfx (Pkcs12) сертификат с закрытым ключом, пароль по умолчанию - \&quot;1\&quot;, если был сгенерирован pfx формат сертификата с закрытым ключом.</value>
-        [DataMember(Name = "pfx", EmitDefaultValue = false)]
         public byte[] Pfx { get; set; }
 
         public override string ToString()

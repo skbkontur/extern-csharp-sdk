@@ -1,5 +1,4 @@
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 
@@ -8,7 +7,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Учетная запись налогоплательщика - организация, за которую отправляется отчетность. Payer и Sender могут совпадать.
     /// </summary>
-    [DataContract]
     public class Payer
     {
         /// <summary>
@@ -30,28 +28,24 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// ИНН налогоплательщика
         /// </summary>
         /// <value>ИНН налогоплательщика</value>
-        [DataMember(Name = "inn", EmitDefaultValue = false)]
         public string Inn { get; set; }
 
         /// <summary>
         /// Название организации
         /// </summary>
         /// <value>Название организации</value>
-        [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; }
 
         /// <summary>
         /// Данные, специфичные для ЮЛ (КПП)
         /// </summary>
         /// <value>Данные, специфичные для ЮЛ (КПП)</value>
-        [DataMember(Name = "organization", EmitDefaultValue = false)]
         public OrganizationInfo Organization { get; set; }
 
         /// <summary>
         /// ФИО руководителя
         /// </summary>
         /// <value>ФИО руководителя</value>
-        [DataMember(Name = "chiefFio", EmitDefaultValue = false)]
         public Fio ChiefFio { get; set; }
 
         public override string ToString()

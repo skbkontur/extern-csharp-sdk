@@ -1,9 +1,7 @@
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
 {
-    [DataContract]
     public class CertificateInfo
     {
         /// <summary>
@@ -21,14 +19,12 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// Отпечаток сертификата
         /// </summary>
         /// <value>Отпечаток сертификата</value>
-        [DataMember(Name = "thumbprint", EmitDefaultValue = false)]
         public string Thumbprint { get; set; }
 
         /// <summary>
         /// Ссылка на сертификат
         /// </summary>
         /// <value>Ссылка на сертификат</value>
-        [DataMember(Name = "certificateDrivePath", EmitDefaultValue = false)]
         public string CertificateDrivePath { get; set; }
 
         public override string ToString()

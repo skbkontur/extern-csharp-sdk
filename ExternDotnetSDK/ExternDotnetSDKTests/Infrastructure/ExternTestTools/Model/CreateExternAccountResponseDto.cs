@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -7,7 +6,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Данные сгенерированной учетной записи экстерна и сертификата
     /// </summary>
-    [DataContract]
     public class CreateExternAccountResponseDto
     {
         /// <summary>
@@ -39,63 +37,54 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// Данные из запроса. Для незаполненных полей значения были сгенерированы.
         /// </summary>
         /// <value>Данные из запроса. Для незаполненных полей значения были сгенерированы.</value>
-        [DataMember(Name = "refinedRequest", EmitDefaultValue = false)]
         public ExternAccountDto RefinedRequest { get; set; }
 
         /// <summary>
         /// Портальный логин
         /// </summary>
         /// <value>Портальный логин</value>
-        [DataMember(Name = "portalLogin", EmitDefaultValue = false)]
         public string PortalLogin { get; set; }
 
         /// <summary>
         /// Портальный пароль
         /// </summary>
         /// <value>Портальный пароль</value>
-        [DataMember(Name = "portalPassword", EmitDefaultValue = false)]
         public string PortalPassword { get; set; }
 
         /// <summary>
         /// Информация о созданном сертификате
         /// </summary>
         /// <value>Информация о созданном сертификате</value>
-        [DataMember(Name = "certificateInfo", EmitDefaultValue = false)]
         public CertificateInfo CertificateInfo { get; set; }
 
         /// <summary>
         /// Портальный пользователь
         /// </summary>
         /// <value>Портальный пользователь</value>
-        [DataMember(Name = "portalUserId", EmitDefaultValue = false)]
         public Guid? PortalUserId { get; set; }
 
         /// <summary>
         /// Организация (или ИП)
         /// </summary>
         /// <value>Организация (или ИП)</value>
-        [DataMember(Name = "organizationId", EmitDefaultValue = false)]
         public Guid? OrganizationId { get; set; }
 
         /// <summary>
         /// Лицевой счет
         /// </summary>
         /// <value>Лицевой счет</value>
-        [DataMember(Name = "accountId", EmitDefaultValue = false)]
         public Guid? AccountId { get; set; }
 
         /// <summary>
         /// gO Группа организаций (или устар. Пользователь экстерна Uкэ)
         /// </summary>
         /// <value>gO Группа организаций (или устар. Пользователь экстерна Uкэ)</value>
-        [DataMember(Name = "userId", EmitDefaultValue = false)]
         public Guid? UserId { get; set; }
 
         /// <summary>
         /// gU Группа портальных пользователей (или устар. Абонент экстерна А)
         /// </summary>
         /// <value>gU Группа портальных пользователей (или устар. Абонент экстерна А)</value>
-        [DataMember(Name = "abonId", EmitDefaultValue = false)]
         public Guid? AbonId { get; set; }
 
         public override string ToString()

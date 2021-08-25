@@ -1,10 +1,8 @@
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
 {
-    [DataContract]
     public class Certificate
     {
         /// <param name="content">Публичная часть сертификата в формате Base64</param>
@@ -20,7 +18,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// Публичная часть сертификата
         /// </summary>
         /// <value>Публичная часть сертификата</value>
-        [DataMember(Name = "content", EmitDefaultValue = false)]
         public string Content { get; set; }
 
         public override string ToString()
