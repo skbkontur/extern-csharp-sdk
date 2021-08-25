@@ -1,17 +1,13 @@
-﻿using JetBrains.Annotations;
+﻿#nullable enable
+using JetBrains.Annotations;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Warrants
 {
     [PublicAPI]
     public class IssuerOrganization
     {
-        [CanBeNull]
-        public string Name { get; set; }
-
-        [CanBeNull]
-        public string Inn { get; set; }
-
-        [CanBeNull]
-        public string Kpp { get; set; }
+        public string? Name { get; set; }
+        public string? Inn { get; set; }
+        public string? Kpp { get; set; }
     }
 }
