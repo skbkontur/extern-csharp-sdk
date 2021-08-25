@@ -5,7 +5,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions;
 using Kontur.Extern.Client.Model.Docflows;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.JsonConverters
+namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
 {
     internal static class DocflowDescriptionsFactory
     {

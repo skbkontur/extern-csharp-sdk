@@ -2,7 +2,7 @@
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Newtonsoft.Json;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.JsonConverters
+namespace Kontur.Extern.Client.ApiLevel.Json.Converters
 {
     public class UrnJsonConverter : JsonConverter
     {

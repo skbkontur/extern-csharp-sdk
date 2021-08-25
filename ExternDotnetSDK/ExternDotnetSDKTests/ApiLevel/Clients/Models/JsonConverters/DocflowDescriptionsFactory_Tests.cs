@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
+using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
 using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Tests.TestHelpers;
 using NUnit.Framework;

@@ -1,5 +1,5 @@
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
+using Kontur.Extern.Client.ApiLevel.Json.NamingStrategies;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters

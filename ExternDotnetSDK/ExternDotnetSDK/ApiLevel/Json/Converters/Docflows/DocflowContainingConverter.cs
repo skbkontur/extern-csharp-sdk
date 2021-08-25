@@ -1,13 +1,12 @@
 ﻿#nullable enable
 using System;
 using System.IO;
-using Kontur.Extern.Client.ApiLevel.Json;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.Model.Docflows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.JsonConverters
+namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
 {
     internal class DocflowContainingConverter<T> : JsonConverter<T>
         where T : class, IDocflowDto, new()

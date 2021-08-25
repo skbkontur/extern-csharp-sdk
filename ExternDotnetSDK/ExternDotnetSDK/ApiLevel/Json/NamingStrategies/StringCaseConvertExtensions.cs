@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.JsonConverters
+namespace Kontur.Extern.Client.ApiLevel.Json.NamingStrategies
 {
     internal static class StringCaseConvertExtensions
     {
