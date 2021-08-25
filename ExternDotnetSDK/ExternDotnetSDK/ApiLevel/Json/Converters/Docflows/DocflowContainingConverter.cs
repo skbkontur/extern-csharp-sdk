@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Model.Docflows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -60,8 +61,8 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
                      return null;
 
                  var descriptionType = DocflowDescriptionTypes.TryGetDescriptionType(docflowType.Value) ??
-                                       throw new JsonSerializationException($"No docflow description created for type {docflowType}.");
-                     
+                                       throw Errors.NoDocflowDescriptionFoundForTypeForJsonSerializer(docflowType);
+
                  using var stringReader = new StringReader(descriptionJObject.ToString());
                  return (DocflowDescription?) serializer.Deserialize(stringReader, descriptionType);
              }

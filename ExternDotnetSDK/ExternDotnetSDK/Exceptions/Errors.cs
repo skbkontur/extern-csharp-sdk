@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
+using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Numbers;
+using Newtonsoft.Json;
 using static System.Environment;
 
 namespace Kontur.Extern.Client.Exceptions
@@ -132,5 +134,8 @@ namespace Kontur.Extern.Client.Exceptions
 
         public static Exception UrnDoesNotBelongToNamespace(string paramName, Urn urn, Urn ns) => 
             new ArgumentOutOfRangeException(paramName, urn, $"The given URN does not belong to the namespace '{ns}'");
+
+        public static Exception NoDocflowDescriptionFoundForTypeForJsonSerializer(in DocflowType? docflowType) => 
+            new JsonSerializationException($"No docflow description created for type {docflowType}.");
     }
 }
