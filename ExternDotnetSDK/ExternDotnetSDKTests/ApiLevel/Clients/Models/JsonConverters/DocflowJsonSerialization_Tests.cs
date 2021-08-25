@@ -55,10 +55,10 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
                 var allDocflows = EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<DocflowType>();
                 return allDocflows.Select(type =>
                 {
-                    var description = DocflowDescriptionsFactory.TryCreateEmptyDescription(type);
-                    if (description == null)
+                    var descriptionType = DocflowDescriptionTypes.TryGetDescriptionType(type);
+                    if (descriptionType == null)
                         return DescriptionCase.WithoutDescriptionAtAll(type);
-                    return DescriptionCase.WithDescription(description.GetType(), type);
+                    return DescriptionCase.WithDescription(descriptionType, type);
                 });
             }
         }

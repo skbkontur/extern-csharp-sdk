@@ -58,13 +58,12 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
 
                  if (!jObject.TryGetValue(DescriptionPropName, out var descriptionJObject) || !descriptionJObject.HasValues)
                      return null;
-                 
-                 var description = DocflowDescriptionsFactory.TryCreateEmptyDescription(docflowType.Value) ?? 
-                                   throw new JsonSerializationException($"No docflow description created for type {docflowType}.");
+
+                 var descriptionType = DocflowDescriptionTypes.TryGetDescriptionType(docflowType.Value) ??
+                                       throw new JsonSerializationException($"No docflow description created for type {docflowType}.");
                      
                  using var stringReader = new StringReader(descriptionJObject.ToString());
-                 serializer.Populate(new JsonTextReader(stringReader), description);
-                 return description;
+                 return (DocflowDescription?) serializer.Deserialize(stringReader, descriptionType);
              }
          }
      }

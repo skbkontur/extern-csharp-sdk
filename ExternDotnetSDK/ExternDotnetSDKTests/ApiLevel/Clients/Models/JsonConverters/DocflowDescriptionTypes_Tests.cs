@@ -8,20 +8,20 @@ using NUnit.Framework;
 namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
 {
     [TestFixture]
-    internal class DocflowDescriptionsFactory_Tests
+    internal class DocflowDescriptionTypes_Tests
     {
         [TestCaseSource(nameof(AllDocflowTypes))]
         public void Should_return_a_description_for_docflow_type(DocflowType docflowType)
         {
-            var description = DocflowDescriptionsFactory.TryCreateEmptyDescription(docflowType);
+            var descriptionType = DocflowDescriptionTypes.TryGetDescriptionType(docflowType);
 
-            description.Should().NotBeNull();
+            descriptionType.Should().NotBeNull();
         }
 
         [Test]
         public void Should_return_null_when_given_unknown_document_type()
         {
-            var description = DocflowDescriptionsFactory.TryCreateEmptyDescription("urn:docflow:fss-stimulative-payment");
+            var description = DocflowDescriptionTypes.TryGetDescriptionType("urn:docflow:fss-stimulative-payment");
 
             description.Should().BeNull();
         }
