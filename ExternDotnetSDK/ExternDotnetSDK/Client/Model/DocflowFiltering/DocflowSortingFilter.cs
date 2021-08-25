@@ -1,7 +1,7 @@
 #nullable enable
 using System;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
 
 namespace Kontur.Extern.Client.Model.DocflowFiltering
 {

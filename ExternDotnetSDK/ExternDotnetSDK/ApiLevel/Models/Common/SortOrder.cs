@@ -1,4 +1,4 @@
-﻿namespace Kontur.Extern.Client.ApiLevel.Models.JsonConverters
+﻿namespace Kontur.Extern.Client.ApiLevel.Models.Common
 {
     public enum SortOrder
     {

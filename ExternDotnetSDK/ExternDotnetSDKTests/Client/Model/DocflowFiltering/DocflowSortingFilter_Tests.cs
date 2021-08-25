@@ -1,7 +1,7 @@
 using System;
 using FluentAssertions;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
 using Kontur.Extern.Client.Model.DocflowFiltering;
 using NUnit.Framework;
 
