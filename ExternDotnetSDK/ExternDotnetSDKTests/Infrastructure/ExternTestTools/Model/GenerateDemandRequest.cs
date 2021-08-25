@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using JetBrains.Annotations;
+
 // ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -9,6 +11,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Данные для генерации требования
     /// </summary>
+    [UsedImplicitly]
     public class GenerateDemandRequest
     {
         /// <summary>

@@ -1,8 +1,11 @@
 using System.Text;
+using JetBrains.Annotations;
+
 // ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
 {
+    [UsedImplicitly]
     public class CertificateInfo
     {
         /// <summary>

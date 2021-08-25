@@ -1,4 +1,6 @@
 using System.Text;
+using JetBrains.Annotations;
+
 // ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -6,6 +8,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Информация для генерации учетной записи экстерна и сертификата
     /// </summary>
+    [UsedImplicitly]
     public class CreateExternAccountIndividualRequestDto
     {
         /// <summary>

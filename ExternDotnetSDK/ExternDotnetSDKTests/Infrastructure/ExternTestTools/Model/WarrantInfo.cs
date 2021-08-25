@@ -1,5 +1,7 @@
 using System.IO;
 using System.Text;
+using JetBrains.Annotations;
+
 // ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -7,6 +9,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Сведения о доверенности
     /// </summary>
+    [UsedImplicitly]
     public class WarrantInfo
     {
         /// <summary>

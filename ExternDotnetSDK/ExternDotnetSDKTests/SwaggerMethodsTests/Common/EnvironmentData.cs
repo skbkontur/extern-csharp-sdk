@@ -1,5 +1,8 @@
-﻿namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Common
+﻿using JetBrains.Annotations;
+
+namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Common
 {
+    [UsedImplicitly]
     internal class EnvironmentData
     {
         public string ApiKey { get; set; }

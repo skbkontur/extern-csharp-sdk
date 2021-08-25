@@ -1,5 +1,7 @@
 using System.IO;
 using System.Text;
+using JetBrains.Annotations;
+
 // ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
@@ -7,6 +9,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Информация для генерации пользователя
     /// </summary>
+    [UsedImplicitly]
     public class CreateTestUsersRequestDto
     {
         /// <param name="phone">Номер телефона. Параметр обязательный, так как на данный номер будет приходить смс сообщение для подтверждения подписания документов (required).</param>

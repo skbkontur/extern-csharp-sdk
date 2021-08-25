@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 // ReSharper disable CommentTypo
 
@@ -8,6 +9,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
     /// <summary>
     /// Учетная запись налогоплательщика - организация, за которую отправляется отчетность. Payer и Sender могут совпадать.
     /// </summary>
+    [UsedImplicitly]
     public class Payer
     {
         /// <summary>
