@@ -1,10 +1,7 @@
 ﻿using System;
-using Kontur.Extern.Client.ApiLevel.Models.JsonConverters;
-using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Common
 {
-    [JsonConverter(typeof (UrnJsonConverter))]
     public sealed class Urn : IComparable<Urn>, IEquatable<Urn>
     {
         private const string Schema = "urn:";
@@ -27,8 +24,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Common
                 throw new UrnException("Invalid URN schema");
             Value = value.Substring(Schema.Length);
         }
-
-        [JsonConstructor]
+        
         public Urn(string nid, string nss)
         {
             TryThrowArgumentNullException(nid);
@@ -95,13 +91,13 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Common
 
         public override string ToString() => Schema + Value;
 
-        private void TryThrowArgumentNullException(Urn urn)
+        private static void TryThrowArgumentNullException(Urn urn)
         {
             if (urn == null)
                 throw new ArgumentNullException(nameof(urn));
         }
 
-        private void TryThrowArgumentNullException(string str)
+        private static void TryThrowArgumentNullException(string str)
         {
             if (string.IsNullOrWhiteSpace(str))
                 throw new ArgumentNullException(nameof(str));
