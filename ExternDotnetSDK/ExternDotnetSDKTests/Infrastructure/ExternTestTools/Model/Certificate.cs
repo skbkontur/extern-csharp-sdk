@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
 {

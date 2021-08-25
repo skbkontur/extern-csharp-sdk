@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API;
 using Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model;
 using NUnit.Framework;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Tests.OtherTests
 {

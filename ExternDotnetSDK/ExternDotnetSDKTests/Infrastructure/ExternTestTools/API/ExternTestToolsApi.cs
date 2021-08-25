@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model;
 using RestSharp;
+// ReSharper disable CommentTypo
 #pragma warning disable 618
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
