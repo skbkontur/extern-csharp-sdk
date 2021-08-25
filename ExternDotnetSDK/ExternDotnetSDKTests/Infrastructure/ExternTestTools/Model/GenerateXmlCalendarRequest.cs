@@ -1,5 +1,5 @@
 using System.Text;
-using Newtonsoft.Json;
+
 // ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
