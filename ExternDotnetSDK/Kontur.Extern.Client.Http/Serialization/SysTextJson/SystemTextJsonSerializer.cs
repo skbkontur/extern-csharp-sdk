@@ -13,10 +13,16 @@ namespace Kontur.Extern.Client.Http.Serialization
         private readonly ArrayPool<byte> bytesPool;
         private readonly JsonWriterOptions writerOptions;
 
+        public SystemTextJsonSerializer(bool ignoreIndentation = false)
+            : this(null, Array.Empty<JsonConverter>(), ignoreIndentation)
+        {
+        }
+
         public SystemTextJsonSerializer(JsonNamingPolicy? namingPolicy, JsonConverter[] jsonConverters, bool ignoreIndentation)
         {
             serializerOptions = new JsonSerializerOptions
             {
+                PropertyNameCaseInsensitive = true,
                 PropertyNamingPolicy = namingPolicy,
                 IgnoreNullValues = true,
                 IncludeFields = true

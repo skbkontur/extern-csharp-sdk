@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.SysTextJsonExtensions
 {
-    internal static class JsonSerializerOptionsExtension
+    public static class JsonSerializerOptionsExtension
     {
         public static JsonSerializerOptions RemoveConverterOf(this JsonSerializerOptions options, Type converterType)
         {

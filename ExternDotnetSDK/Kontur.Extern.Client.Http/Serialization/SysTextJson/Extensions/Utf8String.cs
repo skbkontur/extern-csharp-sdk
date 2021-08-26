@@ -2,9 +2,9 @@
 using System;
 using System.Text;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.SysTextJsonExtensions
+namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions
 {
-    internal readonly struct Utf8String
+    public readonly struct Utf8String
     {
         private readonly string? value;
         private readonly ReadOnlyMemory<byte> utf8Value;

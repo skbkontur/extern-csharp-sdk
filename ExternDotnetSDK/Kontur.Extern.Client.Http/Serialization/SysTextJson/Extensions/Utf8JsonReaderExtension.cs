@@ -1,10 +1,10 @@
 using System;
 using System.Text.Json;
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.Http.Exceptions;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.SysTextJsonExtensions
+namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions
 {
-    internal static class Utf8JsonReaderExtension
+    public static class Utf8JsonReaderExtension
     {
         public static string Dump(this Utf8JsonReader readerClone)
         {

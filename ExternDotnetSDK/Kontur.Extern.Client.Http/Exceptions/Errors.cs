@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using JetBrains.Annotations;
 using Vostok.Clusterclient.Core.Model;
 
@@ -31,5 +32,11 @@ namespace Kontur.Extern.Client.Http.Exceptions
         
         public static Exception ContentRangeMustHaveEqualBytesAsContentLength([InvokerParameterName] string paramName, long from, long to, long contentLength) => 
             new ArgumentException($"The specified content-range [{from}, {to}] have contains different bytes as the CONTENT-LENGTH {contentLength}", paramName);
+        
+        public static Exception JsonIsNotAnObject() => 
+            new JsonException("Json is not an object");
+
+        public static Exception JsonIsInvalid_ExpectedProperty(JsonTokenType tokenType) => 
+            new JsonException($"The json is invalid: expected property, but has {tokenType}.");
     }
 }
