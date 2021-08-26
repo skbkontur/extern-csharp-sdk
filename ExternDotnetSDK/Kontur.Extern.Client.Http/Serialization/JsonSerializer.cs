@@ -77,7 +77,7 @@ namespace Kontur.Extern.Client.Http.Serialization
         public string SerializeToIndentedString<T>(T instance)
         {
             using var stringWriter = new StringWriter();
-            indentedJsonSerializer.Serialize(stringWriter, instance);
+            jsonSerializer.Serialize(stringWriter, instance);
             return stringWriter.ToString();
         }
     }

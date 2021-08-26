@@ -8,7 +8,7 @@ using JsonSerializer = Kontur.Extern.Client.Http.Serialization.JsonSerializer;
 
 namespace Kontur.Extern.Client.ApiLevel.Json
 {
-    internal class JsonSerializerFactory
+    public class JsonSerializerFactory
     {
         public IJsonSerializer CreateApiJsonSerializer() => new JsonSerializer(
             new KebabCaseNamingStrategy(),
@@ -17,6 +17,15 @@ namespace Kontur.Extern.Client.ApiLevel.Json
                 new UrnJsonConverter(),
                 new DocflowContainingConverter<Docflow>(),
                 new DocflowContainingConverter<DocflowPageItem>()
+            }
+        );
+        
+        public IJsonSerializer _CreateApiJsonSerializer() => new SystemTextJsonSerializer(
+            new _KebabCaseNamingStrategy(),
+            new System.Text.Json.Serialization.JsonConverter[]
+            {
+                new _UrnJsonConverter(),
+                new _DocflowContainingConverter()
             }
         );
 

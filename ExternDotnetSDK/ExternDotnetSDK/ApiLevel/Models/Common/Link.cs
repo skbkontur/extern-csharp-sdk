@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Common
 {
@@ -16,6 +17,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Common
         public readonly string Profile;
         public readonly bool Templated;
 
+        [JsonConstructor]
         public Link(Uri href, string rel, string name = null, string title = null, string profile = null, bool templated = false)
         {
             Href = href ?? throw new ArgumentNullException(nameof(href));

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
@@ -7,6 +8,7 @@ using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Numbers;
 using Newtonsoft.Json;
 using static System.Environment;
+using JsonException = Newtonsoft.Json.JsonException;
 
 namespace Kontur.Extern.Client.Exceptions
 {
@@ -137,5 +139,17 @@ namespace Kontur.Extern.Client.Exceptions
 
         public static Exception NoDocflowDescriptionFoundForTypeForJsonSerializer(in DocflowType? docflowType) => 
             new JsonSerializationException($"No docflow description created for type {docflowType}.");
+
+        public static Exception JsonDoesNotContainProperty(string propName) => 
+            new JsonException($"The JSON does not contain property {propName}.");
+
+        public static Exception JsonIsNotAnObject() => 
+            new JsonException("Json is not an object");
+
+        public static Exception JsonIsInvalid_ExpectedProperty(JsonTokenType tokenType) => 
+            new JsonException($"The json is invalid: expected property, but has {tokenType}.");
+
+        public static Exception UnknownSubtypeOf<T>(Type subType) => 
+            new InvalidOperationException($"Unknown subtype {subType} of {typeof(T)}");
     }
 }

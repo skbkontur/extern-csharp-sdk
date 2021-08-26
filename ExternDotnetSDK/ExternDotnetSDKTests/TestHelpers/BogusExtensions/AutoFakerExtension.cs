@@ -24,14 +24,13 @@ namespace Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions
             return methodInfo ??
                    throw new InvalidOperationException($"The generic method {nameof(IAutoFaker.Generate)} with parameter {parameterType} not found");
         });
-        private static readonly object?[] DefaultGenerateMethodParameters = {null};
-        
-        public static object? Generate(this IAutoFaker faker, Type type)
+
+        public static object? Generate(this IAutoFaker faker, Type type, Action<IAutoGenerateConfigBuilder>? configure = null)
         {
             var methodInfo = GenerateGenericMethod.Value;
             return methodInfo
                 .MakeGenericMethod(type)
-                .Invoke(faker, DefaultGenerateMethodParameters);
+                .Invoke(faker, new object?[] {configure});
         }
     }
 }
