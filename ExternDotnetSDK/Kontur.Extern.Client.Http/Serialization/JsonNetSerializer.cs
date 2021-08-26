@@ -6,35 +6,29 @@ using Newtonsoft.Json.Serialization;
 
 namespace Kontur.Extern.Client.Http.Serialization
 {
-    public class JsonSerializer : IJsonSerializer
+    public class JsonNetSerializer : IJsonSerializer
     {
         private static  readonly UTF8Encoding Utf8NoBom = new(false, true);
-        private readonly Newtonsoft.Json.JsonSerializer jsonSerializer;
-        private readonly Newtonsoft.Json.JsonSerializer indentedJsonSerializer;
+        private readonly JsonSerializer jsonSerializer;
+        private readonly JsonSerializer indentedJsonSerializer;
 
-        public JsonSerializer()
-            : this(Array.Empty<JsonConverter>(), null)
+        public JsonNetSerializer()
+            : this(Array.Empty<JsonConverter>(), null, false)
         {
         }
 
-        public JsonSerializer(NamingStrategy namingStrategy, JsonConverter[] converters)
-            : this(converters, namingStrategy ?? throw new ArgumentNullException(nameof(namingStrategy)))
+        public JsonNetSerializer(NamingStrategy namingStrategy, JsonConverter[] converters, bool ignoreIndentation)
+            : this(converters, namingStrategy ?? throw new ArgumentNullException(nameof(namingStrategy)), ignoreIndentation)
         {
         }
         
-        private JsonSerializer(JsonConverter[] converters, NamingStrategy? namingStrategy)
+        private JsonNetSerializer(JsonConverter[] converters, NamingStrategy? namingStrategy, bool ignoreIndentation)
         {
-            jsonSerializer = new Newtonsoft.Json.JsonSerializer();
-            indentedJsonSerializer = new Newtonsoft.Json.JsonSerializer
-            {
-                Formatting = Formatting.Indented,
-                NullValueHandling = NullValueHandling.Ignore
-            };
-            
+            jsonSerializer = new JsonSerializer();
+
             foreach (var converter in converters)
             {
                 jsonSerializer.Converters.Add(converter);
-                indentedJsonSerializer.Converters.Add(converter);
             }
             
             if (namingStrategy != null)
@@ -43,10 +37,33 @@ namespace Kontur.Extern.Client.Http.Serialization
                 {
                     NamingStrategy = namingStrategy
                 };
-                indentedJsonSerializer.ContractResolver = new DefaultContractResolver
+            }
+
+            if (ignoreIndentation)
+            {
+                indentedJsonSerializer = jsonSerializer;
+            }
+            else
+            {
+                indentedJsonSerializer = new JsonSerializer
                 {
-                    NamingStrategy = namingStrategy
+                    NullValueHandling = NullValueHandling.Ignore
                 };
+                
+                foreach (var converter in converters)
+                {
+                    indentedJsonSerializer.Converters.Add(converter);
+                }
+                
+                if (namingStrategy != null)
+                {
+                    indentedJsonSerializer.ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = namingStrategy
+                    };
+                }
+
+                indentedJsonSerializer.Formatting = Formatting.Indented;
             }
         }
 
@@ -68,16 +85,10 @@ namespace Kontur.Extern.Client.Http.Serialization
             return jsonSerializer.Deserialize<TResult>(new JsonTextReader(stringReader));
         }
 
-        public void SerializeToIndentedString<T>(T instance, StringBuilder stringBuilder)
-        {
-            using var stringWriter = new StringWriter(stringBuilder);
-            indentedJsonSerializer.Serialize(stringWriter, instance);
-        }
-
         public string SerializeToIndentedString<T>(T instance)
         {
             using var stringWriter = new StringWriter();
-            jsonSerializer.Serialize(stringWriter, instance);
+            indentedJsonSerializer.Serialize(stringWriter, instance);
             return stringWriter.ToString();
         }
     }

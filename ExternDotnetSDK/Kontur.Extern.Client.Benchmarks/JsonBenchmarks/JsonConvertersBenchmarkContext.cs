@@ -1,11 +1,14 @@
+using System.IO;
+using System.Text;
 using Kontur.Extern.Client.ApiLevel.Json;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.Http.Serialization;
 
-namespace Kontur.Extern.Client.Benchmarks
+namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks
 {
     public class JsonConvertersBenchmarkContext
     {
+        public const int OperationsPerInvoke = 100;
         private const string json = @"{
   ""id"": ""0c536ce5-bdc0-c93b-c47e-74789b111982"",
   ""organization-id"": ""5bce1a2c-8b53-6566-dbd2-09df80f220e8"",
@@ -608,17 +611,24 @@ namespace Kontur.Extern.Client.Benchmarks
     ""original-draft-id"": ""886e2ba0-6d7d-b412-d8c9-b60b8d9e52a6""
   }
 }";
-        
+
+        private readonly byte[] utf8JsonBytes;
+        private readonly byte[] emptyJsonBytes;
+
         public JsonConvertersBenchmarkContext()
         {
-            SysSerializer = new JsonSerializerFactory()._CreateApiJsonSerializer();
-            JsonNetSerializer = new JsonSerializerFactory().CreateApiJsonSerializer();
+            SysSerializer = new JsonSerializerFactory()._CreateApiJsonSerializer(true);
+            JsonNetSerializer = new JsonSerializerFactory().CreateApiJsonSerializer(true);
             Docflow = JsonNetSerializer.DeserializeFromJson<Docflow>(json);
+            utf8JsonBytes = Encoding.UTF8.GetBytes(json);
+            emptyJsonBytes = new byte[json.Length*sizeof (char)];
         }
 
         public IJsonSerializer JsonNetSerializer { get; }
         public IJsonSerializer SysSerializer { get; }
         public Docflow Docflow { get; }
         public string Json => json;
+        public Stream JsonStream => new MemoryStream(utf8JsonBytes);
+        public Stream TargetStream => new MemoryStream(emptyJsonBytes);
     }
 }

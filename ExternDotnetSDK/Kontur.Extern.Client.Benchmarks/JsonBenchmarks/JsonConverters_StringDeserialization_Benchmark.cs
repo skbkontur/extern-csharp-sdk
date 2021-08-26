@@ -1,23 +1,20 @@
 using BenchmarkDotNet.Attributes;
-using Kontur.Extern.Client.ApiLevel.Json;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
-using Kontur.Extern.Client.Http.Serialization;
 
-namespace Kontur.Extern.Client.Benchmarks
+namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks
 {
     [MemoryDiagnoser]
-    public class JsonConverters_Deserialization_Benchmark
+    public class JsonConverters_StringDeserialization_Benchmark
     {
-        private const int OperationsPerInvoke = 100;
         private JsonConvertersBenchmarkContext context;
 
         [GlobalSetup]
         public void Setup() => context = new JsonConvertersBenchmarkContext();
 
-        [Benchmark(Baseline = true, OperationsPerInvoke = OperationsPerInvoke)]
+        [Benchmark(Baseline = true, OperationsPerInvoke = JsonConvertersBenchmarkContext.OperationsPerInvoke)]
         public Docflow Deserialize_SysTextJson() => context.SysSerializer.DeserializeFromJson<Docflow>(context.Json);
 
-        [Benchmark(OperationsPerInvoke = OperationsPerInvoke)]
+        [Benchmark(OperationsPerInvoke = JsonConvertersBenchmarkContext.OperationsPerInvoke)]
         public Docflow Deserialize_JsonNet() => context.JsonNetSerializer.DeserializeFromJson<Docflow>(context.Json);
     }
 }

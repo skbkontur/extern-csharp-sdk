@@ -411,7 +411,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 errorResponseHandler,
                 failover,
                 clusterClient,
-                new JsonSerializer()
+                new JsonNetSerializer()
             );
         }
 

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using BenchmarkDotNet.Attributes;
 using Kontur.Extern.Client.Common;
 
-namespace Kontur.Extern.Client.Benchmarks
+namespace Kontur.Extern.Client.Benchmarks.UtilsBenchmarks
 {
     public class ZeroBytesComparisonBenchmark
     {

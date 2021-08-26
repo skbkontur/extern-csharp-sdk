@@ -4,31 +4,32 @@ using Kontur.Extern.Client.ApiLevel.Json.NamingStrategies;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.Http.Serialization;
 using Newtonsoft.Json;
-using JsonSerializer = Kontur.Extern.Client.Http.Serialization.JsonSerializer;
 
 namespace Kontur.Extern.Client.ApiLevel.Json
 {
     public class JsonSerializerFactory
     {
-        public IJsonSerializer CreateApiJsonSerializer() => new JsonSerializer(
+        public IJsonSerializer CreateApiJsonSerializer(bool ignoreIndentation = false) => new JsonNetSerializer(
             new KebabCaseNamingStrategy(),
             new JsonConverter[]
             {
                 new UrnJsonConverter(),
                 new DocflowContainingConverter<Docflow>(),
                 new DocflowContainingConverter<DocflowPageItem>()
-            }
+            },
+            ignoreIndentation
         );
         
-        public IJsonSerializer _CreateApiJsonSerializer() => new SystemTextJsonSerializer(
+        public IJsonSerializer _CreateApiJsonSerializer(bool ignoreIndentation = false) => new SystemTextJsonSerializer(
             new _KebabCaseNamingStrategy(),
             new System.Text.Json.Serialization.JsonConverter[]
             {
                 new _UrnJsonConverter(),
                 new _DocflowContainingConverter()
-            }
+            },
+            ignoreIndentation
         );
 
-        public IJsonSerializer CreateDefaultJsonSerializer() => new JsonSerializer();
+        public IJsonSerializer CreateDefaultJsonSerializer() => new JsonNetSerializer();
     }
 }

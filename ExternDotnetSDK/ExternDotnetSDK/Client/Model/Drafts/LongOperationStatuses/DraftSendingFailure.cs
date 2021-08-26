@@ -47,7 +47,7 @@ namespace Kontur.Extern.Client.Model.Drafts.LongOperationStatuses
                 
             if (CheckStatus is not null && !CheckStatus.IsSuccessful)
             {
-                serializer.SerializeToIndentedString(CheckStatus, messageBuilder);
+                messageBuilder.Append(serializer.SerializeToIndentedString(CheckStatus));
             }
             
             var message = messageBuilder.ToString();

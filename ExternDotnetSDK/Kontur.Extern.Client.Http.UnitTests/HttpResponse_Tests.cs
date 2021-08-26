@@ -389,7 +389,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
             return new HttpResponse(
                 dummyRequest,
                 new Response(ResponseCode.Ok, content, headers, stream),
-                new JsonSerializer()
+                new JsonNetSerializer()
             );
         }
 

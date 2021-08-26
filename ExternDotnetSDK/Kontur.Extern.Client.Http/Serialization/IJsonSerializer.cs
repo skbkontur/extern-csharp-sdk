@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Text;
 
 namespace Kontur.Extern.Client.Http.Serialization
 {
@@ -10,6 +9,5 @@ namespace Kontur.Extern.Client.Http.Serialization
         TResult DeserializeFromJson<TResult>(string jsonText);
 
         string SerializeToIndentedString<T>(T instance);
-        void SerializeToIndentedString<T>(T instance, StringBuilder stringBuilder);
     }
 }
