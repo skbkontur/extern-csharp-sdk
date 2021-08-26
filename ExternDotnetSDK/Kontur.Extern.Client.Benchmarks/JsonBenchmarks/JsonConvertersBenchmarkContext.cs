@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Text;
 using Kontur.Extern.Client.ApiLevel.Json;
@@ -629,6 +630,7 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks
         public Docflow Docflow { get; }
         public string Json => json;
         public Stream JsonStream => new MemoryStream(utf8JsonBytes);
+        public byte[] JsonBytes => utf8JsonBytes;
         public Stream TargetStream => new MemoryStream(emptyJsonBytes);
     }
 }

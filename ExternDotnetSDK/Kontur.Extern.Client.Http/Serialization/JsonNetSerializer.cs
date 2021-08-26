@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using Kontur.Extern.Client.Http.Serialization.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -76,6 +77,12 @@ namespace Kontur.Extern.Client.Http.Serialization
         public TResult DeserializeFromJson<TResult>(Stream stream)
         {
             using var streamReader = new StreamReader(stream, Utf8NoBom);
+            return jsonSerializer.Deserialize<TResult>(new JsonTextReader(streamReader));
+        }
+
+        public TResult DeserializeFromJson<TResult>(ArraySegment<byte> arraySegment)
+        {
+            using var streamReader = new StreamReader(arraySegment.AsMemoryStream(), Utf8NoBom);
             return jsonSerializer.Deserialize<TResult>(new JsonTextReader(streamReader));
         }
 

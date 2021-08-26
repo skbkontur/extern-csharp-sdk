@@ -53,7 +53,7 @@ namespace Kontur.Extern.Client.Http.Serialization
         public void SerializeToJsonStream<T>(T body, Stream stream)
         {
             using var writer = new Utf8JsonWriter(stream, writerOptions);
-            JsonSerializer.Serialize<T>(writer, body, serializerOptions);
+            JsonSerializer.Serialize(writer, body, serializerOptions);
         }
 
         public TResult DeserializeFromJson<TResult>(Stream stream)
@@ -68,15 +68,17 @@ namespace Kontur.Extern.Client.Http.Serialization
             try
             {
                 stream.Read(bytes, 0, bytes.Length);
-                var reader = new Utf8JsonReader(bytes.AsSpan().Slice(0, streamLength));
                 // todo: allow to return nullable TResult
-                return JsonSerializer.Deserialize<TResult>(ref reader, serializerOptions)!;
+                return DeserializeFromSpan<TResult>(bytes.AsSpan().Slice(0, streamLength));
             }
             finally
             {
                 bytesPool.Return(bytes);
             }
         }
+
+        public TResult DeserializeFromJson<TResult>(ArraySegment<byte> arraySegment) => 
+            DeserializeFromSpan<TResult>(arraySegment.AsSpan());
 
         public TResult DeserializeFromJson<TResult>(string jsonText)
         {
@@ -86,5 +88,12 @@ namespace Kontur.Extern.Client.Http.Serialization
 
         public string SerializeToIndentedString<T>(T instance) => 
             JsonSerializer.Serialize(instance, writeIndentedOptions);
+
+        private TResult DeserializeFromSpan<TResult>(ReadOnlySpan<byte> span)
+        {
+            var reader = new Utf8JsonReader(span);
+            // todo: allow to return nullable TResult
+            return JsonSerializer.Deserialize<TResult>(ref reader, serializerOptions)!;
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace Kontur.Extern.Client.Benchmarks
             }
             
             BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args, config);
+            //BenchmarkRunner.Run(typeof(Program).Assembly, config, args);
         }
     }
 }
