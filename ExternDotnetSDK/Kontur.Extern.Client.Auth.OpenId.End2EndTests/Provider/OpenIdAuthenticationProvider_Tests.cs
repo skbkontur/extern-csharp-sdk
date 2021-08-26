@@ -23,7 +23,7 @@ namespace Kontur.Extern.Client.Auth.OpenId.End2EndTests.Provider
     {
         public class Authenticate_By_Password : BaseTests
         {
-            public Authenticate_By_Password([JetBrains.Annotations.NotNull] ITestOutputHelper output)
+            public Authenticate_By_Password(ITestOutputHelper output)
                 : base(output)
             {
             }
@@ -89,7 +89,7 @@ namespace Kontur.Extern.Client.Auth.OpenId.End2EndTests.Provider
                 var testData = AuthTestData.LoadFromJsonFile();
                 
                 var clusterClient = ClusterClientFactory.CreateTestClient(testData.OpenIdServer, log);
-                var authenticationProvider = new OpenIdAuthenticationProviderBuilder(new JsonNetSerializer(), log)
+                var authenticationProvider = new OpenIdAuthenticationProviderBuilder(log)
                     .WithClusterClient(clusterClient)
                     .WithClientIdentification(testData.ClientId, testData.ApiKey)
                     .WithAuthenticationStrategy(x => strategyFactory(x, testData))

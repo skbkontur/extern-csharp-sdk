@@ -12,6 +12,7 @@ namespace Kontur.Extern.Client.Testing.End2End.ClusterClient
             x.SetupUniversalTransport();
             x.Transport = new DumpRequestsAndResponsesTransport(x.Transport, x.Log);
             x.SetupExternalUrl(serverUrl.ToUrl());
+            x.RepeatReplicas(1);
         });
     }
 }

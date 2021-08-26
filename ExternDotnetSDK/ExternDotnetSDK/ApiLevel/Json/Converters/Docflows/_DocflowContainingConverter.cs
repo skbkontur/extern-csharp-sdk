@@ -9,6 +9,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions;
 using Kontur.Extern.Client.ApiLevel.Models.Documents;
 using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions;
 using Kontur.Extern.Client.Model.Docflows;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows

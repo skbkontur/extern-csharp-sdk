@@ -29,7 +29,5 @@ namespace Kontur.Extern.Client.ApiLevel.Json
             },
             ignoreIndentation
         );
-
-        public IJsonSerializer CreateDefaultJsonSerializer() => new JsonNetSerializer();
     }
 }

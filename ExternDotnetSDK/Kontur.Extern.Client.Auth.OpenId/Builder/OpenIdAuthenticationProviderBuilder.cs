@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
@@ -9,7 +10,6 @@ using Kontur.Extern.Client.Auth.OpenId.Provider.AuthStrategies;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Http.Options;
-using Kontur.Extern.Client.Http.Serialization;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Transport;
 using Vostok.Logging.Abstractions;
@@ -19,13 +19,8 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
     [PublicAPI]
     public class OpenIdAuthenticationProviderBuilder
     {
-        private readonly IJsonSerializer serializer;
-
-        public OpenIdAuthenticationProviderBuilder(IJsonSerializer serializer, ILog log)
-        {
-            this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+        public OpenIdAuthenticationProviderBuilder(ILog log) => 
             Log = log ?? throw new ArgumentNullException(nameof(log));
-        }
 
         public ILog Log { get; }
 
@@ -43,19 +38,18 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
                     cfg.SetupUniversalTransport();
                     cfg.SetupExternalUrl(url);
                 });
-            return new(serializer, Log, clusterClient, requestTimeouts);
+            return new(Log, clusterClient, requestTimeouts);
         }
 
         [SuppressMessage("ReSharper", "ParameterHidesMember")]
         public SpecifyClientIdentification WithClusterClient(IClusterClient clusterClient, RequestTimeouts? requestTimeouts = null) =>
-            new(serializer, Log, clusterClient, requestTimeouts);
+            new(Log, clusterClient, requestTimeouts);
 
         [PublicAPI]
         public class SpecifyClientIdentification
         {
-            internal SpecifyClientIdentification(IJsonSerializer serializer, ILog log, IClusterClient clusterClient, RequestTimeouts? options)
+            internal SpecifyClientIdentification(ILog log, IClusterClient clusterClient, RequestTimeouts? options)
             {
-                Serializer = serializer;
                 Log = log;
                 ClusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
                 RequestTimeouts = options;
@@ -63,7 +57,6 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
 
             internal RequestTimeouts? RequestTimeouts { get; }
             internal IClusterClient ClusterClient { get; }
-            internal IJsonSerializer Serializer { get; }
             internal ILog Log { get; set; }
 
             [SuppressMessage("ReSharper", "ParameterHidesMember")]
@@ -92,7 +85,6 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
 
             internal RequestTimeouts? RequestTimeouts => specifyClient.RequestTimeouts;
             internal IClusterClient ClusterClient => specifyClient.ClusterClient;
-            internal IJsonSerializer Serializer => specifyClient.Serializer;
             internal string ApiKey { get; }
             internal string ClientId { get; }
 
@@ -132,12 +124,11 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
                 stopwatchFactory ??= new SystemStopwatchFactory();
                 var requestTimeouts = specifyAuthStrategy.RequestTimeouts ?? new RequestTimeouts();
                 var clusterClient = specifyAuthStrategy.ClusterClient;
-                var serializer = specifyAuthStrategy.Serializer;
                 var apiKey = specifyAuthStrategy.ApiKey;
                 var clientId = specifyAuthStrategy.ClientId;
 
                 var options = new OpenIdAuthenticationOptions(apiKey, clientId, proactiveAuthTokenRefreshInterval);
-                var openIdClient = OpenIdClient.Create(requestTimeouts, clusterClient, serializer);
+                var openIdClient = OpenIdClient.Create(requestTimeouts, clusterClient);
                 return new OpenIdAuthenticationProvider(options, openIdClient, authenticationStrategy, stopwatchFactory);
             }
         }

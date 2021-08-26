@@ -18,7 +18,9 @@ namespace Kontur.Extern.Client.Auth.OpenId.Client
 {
     public class OpenIdClient : IOpenIdClient
     {
-        public static OpenIdClient Create(RequestTimeouts requestTimeouts, IClusterClient clusterClient, IJsonSerializer serializer)
+        private static readonly IJsonSerializer Serializer = new SystemTextJsonSerializer();
+        
+        public static OpenIdClient Create(RequestTimeouts requestTimeouts, IClusterClient clusterClient)
         {
             var http = new HttpRequestsFactory(
                 requestTimeouts,
@@ -26,7 +28,7 @@ namespace Kontur.Extern.Client.Auth.OpenId.Client
                 HandleOpenIdErrorResponse,
                 null,
                 clusterClient,
-                serializer
+                Serializer
             );
             return new OpenIdClient(http);
         }

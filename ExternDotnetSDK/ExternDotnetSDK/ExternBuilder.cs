@@ -8,7 +8,6 @@ using Kontur.Extern.Client.Auth.OpenId.Builder;
 using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http.Options;
-using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Model.Configuration;
 using Kontur.Extern.Client.Primitives.Polling;
 using Vostok.Clusterclient.Core;
@@ -102,7 +101,7 @@ namespace Kontur.Extern.Client
         {
             var jsonSerializerFactory = new JsonSerializerFactory();
             var apiJsonSerializer = jsonSerializerFactory.CreateApiJsonSerializer();
-            var authProvider = CreateAuthProvider(jsonSerializerFactory.CreateDefaultJsonSerializer());
+            var authProvider = CreateAuthProvider();
 
             return new ExternFactory
                 {
@@ -119,11 +118,11 @@ namespace Kontur.Extern.Client
                 );
         }
 
-        private IAuthenticationProvider CreateAuthProvider(IJsonSerializer jsonSerializer)
+        private IAuthenticationProvider CreateAuthProvider()
         {
             if (openIdAuthProviderSetup != null)
             {
-                var builder = new OpenIdAuthenticationProviderBuilder(jsonSerializer, log);
+                var builder = new OpenIdAuthenticationProviderBuilder(log);
                 var configuredBuilder = openIdAuthProviderSetup(builder);
                 return configuredBuilder.Build();
             }
