@@ -6,7 +6,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta
     {
         private OrganizationInfo organization;
 
-        [JsonProperty(Required = Required.Always)]
+        //[JsonProperty(Required = Required.Always)]
         public string Inn { get; set; }
 
         public string Name { get; set; }

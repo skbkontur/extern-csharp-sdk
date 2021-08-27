@@ -7,13 +7,13 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
         /// <summary>
         /// ОГРН
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public string Ogrn { get; set; }
 
         /// <summary>
         /// Название организации
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public string Name { get; set; }
     }
 }

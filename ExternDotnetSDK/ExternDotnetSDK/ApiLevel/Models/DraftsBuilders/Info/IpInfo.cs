@@ -7,7 +7,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
         /// <summary>
         /// ОГРНИП
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public string OgrnIp { get; set; }
     }
 }

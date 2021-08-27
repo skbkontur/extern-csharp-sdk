@@ -1,5 +1,6 @@
 #nullable enable
 using System.Net;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
@@ -8,8 +9,8 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Send
 {
     public class SendFailure
     {
-        [UsedImplicitly]
-        public SendFailure(Urn id, int statusCode, string message, string status, CheckResultData? checkResult)
+        [JsonConstructor]
+        public SendFailure(Urn id, HttpStatusCode statusCode, string message, string status, CheckResultData? checkResult)
         {
             Id = id;
             StatusCode = (HttpStatusCode) statusCode;

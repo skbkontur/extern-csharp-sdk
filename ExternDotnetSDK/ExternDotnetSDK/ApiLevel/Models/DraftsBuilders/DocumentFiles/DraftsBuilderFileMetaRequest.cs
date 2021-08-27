@@ -8,13 +8,13 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles
         /// <summary>
         /// Название файла
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public string FileName { get; set; }
 
         /// <summary>
         /// Сведения о файле
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public DraftsBuilderFileData BuilderData { get; set; }
     }
 }

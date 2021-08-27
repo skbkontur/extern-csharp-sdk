@@ -10,31 +10,31 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders
         /// <summary>
         /// Информация об отправителе
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public SenderRequest Sender { get; set; }
 
         /// <summary>
         /// Информация о налогоплательщике
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public AccountInfoRequest Payer { get; set; }
 
         /// <summary>
         /// Информация о получателе, контролирующий орган
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public RecipientInfoRequest Recipient { get; set; }
 
         /// <summary>
         /// Тип DraftsBuilder
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public Urn BuilderType { get; set; }
 
         /// <summary>
         /// Данные для указанного типа DraftsBuilder
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public DraftsBuilderData BuilderData { get; set; }
     }
 }

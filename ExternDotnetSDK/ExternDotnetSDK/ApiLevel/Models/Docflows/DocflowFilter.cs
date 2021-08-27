@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Newtonsoft.Json;
@@ -94,7 +95,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Docflows
         /// <summary>
         /// Контролирующий орган. Формат данных: ФНС — ХХХХ, ПФР — ХХХ-ХХХ, ФСС — ХХХХХ, Росстат — ХХ-ХХ, где Х — это цифра от 0 до 9
         /// </summary>
-        [JsonProperty("cu")]
+        [JsonPropertyName("cu")]
         public string AuthorityCode { get; set; }
 
         /// <summary>

@@ -8,13 +8,13 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
         /// <summary>
         /// ИНН
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public string Inn { get; set; }
 
         /// <summary>
         /// ФИО
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public Fio Fio { get; set; }
 
         /// <summary>

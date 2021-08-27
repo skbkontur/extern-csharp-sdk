@@ -13,7 +13,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
         /// <summary>
         /// Информация о заявителе
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public IReadOnlyCollection<ApplicantInfo> ApplicantInfos { get; set; }
 
         /// <summary>

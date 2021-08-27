@@ -9,7 +9,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data
         /// <summary>
         /// Сведения для регистрации бизнеса
         /// </summary>
-        [JsonProperty(Required = Required.Always)]
+        // [JsonProperty(Required = Required.Always)]
         public RegistrationInfo RegistrationInfo { get; set; }
 
         /// <summary>

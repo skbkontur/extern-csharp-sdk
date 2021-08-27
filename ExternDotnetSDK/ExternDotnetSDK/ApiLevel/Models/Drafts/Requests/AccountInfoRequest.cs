@@ -6,10 +6,10 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests
     {
         private OrganizationInfoRequest organization;
         
-        [JsonProperty(Required = Required.Always)]
+        //[JsonProperty(Required = Required.Always)]
         public string Inn { get; set; }
 
-        [JsonProperty(Required = Required.Always)]
+        //[JsonProperty(Required = Required.Always)]
         public OrganizationInfoRequest Organization
         {
             get => organization;
