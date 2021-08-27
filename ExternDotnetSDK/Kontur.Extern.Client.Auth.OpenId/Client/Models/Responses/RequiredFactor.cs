@@ -1,14 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using static Kontur.Extern.Client.Auth.OpenId.Client.Models.ContractConstants.Multifactor;
 
 namespace Kontur.Extern.Client.Auth.OpenId.Client.Models.Responses
 {
     public class RequiredFactor
     {
-        [JsonProperty(Factors.GrantType)]
+        [JsonPropertyName(Factors.GrantType)]
         public string GrantType { get; set; }
 
-        [JsonProperty(Factors.Identity)]
+        [JsonPropertyName(Factors.Identity)]
         public string Identity { get; set; }
     }
 }

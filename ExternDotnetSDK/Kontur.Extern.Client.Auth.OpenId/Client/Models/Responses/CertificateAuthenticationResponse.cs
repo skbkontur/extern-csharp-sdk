@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Kontur.Extern.Client.Auth.OpenId.Client.Models.Responses
 {
@@ -11,13 +11,13 @@ namespace Kontur.Extern.Client.Auth.OpenId.Client.Models.Responses
         /// <summary>
         /// Gets a encrypted content
         /// </summary>
-        [JsonProperty(ContractConstants.CertificateAuthenticationResponse.EncryptedKey)]
+        [JsonPropertyName(ContractConstants.CertificateAuthenticationResponse.EncryptedKey)]
         public byte[] EncryptedKey { get; set; }
 
         /// <summary>
         /// Gets a a list of thumbprints of trusted certificates
         /// </summary>
-        [JsonProperty(ContractConstants.CertificateAuthenticationResponse.TrustedThumbprints)]
+        [JsonPropertyName(ContractConstants.CertificateAuthenticationResponse.TrustedThumbprints)]
         public IList<string> TrustedThumbprints { get; set; }
     }
 }

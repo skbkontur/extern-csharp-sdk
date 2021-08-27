@@ -1,23 +1,23 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using static Kontur.Extern.Client.Auth.OpenId.Client.Models.ContractConstants;
 
 namespace Kontur.Extern.Client.Auth.OpenId.Client.Models.Responses
 {
     public class ErrorResponse
     {
-        [JsonProperty(ErrorModel.Error)]
+        [JsonPropertyName(ErrorModel.Error)]
         public string Error { get; set; }
 
-        [JsonProperty(ErrorModel.ErrorDescription)]
+        [JsonPropertyName(ErrorModel.ErrorDescription)]
         public string ErrorDescription { get; set; }
 
-        [JsonProperty(ErrorModel.ErrorStatus)]
+        [JsonPropertyName(ErrorModel.ErrorStatus)]
         public string ErrorStatus { get; set; }
 
-        [JsonProperty(Multifactor.MultifactorInfo.PartialFactorToken)]
+        [JsonPropertyName(Multifactor.MultifactorInfo.PartialFactorToken)]
         public string PartialFactorToken { get; set; }
 
-        [JsonProperty(Multifactor.MultifactorInfo.RequiredFactors)]
+        [JsonPropertyName(Multifactor.MultifactorInfo.RequiredFactors)]
         public RequiredFactor[] RequiredFactors { get; set; }
     }
 }
