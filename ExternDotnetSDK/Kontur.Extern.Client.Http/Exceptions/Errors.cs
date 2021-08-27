@@ -7,6 +7,15 @@ namespace Kontur.Extern.Client.Http.Exceptions
 {
     internal static class Errors
     {
+        public static Exception ValueShouldBeGreaterOrEqualTo([InvokerParameterName] string paramName, long actualValue, long minimumValue) => 
+            new ArgumentOutOfRangeException(paramName, actualValue, $"The value should be greater or equal to {minimumValue}");
+        
+        public static Exception ValueShouldBeGreaterThanZero([InvokerParameterName] string paramName, long actualValue) => 
+            ValueShouldBeGreaterThan(paramName, actualValue, 0);
+        
+        public static Exception ValueShouldBeGreaterThan([InvokerParameterName] string paramName, long actualValue, long nonInclusiveLowerBound) => 
+            new ArgumentOutOfRangeException(paramName, actualValue, $"The value should be greater than {nonInclusiveLowerBound}");
+        
         public static Exception ResponseHasToHaveBody(string request) => 
             new ContractException($"The response on the request {request} does not have any content.");
 

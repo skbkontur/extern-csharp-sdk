@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.Buffers;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters;
 
 namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
@@ -99,11 +100,12 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
 
         public ArraySegment<byte> SerializeToJsonBytes<T>(T body)
         {
-            // todo: Try to optimize it by port IBufferWriter
-            using var stream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(stream, writerOptions);
+            using var bufferWriter = new PooledByteBufferWriter(bytesPool, serializerOptions.DefaultBufferSize);
+            using var writer = new Utf8JsonWriter(bufferWriter, writerOptions);
+            
             JsonSerializer.Serialize(writer, body, serializerOptions);
-            var bytes = stream.ToArray();
+
+            var bytes = bufferWriter.WrittenMemory.ToArray();
             return new ArraySegment<byte>(bytes);
         }
 
@@ -138,7 +140,7 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
         {
             var reader = new Utf8JsonReader(span);
             // todo: allow to return nullable TResult
-            return JsonSerializer.Deserialize<TResult>(ref reader, serializerOptions)!;
+            return JsonSerializer.Deserialize<TResult>(ref reader, serializerOptions);
         }
     }
 }
