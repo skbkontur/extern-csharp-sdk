@@ -172,7 +172,8 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
                 ContentId = contentId,
                 Description = new DocumentDescriptionRequest
                 {
-                    SvdregCode = svdregCode
+                    SvdregCode = svdregCode,
+                    ContentType = "application/octet-stream"
                 }
             };
 
@@ -192,7 +193,8 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
                 ContentId = contentId,
                 Description = new DocumentDescriptionRequest
                 {
-                    Type = documentType.ToUrn()!
+                    Type = documentType.ToUrn()!,
+                    ContentType = "application/octet-stream"
                 }
             };
             
@@ -212,7 +214,8 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
                 ContentId = contentId,
                 Description = new DocumentDescriptionRequest
                 {
-                    Filename = filename
+                    Filename = filename,
+                    ContentType = "application/octet-stream"
                 }
             };
             
