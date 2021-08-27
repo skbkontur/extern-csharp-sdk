@@ -1,6 +1,5 @@
 using Kontur.Extern.Client.ApiLevel.Json.Converters;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
-using Kontur.Extern.Client.ApiLevel.Json.NamingStrategies;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
@@ -12,7 +11,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json
     public class JsonSerializerFactory
     {
         public IJsonSerializer CreateApiJsonSerializer(bool ignoreIndentation = false) => new JsonNetSerializer(
-            new KebabCaseNamingStrategy(),
+            new NamingStrategies.KebabCaseNamingStrategy(),
             new JsonConverter[]
             {
                 new UrnJsonConverter(),
@@ -22,8 +21,8 @@ namespace Kontur.Extern.Client.ApiLevel.Json
             ignoreIndentation
         );
         
-        public IJsonSerializer _CreateApiJsonSerializer(bool ignoreIndentation = false) => new SystemTextJsonSerializer(
-            new _KebabCaseNamingStrategy(),
+        public IJsonSerializer _CreateJsonSerializer(bool ignoreIndentation = false) => new SystemTextJsonSerializer(
+            new KebabCaseNamingPolicy(),
             new System.Text.Json.Serialization.JsonConverter[]
             {
                 new _UrnJsonConverter(),

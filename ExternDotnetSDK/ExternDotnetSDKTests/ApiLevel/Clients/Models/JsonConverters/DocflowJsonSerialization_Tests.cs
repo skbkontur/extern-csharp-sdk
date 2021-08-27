@@ -23,7 +23,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         [SetUp]
         public void SetUp()
         {
-            serializer = new JsonSerializerFactory()._CreateApiJsonSerializer();
+            serializer = new JsonSerializerFactory()._CreateJsonSerializer();
             descriptionGenerator = new DocflowDescriptionGenerator();
         }
 

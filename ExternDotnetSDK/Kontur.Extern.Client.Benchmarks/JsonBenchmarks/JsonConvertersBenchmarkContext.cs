@@ -618,7 +618,7 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks
 
         public JsonConvertersBenchmarkContext()
         {
-            SysSerializer = new JsonSerializerFactory()._CreateApiJsonSerializer(true);
+            SysSerializer = new JsonSerializerFactory()._CreateJsonSerializer(true);
             JsonNetSerializer = new JsonSerializerFactory().CreateApiJsonSerializer(true);
             Docflow = JsonNetSerializer.DeserializeFromJson<Docflow>(json);
             utf8JsonBytes = Encoding.UTF8.GetBytes(json);

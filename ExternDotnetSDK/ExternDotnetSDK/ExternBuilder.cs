@@ -100,7 +100,7 @@ namespace Kontur.Extern.Client
         public IExtern Create()
         {
             var jsonSerializerFactory = new JsonSerializerFactory();
-            var apiJsonSerializer = jsonSerializerFactory.CreateApiJsonSerializer();
+            var apiJsonSerializer = jsonSerializerFactory._CreateJsonSerializer();
             var authProvider = CreateAuthProvider();
 
             return new ExternFactory
