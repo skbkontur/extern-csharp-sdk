@@ -13,11 +13,6 @@ namespace Kontur.Extern.Client.Http.Serialization
         private readonly JsonSerializer jsonSerializer;
         private readonly JsonSerializer indentedJsonSerializer;
 
-        public JsonNetSerializer()
-            : this(Array.Empty<JsonConverter>(), null, false)
-        {
-        }
-
         public JsonNetSerializer(NamingStrategy namingStrategy, JsonConverter[] converters, bool ignoreIndentation)
             : this(converters, namingStrategy ?? throw new ArgumentNullException(nameof(namingStrategy)), ignoreIndentation)
         {
@@ -66,6 +61,14 @@ namespace Kontur.Extern.Client.Http.Serialization
 
                 indentedJsonSerializer.Formatting = Formatting.Indented;
             }
+        }
+
+        public ArraySegment<byte> SerializeToJsonBytes<T>(T body)
+        {
+            using var stream = new MemoryStream();
+            SerializeToJsonStream(body, stream);
+            var bytes = stream.ToArray();
+            return new ArraySegment<byte>(bytes);
         }
 
         public void SerializeToJsonStream<T>(T body, Stream stream)

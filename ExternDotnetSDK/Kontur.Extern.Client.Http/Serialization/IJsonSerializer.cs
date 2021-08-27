@@ -10,6 +10,7 @@ namespace Kontur.Extern.Client.Http.Serialization
         TResult DeserializeFromJson<TResult>(string jsonText);
 
         void SerializeToJsonStream<T>(T body, Stream stream);
+        ArraySegment<byte> SerializeToJsonBytes<T>(T body);
         string SerializeToIndentedString<T>(T instance);
     }
 }

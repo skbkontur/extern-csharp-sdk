@@ -2,8 +2,10 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Unicode;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters;
 
 namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
@@ -27,12 +29,22 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
 
         public SystemTextJsonSerializer(JsonNamingPolicy? namingPolicy, JsonConverter[] jsonConverters, bool ignoreIndentation)
         {
+            
+            var encoderSettings = new TextEncoderSettings();
+            encoderSettings.AllowRange(UnicodeRanges.BasicLatin);
+            encoderSettings.AllowRange(UnicodeRanges.Cyrillic);
+            encoderSettings.AllowRange(UnicodeRanges.CyrillicSupplement);
+            encoderSettings.AllowRange(UnicodeRanges.CyrillicExtendedA);
+            encoderSettings.AllowRange(UnicodeRanges.CyrillicExtendedB);
+            encoderSettings.AllowRange(UnicodeRanges.CyrillicExtendedC);
+
             serializerOptions = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
                 PropertyNamingPolicy = namingPolicy,
                 IgnoreNullValues = true,
-                IncludeFields = true
+                IncludeFields = true,
+                Encoder = JavaScriptEncoder.Create(encoderSettings),
             };
             AddConverters(serializerOptions.Converters, namingPolicy, jsonConverters);
 
@@ -81,6 +93,15 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
                     converters.Add(new JsonStringEnumConverter(namingPolicy));
                 }
             }
+        }
+
+        public ArraySegment<byte> SerializeToJsonBytes<T>(T body)
+        {
+            // todo: Try to optimize it by port IBufferWriter
+            using var stream = new MemoryStream();
+            SerializeToJsonStream(body, stream);
+            var bytes = stream.ToArray();
+            return new ArraySegment<byte>(bytes);
         }
 
         public void SerializeToJsonStream<T>(T body, Stream stream)

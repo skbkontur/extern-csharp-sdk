@@ -10,7 +10,7 @@ namespace Kontur.Extern.Client.Http.Contents
         public static ObjectJsonContent<T> WithMessage<T>(T message) => new(message);
     }
 
-    public class ObjectJsonContent<T> : IHttpContent    
+    public class ObjectJsonContent<T> : IHttpContent
     {
         private readonly T message;
 
@@ -20,10 +20,8 @@ namespace Kontur.Extern.Client.Http.Contents
 
         public Request Apply(Request request, IJsonSerializer serializer)
         {
-            var memoryStream = new MemoryStream();
-            serializer.SerializeToJsonStream(message, memoryStream);
-            memoryStream.Position = 0;
-            return request.WithContent(new StreamContent(memoryStream)).WithContentTypeHeader(ContentTypes.Json);
+            var bytes = serializer.SerializeToJsonBytes(message);
+            return request.WithContent(bytes).WithContentTypeHeader(ContentTypes.Json);
         }
     }
 }
