@@ -28,7 +28,7 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
         [Fact]
         public void Should_fail_when_deserialize_null_to_non_nullable_date()
         {
-            Action action = () => serializer.DeserializeFromJson<DateOnly>("null");
+            Action action = () => serializer.Deserialize<DateOnly>("null");
 
             action.Should().Throw<JsonException>();
         }
@@ -39,7 +39,7 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
         {
             var (json, expectedDate) = theCase;
             
-            var actualDate = serializer.DeserializeFromJson<DateOnly?>(json);
+            var actualDate = serializer.Deserialize<DateOnly?>(json);
 
             actualDate.Should().Be(expectedDate);
         }

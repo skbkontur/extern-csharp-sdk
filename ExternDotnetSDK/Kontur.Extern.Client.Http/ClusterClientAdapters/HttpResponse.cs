@@ -114,7 +114,8 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             if (!response.HasStream && !response.HasContent)
                 throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
 
-            return DeserializeBody<TResponseMessage>();
+            return await DeserializeBodyAsync<TResponseMessage>().ConfigureAwait(false) ?? 
+                   throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
         }
 
         public async ValueTask<TResponseMessage?> TryGetMessageAsync<TResponseMessage>()
@@ -129,16 +130,16 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             if (!response.HasStream && !response.HasContent)
                 return default;
             
-            return DeserializeBody<TResponseMessage>();
+            return await DeserializeBodyAsync<TResponseMessage>().ConfigureAwait(false);
         }
 
         public HttpStatus Status => new(response.Code);
 
-        private TResponseMessage DeserializeBody<TResponseMessage>()
+        private async ValueTask<TResponseMessage?> DeserializeBodyAsync<TResponseMessage>()
         {
             return response.HasStream
-                ? serializer.DeserializeFromJson<TResponseMessage>(response.Stream)
-                : serializer.DeserializeFromJson<TResponseMessage>(response.Content.ToArraySegment());
+                ? await serializer.DeserializeAsync<TResponseMessage>(response.Stream).ConfigureAwait(false)
+                : serializer.Deserialize<TResponseMessage>(response.Content.ToArraySegment());
         }
 
         private static async ValueTask<byte[]> ToArrayAsync(Stream stream)

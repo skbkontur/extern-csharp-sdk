@@ -6,15 +6,15 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks
     [MemoryDiagnoser]
     public class JsonConverters_ArraySegmentDeserialization_Benchmark
     {
-        private JsonConvertersBenchmarkContext context;
+        private JsonConvertersBenchmarkContext context = null!;
 
         [GlobalSetup]
         public void Setup() => context = new JsonConvertersBenchmarkContext();
 
         [Benchmark(Baseline = true, OperationsPerInvoke = JsonConvertersBenchmarkContext.OperationsPerInvoke)]
-        public Docflow Deserialize_SysTextJson() => context.SysSerializer.DeserializeFromJson<Docflow>(context.JsonBytes);
+        public Docflow? Deserialize_SysTextJson() => context.SysSerializer.Deserialize<Docflow>(context.JsonBytes);
 
         [Benchmark(OperationsPerInvoke = JsonConvertersBenchmarkContext.OperationsPerInvoke)]
-        public Docflow Deserialize_JsonNet() => context.JsonNetSerializer.DeserializeFromJson<Docflow>(context.JsonBytes);
+        public Docflow? Deserialize_JsonNet() => context.JsonNetSerializer.Deserialize<Docflow>(context.JsonBytes);
     }
 }

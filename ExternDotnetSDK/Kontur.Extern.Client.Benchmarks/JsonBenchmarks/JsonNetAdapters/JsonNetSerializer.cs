@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Bytes;
 using Kontur.Extern.Client.Http.Serialization;
 using Newtonsoft.Json;
@@ -67,33 +68,35 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters
         public ArraySegment<byte> SerializeToJsonBytes<T>(T body)
         {
             using var stream = new MemoryStream();
-            SerializeToJsonStream(body, stream);
+            SerializeToJsonStreamAsync(body, stream);
             var bytes = stream.ToArray();
             return new ArraySegment<byte>(bytes);
         }
 
-        public void SerializeToJsonStream<T>(T body, Stream stream)
+        public ValueTask SerializeToJsonStreamAsync<T>(T body, Stream stream)
         {
             using var streamWriter = new StreamWriter(stream, Utf8NoBom, 1024, true);
             jsonSerializer.Serialize(streamWriter, body);
+            return new();
         }
 
-        public TResult DeserializeFromJson<TResult>(Stream stream)
+        public ValueTask<TResult?> DeserializeAsync<TResult>(Stream stream)
         {
             using var streamReader = new StreamReader(stream, Utf8NoBom);
-            return jsonSerializer.Deserialize<TResult>(new JsonTextReader(streamReader));
+            var result = jsonSerializer.Deserialize<TResult>(new JsonTextReader(streamReader));
+            return new(result);
         }
 
-        public TResult DeserializeFromJson<TResult>(ArraySegment<byte> arraySegment)
+        public TResult? Deserialize<TResult>(ArraySegment<byte> arraySegment)
         {
             using var streamReader = new StreamReader(arraySegment.AsMemoryStream(), Utf8NoBom);
             return jsonSerializer.Deserialize<TResult>(new JsonTextReader(streamReader));
         }
 
-        public TResult DeserializeFromJson<TResult>(string jsonText)
+        public TResult Deserialize<TResult>(string jsonText)
         {
             using var stringReader = new StringReader(jsonText);
-            return jsonSerializer.Deserialize<TResult>(new JsonTextReader(stringReader));
+            return jsonSerializer.Deserialize<TResult>(new JsonTextReader(stringReader))!;
         }
 
         public string SerializeToIndentedString<T>(T instance)

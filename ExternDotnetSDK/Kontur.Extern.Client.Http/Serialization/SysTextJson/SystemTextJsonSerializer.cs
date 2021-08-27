@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
+using System.Threading.Tasks;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters;
 
 namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
@@ -29,7 +30,6 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
 
         public SystemTextJsonSerializer(JsonNamingPolicy? namingPolicy, JsonConverter[] jsonConverters, bool ignoreIndentation)
         {
-            
             var encoderSettings = new TextEncoderSettings();
             encoderSettings.AllowRange(UnicodeRanges.BasicLatin);
             encoderSettings.AllowRange(UnicodeRanges.Cyrillic);
@@ -101,42 +101,31 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
         {
             // todo: Try to optimize it by port IBufferWriter
             using var stream = new MemoryStream();
-            SerializeToJsonStream(body, stream);
+            using var writer = new Utf8JsonWriter(stream, writerOptions);
+            JsonSerializer.Serialize(writer, body, serializerOptions);
             var bytes = stream.ToArray();
             return new ArraySegment<byte>(bytes);
         }
 
-        public void SerializeToJsonStream<T>(T body, Stream stream)
+        public async ValueTask SerializeToJsonStreamAsync<T>(T body, Stream stream)
         {
-            using var writer = new Utf8JsonWriter(stream, writerOptions);
-            JsonSerializer.Serialize(writer, body, serializerOptions);
+            if (stream is MemoryStream memoryStream)
+            {
+                // ReSharper disable once UseAwaitUsing
+                using var writer = new Utf8JsonWriter(memoryStream, writerOptions);
+                JsonSerializer.Serialize(writer, body, serializerOptions);
+            }
+
+            await JsonSerializer.SerializeAsync(stream, body, serializerOptions).ConfigureAwait(false);
         }
 
-        public TResult DeserializeFromJson<TResult>(Stream stream)
-        {
-            int streamLength;
-            checked
-            {
-                streamLength = (int) stream.Length;
-            }
+        public ValueTask<TResult?> DeserializeAsync<TResult>(Stream stream) => 
+            JsonSerializer.DeserializeAsync<TResult>(stream, serializerOptions);
 
-            var bytes = bytesPool.Rent(streamLength);
-            try
-            {
-                stream.Read(bytes, 0, bytes.Length);
-                // todo: allow to return nullable TResult
-                return DeserializeFromSpan<TResult>(bytes.AsSpan().Slice(0, streamLength));
-            }
-            finally
-            {
-                bytesPool.Return(bytes);
-            }
-        }
-
-        public TResult DeserializeFromJson<TResult>(ArraySegment<byte> arraySegment) => 
+        public TResult? Deserialize<TResult>(ArraySegment<byte> arraySegment) => 
             DeserializeFromSpan<TResult>(arraySegment.AsSpan());
 
-        public TResult DeserializeFromJson<TResult>(string jsonText)
+        public TResult Deserialize<TResult>(string jsonText)
         {
             // todo: allow to return nullable TResult
             return JsonSerializer.Deserialize<TResult>(jsonText, serializerOptions)!;

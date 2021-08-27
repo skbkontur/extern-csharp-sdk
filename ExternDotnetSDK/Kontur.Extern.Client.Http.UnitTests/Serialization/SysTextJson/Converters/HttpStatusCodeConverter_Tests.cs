@@ -114,7 +114,7 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
             var serializer = new SystemTextJsonSerializer(namingPolicy);
             var expectedDto = new Dto {StatusCode = statusCode};
 
-            var dto = serializer.DeserializeFromJson<Dto>(json);
+            var dto = serializer.Deserialize<Dto>(json);
 
             dto.Should().BeEquivalentTo(expectedDto);
         }

@@ -32,7 +32,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         {
             var (json, expectedDocflow) = descriptionCase.Generate(serializer, descriptionGenerator);
             
-            var docflow = serializer.DeserializeFromJson<Docflow>(json);
+            var docflow = serializer.Deserialize<Docflow>(json);
 
             docflow.Type.Should().Be(descriptionCase.DocflowType.ToUrn());
             DocflowShouldHaveExpectedDescription(docflow, expectedDocflow);

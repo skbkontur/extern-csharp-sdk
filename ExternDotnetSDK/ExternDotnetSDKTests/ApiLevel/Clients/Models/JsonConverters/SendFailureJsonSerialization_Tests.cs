@@ -83,7 +83,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         {
             var expectedSendFailure = CreateSendFailureForJson();
 
-            var sendFailure = serializer.DeserializeFromJson<SendFailure>(Json);
+            var sendFailure = serializer.Deserialize<SendFailure>(Json);
             
             sendFailure.Should().BeEquivalentTo(expectedSendFailure);
         }
