@@ -43,6 +43,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             await using var accountScope = await Context.Accounts.CreateAccount(Inn.Parse("678050110389"), "org");
             
             var account = accountScope.Entity;
+            await Task.Delay(1.Seconds());
             var loadedAccount = await Context.Accounts.GetAccount(account.Id);
             
             loadedAccount.Should().BeEquivalentTo(account);
@@ -54,6 +55,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             await using var accountScope = await Context.Accounts.CreateAccount(LegalEntityInn.Parse("1754462785"), Kpp.Parse("515744582"), "org");
             
             var account = accountScope.Entity;
+            await Task.Delay(1.Seconds());
             var loadedAccount = await Context.Accounts.GetAccount(account.Id);
             
             loadedAccount.Should().BeEquivalentTo(account);
