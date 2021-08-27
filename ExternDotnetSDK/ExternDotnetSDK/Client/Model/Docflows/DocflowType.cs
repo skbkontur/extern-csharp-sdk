@@ -30,6 +30,7 @@ namespace Kontur.Extern.Client.Model.Docflows
                 throw Errors.UrnDoesNotBelongToNamespace(nameof(urn), urn, Namespace);
         }
 
+        [Pure]
         public Urn? ToUrn() => urn;
 
         public override string ToString() => urn?.ToString() ?? string.Empty;
