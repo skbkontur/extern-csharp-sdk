@@ -1,5 +1,6 @@
 ﻿using Kontur.Extern.Client.Auth.OpenId.Exceptions;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Auth.OpenId.Client.Models.Requests
 {

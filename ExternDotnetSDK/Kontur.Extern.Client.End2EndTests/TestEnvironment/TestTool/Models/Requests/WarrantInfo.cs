@@ -1,4 +1,5 @@
 using System;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests
 {

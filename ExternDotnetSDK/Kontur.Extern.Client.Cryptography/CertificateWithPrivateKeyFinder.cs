@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Cryptography
 {

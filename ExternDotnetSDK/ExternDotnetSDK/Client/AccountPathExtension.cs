@@ -7,6 +7,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Certificates;
 using Kontur.Extern.Client.ApiLevel.Models.Warrants;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client
 {

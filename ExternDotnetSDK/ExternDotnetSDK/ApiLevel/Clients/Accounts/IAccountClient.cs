@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Accounts;
 using Kontur.Extern.Client.ApiLevel.Models.Certificates;
 using Kontur.Extern.Client.ApiLevel.Models.Warrants;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Accounts
 {

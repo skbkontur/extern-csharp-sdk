@@ -6,6 +6,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Model.Numbers;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Model.DocflowFiltering
 {

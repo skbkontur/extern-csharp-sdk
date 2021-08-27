@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Exceptions;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Model.Numbers
 {

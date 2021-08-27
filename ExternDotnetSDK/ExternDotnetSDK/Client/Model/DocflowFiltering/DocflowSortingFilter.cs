@@ -2,6 +2,7 @@
 using System;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Model.DocflowFiltering
 {

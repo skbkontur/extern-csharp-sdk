@@ -1,5 +1,6 @@
 ﻿using System;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Drafts
 {

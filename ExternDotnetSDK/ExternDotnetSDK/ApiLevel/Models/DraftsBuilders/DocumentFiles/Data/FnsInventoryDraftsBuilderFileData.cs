@@ -1,4 +1,5 @@
-﻿namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles.Data
+﻿// ReSharper disable CommentTypo
+namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles.Data
 {
     public class FnsInventoryDraftsBuilderFileData : DraftsBuilderFileData
     {

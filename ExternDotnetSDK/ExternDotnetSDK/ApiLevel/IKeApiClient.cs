@@ -7,6 +7,7 @@ using Kontur.Extern.Client.ApiLevel.Clients.Events;
 using Kontur.Extern.Client.ApiLevel.Clients.Organizations;
 using Kontur.Extern.Client.ApiLevel.Clients.Replies;
 using Kontur.Extern.Client.Http;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel
 {

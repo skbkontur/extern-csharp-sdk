@@ -1,4 +1,5 @@
-﻿namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
+﻿// ReSharper disable CommentTypo
+namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
 {
     public class UlInfo
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography.X509Certificates;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Cryptography
 {

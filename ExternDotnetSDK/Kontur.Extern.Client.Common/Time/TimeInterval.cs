@@ -1,5 +1,6 @@
 using System;
 using Kontur.Extern.Client.Common.Exceptions;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Common.Time
 {

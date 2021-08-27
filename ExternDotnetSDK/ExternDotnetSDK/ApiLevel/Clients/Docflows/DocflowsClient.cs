@@ -10,6 +10,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Documents;
 using Kontur.Extern.Client.ApiLevel.Models.Documents.Data;
 using Kontur.Extern.Client.Http;
 using Vostok.Clusterclient.Core.Model;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
 {

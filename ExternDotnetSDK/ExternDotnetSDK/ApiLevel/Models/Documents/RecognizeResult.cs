@@ -1,4 +1,5 @@
 ﻿using Kontur.Extern.Client.Common.Time;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Documents
 {

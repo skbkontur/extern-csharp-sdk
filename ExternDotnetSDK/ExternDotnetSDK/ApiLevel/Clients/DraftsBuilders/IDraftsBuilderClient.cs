@@ -5,6 +5,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders
 {

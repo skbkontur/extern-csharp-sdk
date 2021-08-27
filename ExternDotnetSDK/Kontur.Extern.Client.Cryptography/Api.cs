@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Cryptography
 {
-    //Классы и константы для работы с Api
-    //Описание функций и констант можно найти в MSDN
+    /// <summary>
+    /// Классы и константы для работы с Api
+    /// Описание функций и констант можно найти в MSDN
+    /// </summary>
     public static class Api
     {
         [DllImport("Crypt32.dll", SetLastError = true)]

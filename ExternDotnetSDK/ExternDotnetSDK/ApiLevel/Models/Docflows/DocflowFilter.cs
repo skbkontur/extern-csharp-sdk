@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Docflows
 {
