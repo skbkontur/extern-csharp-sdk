@@ -3,6 +3,8 @@ using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
 using Kontur.Extern.Client.ApiLevel.Json.NamingStrategies;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.Http.Serialization;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies;
 using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Json

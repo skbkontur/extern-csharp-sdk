@@ -12,13 +12,15 @@ using Kontur.Extern.Client.Http.Constants;
 using Kontur.Extern.Client.Http.Contents;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies;
 using Vostok.Clusterclient.Core;
 
 namespace Kontur.Extern.Client.Auth.OpenId.Client
 {
     public class OpenIdClient : IOpenIdClient
     {
-        private static readonly IJsonSerializer Serializer = new SystemTextJsonSerializer();
+        private static readonly IJsonSerializer Serializer = new SystemTextJsonSerializer(new SnakeCaseNamingStrategy());
         
         public static OpenIdClient Create(RequestTimeouts requestTimeouts, IClusterClient clusterClient)
         {

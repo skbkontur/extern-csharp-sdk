@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using Kontur.Extern.Client.Http.ClusterClientAdapters;
 using Kontur.Extern.Client.Http.Exceptions;
 using Kontur.Extern.Client.Http.Options;
-using Kontur.Extern.Client.Http.Serialization;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson;
 using Kontur.Extern.Client.Testing.Fakes.Http;
 using Kontur.Extern.Client.Testing.Fakes.Logging;
 using Vostok.Clusterclient.Core;

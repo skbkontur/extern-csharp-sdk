@@ -31,5 +31,11 @@ namespace Kontur.Extern.Client.Auth.OpenId.Exceptions
         
         public static Exception AuthTokenHasAlreadyExpired() => 
             new OpenIdException("The auth token has already expired");
+
+        public static Exception TokenResponseHasEmptyAccessToken() => 
+            new OpenIdException("The token response has empty access token, probably because of serialization");
+        
+        public static Exception TokenResponseInvalidExpirationSeconds(int expiresInSeconds) => 
+            new OpenIdException($"The token response has invalid token expiration seconds {expiresInSeconds}");
     }
 }

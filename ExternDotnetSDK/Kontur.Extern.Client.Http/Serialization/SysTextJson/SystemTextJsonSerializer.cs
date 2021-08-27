@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Kontur.Extern.Client.Http.Serialization
+namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
 {
     public class SystemTextJsonSerializer : IJsonSerializer
     {
@@ -15,6 +15,11 @@ namespace Kontur.Extern.Client.Http.Serialization
 
         public SystemTextJsonSerializer(bool ignoreIndentation = false)
             : this(null, Array.Empty<JsonConverter>(), ignoreIndentation)
+        {
+        }
+        
+        public SystemTextJsonSerializer(JsonNamingPolicy? namingPolicy, bool ignoreIndentation = false)
+            : this(namingPolicy, Array.Empty<JsonConverter>(), ignoreIndentation)
         {
         }
 

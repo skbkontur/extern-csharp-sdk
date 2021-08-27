@@ -19,6 +19,7 @@ namespace Kontur.Extern.Client.Auth.OpenId.Provider.Models
         /// <exception cref="OpenIdException">the token from the response has already expired.</exception>
         public AccessToken CreateAccessToken(TokenResponse tokenResponse)
         {
+            tokenResponse.Validate();
             var value = tokenResponse.AccessToken;
             var refreshToken = tokenResponse.RefreshToken;
             if (TimeToLive.TryCreateActive(TimeSpan.FromSeconds(tokenResponse.ExpiresInSeconds), stopwatch, out var timeToLive))
