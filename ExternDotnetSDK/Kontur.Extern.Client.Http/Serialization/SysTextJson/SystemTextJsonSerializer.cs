@@ -1,8 +1,10 @@
 using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters;
 
 namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
 {
@@ -32,10 +34,7 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
                 IgnoreNullValues = true,
                 IncludeFields = true
             };
-            foreach (var converter in jsonConverters)
-            {
-                serializerOptions.Converters.Add(converter);
-            }
+            AddConverters(serializerOptions.Converters, namingPolicy, jsonConverters);
 
             writeIndentedOptions = ignoreIndentation
                 ? serializerOptions
@@ -53,8 +52,37 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
             };
             
             bytesPool = ArrayPool<byte>.Shared;
+
+            static void AddConverters(ICollection<JsonConverter> converters, JsonNamingPolicy? namingPolicy, JsonConverter[] jsonConverters)
+            {
+                var httpStatusCodeConverterAdded = false;
+                var jsonStringEnumConverterAdded = false;
+                foreach (var converter in jsonConverters)
+                {
+                    converters.Add(converter);
+                    if (converter is JsonStringEnumConverter)
+                    {
+                        jsonStringEnumConverterAdded = true;
+                    }
+
+                    if (converter is HttpStatusCodeConverter)
+                    {
+                        httpStatusCodeConverterAdded = true;
+                    }
+                }
+
+                if (!httpStatusCodeConverterAdded)
+                {
+                    converters.Add(new HttpStatusCodeConverter(namingPolicy));
+                }
+
+                if (!jsonStringEnumConverterAdded)
+                {
+                    converters.Add(new JsonStringEnumConverter(namingPolicy));
+                }
+            }
         }
-        
+
         public void SerializeToJsonStream<T>(T body, Stream stream)
         {
             using var writer = new Utf8JsonWriter(stream, writerOptions);

@@ -36,7 +36,10 @@ namespace Kontur.Extern.Client.Http.Exceptions
         public static Exception JsonIsNotAnObject() => 
             new JsonException("Json is not an object");
 
-        public static Exception JsonIsInvalid_ExpectedProperty(JsonTokenType tokenType) => 
-            new JsonException($"The json is invalid: expected property, but has {tokenType}.");
+        public static Exception JsonTokenIsUnexpected(Type type, JsonTokenType actualToken, params JsonTokenType[] expectedTokens) => 
+            new JsonException($"Unexpected token while deserialize {type}. Expected {string.Join(", or", expectedTokens)}, but the json has {actualToken}.");
+
+        public static Exception JsonInvalidEnumValue(Type type, string? value) => 
+            new JsonException($"Unexpected value of enum type {type}: {value ?? "<null>"}");
     }
 }
