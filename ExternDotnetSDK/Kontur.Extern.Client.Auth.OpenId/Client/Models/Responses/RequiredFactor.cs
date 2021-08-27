@@ -1,14 +1,11 @@
-﻿using System.Text.Json.Serialization;
-using static Kontur.Extern.Client.Auth.OpenId.Client.Models.ContractConstants.Multifactor;
+﻿using JetBrains.Annotations;
 
 namespace Kontur.Extern.Client.Auth.OpenId.Client.Models.Responses
 {
+    [PublicAPI]
     public class RequiredFactor
     {
-        [JsonPropertyName(Factors.GrantType)]
         public string GrantType { get; set; }
-
-        [JsonPropertyName(Factors.Identity)]
         public string Identity { get; set; }
     }
 }
