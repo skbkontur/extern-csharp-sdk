@@ -1,6 +1,4 @@
-﻿using System;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Newtonsoft.Json;
+﻿using Kontur.Extern.Client.Common.Time;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Documents
 {
@@ -19,20 +17,17 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Documents
         /// <summary>
         /// Дата из файла требования
         /// </summary>
-        [JsonConverter(typeof (DateFormat))]
-        public DateTime? DemandDate { get; set; }
+        public DateOnly? DemandDate { get; set; }
 
         /// <summary>
         /// Срок отправки квитанции о приеме/отказе. Дата указывает, до какого числа нужно отправить квитанцию  
         /// </summary>
-        [JsonConverter(typeof (DateFormat))]
-        public DateTime? ReceiptDeadlineDate { get; set; }
+        public DateOnly? ReceiptDeadlineDate { get; set; }
 
         /// <summary>
         /// Срок ответа на требование. Дата указывает, до какого числа нужно отправить ответ на требование
         /// </summary>
-        [JsonConverter(typeof (DateFormat))]
-        public DateTime? ReplyDeadlineDate { get; set; }
+        public DateOnly? ReplyDeadlineDate { get; set; }
 
         /// <summary>
         /// Список ИНН, которые были перечислены в pdf-файле требования
