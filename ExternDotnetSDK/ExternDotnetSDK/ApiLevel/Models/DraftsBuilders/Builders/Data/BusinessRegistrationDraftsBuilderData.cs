@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info;
-using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data
 {

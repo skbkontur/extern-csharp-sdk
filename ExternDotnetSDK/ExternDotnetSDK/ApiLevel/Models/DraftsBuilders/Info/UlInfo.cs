@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
+﻿namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
 {
     public class UlInfo
     {

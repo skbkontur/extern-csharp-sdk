@@ -1,13 +1,13 @@
 ﻿#nullable enable
 using System;
 using System.IO;
+using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
-using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Model.Docflows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
+namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Converters
 {
     internal class DocflowContainingConverter<T> : JsonConverter<T>
         where T : class, IDocflowDto, new()
@@ -49,7 +49,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
                  if (typePropValueToken is not JValue {Type: JTokenType.String} typeValueToken)
                      return null;
 
-                 return typeValueToken.Value.ToString();
+                 return typeValueToken.Value.ToString()!;
              }
 
              static DocflowDescription? TryGetDocflowDescription(JObject jObject, in DocflowType? docflowType, JsonSerializer serializer)
@@ -61,7 +61,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
                      return null;
 
                  var descriptionType = DocflowDescriptionTypes.TryGetDescriptionType(docflowType.Value) ??
-                                       throw Errors.NoDocflowDescriptionFoundForTypeForJsonSerializer(docflowType);
+                                       throw new JsonSerializationException($"No docflow description created for type {docflowType}.");
 
                  using var stringReader = new StringReader(descriptionJObject.ToString());
                  return (DocflowDescription?) serializer.Deserialize(stringReader, descriptionType);

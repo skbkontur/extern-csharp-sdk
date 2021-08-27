@@ -34,7 +34,6 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.API
             BasePath = basePath;
             ApiKey = apiKey;
             Timeout = 100000;
-            AuthenticationProvider = new AuthenticationProvider(login, password, "https://api.testkontur.ru/auth");
         }
 
         public string BasePath { get; set; }

@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests
+﻿namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests
 {
     public class AccountInfoRequest
     {

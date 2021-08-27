@@ -75,7 +75,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         [SetUp]
         public void SetUp()
         {
-            serializer = new JsonSerializerFactory()._CreateJsonSerializer();
+            serializer = JsonSerializerFactory.CreateJsonSerializer();
         }
         
         [Test]

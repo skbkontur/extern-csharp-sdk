@@ -1,6 +1,5 @@
 ﻿using System;
 using Kontur.Extern.Client.ApiLevel.Clients.Accounts;
-using Kontur.Extern.Client.ApiLevel.Clients.Authentication;
 using Kontur.Extern.Client.ApiLevel.Clients.Common.Logging;
 using Kontur.Extern.Client.ApiLevel.Clients.Contents;
 using Kontur.Extern.Client.ApiLevel.Clients.Docflows;
@@ -17,7 +16,6 @@ namespace Kontur.Extern.Client.ApiLevel
     {
         public KeApiClient(
             string apiKey,
-            IAuthenticationProvider authenticationProvider,
             string baseAddress,
             ILogger logger = null)
         {

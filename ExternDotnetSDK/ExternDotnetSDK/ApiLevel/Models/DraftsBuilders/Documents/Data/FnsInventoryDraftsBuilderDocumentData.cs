@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents.Data
+﻿namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents.Data
 {
     public class FnsInventoryDraftsBuilderDocumentData : DraftsBuilderDocumentData
     {

@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using Kontur.Extern.Client.ApiLevel.Json;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters;
 using Kontur.Extern.Client.Http.Serialization;
 
 namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks
@@ -618,8 +619,8 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks
 
         public JsonConvertersBenchmarkContext()
         {
-            SysSerializer = new JsonSerializerFactory()._CreateJsonSerializer(true);
-            JsonNetSerializer = new JsonSerializerFactory().CreateApiJsonSerializer(true);
+            SysSerializer = JsonSerializerFactory.CreateJsonSerializer(true);
+            JsonNetSerializer = JsonNetSerializerFactory.CreateJsonSerializer(true);
             Docflow = JsonNetSerializer.DeserializeFromJson<Docflow>(json);
             utf8JsonBytes = Encoding.UTF8.GetBytes(json);
             emptyJsonBytes = new byte[json.Length*sizeof (char)];

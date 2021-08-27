@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Kontur.Extern.Client.ApiLevel.Json
+namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters
 {
     internal static class JsonSerializerExtension
     {

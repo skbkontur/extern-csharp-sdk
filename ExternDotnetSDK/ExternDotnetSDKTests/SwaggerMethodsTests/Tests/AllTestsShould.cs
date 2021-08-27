@@ -41,7 +41,6 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
 
         protected void InitializeClient() => Client = new KeApiClient(
             Data.ApiKey,
-            new AuthenticationProvider(Data.Login, Data.Password, Data.AuthBaseAddress),
             Data.BaseAddress);
     }
 }

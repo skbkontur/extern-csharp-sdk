@@ -1,12 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-
+﻿// ReSharper disable CommentTypo
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
 {
     /// <summary>
     /// Код заявления
     /// </summary>
-    [JsonConverter(typeof (StringEnumConverter))]
     public enum ApplicationCode
     {
         #region ip

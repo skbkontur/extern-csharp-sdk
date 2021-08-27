@@ -6,7 +6,7 @@ using Kontur.Extern.Client.Model.Docflows;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
 {
-    internal static class DocflowDescriptionTypes
+    public static class DocflowDescriptionTypes
     {
         private static readonly Dictionary<DocflowType, Type> DescriptionTypesMap = new()
         {

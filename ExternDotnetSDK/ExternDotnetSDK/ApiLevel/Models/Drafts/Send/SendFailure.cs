@@ -1,7 +1,6 @@
 #nullable enable
 using System.Net;
 using System.Text.Json.Serialization;
-using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
 

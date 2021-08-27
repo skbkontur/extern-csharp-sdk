@@ -1,6 +1,8 @@
-﻿using Kontur.Extern.Client.Auth.OpenId.Exceptions;
+﻿#nullable enable
+using System.Text.Json.Serialization;
+using Kontur.Extern.Client.Auth.OpenId.Exceptions;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
-using Newtonsoft.Json;
+// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Auth.OpenId.Client.Models.Requests
 {

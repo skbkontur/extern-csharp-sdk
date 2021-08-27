@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Docflows
 {

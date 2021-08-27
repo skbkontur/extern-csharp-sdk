@@ -1,5 +1,4 @@
 ﻿using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles.Data;
-using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles
 {

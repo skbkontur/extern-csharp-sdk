@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using Kontur.Extern.Client.Http.Serialization.Extensions;
+using Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Bytes;
+using Kontur.Extern.Client.Http.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Kontur.Extern.Client.Http.Serialization
+namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters
 {
-    public class JsonNetSerializer : IJsonSerializer
+    internal class JsonNetSerializer : IJsonSerializer
     {
         private static  readonly UTF8Encoding Utf8NoBom = new(false, true);
         private readonly JsonSerializer jsonSerializer;

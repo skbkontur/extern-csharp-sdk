@@ -6,7 +6,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Common;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters
 {
-    public class _UrnJsonConverter : JsonConverter<Urn>
+    internal class _UrnJsonConverter : JsonConverter<Urn>
     {
         public override Urn? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

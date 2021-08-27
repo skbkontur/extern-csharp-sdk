@@ -4,11 +4,8 @@ using System.Text.Json;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
-using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Numbers;
-using Newtonsoft.Json;
 using static System.Environment;
-using JsonException = Newtonsoft.Json.JsonException;
 
 namespace Kontur.Extern.Client.Exceptions
 {
@@ -99,7 +96,7 @@ namespace Kontur.Extern.Client.Exceptions
             new ArgumentException("The given value cannot be empty.", paramName);
 
         public static Exception TheAuthProviderNotSpecifiedOrUnsupported() => 
-            new InvalidOperationException("There is no specified an authentication provider or the specified one is not suppoted");
+            new InvalidOperationException("There is no specified an authentication provider or the specified one is not supported");
 
         public static Exception UnsuccessfulApiResponse(ApiError apiErrorResponse) =>
             new ApiException(apiErrorResponse.ToString());
@@ -115,9 +112,6 @@ namespace Kontur.Extern.Client.Exceptions
         
         public static Exception StringsCannotContainNullOrWhitespace(string paramName) => 
             new ArgumentException("The collection cannot contains null, or empty, or whitespace strings.", paramName);
-
-        public static Exception ContentHasChangedDuringReading() => 
-            new ApiException("Content has changed during download");
 
         public static Exception TheOffsetCannotExceedBufferLength([InvokerParameterName] string paramName, int offset, int bufferLength) => 
             new ArgumentOutOfRangeException(paramName, offset, $"The offset cannot exceed the buffer length, which is {bufferLength}");
@@ -137,17 +131,8 @@ namespace Kontur.Extern.Client.Exceptions
         public static Exception UrnDoesNotBelongToNamespace(string paramName, Urn urn, Urn ns) => 
             new ArgumentOutOfRangeException(paramName, urn, $"The given URN does not belong to the namespace '{ns}'");
 
-        public static Exception NoDocflowDescriptionFoundForTypeForJsonSerializer(in DocflowType? docflowType) => 
-            new JsonSerializationException($"No docflow description created for type {docflowType}.");
-
         public static Exception JsonDoesNotContainProperty(string propName) => 
             new JsonException($"The JSON does not contain property {propName}.");
-
-        public static Exception JsonIsNotAnObject() => 
-            new JsonException("Json is not an object");
-
-        public static Exception JsonIsInvalid_ExpectedProperty(JsonTokenType tokenType) => 
-            new JsonException($"The json is invalid: expected property, but has {tokenType}.");
 
         public static Exception UnknownSubtypeOf<T>(Type subType) => 
             new InvalidOperationException($"Unknown subtype {subType} of {typeof(T)}");

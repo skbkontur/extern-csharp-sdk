@@ -2,9 +2,9 @@
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Newtonsoft.Json;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters
+namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Converters
 {
-    public class UrnJsonConverter : JsonConverter
+    internal class UrnJsonConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) =>
             writer.WriteValue(((Urn) value).ToString());
