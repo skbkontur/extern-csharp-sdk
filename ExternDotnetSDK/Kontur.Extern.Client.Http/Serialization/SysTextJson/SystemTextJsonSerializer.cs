@@ -92,6 +92,8 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
                 {
                     converters.Add(new JsonStringEnumConverter(namingPolicy));
                 }
+                
+                converters.Add(new DateOnlyConverter());
             }
         }
 
