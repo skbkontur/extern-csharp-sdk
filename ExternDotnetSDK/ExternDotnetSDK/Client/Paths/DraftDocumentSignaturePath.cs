@@ -11,7 +11,7 @@ namespace Kontur.Extern.Client.Paths
             DraftId = draftId;
             DocumentId = documentId;
             SignatureId = signatureId;
-            Services = services;
+            Services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }

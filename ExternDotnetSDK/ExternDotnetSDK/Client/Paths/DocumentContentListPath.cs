@@ -10,7 +10,7 @@ namespace Kontur.Extern.Client.Paths
             AccountId = accountId;
             DocflowId = docflowId;
             DocumentId = documentId;
-            Services = services;
+            Services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
@@ -18,6 +18,6 @@ namespace Kontur.Extern.Client.Paths
         public Guid DocumentId { get; }
         public IExternClientServices Services { get; }
 
-        public DocumentContentPath WithId(Guid contentId) => new DocumentContentPath(AccountId, DocflowId, DocumentId, contentId, Services);
+        public DocumentContentPath WithId(Guid contentId) => new(AccountId, DocflowId, DocumentId, contentId, Services);
     }
 }

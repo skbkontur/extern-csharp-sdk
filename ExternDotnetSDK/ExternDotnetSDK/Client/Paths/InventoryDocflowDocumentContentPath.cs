@@ -13,7 +13,7 @@ namespace Kontur.Extern.Client.Paths
             InventoryId = inventoryId;
             InventoryDocumentId = inventoryDocumentId;
             ContentId = contentId;
-            Services = services;
+            Services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }

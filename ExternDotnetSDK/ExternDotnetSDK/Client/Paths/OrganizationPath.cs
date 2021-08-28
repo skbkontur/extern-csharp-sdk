@@ -9,7 +9,7 @@ namespace Kontur.Extern.Client.Paths
         {
             AccountId = accountId;
             OrganizationId = organizationId;
-            Services = services;
+            Services = services ?? throw new ArgumentNullException(nameof(services));
         }
         
         public Guid AccountId { get; }

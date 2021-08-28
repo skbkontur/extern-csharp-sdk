@@ -5,7 +5,7 @@ namespace Kontur.Extern.Client.Paths
 {
     public readonly struct AccountListPath
     {
-        public AccountListPath(IExternClientServices services) => Services = services;
+        public AccountListPath(IExternClientServices services) => Services = services ?? throw new ArgumentNullException(nameof(services));
         
         public IExternClientServices Services { get; }
 

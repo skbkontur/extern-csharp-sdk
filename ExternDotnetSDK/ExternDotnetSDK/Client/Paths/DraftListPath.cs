@@ -8,7 +8,7 @@ namespace Kontur.Extern.Client.Paths
         public DraftListPath(Guid accountId, IExternClientServices services)
         {
             AccountId = accountId;
-            Services = services;
+            Services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }

@@ -1,3 +1,4 @@
+using System;
 using Kontur.Extern.Client.ApiLevel;
 using Kontur.Extern.Client.Auth.Abstractions;
 using Kontur.Extern.Client.Cryptography;
@@ -20,12 +21,12 @@ namespace Kontur.Extern.Client.Common
             IAuthenticationProvider authProvider,
             ICrypt crypt)
         {
-            Http = http;
-            JsonSerializer = jsonSerializer;
-            Api = api;
-            LongOperationsPollingStrategy = longOperationsPollingStrategy;
-            AuthProvider = authProvider;
-            Crypt = crypt;
+            Http = http ?? throw new ArgumentNullException(nameof(http));
+            JsonSerializer = jsonSerializer ?? throw new ArgumentNullException(nameof(jsonSerializer));
+            Api = api ?? throw new ArgumentNullException(nameof(api));
+            LongOperationsPollingStrategy = longOperationsPollingStrategy ?? throw new ArgumentNullException(nameof(longOperationsPollingStrategy));
+            AuthProvider = authProvider ?? throw new ArgumentNullException(nameof(authProvider));
+            Crypt = crypt ?? throw new ArgumentNullException(nameof(crypt));
             ContentService = new ContentService(api.Contents, contentManagementOptions);
         }
         
