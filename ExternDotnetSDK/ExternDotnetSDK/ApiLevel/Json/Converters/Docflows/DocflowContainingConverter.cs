@@ -14,7 +14,7 @@ using Kontur.Extern.Client.Model.Docflows;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
 {
-    internal class _DocflowContainingConverter : JsonConverterFactory
+    internal class DocflowContainingConverter : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert) =>
             typeof (IDocflow).IsAssignableFrom(typeToConvert) || typeof (IDocflowPageItem).IsAssignableFrom(typeToConvert);
@@ -23,18 +23,18 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
         {
             if (typeof (IDocflow).IsAssignableFrom(typeToConvert))
             {
-                return new DocflowContainingConverter<IDocflow>();
+                return new ConcreteDocflowContainingConverter<IDocflow>();
             }
 
             if (typeof (IDocflowPageItem).IsAssignableFrom(typeToConvert))
             {
-                return new DocflowContainingConverter<IDocflowPageItem>();
+                return new ConcreteDocflowContainingConverter<IDocflowPageItem>();
             }
 
             throw new InvalidOperationException();
         }
 
-        private class DocflowContainingConverter<T> : JsonConverter<T>
+        private class ConcreteDocflowContainingConverter<T> : JsonConverter<T>
         {
             private readonly Utf8String typePropName = "type";
 

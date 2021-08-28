@@ -12,8 +12,8 @@ namespace Kontur.Extern.Client.ApiLevel.Json
             new KebabCaseNamingPolicy(),
             new System.Text.Json.Serialization.JsonConverter[]
             {
-                new _UrnJsonConverter(),
-                new _DocflowContainingConverter()
+                new UrnJsonConverter(),
+                new DocflowContainingConverter()
             },
             ignoreIndentation
         );
