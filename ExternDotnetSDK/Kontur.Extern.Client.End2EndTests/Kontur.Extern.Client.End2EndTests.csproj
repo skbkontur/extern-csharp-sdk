@@ -12,7 +12,6 @@
         <PackageReference Include="FluentAssertions" Version="5.10.3" />
         <PackageReference Include="NSubstitute" Version="4.2.2" />        
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
-        <PackageReference Include="RestSharp" Version="106.11.7" />
         <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
         <PackageReference Include="Vostok.ClusterClient.Transport" Version="0.1.17" />
         <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.21" />
