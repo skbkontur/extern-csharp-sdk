@@ -1,12 +1,13 @@
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests;
-using Kontur.Extern.Client.End2EndTests.TestHelpers;
 using Kontur.Extern.Client.Http.Models;
+using Kontur.Extern.Client.Testing.ExternTestTool.Helpers.Xml;
+using Kontur.Extern.Client.Testing.ExternTestTool.Http;
+using Kontur.Extern.Client.Testing.ExternTestTool.Models.Requests;
+using Kontur.Extern.Client.Testing.ExternTestTool.ResponseCaching;
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands
+namespace Kontur.Extern.Client.Testing.ExternTestTool.Commands
 {
     internal class GenerateFufSschXmlFileCommand : IExternTestToolCommand<byte[]>
     {

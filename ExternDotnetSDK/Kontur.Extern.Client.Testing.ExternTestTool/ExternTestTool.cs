@@ -1,20 +1,22 @@
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Results;
+using Kontur.Extern.Client.Testing.ExternTestTool.Commands;
+using Kontur.Extern.Client.Testing.ExternTestTool.Drive;
+using Kontur.Extern.Client.Testing.ExternTestTool.Http;
+using Kontur.Extern.Client.Testing.ExternTestTool.Models.Requests;
+using Kontur.Extern.Client.Testing.ExternTestTool.Models.Results;
+using Kontur.Extern.Client.Testing.ExternTestTool.ResponseCaching;
 using Kontur.Extern.Client.Testing.Fakes.Logging;
 using Kontur.Extern.Client.Testing.Lifetimes;
 using Vostok.Logging.Abstractions;
 using Xunit.Abstractions;
+using Docflow = Kontur.Extern.Client.ApiLevel.Models.Docflows.Docflow;
 
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
+namespace Kontur.Extern.Client.Testing.ExternTestTool
 {
-    internal class ExternTestTool
+    public class ExternTestTool
     {
         private readonly string apiKey;
         private readonly IResponseCache cache;

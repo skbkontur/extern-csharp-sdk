@@ -3,11 +3,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Results;
+using Kontur.Extern.Client.Testing.ExternTestTool.Drive;
+using Kontur.Extern.Client.Testing.ExternTestTool.Http;
+using Kontur.Extern.Client.Testing.ExternTestTool.Models.Results;
+using Kontur.Extern.Client.Testing.ExternTestTool.ResponseCaching;
 using Newtonsoft.Json;
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands
+namespace Kontur.Extern.Client.Testing.ExternTestTool.Commands
 {
     internal class GenerateLegalEntityAccountCommand : IExternTestToolCommand<GeneratedAccount>
     {

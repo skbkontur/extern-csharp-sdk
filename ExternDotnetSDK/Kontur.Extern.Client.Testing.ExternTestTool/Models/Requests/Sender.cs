@@ -1,7 +1,8 @@
 using Kontur.Extern.Client.Http.Models;
+
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests
+namespace Kontur.Extern.Client.Testing.ExternTestTool.Models.Requests
 {
     /// <summary>
     /// Организация, которая общается с налоговым органом (отправляет и получает документы). Payer и Sender могут совпадать.

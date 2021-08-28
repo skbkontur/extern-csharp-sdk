@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Testing.Lifetimes;
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
+namespace Kontur.Extern.Client.Testing.ExternTestTool.Drive
 {
     internal class DriveCertificatesReader
     {

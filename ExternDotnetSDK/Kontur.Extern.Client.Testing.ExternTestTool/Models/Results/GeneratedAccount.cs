@@ -2,9 +2,9 @@ using System;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Client.Model.Numbers;
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Results
+namespace Kontur.Extern.Client.Testing.ExternTestTool.Models.Results
 {
-    internal class GeneratedAccount
+    public class GeneratedAccount
     {
         // ReSharper disable StringLiteralTypo
         public static readonly (string surname, string firstName, string partonymicName) DefaultChiefName = (

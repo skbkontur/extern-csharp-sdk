@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
+namespace Kontur.Extern.Client.Testing.ExternTestTool.ResponseCaching
 {
-    internal interface IResponseCache
+    public interface IResponseCache
     {
         Task<string?> TryGetAsync(string key);
         Task SetValueAsync(string key, string value);

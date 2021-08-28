@@ -29,6 +29,7 @@
         <ProjectReference Include="..\ExternDotnetSDK\Kontur.Extern.Client.csproj" />
         <ProjectReference Include="..\Kontur.Extern.Client.Auth.OpenId\Kontur.Extern.Client.Auth.OpenId.csproj" />
         <ProjectReference Include="..\Kontur.Extern.Client.Testing.End2End\Kontur.Extern.Client.Testing.End2End.csproj" />
+        <ProjectReference Include="..\Kontur.Extern.Client.Testing.ExternTestTool\Kontur.Extern.Client.Testing.ExternTestTool.csproj" />
         <ProjectReference Include="..\Kontur.Extern.Client.Testing\Kontur.Extern.Client.Testing.csproj" />
     </ItemGroup>
 

@@ -2,10 +2,11 @@ using System;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests;
+using Kontur.Extern.Client.Testing.ExternTestTool.Http;
+using Kontur.Extern.Client.Testing.ExternTestTool.Models.Requests;
+using Kontur.Extern.Client.Testing.ExternTestTool.ResponseCaching;
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands
+namespace Kontur.Extern.Client.Testing.ExternTestTool.Commands
 {
     internal class GenerateCuLetterCommand : IExternTestToolCommand<Docflow>
     {

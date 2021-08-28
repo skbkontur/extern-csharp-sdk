@@ -2,7 +2,7 @@ using System.IO;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Kontur.Extern.Client.End2EndTests.TestHelpers
+namespace Kontur.Extern.Client.Testing.ExternTestTool.Helpers.Xml
 {
     internal static class XDocumentExtension
     {

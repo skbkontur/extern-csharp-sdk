@@ -2,12 +2,13 @@ using System;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Results;
+using Kontur.Extern.Client.Testing.ExternTestTool.Http;
+using Kontur.Extern.Client.Testing.ExternTestTool.Models.Requests;
+using Kontur.Extern.Client.Testing.ExternTestTool.Models.Results;
+using Kontur.Extern.Client.Testing.ExternTestTool.ResponseCaching;
 using static System.Environment;
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands
+namespace Kontur.Extern.Client.Testing.ExternTestTool.Commands
 {
     internal class GenerateCertificateCommand : IExternTestToolCommand<GeneratedCertificate>
     {

@@ -3,9 +3,9 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool
+namespace Kontur.Extern.Client.Testing.ExternTestTool.ResponseCaching
 {
-    internal class JsonFileResponseCache : IResponseCache
+    public class JsonFileResponseCache : IResponseCache
     {
         private const string FileName = "extern.api.test.tools.response.json";
         

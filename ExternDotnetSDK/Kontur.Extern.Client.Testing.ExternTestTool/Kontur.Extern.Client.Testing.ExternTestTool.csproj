@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="JetBrains.Annotations" Version="2021.1.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ExternDotnetSDK\Kontur.Extern.Client.csproj" />
+      <ProjectReference Include="..\Kontur.Extern.Client.Testing.End2End\Kontur.Extern.Client.Testing.End2End.csproj" />
+      <ProjectReference Include="..\Kontur.Extern.Client.Testing\Kontur.Extern.Client.Testing.csproj" />
+    </ItemGroup>
+
+</Project>

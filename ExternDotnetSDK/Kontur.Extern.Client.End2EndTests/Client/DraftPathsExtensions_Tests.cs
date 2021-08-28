@@ -11,7 +11,6 @@ using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Model.Configuration;
 using Kontur.Extern.Client.Model.Documents;
@@ -19,6 +18,7 @@ using Kontur.Extern.Client.Model.Documents.Contents;
 using Kontur.Extern.Client.Model.Drafts;
 using Kontur.Extern.Client.Model.Numbers;
 using Kontur.Extern.Client.Testing.Assertions;
+using Kontur.Extern.Client.Testing.ExternTestTool.Models.Requests;
 using Kontur.Extern.Client.Testing.Generators;
 using Kontur.Extern.Client.Testing.Helpers;
 using Xunit;
@@ -32,7 +32,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
     public class DraftPathsExtensions_Tests : GeneratedAccountTests
     {
         private readonly Randomizer randomizer = new();
-        private readonly AuthoritiesCodesGenerator codesGenerator = new AuthoritiesCodesGenerator();
+        private readonly AuthoritiesCodesGenerator codesGenerator = new();
 
         public DraftPathsExtensions_Tests(ITestOutputHelper output, IsolatedAccountEnvironment environment)
             : base(output, environment)
@@ -295,7 +295,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
                 var (surname, firstName, patronymicName) = GeneratedAccount.ChiefName;
                 return await ExternTestTool.GenerateFufSschFileContentAsync(
                     generateCertificateIfAbsentInSender: true,
-                    sender: new TestEnvironment.TestTool.Models.Requests.Sender(inn, Kpp: kpp, OrgName: orgName),
+                    sender: new Testing.ExternTestTool.Models.Requests.Sender(inn, Kpp: kpp, OrgName: orgName),
                     payer: new Payer(inn, orgName, kpp, new PersonFullName(surname, firstName, patronymicName))
                 );
             }
@@ -322,7 +322,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             {
                 var inn = GeneratedAccount.Inn.ToString();
                 return await ExternTestTool.GenerateFufSschFileContentAsync(
-                    new TestEnvironment.TestTool.Models.Requests.Sender(inn),
+                    new Testing.ExternTestTool.Models.Requests.Sender(inn),
                     generateCertificateIfAbsentInSender: true
                 );
             }
@@ -373,7 +373,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             {
                 var inn = GeneratedAccount.Inn.ToString();
                 return await ExternTestTool.GenerateFufSschFileContentAsync(
-                    new TestEnvironment.TestTool.Models.Requests.Sender(inn),
+                    new Testing.ExternTestTool.Models.Requests.Sender(inn),
                     generateCertificateIfAbsentInSender: true
                 );
             }
@@ -401,7 +401,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             {
                 var inn = GeneratedAccount.Inn.ToString();
                 return await ExternTestTool.GenerateFufSschFileContentAsync(
-                    new TestEnvironment.TestTool.Models.Requests.Sender(inn),
+                    new Testing.ExternTestTool.Models.Requests.Sender(inn),
                     generateCertificateIfAbsentInSender: true
                 );
             }

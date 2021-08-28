@@ -1,7 +1,7 @@
 
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests
+namespace Kontur.Extern.Client.Testing.ExternTestTool.Models.Requests
 {
     public record PersonFullName(string Surname, string Name, string Patronymic);
 }

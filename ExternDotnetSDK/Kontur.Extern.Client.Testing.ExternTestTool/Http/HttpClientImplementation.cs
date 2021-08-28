@@ -8,7 +8,7 @@ using Kontur.Extern.Client.Testing.Lifetimes;
 using Vostok.Logging.Abstractions;
 using static System.Environment;
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http
+namespace Kontur.Extern.Client.Testing.ExternTestTool.Http
 {
     internal class HttpClientImplementation : IHttpClient
     {

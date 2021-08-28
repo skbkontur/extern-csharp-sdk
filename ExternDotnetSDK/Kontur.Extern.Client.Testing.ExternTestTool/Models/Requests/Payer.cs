@@ -1,5 +1,5 @@
 // ReSharper disable CommentTypo
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests
+namespace Kontur.Extern.Client.Testing.ExternTestTool.Models.Requests
 {
     /// <summary>
     /// Учетная запись налогоплательщика - организация, за которую отправляется отчетность. Payer и Sender могут совпадать.
