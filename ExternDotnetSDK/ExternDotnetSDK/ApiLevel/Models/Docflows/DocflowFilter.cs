@@ -95,8 +95,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Docflows
         /// <summary>
         /// Контролирующий орган. Формат данных: ФНС — ХХХХ, ПФР — ХХХ-ХХХ, ФСС — ХХХХХ, Росстат — ХХ-ХХ, где Х — это цифра от 0 до 9
         /// </summary>
-        [JsonPropertyName("cu")]
-        public string AuthorityCode { get; set; }
+        public string Cu { get; set; }
 
         /// <summary>
         /// Получить документооборот ПФР по регистрационному номеру. Маска для ввода ХХХ-ХХХ-ХХХХХХ, где Х - это цифра от 0 до 9

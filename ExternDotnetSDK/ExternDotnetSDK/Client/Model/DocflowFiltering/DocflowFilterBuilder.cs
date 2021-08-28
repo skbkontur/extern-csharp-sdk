@@ -132,13 +132,12 @@ namespace Kontur.Extern.Client.Model.DocflowFiltering
             return this;
         }
         
-        // Supervisory authority
         /// <summary>
         /// Контролирующий орган.
         /// </summary>
-        public DocflowFilterBuilder WithAuthorityCode(AuthorityCode code)
+        public DocflowFilterBuilder WithCu(AuthorityCode code)
         {
-            filter.AuthorityCode = code.Value;
+            filter.Cu = code.Value;
             return this;
         }
 

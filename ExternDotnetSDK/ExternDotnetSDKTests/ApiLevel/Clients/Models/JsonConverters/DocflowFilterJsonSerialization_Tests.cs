@@ -73,7 +73,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
                 Knd = "knd",
                 Okud = "okud",
                 Okpo = "okpo",
-                AuthorityCode = "code",
+                Cu = "code",
                 RegNumber = "reg",
                 FormName = "the-name",
                 DemandsOnReports = true,

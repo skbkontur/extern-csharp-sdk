@@ -33,7 +33,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
             var periodTo = new DateTime(2021, 07, 18, 10, 53, 06);
             var expectedFilter = new DocflowFilter
             {
-                AuthorityCode = "123-456",
+                Cu = "123-456",
                 Finished = true,
                 Incoming = false,
                 Knd = "1234567",
@@ -55,7 +55,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
             var docflowFilter = new DocflowFilterBuilder()
                 .WithFinishedDocflows()
                 .WithIncomingDocflows(false)
-                .WithAuthorityCode(AuthorityCode.Pfr.Parse("123-456"))
+                .WithCu(AuthorityCode.Pfr.Parse("123-456"))
                 .WithKnd(Knd.Parse("1234567"))
                 .WithOkpo(Okpo.LegalEntity.Parse("12345678"))
                 .WithInnKppOfALegalEntity(InnKpp.Parse("1234567890-123456789"))
