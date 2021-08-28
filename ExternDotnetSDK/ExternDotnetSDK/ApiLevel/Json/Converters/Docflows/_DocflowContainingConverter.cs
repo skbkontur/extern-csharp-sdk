@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions;
@@ -49,7 +50,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
                 }
                 else
                 {
-                    throw Errors.UnknownSubtypeOf<IDocflowDto>(value.GetType());
+                    throw Errors.UnknownSubtypeOf<IDocflowDto>(value!.GetType());
                 }
             }
 
@@ -74,11 +75,6 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
                     return DocflowDescriptionTypes.TryGetDescriptionType(docflowType) ??
                            typeof (UnknownDescription);
                 }
-            }
-
-            class TypeCache
-            {
-                
             }
 
             private interface ISerializationDocflow
@@ -121,15 +117,25 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
                     Documents = null!;
                 }
 
+                [UsedImplicitly]
                 public Guid Id { get; set; }
+                [UsedImplicitly]
                 public Guid OrganizationId { get; set; }
+                [UsedImplicitly]
                 public Urn Type { get; set; } = null!;
+                [UsedImplicitly]
                 public Urn Status { get; set; } = null!;
+                [UsedImplicitly]
                 public Urn SuccessState { get; set; } = null!;
+                [UsedImplicitly]
                 public List<Document> Documents { get; set; } = null!;
+                [UsedImplicitly]
                 public List<Link> Links { get; set; } = null!;
+                [UsedImplicitly]
                 public DateTime SendDate { get; set; }
+                [UsedImplicitly]
                 public DateTime? LastChangeDate { get; set; }
+                [UsedImplicitly]
                 public TDescription Description { get; set; } = default!;
 
                 public TResult ConvertTo<TResult>()
