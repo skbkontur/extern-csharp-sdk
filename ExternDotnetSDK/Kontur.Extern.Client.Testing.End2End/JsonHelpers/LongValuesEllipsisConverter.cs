@@ -21,7 +21,7 @@ namespace Kontur.Extern.Client.Testing.End2End.JsonHelpers
         public override bool CanConvert(Type objectType) => 
             objectType == typeof (byte[]) || objectType == typeof (string);
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             if (value is string stringValue)
             {
@@ -37,7 +37,7 @@ namespace Kontur.Extern.Client.Testing.End2End.JsonHelpers
             }
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) => 
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer) => 
             serializer.Deserialize(reader, objectType);
 
         private void WriteString(JsonWriter writer, string value)

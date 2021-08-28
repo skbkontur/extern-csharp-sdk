@@ -36,9 +36,9 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Api
 
         public Guid Id { get; set; }
         public ApiTaskState TaskState { get; set; }
-        public Urn TaskType { get; set; }
-        public TResult TaskResult { get; set; }
-        public ApiError ApiError { get; set; }
+        public Urn? TaskType { get; set; }
+        public TResult? TaskResult { get; set; }
+        public ApiError? ApiError { get; set; }
 
         public ApiTaskResult<TOtherResult> Convert<TOtherResult>(Func<TResult, TOtherResult> converter) => new()
         {
@@ -58,7 +58,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Api
             Id = apiTaskResult.Id;
             TaskState = apiTaskResult.TaskState;
             TaskType = apiTaskResult.TaskType;
-            if (TaskState == ApiTaskState.Succeed)
+            if (TaskState == ApiTaskState.Succeed && apiTaskResult.TaskResult is not null)
             {
                 TaskResult = apiTaskResult.TaskResult;
             }
@@ -70,7 +70,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Api
             Id = apiTaskResult.Id;
             TaskState = apiTaskResult.TaskState;
             TaskType = apiTaskResult.TaskType;
-            if (TaskState == ApiTaskState.Succeed)
+            if (TaskState == ApiTaskState.Succeed && apiTaskResult.TaskResult is not null)
             {
                 TaskResult = apiTaskResult.TaskResult;
             }

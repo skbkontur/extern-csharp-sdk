@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -14,7 +15,7 @@ namespace Kontur.Extern.Client.Testing.End2End.Environment
         public static AuthTestData LoadFromJsonFile()
         {
             var json = File.ReadAllText("auth_params.json");
-            return JsonConvert.DeserializeObject<AuthTestData>(json);
+            return JsonConvert.DeserializeObject<AuthTestData>(json) ?? throw new NotSupportedException("Null JSON is invalid");
         }
 
         public AuthTestData(string userName, string password, string scope, string apiKey, string clientId, TestDataGenerationLevel testDataGenerateLevel, string? openIdServer = DefaultOpenIdServer)
