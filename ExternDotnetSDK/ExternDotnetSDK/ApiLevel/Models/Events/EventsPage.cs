@@ -7,9 +7,6 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Events
     {
         public string FirstEventId { get; set; }
 
-        [Obsolete("Should be removed in next releases. To get next event page use NextEventId as from parameter")]
-        public string LastEventId { get; set; }
-
         public string NextEventId { get; set; }
         public int RequestedCount { get; set; }
         public int ReturnedCount { get; set; }
