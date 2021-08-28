@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Kontur.Extern.Client.Testing.End2End.JsonHelpers
+namespace Kontur.Extern.Client.Testing.Helpers.Json
 {
     public static class StringJsonConvertExtension
     {

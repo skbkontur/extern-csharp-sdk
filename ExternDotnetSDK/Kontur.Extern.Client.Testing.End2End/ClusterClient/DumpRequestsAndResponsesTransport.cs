@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Http.Constants;
-using Kontur.Extern.Client.Testing.End2End.JsonHelpers;
+using Kontur.Extern.Client.Testing.Helpers.Json;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Core.Transport;
 using Vostok.Logging.Abstractions;

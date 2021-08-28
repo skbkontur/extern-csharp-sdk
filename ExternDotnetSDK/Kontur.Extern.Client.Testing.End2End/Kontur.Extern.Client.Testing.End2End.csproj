@@ -8,12 +8,12 @@
     <ItemGroup>
       <PackageReference Include="FluentAssertions" Version="5.10.3" />
       <PackageReference Include="JetBrains.Annotations" Version="2021.1.0" />
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
       <PackageReference Include="xunit.extensibility.core" Version="2.4.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Kontur.Extern.Client.Auth.OpenId\Kontur.Extern.Client.Auth.OpenId.csproj" />
+      <ProjectReference Include="..\Kontur.Extern.Client.Testing\Kontur.Extern.Client.Testing.csproj" />
     </ItemGroup>
 
     <ItemGroup>

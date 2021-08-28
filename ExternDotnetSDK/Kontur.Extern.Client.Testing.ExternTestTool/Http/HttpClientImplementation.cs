@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Testing.End2End.JsonHelpers;
+using Kontur.Extern.Client.Testing.Helpers.Json;
 using Kontur.Extern.Client.Testing.Lifetimes;
 using Vostok.Logging.Abstractions;
 using static System.Environment;

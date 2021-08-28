@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Kontur.Extern.Client.Testing.End2End.JsonHelpers
+namespace Kontur.Extern.Client.Testing.Helpers.Json
 {
     internal class LongValuesEllipsisConverter : JsonConverter
     {
