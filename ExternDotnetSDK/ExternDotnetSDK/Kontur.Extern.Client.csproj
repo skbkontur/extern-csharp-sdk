@@ -18,6 +18,7 @@
     <PackageReference Include="OneOf" Version="3.0.190" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1" />
     <PackageReference Include="System.Text.Json" Version="5.0.2" />
     <PackageReference Include="Vostok.ClusterClient.Core" Version="0.1.32" />
     <PackageReference Include="Vostok.ClusterClient.Transport" Version="0.1.17" />
