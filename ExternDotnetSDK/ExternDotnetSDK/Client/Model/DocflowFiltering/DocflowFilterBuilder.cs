@@ -1,10 +1,11 @@
 #nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Numbers;
 // ReSharper disable CommentTypo
 
@@ -99,9 +100,9 @@ namespace Kontur.Extern.Client.Model.DocflowFiltering
         /// <summary>
         /// Типы документооборотов
         /// </summary>
-        public DocflowFilterBuilder WithTypes(Urn[] docTypeUrns)
+        public DocflowFilterBuilder WithTypes(params DocflowType[] types)
         {
-            filter.Types = docTypeUrns;
+            filter.Types = types.Select(x => x.ToUrn()).ToArray();
             return this;
         }
 

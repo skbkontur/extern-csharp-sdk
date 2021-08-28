@@ -3,6 +3,7 @@ using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.Model.DocflowFiltering;
+using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Numbers;
 using NUnit.Framework;
 using Vostok.Commons.Time;
@@ -41,7 +42,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
                 Okud = "1234567",
                 InnKpp = "1234567890-123456789",
                 RegNumber = "123-456-789012",
-                Types = new Urn[] {new("nid", "nss")},
+                Types = new[] {DocflowType.Fns.Fns534.Report.ToUrn()},
                 FormName = "the form",
                 CreatedFrom = createdFrom,
                 CreatedTo = createdTo,
@@ -61,7 +62,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
                 .WithInnKppOfALegalEntity(InnKpp.Parse("1234567890-123456789"))
                 .WithOkud(Okud.Parse("1234567"))
                 .WithRegNumberOfPfrDocflow(PfrRegNumber.Parse("123-456-789012"))
-                .WithTypes(new Urn[] {new("nid", "nss")})
+                .WithTypes(DocflowType.Fns.Fns534.Report)
                 .WithFormName("the form")
                 .WithCreatedFrom(createdFrom)
                 .WithCreatedTo(createdTo)
