@@ -1,6 +1,6 @@
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.Models
+namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Results
 {
     /// <summary>
     /// Тестовый сертификат

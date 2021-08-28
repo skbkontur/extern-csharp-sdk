@@ -2,7 +2,7 @@ using System;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Client.Model.Numbers;
 
-namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.Models
+namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Results
 {
     internal class GeneratedAccount
     {

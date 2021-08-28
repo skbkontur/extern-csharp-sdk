@@ -2,7 +2,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.SysTextJsonExtensions
+namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions
 {
     public static class JsonSerializerOptionsExtension
     {

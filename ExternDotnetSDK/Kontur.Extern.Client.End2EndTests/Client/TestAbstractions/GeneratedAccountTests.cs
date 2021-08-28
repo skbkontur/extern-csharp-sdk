@@ -1,8 +1,8 @@
 using System;
 using Kontur.Extern.Client.End2EndTests.Client.TestContext;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.Models;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Results;
 using Xunit;
 using Xunit.Abstractions;
 

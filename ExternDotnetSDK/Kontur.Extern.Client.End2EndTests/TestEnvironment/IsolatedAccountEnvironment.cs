@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.Models;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Results;
 using Kontur.Extern.Client.Testing.End2End.Environment;
 using Kontur.Extern.Client.Testing.Fakes.Logging;
 using Kontur.Extern.Client.Testing.Lifetimes;

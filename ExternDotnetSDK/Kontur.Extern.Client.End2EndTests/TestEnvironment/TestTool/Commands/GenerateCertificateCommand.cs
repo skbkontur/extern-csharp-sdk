@@ -2,9 +2,9 @@ using System;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.Models;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Results;
 using static System.Environment;
 
 namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands

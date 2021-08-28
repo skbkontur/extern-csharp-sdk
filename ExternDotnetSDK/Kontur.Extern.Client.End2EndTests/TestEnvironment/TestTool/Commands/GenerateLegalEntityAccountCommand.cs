@@ -3,8 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.Models;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Results;
 using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands

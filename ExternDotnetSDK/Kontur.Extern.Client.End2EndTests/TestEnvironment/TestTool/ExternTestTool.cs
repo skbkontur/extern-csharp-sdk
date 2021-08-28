@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
-using Kontur.Extern.Client.End2EndTests.TestEnvironment.Models;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Commands;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Http;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Requests;
+using Kontur.Extern.Client.End2EndTests.TestEnvironment.TestTool.Models.Results;
 using Kontur.Extern.Client.Testing.Fakes.Logging;
 using Kontur.Extern.Client.Testing.Lifetimes;
 using Vostok.Logging.Abstractions;
