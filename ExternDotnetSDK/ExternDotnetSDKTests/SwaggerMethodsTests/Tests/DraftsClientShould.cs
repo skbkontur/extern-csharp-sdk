@@ -624,7 +624,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public async Task StartSendDraft_WithValidParameters()
         {
             var d = await CreateDraftAsync().ConfigureAwait(false);
-            Assert.DoesNotThrowAsync(async () => await Client.Drafts._StartSendDraftAsync(Account.Id, d.Id, true).ConfigureAwait(false));
+            Assert.DoesNotThrowAsync(async () => await Client.Drafts.StartSendDraftAsync(Account.Id, d.Id, true).ConfigureAwait(false));
             await DeleteDraftAsync(d).ConfigureAwait(false);
         }
 

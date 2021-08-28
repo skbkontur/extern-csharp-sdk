@@ -193,19 +193,6 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
                 .Build();
             return http.PostAsync<Docflow>(url, timeout);
         }
-
-        public Task<ApiTaskResult<Docflow>> _StartSendDraftAsync(
-            Guid accountId,
-            Guid draftId,
-            bool? force = null,
-            TimeSpan? timeout = null)
-        {
-            var url = new RequestUrlBuilder($"/v1/{accountId}/drafts/{draftId}/send")
-                .AppendToQuery("deferred", true)
-                .AppendToQuery("force", force)
-                .Build();
-            return http.PostAsync<ApiTaskResult<Docflow>>(url, timeout);
-        }
         
         public async Task<ApiTaskResult<Docflow, SendFailure>> StartSendDraftAsync(
             Guid accountId,
