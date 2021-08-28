@@ -114,33 +114,30 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             if (!response.HasStream && !response.HasContent)
                 throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
 
-            return await DeserializeBodyAsync<TResponseMessage>().ConfigureAwait(false) ?? 
-                   throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
+            return response.HasStream
+                ? await serializer.DeserializeAsync<TResponseMessage>(response.Stream).ConfigureAwait(false)
+                : serializer.Deserialize<TResponseMessage>(response.Content.ToArraySegment());
         }
 
         public async ValueTask<TResponseMessage?> TryGetMessageAsync<TResponseMessage>()
         {
             var contentType = ContentType;
             if (typeof (TResponseMessage) == typeof (string) && contentType.IsPlainText && (response.HasContent || response.HasStream))
-                return (TResponseMessage)(object)await GetStringAsync().ConfigureAwait(false);
+                return (TResponseMessage) (object) await GetStringAsync().ConfigureAwait(false);
 
             if (!contentType.IsJson)
                 return default;
 
             if (!response.HasStream && !response.HasContent)
                 return default;
-            
-            return await DeserializeBodyAsync<TResponseMessage>().ConfigureAwait(false);
+
+            var result = response.HasStream 
+                ? await serializer.TryDeserializeAsync<TResponseMessage>(response.Stream).ConfigureAwait(false) 
+                : serializer.TryDeserialize<TResponseMessage>(response.Content.ToArraySegment());
+            return result.GetResultOrNull();
         }
 
         public HttpStatus Status => new(response.Code);
-
-        private async ValueTask<TResponseMessage?> DeserializeBodyAsync<TResponseMessage>()
-        {
-            return response.HasStream
-                ? await serializer.DeserializeAsync<TResponseMessage>(response.Stream).ConfigureAwait(false)
-                : serializer.Deserialize<TResponseMessage>(response.Content.ToArraySegment());
-        }
 
         private static async ValueTask<byte[]> ToArrayAsync(Stream stream)
         {
@@ -150,8 +147,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             var count = stream.Length - stream.Position;
             if (count == 0)
                 return Array.Empty<byte>();
-            // todo: apply an uninitialized array creation
-            //byte[] copy = GC.AllocateUninitializedArray<byte>(count);
+            
             var copy = new byte[count];
             await stream.ReadAsync(copy, 0, copy.Length).ConfigureAwait(false);
             return copy;

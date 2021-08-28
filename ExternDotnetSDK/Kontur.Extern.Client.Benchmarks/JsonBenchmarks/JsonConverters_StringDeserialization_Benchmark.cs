@@ -1,5 +1,6 @@
 using BenchmarkDotNet.Attributes;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.Http.Serialization;
 
 namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks
 {

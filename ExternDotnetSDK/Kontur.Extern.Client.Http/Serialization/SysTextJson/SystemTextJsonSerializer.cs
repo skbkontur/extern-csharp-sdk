@@ -120,27 +120,48 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
 
             await JsonSerializer.SerializeAsync(stream, body, serializerOptions).ConfigureAwait(false);
         }
-
-        public ValueTask<TResult?> DeserializeAsync<TResult>(Stream stream) => 
-            JsonSerializer.DeserializeAsync<TResult>(stream, serializerOptions);
-
-        public TResult? Deserialize<TResult>(ArraySegment<byte> arraySegment) => 
-            DeserializeFromSpan<TResult>(arraySegment.AsSpan());
-
-        public TResult Deserialize<TResult>(string jsonText)
-        {
-            // todo: allow to return nullable TResult
-            return JsonSerializer.Deserialize<TResult>(jsonText, serializerOptions)!;
-        }
-
+        
         public string SerializeToIndentedString<T>(T instance) => 
             JsonSerializer.Serialize(instance, writeIndentedOptions);
 
-        private TResult DeserializeFromSpan<TResult>(ReadOnlySpan<byte> span)
+        public async ValueTask<DeserializationResult<TResult>> TryDeserializeAsync<TResult>(Stream stream)
         {
-            var reader = new Utf8JsonReader(span);
-            // todo: allow to return nullable TResult
-            return JsonSerializer.Deserialize<TResult>(ref reader, serializerOptions);
+            try
+            {
+                var result = await JsonSerializer.DeserializeAsync<TResult>(stream, serializerOptions).ConfigureAwait(false);
+                return DeserializationResult<TResult>.Success(result);
+            }
+            catch (Exception ex)
+            {
+                return DeserializationResult<TResult>.Failed(ex);
+            }
+        }
+
+        public DeserializationResult<TResult> TryDeserialize<TResult>(in ArraySegment<byte> arraySegment)
+        {
+            try
+            {
+                var reader = new Utf8JsonReader(arraySegment.AsSpan());
+                var result = JsonSerializer.Deserialize<TResult>(ref reader, serializerOptions);
+                return DeserializationResult<TResult>.Success(result);
+            }
+            catch (Exception ex)
+            {
+                return DeserializationResult<TResult>.Failed(ex);
+            }
+        }
+
+        public DeserializationResult<TResult> TryDeserialize<TResult>(string jsonText)
+        {
+            try
+            {
+                var result = JsonSerializer.Deserialize<TResult>(jsonText, serializerOptions);
+                return DeserializationResult<TResult>.Success(result);
+            }
+            catch (Exception ex)
+            {
+                return DeserializationResult<TResult>.Failed(ex);
+            }
         }
     }
 }

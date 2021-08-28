@@ -6,10 +6,10 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Convert
 {
     internal class UrnJsonConverter : JsonConverter
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) =>
-            writer.WriteValue(((Urn) value).ToString());
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer) =>
+            writer.WriteValue(((Urn?) value)?.ToString());
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.Null)
                 return null;
@@ -17,8 +17,10 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Convert
             if (reader.TokenType != JsonToken.String)
                 throw new JsonSerializationException("Unexpected token parsing URN. Expected String");
 
+            if (reader.Value == null)
+                return null;
+            
             var value = reader.Value.ToString();
-
             return new Urn(value);
         }
 

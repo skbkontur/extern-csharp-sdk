@@ -5,7 +5,7 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks
     [MemoryDiagnoser]
     public class JsonConverters_StreamSerialization_Benchmark
     {
-        private JsonConvertersBenchmarkContext context;
+        private JsonConvertersBenchmarkContext context = null!;
 
         [GlobalSetup]
         public void Setup() => context = new JsonConvertersBenchmarkContext();

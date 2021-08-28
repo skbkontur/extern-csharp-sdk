@@ -80,23 +80,22 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters
             return new();
         }
 
-        public ValueTask<TResult?> DeserializeAsync<TResult>(Stream stream)
+        public ValueTask<DeserializationResult<TResult>> TryDeserializeAsync<TResult>(Stream stream)
         {
             using var streamReader = new StreamReader(stream, Utf8NoBom);
-            var result = jsonSerializer.Deserialize<TResult>(new JsonTextReader(streamReader));
-            return new(result);
+            return new(TryDeserialize<TResult>(streamReader));
         }
 
-        public TResult? Deserialize<TResult>(ArraySegment<byte> arraySegment)
+        public DeserializationResult<TResult> TryDeserialize<TResult>(in ArraySegment<byte> arraySegment)
         {
             using var streamReader = new StreamReader(arraySegment.AsMemoryStream(), Utf8NoBom);
-            return jsonSerializer.Deserialize<TResult>(new JsonTextReader(streamReader));
+            return TryDeserialize<TResult>(streamReader);
         }
 
-        public TResult Deserialize<TResult>(string jsonText)
+        public DeserializationResult<TResult> TryDeserialize<TResult>(string jsonText)
         {
             using var stringReader = new StringReader(jsonText);
-            return jsonSerializer.Deserialize<TResult>(new JsonTextReader(stringReader))!;
+            return TryDeserialize<TResult>(stringReader);
         }
 
         public string SerializeToIndentedString<T>(T instance)
@@ -104,6 +103,19 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters
             using var stringWriter = new StringWriter();
             indentedJsonSerializer.Serialize(stringWriter, instance);
             return stringWriter.ToString();
+        }
+
+        private DeserializationResult<TResult> TryDeserialize<TResult>(TextReader streamReader)
+        {
+            try
+            {
+                var result = jsonSerializer.Deserialize<TResult>(new JsonTextReader(streamReader));
+                return DeserializationResult<TResult>.Success(result);
+            }
+            catch (Exception ex)
+            {
+                return DeserializationResult<TResult>.Failed(ex);
+            }
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Convert
                  if (typePropValueToken is not JValue {Type: JTokenType.String} typeValueToken)
                      return null;
 
-                 return typeValueToken.Value.ToString()!;
+                 return typeValueToken.Value?.ToString()!;
              }
 
              static DocflowDescription? TryGetDocflowDescription(JObject jObject, in DocflowType? docflowType, JsonSerializer serializer)

@@ -6,9 +6,9 @@ namespace Kontur.Extern.Client.Http.Serialization
 {
     public interface IJsonSerializer
     {
-        ValueTask<TResult?> DeserializeAsync<TResult>(Stream stream);
-        TResult? Deserialize<TResult>(ArraySegment<byte> arraySegment);
-        TResult Deserialize<TResult>(string jsonText);
+        ValueTask<DeserializationResult<TResult>> TryDeserializeAsync<TResult>(Stream stream);
+        DeserializationResult<TResult> TryDeserialize<TResult>(in ArraySegment<byte> arraySegment);
+        DeserializationResult<TResult> TryDeserialize<TResult>(string jsonText);
 
         ValueTask SerializeToJsonStreamAsync<T>(T body, Stream stream);
         ArraySegment<byte> SerializeToJsonBytes<T>(T body);
