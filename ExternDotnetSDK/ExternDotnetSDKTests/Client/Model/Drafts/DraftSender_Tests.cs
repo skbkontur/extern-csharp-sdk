@@ -1,7 +1,6 @@
 using System;
 using System.Net;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.Model;
 using Kontur.Extern.Client.Model.Drafts;
@@ -44,7 +43,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             {
                 Certificate = new CertificateRequest
                 {
-                    Content = certificate
+                    PublicKey = certificate
                 },
                 Inn = inn.ToString()
             };
@@ -97,7 +96,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             {
                 Certificate = new CertificateRequest
                 {
-                    Content = certificate
+                    PublicKey = certificate
                 },
                 Inn = inn.ToString(),
                 Kpp = kpp.ToString()
@@ -118,7 +117,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             {
                 Certificate = new CertificateRequest
                 {
-                    Content = certificate
+                    PublicKey = certificate
                 },
                 Inn = inn.ToString(),
                 Kpp = kpp.ToString(),
@@ -157,7 +156,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
             {
                 Certificate = new CertificateRequest
                 {
-                    Content = certificate
+                    PublicKey = certificate
                 },
                 Inn = inn.ToString(),
                 IsRepresentative = true

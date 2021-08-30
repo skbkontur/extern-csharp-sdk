@@ -9,39 +9,39 @@ namespace Kontur.Extern.Client.Model.Drafts
 {
     public class DraftSender
     {
-        public static DraftSender LegalEntity(LegalEntityInn inn, Kpp kpp, CertificateContent certificate)
+        public static DraftSender LegalEntity(LegalEntityInn inn, Kpp kpp, CertificateContent certificatePublicKey)
         {
             if (inn is null)
                 throw new ArgumentNullException(nameof(inn));
             if (kpp is null)
                 throw new ArgumentNullException(nameof(kpp));
-            if (certificate is null)
-                throw new ArgumentNullException(nameof(certificate));
+            if (certificatePublicKey is null)
+                throw new ArgumentNullException(nameof(certificatePublicKey));
             
-            return new(inn.ToString(), kpp.ToString(), certificate);
+            return new(inn.ToString(), kpp.ToString(), certificatePublicKey);
         }
 
-        public static DraftSender IndividualEntrepreneur(Inn inn, CertificateContent certificate)
+        public static DraftSender IndividualEntrepreneur(Inn inn, CertificateContent certificatePublicKey)
         {
             if (inn is null)
                 throw new ArgumentNullException(nameof(inn));
-            if (certificate is null)
-                throw new ArgumentNullException(nameof(certificate));
+            if (certificatePublicKey is null)
+                throw new ArgumentNullException(nameof(certificatePublicKey));
             
-            return new(inn.ToString(), null, certificate);
+            return new(inn.ToString(), null, certificatePublicKey);
         }
 
         private readonly string inn;
         private readonly string? kpp;
         private IPAddress? ip;
         private bool isRepresentative;
-        private readonly CertificateContent certificate;
+        private readonly CertificateContent certificatePublicKey;
 
-        private DraftSender(string inn, string? kpp, CertificateContent certificate)
+        private DraftSender(string inn, string? kpp, CertificateContent certificatePublicKey)
         {
             this.inn = inn;
             this.kpp = kpp;
-            this.certificate = certificate;
+            this.certificatePublicKey = certificatePublicKey;
         }
 
         public DraftSender WithIpAddress(IPAddress ipAddress)
@@ -66,7 +66,7 @@ namespace Kontur.Extern.Client.Model.Drafts
             IsRepresentative = isRepresentative,
             Certificate = new CertificateRequest
             {
-                Content = certificate.ToBytes()
+                PublicKey = certificatePublicKey.ToBytes()
             }
         };
     }

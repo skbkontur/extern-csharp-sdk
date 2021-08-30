@@ -37,7 +37,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
                     Inn = cert.Inn,
                     Kpp = cert.Kpp,
                     IpAddress = "8.8.8.8",
-                    Certificate = new CertificateRequest {Content = cert.Content}
+                    Certificate = new CertificateRequest {PublicKey = cert.Content}
                 },
                 Recipient = new RecipientInfoRequest {FssCode = "11111"}
             };

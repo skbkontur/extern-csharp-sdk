@@ -316,14 +316,14 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="docflowId">Идентификатор документооборота</param>
         /// <param name="documentId">Идентификатор документа</param>
-        /// <param name="certificate">Сертификат</param>
+        /// <param name="publicKey">Сертификат</param>
         /// <param name="timeout"></param>
         /// <returns>Инициировано дешифрование документа</returns>
         Task<CloudDecryptionInitResult> StartCloudDecryptDocumentAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
-            byte[] certificate,
+            byte[] publicKey,
             TimeSpan? timeout = null);
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="docflowId">Идентификатор документооборота</param>
         /// <param name="documentId">Идентификатор документа</param>
-        /// <param name="certificate">Сертификат</param>
+        /// <param name="publicKey">Сертификат</param>
         /// <param name="unzip">Флаг необходимости распаковки архива. По умолчанию false, контент возвращается сжатым</param>
         /// <param name="timeout"></param>
         /// <returns>Инициировано дешифрование документа</returns>
@@ -360,7 +360,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
             Guid accountId,
             Guid docflowId,
             Guid documentId,
-            byte[] certificate,
+            byte[] publicKey,
             bool? unzip = null,
             TimeSpan? timeout = null);
 

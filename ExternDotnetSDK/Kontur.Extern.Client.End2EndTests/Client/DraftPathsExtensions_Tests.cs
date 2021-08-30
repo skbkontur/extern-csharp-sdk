@@ -486,7 +486,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
                 IsRepresentative = sender.IsRepresentative,
                 Certificate = new Certificate
                 {
-                    Content = Encoding.UTF8.GetString(sender.Certificate.Content)
+                    Content = Encoding.UTF8.GetString(sender.Certificate.PublicKey)
                 }
             };
 

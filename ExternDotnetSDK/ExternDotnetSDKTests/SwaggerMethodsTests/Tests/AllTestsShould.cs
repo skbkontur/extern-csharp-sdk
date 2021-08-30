@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel;
-using Kontur.Extern.Client.ApiLevel.Clients.Authentication;
 using Kontur.Extern.Client.ApiLevel.Models.Accounts;
 using Kontur.Extern.Client.Tests.SwaggerMethodsTests.Common;
 using Newtonsoft.Json;

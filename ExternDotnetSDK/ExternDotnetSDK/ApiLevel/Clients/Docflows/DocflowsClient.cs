@@ -8,6 +8,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Documents;
 using Kontur.Extern.Client.ApiLevel.Models.Documents.Data;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 // ReSharper disable CommentTypo
@@ -259,12 +260,12 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
             Guid accountId,
             Guid docflowId,
             Guid documentId,
-            byte[] certificate,
+            byte[] publicKey,
             TimeSpan? timeout = null)
         {
             return http.PostAsync<CertificateRequest, CloudDecryptionInitResult>(
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content",
-                new CertificateRequest {Content = certificate},
+                new CertificateRequest {PublicKey = publicKey},
                 timeout
             );
         }
@@ -290,7 +291,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
             Guid accountId,
             Guid docflowId,
             Guid documentId,
-            byte[] certificate,
+            byte[] publicKey,
             bool? unzip = null,
             TimeSpan? timeout = null)
         {
@@ -299,7 +300,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
                 .Build();
             return http.PostAsync<CertificateRequest, DssDecryptionInitResult>(
                 url,
-                new CertificateRequest {Content = certificate},
+                new CertificateRequest {PublicKey = publicKey},
                 timeout
             );
         }

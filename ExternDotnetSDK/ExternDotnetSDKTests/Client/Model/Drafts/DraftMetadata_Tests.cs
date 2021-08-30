@@ -1,7 +1,6 @@
 #nullable enable
 using System;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.Model.Drafts;
 using Kontur.Extern.Client.Model.Numbers;
@@ -33,7 +32,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                     Inn = senderInn.ToString(),
                     Certificate = new CertificateRequest
                     {
-                        Content = senderCert
+                        PublicKey = senderCert
                     }
                 },
                 Recipient = new RecipientInfoRequest
@@ -217,7 +216,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
                     Inn = senderInn.ToString(),
                     Certificate = new CertificateRequest
                     {
-                        Content = senderCert
+                        PublicKey = senderCert
                     }
                 },
                 Recipient = new RecipientInfoRequest
