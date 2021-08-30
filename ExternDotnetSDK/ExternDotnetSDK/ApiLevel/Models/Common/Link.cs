@@ -76,7 +76,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Common
                 ? b == null
                 : b != null && string.Compare(a, b, StringComparison.CurrentCultureIgnoreCase) == 0;
 
-        private int TryIncreaseHashcode(int hashcode, string linkField)
+        private static int TryIncreaseHashcode(int hashcode, string linkField)
         {
             unchecked
             {
