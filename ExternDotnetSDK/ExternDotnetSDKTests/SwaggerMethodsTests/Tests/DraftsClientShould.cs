@@ -184,7 +184,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
                                 Inn = validDraftMetaRequest.Sender.Inn,
                                 IpAddress = "8.8.8.8",
                                 Kpp = validDraftMetaRequest.Sender.Kpp,
-                                Certificate = new CertificateRequest {Content = new byte[] {1, 2, 3}}
+                                Certificate = new CertificateRequest {PublicKey = new byte[] {1, 2, 3}}
                             },
                             Recipient = validDraftMetaRequest.Recipient
                         })
@@ -750,7 +750,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
                         Filename = "Filename",
                         Type = new Urn("nid", "nss")
                     },
-                    Signature = validDraftMetaRequest.Sender.Certificate.Content
+                    Signature = validDraftMetaRequest.Sender.Certificate.PublicKey
                 }).ConfigureAwait(false);
     }
 }
