@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
-// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Docflows
 {
     [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class DocflowFilter
     {
         private static PropertyInfo[] properties = typeof (DocflowFilter).GetProperties();
