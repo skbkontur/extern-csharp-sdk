@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Docflows
 {

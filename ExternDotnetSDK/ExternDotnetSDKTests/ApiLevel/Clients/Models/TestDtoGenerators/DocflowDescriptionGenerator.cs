@@ -4,6 +4,7 @@ using AutoBogus.Conventions;
 using Bogus;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions;
 using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions;
 

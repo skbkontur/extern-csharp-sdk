@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions;
 using Kontur.Extern.Client.Model.Docflows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
