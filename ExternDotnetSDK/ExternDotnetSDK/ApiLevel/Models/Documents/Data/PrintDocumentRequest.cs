@@ -1,5 +1,4 @@
 ﻿using System;
-// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Documents.Data
 {

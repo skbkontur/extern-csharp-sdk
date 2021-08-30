@@ -1,6 +1,4 @@
-﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
-
-namespace Kontur.Extern.Client.ApiLevel.Models.Documents
+﻿namespace Kontur.Extern.Client.ApiLevel.Models.Documents
 {
     public class SendReplyDocumentRequest
     {

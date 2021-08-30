@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 
-// ReSharper disable UnusedAutoPropertyAccessor.Global
-
 namespace Kontur.Extern.Client.ApiLevel.Models.Documents
 {
     public class Document
