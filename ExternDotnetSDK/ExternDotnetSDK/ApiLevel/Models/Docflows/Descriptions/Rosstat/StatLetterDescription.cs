@@ -8,7 +8,6 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Rosstat
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class StatLetterDescription : DocflowDescription
     {
-        public string FinalRecipient { get; set; }
         /// <summary>
         /// Код ТОГС, куда направляется письмо
         /// </summary>
