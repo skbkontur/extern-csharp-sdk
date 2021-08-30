@@ -1,33 +1,56 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Certificates
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class CertificateDto
     {
-        [UsedImplicitly]
+        /// <summary>
+        /// ФИО владельца сертификата
+        /// </summary>
         public string Fio { get; set; }
 
-        [UsedImplicitly]
+        /// <summary>
+        /// ИНН организации
+        /// </summary>
         public string Inn { get; set; }
 
-        [UsedImplicitly]
+        /// <summary>
+        /// КПП организации если есть
+        /// </summary>
         public string Kpp { get; set; }
 
-        [UsedImplicitly]
+        /// <summary>
+        /// Валидность сертификата
+        /// </summary>
         public bool IsValid { get; set; }
 
-        [UsedImplicitly]
-        public bool IsCloud { get; set; }
-
-        [UsedImplicitly]
+        /// <summary>
+        /// Является ли сертификат КЭП
+        /// </summary>
         public bool IsQualified { get; set; }
 
-        [UsedImplicitly]
+        /// <summary>
+        /// Контент
+        /// </summary>
         public byte[] Content { get; set; }
 
+        /// <summary>
+        /// Отпечаток сертификата
+        /// </summary>
+        public string Thumbprint { get; set; }
+
+        /// <summary>
+        /// Действителен по 
+        /// </summary>
         public DateTime ExpiredAt { get; set; }
 
-        public CertificateType CertificateType { get; set; }
+        /// <summary>
+        /// Серийный номер
+        /// </summary>
+        public string SerialNumber { get; set; }
     }
 }
