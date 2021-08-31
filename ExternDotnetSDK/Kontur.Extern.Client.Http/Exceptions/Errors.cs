@@ -59,5 +59,8 @@ namespace Kontur.Extern.Client.Http.Exceptions
 
         public static Exception CannotDeserializeFromNullJson(Type type) => 
             new NotSupportedException($"An attempt to deserialize a null json into an object of type {type} failed: null JSON deserialization is not supported.");
+
+        public static Exception DeserializationFailure(Exception exception) => 
+            new JsonException("Deserialization failed", exception);
     }
 }

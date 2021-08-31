@@ -22,11 +22,11 @@ namespace Kontur.Extern.Client.Http.Serialization
         
         public T EnsureSuccessfulNotNullResult() => 
             exception is not null 
-                ? throw exception 
+                ? throw Errors.DeserializationFailure(exception)
                 : result ?? throw Errors.CannotDeserializeFromNullJson(typeof (T));
 
         public DeserializationResult<T> EnsureSuccess() => 
-            exception is not null ? throw exception : this;
+            exception is not null ? throw Errors.DeserializationFailure(exception) : this;
 
         public T? GetResultOrNull() => 
             exception is not null ? default : result;
