@@ -20,7 +20,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
         /// <param name="replyId">Идентификатор ответного документа</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
-        Task<ApiReplyDocument> GetReplyAsync(
+        Task<ReplyDocument> GetReplyAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
@@ -38,7 +38,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
         /// <param name="replyId">Идентификатор ответного документа</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
-        Task<ApiReplyDocument> GetInventoryReplyAsync(
+        Task<ReplyDocument> GetInventoryReplyAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
@@ -57,7 +57,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
         /// <param name="certificate">Сертификат</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
-        Task<ApiReplyDocument> GenerateReplyAsync(
+        Task<ReplyDocument> GenerateReplyAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
@@ -76,7 +76,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
         /// <param name="certificate">Сертификат</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
-        Task<ApiReplyDocument> GenerateReplyAsync(
+        Task<ReplyDocument> GenerateReplyAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
@@ -97,7 +97,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
         /// <param name="certificate">Сертификат</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
-        Task<ApiReplyDocument> GenerateInventoryReplyAsync(
+        Task<ReplyDocument> GenerateInventoryReplyAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
@@ -157,7 +157,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
         /// <param name="signature">Подпись</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
-        Task<ApiReplyDocument> UpdateReplySignatureAsync(
+        Task<ReplyDocument> UpdateReplySignatureAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
@@ -177,7 +177,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
         /// <param name="signature">Подпись</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
-        Task<ApiReplyDocument> UpdateInventoryReplySignatureAsync(
+        Task<ReplyDocument> UpdateInventoryReplySignatureAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
@@ -197,7 +197,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
         /// <param name="content">Контент ответного документа</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
-        Task<ApiReplyDocument> UpdateReplyContentAsync(
+        Task<ReplyDocument> UpdateReplyContentAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
@@ -217,7 +217,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
         /// <param name="content">Контент ответного документа</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
-        Task<ApiReplyDocument> UpdateInventoryReplyContentAsync(
+        Task<ReplyDocument> UpdateInventoryReplyContentAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
