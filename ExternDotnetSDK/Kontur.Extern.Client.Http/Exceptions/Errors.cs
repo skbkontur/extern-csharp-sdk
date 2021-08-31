@@ -47,6 +47,12 @@ namespace Kontur.Extern.Client.Http.Exceptions
 
         public static Exception JsonTokenIsUnexpected(Type type, JsonTokenType actualToken, params JsonTokenType[] expectedTokens) => 
             new JsonException($"Unexpected token while deserialize {type}. Expected {string.Join(", or", expectedTokens)}, but the json has {actualToken}.");
+        
+        public static Exception JsonTokenIsUnexpected(JsonTokenType actualToken, params JsonTokenType[] expectedTokens) => 
+            new JsonException($"Unexpected token {actualToken}. Expected {string.Join(", or", expectedTokens)}.");
+        
+        public static Exception UnknownJsonBooleanValue(string value, params string[] expectedValues) => 
+            new JsonException($"Unexpected json property value \"{value}\". Possible values {string.Join(", or", expectedValues)}.");
 
         public static Exception JsonInvalidEnumValue(Type type, string? value) => 
             new JsonException($"Unexpected value of enum type {type}: {value ?? "<null>"}");

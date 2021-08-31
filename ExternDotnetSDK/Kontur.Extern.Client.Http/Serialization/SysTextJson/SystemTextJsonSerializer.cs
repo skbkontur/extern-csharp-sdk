@@ -29,7 +29,7 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
         {
         }
 
-        public SystemTextJsonSerializer(JsonNamingPolicy? namingPolicy, JsonConverter[] jsonConverters, bool ignoreIndentation)
+        public SystemTextJsonSerializer(JsonNamingPolicy? namingPolicy, JsonConverter[] jsonConverters, bool ignoreIndentation, bool ignoreNullValues = true)
         {
             var encoderSettings = new TextEncoderSettings();
             encoderSettings.AllowRange(UnicodeRanges.BasicLatin);
@@ -43,7 +43,7 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
             {
                 PropertyNameCaseInsensitive = true,
                 PropertyNamingPolicy = namingPolicy,
-                IgnoreNullValues = true,
+                IgnoreNullValues = ignoreNullValues,
                 IncludeFields = true,
                 Encoder = JavaScriptEncoder.Create(encoderSettings),
             };
