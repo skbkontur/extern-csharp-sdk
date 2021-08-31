@@ -1,8 +1,16 @@
-﻿namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+
+namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class Certificate
     {
-        // [JsonProperty(Required = Required.Always)]
+        /// <summary>
+        ///     Публичная часть сертификата
+        /// </summary>
+        //[Required]
         public string Content { get; set; }
     }
 }
