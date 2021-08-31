@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Testing.Helpers;
 
 namespace Kontur.Extern.Client.Tests.TestHelpers
@@ -19,23 +18,44 @@ namespace Kontur.Extern.Client.Tests.TestHelpers
                 .Select(x => x!.Value);
         }
         
+        public static IEnumerable<TValue> AllEnumValuesFromNestedTypesOfStruct<T, TValue>()
+            where TValue : struct
+        {
+            return AllEnumMembersFromNestedTypesOfStruct<T, TValue>()
+                .Select(x => x.value)
+                .Where(x => x.HasValue)
+                .Select(x => x!.Value);
+        }
+        
         public static IEnumerable<(FieldInfo field, T? value)> AllEnumMembersFromNestedTypesOfStruct<T>()
             where T : struct
         {
-            return EnumMembersFromNestedTypesOf<T>().Select(x => (x, (T?)x.GetValue(null!)));
+            return AllEnumMembersFromNestedTypesOfStruct<T, T>();
         }
+        
+        public static IEnumerable<(FieldInfo field, TValue? value)> AllEnumMembersFromNestedTypesOfStruct<T, TValue>()
+            where TValue : struct
+        {
+            return EnumMembersFromNestedTypesOf<T, TValue>().Select(x => (x, (TValue?) x.GetValue(null!)));
+        }
+        
+        public static IEnumerable<(FieldInfo field, T? value)> AllEnumMembersFromNestedTypesOf<T>() => 
+            AllEnumMembersFromNestedTypes<T, T>();
+        
+        public static IEnumerable<(FieldInfo field, TValue? value)> AllEnumMembersFromNestedTypes<T, TValue>() => 
+            EnumMembersFromNestedTypesOf<T, TValue>().Select(x => (x, (TValue?) x.GetValue(null!)));
 
-        private static IEnumerable<FieldInfo> EnumMembersFromNestedTypesOf<T>()
+        private static IEnumerable<FieldInfo> EnumMembersFromNestedTypesOf<T, TValue>()
         {
             var fields = (
                 from nestedType in typeof (T).EnumerateAllNestedTypes()
                 from fieldInfo in nestedType.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField)
-                where fieldInfo.FieldType == typeof (T)
+                where fieldInfo.FieldType == typeof (TValue)
                 select fieldInfo
             ).ToArray();
 
             if (fields.Length == 0)
-                throw new InvalidOperationException($"Type {typeof(DocumentType)} does not contain predefined document types");
+                throw new InvalidOperationException($"Type {typeof(T)} does not contain predefined values of {typeof(TValue)}");
                 
             return fields;
         }
