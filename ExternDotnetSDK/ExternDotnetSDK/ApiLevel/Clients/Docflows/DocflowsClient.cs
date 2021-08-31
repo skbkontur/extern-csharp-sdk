@@ -8,7 +8,6 @@ using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Documents;
 using Kontur.Extern.Client.ApiLevel.Models.Documents.Data;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 // ReSharper disable CommentTypo
@@ -252,68 +251,6 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
         {
             return http.GetAsync<ApiTaskResult<PrintDocumentResult>>(
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/tasks/{taskId}",
-                timeout
-            );
-        }
-
-        public Task<CloudDecryptionInitResult> StartCloudDecryptDocumentAsync(
-            Guid accountId,
-            Guid docflowId,
-            Guid documentId,
-            byte[] publicKey,
-            TimeSpan? timeout = null)
-        {
-            return http.PostAsync<CertificateRequest, CloudDecryptionInitResult>(
-                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content",
-                new CertificateRequest {PublicKey = publicKey},
-                timeout
-            );
-        }
-
-        public Task<DecryptDocumentResult> ConfirmDocumentDecryptionAsync(
-            Guid accountId,
-            Guid docflowId,
-            Guid documentId,
-            string requestId,
-            string code,
-            bool? unzip = null,
-            TimeSpan? timeout = null)
-        {
-            var url = new RequestUrlBuilder($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/confirm-content-decryption")
-                .AppendToQuery("requestId", requestId)
-                .AppendToQuery("code", code)
-                .AppendToQuery("unzip", unzip)
-                .Build();
-            return http.PostAsync<DecryptDocumentResult>(url, timeout);
-        }
-
-        public Task<DssDecryptionInitResult> StartDssDecryptDocumentAsync(
-            Guid accountId,
-            Guid docflowId,
-            Guid documentId,
-            byte[] publicKey,
-            bool? unzip = null,
-            TimeSpan? timeout = null)
-        {
-            var url = new RequestUrlBuilder($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypt-content")
-                .AppendToQuery("unzipIfCan", unzip)
-                .Build();
-            return http.PostAsync<CertificateRequest, DssDecryptionInitResult>(
-                url,
-                new CertificateRequest {PublicKey = publicKey},
-                timeout
-            );
-        }
-
-        public Task<ApiTaskResult<DecryptDocumentResult>> GetDssDecryptDocumentTaskAsync(
-            Guid accountId,
-            Guid docflowId,
-            Guid documentId,
-            Guid taskId,
-            TimeSpan? timeout = null)
-        {
-            return http.PostAsync<ApiTaskResult<DecryptDocumentResult>>(
-                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/tasks/{taskId}",
                 timeout
             );
         }
