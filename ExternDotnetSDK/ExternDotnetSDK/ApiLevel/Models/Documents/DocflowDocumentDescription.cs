@@ -1,16 +1,12 @@
-﻿using Kontur.Extern.Client.ApiLevel.Models.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Documents.Requisites;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Documents
 {
-    public class DocflowDocumentDescription
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
+    public class DocflowDocumentDescription : DocflowDocumentDescriptionBase<DocflowDocumentRequisites>
     {
-        public Urn Type { get; set; }
-        public string Filename { get; set; }
-        public string ContentType { get; set; }
-        public bool Compressed { get; set; }
-        public DocflowDocumentRequisites Requisites { get; set; }
-        public long? RelatedDocflowsCount { get; set; }
-        public bool SupportRecognition { get; set; }
     }
 }

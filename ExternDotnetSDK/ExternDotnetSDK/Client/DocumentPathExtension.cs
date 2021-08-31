@@ -40,7 +40,7 @@ namespace Kontur.Extern.Client
             );
         }
 
-        public static Task<ApiReplyDocument> GenerateReplyAsync(this in DocumentPath path, DocumentType documentType, CertificateContent certificate, TimeSpan? timeout = null)
+        public static Task<ReplyDocument> GenerateReplyAsync(this in DocumentPath path, DocumentType documentType, CertificateContent certificate, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
             return apiClient.Replies.GenerateReplyAsync(

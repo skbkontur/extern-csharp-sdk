@@ -13,7 +13,8 @@ namespace Kontur.Extern.Client.ApiLevel.Json
             new System.Text.Json.Serialization.JsonConverter[]
             {
                 new UrnJsonConverter(),
-                new DocflowContainingConverter()
+                new DocflowContainingConverter(),
+                new DocflowDocumentDescriptionConverter()
             },
             ignoreIndentation
         );
