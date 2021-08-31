@@ -1,6 +1,6 @@
 ﻿namespace Kontur.Extern.Client.ApiLevel.Models.Documents.Requisites
 {
-    public class DocflowDocumentRequisites
+    public abstract class DocflowDocumentRequisites
     {
     }
 }
