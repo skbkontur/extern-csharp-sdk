@@ -1,7 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Kontur.Extern.Client.ApiLevel.Models.Documents.Requisites;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents.Requisites;
 using Kontur.Extern.Client.Model.Documents;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows

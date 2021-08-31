@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Attributes;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Documents
+namespace Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

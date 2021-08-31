@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Documents.Data
+namespace Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents.Data
 {
     public class PrintDocumentRequest
     {

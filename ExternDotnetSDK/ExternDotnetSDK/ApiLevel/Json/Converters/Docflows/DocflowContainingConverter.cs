@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions;
-using Kontur.Extern.Client.ApiLevel.Models.Documents;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions;
 using Kontur.Extern.Client.Model.Docflows;

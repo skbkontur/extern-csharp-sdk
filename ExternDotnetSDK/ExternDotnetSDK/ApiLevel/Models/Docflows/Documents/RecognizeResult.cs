@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Common.Time;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Documents
+namespace Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

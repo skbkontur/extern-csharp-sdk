@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
-using Kontur.Extern.Client.ApiLevel.Models.Documents;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents.Replies;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 // ReSharper disable CommentTypo
 
