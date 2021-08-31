@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Documents;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.End2EndTests.Client.TestAbstractions;
@@ -158,7 +159,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
                 .WithSignature(GeneratedAccount.CertificatePublicPart);
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
-            var expectedDocument = new ApiLevel.Models.Drafts.DraftDocument
+            var expectedDocument = new ApiLevel.Models.Drafts.Documents.DraftDocument
             {
                 Id = addedDocumentId,
                 Description = new DocumentDescription
@@ -181,7 +182,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
 
             var draftDocument = await Context.Drafts.GetDocument(AccountId, createdDraft.Id, addedDocumentId);
 
-            draftDocument.Should().BeEquivalentTo(expectedDocument, c => c.Excluding(x => x.DecryptedContentLink).Excluding(x => x.SignatureContentLink).Excluding(x => x.Contents));
+            draftDocument.Should().BeEquivalentTo(expectedDocument, c => c.Excluding(x => x.SignatureContentLink).Excluding(x => x.Contents));
         }
         
         [Fact]

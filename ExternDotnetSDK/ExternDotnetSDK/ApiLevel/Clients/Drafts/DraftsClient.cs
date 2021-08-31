@@ -6,6 +6,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Documents;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Send;
@@ -228,7 +229,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             Guid accountId,
             Guid draftId,
             Guid documentId,
-            FormatType type,
+            DocumentFormatType type,
             int? version,
             string contract,
             TimeSpan? timeout = null)
@@ -243,7 +244,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         public async Task<DraftDocument> BuildDocumentAsync(
             Guid accountId,
             Guid draftId,
-            FormatType type,
+            DocumentFormatType type,
             int? version,
             string contract,
             TimeSpan? timeout = null)
