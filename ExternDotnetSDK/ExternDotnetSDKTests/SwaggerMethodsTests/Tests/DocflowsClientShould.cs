@@ -205,16 +205,16 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         //         async () => await Client.Docflows.PrintDocumentAsync(Account.Id, docflow.Id, document.Id, new byte[] {0}).ConfigureAwait(false));
         // }
 
-        [Test]
-        public void FailToDecryptDocumentContent_WithBadCertificate()
-        {
-            Assert.ThrowsAsync<HttpRequestException>(
-                () => Client.Docflows.StartCloudDecryptDocumentAsync(
-                    Account.Id,
-                    docflow.Id,
-                    document.Id,
-                    new byte[] {1, 2, 3}));
-        }
+        // [Test]
+        // public void FailToDecryptDocumentContent_WithBadCertificate()
+        // {
+        //     Assert.ThrowsAsync<HttpRequestException>(
+        //         () => Client.Docflows.StartCloudDecryptDocumentAsync(
+        //             Account.Id,
+        //             docflow.Id,
+        //             document.Id,
+        //             new byte[] {1, 2, 3}));
+        // }
 
         [Test]
         public void FailToGenerateDocumentReply_WithBadParameters()
