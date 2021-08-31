@@ -32,6 +32,15 @@ namespace Kontur.Extern.Client.Model.Documents
 
         public Urn? ToUrn() => urn;
 
+        public bool IsBelongTo(Urn @namespace)
+        {
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            if (@namespace is null)
+                return false;
+            
+            return urn is not null && urn.Value.StartsWith(@namespace.Value);
+        }
+
         public override string ToString() => urn?.ToString() ?? string.Empty;
 
         public bool Equals(DocumentType other) => Equals(urn, other.urn);
