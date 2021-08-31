@@ -16,6 +16,25 @@ namespace Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions
             return builder.WithOverride(new PropNameGenerator<TValue>(propName, nameComparison, generator));
         }
         
+        [PublicAPI]
+        public static IAutoGenerateConfigBuilder RuleForType<TValue>(this IAutoGenerateConfigBuilder builder, Func<Faker, TValue> generator) => 
+            builder.WithOverride(new TypeGenerator<TValue>(generator));
+
+        private class TypeGenerator<TValue> : AutoGeneratorOverride
+        {
+            private readonly Func<Faker, TValue> generator;
+
+            public TypeGenerator(Func<Faker, TValue> generator) => this.generator = generator;
+
+            public override bool Preinitialize => false;
+
+            public override bool CanOverride(AutoGenerateContext context) =>
+                context.GenerateType.IsAssignableTo(typeof (TValue));
+
+            public override void Generate(AutoGenerateOverrideContext context) => 
+                context.Instance = generator(context.Faker);
+        }
+
         private class PropNameGenerator<TValue> : AutoGeneratorOverride
         {
             private readonly string propName;

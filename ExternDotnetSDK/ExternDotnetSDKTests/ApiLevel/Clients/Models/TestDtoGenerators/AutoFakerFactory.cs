@@ -31,6 +31,8 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
                 builder.RuleForPropNameOf("SenderInn", x => x.Random.ReplaceNumbers(PatternFor10Digits));
                 builder.RuleForPropNameOf("Inn", x => x.Random.ReplaceNumbers(PatternFor10Digits));
 
+                builder.RuleForType<DateOnly>(x => x.Date.Recent(30));
+                
                 builder.WithSkip<Urn>();
             });
         }
