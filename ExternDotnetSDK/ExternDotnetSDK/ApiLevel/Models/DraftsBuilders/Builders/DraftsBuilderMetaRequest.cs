@@ -1,7 +1,6 @@
 ﻿using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data;
-// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders
 {

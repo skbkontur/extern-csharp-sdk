@@ -6,19 +6,33 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders
 {
     public class DraftsBuilderMeta
     {
-        //[JsonProperty(Required = Required.Always)]
+        /// <summary>
+        /// Отправитель
+        /// </summary>
+        //[Required]
         public Sender Sender { get; set; }
         
-        //[JsonProperty(Required = Required.Always)]
+        /// <summary>
+        /// Налогоплательщик
+        /// </summary>
+        //[Required]
         public AccountInfo Payer { get; set; }
         
-        //[JsonProperty(Required = Required.Always)]
+        /// <summary>
+        /// Получатель
+        /// </summary>
+        //[Required]
         public RecipientInfo Recipient { get; set; }
         
-        //[JsonProperty(Required = Required.Always)]
+        /// <summary>
+        /// Тип DraftsBuilder
+        /// </summary>
+        //[Required]
         public Urn BuilderType { get; set; }
         
-        //[JsonProperty(Required = Required.Always)]
+        /// <summary>
+        /// Данные, специфичные для указанного типа DraftsBuilder
+        /// </summary>
         public DraftsBuilderData BuilderData { get; set; }
     }
 }
