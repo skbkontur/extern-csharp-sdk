@@ -1,9 +1,13 @@
-﻿using Kontur.Extern.Client.ApiLevel.Models.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class DraftsBuilderMeta
     {
         /// <summary>
