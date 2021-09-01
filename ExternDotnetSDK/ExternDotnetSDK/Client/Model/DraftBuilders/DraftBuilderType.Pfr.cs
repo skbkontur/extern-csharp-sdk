@@ -16,6 +16,16 @@ namespace Kontur.Extern.Client.Model.DraftBuilders
             /// Сведения ПФР
             /// </summary>
             public static readonly DraftBuilderType Report = "urn:drafts-builder:pfr-report";
+            
+            /// <summary>
+            /// Текст письма
+            /// </summary>
+            public static readonly DraftBuilderType Letter = "urn:drafts-builder:pfr-letter";
+            
+            /// <summary>
+            /// Уточнение платежей
+            /// </summary>
+            public static readonly DraftBuilderType Ios = "urn:drafts-builder:pfr-ios";
         }
     }
 }

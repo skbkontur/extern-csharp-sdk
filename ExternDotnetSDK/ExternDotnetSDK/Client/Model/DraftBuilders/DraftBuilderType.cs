@@ -19,6 +19,8 @@ namespace Kontur.Extern.Client.Model.DraftBuilders
         /// </summary>
         public static readonly Urn Namespace = new("urn:drafts-builder");
         
+        private static readonly Urn LegacyNamespace = new("urn:externapi");
+        
         private readonly Urn? urn;
 
         public DraftBuilderType(string urn)
@@ -29,7 +31,7 @@ namespace Kontur.Extern.Client.Model.DraftBuilders
         public DraftBuilderType(Urn urn)
         {
             this.urn = urn ?? throw new ArgumentNullException(nameof(urn));
-            if (!Namespace.IsParentOf(urn))
+            if (!Namespace.IsParentOf(urn) && !LegacyNamespace.IsParentOf(urn))
                 throw Errors.UrnDoesNotBelongToNamespace(nameof(urn), urn, Namespace);
         }
 
