@@ -184,30 +184,6 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
             return http.PutAsync<byte[], ReplyDocument>(url, content, timeout);
         }
 
-        public Task<SignInitResult> DssSignReplyAsync(
-            Guid accountId,
-            Guid docflowId,
-            Guid documentId,
-            Guid replyId,
-            TimeSpan? timeout = null)
-        {
-            var url = $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/cloud-sign";
-            return http.PostAsync<SignInitResult>(url, timeout);
-        }
-
-        public Task<SignInitResult> DssSignInventoryReplyAsync(
-            Guid accountId,
-            Guid relatedDocflowId,
-            Guid relatedDocumentId,
-            Guid inventoryId,
-            Guid documentId,
-            Guid replyId,
-            TimeSpan? timeout = null)
-        {
-            var url = $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/cloud-sign";
-            return http.PostAsync<SignInitResult>(url, timeout);
-        }
-
         public Task<ApiTaskResult<CryptOperationStatusResult>> GetDssSignReplyTaskAsync(
             Guid accountId,
             Guid docflowId,

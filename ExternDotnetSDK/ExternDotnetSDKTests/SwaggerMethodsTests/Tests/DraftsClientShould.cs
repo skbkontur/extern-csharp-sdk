@@ -723,15 +723,6 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
             await Client.Drafts.DeleteDraftAsync(Account.Id, d.Id).ConfigureAwait(false);
         }
 
-        [Test]
-        public async Task FailToCloudSignDraft_WithBadParameters()
-        {
-            var d = await CreateDraftAsync().ConfigureAwait(false);
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.DssSignAsync(Guid.Empty, d.Id).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.DssSignAsync(Account.Id, Guid.Empty).ConfigureAwait(false));
-            await DeleteDraftAsync(d).ConfigureAwait(false);
-        }
-
         private async Task<Draft> CreateDraftAsync() => await Client.Drafts.CreateDraftAsync(Account.Id, validDraftMetaRequest).ConfigureAwait(false);
 
         private async Task DeleteDraftAsync(Draft d) => await Client.Drafts.DeleteDraftAsync(Account.Id, d.Id).ConfigureAwait(false);

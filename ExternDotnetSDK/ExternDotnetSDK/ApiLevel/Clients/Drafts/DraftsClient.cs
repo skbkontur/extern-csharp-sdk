@@ -276,9 +276,6 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             return http.GetAsync<ApiTaskPage>(url, timeout);
         }
 
-        public Task<SignInitResult> DssSignAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
-            http.PostAsync<SignInitResult>($"/v1/{accountId}/drafts/{draftId}/cloud-sign", timeout);
-
         public Task<ApiTaskResult<CryptOperationStatusResult>> GetDssSignTask(
             Guid accountId,
             Guid draftId,

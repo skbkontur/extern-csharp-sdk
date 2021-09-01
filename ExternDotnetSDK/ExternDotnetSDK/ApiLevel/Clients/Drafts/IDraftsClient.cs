@@ -340,15 +340,6 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             TimeSpan? timeout = null);
 
         /// <summary>
-        /// Подписание документов в черновике
-        /// </summary>
-        /// <param name="accountId">Идентификатор учетной записи</param>
-        /// <param name="draftId">Идентификатор черновика</param>
-        /// <param name="timeout"></param>
-        /// <returns>Задача подписания</returns>
-        Task<SignInitResult> DssSignAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
-
-        /// <summary>
         /// Проверка статуса задачи подписания по TaskId
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
