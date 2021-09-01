@@ -1,8 +1,13 @@
-﻿using Kontur.Extern.Client.ApiLevel.Models.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
+
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests
+namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Documents
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class DocumentDescriptionRequest
     {
         /// <summary>

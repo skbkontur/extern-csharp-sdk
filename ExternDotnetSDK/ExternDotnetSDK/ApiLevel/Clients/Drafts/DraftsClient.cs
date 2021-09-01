@@ -10,6 +10,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Drafts.Documents;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Send;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Signatures;
 using Kontur.Extern.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 

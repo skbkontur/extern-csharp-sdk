@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Documents;
 
 // ReSharper disable CommentTypo
 

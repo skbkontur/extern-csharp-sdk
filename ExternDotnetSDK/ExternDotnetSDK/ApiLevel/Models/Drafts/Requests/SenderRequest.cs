@@ -1,22 +1,40 @@
-﻿using System.Text.Json.Serialization;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
+using JetBrains.Annotations;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class SenderRequest
     {
-        //[JsonProperty(Required = Required.Always)]
+        /// <summary>
+        /// ИНН
+        /// </summary>
+        //[Required]
         public string Inn { get; set; }
+
+        /// <summary>
+        /// КПП
+        /// </summary>
         public string Kpp { get; set; }
 
-        //[JsonProperty(Required = Required.Always)]
+        /// <summary>
+        /// Сертификат для отправки
+        /// </summary>
+        // [Required]
         public CertificateRequest Certificate { get; set; }
 
-        //[JsonProperty(Required = Required.Always)]
+        /// <summary>
+        /// Отправитель является представителем
+        /// </summary>
+        //[Required]
         public bool IsRepresentative { get; set; }
 
+        /// <summary>
+        /// IP адрес отправителя отчета
+        /// </summary>
         [JsonPropertyName("ipaddress")]
-        //[JsonProperty(Required = Required.Always)]
         public string IpAddress { get; set; }
     }
 }

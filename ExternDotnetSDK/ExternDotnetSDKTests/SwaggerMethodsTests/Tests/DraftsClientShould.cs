@@ -6,6 +6,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Documents;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
+using Kontur.Extern.Client.ApiLevel.Models.Drafts.Signatures;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
