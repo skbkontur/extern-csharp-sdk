@@ -8,7 +8,8 @@ namespace Kontur.Extern.Client.ApiLevel.Json
 {
     public static class JsonSerializerFactory
     {
-       public static IJsonSerializer CreateJsonSerializer(bool ignoreIndentation = false) => new SystemTextJsonSerializer(
+       public static IJsonSerializer CreateJsonSerializer(bool ignoreIndentation = false, bool ignoreNullValues = true) => 
+           new SystemTextJsonSerializer(
             new KebabCaseNamingPolicy(),
             new System.Text.Json.Serialization.JsonConverter[]
             {
@@ -16,7 +17,8 @@ namespace Kontur.Extern.Client.ApiLevel.Json
                 new DocflowContainingConverter(),
                 new DocflowDocumentDescriptionConverter()
             },
-            ignoreIndentation
+            ignoreIndentation,
+            ignoreNullValues
         );
     }
 }

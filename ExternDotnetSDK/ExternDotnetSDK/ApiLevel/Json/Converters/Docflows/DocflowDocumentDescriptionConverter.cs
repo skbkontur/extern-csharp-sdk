@@ -30,7 +30,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
 
                 var documentTypeValue = readerClone.GetString();
                 if (documentTypeValue == null)
-                    return typeof (UnknownDescription);
+                    return typeof (CommonDocflowDocumentRequisites);
 
                 var documentType = new DocumentType(documentTypeValue);
                 return DocumentDescriptionRequisitesTypes.GetRequisiteType(documentType);

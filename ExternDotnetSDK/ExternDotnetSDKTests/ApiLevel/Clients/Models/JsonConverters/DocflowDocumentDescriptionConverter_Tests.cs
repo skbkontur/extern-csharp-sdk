@@ -6,6 +6,7 @@ using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Json;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents.Requisites;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators;
@@ -23,7 +24,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         [SetUp]
         public void SetUp()
         {
-            serializer = JsonSerializerFactory.CreateJsonSerializer();
+            serializer = JsonSerializerFactory.CreateJsonSerializer(ignoreNullValues: false);
             descriptionGenerator = new DocflowDocumentDescriptionGenerator();
         }
         
@@ -37,6 +38,39 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
 
             description.Type.Should().Be(requisitesCase.DocumentType.ToUrn());
             DescriptionShouldBeEqual(description, expectedDescription);
+        }
+
+        [Test]
+        public void Should_deserialize_common_requisites_in_case_of_unknown_document_type()
+        {
+            var unknownDocumentType = new DocumentType(DocumentType.Namespace.Append("unknown-document"));
+            var documentDescription = descriptionGenerator.GenerateWithoutRequisites(unknownDocumentType);
+            documentDescription.Requisites = new CommonDocflowDocumentRequisites();
+            var json = serializer.SerializeToIndentedString(documentDescription);
+            Console.WriteLine($"Generated JSON: {json}");
+
+            var description = serializer.Deserialize<DocflowDocumentDescription>(json);
+
+            description.Type.Should().Be(unknownDocumentType.ToUrn());
+            description.Requisites.Should().BeOfType<CommonDocflowDocumentRequisites>();
+            description.Should().BeEquivalentTo(documentDescription);
+        }
+
+        [Test]
+        public void Should_deserialize_common_requisites_in_case_of_null_document_type()
+        {
+            var dummyDocumentType = DocumentType.Fns.Fns534.Report;
+            var documentDescription = descriptionGenerator.GenerateWithoutRequisites(dummyDocumentType);
+            documentDescription.Type = null;
+            documentDescription.Requisites = new CommonDocflowDocumentRequisites();
+            var json = serializer.SerializeToIndentedString(documentDescription);
+            Console.WriteLine($"Generated JSON: {json}");
+
+            var description = serializer.Deserialize<DocflowDocumentDescription>(json);
+
+            description.Type.Should().BeNull();
+            description.Requisites.Should().BeOfType<CommonDocflowDocumentRequisites>();
+            description.Should().BeEquivalentTo(documentDescription);
         }
 
         private static void DescriptionShouldBeEqual(DocflowDocumentDescription description, DocflowDocumentDescription expectedDescription)
