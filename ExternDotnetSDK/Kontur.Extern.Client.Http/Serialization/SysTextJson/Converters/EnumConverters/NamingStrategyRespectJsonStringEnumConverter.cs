@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
 using System.Text.Json;
@@ -8,12 +9,19 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumCon
 {
     public class NamingStrategyRespectJsonStringEnumConverter : JsonConverterFactory
     {
+        private readonly Dictionary<Type, JsonNamingPolicy?> enumTypeNamingPoliciesMap;
         private readonly bool serializeAsStrings;
         private readonly bool serializeHttpCodeAsStrings;
         private readonly JsonStringEnumConverter defaultJsonStringEnumConverter = new();
 
         public NamingStrategyRespectJsonStringEnumConverter(bool serializeAsStrings = true, bool serializeHttpCodeAsStrings = false)
+            : this(new Dictionary<Type, JsonNamingPolicy?>(), serializeHttpCodeAsStrings)
         {
+        }
+
+        public NamingStrategyRespectJsonStringEnumConverter(Dictionary<Type, JsonNamingPolicy?> enumTypeNamingPoliciesMap, bool serializeAsStrings = true, bool serializeHttpCodeAsStrings = false)
+        {
+            this.enumTypeNamingPoliciesMap = enumTypeNamingPoliciesMap;
             this.serializeAsStrings = serializeAsStrings;
             this.serializeHttpCodeAsStrings = serializeHttpCodeAsStrings;
         }
@@ -45,11 +53,16 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumCon
 
         private JsonConverter CreateJsonStringEnumConverter(Type typeToConvert, JsonSerializerOptions options)
         {
-            var namingPolicy = options.PropertyNamingPolicy;
+            var namingPolicy = enumTypeNamingPoliciesMap.TryGetValue(typeToConvert, out var overridenNamingPolicy) 
+                ? overridenNamingPolicy 
+                : options.PropertyNamingPolicy;
+
             if (typeToConvert == typeof (HttpStatusCode))
+            {
                 return new HttpStatusCodeConverter(namingPolicy, serializeHttpCodeAsStrings);
+            }
             
-            if ((namingPolicy is not null || !serializeAsStrings) && IsNamingStrategyConverterSupported(typeToConvert))
+            if ((namingPolicy is not null || !serializeAsStrings)  && IsNamingStrategyConverterSupported(typeToConvert))
             {
                 var converterType = typeof (NamingStrategyRespectJsonStringEnumConverter<>).MakeGenericType(typeToConvert);
                 return (JsonConverter) Activator.CreateInstance(converterType, namingPolicy, options.Encoder, serializeAsStrings);

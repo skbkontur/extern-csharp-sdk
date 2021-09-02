@@ -14,13 +14,13 @@ using Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumConvert
 
 namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
 {
-    public class SystemTextJsonSerializer : IJsonSerializer
+    internal class SystemTextJsonSerializer : IJsonSerializer
     {
         private readonly JsonSerializerOptions serializerOptions;
         private readonly JsonSerializerOptions writeIndentedOptions;
         private readonly ArrayPool<byte> bytesPool;
         private readonly JsonWriterOptions writerOptions;
-
+        
         public SystemTextJsonSerializer(bool ignoreIndentation = false)
             : this(null, Array.Empty<JsonConverter>(), ignoreIndentation)
         {
@@ -75,7 +75,7 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
                 {
                     if (converter is JsonStringEnumConverter)
                     {
-                        throw Errors.OverridingJsonStringEnumConverterIsUnsupported();
+                        throw Errors.OverridingJsonStringEnumConverterIsUnsupported(nameof(converter));
                     }
                     
                     converters.Add(converter);
@@ -92,6 +92,27 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
 
                 converters.Add(new DateOnlyConverter());
             }
+        }
+
+        public SystemTextJsonSerializer(JsonSerializerOptions options, bool ignoreIndentation)
+        {
+            serializerOptions = options;
+            writeIndentedOptions = ignoreIndentation
+                ? serializerOptions
+                : new JsonSerializerOptions(serializerOptions)
+                {
+                    WriteIndented = true
+                };
+
+            writerOptions = new JsonWriterOptions
+            {
+                Encoder = serializerOptions.Encoder,
+                Indented = serializerOptions.WriteIndented,
+                // todo: benchmark with this option to find out how important it is
+                //SkipValidation = true 
+            };
+            
+            bytesPool = ArrayPool<byte>.Shared;
         }
 
         public ArraySegment<byte> SerializeToJsonBytes<T>(T body)

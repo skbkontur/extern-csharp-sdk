@@ -1,5 +1,4 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Http.Serialization;
@@ -110,13 +109,42 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
             }
         }
 
+        public class OverridenNamingStrategy
+        {
+            [Fact]
+            public void Should_override_naming_strategy_for_particular_enum()
+            {
+                var serializer = new SystemTextJsonSerializerFactory()
+                    .WithNamingPolicy(new KebabCaseNamingPolicy())
+                    .IgnoreIndentation()
+                    .IgnoreNullValues(false)
+                    .SetCustomNamingPolicyForSerializationEnumOf<AnotherTestEnum>(JsonNamingPolicy.CamelCase)
+                    .CreateSerializer();
+
+                ShouldSerializeDeserializeJsonCorrectly(
+                    AnotherTestEnum.ManyWordsMember,
+                    serializer,
+                    "\"manyWordsMember\""
+                );
+                ShouldSerializeDeserializeJsonCorrectly(
+                    TestEnum.ManyWordsValue,
+                    serializer,
+                    nameof(TestEnum.ManyWordsValue).ToKebabCase().ToQuoted()
+                );
+            }
+        }
+
         private static void ShouldSerializeDeserializeJsonCorrectly<TEnum>(TEnum testEnum, JsonNamingPolicy? namingPolicy, string expectedJson)
         {
-            var serializer = new SystemTextJsonSerializer(namingPolicy, true, false);
+            var serializer = new SystemTextJsonSerializerFactory()
+                .WithNamingPolicy(namingPolicy)
+                .IgnoreIndentation()
+                .IgnoreNullValues(false)
+                .CreateSerializer();
             ShouldSerializeDeserializeJsonCorrectly(testEnum, serializer, expectedJson);
         }
 
-        private static void ShouldSerializeDeserializeJsonCorrectly<TEnum>(TEnum testEnum, SystemTextJsonSerializer serializer, string expectedJson)
+        private static void ShouldSerializeDeserializeJsonCorrectly<TEnum>(TEnum testEnum, IJsonSerializer serializer, string expectedJson)
         {
             var dto = new Dto<TEnum> {value = testEnum};
             var expectedDtoJson = $"{{\"{nameof(dto.value)}\":{expectedJson}}}";
@@ -135,17 +163,23 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
             public TEnum value { get; set; } = default!;
         }
 
-        private static SystemTextJsonSerializer CreateSerializerWithNumberEnums() => new(
-            new KebabCaseNamingPolicy(),
-            new JsonConverter[] {new NamingStrategyRespectJsonStringEnumConverter(false)},
-            true,
-            false
-        );
+        private static IJsonSerializer CreateSerializerWithNumberEnums() =>
+            new SystemTextJsonSerializerFactory()
+                .AddConverter(new NamingStrategyRespectJsonStringEnumConverter(false))
+                .IgnoreIndentation()
+                .IgnoreNullValues(false)
+                .CreateSerializer();
 
         public enum TestEnum
         {
             Value,
             ManyWordsValue
+        }
+
+        public enum AnotherTestEnum
+        {
+            Member,
+            ManyWordsMember
         }
         
         public enum TestIntEnum
