@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using FluentAssertions;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
@@ -11,15 +10,9 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
     {
         private readonly IJsonSerializer serializer;
 
-        public YesNoUnknownBooleanConverter_Tests() => serializer = new SystemTextJsonSerializer(
-            null,
-            new JsonConverter[]
-            {
-                new YesNoUnknownBooleanConverter()
-            },
-            false,
-            false
-        );
+        public YesNoUnknownBooleanConverter_Tests() => serializer = new SystemTextJsonSerializerFactory()
+            .AddConverter(new YesNoUnknownBooleanConverter())
+            .CreateSerializer();
         
         [Theory]
         [InlineData(true, "yes")]

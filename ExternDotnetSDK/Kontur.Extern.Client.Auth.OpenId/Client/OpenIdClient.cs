@@ -20,7 +20,9 @@ namespace Kontur.Extern.Client.Auth.OpenId.Client
 {
     public class OpenIdClient : IOpenIdClient
     {
-        private static readonly IJsonSerializer Serializer = new SystemTextJsonSerializer(new SnakeCaseNamingPolicy());
+        private static readonly IJsonSerializer Serializer = new SystemTextJsonSerializerFactory()
+            .WithNamingPolicy(new SnakeCaseNamingPolicy())
+            .CreateSerializer();
         
         public static OpenIdClient Create(RequestTimeouts requestTimeouts, IClusterClient clusterClient)
         {

@@ -15,7 +15,7 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
     {
         private readonly IJsonSerializer serializer;
 
-        public DateOnlySerialization_Tests() => serializer = new SystemTextJsonSerializer();
+        public DateOnlySerialization_Tests() => serializer = new SystemTextJsonSerializerFactory().CreateSerializer();
 
         [Fact]
         public void Should_serialize_date_to_json_in_iso_format()

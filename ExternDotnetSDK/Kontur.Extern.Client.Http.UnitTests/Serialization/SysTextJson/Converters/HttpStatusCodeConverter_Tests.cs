@@ -80,7 +80,9 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
         [Theory]
         [MemberData(nameof(ValidStatusCodes))]
         public void Should_serialize_as_int_by_default(HttpStatusCode statusCode) => ShouldSerializeCorrectly(
-            new SystemTextJsonSerializer(true),
+            new SystemTextJsonSerializerFactory()
+                .IgnoreIndentation()
+                .CreateSerializer(),
             statusCode,
             $@"{{""StatusCode"":{((int) statusCode).ToString()}}}"
         );
@@ -101,7 +103,7 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
             $@"{{""StatusCode"":""{statusCode.ToString().ToKebabCase()}""}}"
         );
 
-        private static void ShouldSerializeCorrectly(SystemTextJsonSerializer serializer, HttpStatusCode statusCode, string? expectedJson)
+        private static void ShouldSerializeCorrectly(IJsonSerializer serializer, HttpStatusCode statusCode, string? expectedJson)
         {
             var dto = new Dto {StatusCode = statusCode};
 
@@ -112,7 +114,7 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
 
         private static void ShouldDeserializeJsonCorrectly(string json, HttpStatusCode statusCode, JsonNamingPolicy? namingPolicy = null)
         {
-            var serializer = new SystemTextJsonSerializer(namingPolicy);
+            var serializer = new SystemTextJsonSerializerFactory().WithNamingPolicy(namingPolicy).CreateSerializer();
             var expectedDto = new Dto {StatusCode = statusCode};
 
             var dto = serializer.Deserialize<Dto>(json);
@@ -120,8 +122,11 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
             dto.Should().BeEquivalentTo(expectedDto);
         }
 
-        private static SystemTextJsonSerializer CreateSerializerWithOverridenConverter(JsonConverter converter) => 
-            new(null, new[] {converter}, true);
+        private static IJsonSerializer CreateSerializerWithOverridenConverter(JsonConverter converter) =>
+            new SystemTextJsonSerializerFactory()
+                .AddConverter(converter)
+                .IgnoreIndentation()
+                .CreateSerializer();
 
         public static TheoryData<HttpStatusCode> ValidStatusCodes
         {
