@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Kontur.Extern.Client.Http.Exceptions;
 
-namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters
+namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumConverters
 {
     internal class HttpStatusCodeConverter : JsonConverter<HttpStatusCode>
     {

@@ -7,8 +7,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.Http.Exceptions;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Buffers;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumConverters;
 
 namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
 {
@@ -24,8 +26,8 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
         {
         }
         
-        public SystemTextJsonSerializer(JsonNamingPolicy? namingPolicy, bool ignoreIndentation = false)
-            : this(namingPolicy, Array.Empty<JsonConverter>(), ignoreIndentation)
+        public SystemTextJsonSerializer(JsonNamingPolicy? namingPolicy, bool ignoreIndentation = false, bool ignoreNullValues = true)
+            : this(namingPolicy, Array.Empty<JsonConverter>(), ignoreIndentation, ignoreNullValues)
         {
         }
 
@@ -47,7 +49,7 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
                 IncludeFields = true,
                 Encoder = JavaScriptEncoder.Create(encoderSettings),
             };
-            AddConverters(serializerOptions.Converters, namingPolicy, jsonConverters);
+            AddConverters(serializerOptions.Converters, jsonConverters);
 
             writeIndentedOptions = ignoreIndentation
                 ? serializerOptions
@@ -66,34 +68,28 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
             
             bytesPool = ArrayPool<byte>.Shared;
 
-            static void AddConverters(ICollection<JsonConverter> converters, JsonNamingPolicy? namingPolicy, JsonConverter[] jsonConverters)
+            static void AddConverters(ICollection<JsonConverter> converters, JsonConverter[] jsonConverters)
             {
-                var httpStatusCodeConverterAdded = false;
                 var jsonStringEnumConverterAdded = false;
                 foreach (var converter in jsonConverters)
                 {
-                    converters.Add(converter);
                     if (converter is JsonStringEnumConverter)
+                    {
+                        throw Errors.OverridingJsonStringEnumConverterIsUnsupported();
+                    }
+                    
+                    converters.Add(converter);
+                    if (converter is NamingStrategyRespectJsonStringEnumConverter)
                     {
                         jsonStringEnumConverterAdded = true;
                     }
-
-                    if (converter is HttpStatusCodeConverter)
-                    {
-                        httpStatusCodeConverterAdded = true;
-                    }
-                }
-
-                if (!httpStatusCodeConverterAdded)
-                {
-                    converters.Add(new HttpStatusCodeConverter(namingPolicy));
                 }
 
                 if (!jsonStringEnumConverterAdded)
                 {
-                    converters.Add(new JsonStringEnumConverter(namingPolicy));
+                    converters.Add(new NamingStrategyRespectJsonStringEnumConverter());
                 }
-                
+
                 converters.Add(new DateOnlyConverter());
             }
         }

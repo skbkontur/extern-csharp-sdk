@@ -2,7 +2,7 @@
 
 namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies
 {
-    internal static class StringCaseConvertExtensions
+    public static class StringCaseConvertExtensions
     {
         public static string ToKebabCase(this string value) => value.ToSeparatedCase('-');
         

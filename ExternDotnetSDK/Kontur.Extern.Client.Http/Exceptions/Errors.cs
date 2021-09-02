@@ -1,6 +1,8 @@
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumConverters;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client.Http.Exceptions
@@ -51,6 +53,12 @@ namespace Kontur.Extern.Client.Http.Exceptions
         public static Exception JsonTokenIsUnexpected(JsonTokenType actualToken, params JsonTokenType[] expectedTokens) => 
             new JsonException($"Unexpected token {actualToken}. Expected {string.Join(", or", expectedTokens)}.");
         
+        public static Exception EnumValueOfBackingTypeIsNotSupported(TypeCode typeCode) => 
+            new NotSupportedException($"Enum with backing type {typeCode} is not supported.");
+        
+        public static Exception CannotReadNumberFromJsonValue() => 
+            new JsonException("Cannot read number from json value");
+        
         public static Exception UnknownJsonBooleanValue(string value, params string[] expectedValues) => 
             new JsonException($"Unexpected json property value \"{value}\". Possible values {string.Join(", or", expectedValues)}.");
 
@@ -62,5 +70,11 @@ namespace Kontur.Extern.Client.Http.Exceptions
 
         public static Exception DeserializationFailure(Exception exception) => 
             new JsonException("Deserialization failed", exception);
+
+        public static Exception CannotParseJsonStringValueToEnumOfType(string? stringValue, Type type) =>
+            new JsonException($"Cannot parse string value {stringValue} to enum of type {type}");
+
+        public static Exception OverridingJsonStringEnumConverterIsUnsupported() =>
+            new NotSupportedException($"Overriding a {nameof(JsonStringEnumConverter)} is unsupported, use {nameof(NamingStrategyRespectJsonStringEnumConverter)} instead");
     }
 }
