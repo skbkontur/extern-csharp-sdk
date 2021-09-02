@@ -20,6 +20,8 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumCon
         
         public override bool CanConvert(Type typeToConvert)
         {
+            if (!typeToConvert.IsValueType)
+                return false;
             if (typeToConvert.IsEnum)
                 return true;
 
@@ -43,13 +45,14 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumCon
 
         private JsonConverter CreateJsonStringEnumConverter(Type typeToConvert, JsonSerializerOptions options)
         {
+            var namingPolicy = options.PropertyNamingPolicy;
             if (typeToConvert == typeof (HttpStatusCode))
-                return new HttpStatusCodeConverter(options.PropertyNamingPolicy, serializeHttpCodeAsStrings);
+                return new HttpStatusCodeConverter(namingPolicy, serializeHttpCodeAsStrings);
             
-            if (options.PropertyNamingPolicy is not null && IsNamingStrategyConverterSupported(typeToConvert))
+            if ((namingPolicy is not null || !serializeAsStrings) && IsNamingStrategyConverterSupported(typeToConvert))
             {
                 var converterType = typeof (NamingStrategyRespectJsonStringEnumConverter<>).MakeGenericType(typeToConvert);
-                return (JsonConverter) Activator.CreateInstance(converterType, options.PropertyNamingPolicy, options.Encoder, serializeAsStrings);
+                return (JsonConverter) Activator.CreateInstance(converterType, namingPolicy, options.Encoder, serializeAsStrings);
             }
 
             return defaultJsonStringEnumConverter.CreateConverter(typeToConvert, options);

@@ -7,6 +7,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Kontur.Extern.Client.Http.Exceptions;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies;
 
 namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumConverters
 {
@@ -19,9 +20,10 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumCon
         private readonly Dictionary<T, JsonEncodedText> valuesToNames;
         private readonly Dictionary<string, T> stringsToValues;
 
-        public NamingStrategyRespectJsonStringEnumConverter(JsonNamingPolicy namingPolicy, JavaScriptEncoder? encoder, bool serializeAsStrings)
+        public NamingStrategyRespectJsonStringEnumConverter(JsonNamingPolicy? namingPolicy, JavaScriptEncoder? encoder, bool serializeAsStrings)
         {
             this.serializeAsStrings = serializeAsStrings;
+            namingPolicy ??= new AsIsNamingPolicy();
 
             var names = Enum.GetNames(TypeToConvert);
             var values = Enum.GetValues(TypeToConvert);
