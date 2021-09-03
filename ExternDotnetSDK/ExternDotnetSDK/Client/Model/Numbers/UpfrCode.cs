@@ -14,7 +14,7 @@ namespace Kontur.Extern.Client.Model.Numbers
             (param, value) => Errors.InvalidAuthorityNumber(param, value, AuthorityNumberKind.UpfrCode, "ХХХ-ХХХ")
         );
 
-        // <summary>
+        /// <summary>
         /// Код УПФР. Формат данных: ХХХ-ХХХ, где Х - это цифра от 0 до 9
         /// </summary>
         public static UpfrCode Parse(string value) => Parser.Parse(value);

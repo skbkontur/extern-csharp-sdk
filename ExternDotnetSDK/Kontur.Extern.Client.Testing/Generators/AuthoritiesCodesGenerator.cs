@@ -1,17 +1,16 @@
+using System;
 using System.Linq;
-using JetBrains.Annotations;
 using Kontur.Extern.Client.Model.Numbers;
 
 namespace Kontur.Extern.Client.Testing.Generators
 {
     public class AuthoritiesCodesGenerator
     {
-        private readonly Randomizer randomizer = new();
-
-        [UsedImplicitly]
-        public AuthoritiesCodesGenerator()
-        {
-        }
+        private readonly Randomizer randomizer;
+        
+        public AuthoritiesCodesGenerator() => randomizer = new();
+        
+        public AuthoritiesCodesGenerator(Random random) => randomizer = new Randomizer(random);
 
         public LegalEntityInn LegalEntityInn()
         {
@@ -52,6 +51,7 @@ namespace Kontur.Extern.Client.Testing.Generators
         }
         
         public FssRegNumber FssRegNumber() => Model.Numbers.FssRegNumber.Parse(randomizer.DigitsString(10));
+        
         public PfrRegNumber PfrRegNumber()
         {
             var value = $"{randomizer.DigitsString(3)}-{randomizer.DigitsString(3)}-{randomizer.DigitsString(6)}";
@@ -59,5 +59,19 @@ namespace Kontur.Extern.Client.Testing.Generators
         }
 
         public IfnsCode IfnsCode() => Model.Numbers.IfnsCode.Parse(randomizer.DigitsString(4));
+
+        public FssCode FssCode() => Model.Numbers.FssCode.Parse($"{randomizer.DigitsString(4)}{randomizer.Int(1, 3)}");
+        
+        public UpfrCode UpfrCode() => Model.Numbers.UpfrCode.Parse($"{randomizer.DigitsString(3)}-{randomizer.DigitsString(3)}");
+        
+        public TogsCode TogsCode() => Model.Numbers.TogsCode.Parse($"{randomizer.DigitsString(2)}-{randomizer.DigitsString(2)}");
+        
+        public MriCode MriCode() => Model.Numbers.MriCode.Parse(randomizer.DigitsString(4));
+        
+        public Knd Knd() => Model.Numbers.Knd.Parse(randomizer.DigitsString(7));
+        
+        public Okud Okud() => Model.Numbers.Okud.Parse(randomizer.DigitsString(7));
+        
+        public Okpo LegalEntityOkpo() => Okpo.LegalEntity.Parse(randomizer.DigitsString(8));
     }
 }

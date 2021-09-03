@@ -7,6 +7,12 @@ namespace Kontur.Extern.Client.Testing.Generators
     {
         private readonly Random random = new();
 
+        public Randomizer()
+        {
+        }
+
+        public Randomizer(Random random) => this.random = random;
+
         public int Int(int min, int max) => random.Next(min, max);
 
         public byte[] Bytes(int length)
