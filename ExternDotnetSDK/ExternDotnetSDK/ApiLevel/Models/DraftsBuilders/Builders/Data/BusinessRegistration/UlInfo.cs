@@ -1,6 +1,10 @@
-﻿// ReSharper disable CommentTypo
-namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+
+namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data.BusinessRegistration
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class UlInfo
     {
         /// <summary>

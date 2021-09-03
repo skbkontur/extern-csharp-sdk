@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Cbrf;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Fns;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Fns.BusinessRegistration;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Fss;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Oved;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Pfr;

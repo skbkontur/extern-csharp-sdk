@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.BusinessRegistration
+namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data.BusinessRegistration
 {
     /// <summary>
     /// Признак наличия запроса о предоставлении документов в письменном (бумажном) виде.

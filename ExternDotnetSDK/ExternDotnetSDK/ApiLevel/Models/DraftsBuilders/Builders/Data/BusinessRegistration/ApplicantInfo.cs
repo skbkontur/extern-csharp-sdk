@@ -1,7 +1,11 @@
-﻿using Kontur.Extern.Client.ApiLevel.Models.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Info
+namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data.BusinessRegistration
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class ApplicantInfo
     {
         /// <summary>

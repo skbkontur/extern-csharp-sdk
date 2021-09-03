@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data;
+using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data.BusinessRegistration;
 using Kontur.Extern.Client.Model.DraftBuilders;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders

@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Fns
+namespace Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Fns.BusinessRegistration
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]
@@ -46,14 +46,6 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Fns
             /// Информация о регистрируемом ЮЛ
             /// </summary>
             public UlInfoDescription UlInfo { get; set; }
-        }
-        
-        [PublicAPI]
-        public enum BusinessType
-        {
-            Unknown,
-            Ip,
-            Ul
         }
     
         [PublicAPI]

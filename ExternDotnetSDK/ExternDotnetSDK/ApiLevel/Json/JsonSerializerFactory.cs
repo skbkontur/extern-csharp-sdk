@@ -2,7 +2,7 @@ using System.Text.Json;
 using Kontur.Extern.Client.ApiLevel.Json.Converters;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.BusinessRegistration;
+using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data.BusinessRegistration;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies;
