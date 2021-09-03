@@ -13,7 +13,7 @@ using Kontur.Extern.Client.Http.Contents;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies;
 using Vostok.Clusterclient.Core;
 
 namespace Kontur.Extern.Client.Auth.OpenId.Client

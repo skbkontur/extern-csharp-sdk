@@ -4,13 +4,13 @@ using JetBrains.Annotations;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumConverters;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies;
 using Kontur.Extern.Client.Testing.Helpers;
 using Xunit;
 
 namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converters
 {
-    public static class NamingStrategyRespectJsonStringEnumConverter_Tests
+    public static class NamingPolicyRespectJsonStringEnumConverter_Tests
     {
         public class NonNullableEnums
         {
@@ -26,7 +26,7 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
 
             [Theory]
             [MemberData(nameof(NamingPoliciesEnumCases))]
-            public void Should_serialize_as_string_according_naming_strategy((TestEnum testEnum, string expectedJson, JsonNamingPolicy? namingPolicy) theCase) =>
+            public void Should_serialize_as_string_according_naming_policy((TestEnum testEnum, string expectedJson, JsonNamingPolicy? namingPolicy) theCase) =>
                 ShouldSerializeDeserializeJsonCorrectly(theCase.testEnum, theCase.namingPolicy, theCase.expectedJson);
 
             public static TheoryData<(TestIntEnum testEnum, string expectedJson)> IntEnumCases => new()
@@ -75,7 +75,7 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
 
             [Theory]
             [MemberData(nameof(NamingPoliciesNullableEnumCases))]
-            public void Should_serialize_as_string_according_naming_strategy((TestEnum? testEnum, string expectedJson, JsonNamingPolicy? namingPolicy) theCase) =>
+            public void Should_serialize_as_string_according_naming_policy((TestEnum? testEnum, string expectedJson, JsonNamingPolicy? namingPolicy) theCase) =>
                 ShouldSerializeDeserializeJsonCorrectly(theCase.testEnum, theCase.namingPolicy, theCase.expectedJson);
 
             public static TheoryData<(TestIntEnum? testEnum, string expectedJson)> NullableIntEnumCases => new()
@@ -109,10 +109,10 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
             }
         }
 
-        public class OverridenNamingStrategy
+        public class OverridenNamingPolicy
         {
             [Fact]
-            public void Should_override_naming_strategy_for_particular_enum()
+            public void Should_override_naming_policy_for_particular_enum()
             {
                 var serializer = new SystemTextJsonSerializerFactory()
                     .WithNamingPolicy(new KebabCaseNamingPolicy())
@@ -165,7 +165,7 @@ namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converte
 
         private static IJsonSerializer CreateSerializerWithNumberEnums() =>
             new SystemTextJsonSerializerFactory()
-                .AddConverter(new NamingStrategyRespectJsonStringEnumConverter(false))
+                .AddConverter(new NamingPolicyRespectJsonStringEnumConverter(false))
                 .IgnoreIndentation()
                 .IgnoreNullValues(false)
                 .CreateSerializer();

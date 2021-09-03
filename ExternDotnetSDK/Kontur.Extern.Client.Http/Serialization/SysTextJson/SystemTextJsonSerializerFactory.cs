@@ -84,7 +84,7 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
             var jsonStringEnumConverterAdded = false;
             foreach (var converter in serializerOptions.Converters)
             {
-                if (converter is NamingStrategyRespectJsonStringEnumConverter)
+                if (converter is NamingPolicyRespectJsonStringEnumConverter)
                 {
                     jsonStringEnumConverterAdded = true;
                 }
@@ -92,7 +92,7 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson
 
             if (!jsonStringEnumConverterAdded)
             {
-                serializerOptions.Converters.Add(new NamingStrategyRespectJsonStringEnumConverter(enumTypeNamingPoliciesMap));
+                serializerOptions.Converters.Add(new NamingPolicyRespectJsonStringEnumConverter(enumTypeNamingPoliciesMap));
             }
 
             serializerOptions.Converters.Add(new DateOnlyConverter());

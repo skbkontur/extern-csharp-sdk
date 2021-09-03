@@ -75,6 +75,6 @@ namespace Kontur.Extern.Client.Http.Exceptions
             new JsonException($"Cannot parse string value {stringValue} to enum of type {type}");
 
         public static Exception OverridingJsonStringEnumConverterIsUnsupported([InvokerParameterName] string paramName) =>
-            new ArgumentException($"Overriding a {nameof(JsonStringEnumConverter)} is unsupported, use {nameof(NamingStrategyRespectJsonStringEnumConverter)} instead", paramName);
+            new ArgumentException($"Overriding a {nameof(JsonStringEnumConverter)} is unsupported, use {nameof(NamingPolicyRespectJsonStringEnumConverter)} instead", paramName);
     }
 }

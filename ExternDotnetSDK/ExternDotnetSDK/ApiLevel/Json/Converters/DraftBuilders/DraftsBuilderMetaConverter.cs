@@ -9,7 +9,7 @@ using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies;
 using Kontur.Extern.Client.Model.DraftBuilders;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders

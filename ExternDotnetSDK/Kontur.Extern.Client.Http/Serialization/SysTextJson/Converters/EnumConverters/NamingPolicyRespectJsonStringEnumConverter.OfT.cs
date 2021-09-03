@@ -7,11 +7,11 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Kontur.Extern.Client.Http.Exceptions;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies;
 
 namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumConverters
 {
-    internal class NamingStrategyRespectJsonStringEnumConverter<T> : JsonConverter<T>
+    internal class NamingPolicyRespectJsonStringEnumConverter<T> : JsonConverter<T>
         where T : struct, Enum
     {
         private static readonly Type TypeToConvert = typeof(T);
@@ -20,7 +20,7 @@ namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumCon
         private readonly Dictionary<T, JsonEncodedText> valuesToNames;
         private readonly Dictionary<string, T> stringsToValues;
 
-        public NamingStrategyRespectJsonStringEnumConverter(JsonNamingPolicy? namingPolicy, JavaScriptEncoder? encoder, bool serializeAsStrings)
+        public NamingPolicyRespectJsonStringEnumConverter(JsonNamingPolicy? namingPolicy, JavaScriptEncoder? encoder, bool serializeAsStrings)
         {
             this.serializeAsStrings = serializeAsStrings;
             namingPolicy ??= new AsIsNamingPolicy();

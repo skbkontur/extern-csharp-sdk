@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Converters.EnumConverters;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies;
 using Xunit;
 
 namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converters

@@ -1,8 +1,8 @@
 using FluentAssertions;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies;
+using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies;
 using Xunit;
 
-namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.NamingStrategies
+namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.NamingPolicies
 {
     public class StringCaseConvertExtensions_Tests
     {

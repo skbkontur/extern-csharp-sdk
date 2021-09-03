@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies
+namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies
 {
     public class KebabCaseNamingPolicy : JsonNamingPolicy
     {

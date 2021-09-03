@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies
+namespace Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies
 {
     public static class StringCaseConvertExtensions
     {
