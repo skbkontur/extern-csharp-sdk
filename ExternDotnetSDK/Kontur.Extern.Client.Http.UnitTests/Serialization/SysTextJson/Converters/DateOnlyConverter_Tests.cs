@@ -11,11 +11,11 @@ using Xunit;
 
 namespace Kontur.Extern.Client.Http.UnitTests.Serialization.SysTextJson.Converters
 {
-    public class DateOnlySerialization_Tests
+    public class DateOnlyConverter_Tests
     {
         private readonly IJsonSerializer serializer;
 
-        public DateOnlySerialization_Tests() => serializer = new SystemTextJsonSerializerFactory().CreateSerializer();
+        public DateOnlyConverter_Tests() => serializer = new SystemTextJsonSerializerFactory().CreateSerializer();
 
         [Fact]
         public void Should_serialize_date_to_json_in_iso_format()
