@@ -1,23 +1,23 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents.Data;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents
+namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]
-    public class DraftsBuilderDocumentMeta : IDraftsBuilderMeta<DraftsBuilderDocumentData>
+    public interface IDraftsBuilderMeta<TData>
     {
         /// <summary>
         /// Тип DraftsBuilder
         /// </summary>
         // [Required]
-        public Urn BuilderType { get; set; }
+        Urn BuilderType { get; set; }
         
         /// <summary>
         /// Сведения о документе
         /// </summary>
-        public DraftsBuilderDocumentData BuilderData { get; set; }
+        TData BuilderData { get; set; }
     }
 }

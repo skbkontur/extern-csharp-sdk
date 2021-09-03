@@ -18,6 +18,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json
                 .AddConverter(new DocflowContainingConverter())
                 .AddConverter(new DocflowDocumentDescriptionConverter())
                 .AddConverter(new DraftsBuilderMetaConverter())
+                .AddConverter(new DraftsBuilderDocumentMetaConverter())
                 .SetCustomNamingPolicyForSerializationEnumOf<PaperDocumentsDeliveryType>(JsonNamingPolicy.CamelCase)
                 .IgnoreIndentation(ignoreIndentation)
                 .IgnoreNullValues(ignoreNullValues)

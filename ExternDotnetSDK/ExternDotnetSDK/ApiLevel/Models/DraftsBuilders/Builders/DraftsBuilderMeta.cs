@@ -8,7 +8,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]
-    public class DraftsBuilderMeta
+    public class DraftsBuilderMeta : IDraftsBuilderMeta<DraftsBuilderData>
     {
         /// <summary>
         /// Отправитель

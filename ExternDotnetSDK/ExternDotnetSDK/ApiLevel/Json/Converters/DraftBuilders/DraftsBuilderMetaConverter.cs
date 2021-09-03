@@ -1,59 +1,33 @@
 #nullable enable
 using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies;
 using Kontur.Extern.Client.Model.DraftBuilders;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders
 {
-    internal class DraftsBuilderMetaConverter : JsonConverter<DraftsBuilderMeta>
+    internal class DraftsBuilderMetaConverter : DraftsBuilderPolymorphicConverter<DraftsBuilderMeta>
     {
-        private readonly Utf8String builderTypePropName = nameof(DraftsBuilderMeta.BuilderType).ToKebabCase();
-
-        public override DraftsBuilderMeta? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        protected override Type GetSerializationObjectToDataType(DraftBuilderType? builderType)
         {
-            var requisitesType = TryGetDataType(reader, builderTypePropName);
-            // todo: optimize it by caching
-            var builderMetaType = typeof (SerializationDraftsBuilderMeta<>).MakeGenericType(requisitesType);
-            var deserialized = (ISerializationDraftsBuilderMeta?) JsonSerializer.Deserialize(ref reader, builderMetaType, options);
-            return deserialized?.ConvertToDto();
-
-            static Type TryGetDataType(Utf8JsonReader readerClone, in Utf8String typePropName)
+            Type? builderDataType = null;
+            if (builderType is not null)
             {
-                if (!readerClone.ScanToPropertyValue(typePropName.AsUtf8()))
-                    throw Errors.JsonDoesNotContainProperty(typePropName.ToString());
-                
-                var docflowTypeValue = readerClone.GetString();
-                if (docflowTypeValue == null)
-                    return typeof (UnknownDraftsBuilderData);
-    
-                var builderType = new DraftBuilderType(docflowTypeValue);
-                return DraftBuilderDataTypes.TryGetBuilderDataType(builderType) ??
-                       typeof (UnknownDraftsBuilderData);
+                builderDataType = DraftBuilderMetasDataTypes.TryGetBuildersDataType(builderType.Value);
             }
+            builderDataType ??= typeof (UnknownDraftsBuilderData);
+            
+            return typeof (SerializationDraftsBuilderMeta<>).MakeGenericType(builderDataType);
         }
-    
-        public override void Write(Utf8JsonWriter writer, DraftsBuilderMeta value, JsonSerializerOptions options)
+
+        protected override ISerializationDataType DtoToSerializationObject(DraftsBuilderMeta instance) => 
+            new SerializationDraftsBuilderMeta<object>(instance);
+
+        private class SerializationDraftsBuilderMeta<TData> : ISerializationDataType
         {
-            JsonSerializer.Serialize(writer, new SerializationDraftsBuilderMeta<object>(value), options);
-        }
-        
-        private interface ISerializationDraftsBuilderMeta
-        {
-            DraftsBuilderMeta ConvertToDto();
-        }
-        
-        private class SerializationDraftsBuilderMeta<TData> : ISerializationDraftsBuilderMeta
-        {
-            [JsonConstructor]
             public SerializationDraftsBuilderMeta()
             {
             }
