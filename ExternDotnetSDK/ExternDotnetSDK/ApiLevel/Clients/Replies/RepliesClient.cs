@@ -6,7 +6,6 @@ using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents.Data;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents.Replies;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts;
 using Kontur.Extern.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 

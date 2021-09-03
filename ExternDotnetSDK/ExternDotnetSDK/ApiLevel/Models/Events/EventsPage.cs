@@ -1,5 +1,4 @@
-﻿using System;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
+﻿using Kontur.Extern.Client.ApiLevel.Models.Common;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Events
 {

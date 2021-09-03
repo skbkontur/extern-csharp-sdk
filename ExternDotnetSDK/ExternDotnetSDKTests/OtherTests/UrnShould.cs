@@ -27,7 +27,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
             urnParent.IsChildOf(urnChild).Should().BeFalse();
             urn.IsParentOf(urnParent).Should().BeFalse();
             urn.IsChildOf(urnParent).Should().BeFalse();
-            urn.CreateChild("child").IsChildOf(urn).Should().BeTrue();
+            urn.Append("child").IsChildOf(urn).Should().BeTrue();
         }
 
         [Test]

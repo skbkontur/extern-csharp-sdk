@@ -65,7 +65,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Common
         public bool Equals(Urn other) =>
             !(other is null) && 0 == string.Compare(Value, other.Value, StringComparison.OrdinalIgnoreCase);
 
-        public Urn CreateChild(string nss) => new Urn(this, nss);
+        public Urn Append(string nss) => new Urn(this, nss);
 
         public bool IsParentOf(Urn urn)
         {

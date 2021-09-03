@@ -2,7 +2,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents.Requisites;
 using Kontur.Extern.Client.Exceptions;

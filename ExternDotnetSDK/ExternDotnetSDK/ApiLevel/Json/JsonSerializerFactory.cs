@@ -1,8 +1,8 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Kontur.Extern.Client.ApiLevel.Json.Converters;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders;
+using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.BusinessRegistration;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingStrategies;
@@ -17,6 +17,8 @@ namespace Kontur.Extern.Client.ApiLevel.Json
                 .AddConverter(new UrnJsonConverter())
                 .AddConverter(new DocflowContainingConverter())
                 .AddConverter(new DocflowDocumentDescriptionConverter())
+                .AddConverter(new DraftsBuilderMetaConverter())
+                .SetCustomNamingPolicyForSerializationEnumOf<PaperDocumentsDeliveryType>(JsonNamingPolicy.CamelCase)
                 .IgnoreIndentation(ignoreIndentation)
                 .IgnoreNullValues(ignoreNullValues)
                 .CreateSerializer();

@@ -51,9 +51,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
 
             var description = serializer.Deserialize<DocflowDocumentDescription>(json);
 
-            description.Type.Should().Be(unknownDocumentType.ToUrn());
-            description.Requisites.Should().BeOfType<CommonDocflowDocumentRequisites>();
-            description.Should().BeEquivalentTo(documentDescription);
+            DescriptionShouldBeEqual(description, documentDescription);
         }
 
         [Test]
@@ -68,9 +66,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
 
             var description = serializer.Deserialize<DocflowDocumentDescription>(json);
 
-            description.Type.Should().BeNull();
-            description.Requisites.Should().BeOfType<CommonDocflowDocumentRequisites>();
-            description.Should().BeEquivalentTo(documentDescription);
+            DescriptionShouldBeEqual(description, documentDescription);
         }
 
         private static void DescriptionShouldBeEqual(DocflowDocumentDescription description, DocflowDocumentDescription expectedDescription)
