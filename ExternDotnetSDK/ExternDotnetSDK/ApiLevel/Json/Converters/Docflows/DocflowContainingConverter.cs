@@ -65,7 +65,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
                 static Type GetDescriptionType(Utf8JsonReader readerClone, in Utf8String typePropName)
                 {
                     if (!readerClone.ScanToPropertyValue(typePropName.AsUtf8()))
-                        throw Errors.JsonDoesNotContainProperty(typePropName.ToString());
+                        return typeof (UnknownDescription);
 
                     var docflowTypeValue = readerClone.GetString();
                     if (docflowTypeValue == null)

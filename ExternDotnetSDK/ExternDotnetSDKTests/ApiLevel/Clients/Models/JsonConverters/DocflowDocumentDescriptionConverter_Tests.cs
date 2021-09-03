@@ -45,13 +45,17 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         {
             var unknownDocumentType = new DocumentType(DocumentType.Namespace.Append("unknown-document"));
             var documentDescription = descriptionGenerator.GenerateWithoutRequisites(unknownDocumentType);
-            documentDescription.Requisites = new CommonDocflowDocumentRequisites();
+            documentDescription.Requisites = new PfrReportRequisites
+            {
+                CorrectionType = PfrReportCorrectionType.PensionAssignment
+            };
             var json = serializer.SerializeToIndentedString(documentDescription);
             Console.WriteLine($"Generated JSON: {json}");
 
             var description = serializer.Deserialize<DocflowDocumentDescription>(json);
 
-            DescriptionShouldBeEqual(description, documentDescription);
+            description.Type.Should().Be(unknownDocumentType.ToUrn());
+            description.Requisites.Should().BeOfType<CommonDocflowDocumentRequisites>();
         }
 
         [Test]
@@ -60,13 +64,17 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             var dummyDocumentType = DocumentType.Fns.Fns534.Report;
             var documentDescription = descriptionGenerator.GenerateWithoutRequisites(dummyDocumentType);
             documentDescription.Type = null;
-            documentDescription.Requisites = new CommonDocflowDocumentRequisites();
+            documentDescription.Requisites = new PfrReportRequisites
+            {
+                CorrectionType = PfrReportCorrectionType.PensionAssignment
+            };
             var json = serializer.SerializeToIndentedString(documentDescription);
             Console.WriteLine($"Generated JSON: {json}");
 
             var description = serializer.Deserialize<DocflowDocumentDescription>(json);
 
-            DescriptionShouldBeEqual(description, documentDescription);
+            description.Type.Should().BeNull();
+            description.Requisites.Should().BeOfType<CommonDocflowDocumentRequisites>();
         }
 
         private static void DescriptionShouldBeEqual(DocflowDocumentDescription description, DocflowDocumentDescription expectedDescription)

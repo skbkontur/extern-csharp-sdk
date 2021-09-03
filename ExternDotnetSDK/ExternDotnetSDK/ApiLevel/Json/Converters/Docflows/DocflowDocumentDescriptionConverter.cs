@@ -4,7 +4,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents.Requisites;
-using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions;
 using Kontur.Extern.Client.Model.Documents;
 
@@ -25,7 +24,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
             static Type GetRequisitesType(Utf8JsonReader readerClone, in Utf8String typePropName)
             {
                 if (!readerClone.ScanToPropertyValue(typePropName.AsUtf8()))
-                    throw Errors.JsonDoesNotContainProperty(typePropName.ToString());
+                    return typeof (CommonDocflowDocumentRequisites);
 
                 var documentTypeValue = readerClone.GetString();
                 if (documentTypeValue == null)

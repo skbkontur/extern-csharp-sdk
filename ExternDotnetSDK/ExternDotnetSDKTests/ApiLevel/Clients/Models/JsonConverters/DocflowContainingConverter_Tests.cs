@@ -6,6 +6,8 @@ using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Json;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions;
+using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Fns;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators;
@@ -28,14 +30,66 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         }
 
         [TestCaseSource(nameof(TypeToDescriptionCases))]
-        public void Should_deserialize_docflow_description_by_it_docflow_type(DescriptionCase descriptionCase)
+        public void Should_deserialize_docflow_description_by_its_docflow_type(DescriptionCase descriptionCase)
         {
             var (json, expectedDocflow) = descriptionCase.Generate(serializer, descriptionGenerator);
+            Console.WriteLine($"Generated JSON: {json}");
             
             var docflow = serializer.Deserialize<Docflow>(json);
 
             docflow.Type.Should().Be(descriptionCase.DocflowType.ToUrn());
             DocflowShouldHaveExpectedDescription(docflow, expectedDocflow);
+        }
+
+        [Test]
+        public void Should_return_null_description_if_its_known_but_missed()
+        {
+            var unknownDocflowType = new DocflowType(DocflowType.Namespace.Append("unknown-docflow"));
+            var originalDocflow = descriptionGenerator.GenerateDocflowWithoutDescription(unknownDocflowType);
+            var json = serializer.SerializeToIndentedString(originalDocflow);
+            Console.WriteLine($"Generated JSON: {json}");
+            
+            var docflow = serializer.Deserialize<Docflow>(json);
+
+            docflow.Type.Should().Be(unknownDocflowType.ToUrn());
+            docflow.Description.Should().BeNull();
+        }
+
+        [Test]
+        public void Should_return_unknown_description_in_case_of_unknown_docflow_type()
+        {
+            var unknownDocflowType = new DocflowType(DocflowType.Namespace.Append("unknown-docflow"));
+            var originalDocflow = descriptionGenerator.GenerateDocflowWithoutDescription(unknownDocflowType);
+            originalDocflow.Description = new ReportDescription
+            {
+                FinalRecipient = "123"
+            };
+            var json = serializer.SerializeToIndentedString(originalDocflow);
+            Console.WriteLine($"Generated JSON: {json}");
+            
+            var docflow = serializer.Deserialize<Docflow>(json);
+
+            docflow.Type.Should().Be(unknownDocflowType.ToUrn());
+            docflow.Description.Should().BeOfType<UnknownDescription>();
+        }
+
+        [Test]
+        public void Should_return_unknown_description_in_case_of_null_docflow_type()
+        {
+            var dummyDocflowType = DocflowType.Fns.Fns534.Report;
+            var originalDocflow = descriptionGenerator.GenerateDocflowWithoutDescription(dummyDocflowType);
+            originalDocflow.Type = null;
+            originalDocflow.Description = new ReportDescription
+            {
+                FinalRecipient = "123"
+            };
+            var json = serializer.SerializeToIndentedString(originalDocflow);
+            Console.WriteLine($"Generated JSON: {json}");
+            
+            var docflow = serializer.Deserialize<Docflow>(json);
+
+            docflow.Type.Should().BeNull();
+            docflow.Description.Should().BeOfType<UnknownDescription>();
         }
 
         private static void DocflowShouldHaveExpectedDescription(Docflow docflow, Docflow expectedDocflow)
