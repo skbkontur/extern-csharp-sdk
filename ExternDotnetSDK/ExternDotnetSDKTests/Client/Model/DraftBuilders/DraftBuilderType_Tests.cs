@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Model.DraftBuilders;
 using Kontur.Extern.Client.Tests.Client.Model.TestAssertions;
 using Kontur.Extern.Client.Tests.TestHelpers;

@@ -5,7 +5,6 @@ using FluentAssertions;
 using Kontur.Extern.Client.Auth.Abstractions;
 using Kontur.Extern.Client.Auth.OpenId.Builder;
 using Kontur.Extern.Client.Auth.OpenId.Provider;
-using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Testing.End2End.ClusterClient;
 using Kontur.Extern.Client.Testing.End2End.Environment;
 using Kontur.Extern.Client.Testing.Fakes.Logging;
