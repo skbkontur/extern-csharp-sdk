@@ -2,7 +2,6 @@
 using System;
 using AutoBogus;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents;
 using Kontur.Extern.Client.Model.DraftBuilders;
 using Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions;
 
@@ -38,7 +37,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
 
         public T GenerateWithoutData(DraftBuilderType draftBuilderType)
         {
-            var description = faker.Generate<T>(c => c.WithSkip<DraftsBuilderDocumentMeta>(x => x.BuilderData));
+            var description = faker.Generate<T>(c => c.WithSkip<T>(x => x.BuilderData));
             description.BuilderData = null!;
             description.BuilderType = draftBuilderType.ToUrn();
             return description;

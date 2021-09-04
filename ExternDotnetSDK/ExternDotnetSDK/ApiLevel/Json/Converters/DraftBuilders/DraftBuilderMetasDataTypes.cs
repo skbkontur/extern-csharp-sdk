@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data.BusinessRegistration;
+using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles.Data;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents.Data;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents.Data.BusinessRegistration;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents.Data.FnsInventory;
@@ -27,11 +28,22 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders
             [DraftBuilderType.Fns.BusinessRegistration.RegistrationLegacy] = typeof (BusinessRegistrationDraftsBuilderDocumentData),
             [DraftBuilderType.Pfr.Report] = typeof (PfrReportDraftsBuilderDocumentData)
         };
+        
+        private static readonly Dictionary<DraftBuilderType, Type> BuilderDocumentFileDataMap = new()
+        {
+            [DraftBuilderType.Fns.Fns534.Inventory] = typeof (FnsInventoryDraftsBuilderDocumentFileData),
+            [DraftBuilderType.Fns.BusinessRegistration.Registration] = typeof (BusinessRegistrationDraftsBuilderDocumentFileData),
+            [DraftBuilderType.Fns.BusinessRegistration.RegistrationLegacy] = typeof (BusinessRegistrationDraftsBuilderDocumentFileData),
+            [DraftBuilderType.Pfr.Report] = typeof (PfrReportDraftsBuilderDocumentFileData)
+        };
     
         public static Type? TryGetBuildersDataType(DraftBuilderType draftBuilderType) => 
-            BuildersDataTypesMap.TryGetValue(draftBuilderType, out var descriptionType) ? descriptionType : null;
+            BuildersDataTypesMap.TryGetValue(draftBuilderType, out var dataType) ? dataType : null;
         
         public static Type? TryGetBuilderDocumentDataType(DraftBuilderType draftBuilderType) => 
-            BuilderDocumentDataMap.TryGetValue(draftBuilderType, out var descriptionType) ? descriptionType : null;
+            BuilderDocumentDataMap.TryGetValue(draftBuilderType, out var dataType) ? dataType : null;
+        
+        public static Type? TryGetBuilderDocumentFileDataType(DraftBuilderType draftBuilderType) => 
+            BuilderDocumentFileDataMap.TryGetValue(draftBuilderType, out var dataType) ? dataType : null;
     }
 }

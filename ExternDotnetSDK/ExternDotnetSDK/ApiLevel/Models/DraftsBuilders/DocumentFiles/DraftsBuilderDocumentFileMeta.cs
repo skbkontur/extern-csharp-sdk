@@ -7,7 +7,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]
-    public class DraftsBuilderDocumentFileMeta
+    public class DraftsBuilderDocumentFileMeta : IDraftsBuilderMeta<DraftsBuilderDocumentFileData>
     {
         /// <summary>
         /// Название файла
