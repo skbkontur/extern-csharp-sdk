@@ -25,7 +25,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
                 TaskState = ApiTaskState.Running
             };
 
-            var result = _ApiTaskResult<SuccessResult>.Running(id, taskType);
+            var result = ApiTaskResult<SuccessResult>.Running(id, taskType);
 
             result.Should().BeEquivalentTo(expectedDto);
         }
@@ -42,7 +42,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
                 TaskState = ApiTaskState.Failed
             };
 
-            var result = _ApiTaskResult<SuccessResult>.TaskFailure(new ApiError(), id, taskType);
+            var result = ApiTaskResult<SuccessResult>.TaskFailure(new ApiError(), id, taskType);
 
             result.Should().BeEquivalentTo(expectedDto);
         }
@@ -53,7 +53,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
             var id = Guid.NewGuid();
             var taskType = new Urn("nid", "nss");
             
-            Action action = () => _ApiTaskResult<SuccessResult>.TaskFailure(null!, id, taskType);
+            Action action = () => ApiTaskResult<SuccessResult>.TaskFailure(null!, id, taskType);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -70,7 +70,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
                 TaskState = ApiTaskState.Succeed
             };
 
-            var result = _ApiTaskResult<SuccessResult>.Success(new SuccessResult(), id, taskType);
+            var result = ApiTaskResult<SuccessResult>.Success(new SuccessResult(), id, taskType);
 
             result.Should().BeEquivalentTo(expectedDto);
         }
@@ -81,7 +81,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
             var id = Guid.NewGuid();
             var taskType = new Urn("nid", "nss");
             
-            Action action = () => _ApiTaskResult<SuccessResult>.Success(null!, id, taskType);
+            Action action = () => ApiTaskResult<SuccessResult>.Success(null!, id, taskType);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -90,7 +90,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         public void TryGetSuccessResult_should_return_success_result_if_api_task_result_is_successful()
         {
             var successResult = new SuccessResult();
-            var taskResult = _ApiTaskResult<SuccessResult>.Success(successResult, Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult>.Success(successResult, Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetSuccessResult(out var result);
 
@@ -101,7 +101,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         [Test]
         public void TryGetSuccessResult_should_return_error_if_api_task_result_is_api_error()
         {
-            var taskResult = _ApiTaskResult<SuccessResult>.TaskFailure(new ApiError(), Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult>.TaskFailure(new ApiError(), Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetSuccessResult(out var result);
 
@@ -113,7 +113,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         public void TryGetTaskError_should_return_task_error_if_api_task_result_is_api_error()
         {
             var apiError = new ApiError();
-            var taskResult = _ApiTaskResult<SuccessResult>.TaskFailure(apiError, Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult>.TaskFailure(apiError, Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetTaskError(out var result);
 
@@ -124,7 +124,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         [Test]
         public void TryGetTaskError_should_return_error_if_api_task_result_is_successful()
         {
-            var taskResult = _ApiTaskResult<SuccessResult>.Success(new SuccessResult(), Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult>.Success(new SuccessResult(), Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetTaskError(out var result);
 

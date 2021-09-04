@@ -2,30 +2,50 @@
 using System;
 using System.Net;
 using System.Text;
+using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Send;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
+using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http.Serialization;
+using Kontur.Extern.Client.Primitives.LongOperations;
 
 namespace Kontur.Extern.Client.Model.Drafts.LongOperationStatuses
 {
-    public class DraftSendingFailure
+    public class DraftSendingFailure : ILongOperationFailure, IApiTaskResult
     {
-        public static DraftSendingFailure From(SendFailure failure) => new(
+        private readonly Guid draftId;
+        private readonly IJsonSerializer jsonSerializer;
+
+        public static DraftSendingFailure From(SendFailure failure, Guid draftId, IJsonSerializer jsonSerializer) => new(
             failure.Id,
             failure.Message,
             failure.StatusCode,
             failure.Status,
-            failure.CheckResult is not null ? DraftCheckingStatus.From(failure.CheckResult) : null
+            failure.CheckResult is not null ? DraftCheckingStatus.From(failure.CheckResult) : null,
+            failure.IsEmpty,
+            draftId,
+            jsonSerializer
         );
-        
-        public DraftSendingFailure(Urn id, string message, HttpStatusCode statusCode, string status, DraftCheckingStatus? checkStatus)
+
+        public DraftSendingFailure(
+            Urn id, 
+            string message, 
+            HttpStatusCode statusCode, 
+            string status, 
+            DraftCheckingStatus? checkStatus, 
+            bool isEmpty,
+            Guid draftId, 
+            IJsonSerializer jsonSerializer)
         {
+            this.draftId = draftId;
+            this.jsonSerializer = jsonSerializer;
             Id = id;
             Message = message;
             StatusCode = statusCode;
             Status = status;
             CheckStatus = checkStatus;
+            IsEmpty = isEmpty;
         }
 
         public Urn Id { get; }
@@ -34,7 +54,11 @@ namespace Kontur.Extern.Client.Model.Drafts.LongOperationStatuses
         public string Status { get; }
         public DraftCheckingStatus? CheckStatus { get; }
 
-        public ApiError ToApiError(Guid draftId, IJsonSerializer serializer)
+        public bool IsEmpty { get; }
+
+        public ApiException ToException() => Errors.LongOperationFailed(ToApiError());
+
+        public ApiError ToApiError()
         {
             var messageBuilder = new StringBuilder();
             messageBuilder.Append($"Failed to send draft {draftId}.");
@@ -47,7 +71,7 @@ namespace Kontur.Extern.Client.Model.Drafts.LongOperationStatuses
                 
             if (CheckStatus is not null && !CheckStatus.IsSuccessful)
             {
-                messageBuilder.Append(serializer.SerializeToIndentedString(CheckStatus));
+                messageBuilder.Append(jsonSerializer.SerializeToIndentedString(CheckStatus));
             }
             
             var message = messageBuilder.ToString();

@@ -26,7 +26,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
                 TaskState = ApiTaskState.Running
             };
 
-            var result = _ApiTaskResult<SuccessResult, FailureResult>.Running(id, taskType);
+            var result = ApiTaskResult<SuccessResult, FailureResult>.Running(id, taskType);
 
             result.Should().BeEquivalentTo(expectedDto);
         }
@@ -43,7 +43,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
                 TaskState = ApiTaskState.Failed
             };
 
-            var result = _ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(new ApiError(), id, taskType);
+            var result = ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(new ApiError(), id, taskType);
 
             result.Should().BeEquivalentTo(expectedDto);
         }
@@ -54,7 +54,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
             var id = Guid.NewGuid();
             var taskType = new Urn("nid", "nss");
             
-            Action action = () => _ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(null!, id, taskType);
+            Action action = () => ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(null!, id, taskType);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -71,7 +71,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
                 TaskState = ApiTaskState.Succeed
             };
 
-            var result = _ApiTaskResult<SuccessResult, FailureResult>.Success(new SuccessResult(), id, taskType);
+            var result = ApiTaskResult<SuccessResult, FailureResult>.Success(new SuccessResult(), id, taskType);
 
             result.Should().BeEquivalentTo(expectedDto);
         }
@@ -82,7 +82,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
             var id = Guid.NewGuid();
             var taskType = new Urn("nid", "nss");
             
-            Action action = () => _ApiTaskResult<SuccessResult, FailureResult>.Success(null!, id, taskType);
+            Action action = () => ApiTaskResult<SuccessResult, FailureResult>.Success(null!, id, taskType);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -93,7 +93,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
             var id = Guid.NewGuid();
             var taskType = new Urn("nid", "nss");
             
-            Action action = () => _ApiTaskResult<SuccessResult, FailureResult>.Success(SuccessResult.Empty, id, taskType);
+            Action action = () => ApiTaskResult<SuccessResult, FailureResult>.Success(SuccessResult.Empty, id, taskType);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -110,7 +110,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
                 TaskState = ApiTaskState.Failed
             };
 
-            var result = _ApiTaskResult<SuccessResult, FailureResult>.FailureResult(new FailureResult(), id, taskType);
+            var result = ApiTaskResult<SuccessResult, FailureResult>.FailureResult(new FailureResult(), id, taskType);
 
             result.Should().BeEquivalentTo(expectedDto);
         }
@@ -121,7 +121,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
             var id = Guid.NewGuid();
             var taskType = new Urn("nid", "nss");
             
-            Action action = () => _ApiTaskResult<SuccessResult, FailureResult>.FailureResult(null!, id, taskType);
+            Action action = () => ApiTaskResult<SuccessResult, FailureResult>.FailureResult(null!, id, taskType);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -132,7 +132,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
             var id = Guid.NewGuid();
             var taskType = new Urn("nid", "nss");
             
-            Action action = () => _ApiTaskResult<SuccessResult, FailureResult>.FailureResult(FailureResult.Empty, id, taskType);
+            Action action = () => ApiTaskResult<SuccessResult, FailureResult>.FailureResult(FailureResult.Empty, id, taskType);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -141,7 +141,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         public void TryGetSuccessResult_should_return_success_result_if_api_task_result_is_successful()
         {
             var successResult = new SuccessResult();
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.Success(successResult, Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.Success(successResult, Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetSuccessResult(out var result);
 
@@ -152,7 +152,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         [Test]
         public void TryGetSuccessResult_should_return_error_if_api_task_result_is_failure()
         {
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.FailureResult(new FailureResult(), Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.FailureResult(new FailureResult(), Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetSuccessResult(out var result);
 
@@ -163,7 +163,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         [Test]
         public void TryGetSuccessResult_should_return_error_if_api_task_result_is_api_error()
         {
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(new ApiError(), Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(new ApiError(), Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetSuccessResult(out var result);
 
@@ -175,7 +175,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         public void TryGetFailureResult_should_return_failure_result_if_api_task_result_is_failure()
         {
             var failureResult = new FailureResult();
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.FailureResult(failureResult, Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.FailureResult(failureResult, Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetFailureResult(out var result);
 
@@ -186,7 +186,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         [Test]
         public void TryGetFailureResult_should_return_error_if_api_task_result_is_successful()
         {
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.Success(new SuccessResult(), Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.Success(new SuccessResult(), Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetFailureResult(out var result);
 
@@ -197,7 +197,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         [Test]
         public void TryGetFailureResult_should_return_error_if_api_task_result_is_api_error()
         {
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(new ApiError(), Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(new ApiError(), Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetFailureResult(out var result);
 
@@ -209,7 +209,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         public void TryGetTaskError_should_return_task_error_if_api_task_result_is_api_error()
         {
             var apiError = new ApiError();
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(apiError, Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(apiError, Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetTaskError(out var result);
 
@@ -220,7 +220,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         [Test]
         public void TryGetTaskError_should_return_error_if_api_task_result_is_successful()
         {
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.Success(new SuccessResult(), Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.Success(new SuccessResult(), Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetTaskError(out var result);
 
@@ -231,7 +231,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         [Test]
         public void TryGetTaskError_should_return_error_if_api_task_result_is_failure()
         {
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.FailureResult(new FailureResult(), Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.FailureResult(new FailureResult(), Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetTaskError(out var result);
 
@@ -240,7 +240,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         }
 
         [Test]
-        public void ConvertTo_should_convert_failure_result_to_api_error()
+        public void ConvertToSingleApiResult_should_convert_failure_result_to_api_error()
         {
             var id = Guid.NewGuid();
             var taskType = new Urn("nid", "nss");
@@ -251,9 +251,9 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
                 TaskState = ApiTaskState.Failed
             };
             var expectedApiError = new ApiError(HttpStatusCode.Forbidden, "10");
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.FailureResult(new FailureResult(value: 10), id, taskType);
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.FailureResult(new FailureResult(value: 10), id, taskType);
 
-            var oneResultApiResult = taskResult.ConvertTo(
+            var oneResultApiResult = taskResult.ConvertToSingleApiResult(
                 x => x.Value,
                 x => new ApiError(HttpStatusCode.Forbidden, x.Value.ToString())
             );
@@ -264,7 +264,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         }
         
         [Test]
-        public void ConvertTo_should_convert_success_result_to_success_result()
+        public void ConvertToSingleApiResult_should_convert_success_result_to_success_result()
         {
             var id = Guid.NewGuid();
             var taskType = new Urn("nid", "nss");
@@ -274,9 +274,9 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
                 TaskType = taskType,
                 TaskState = ApiTaskState.Succeed
             };
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.Success(new SuccessResult(value: 10), id, taskType);
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.Success(new SuccessResult(value: 10), id, taskType);
 
-            var oneResultApiResult = taskResult.ConvertTo(
+            var oneResultApiResult = taskResult.ConvertToSingleApiResult(
                 x => x.Value,
                 x => new ApiError(HttpStatusCode.Forbidden, x.Value.ToString())
             );
@@ -287,7 +287,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         }
         
         [Test]
-        public void ConvertTo_should_convert_running_result_to_running_result()
+        public void ConvertToSingleApiResult_should_convert_running_result_to_running_result()
         {
             var id = Guid.NewGuid();
             var taskType = new Urn("nid", "nss");
@@ -297,9 +297,9 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
                 TaskType = taskType,
                 TaskState = ApiTaskState.Running
             };
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.Running(id, taskType);
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.Running(id, taskType);
 
-            var oneResultApiResult = taskResult.ConvertTo(
+            var oneResultApiResult = taskResult.ConvertToSingleApiResult(
                 x => x.Value,
                 x => new ApiError(HttpStatusCode.Forbidden, x.Value.ToString())
             );
@@ -309,7 +309,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         }
         
         [Test]
-        public void ConvertTo_should_convert_task_error_result_to_api_error()
+        public void ConvertToSingleApiResult_should_convert_task_error_result_to_api_error()
         {
             var id = Guid.NewGuid();
             var taskType = new Urn("nid", "nss");
@@ -320,9 +320,9 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
                 TaskState = ApiTaskState.Failed
             };
             var expectedApiError = new ApiError(HttpStatusCode.Forbidden, "an error");
-            var taskResult = _ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(expectedApiError, id, taskType);
+            var taskResult = ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(expectedApiError, id, taskType);
 
-            var oneResultApiResult = taskResult.ConvertTo(
+            var oneResultApiResult = taskResult.ConvertToSingleApiResult(
                 x => x.Value,
                 x => new ApiError(HttpStatusCode.Forbidden, x.Value.ToString())
             );

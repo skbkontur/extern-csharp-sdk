@@ -12,13 +12,13 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
 {
     internal partial class ApiTaskResultJsonConverter
     {
-        private class ApiTaskResultOfOneResultJsonConverter<TResult> : JsonConverter<_ApiTaskResult<TResult>>
+        private class ApiTaskResultOfOneResultJsonConverter<TResult> : JsonConverter<ApiTaskResult<TResult>>
         {
             private readonly ApiTaskResultDtoPropNames propNames;
 
             public ApiTaskResultOfOneResultJsonConverter(ApiTaskResultDtoPropNames propNames) => this.propNames = propNames;
 
-            public override _ApiTaskResult<TResult> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override ApiTaskResult<TResult> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var jsonDocument = JsonDocument.ParseValue(ref reader);
                 var taskId = jsonDocument.RootElement.GetProperty(propNames.IdPropName.AsUtf8()).GetGuid();
@@ -32,17 +32,17 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
                 switch (taskState)
                 {
                     case ApiTaskState.Running:
-                        return _ApiTaskResult<TResult>.Running(taskId, taskType);
+                        return ApiTaskResult<TResult>.Running(taskId, taskType);
 
                     case ApiTaskState.Succeed:
                         var resultJson = jsonDocument.RootElement.GetProperty(propNames.TaskResultPropName.AsUtf8()).GetRawText();
                         var successResult = DeserializeAs<TResult>(resultJson, propNames.TaskResultPropName, taskStateValue);
-                        return _ApiTaskResult<TResult>.Success(successResult, taskId, taskType);
+                        return ApiTaskResult<TResult>.Success(successResult, taskId, taskType);
 
                     case ApiTaskState.Failed:
                         var errorJson = jsonDocument.RootElement.GetProperty(propNames.ApiErrorPropName.AsUtf8()).GetRawText();
                         var error = DeserializeAs<ApiError>(errorJson, propNames.ApiErrorPropName, taskStateValue);
-                        return _ApiTaskResult<TResult>.TaskFailure(error, taskId, taskType);
+                        return ApiTaskResult<TResult>.TaskFailure(error, taskId, taskType);
 
                     default:
                         throw Errors.UnexpectedEnumMember(nameof(taskState), taskState);
@@ -58,7 +58,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
                 }
             }
 
-            public override void Write(Utf8JsonWriter writer, _ApiTaskResult<TResult> value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, ApiTaskResult<TResult> value, JsonSerializerOptions options)
             {
                 var dto = ToDto();
                 if (value.TryGetTaskError(out var error))

@@ -15,8 +15,8 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
 
         public override bool CanConvert(Type typeToConvert) =>
             typeToConvert.IsGenericType &&
-            (typeToConvert.GetGenericTypeDefinition() == typeof (_ApiTaskResult<,>) ||
-             typeToConvert.GetGenericTypeDefinition() == typeof (_ApiTaskResult<>));
+            (typeToConvert.GetGenericTypeDefinition() == typeof (ApiTaskResult<,>) ||
+             typeToConvert.GetGenericTypeDefinition() == typeof (ApiTaskResult<>));
 
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
         {

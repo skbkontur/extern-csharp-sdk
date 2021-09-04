@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2021.1.0" />
-    <PackageReference Include="OneOf" Version="3.0.190" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
     <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1" />

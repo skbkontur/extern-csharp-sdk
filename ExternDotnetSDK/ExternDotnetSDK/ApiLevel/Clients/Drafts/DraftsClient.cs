@@ -209,10 +209,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
 
             var response = await http.Post(url).SendAsync(timeout, DoNotFailOnBadRequestsWithPayloads).ConfigureAwait(false);
 
-            if (response.Status.IsSuccessful)
-                return await response.GetMessageAsync<ApiTaskResult<Docflow>>().ConfigureAwait(false);
-            
-            return await response.GetMessageAsync<ApiTaskResult<SendFailure>>().ConfigureAwait(false);
+            return await response.GetMessageAsync<ApiTaskResult<Docflow, SendFailure>>().ConfigureAwait(false);
         }
 
         public async Task<ApiTaskResult<Docflow, SendFailure>> GetSendDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null)
@@ -220,10 +217,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             var url = $"/v1/{accountId}/drafts/{draftId}/tasks/{taskId}";
             var response = await http.Get(url).SendAsync(timeout, DoNotFailOnBadRequestsWithPayloads).ConfigureAwait(false);
             
-            if (response.Status.IsSuccessful)
-                return await response.GetMessageAsync<ApiTaskResult<Docflow>>().ConfigureAwait(false);
-            
-            return await response.GetMessageAsync<ApiTaskResult<SendFailure>>().ConfigureAwait(false);
+            return await response.GetMessageAsync<ApiTaskResult<Docflow, SendFailure>>().ConfigureAwait(false);
         }
 
         public Task BuildDocumentAsync(

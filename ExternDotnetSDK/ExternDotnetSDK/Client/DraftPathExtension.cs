@@ -14,7 +14,6 @@ using Kontur.Extern.Client.Model.Drafts.LongOperationStatuses;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives.LongOperations;
 using Kontur.Extern.Client.Uploading;
-using OneOf;
 using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
 
 namespace Kontur.Extern.Client
@@ -85,22 +84,23 @@ namespace Kontur.Extern.Client
             );
         }
         
-        public static ILongOperation<OneOf<Docflow, DraftSendingFailure>> TrySend(this DraftPath path, bool allowToSendIncorrectPfrReport = false, TimeSpan? timeout = null)
+        public static ILongOperation<Docflow, DraftSendingFailure> TrySend(this DraftPath path, bool allowToSendIncorrectPfrReport = false, TimeSpan? timeout = null)
         {   
             var apiClient = path.Services.Api;
             var accountId = path.AccountId;
             var draftId = path.DraftId;
+            var jsonSerializer = path.Services.JsonSerializer;
 
-            return new LongOperation<OneOf<Docflow, DraftSendingFailure>>(
+            return new LongOperation<Docflow, DraftSendingFailure>(
                 async () =>
                 {
                     var result = await apiClient.Drafts.StartSendDraftAsync(accountId, draftId, allowToSendIncorrectPfrReport, timeout).ConfigureAwait(false);
-                    return result.ConvertSecondResult(x => DraftSendingFailure.From(x));
+                    return result.ConvertFailureResult(x => DraftSendingFailure.From(x, draftId, jsonSerializer));
                 },
                 async taskId =>
                 {
                     var result = await apiClient.Drafts.GetSendDraftTaskStatusAsync(accountId, draftId, taskId, timeout).ConfigureAwait(false);
-                    return result.ConvertSecondResult(x => DraftSendingFailure.From(x));
+                    return result.ConvertFailureResult(x => DraftSendingFailure.From(x, draftId, jsonSerializer));
                 },
                 path.Services.LongOperationsPollingStrategy
             );
@@ -128,7 +128,7 @@ namespace Kontur.Extern.Client
             );
 
             static ApiTaskResult<Docflow> ToOnlyDraftApiResult(ApiTaskResult<Docflow, SendFailure> result, Guid draftId, IJsonSerializer serializer) => 
-                result.ConsiderSecondAsError(x => DraftSendingFailure.From(x).ToApiError(draftId, serializer));
+                result.ConvertToSingleApiResult(x => DraftSendingFailure.From(x, draftId, serializer).ToApiError());
         }
     }
 }

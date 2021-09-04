@@ -1,12 +1,13 @@
 #nullable enable
 using System.Net;
 using System.Text.Json.Serialization;
+using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Send
 {
-    public class SendFailure
+    public class SendFailure : IApiTaskResult
     {
         [JsonConstructor]
         public SendFailure(Urn id, HttpStatusCode statusCode, string message, string status, CheckResultData? checkResult)
@@ -23,5 +24,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Drafts.Send
         public string Message { get; }
         public string Status { get; }
         public CheckResultData? CheckResult { get; }
+
+        public bool IsEmpty => Id == null! && Message is null! && StatusCode == 0 && Status == null!;
     }
 }

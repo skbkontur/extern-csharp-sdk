@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,7 +13,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
 {
     internal partial class ApiTaskResultJsonConverter
     {
-        private class ApiTaskResultOfTwoResultsJsonConverter<TResult, TFailureResult> : JsonConverter<_ApiTaskResult<TResult, TFailureResult>>
+        private class ApiTaskResultOfTwoResultsJsonConverter<TResult, TFailureResult> : JsonConverter<ApiTaskResult<TResult, TFailureResult>>
             where TResult : IApiTaskResult
             where TFailureResult : IApiTaskResult
         {
@@ -20,7 +21,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
 
             public ApiTaskResultOfTwoResultsJsonConverter(ApiTaskResultDtoPropNames propNames) => this.propNames = propNames;
 
-            public override _ApiTaskResult<TResult, TFailureResult> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override ApiTaskResult<TResult, TFailureResult> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var jsonDocument = JsonDocument.ParseValue(ref reader);
                 var taskId = jsonDocument.RootElement.GetProperty(propNames.IdPropName.AsUtf8()).GetGuid();
@@ -34,39 +35,22 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
                 switch (taskState)
                 {
                     case ApiTaskState.Running:
-                        return _ApiTaskResult<TResult, TFailureResult>.Running(taskId, taskType);
+                        return ApiTaskResult<TResult, TFailureResult>.Running(taskId, taskType);
 
                     case ApiTaskState.Succeed:
-                        var resultJson = jsonDocument.RootElement.GetProperty(propNames.TaskResultPropName.AsUtf8()).GetRawText();
-                        var successResult = DeserializeAs<TResult>(resultJson, propNames.TaskResultPropName, taskStateValue);
-                        if (!successResult.IsEmpty)
-                        {
-                            return _ApiTaskResult<TResult, TFailureResult>.Success(successResult, taskId, taskType);
-                        }
-
-                        var failureResult = DeserializeAs<TFailureResult>(resultJson, propNames.TaskResultPropName, taskStateValue);
-                        return _ApiTaskResult<TResult, TFailureResult>.FailureResult(failureResult, taskId, taskType);
+                        return DeserializeResult(jsonDocument, taskStateValue, taskId, taskType, options);
 
                     case ApiTaskState.Failed:
                         var errorJson = jsonDocument.RootElement.GetProperty(propNames.ApiErrorPropName.AsUtf8()).GetRawText();
-                        var error = DeserializeAs<ApiError>(errorJson, propNames.ApiErrorPropName, taskStateValue);
-                        return _ApiTaskResult<TResult, TFailureResult>.TaskFailure(error, taskId, taskType);
+                        var error = DeserializeAs<ApiError>(errorJson, propNames.ApiErrorPropName, taskStateValue, options);
+                        return ApiTaskResult<TResult, TFailureResult>.TaskFailure(error, taskId, taskType);
 
                     default:
                         throw Errors.UnexpectedEnumMember(nameof(taskState), taskState);
                 }
-
-                T DeserializeAs<T>(string json, in Utf8String propName, string? taskStatePropValue)
-                {
-                    return JsonSerializer.Deserialize<T>(json, options) ??
-                           throw Errors.JsonPropertyCannotBeNullIfAnotherPropertyHasValue(
-                               propName.ToString(),
-                               propNames.TaskStatePropName.ToString(),
-                               taskStatePropValue);
-                }
             }
 
-            public override void Write(Utf8JsonWriter writer, _ApiTaskResult<TResult, TFailureResult> value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, ApiTaskResult<TResult, TFailureResult> value, JsonSerializerOptions options)
             {
                 var dto = ToDto();
                 if (value.TryGetTaskError(out var error))
@@ -94,6 +78,43 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
                         TaskType = value.TaskType,
                     };
                 }
+            }
+            
+            private ApiTaskResult<TResult, TFailureResult> DeserializeResult(
+                JsonDocument jsonDocument, 
+                string? taskStateValue, 
+                Guid taskId, 
+                Urn? taskType, 
+                JsonSerializerOptions? options)
+            {
+                var resultJson = jsonDocument.RootElement.GetProperty(propNames.TaskResultPropName.AsUtf8()).GetRawText();
+                Exception? failureSerializationError = null;
+                try
+                {
+                    var failureResult = DeserializeAs<TFailureResult>(resultJson, propNames.TaskResultPropName, taskStateValue, options);
+                    if (!failureResult.IsEmpty)
+                    {
+                        return ApiTaskResult<TResult, TFailureResult>.FailureResult(failureResult, taskId, taskType);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    failureSerializationError = ex;
+                }
+
+                var successResult = DeserializeAs<TResult>(resultJson, propNames.TaskResultPropName, taskStateValue, options);
+                if (successResult.IsEmpty && failureSerializationError is not null)
+                    throw failureSerializationError;
+                return ApiTaskResult<TResult, TFailureResult>.Success(successResult, taskId, taskType);
+            }
+
+            private T DeserializeAs<T>(string json, in Utf8String propName, string? taskStatePropValue, JsonSerializerOptions? options)
+            {
+                return JsonSerializer.Deserialize<T>(json, options) ??
+                       throw Errors.JsonPropertyCannotBeNullIfAnotherPropertyHasValue(
+                           propName.ToString(),
+                           propNames.TaskStatePropName.ToString(),
+                           taskStatePropValue);
             }
         }
     }

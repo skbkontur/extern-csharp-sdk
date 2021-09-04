@@ -1,8 +1,10 @@
 using System;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Kontur.Extern.Client.Primitives.LongOperations
 {
+    [PublicAPI]
     public interface ILongOperation
     { 
         Task<ILongOperationAwaiter> StartAsync();
@@ -12,6 +14,7 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
         Task<LongOperationStatus> CheckStatusAsync(Guid taskId);
     }
     
+    [PublicAPI]
     public interface ILongOperation<TResult>
     { 
         Task<ILongOperationAwaiter<TResult>> StartAsync();
@@ -19,5 +22,16 @@ namespace Kontur.Extern.Client.Primitives.LongOperations
         ILongOperationAwaiter<TResult> ContinueAwait(Guid taskId);
 
         Task<LongOperationStatus<TResult>> CheckStatusAsync(Guid taskId);
+    }
+    
+    [PublicAPI]
+    public interface ILongOperation<TResult, TFailure>
+        where TFailure : ILongOperationFailure
+    { 
+        Task<ILongOperationAwaiter<TResult, TFailure>> StartAsync();
+        
+        ILongOperationAwaiter<TResult, TFailure> ContinueAwait(Guid taskId);
+
+        Task<LongOperationStatus<TResult, TFailure>> CheckStatusAsync(Guid taskId);
     }
 }

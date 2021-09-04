@@ -395,7 +395,8 @@ namespace Kontur.Extern.Client.End2EndTests.Client
 
             var result = await Context.Drafts.TrySendDraft(AccountId, createdDraft.Id);
 
-            result.AsT1.CheckStatus.Should().NotBeNull();
+            result.TryGetFailureResult(out var sendingFailure).Should().BeTrue();
+            sendingFailure.CheckStatus.Should().NotBeNull();
 
             async Task<byte[]> GenerateIncorrectFufSschContent()
             {
