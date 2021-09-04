@@ -1,7 +1,9 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
 using Kontur.Extern.Client.Model.Numbers;
@@ -128,7 +130,7 @@ namespace Kontur.Extern.Client.Exceptions
         public static Exception TheContentIsAlreadyEndedAndNextPartCannotBeLoaded() => 
             new ApiException("The content is already ended and there is no next part of it to download");
 
-        public static Exception UrnDoesNotBelongToNamespace(string paramName, Urn urn, Urn ns) => 
+        public static Exception UrnDoesNotBelongToNamespace([InvokerParameterName] string paramName, Urn urn, Urn ns) => 
             new ArgumentOutOfRangeException(paramName, urn, $"The given URN does not belong to the namespace '{ns}'");
 
         public static Exception JsonDoesNotContainProperty(string propName) => 
@@ -136,5 +138,11 @@ namespace Kontur.Extern.Client.Exceptions
 
         public static Exception UnknownSubtypeOf<T>(Type subType) => 
             new InvalidOperationException($"Unknown subtype {subType} of {typeof(T)}");
+
+        public static Exception JsonPropertyCannotBeNullIfAnotherPropertyHasValue(string propertyName, string anotherPropertyName, string? anotherPropertyValue) => 
+            new JsonException($"The json property '{propertyName}' cannot be null, if the another property '{anotherPropertyName}' has following value '{anotherPropertyValue ?? "null"}'");
+
+        public static Exception CannotCreateApiTaskResultWithIsEmptyResult<TResult>([InvokerParameterName] string paramName, TResult result) =>
+            new ArgumentException($"Cannot create api task result when given an empty parameter. The parameter value:{NewLine}{result}.", paramName);
     }
 }
