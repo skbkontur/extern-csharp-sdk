@@ -13,14 +13,14 @@ using Xunit.Abstractions;
 
 namespace Kontur.Extern.Client.End2EndTests.Client
 {
-    public class OrganizationPathsExtensions_Tests : GeneratedAccountTests, IClassFixture<AuthoritiesCodesGenerator>
+    public class OrganizationPathsExtensions_Tests : GeneratedAccountTests
     {
         private readonly AuthoritiesCodesGenerator codesGenerator;
 
-        public OrganizationPathsExtensions_Tests(ITestOutputHelper output, IsolatedAccountEnvironment environment, AuthoritiesCodesGenerator codesGenerator)
+        public OrganizationPathsExtensions_Tests(ITestOutputHelper output, IsolatedAccountEnvironment environment)
             : base(output, environment)
         {
-            this.codesGenerator = codesGenerator;
+            codesGenerator = new AuthoritiesCodesGenerator();
         }
 
         [Fact]

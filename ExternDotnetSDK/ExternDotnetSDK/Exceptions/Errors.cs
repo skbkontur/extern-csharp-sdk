@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.Errors;
 using Kontur.Extern.Client.Model.Numbers;
@@ -89,7 +88,8 @@ namespace Kontur.Extern.Client.Exceptions
         public static Exception InvalidRange([InvokerParameterName] string fromParamName, [InvokerParameterName] string toParamName, DateTime from, DateTime to) => 
             new ArgumentException($"Invalid range bounds, the value '{@from}' of '{fromParamName}' parameter is greater than the value '{to}' of '{toParamName}' parameter");
 
-        public static Exception LongOperationFailed(ApiError startApiError) => new ApiException($"{startApiError}{NewLine}{startApiError.Message}");
+        public static ApiException LongOperationFailed(ApiError startApiError) => 
+            new($"{startApiError}{NewLine}{startApiError.Message}");
 
         public static Exception StringShouldNotBeNullOrWhiteSpace([InvokerParameterName] string paramName) => 
             new ArgumentException("The given value cannot be null, or empty, or a whitespace string.", paramName);
