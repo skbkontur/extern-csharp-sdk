@@ -1,23 +1,27 @@
 ﻿using System;
-// ReSharper disable CommentTypo
+using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class DraftsBuilderFileRequest
     {
         /// <summary>
         /// Идентификатор контента в сервисе контентов
         /// </summary>
-        public Guid ContentId { get; set; }
-
+        public Guid? ContentId { get; set; }
+        
         /// <summary>
-        /// Контент подписи файла
+        /// Контент подписи файла в формате base64
         /// </summary>
-        public byte[] Signature { get; set; }
-
+        public string Base64SignatureContent { get; set; }
+        
         /// <summary>
         /// Метаинформация файла
         /// </summary>
+        //[Required]
         public DraftsBuilderFileMetaRequest Meta { get; set; }
     }
 }

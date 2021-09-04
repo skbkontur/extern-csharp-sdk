@@ -1,6 +1,6 @@
 ﻿namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles.Data
 {
-    public class BusinessRegistrationDraftsBuilderFileData : DraftsBuilderFileData
+    public abstract class DraftsBuilderDocumentFileData
     {
     }
 }

@@ -1,17 +1,29 @@
-﻿using Kontur.Extern.Client.ApiLevel.Models.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles.Data;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class DraftsBuilderDocumentFileMeta
     {
-        // [JsonProperty(Required = Required.Always)]
+        /// <summary>
+        /// Название файла
+        /// </summary>
+        ///[Required]
         public string FileName { get; set; }
-
-        // [JsonProperty(Required = Required.Always)]
+        
+        /// <summary>
+        /// Тип DraftsBuilder
+        /// </summary>
+        //[Required]
         public Urn BuilderType { get; set; }
-
-        // [JsonProperty(Required = Required.Always)]
-        public DraftsBuilderFileData BuilderData { get; set; }
+        
+        /// <summary>
+        /// Дополнительная информация о файле
+        /// </summary>
+        public DraftsBuilderDocumentFileData BuilderData { get; set; }
     }
 }
