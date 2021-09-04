@@ -1,6 +1,3 @@
-
-// ReSharper disable CommentTypo
-
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
