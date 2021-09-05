@@ -25,6 +25,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Send
         public string Status { get; }
         public CheckResultData? CheckResult { get; }
 
+        [JsonIgnore]
         public bool IsEmpty => Id == null! && Message is null! && StatusCode == 0 && Status == null!;
     }
 }
