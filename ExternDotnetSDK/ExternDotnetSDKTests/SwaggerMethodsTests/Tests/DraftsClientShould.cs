@@ -701,29 +701,6 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
             Assert.DoesNotThrowAsync(async () => await Client.Drafts.GetDraftTasks(Account.Id, draft.Id).ConfigureAwait(false));
         }
 
-        [Test]
-        public async Task FailToGetDraftTask_WithBadParameters()
-        {
-            var d = await CreateDraftAsync().ConfigureAwait(false);
-            await Client.Drafts.StartCheckDraftAsync(Account.Id, d.Id).ConfigureAwait(false);
-            var taskId = (await Client.Drafts.GetDraftTasks(Account.Id, d.Id).ConfigureAwait(false)).ApiTaskPageItems[0].Id;
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.GetDssSignTask(Guid.Empty, d.Id, taskId).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(
-                async () => await Client.Drafts.GetDssSignTask(Account.Id, Guid.Empty, taskId).ConfigureAwait(false));
-            Assert.ThrowsAsync<HttpRequestException>(async () => await Client.Drafts.GetDssSignTask(Account.Id, d.Id, Guid.Empty).ConfigureAwait(false));
-            await Client.Drafts.DeleteDraftAsync(Account.Id, d.Id).ConfigureAwait(false);
-        }
-
-        [Test]
-        public async Task GetDraftTask_WithValidParameters()
-        {
-            var d = await CreateDraftAsync().ConfigureAwait(false);
-            await Client.Drafts.StartCheckDraftAsync(Account.Id, d.Id).ConfigureAwait(false);
-            var taskId = (await Client.Drafts.GetDraftTasks(Account.Id, d.Id).ConfigureAwait(false)).ApiTaskPageItems[0].Id;
-            Assert.DoesNotThrowAsync(async () => await Client.Drafts.GetDssSignTask(Account.Id, d.Id, taskId).ConfigureAwait(false));
-            await Client.Drafts.DeleteDraftAsync(Account.Id, d.Id).ConfigureAwait(false);
-        }
-
         private async Task<Draft> CreateDraftAsync() => await Client.Drafts.CreateDraftAsync(Account.Id, validDraftMetaRequest).ConfigureAwait(false);
 
         private async Task DeleteDraftAsync(Draft d) => await Client.Drafts.DeleteDraftAsync(Account.Id, d.Id).ConfigureAwait(false);

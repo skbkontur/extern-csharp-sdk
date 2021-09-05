@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Signatures;
 using Kontur.Extern.Client.ApiLevel.Models.Responses.ApiTasks;
@@ -339,20 +338,6 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             int? skip = null,
             int? take = null,
             bool? includeReleased = null,
-            TimeSpan? timeout = null);
-
-        /// <summary>
-        /// Проверка статуса задачи подписания по TaskId
-        /// </summary>
-        /// <param name="accountId">Идентификатор учетной записи</param>
-        /// <param name="draftId">Идентификатор черновика</param>
-        /// <param name="taskId">Идентификатор задачи</param>
-        /// <param name="timeout"></param>
-        /// <returns>Задача подписания</returns>
-        Task<ApiTaskResult<CryptOperationStatusResult>> GetDssSignTask(
-            Guid accountId,
-            Guid draftId,
-            Guid taskId,
             TimeSpan? timeout = null);
     }
 }

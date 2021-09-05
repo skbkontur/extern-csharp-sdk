@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Api;
-using Kontur.Extern.Client.Models.ApiTasks;
 using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Models.Docflows.Documents.Replies;
@@ -226,46 +224,6 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
             Guid documentId,
             Guid replyId,
             byte[] content,
-            TimeSpan? timeout = null);
-
-        /// <summary>
-        /// Проверка статуса задачи подписания ответного документа по TaskId
-        /// </summary>
-        /// <param name="accountId">Идентификатор учетной записи</param>
-        /// <param name="docflowId">Идентификатор документооборота</param>
-        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
-        /// <param name="replyId">Идентификатор ответного документа</param>
-        /// <param name="taskId">Идентификатор задачи</param>
-        /// <param name="timeout"></param>
-        /// <returns>Задача подписания ответного документа</returns>
-        Task<ApiTaskResult<CryptOperationStatusResult>> GetDssSignReplyTaskAsync(
-            Guid accountId,
-            Guid docflowId,
-            Guid documentId,
-            Guid replyId,
-            Guid taskId,
-            TimeSpan? timeout = null);
-
-        /// <summary>
-        /// Проверка статуса задачи подписания ответного документа документооборота описи по TaskId
-        /// </summary>
-        /// <param name="accountId">Идентификатор учетной записи</param>
-        /// <param name="relatedDocflowId">Идентификатор связанного документооборота</param>
-        /// <param name="relatedDocumentId">Идентификатор документа из связанного документооборота</param>
-        /// <param name="inventoryId">Идентификатор документооборота описи</param>
-        /// <param name="documentId">Идентификатор документа, на который был сформирован ответный документ</param>
-        /// <param name="replyId">Идентификатор ответного документа</param>
-        /// <param name="taskId">Идентификатор задачи</param>
-        /// <param name="timeout"></param>
-        /// <returns>Задача подписания ответного документа</returns>
-        Task<ApiTaskResult<CryptOperationStatusResult>> GetDssSignReplyTaskAsync(
-            Guid accountId,
-            Guid relatedDocflowId,
-            Guid relatedDocumentId,
-            Guid inventoryId,
-            Guid documentId,
-            Guid replyId,
-            Guid taskId,
             TimeSpan? timeout = null);
     }
 }

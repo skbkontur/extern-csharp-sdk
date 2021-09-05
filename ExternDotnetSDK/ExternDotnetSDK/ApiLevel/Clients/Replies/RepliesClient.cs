@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows.Documents;
 using Kontur.Extern.Client.Http;
-using Kontur.Extern.Client.Models.ApiTasks;
 using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Models.Docflows.Documents.Replies;
@@ -181,32 +179,6 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
         {
             var url = $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/content";
             return http.PutAsync<byte[], ReplyDocument>(url, content, timeout);
-        }
-
-        public Task<ApiTaskResult<CryptOperationStatusResult>> GetDssSignReplyTaskAsync(
-            Guid accountId,
-            Guid docflowId,
-            Guid documentId,
-            Guid replyId,
-            Guid taskId,
-            TimeSpan? timeout = null)
-        {
-            var url = $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/tasks/{taskId}";
-            return http.GetAsync<ApiTaskResult<CryptOperationStatusResult>>(url, timeout);
-        }
-
-        public Task<ApiTaskResult<CryptOperationStatusResult>> GetDssSignReplyTaskAsync(
-            Guid accountId,
-            Guid relatedDocflowId,
-            Guid relatedDocumentId,
-            Guid inventoryId,
-            Guid documentId,
-            Guid replyId,
-            Guid taskId,
-            TimeSpan? timeout = null)
-        {
-            var url = $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/tasks/{taskId}";
-            return http.GetAsync<ApiTaskResult<CryptOperationStatusResult>>(url, timeout);
         }
         
         private Task<Docflow> PostDocflowAsync<TDto>(string url, TDto dto, TimeSpan? timeout) => 

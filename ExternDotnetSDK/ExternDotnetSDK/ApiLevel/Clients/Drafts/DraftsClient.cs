@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Signatures;
 using Kontur.Extern.Client.ApiLevel.Models.Responses.ApiTasks;
@@ -270,15 +269,6 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
                 .AppendToQuery("includeReleased", includeReleased)
                 .Build();
             return http.GetAsync<ApiTaskPage>(url, timeout);
-        }
-
-        public Task<ApiTaskResult<CryptOperationStatusResult>> GetDssSignTask(
-            Guid accountId,
-            Guid draftId,
-            Guid taskId,
-            TimeSpan? timeout = null)
-        {
-            return http.GetAsync<ApiTaskResult<CryptOperationStatusResult>>($"/v1/{accountId}/drafts/{draftId}/tasks/{taskId}", timeout);
         }
 
         private static bool DoNotFailOnBadRequestsWithPayloads(IHttpResponse httpResponse) => 
