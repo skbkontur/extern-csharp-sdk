@@ -1,5 +1,10 @@
-﻿namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Check
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+
+namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Check
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class CheckError
     {
         public string Description { get; set; }

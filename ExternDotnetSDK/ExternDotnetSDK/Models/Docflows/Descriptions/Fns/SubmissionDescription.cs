@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Common.Time;
 
 namespace Kontur.Extern.Client.Models.Docflows.Descriptions.Fns
 {
@@ -46,12 +47,12 @@ namespace Kontur.Extern.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// Дата начала отчетного периода, за который сдается документ
         /// </summary>
-        public DateTime PeriodBegin { get; set; }
+        public DateOnly PeriodBegin { get; set; }
         
         /// <summary>
         /// Дата конца отчетного периода, за который сдается документ
         /// </summary>
-        public DateTime PeriodEnd { get; set; }
+        public DateOnly PeriodEnd { get; set; }
         
         /// <summary>
         /// Идентификатор связанного документооборота, в ответ на который отправляется представление

@@ -1,8 +1,8 @@
 ﻿#nullable enable
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Common.Time;
 
 namespace Kontur.Extern.Client.Models.Warrants
 {
@@ -16,14 +16,12 @@ namespace Kontur.Extern.Client.Models.Warrants
         /// <summary>
         /// Дата начала действия доверенности
         /// </summary>
-        [CanBeNull]
-        public DateTime? DateBegin { get; set; }
+        public DateOnly? DateBegin { get; set; }
 
         /// <summary>
         /// Дата окончания действия доверенности
         /// </summary>
-        [CanBeNull]
-        public DateTime? DateEnd { get; set; }
+        public DateOnly? DateEnd { get; set; }
 
         /// <summary>
         /// Номер доверенности
@@ -33,7 +31,7 @@ namespace Kontur.Extern.Client.Models.Warrants
         /// <summary>
         /// Список полномочий представителя
         /// </summary>
-        public List<int>? Permissions { get; set; } = new List<int>();
+        public List<int>? Permissions { get; set; } = new();
 
         /// <summary>
         /// Нотариус

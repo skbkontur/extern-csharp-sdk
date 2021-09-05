@@ -1,6 +1,6 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Common.Time;
 
 namespace Kontur.Extern.Client.Models.Docflows.Descriptions.Fss
 {
@@ -51,6 +51,6 @@ namespace Kontur.Extern.Client.Models.Docflows.Descriptions.Fss
         /// <summary>
         /// Дата перехода реестра в текущую стадию обработки
         /// </summary>
-        public DateTime? FssStageDate { get; set; }
+        public DateOnly? FssStageDate { get; set; }
     }
 }

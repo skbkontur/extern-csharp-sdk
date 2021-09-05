@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Models.Common;
 
 namespace Kontur.Extern.Client.Models.Docflows.Documents
@@ -29,7 +30,7 @@ namespace Kontur.Extern.Client.Models.Docflows.Documents
         /// <summary>
         /// Дата отправки документа
         /// </summary>
-        public DateTime? SendDate { get; set; }
+        public DateOnly? SendDate { get; set; }
         
         /// <summary>
         /// Подписи документа

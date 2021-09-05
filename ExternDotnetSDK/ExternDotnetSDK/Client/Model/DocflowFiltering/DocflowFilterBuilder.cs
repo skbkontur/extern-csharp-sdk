@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Numbers;
@@ -74,9 +75,9 @@ namespace Kontur.Extern.Client.Model.DocflowFiltering
         }
 
         /// <summary>
-        /// Дата создания документооборотов, от которой нужно получить список
+        /// Установить дату создания документооборотов, от которой нужно получить список
         /// </summary>
-        public DocflowFilterBuilder WithCreatedFrom(DateTime dateFrom)
+        public DocflowFilterBuilder WithCreatedFrom(DateOnly dateFrom)
         {
             if (filter.CreatedTo < dateFrom)
                 throw Errors.InvalidRange(nameof(dateFrom), nameof(filter.CreatedTo), dateFrom, filter.CreatedTo.Value);
@@ -86,9 +87,9 @@ namespace Kontur.Extern.Client.Model.DocflowFiltering
         }
 
         /// <summary>
-        /// Дата создания документооборотов, до которой нужно получить список
+        /// Установить дату создания документооборотов, до которой нужно получить список
         /// </summary>
-        public DocflowFilterBuilder WithCreatedTo(DateTime dateTo)
+        public DocflowFilterBuilder WithCreatedTo(DateOnly dateTo)
         {
             if (filter.CreatedFrom > dateTo)
                 throw Errors.InvalidRange(nameof(dateTo), nameof(filter.CreatedFrom), filter.CreatedFrom.Value, dateTo);
@@ -172,7 +173,7 @@ namespace Kontur.Extern.Client.Model.DocflowFiltering
         /// <summary>
         /// Поиск документооборотов по указанному началу отчетного периода.
         /// </summary>
-        public DocflowFilterBuilder WithReportingPeriod(DateTime from, DateTime to)
+        public DocflowFilterBuilder WithReportingPeriod(DateOnly from, DateOnly to)
         {
             if (from > to)
                 throw Errors.InvalidRange(nameof(from), nameof(to), from, to);

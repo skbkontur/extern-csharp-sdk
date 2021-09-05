@@ -1,6 +1,6 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Common.Time;
 
 namespace Kontur.Extern.Client.Models.Docflows.Descriptions.Oved
 {
@@ -21,12 +21,12 @@ namespace Kontur.Extern.Client.Models.Docflows.Descriptions.Oved
         /// <summary>
         /// Дата начала отчетного периода, за который сдается отчет
         /// </summary>
-        public DateTime? PeriodBegin { get; set; }
+        public DateOnly? PeriodBegin { get; set; }
         
         /// <summary>
         /// Дата окончания отчетного периода, за который сдается отчет
         /// </summary>
-        public DateTime? PeriodEnd { get; set; }
+        public DateOnly? PeriodEnd { get; set; }
         
         /// <summary>
         /// ИНН организации, за которую сдается отчет

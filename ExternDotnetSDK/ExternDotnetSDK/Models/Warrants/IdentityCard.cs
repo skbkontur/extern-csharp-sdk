@@ -1,7 +1,7 @@
 ﻿#nullable enable
-using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Common.Time;
 
 namespace Kontur.Extern.Client.Models.Warrants
 {
@@ -35,7 +35,7 @@ namespace Kontur.Extern.Client.Models.Warrants
         /// <summary>
         /// Дата выдачи
         /// </summary>
-        public DateTime? IssuanceDate { get; set; }
+        public DateOnly? IssuanceDate { get; set; }
 
         /// <summary>
         /// Код подразделения

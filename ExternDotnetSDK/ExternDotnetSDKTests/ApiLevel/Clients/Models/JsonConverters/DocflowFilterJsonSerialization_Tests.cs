@@ -2,6 +2,7 @@ using System;
 using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Json;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Models.Common;
@@ -20,10 +21,10 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
   ""inn-kpp"": ""inn-kpp"",
   ""org-id"": ""0924103a-1ddf-4ef7-a7f3-323e0702aff4"",
   ""order-by"": ""ascending"",
-  ""updated-from"": ""2021-08-27T13:51:22"",
-  ""updated-to"": ""2021-08-27T13:51:22"",
-  ""created-from"": ""2021-08-27T13:51:22"",
-  ""created-to"": ""2021-08-27T13:51:22"",
+  ""updated-from"": ""2021-08-26"",
+  ""updated-to"": ""2021-08-27"",
+  ""created-from"": ""2021-08-26"",
+  ""created-to"": ""2021-08-27"",
   ""types"": [
     ""urn:docflow:fns534-letter""
   ],
@@ -34,8 +35,8 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
   ""reg-number"": ""reg"",
   ""form-name"": ""the-name"",
   ""demands-on-reports"": true,
-  ""period-from"": ""2021-08-27T13:51:22"",
-  ""period-to"": ""2021-08-27T13:51:22"",
+  ""period-from"": ""2021-08-26"",
+  ""period-to"": ""2021-08-27"",
   ""for-all-users"": true
 }";
         private IJsonSerializer serializer;
@@ -62,10 +63,10 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
                 InnKpp = "inn-kpp",
                 OrgId = Guid.Parse("0924103A-1DDF-4EF7-A7F3-323E0702AFF4"),
                 OrderBy = SortOrder.Ascending,
-                UpdatedFrom = new DateTime(2021, 08, 27, 13, 51, 22),
-                UpdatedTo = new DateTime(2021, 08, 27, 13, 51, 22),
-                CreatedFrom = new DateTime(2021, 08, 27, 13, 51, 22),
-                CreatedTo = new DateTime(2021, 08, 27, 13, 51, 22),
+                UpdatedFrom = new DateOnly(2021, 08, 26),
+                UpdatedTo = new DateOnly(2021, 08, 27),
+                CreatedFrom = new DateOnly(2021, 08, 26),
+                CreatedTo = new DateOnly(2021, 08, 27),
                 Types = new[]
                 {
                     DocflowType.Fns.Fns534.Letter.ToUrn()
@@ -77,8 +78,8 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
                 RegNumber = "reg",
                 FormName = "the-name",
                 DemandsOnReports = true,
-                PeriodFrom = new DateTime(2021, 08, 27, 13, 51, 22),
-                PeriodTo = new DateTime(2021, 08, 27, 13, 51, 22),
+                PeriodFrom = new DateOnly(2021, 08, 26),
+                PeriodTo = new DateOnly(2021, 08, 27),
                 ForAllUsers = true
             };
         }
