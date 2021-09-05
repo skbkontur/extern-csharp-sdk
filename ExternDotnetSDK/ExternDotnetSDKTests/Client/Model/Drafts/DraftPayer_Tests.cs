@@ -1,6 +1,6 @@
 using System;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Client.Model.Drafts;
 using Kontur.Extern.Client.Testing.Generators;
 using NUnit.Framework;

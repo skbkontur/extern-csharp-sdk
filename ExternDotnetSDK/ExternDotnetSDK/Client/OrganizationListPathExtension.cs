@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Organizations;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Organizations;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Model.Numbers;
 using Kontur.Extern.Client.Paths;

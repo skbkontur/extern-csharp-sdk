@@ -1,7 +1,8 @@
 ﻿#nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Organizations;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Organizations;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Organizations;
 using Kontur.Extern.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 // ReSharper disable CommentTypo

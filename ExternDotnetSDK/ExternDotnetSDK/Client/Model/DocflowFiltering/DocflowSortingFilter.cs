@@ -1,7 +1,8 @@
 #nullable enable
 using System;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Client.Models.Common;
+
 // ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Model.DocflowFiltering

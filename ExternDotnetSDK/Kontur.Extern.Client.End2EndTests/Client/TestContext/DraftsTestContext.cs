@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.Model;
 using Kontur.Extern.Client.Model.Drafts;
 using Kontur.Extern.Client.Model.Drafts.LongOperationStatuses;
+using Kontur.Extern.Client.Models.Docflows;
+using Kontur.Extern.Client.Models.Drafts;
+using Kontur.Extern.Client.Models.Drafts.Meta;
 using Kontur.Extern.Client.Primitives.LongOperations;
 using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
 
@@ -43,7 +43,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
         public Task DeleteDocument(Guid accountId, Guid draftId, Guid documentId) => 
             konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).Document(documentId).DeleteAsync();
 
-        public Task<ApiLevel.Models.Drafts.Documents.DraftDocument> GetDocument(Guid accountId, Guid draftId, Guid documentId) =>
+        public Task<Models.Drafts.Documents.DraftDocument> GetDocument(Guid accountId, Guid draftId, Guid documentId) =>
             konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).Document(documentId).GetAsync();
         
         public async Task<Signature> GetSignature(Guid accountId, Guid draftId, Guid documentId, Guid signatureId) =>

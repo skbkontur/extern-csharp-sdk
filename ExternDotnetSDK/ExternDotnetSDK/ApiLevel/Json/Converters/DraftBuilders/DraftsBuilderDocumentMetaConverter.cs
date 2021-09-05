@@ -1,11 +1,11 @@
 #nullable enable
 using System;
 using System.Text.Json.Serialization;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents.Data;
 using Kontur.Extern.Client.Model.DraftBuilders;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.DraftsBuilders.Builders.Data;
+using Kontur.Extern.Client.Models.DraftsBuilders.Documents;
+using Kontur.Extern.Client.Models.DraftsBuilders.Documents.Data;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders
 {

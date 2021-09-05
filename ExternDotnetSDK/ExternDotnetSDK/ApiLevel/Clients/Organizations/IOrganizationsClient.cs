@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Organizations;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Organizations;
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Organizations
 {

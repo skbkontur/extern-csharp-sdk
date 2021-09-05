@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Documents;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Signatures;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Signatures;
 using Kontur.Extern.Client.Http.Models;
+using Kontur.Extern.Client.Models.Drafts.Documents;
 using Kontur.Extern.Client.Paths;
 
 namespace Kontur.Extern.Client

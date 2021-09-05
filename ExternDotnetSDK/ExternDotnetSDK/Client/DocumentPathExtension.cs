@@ -2,13 +2,13 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents.Replies;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows;
 using Kontur.Extern.Client.Helpers;
 using Kontur.Extern.Client.Model;
 using Kontur.Extern.Client.Model.DocflowFiltering;
 using Kontur.Extern.Client.Model.Documents;
+using Kontur.Extern.Client.Models.Docflows.Documents;
+using Kontur.Extern.Client.Models.Docflows.Documents.Replies;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives;
 

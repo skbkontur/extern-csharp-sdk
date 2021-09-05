@@ -1,11 +1,11 @@
 #nullable enable
 using System;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data;
 using Kontur.Extern.Client.Model.DraftBuilders;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Drafts.Meta;
+using Kontur.Extern.Client.Models.DraftsBuilders.Builders;
+using Kontur.Extern.Client.Models.DraftsBuilders.Builders.Data;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders
 {

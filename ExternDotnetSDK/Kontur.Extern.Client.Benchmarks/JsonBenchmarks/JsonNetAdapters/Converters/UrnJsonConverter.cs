@@ -1,5 +1,5 @@
 ﻿using System;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
+using Kontur.Extern.Client.Models.Common;
 using Newtonsoft.Json;
 
 namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Converters

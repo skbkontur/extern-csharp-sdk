@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Kontur.Extern.Client.ApiLevel.Models.Api;
+using Kontur.Extern.Client.Models.ApiTasks;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
 {

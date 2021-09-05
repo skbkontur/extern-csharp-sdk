@@ -1,9 +1,9 @@
 using System.IO;
 using System.Text;
 using Kontur.Extern.Client.ApiLevel.Json;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
 using Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters;
 using Kontur.Extern.Client.Http.Serialization;
+using Kontur.Extern.Client.Models.Docflows;
 
 namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks
 {

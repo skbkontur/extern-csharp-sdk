@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Net;
 using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Json;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Send;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Check;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Send;
 using Kontur.Extern.Client.Http.Serialization;
+using Kontur.Extern.Client.Models.Common;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters

@@ -1,5 +1,5 @@
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
+using Kontur.Extern.Client.Models.Common;
 
 // ReSharper disable CommentTypo
 

@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Paths;
 
 namespace Kontur.Extern.Client

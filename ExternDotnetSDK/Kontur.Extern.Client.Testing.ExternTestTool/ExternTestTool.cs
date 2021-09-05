@@ -10,7 +10,7 @@ using Kontur.Extern.Client.Testing.Fakes.Logging;
 using Kontur.Extern.Client.Testing.Lifetimes;
 using Vostok.Logging.Abstractions;
 using Xunit.Abstractions;
-using Docflow = Kontur.Extern.Client.ApiLevel.Models.Docflows.Docflow;
+using Docflow = Kontur.Extern.Client.Models.Docflows.Docflow;
 
 // ReSharper disable CommentTypo
 

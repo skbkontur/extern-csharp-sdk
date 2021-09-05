@@ -2,9 +2,9 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Accounts;
-using Kontur.Extern.Client.ApiLevel.Models.Certificates;
-using Kontur.Extern.Client.ApiLevel.Models.Warrants;
+using Kontur.Extern.Client.Models.Accounts;
+using Kontur.Extern.Client.Models.Certificates;
+using Kontur.Extern.Client.Models.Warrants;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives;
 // ReSharper disable CommentTypo

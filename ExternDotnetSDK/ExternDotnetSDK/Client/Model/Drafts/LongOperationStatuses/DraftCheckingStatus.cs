@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Check;
 
 namespace Kontur.Extern.Client.Model.Drafts.LongOperationStatuses
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Organizations;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Organizations;
 using Kontur.Extern.Client.Model.Numbers;
 
 namespace Kontur.Extern.Client.End2EndTests.Client.TestContext

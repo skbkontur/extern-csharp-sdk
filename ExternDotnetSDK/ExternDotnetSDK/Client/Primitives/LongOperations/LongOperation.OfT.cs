@@ -1,8 +1,8 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Api;
 using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.Models.ApiTasks;
 using Kontur.Extern.Client.Primitives.Polling;
 
 namespace Kontur.Extern.Client.Primitives.LongOperations

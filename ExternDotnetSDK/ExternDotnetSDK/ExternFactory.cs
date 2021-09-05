@@ -2,7 +2,6 @@
 using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel;
-using Kontur.Extern.Client.ApiLevel.Models.Errors;
 using Kontur.Extern.Client.Auth.Abstractions;
 using Kontur.Extern.Client.Authentication;
 using Kontur.Extern.Client.Common;
@@ -13,6 +12,7 @@ using Kontur.Extern.Client.Http.ClusterClientAdapters;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Model.Configuration;
+using Kontur.Extern.Client.Models.Errors;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives.Polling;
 using Vostok.Clusterclient.Core;

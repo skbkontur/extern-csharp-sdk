@@ -1,8 +1,8 @@
 using System;
 using AutoBogus;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents.Requisites;
 using Kontur.Extern.Client.Model.Documents;
+using Kontur.Extern.Client.Models.Docflows.Documents;
+using Kontur.Extern.Client.Models.Docflows.Documents.Requisites;
 using Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions;
 
 namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators

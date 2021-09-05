@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Api;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Documents.Data;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows.Documents;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows;
 using Kontur.Extern.Client.Http;
+using Kontur.Extern.Client.Models.ApiTasks;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Docflows;
+using Kontur.Extern.Client.Models.Docflows.Documents;
 using Vostok.Clusterclient.Core.Model;
 // ReSharper disable CommentTypo
 

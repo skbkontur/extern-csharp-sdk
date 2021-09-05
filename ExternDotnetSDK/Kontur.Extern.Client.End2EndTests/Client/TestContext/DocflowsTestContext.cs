@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows;
+using Kontur.Extern.Client.Models.Docflows;
 
 namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
 {

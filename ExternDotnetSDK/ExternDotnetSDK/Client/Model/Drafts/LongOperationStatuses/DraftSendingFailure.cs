@@ -2,12 +2,12 @@
 using System;
 using System.Net;
 using System.Text;
-using Kontur.Extern.Client.ApiLevel.Models.Api;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Send;
-using Kontur.Extern.Client.ApiLevel.Models.Errors;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Send;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http.Serialization;
+using Kontur.Extern.Client.Models.ApiTasks;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Errors;
 using Kontur.Extern.Client.Primitives.LongOperations;
 
 namespace Kontur.Extern.Client.Model.Drafts.LongOperationStatuses

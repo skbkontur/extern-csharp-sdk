@@ -2,10 +2,9 @@
 using System;
 using FluentAssertions;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Api;
-using Kontur.Extern.Client.ApiLevel.Models.Api.Enums;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.Errors;
+using Kontur.Extern.Client.Models.ApiTasks;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Errors;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api

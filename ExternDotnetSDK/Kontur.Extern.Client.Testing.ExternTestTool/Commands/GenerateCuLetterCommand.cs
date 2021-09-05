@@ -1,7 +1,7 @@
 using System;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Testing.ExternTestTool.Http;
 using Kontur.Extern.Client.Testing.ExternTestTool.Models.Requests;
 using Kontur.Extern.Client.Testing.ExternTestTool.ResponseCaching;

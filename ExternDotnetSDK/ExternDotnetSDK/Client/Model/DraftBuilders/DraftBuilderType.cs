@@ -2,8 +2,8 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.Models.Common;
 
 namespace Kontur.Extern.Client.Model.DraftBuilders
 {

@@ -1,10 +1,10 @@
 using System;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Client.Model.DocflowFiltering;
 using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.Models.Common;
 using NUnit.Framework;
 using Vostok.Commons.Time;
 

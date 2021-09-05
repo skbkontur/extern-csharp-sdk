@@ -1,13 +1,13 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data.BusinessRegistration;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.DocumentFiles.Data;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents.Data;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents.Data.BusinessRegistration;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Documents.Data.FnsInventory;
 using Kontur.Extern.Client.Model.DraftBuilders;
+using Kontur.Extern.Client.Models.DraftsBuilders.Builders.Data;
+using Kontur.Extern.Client.Models.DraftsBuilders.Builders.Data.BusinessRegistration;
+using Kontur.Extern.Client.Models.DraftsBuilders.DocumentFiles.Data;
+using Kontur.Extern.Client.Models.DraftsBuilders.Documents.Data;
+using Kontur.Extern.Client.Models.DraftsBuilders.Documents.Data.BusinessRegistration;
+using Kontur.Extern.Client.Models.DraftsBuilders.Documents.Data.FnsInventory;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders
 {

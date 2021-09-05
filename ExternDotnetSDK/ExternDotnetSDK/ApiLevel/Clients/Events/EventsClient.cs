@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Events;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Events;
 using Kontur.Extern.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 // ReSharper disable CommentTypo

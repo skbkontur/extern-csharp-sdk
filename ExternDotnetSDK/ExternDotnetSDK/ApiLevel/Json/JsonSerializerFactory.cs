@@ -3,10 +3,10 @@ using Kontur.Extern.Client.ApiLevel.Json.Converters;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders.Builders.Data.BusinessRegistration;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies;
+using Kontur.Extern.Client.Models.DraftsBuilders.Builders.Data.BusinessRegistration;
 
 namespace Kontur.Extern.Client.ApiLevel.Json
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.Organizations;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Organizations;
 using Kontur.Extern.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Client.Exceptions;

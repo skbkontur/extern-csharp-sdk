@@ -6,9 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Documents;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Client.Exceptions;
@@ -17,6 +15,8 @@ using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Model.Documents.Contents;
 using Kontur.Extern.Client.Model.Drafts;
 using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.Models.Drafts.Documents;
+using Kontur.Extern.Client.Models.Drafts.Meta;
 using Kontur.Extern.Client.Testing.Assertions;
 using Kontur.Extern.Client.Testing.ExternTestTool.Models.Requests;
 using Kontur.Extern.Client.Testing.Generators;
@@ -24,7 +24,7 @@ using Kontur.Extern.Client.Testing.Helpers;
 using Xunit;
 using Xunit.Abstractions;
 using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
-using Sender = Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta.Sender;
+using Sender = Kontur.Extern.Client.Models.Drafts.Meta.Sender;
 using Signature = Kontur.Extern.Client.Model.Signature;
 
 namespace Kontur.Extern.Client.End2EndTests.Client
@@ -158,7 +158,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
                 .WithSignature(GeneratedAccount.CertificatePublicPart);
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
-            var expectedDocument = new ApiLevel.Models.Drafts.Documents.DraftDocument
+            var expectedDocument = new Models.Drafts.Documents.DraftDocument
             {
                 Id = addedDocumentId,
                 Description = new DocumentDescription

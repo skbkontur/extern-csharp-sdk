@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.Errors;
 using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Errors;
 using static System.Environment;
 
 namespace Kontur.Extern.Client.Exceptions

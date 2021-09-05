@@ -1,6 +1,6 @@
 using System;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
+using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives.LongOperations;
 

@@ -1,9 +1,9 @@
 #nullable enable
 using System;
 using Kontur.Extern.Client.ApiLevel.Json;
-using Kontur.Extern.Client.ApiLevel.Models.DraftsBuilders;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Model.DraftBuilders;
+using Kontur.Extern.Client.Models.DraftsBuilders;
 using Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators;
 
 namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters.DraftBuilders

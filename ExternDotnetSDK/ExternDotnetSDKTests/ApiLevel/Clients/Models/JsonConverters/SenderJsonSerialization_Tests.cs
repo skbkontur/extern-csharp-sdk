@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Json;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
 using Kontur.Extern.Client.Http.Serialization;
+using Kontur.Extern.Client.Models.Drafts.Meta;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters

@@ -1,6 +1,6 @@
 ﻿using System;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
+using Kontur.Extern.Client.Models.Common;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -35,7 +35,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         {
             // ReSharper disable once NotAccessedVariable
             Urn badUrn;
-            Assert.Throws<UrnException>(() => badUrn = new Urn("bad value"), "Invalid URN schema");
+            Assert.Throws<ArgumentException>(() => badUrn = new Urn("bad value"), "Invalid URN schema");
             Assert.Throws<ArgumentNullException>(() => badUrn = new Urn(null));
             Assert.Throws<ArgumentNullException>(() => badUrn = new Urn(string.Empty, "nss"));
             Assert.Throws<ArgumentNullException>(() => badUrn = new Urn("nid", string.Empty));

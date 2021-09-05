@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
+using Kontur.Extern.Client.Models.Common;
 
 namespace Kontur.Extern.Client.End2EndTests.TestHelpers
 {

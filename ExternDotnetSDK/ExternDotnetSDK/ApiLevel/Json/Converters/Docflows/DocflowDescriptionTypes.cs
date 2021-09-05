@@ -1,14 +1,14 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Cbrf;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Fns;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Fns.BusinessRegistration;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Fss;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Oved;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Pfr;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows.Descriptions.Rosstat;
 using Kontur.Extern.Client.Model.Docflows;
+using Kontur.Extern.Client.Models.Docflows.Descriptions.Cbrf;
+using Kontur.Extern.Client.Models.Docflows.Descriptions.Fns;
+using Kontur.Extern.Client.Models.Docflows.Descriptions.Fns.BusinessRegistration;
+using Kontur.Extern.Client.Models.Docflows.Descriptions.Fss;
+using Kontur.Extern.Client.Models.Docflows.Descriptions.Oved;
+using Kontur.Extern.Client.Models.Docflows.Descriptions.Pfr;
+using Kontur.Extern.Client.Models.Docflows.Descriptions.Rosstat;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
 {

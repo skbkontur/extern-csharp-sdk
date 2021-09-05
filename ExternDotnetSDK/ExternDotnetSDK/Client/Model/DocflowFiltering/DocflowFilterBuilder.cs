@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Numbers;

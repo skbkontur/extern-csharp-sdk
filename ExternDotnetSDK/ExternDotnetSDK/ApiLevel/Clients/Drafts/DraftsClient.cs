@@ -2,16 +2,18 @@
 using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Api;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Check;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Documents;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Meta;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Send;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Signatures;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Signatures;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.ApiTasks;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Check;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Send;
 using Kontur.Extern.Client.Http;
+using Kontur.Extern.Client.Models.ApiTasks;
+using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Docflows;
+using Kontur.Extern.Client.Models.Drafts;
+using Kontur.Extern.Client.Models.Drafts.Documents;
+using Kontur.Extern.Client.Models.Drafts.Meta;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts

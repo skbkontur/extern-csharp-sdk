@@ -2,7 +2,8 @@
 using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows;
 using Kontur.Extern.Client.Model.DocflowFiltering;
 using Kontur.Extern.Client.Primitives;
 

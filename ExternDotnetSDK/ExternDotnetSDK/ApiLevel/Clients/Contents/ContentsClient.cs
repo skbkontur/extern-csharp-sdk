@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Contents;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Contents;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http;
 using Kontur.Extern.Client.Http.Constants;

@@ -1,6 +1,6 @@
 #nullable enable
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Docflows;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows;
 using Kontur.Extern.Client.Helpers;
 using Kontur.Extern.Client.Model.DocflowFiltering;
 using Kontur.Extern.Client.Paths;

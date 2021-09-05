@@ -1,6 +1,6 @@
 #nullable enable
 using System;
-using Kontur.Extern.Client.ApiLevel.Models.Drafts.Requests;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Client.Model.Numbers;
 
 namespace Kontur.Extern.Client.Model.Drafts

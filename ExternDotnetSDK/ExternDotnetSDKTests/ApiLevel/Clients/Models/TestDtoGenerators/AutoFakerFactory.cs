@@ -1,8 +1,8 @@
 using System;
 using AutoBogus;
 using AutoBogus.Conventions;
-using Kontur.Extern.Client.ApiLevel.Models.Common;
 using Kontur.Extern.Client.Common.Time;
+using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Testing.Generators;
 using Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions;
 using Randomizer = Bogus.Randomizer;

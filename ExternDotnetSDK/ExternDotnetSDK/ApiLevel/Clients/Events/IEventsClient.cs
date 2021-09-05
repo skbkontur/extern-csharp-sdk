@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Events;
+using Kontur.Extern.Client.ApiLevel.Models.Responses.Events;
 
 namespace Kontur.Extern.Client.ApiLevel.Clients.Events
 {
