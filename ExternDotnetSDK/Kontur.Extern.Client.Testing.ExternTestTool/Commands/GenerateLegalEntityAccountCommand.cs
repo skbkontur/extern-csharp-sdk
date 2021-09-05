@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
+using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Testing.ExternTestTool.Drive;
 using Kontur.Extern.Client.Testing.ExternTestTool.Http;
 using Kontur.Extern.Client.Testing.ExternTestTool.Models.Results;
@@ -14,12 +15,12 @@ namespace Kontur.Extern.Client.Testing.ExternTestTool.Commands
     internal class GenerateLegalEntityAccountCommand : IExternTestToolCommand<GeneratedAccount>
     {
         private readonly string organizationName;
-        private readonly (string surname, string firstName, string partonymicName) chiefName;
+        private readonly PersonFullName chiefName;
         private readonly DriveCertificatesReader driveCertificatesReader;
 
         public GenerateLegalEntityAccountCommand(
             string organizationName, 
-            (string surname, string firstName, string partonymicName) chiefName, 
+            PersonFullName chiefName, 
             DriveCertificatesReader driveCertificatesReader)
         {
             this.organizationName = organizationName;
@@ -62,9 +63,9 @@ namespace Kontur.Extern.Client.Testing.ExternTestTool.Commands
                     new NewLegalEntityAccountRequest
                     {
                         OrganizationName = organizationName,
-                        FirstName = chiefName.firstName,
-                        Surname = chiefName.surname,
-                        Patronymic = chiefName.partonymicName
+                        FirstName = chiefName.FirstName,
+                        Surname = chiefName.LastSurname,
+                        Patronymic = chiefName.PatronymicName
                     }
                 );
                 

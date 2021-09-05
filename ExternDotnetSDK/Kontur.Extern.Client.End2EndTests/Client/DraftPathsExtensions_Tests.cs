@@ -15,6 +15,7 @@ using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Model.Documents.Contents;
 using Kontur.Extern.Client.Model.Drafts;
 using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Models.Drafts.Documents;
 using Kontur.Extern.Client.Models.Drafts.Meta;
 using Kontur.Extern.Client.Testing.Assertions;

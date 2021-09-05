@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
 namespace Kontur.Extern.Client.Models.Common
@@ -7,19 +8,36 @@ namespace Kontur.Extern.Client.Models.Common
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class PersonFullName
     {
+        public PersonFullName(string lastSurname, string firstName, string patronymicName)
+        {
+            LastSurname = lastSurname;
+            FirstName = firstName;
+            PatronymicName = patronymicName;
+        }
+        
         /// <summary>
         /// Фамилия
         /// </summary>
-        public string Surname { get; set; }
+        [JsonPropertyName("surname")]
+        public string LastSurname { get; }
 
         /// <summary>
         /// Имя
         /// </summary>
-        public string Name { get; set; }
+        [JsonPropertyName("name")]
+        public string FirstName { get; }
 
         /// <summary>
         /// Отчество
         /// </summary>
-        public string Patronymic { get; set; }
+        [JsonPropertyName("patronymic")]
+        public string PatronymicName { get; }
+
+        public void Deconstruct(out string lastSurname, out string firstName, out string patronymicName)
+        {
+            lastSurname = LastSurname;
+            firstName = FirstName;
+            patronymicName = PatronymicName;
+        }
     }
 }

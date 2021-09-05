@@ -2,6 +2,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Kontur.Extern.Client.Http.Models;
+using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Testing.ExternTestTool.Helpers.Xml;
 using Kontur.Extern.Client.Testing.ExternTestTool.Http;
 using Kontur.Extern.Client.Testing.ExternTestTool.Models.Requests;
@@ -42,9 +43,9 @@ namespace Kontur.Extern.Client.Testing.ExternTestTool.Commands
                 sender.Inn,
                 sender.Kpp,
                 sender.OrgName,
-                Surname: payer?.ChiefFullName?.Surname,
-                FirstName: payer?.ChiefFullName?.Name,
-                Patronymic: payer?.ChiefFullName?.Patronymic
+                Surname: payer?.ChiefFullName?.LastSurname,
+                FirstName: payer?.ChiefFullName?.FirstName,
+                Patronymic: payer?.ChiefFullName?.PatronymicName
             );
             var generatedCertificate = await new GenerateCertificateCommand(certificateGenerationData).ExecuteAsync(httpClient, cache);
             return sender with

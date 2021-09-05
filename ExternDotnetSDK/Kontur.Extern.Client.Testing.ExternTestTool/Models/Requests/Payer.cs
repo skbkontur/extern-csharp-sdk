@@ -1,4 +1,6 @@
 // ReSharper disable CommentTypo
+using Kontur.Extern.Client.Models.Common;
+
 namespace Kontur.Extern.Client.Testing.ExternTestTool.Models.Requests
 {
     /// <summary>

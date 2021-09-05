@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Testing.ExternTestTool.Commands;
 using Kontur.Extern.Client.Testing.ExternTestTool.Drive;
 using Kontur.Extern.Client.Testing.ExternTestTool.Http;
@@ -43,7 +44,7 @@ namespace Kontur.Extern.Client.Testing.ExternTestTool
         /// <param name="chiefName">Имя руководителя</param>
         /// <returns>Сгенерированный аккаунт</returns>
         public Task<GeneratedAccount> GenerateLegalEntityAccountAsync(string organizationName, 
-                                                                      (string surname, string firstName, string partonymicName) chiefName) => 
+                                                                      PersonFullName chiefName) => 
             RunAsync(new GenerateLegalEntityAccountCommand(organizationName, chiefName, driveCertificatesReader));
 
         /// <summary>

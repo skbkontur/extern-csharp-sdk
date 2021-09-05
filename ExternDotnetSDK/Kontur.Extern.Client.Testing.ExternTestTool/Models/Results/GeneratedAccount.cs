@@ -1,13 +1,14 @@
 using System;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.Models.Common;
 
 namespace Kontur.Extern.Client.Testing.ExternTestTool.Models.Results
 {
     public class GeneratedAccount
     {
         // ReSharper disable StringLiteralTypo
-        public static readonly (string surname, string firstName, string partonymicName) DefaultChiefName = (
+        public static readonly PersonFullName DefaultChiefName = new (
             "Афанасьев",
             "Сергей",
             "Робертович"
@@ -37,7 +38,7 @@ namespace Kontur.Extern.Client.Testing.ExternTestTool.Models.Results
             ChiefName = DefaultChiefName;
         }
 
-        public (string surname, string firstName, string patronymicName) ChiefName { get; set; }
+        public PersonFullName ChiefName { get; set; }
 
         public Guid AccountId { get; }
         public Guid OrganizationId { get; }
