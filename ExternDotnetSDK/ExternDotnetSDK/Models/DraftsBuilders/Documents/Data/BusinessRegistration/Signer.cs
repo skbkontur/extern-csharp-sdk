@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Models.Common;
 
@@ -11,6 +12,7 @@ namespace Kontur.Extern.Client.Models.DraftsBuilders.Documents.Data.BusinessRegi
         /// <summary>
         /// ФИО
         /// </summary>
-        public Fio Fio { get; set; }
+        [JsonPropertyName("fio")]
+        public PersonFullName PersonFullName { get; set; }
     }
 }

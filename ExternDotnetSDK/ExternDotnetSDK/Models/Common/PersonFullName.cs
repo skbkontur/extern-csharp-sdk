@@ -5,7 +5,7 @@ namespace Kontur.Extern.Client.Models.Common
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]
-    public class Fio
+    public class PersonFullName
     {
         /// <summary>
         /// Фамилия

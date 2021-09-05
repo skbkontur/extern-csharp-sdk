@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Models.Common;
 
@@ -20,7 +21,8 @@ namespace Kontur.Extern.Client.Models.Warrants
         /// <summary>
         /// ФИО руководителя организации
         /// </summary>
-        public Fio? ChiefFio { get; set; }
+        [JsonPropertyName("chief-fio")]
+        public PersonFullName? ChiefFullName { get; set; }
 
         /// <summary>
         /// ИНН руководителя организации

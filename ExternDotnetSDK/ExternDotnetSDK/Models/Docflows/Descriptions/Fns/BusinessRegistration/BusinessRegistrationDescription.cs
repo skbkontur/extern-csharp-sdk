@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Models.Common;
 
@@ -55,7 +56,8 @@ namespace Kontur.Extern.Client.Models.Docflows.Descriptions.Fns.BusinessRegistra
             /// <summary>
             /// ФИО
             /// </summary>
-            public Fio Fio { get; set; }
+            [JsonPropertyName("fio")]
+            public PersonFullName PersonFullName { get; set; }
             
             /// <summary>
             /// ИНН физического лица заявителя
