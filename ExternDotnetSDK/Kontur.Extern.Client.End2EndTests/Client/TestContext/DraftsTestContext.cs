@@ -7,7 +7,6 @@ using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Models.Drafts;
 using Kontur.Extern.Client.Models.Drafts.Meta;
 using Kontur.Extern.Client.Primitives.LongOperations;
-using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
 
 namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
 {
@@ -37,7 +36,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
         public Task<DraftMeta> UpdateDraftMetadata(Guid accountId, Guid draftId, DraftMetadata metadata) => 
             konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).UpdateMetadataAsync(metadata);
 
-        public Task<Guid> SetDocument(Guid accountId, Guid draftId, DraftDocument document) => 
+        public Task<Guid> SetDocument(Guid accountId, Guid draftId, IDraftDocument document) => 
             konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).SetDocumentAsync(document);
         
         public Task DeleteDocument(Guid accountId, Guid draftId, Guid documentId) => 

@@ -331,7 +331,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         }
         
         [Fact]
-        public async Task Should_send_a_correct_draft()
+        public async Task Should_send_a_correct_draft_without_content()
         {
             var fssRegNumber = codesGenerator.FssRegNumber();
             var newDraft = CreateDraftOfDefaultAccount(DraftRecipient.Fss(FssCode.Parse("12341")), fssRegNumber);
@@ -339,9 +339,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var createdDraft = entityScope.Entity;
 
             var document = DraftDocument
-                // todo: ignore content for this document type
-                .WithNewId(new ByteDocumentContent(new byte[] {1, 2, 3}, "application/xml"))
-                .OfType(DocumentType.Fss.SedoProviderSubscription.SubscribeRequestForRegistrationNumber);
+                .FssSedoProviderSubscriptionSubscribeRequestForRegistrationNumber(Guid.NewGuid());
             await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
             var docflow = await Context.Drafts.SendDraftOrFail(AccountId, createdDraft.Id);

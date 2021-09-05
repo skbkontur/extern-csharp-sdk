@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents;
@@ -11,9 +12,20 @@ using Kontur.Extern.Client.Model.Documents.Contents;
 
 namespace Kontur.Extern.Client.Model.Drafts
 {
-    public class DraftDocument
+    [SuppressMessage("ReSharper", "CommentTypo")]
+    public class DraftDocument : IDraftDocument
     {
-        // todo: add method without document
+        /// <summary>
+        /// Создать документ подписки оператора на страхователя для получения документов из СЭДО (без контента)
+        /// </summary>
+        /// <param name="documentId">Заранее определенный ID документа</param>
+        /// <returns></returns>
+        public static IDraftDocument FssSedoProviderSubscriptionSubscribeRequestForRegistrationNumber(Guid documentId)
+        {
+            return new DraftDocument(documentId, null)
+                .OfType(DocumentType.Fss.SedoProviderSubscription.SubscribeRequestForRegistrationNumber);
+        }
+
         public static DraftDocument WithNewId(IDocumentContent documentContent) => 
             WithId(Guid.NewGuid(), documentContent);
 
@@ -25,15 +37,15 @@ namespace Kontur.Extern.Client.Model.Drafts
         private string? svdregCode;
         private string? fileName;
         private DocumentType type;
+        private readonly IDocumentContent? DocumentContent;
 
-        private DraftDocument(Guid documentId, IDocumentContent documentContent)
+        private DraftDocument(Guid documentId, IDocumentContent? documentContent)
         {
             DocumentId = documentId;
             DocumentContent = documentContent;
         }
 
         public Guid DocumentId { get; }
-        public IDocumentContent DocumentContent { get; }
 
         public DraftDocument OfType(in DocumentType documentType)
         {
@@ -73,37 +85,27 @@ namespace Kontur.Extern.Client.Model.Drafts
             return this;
         }
 
-        internal async Task<(Signature? signature, DocumentRequest request)> CreateSignedRequestAsync(Guid contentId, ICrypt crypt)
+        bool IDraftDocument.TryGetDocumentContent(out IDocumentContent content)
         {
+            if (DocumentContent is not null)
+            {
+                content = DocumentContent;
+                return true;
+            }
+
+            content = default!;
+            return false;
+        }
+
+        async Task<(Signature? signature, DocumentRequest request)> IDraftDocument.CreateSignedRequestAsync(Guid contentId, ICrypt crypt)
+        {
+            if (DocumentContent == null)
+                throw new InvalidOperationException();
             if (crypt == null)
                 throw new ArgumentNullException(nameof(crypt));
 
             var signatureOfContent = await SignContentAsync().ConfigureAwait(false);
-            return ToRequest(signatureOfContent);
-            
-            (Signature? signature, DocumentRequest request) ToRequest(Signature? overridenSignature)
-            {
-                var documentTypeUrn = type.ToUrn();
-                var contentType = DocumentContent.ContentType;
-                DocumentDescriptionRequest? description = null;
-                if (svdregCode is not null || fileName is not null || documentTypeUrn is not null || contentType is not null)
-                {
-                    description = new DocumentDescriptionRequest
-                    {
-                        Type = documentTypeUrn,
-                        Filename = fileName,
-                        SvdregCode = svdregCode,
-                        ContentType = contentType ?? ContentTypes.Binary
-                    };
-                }
-
-                var documentRequest = new DocumentRequest
-                {
-                    ContentId = contentId,
-                    Description = description
-                };
-                return (overridenSignature, documentRequest);
-            }
+            return (signatureOfContent, ToRequest(contentId));
 
             async Task<Signature?> SignContentAsync()
             {
@@ -111,6 +113,42 @@ namespace Kontur.Extern.Client.Model.Drafts
                     ? signature 
                     : await DocumentContent.SignAsync(certificate, crypt).ConfigureAwait(false);
             }
+        }
+
+        DocumentRequest IDraftDocument.CreateRequestWithoutContentAsync()
+        {
+            if (DocumentContent is not null)
+                throw new InvalidOperationException();
+            
+            return ToRequest(null);
+        }
+        
+        private DocumentRequest ToRequest(Guid? contentId)
+        {
+            var documentTypeUrn = type.ToUrn();
+            var contentType = DocumentContent?.ContentType;
+            DocumentDescriptionRequest? description = null;
+            if (svdregCode is not null || fileName is not null || documentTypeUrn is not null || contentType is not null)
+            {
+                if (contentType is null && DocumentContent is not null)
+                {
+                    contentType = ContentTypes.Binary;
+                }
+
+                description = new DocumentDescriptionRequest
+                {
+                    Type = documentTypeUrn,
+                    Filename = fileName,
+                    SvdregCode = svdregCode,
+                    ContentType = contentType
+                };
+            }
+
+            return new DocumentRequest
+            {
+                ContentId = contentId,
+                Description = description
+            };
         }
     }
 }

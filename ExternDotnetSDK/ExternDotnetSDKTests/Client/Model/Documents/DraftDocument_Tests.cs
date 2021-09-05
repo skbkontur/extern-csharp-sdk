@@ -8,6 +8,7 @@ using Kontur.Extern.Client.Http.Constants;
 using Kontur.Extern.Client.Model;
 using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Model.Documents.Contents;
+using Kontur.Extern.Client.Model.Drafts;
 using NSubstitute;
 using NUnit.Framework;
 using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
@@ -64,6 +65,16 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             Action action = () => document.OfType(default);
 
             action.Should().Throw<ArgumentException>();
+        }
+
+        [Test]
+        public void Should_create_special_document_of_fss_sedo_subscribe_without_content()
+        {
+            var documentId = Guid.NewGuid();
+            
+            var document = DraftDocument.FssSedoProviderSubscriptionSubscribeRequestForRegistrationNumber(documentId);
+
+            document.DocumentId.Should().Be(documentId);
         }
 
         [Test]
@@ -126,7 +137,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             var contentId = Guid.NewGuid();
             var document = DraftDocument.WithNewId(CreateContent());
 
-            Func<Task> func = async () => await document.CreateSignedRequestAsync(contentId, null!);
+            Func<Task> func = async () => await document.As<IDraftDocument>().CreateSignedRequestAsync(contentId, null!);
 
             func.Should().Throw<ArgumentException>();
         }
@@ -229,7 +240,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         {
             var crypt = Substitute.For<ICrypt>();
 
-            var (_, request) = await document.CreateSignedRequestAsync(contentId, crypt);
+            var (_, request) = await document.As<IDraftDocument>().CreateSignedRequestAsync(contentId, crypt);
 
             request.Should().BeEquivalentTo(expectedRequest);
         }
@@ -241,7 +252,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             var contentId = Guid.NewGuid();
             var document = DraftDocument.WithNewId(CreateContent());
 
-            var (signature, _) = await document.CreateSignedRequestAsync(contentId, crypt);
+            var (signature, _) = await document.As<IDraftDocument>().CreateSignedRequestAsync(contentId, crypt);
 
             signature.Should().BeNull();
             crypt.DidNotReceive().Sign(Arg.Any<byte[]>(), Arg.Any<byte[]>());
@@ -257,9 +268,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             var document = DraftDocument.WithNewId(documentContent)
                 .WithSignature(expectedSignature);
 
-            var (signature, _) = await document.CreateSignedRequestAsync(contentId, crypt);
+            var (signature, _) = await document.As<IDraftDocument>().CreateSignedRequestAsync(contentId, crypt);
 
-            signature.Should().BeEquivalentTo(expectedSignature);
+            signature.ToBytes().Should().BeEquivalentTo(expectedSignature);
             _ = documentContent.DidNotReceive().SignAsync(Arg.Any<CertificateContent>(), Arg.Any<ICrypt>());
         }
 
@@ -276,9 +287,27 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             documentContent.SignAsync(Arg.Any<CertificateContent>(), Arg.Any<ICrypt>())
                 .Returns(expectedSignature);
 
-            var (signature, _) = await document.CreateSignedRequestAsync(contentId, crypt);
+            var (signature, _) = await document.As<IDraftDocument>().CreateSignedRequestAsync(contentId, crypt);
             
-            signature.Should().BeEquivalentTo(expectedSignature);
+            signature.ToBytes().Should().BeEquivalentTo(expectedSignature);
+        }
+
+        [Test]
+        public void CreateSignedRequestAsync_should_ignore_content_for_and_signature_for_special_doc_without_content()
+        {
+            var documentId = Guid.NewGuid();
+            var document = DraftDocument.FssSedoProviderSubscriptionSubscribeRequestForRegistrationNumber(documentId);
+            var expectedRequest = new DocumentRequest
+            {
+                Description = new DocumentDescriptionRequest
+                {
+                    Type = DocumentType.Fss.SedoProviderSubscription.SubscribeRequestForRegistrationNumber.ToUrn()
+                }
+            };
+
+            var request = document.CreateRequestWithoutContentAsync();
+            
+            request.Should().BeEquivalentTo(expectedRequest);
         }
 
         private static IDocumentContent CreateContent(string contentType = ContentTypes.Json)
