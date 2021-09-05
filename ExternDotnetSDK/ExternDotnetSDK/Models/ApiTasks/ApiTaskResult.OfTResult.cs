@@ -1,7 +1,8 @@
 ﻿#nullable enable
 using System;
+using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.Models.ApiErrors;
 using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Errors;
 
 namespace Kontur.Extern.Client.Models.ApiTasks
 {
@@ -80,7 +81,7 @@ namespace Kontur.Extern.Client.Models.ApiTasks
                 ApiTaskState.Running => ApiTaskResult<TAnotherResult>.Running(Id, TaskType),
                 ApiTaskState.Succeed => ApiTaskResult<TAnotherResult>.Success(converter(successResult!), Id, TaskType),
                 ApiTaskState.Failed => ApiTaskResult<TAnotherResult>.TaskFailure(apiError!, Id, TaskType),
-                _ => throw Exceptions.Errors.UnexpectedEnumMember(nameof(TaskState), TaskState)
+                _ => throw Errors.UnexpectedEnumMember(nameof(TaskState), TaskState)
             };
     }
 }

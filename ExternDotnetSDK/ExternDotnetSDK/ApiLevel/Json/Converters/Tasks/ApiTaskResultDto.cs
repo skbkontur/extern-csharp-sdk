@@ -1,7 +1,7 @@
 using System;
+using Kontur.Extern.Client.Models.ApiErrors;
 using Kontur.Extern.Client.Models.ApiTasks;
 using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Errors;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
 {

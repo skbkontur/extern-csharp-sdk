@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using Kontur.Extern.Client.Models.Common;
 
-namespace Kontur.Extern.Client.Models.Errors
+namespace Kontur.Extern.Client.Models.ApiErrors
 {
     public class ApiError
     {

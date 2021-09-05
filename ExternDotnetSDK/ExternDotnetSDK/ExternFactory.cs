@@ -12,7 +12,7 @@ using Kontur.Extern.Client.Http.ClusterClientAdapters;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Model.Configuration;
-using Kontur.Extern.Client.Models.Errors;
+using Kontur.Extern.Client.Models.ApiErrors;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives.Polling;
 using Vostok.Clusterclient.Core;

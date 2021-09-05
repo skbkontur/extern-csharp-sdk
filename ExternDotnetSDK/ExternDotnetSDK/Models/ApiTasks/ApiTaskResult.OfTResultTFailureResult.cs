@@ -1,7 +1,8 @@
 ﻿#nullable enable
 using System;
+using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.Models.ApiErrors;
 using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Errors;
 
 namespace Kontur.Extern.Client.Models.ApiTasks
 {
@@ -23,7 +24,7 @@ namespace Kontur.Extern.Client.Models.ApiTasks
             if (result == null)
                 throw new ArgumentNullException(nameof(result));
             if (result.IsEmpty)
-                throw Exceptions.Errors.CannotCreateApiTaskResultWithIsEmptyResult(nameof(result), result);
+                throw Errors.CannotCreateApiTaskResultWithIsEmptyResult(nameof(result), result);
             
             return new(
                 id,
@@ -40,7 +41,7 @@ namespace Kontur.Extern.Client.Models.ApiTasks
             if (result == null)
                 throw new ArgumentNullException(nameof(result));
             if (result.IsEmpty)
-                throw Exceptions.Errors.CannotCreateApiTaskResultWithIsEmptyResult(nameof(result), result); 
+                throw Errors.CannotCreateApiTaskResultWithIsEmptyResult(nameof(result), result); 
             
             return new(
                 id,
@@ -131,7 +132,7 @@ namespace Kontur.Extern.Client.Models.ApiTasks
                     ApiTaskResult<TAnotherResult>.TaskFailure(failureResultConverter(failureResult!), Id, TaskType),
                 ApiTaskState.Failed when apiError != null => 
                     ApiTaskResult<TAnotherResult>.TaskFailure(apiError, Id, TaskType),
-                _ => throw Exceptions.Errors.UnexpectedEnumMember(nameof(TaskState), TaskState)
+                _ => throw Errors.UnexpectedEnumMember(nameof(TaskState), TaskState)
             };
 
         public ApiTaskResult<TResult, TAnotherFailure> ConvertFailureResult<TAnotherFailure>(
@@ -148,7 +149,7 @@ namespace Kontur.Extern.Client.Models.ApiTasks
                     ApiTaskResult<TResult, TAnotherFailure>.FailureResult(failureResultConverter(failureResult!), Id, TaskType),
                 ApiTaskState.Failed when apiError != null =>
                     ApiTaskResult<TResult, TAnotherFailure>.TaskFailure(apiError, Id, TaskType),
-                _ => throw Exceptions.Errors.UnexpectedEnumMember(nameof(TaskState), TaskState)
+                _ => throw Errors.UnexpectedEnumMember(nameof(TaskState), TaskState)
             };
         }
 

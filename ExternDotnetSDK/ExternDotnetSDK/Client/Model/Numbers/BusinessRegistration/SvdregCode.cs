@@ -1,5 +1,7 @@
+#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Exceptions;
 
 namespace Kontur.Extern.Client.Model.Numbers.BusinessRegistration
 {
@@ -14,7 +16,7 @@ namespace Kontur.Extern.Client.Model.Numbers.BusinessRegistration
         public static readonly RegexBasedParser<SvdregCode> Parser = new(
             @"^(X|0)\d{4}$",
             v => new SvdregCode(v),
-            Exceptions.Errors.InvalidSvdregCode
+            Errors.InvalidSvdregCode
         );
 
         /// <summary>
@@ -26,7 +28,7 @@ namespace Kontur.Extern.Client.Model.Numbers.BusinessRegistration
 
         private SvdregCode(string code) => Code = code;
 
-        public string Code { get; }
+        public string? Code { get; }
 
         public override string ToString() => Code ?? string.Empty;
 
