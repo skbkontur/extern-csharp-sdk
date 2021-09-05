@@ -15,7 +15,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Json.Converters
 {
     internal class ApiTaskResultJsonConverter_Tests
     {
-        private IJsonSerializer serializer;
+        private IJsonSerializer serializer = null!;
 
         [SetUp]
         public void SetUp() => 
@@ -32,7 +32,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Json.Converters
                 yield return ApiTaskResult<SuccessResult, FailureResult>.Running(id, taskType);
                 yield return ApiTaskResult<SuccessResult, FailureResult>.Success(new SuccessResult(Guid.NewGuid(), string.Empty, "success-data"), id, taskType);
                 yield return ApiTaskResult<SuccessResult, FailureResult>.FailureResult(new FailureResult("failure", new Urn("nid", "nss"), "failure-data"), id, taskType);
-                yield return ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(new ApiError(), id, taskType);
+                yield return ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(new ApiError(ApiError.Namespace, HttpStatusCode.InternalServerError, null, null, null), id, taskType);
                 yield return ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(new ApiError(HttpStatusCode.BadRequest, "message"), id, taskType);
                 yield return ApiTaskResult<SuccessResult, FailureResult>.TaskFailure(new ApiError(errorType, HttpStatusCode.BadRequest, "message"), id, taskType);
             }
@@ -54,7 +54,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Json.Converters
 
                 yield return ApiTaskResult<SuccessResult>.Running(id, taskType);
                 yield return ApiTaskResult<SuccessResult>.Success(new SuccessResult(Guid.NewGuid(), "type", "data"), id, taskType);
-                yield return ApiTaskResult<SuccessResult>.TaskFailure(new ApiError(), id, taskType);
+                yield return ApiTaskResult<SuccessResult>.TaskFailure(new ApiError(ApiError.Namespace, HttpStatusCode.InternalServerError, null, null, null), id, taskType);
                 yield return ApiTaskResult<SuccessResult>.TaskFailure(new ApiError(HttpStatusCode.BadRequest, "message"), id, taskType);
                 yield return ApiTaskResult<SuccessResult>.TaskFailure(new ApiError(errorType, HttpStatusCode.BadRequest, "message"), id, taskType);
             }

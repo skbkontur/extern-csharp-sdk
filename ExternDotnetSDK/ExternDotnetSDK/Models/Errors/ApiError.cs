@@ -10,29 +10,14 @@ namespace Kontur.Extern.Client.Models.Errors
     public class ApiError
     {
         public static readonly Urn Namespace = new("urn:error");
-
-        public ApiError()
-            : this(Namespace)
-        {
-        }
-
-        public ApiError(HttpStatusCode statusCode, string message)
-        {
-            StatusCode = statusCode;
-            Message = message;
-            Properties = new Dictionary<string, string>();
-        }
         
-        public ApiError(Urn id, HttpStatusCode statusCode = HttpStatusCode.InternalServerError, string message = null)
+        public ApiError(HttpStatusCode statusCode, string? message = null, string? traceId = null, Dictionary<string, string>? properties = null)
+            : this(Namespace, statusCode, message, traceId, properties)
         {
-            Id = id;
-            StatusCode = statusCode;
-            Message = message;
-            Properties = new Dictionary<string, string>();
         }
         
         [JsonConstructor]
-        public ApiError(Urn id, HttpStatusCode statusCode, string message, string traceId, Dictionary<string, string>? properties)
+        public ApiError(Urn id, HttpStatusCode statusCode, string? message = null, string? traceId = null, Dictionary<string, string>? properties = null)
         {
             Id = id;
             StatusCode = statusCode;
@@ -43,8 +28,8 @@ namespace Kontur.Extern.Client.Models.Errors
 
         public Urn Id { get; }
         public HttpStatusCode StatusCode { get; }
-        public string Message { get; }
-        public string TraceId { get; }
+        public string? Message { get; }
+        public string? TraceId { get; }
         public Dictionary<string, string> Properties { get; }
 
         public bool IsNotEmpty => !string.IsNullOrWhiteSpace(Message);

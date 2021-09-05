@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Net;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Models.ApiTasks;
@@ -41,11 +42,11 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
                 TaskState = ApiTaskState.Failed
             };
 
-            var result = ApiTaskResult<SuccessResult>.TaskFailure(new ApiError(), id, taskType);
+            var result = ApiTaskResult<SuccessResult>.TaskFailure(AnApiError, id, taskType);
 
             result.Should().BeEquivalentTo(expectedDto);
         }
-        
+
         [Test]
         public void TaskFailure_should_fail_if_given_null_error()
         {
@@ -100,7 +101,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         [Test]
         public void TryGetSuccessResult_should_return_error_if_api_task_result_is_api_error()
         {
-            var taskResult = ApiTaskResult<SuccessResult>.TaskFailure(new ApiError(), Guid.NewGuid(), new Urn("nid", "nss"));
+            var taskResult = ApiTaskResult<SuccessResult>.TaskFailure(AnApiError, Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetSuccessResult(out var result);
 
@@ -111,7 +112,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
         [Test]
         public void TryGetTaskError_should_return_task_error_if_api_task_result_is_api_error()
         {
-            var apiError = new ApiError();
+            var apiError = AnApiError;
             var taskResult = ApiTaskResult<SuccessResult>.TaskFailure(apiError, Guid.NewGuid(), new Urn("nid", "nss"));
 
             var success = taskResult.TryGetTaskError(out var result);
@@ -130,11 +131,11 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
             success.Should().BeFalse();
             result.Should().BeNull();
         }
+        
+        private static ApiError AnApiError => new(ApiError.Namespace, HttpStatusCode.BadRequest, "really bad");
 
         private class SuccessResult
         {
-            public SuccessResult(bool isEmpty = false) => IsEmpty = isEmpty;
-            public bool IsEmpty { get; }
         }
 
         [PublicAPI]
