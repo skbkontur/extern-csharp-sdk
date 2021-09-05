@@ -55,8 +55,12 @@ namespace Kontur.Extern.Client
             var uploader = path.Services.ContentService;
 
             var contentId = await UploadContent(path.AccountId, uploader, document.DocumentContent).ConfigureAwait(false);
-            var documentRequest = await document.CreateSignedRequestAsync(contentId, path.Services.Crypt).ConfigureAwait(false);
+            var (signature, documentRequest) = await document.CreateSignedRequestAsync(contentId, path.Services.Crypt).ConfigureAwait(false);
             var createdDocument = await apiClient.Drafts.UpdateDocumentAsync(path.AccountId, path.DraftId, document.DocumentId, documentRequest, putTimeout).ConfigureAwait(false);
+            if (signature is not null)
+            {
+                await path.Document(createdDocument.Id).AddSignatureAsync(signature.ToBase64String(), putTimeout).ConfigureAwait(false);
+            }
             return createdDocument.Id;
 
             Task<Guid> UploadContent(Guid accountId, IContentService contentUploader, IDocumentContent content) =>

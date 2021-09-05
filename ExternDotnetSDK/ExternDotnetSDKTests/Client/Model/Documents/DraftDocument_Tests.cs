@@ -229,7 +229,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         {
             var crypt = Substitute.For<ICrypt>();
 
-            var request = await document.CreateSignedRequestAsync(contentId, crypt);
+            var (_, request) = await document.CreateSignedRequestAsync(contentId, crypt);
 
             request.Should().BeEquivalentTo(expectedRequest);
         }
@@ -241,9 +241,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             var contentId = Guid.NewGuid();
             var document = DraftDocument.WithNewId(CreateContent());
 
-            var request = await document.CreateSignedRequestAsync(contentId, crypt);
+            var (signature, _) = await document.CreateSignedRequestAsync(contentId, crypt);
 
-            request.Signature.Should().BeNull();
+            signature.Should().BeNull();
             crypt.DidNotReceive().Sign(Arg.Any<byte[]>(), Arg.Any<byte[]>());
         }
 
@@ -257,9 +257,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             var document = DraftDocument.WithNewId(documentContent)
                 .WithSignature(expectedSignature);
 
-            var request = await document.CreateSignedRequestAsync(contentId, crypt);
+            var (signature, _) = await document.CreateSignedRequestAsync(contentId, crypt);
 
-            request.Signature.Should().BeEquivalentTo(expectedSignature);
+            signature.Should().BeEquivalentTo(expectedSignature);
             _ = documentContent.DidNotReceive().SignAsync(Arg.Any<CertificateContent>(), Arg.Any<ICrypt>());
         }
 
@@ -276,9 +276,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             documentContent.SignAsync(Arg.Any<CertificateContent>(), Arg.Any<ICrypt>())
                 .Returns(expectedSignature);
 
-            var request = await document.CreateSignedRequestAsync(contentId, crypt);
-
-            request.Signature.Should().BeEquivalentTo(expectedSignature);
+            var (signature, _) = await document.CreateSignedRequestAsync(contentId, crypt);
+            
+            signature.Should().BeEquivalentTo(expectedSignature);
         }
 
         private static IDocumentContent CreateContent(string contentType = ContentTypes.Json)

@@ -73,7 +73,7 @@ namespace Kontur.Extern.Client.Model.Drafts
             return this;
         }
 
-        internal async Task<DocumentRequest> CreateSignedRequestAsync(Guid contentId, ICrypt crypt)
+        internal async Task<(Signature? signature, DocumentRequest request)> CreateSignedRequestAsync(Guid contentId, ICrypt crypt)
         {
             if (crypt == null)
                 throw new ArgumentNullException(nameof(crypt));
@@ -81,7 +81,7 @@ namespace Kontur.Extern.Client.Model.Drafts
             var signatureOfContent = await SignContentAsync().ConfigureAwait(false);
             return ToRequest(signatureOfContent);
             
-            DocumentRequest ToRequest(Signature? overridenSignature)
+            (Signature? signature, DocumentRequest request) ToRequest(Signature? overridenSignature)
             {
                 var documentTypeUrn = type.ToUrn();
                 var contentType = DocumentContent.ContentType;
@@ -96,13 +96,13 @@ namespace Kontur.Extern.Client.Model.Drafts
                         ContentType = contentType ?? ContentTypes.Binary
                     };
                 }
-            
-                return new DocumentRequest
+
+                var documentRequest = new DocumentRequest
                 {
                     ContentId = contentId,
-                    Signature = overridenSignature?.ToBytes(),
                     Description = description
                 };
+                return (overridenSignature, documentRequest);
             }
 
             async Task<Signature?> SignContentAsync()

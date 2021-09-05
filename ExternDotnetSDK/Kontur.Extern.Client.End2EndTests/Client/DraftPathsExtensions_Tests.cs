@@ -182,7 +182,8 @@ namespace Kontur.Extern.Client.End2EndTests.Client
 
             var draftDocument = await Context.Drafts.GetDocument(AccountId, createdDraft.Id, addedDocumentId);
 
-            draftDocument.Should().BeEquivalentTo(expectedDocument, c => c.Excluding(x => x.SignatureContentLink).Excluding(x => x.Contents));
+            draftDocument.Should().BeEquivalentTo(expectedDocument, c => c.Excluding(x => x.SignatureContentLink).Excluding(x => x.Contents).Excluding(x => x.Signatures));
+            draftDocument.Signatures.Should().HaveCount(1);
         }
         
         [Fact]
