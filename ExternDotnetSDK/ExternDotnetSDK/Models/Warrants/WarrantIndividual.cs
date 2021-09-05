@@ -1,8 +1,8 @@
 ﻿#nullable enable
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Models.Common;
 
 namespace Kontur.Extern.Client.Models.Warrants
@@ -33,8 +33,7 @@ namespace Kontur.Extern.Client.Models.Warrants
         /// <summary>
         /// Дата рождения
         /// </summary>
-        [CanBeNull]
-        public DateTime? BirthDate { get; set; }
+        public DateOnly? BirthDate { get; set; }
 
         /// <summary>
         /// ОГРНИП

@@ -1,6 +1,6 @@
 #nullable enable
-using System;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Models.Common;
 
 // ReSharper disable CommentTypo
@@ -18,22 +18,22 @@ namespace Kontur.Extern.Client.Model.DocflowFiltering
         public static DocflowSortingFilter OrderByCreationDate(SortOrder order) => new(order);
 
         /// <summary>
-        /// Дата обновления документооборотов, от которой нужно получить список.
+        /// Установить дату обновления документооборотов, от которой нужно получить список.
         /// Документы автоматически будут отсортированы по дате изменения
         /// </summary>
-        public static DocflowSortingFilter UpdatedFrom(DateTime dateFrom) => new(updatedFrom: dateFrom);
+        public static DocflowSortingFilter UpdatedFrom(DateOnly dateFrom) => new(updatedFrom: dateFrom);
 
         /// <summary>
-        /// Дата обновления документооборотов, до которой нужно получить список.
+        /// Установить дату обновления документооборотов, до которой нужно получить список.
         /// Документы автоматически будут отсортированы по дате изменения
         /// </summary>
-        public static DocflowSortingFilter UpdatedTo(DateTime dateTo) => new(updatedTo: dateTo);
+        public static DocflowSortingFilter UpdatedTo(DateOnly dateTo) => new(updatedTo: dateTo);
 
         private readonly SortOrder? order;
-        private readonly DateTime? updatedFrom;
-        private readonly DateTime? updatedTo;
+        private readonly DateOnly? updatedFrom;
+        private readonly DateOnly? updatedTo;
         
-        private DocflowSortingFilter(SortOrder? order = null, DateTime? updatedFrom = null, DateTime? updatedTo = null)
+        private DocflowSortingFilter(SortOrder? order = null, DateOnly? updatedFrom = null, DateOnly? updatedTo = null)
         {
             this.order = order;
             this.updatedFrom = updatedFrom;

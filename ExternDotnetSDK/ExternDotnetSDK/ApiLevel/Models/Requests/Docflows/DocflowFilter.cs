@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Models.Common;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows
@@ -54,23 +55,23 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows
         /// Дата обновления документооборотов, от которой нужно получить список.
         /// Документы автоматически будут отсортированы по дате изменения
         /// </summary>
-        public DateTime? UpdatedFrom { get; set; }
+        public DateOnly? UpdatedFrom { get; set; }
 
         /// <summary>
         /// Дата обновления документооборотов, до которой нужно получить список.
         /// Документы автоматически будут отсортированы по дате изменения
         /// </summary>
-        public DateTime? UpdatedTo { get; set; }
+        public DateOnly? UpdatedTo { get; set; }
 
         /// <summary>
         /// Дата создания документооборотов, от которой нужно получить список
         /// </summary>
-        public DateTime? CreatedFrom { get; set; }
+        public DateOnly? CreatedFrom { get; set; }
 
         /// <summary>
         /// Дата создания документооборотов, до которой нужно получить список
         /// </summary>
-        public DateTime? CreatedTo { get; set; }
+        public DateOnly? CreatedTo { get; set; }
 
         /// <summary>
         /// Типы документооборотов
@@ -115,12 +116,12 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows
         /// <summary>
         /// Поиск документооборотов по указанному началу отчетного периода. Обязательно указание обеих границ отчетного периода
         /// </summary>
-        public DateTime? PeriodFrom { get; set; }
+        public DateOnly? PeriodFrom { get; set; }
 
         /// <summary>
         /// Поиск документооборотов по указанному началу отчетного периода. Обязательно указание обеих границ отчетного периода
         /// </summary>
-        public DateTime? PeriodTo { get; set; }
+        public DateOnly? PeriodTo { get; set; }
 
         /// <summary>
         /// Получить документообороты всех пользователей (только для администратора)

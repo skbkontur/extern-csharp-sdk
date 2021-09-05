@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Model.Numbers;
 using Kontur.Extern.Client.Models.ApiErrors;
 using Kontur.Extern.Client.Models.Common;
@@ -86,6 +87,9 @@ namespace Kontur.Extern.Client.Exceptions
         }
 
         public static Exception InvalidRange([InvokerParameterName] string fromParamName, [InvokerParameterName] string toParamName, DateTime from, DateTime to) => 
+            new ArgumentException($"Invalid range bounds, the value '{@from}' of '{fromParamName}' parameter is greater than the value '{to}' of '{toParamName}' parameter");
+        
+        public static Exception InvalidRange([InvokerParameterName] string fromParamName, [InvokerParameterName] string toParamName, DateOnly from, DateOnly to) => 
             new ArgumentException($"Invalid range bounds, the value '{@from}' of '{fromParamName}' parameter is greater than the value '{to}' of '{toParamName}' parameter");
 
         public static ApiException LongOperationFailed(ApiError startApiError) => 

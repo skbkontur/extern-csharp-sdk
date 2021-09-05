@@ -1,12 +1,12 @@
 using System;
 using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Model.DocflowFiltering;
 using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Numbers;
 using Kontur.Extern.Client.Models.Common;
 using NUnit.Framework;
-using Vostok.Commons.Time;
 
 namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
 {
@@ -27,11 +27,11 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
         [Test]
         public void Should_build_filter_with_non_dependent_fields()
         {
-            var createdFrom = new DateTime(2021, 07, 08, 10, 53, 06);
-            var createdTo = new DateTime(2021, 07, 18, 10, 53, 06);
+            var createdFrom = new DateOnly(2021, 07, 08);
+            var createdTo = new DateOnly(2021, 07, 18);
             var orgId = Guid.Parse("047AE3BA-6F78-48BB-8460-A59A11C65C2E");
-            var periodFrom = new DateTime(2021, 07, 08, 10, 53, 06);
-            var periodTo = new DateTime(2021, 07, 18, 10, 53, 06);
+            var periodFrom = new DateOnly(2021, 07, 08);
+            var periodTo = new DateOnly(2021, 07, 18);
             var expectedFilter = new DocflowFilter
             {
                 Cu = "123-456",
@@ -109,8 +109,8 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
         [Test]
         public void Should_fail_when_reporting_period_bounds_are_invalid()
         {
-            var from = new DateTime(2021, 07, 08, 16, 48, 00);
-            var to = from - 1.Seconds();
+            var from = new DateOnly(2021, 07, 08);
+            var to = from.AddDays(-1);
             
             Action action = () => new DocflowFilterBuilder().WithReportingPeriod(from, to);
 
@@ -120,8 +120,8 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
         [Test]
         public void WithCreatedTo_should_fail_when_created_from_is_bigger_than_created_to_filter()
         {
-            var from = new DateTime(2021, 07, 08, 16, 48, 00);
-            var to = from - 1.Seconds();
+            var from = new DateOnly(2021, 07, 08);
+            var to = from.AddDays(-1);
             var docflowFilterBuilder = new DocflowFilterBuilder().WithCreatedFrom(from);
 
             Action action = () => docflowFilterBuilder.WithCreatedTo(to);
@@ -132,8 +132,8 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
         [Test]
         public void WithCreatedFrom_should_fail_when_created_from_is_bigger_than_created_to_filter()
         {
-            var from = new DateTime(2021, 07, 08, 16, 48, 00);
-            var to = from - 1.Seconds();
+            var from = new DateOnly(2021, 07, 08);
+            var to = from.AddDays(-1);
             var docflowFilterBuilder = new DocflowFilterBuilder().WithCreatedTo(to);
             
             Action action = () => docflowFilterBuilder.WithCreatedFrom(from);
@@ -144,7 +144,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
         [Test]
         public void WithCreatedFrom_should_set_created_from_filter_without_created_to_bound()
         {
-            var from = new DateTime(2021, 07, 08, 16, 48, 00);
+            var from = new DateOnly(2021, 07, 08);
             var expectedFilter = new DocflowFilter
             {
                 CreatedFrom = from
@@ -159,7 +159,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
         [Test]
         public void WithCreatedTo_should_set_created_to_filter_without_created_from_bound()
         {
-            var to = new DateTime(2021, 07, 08, 16, 48, 00);
+            var to = new DateOnly(2021, 07, 08);
             var expectedFilter = new DocflowFilter
             {
                 CreatedTo = to

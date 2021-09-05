@@ -1,6 +1,6 @@
-using System;
 using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Model.DocflowFiltering;
 using Kontur.Extern.Client.Models.Common;
 using NUnit.Framework;
@@ -25,7 +25,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
         [Test]
         public void UpdatedTo_should_apply_update_to_storing_filter()
         {
-            var updateTo = new DateTime(2021, 07, 08, 16, 38, 19);
+            var updateTo = new DateOnly(2021, 07, 08);
             var docflowFilter = new DocflowFilter();
 
             DocflowSortingFilter.UpdatedTo(updateTo).ApplyTo(docflowFilter);
@@ -36,7 +36,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
         [Test]
         public void UpdatedFrom_should_apply_update_from_storing_filter()
         {
-            var updateFrom = new DateTime(2021, 07, 08, 16, 38, 19);
+            var updateFrom = new DateOnly(2021, 07, 08);
             var docflowFilter = new DocflowFilter();
 
             DocflowSortingFilter.UpdatedFrom(updateFrom).ApplyTo(docflowFilter);
@@ -49,8 +49,8 @@ namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
         {
             var docflowFilter = new DocflowFilter
             {
-                UpdatedTo = new DateTime(2021, 07, 08, 16, 38, 19),
-                UpdatedFrom = new DateTime(2021, 07, 08, 16, 38, 19),
+                UpdatedTo = new DateOnly(2021, 07, 06),
+                UpdatedFrom = new DateOnly(2021, 07, 08),
                 OrderBy = SortOrder.Ascending
             };
 
