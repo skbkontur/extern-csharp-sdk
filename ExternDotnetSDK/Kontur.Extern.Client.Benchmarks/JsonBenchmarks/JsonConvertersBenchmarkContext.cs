@@ -620,14 +620,14 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks
         {
             SysSerializer = JsonSerializerFactory.CreateJsonSerializer(true);
             JsonNetSerializer = JsonNetSerializerFactory.CreateJsonSerializer(true);
-            Docflow = JsonNetSerializer.Deserialize<Docflow>(json);
+            Docflow = SysSerializer.Deserialize<IDocflowWithDocuments>(json);
             utf8JsonBytes = Encoding.UTF8.GetBytes(json);
             emptyJsonBytes = new byte[json.Length*sizeof (char)];
         }
 
         public IJsonSerializer JsonNetSerializer { get; }
         public IJsonSerializer SysSerializer { get; }
-        public Docflow Docflow { get; }
+        public IDocflowWithDocuments Docflow { get; }
         public string Json => json;
         public Stream JsonStream => new MemoryStream(utf8JsonBytes);
         public byte[] JsonBytes => utf8JsonBytes;

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Models.Docflows;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows
 {
@@ -25,6 +26,6 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows
         /// <summary>
         /// Краткая информация о документообороте
         /// </summary>
-        public DocflowPageItem[] DocflowsPageItem { get; set; }
+        public IDocflow[] DocflowsPageItem { get; set; }
     }
 }

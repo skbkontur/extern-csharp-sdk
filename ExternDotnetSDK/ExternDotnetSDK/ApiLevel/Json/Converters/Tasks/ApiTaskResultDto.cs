@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Kontur.Extern.Client.Models.ApiErrors;
 using Kontur.Extern.Client.Models.ApiTasks;

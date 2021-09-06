@@ -2,11 +2,11 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows;
 using Kontur.Extern.Client.Helpers;
 using Kontur.Extern.Client.Model;
 using Kontur.Extern.Client.Model.DocflowFiltering;
 using Kontur.Extern.Client.Model.Documents;
+using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Models.Docflows.Documents;
 using Kontur.Extern.Client.Models.Docflows.Documents.Replies;
 using Kontur.Extern.Client.Paths;
@@ -29,7 +29,7 @@ namespace Kontur.Extern.Client
             return apiClient.Docflows.GetDocumentAsync(path.AccountId, path.DocflowId, path.DocumentId, timeout);
         }
         
-        public static IEntityList<DocflowPageItem> RelatedDocflowsList(this in DocumentPath path, DocflowFilterBuilder? filterBuilder = null)
+        public static IEntityList<IDocflow> RelatedDocflowsList(this in DocumentPath path, DocflowFilterBuilder? filterBuilder = null)
         {
             return DocflowListsHelper.DocflowsList(
                 path.Services.Api,

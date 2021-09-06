@@ -102,14 +102,14 @@ namespace Kontur.Extern.Client
             );
         }
         
-        public static ILongOperation<Docflow, DraftSendingFailure> TrySend(this DraftPath path, bool allowToSendIncorrectPfrReport = false, TimeSpan? timeout = null)
+        public static ILongOperation<IDocflowWithDocuments, DraftSendingFailure> TrySend(this DraftPath path, bool allowToSendIncorrectPfrReport = false, TimeSpan? timeout = null)
         {   
             var apiClient = path.Services.Api;
             var accountId = path.AccountId;
             var draftId = path.DraftId;
             var jsonSerializer = path.Services.JsonSerializer;
 
-            return new LongOperation<Docflow, DraftSendingFailure>(
+            return new LongOperation<IDocflowWithDocuments, DraftSendingFailure>(
                 async () =>
                 {
                     var result = await apiClient.Drafts.StartSendDraftAsync(accountId, draftId, allowToSendIncorrectPfrReport, timeout).ConfigureAwait(false);
@@ -124,14 +124,14 @@ namespace Kontur.Extern.Client
             );
         }
         
-        public static ILongOperation<Docflow> Send(this DraftPath path, bool allowToSendIncorrectPfrReport = false, TimeSpan? timeout = null)
+        public static ILongOperation<IDocflowWithDocuments> Send(this DraftPath path, bool allowToSendIncorrectPfrReport = false, TimeSpan? timeout = null)
         {
             var jsonSerializer = path.Services.JsonSerializer;
             var apiClient = path.Services.Api;
             var accountId = path.AccountId;
             var draftId = path.DraftId;
 
-            return new LongOperation<Docflow>(
+            return new LongOperation<IDocflowWithDocuments>(
                 async () =>
                 {
                     var result = await apiClient.Drafts.StartSendDraftAsync(accountId, draftId, allowToSendIncorrectPfrReport, timeout).ConfigureAwait(false);
@@ -145,7 +145,7 @@ namespace Kontur.Extern.Client
                 path.Services.LongOperationsPollingStrategy
             );
 
-            static ApiTaskResult<Docflow> ToOnlyDraftApiResult(ApiTaskResult<Docflow, SendFailure> result, Guid draftId, IJsonSerializer serializer) => 
+            static ApiTaskResult<IDocflowWithDocuments> ToOnlyDraftApiResult(ApiTaskResult<IDocflowWithDocuments, SendFailure> result, Guid draftId, IJsonSerializer serializer) => 
                 result.ConvertToSingleApiResult(x => DraftSendingFailure.From(x, draftId, serializer).ToApiError());
         }
     }

@@ -6,7 +6,7 @@ using Kontur.Extern.Client.Models.Docflows.Descriptions;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows
 {
-    public class DocflowPageItem : IDocflowPageItem
+    public class DocflowPageItem : IDocflow
     {
         public DocflowPageItem()
         {

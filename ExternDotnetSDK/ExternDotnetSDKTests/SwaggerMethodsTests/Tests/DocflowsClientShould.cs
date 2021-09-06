@@ -6,6 +6,7 @@ using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows;
 using Kontur.Extern.Client.Models.Certificates;
 using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Models.Docflows.Documents;
 using NUnit.Framework;
 
@@ -18,7 +19,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
     {
         private readonly Guid badId = Guid.NewGuid();
         private DocflowPage page;
-        private DocflowPageItem docflow;
+        private IDocflow docflow;
         private List<Document> docflowDocuments;
         private Document document;
         private Signature signature;

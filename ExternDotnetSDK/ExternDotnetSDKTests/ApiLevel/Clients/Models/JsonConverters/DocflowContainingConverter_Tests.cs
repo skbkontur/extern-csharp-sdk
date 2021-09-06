@@ -30,14 +30,26 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         }
 
         [TestCaseSource(nameof(TypeToDescriptionCases))]
-        public void Should_deserialize_docflow_description_by_its_docflow_type(DescriptionCase descriptionCase)
+        public void Should_deserialize_docflow_with_documents(DescriptionCase descriptionCase)
         {
-            var (json, expectedDocflow) = descriptionCase.Generate(serializer, descriptionGenerator);
+            var (json, expectedDocflow) = descriptionCase.GenerateWithDocuments(serializer, descriptionGenerator);
             Console.WriteLine($"Generated JSON: {json}");
             
-            var docflow = serializer.Deserialize<Docflow>(json);
+            var docflow = serializer.Deserialize<IDocflowWithDocuments>(json);
 
-            docflow.Type.Should().Be(descriptionCase.DocflowType.ToUrn());
+            docflow.Type.Should().Be(descriptionCase.DocflowType.ToUrn()!);
+            DocflowShouldHaveExpectedDescription(docflow, expectedDocflow);
+        }
+
+        [TestCaseSource(nameof(TypeToDescriptionCases))]
+        public void Should_deserialize_docflow_without_documents(DescriptionCase descriptionCase)
+        {
+            var (json, expectedDocflow) = descriptionCase.GenerateWithoutDocuments(serializer, descriptionGenerator);
+            Console.WriteLine($"Generated JSON: {json}");
+            
+            var docflow = serializer.Deserialize<IDocflow>(json);
+
+            docflow.Type.Should().Be(descriptionCase.DocflowType.ToUrn()!);
             DocflowShouldHaveExpectedDescription(docflow, expectedDocflow);
         }
 
@@ -51,7 +63,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             
             var docflow = serializer.Deserialize<Docflow>(json);
 
-            docflow.Type.Should().Be(unknownDocflowType.ToUrn());
+            docflow.Type.Should().Be(unknownDocflowType.ToUrn()!);
             docflow.Description.Should().BeNull();
         }
 
@@ -69,7 +81,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             
             var docflow = serializer.Deserialize<Docflow>(json);
 
-            docflow.Type.Should().Be(unknownDocflowType.ToUrn());
+            docflow.Type.Should().Be(unknownDocflowType.ToUrn()!);
             docflow.Description.Should().BeOfType<UnknownDescription>();
         }
 
@@ -92,7 +104,8 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             docflow.Description.Should().BeOfType<UnknownDescription>();
         }
 
-        private static void DocflowShouldHaveExpectedDescription(Docflow docflow, Docflow expectedDocflow)
+        private static void DocflowShouldHaveExpectedDescription<T>(T docflow, T expectedDocflow)
+            where T : IDocflow
         {
             docflow.Should().BeEquivalentTo(expectedDocflow);
             var expectedDescription = expectedDocflow.Description;
@@ -146,9 +159,17 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
                 DescriptionType = descriptionType;
             }
 
-            public (string json, Docflow expectedDocflow) Generate(IJsonSerializer serializer, DocflowDescriptionGenerator descriptionGenerator)
+            public (string json, IDocflowWithDocuments expectedDocflow) GenerateWithDocuments(IJsonSerializer serializer, DocflowDescriptionGenerator descriptionGenerator)
             {
                 var docflow = expectedDescriptionFactory(descriptionGenerator);
+                var json = serializer.SerializeToIndentedString(docflow);
+                return (json, docflow);
+            }
+
+            public (string json, IDocflow expectedDocflow) GenerateWithoutDocuments(IJsonSerializer serializer, DocflowDescriptionGenerator descriptionGenerator)
+            {
+                var docflow = expectedDescriptionFactory(descriptionGenerator);
+                docflow.Documents = null;
                 var json = serializer.SerializeToIndentedString(docflow);
                 return (json, docflow);
             }

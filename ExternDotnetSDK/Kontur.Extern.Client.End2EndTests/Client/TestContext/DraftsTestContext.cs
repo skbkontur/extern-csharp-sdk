@@ -59,13 +59,13 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
             return await awaiter.WaitForCompletion();
         }
         
-        public async Task<LongOperationResult<Docflow, DraftSendingFailure>> TrySendDraft(Guid accountId, Guid draftId)
+        public async Task<LongOperationResult<IDocflowWithDocuments, DraftSendingFailure>> TrySendDraft(Guid accountId, Guid draftId)
         {
             var awaiter = await konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).TrySend().StartAsync();
             return await awaiter.WaitForSuccessOrFailure();
         }
         
-        public async Task<Docflow> SendDraftOrFail(Guid accountId, Guid draftId)
+        public async Task<IDocflowWithDocuments> SendDraftOrFail(Guid accountId, Guid draftId)
         {
             var awaiter = await konturExtern.Accounts.WithId(accountId).Drafts.WithId(draftId).Send().StartAsync();
             return await awaiter.WaitForCompletion();

@@ -116,7 +116,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
         /// <param name="senderIp">IP адрес отправителя</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
-        Task<Docflow> SendReplyAsync(
+        Task<IDocflowWithDocuments> SendReplyAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
@@ -136,7 +136,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
         /// <param name="senderIp">IP адрес отправителя</param>
         /// <param name="timeout"></param>
         /// <returns>Ответный документ</returns>
-        Task<Docflow> SendInventoryReplyAsync(
+        Task<IDocflowWithDocuments> SendInventoryReplyAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,

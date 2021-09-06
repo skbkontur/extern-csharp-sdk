@@ -63,7 +63,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
         /// <param name="docflowId">Идентификатор документооборота</param>
         /// <param name="timeout"></param>
         /// <returns>Документооборот</returns>
-        Task<Docflow> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null);
+        Task<IDocflowWithDocuments> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null);
         
         /// <summary>
         /// Получение документооборота по идентификатору
@@ -72,7 +72,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
         /// <param name="docflowId">Идентификатор документооборота</param>
         /// <param name="timeout"></param>
         /// <returns>Документооборот или null, если документооброт с указанными ID не существует</returns>
-        Task<Docflow?> TryGetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null);
+        Task<IDocflowWithDocuments?> TryGetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Получение документооборота описи по идентификатору
@@ -83,7 +83,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
         /// <param name="inventoryId">Идентификатор документооборота описи</param>
         /// <param name="timeout"></param>
         /// <returns>Документооборот описи</returns>
-        Task<Docflow> GetInventoryDocflowAsync(
+        Task<IDocflowWithDocuments> GetInventoryDocflowAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
@@ -99,7 +99,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
         /// <param name="inventoryId">Идентификатор документооборота описи</param>
         /// <param name="timeout"></param>
         /// <returns>Документооборот описи или null</returns>
-        Task<Docflow?> TryGetInventoryDocflowAsync(
+        Task<IDocflowWithDocuments?> TryGetInventoryDocflowAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,

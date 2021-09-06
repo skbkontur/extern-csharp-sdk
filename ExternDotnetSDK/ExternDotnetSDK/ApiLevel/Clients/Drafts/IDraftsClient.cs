@@ -258,7 +258,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         /// <param name="force">Флаг отправки в ПФР отчета с ошибками</param>
         /// <param name="timeout"></param>
         /// <returns>Результат отправки черновика</returns>
-        Task<Docflow> SendDraftAsync(Guid accountId, Guid draftId, bool? force = null, TimeSpan? timeout = null);
+        Task<IDocflowWithDocuments> SendDraftAsync(Guid accountId, Guid draftId, bool? force = null, TimeSpan? timeout = null);
 
         /// <summary>
         /// Отправка документов черновика
@@ -268,7 +268,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         /// <param name="force">Флаг отправки в ПФР отчета с ошибками</param>
         /// <param name="timeout"></param>
         /// <returns>Состояние созданной задачи отправки черновика. В случае успешного завершения возвращает созданный <see cref="Docflow">документооборот</see></returns>
-        Task<ApiTaskResult<Docflow, SendFailure>> StartSendDraftAsync(
+        Task<ApiTaskResult<IDocflowWithDocuments, SendFailure>> StartSendDraftAsync(
             Guid accountId,
             Guid draftId,
             bool? force = null,
@@ -282,7 +282,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         /// <param name="taskId">Идентификатор задачи</param>
         /// <param name="timeout"></param>
         /// <returns>Состояние задачи отправки черновика. В случае успешного завершения возвращает созданный <see cref="Docflow">документооборот</see></returns>
-        Task<ApiTaskResult<Docflow, SendFailure>> GetSendDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null);
+        Task<ApiTaskResult<IDocflowWithDocuments, SendFailure>> GetSendDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Создание файла в документе по контракту (УСН, ИОН, ЭДОК)

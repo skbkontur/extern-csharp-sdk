@@ -1,20 +1,25 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 using System.IO;
+using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
 using Kontur.Extern.Client.Model.Docflows;
+using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Models.Docflows.Descriptions;
+using Kontur.Extern.Client.Models.Docflows.Documents;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Converters
 {
     internal class DocflowContainingConverter<T> : JsonConverter<T>
-        where T : class, IDocflowBase, new()
+        where T : IDocflow
      {
          private const string TypePropName = "type";
          private const string DescriptionPropName = "description";
+         private const string DocumentsPropName = "documents";
 
          public override void WriteJson(JsonWriter writer, T? value, JsonSerializer serializer)
          {
@@ -25,22 +30,23 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Convert
          public override T ReadJson(JsonReader reader, Type objectType, T? existingValue, bool hasExistingValue, JsonSerializer serializer)
          {
              if (reader.TokenType == JsonToken.Null)
-                 return null!;
+                 return default!;
 
              var jObject = JObject.Load(reader);
              
              var docflowType = TryGetTypeValue(jObject);
              var description = TryGetDocflowDescription(jObject, docflowType, serializer);
              jObject.Remove(DescriptionPropName);
+             jObject.Remove(DocumentsPropName);
 
-             var result = new T();
+             var result = new Docflow();
              serializer.Populate(jObject.CreateReader(), result);
              if (description != null)
              {
                  result.Description = description;
              }
 
-             return result;
+             return (T) (object) result;
 
              static DocflowType? TryGetTypeValue(JObject jObject)
              {
@@ -67,6 +73,23 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Convert
                  using var stringReader = new StringReader(descriptionJObject.ToString());
                  return (DocflowDescription?) serializer.Deserialize(stringReader, descriptionType);
              }
+         }
+
+         [PublicAPI]
+         private class Docflow : IDocflowWithDocuments
+         {
+             public Guid Id { get; set; }
+             public Guid OrganizationId { get; set; }
+             public Urn Type { get; set; } = null!;
+             public Urn Status { get; set; } = null!;
+             public Urn SuccessState { get; set; } = null!;
+             public List<Document> Documents { get; set; } = null!;
+             public List<Link> Links { get; set; } = null!;
+             public DateTime SendDateTime { get; set; }
+             public DateTime? LastChangeDateTime { get; set; }
+             public DocflowDescription Description { get; set; } = null!;
+
+             public bool IsEmpty { get; }
          }
      }
 }

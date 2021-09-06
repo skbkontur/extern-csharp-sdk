@@ -1,4 +1,3 @@
-using System;
 using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Json;
 using Kontur.Extern.Client.Http.Serialization;

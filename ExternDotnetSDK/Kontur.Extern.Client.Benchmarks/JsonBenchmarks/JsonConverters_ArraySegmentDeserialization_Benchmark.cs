@@ -13,9 +13,9 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks
         public void Setup() => context = new JsonConvertersBenchmarkContext();
 
         [Benchmark(Baseline = true, OperationsPerInvoke = JsonConvertersBenchmarkContext.OperationsPerInvoke)]
-        public Docflow Deserialize_SysTextJson() => context.SysSerializer.Deserialize<Docflow>(context.JsonBytes);
+        public IDocflowWithDocuments Deserialize_SysTextJson() => context.SysSerializer.Deserialize<IDocflowWithDocuments>(context.JsonBytes);
 
         [Benchmark(OperationsPerInvoke = JsonConvertersBenchmarkContext.OperationsPerInvoke)]
-        public Docflow Deserialize_JsonNet() => context.JsonNetSerializer.Deserialize<Docflow>(context.JsonBytes);
+        public IDocflowWithDocuments Deserialize_JsonNet() => context.JsonNetSerializer.Deserialize<IDocflowWithDocuments>(context.JsonBytes);
     }
 }

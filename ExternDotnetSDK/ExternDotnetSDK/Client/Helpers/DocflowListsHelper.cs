@@ -5,13 +5,14 @@ using Kontur.Extern.Client.ApiLevel;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows;
 using Kontur.Extern.Client.Model.DocflowFiltering;
+using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Primitives;
 
 namespace Kontur.Extern.Client.Helpers
 {
     internal static class DocflowListsHelper
     {
-        internal static IEntityList<DocflowPageItem> DocflowsList(
+        internal static IEntityList<IDocflow> DocflowsList(
             IKeApiClient apiClient,
             Guid accountId,
             Guid docflowId,
@@ -20,7 +21,7 @@ namespace Kontur.Extern.Client.Helpers
             LoadPage loadPage)
         {
             var docflowFilter = filterBuilder?.CreateFilter() ?? new DocflowFilter();
-            return new EntityList<DocflowPageItem>(
+            return new EntityList<IDocflow>(
                 async (skip, take, timeout) =>
                 {
                     checked

@@ -1,4 +1,3 @@
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows;
 using Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Converters;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Models.Docflows;
@@ -14,8 +13,8 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters
             new JsonConverter[]
             {
                 new UrnJsonConverter(),
-                new DocflowContainingConverter<Docflow>(),
-                new DocflowContainingConverter<DocflowPageItem>()
+                new DocflowContainingConverter<IDocflowWithDocuments>(),
+                new DocflowContainingConverter<IDocflow>()
             },
             ignoreIndentation
         );

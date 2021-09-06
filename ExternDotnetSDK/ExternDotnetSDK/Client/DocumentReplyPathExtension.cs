@@ -10,7 +10,7 @@ namespace Kontur.Extern.Client
     [PublicAPI]
     public static class DocumentReplyPathExtension
     {
-        public static Task<Docflow> SendReplyAsync(this DocumentReplyPath path, IPAddress address, TimeSpan? timeout = null)
+        public static Task<IDocflowWithDocuments> SendReplyAsync(this DocumentReplyPath path, IPAddress address, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
             return apiClient.Replies.SendReplyAsync(

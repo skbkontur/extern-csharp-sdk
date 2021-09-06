@@ -1,8 +1,8 @@
 #nullable enable
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows;
 using Kontur.Extern.Client.Model.DocflowFiltering;
+using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives;
 
@@ -11,13 +11,13 @@ namespace Kontur.Extern.Client
     [PublicAPI]
     public static class DocflowListPathExtension
     {
-        public static IEntityList<DocflowPageItem> List(this in DocflowListPath path, DocflowFilterBuilder? filterBuilder = null)
+        public static IEntityList<IDocflow> List(this in DocflowListPath path, DocflowFilterBuilder? filterBuilder = null)
         {
             var apiClient = path.Services.Api;
             var apiFilter = filterBuilder?.CreateFilter() ?? new DocflowFilter();
             
             var accountId = path.AccountId;
-            return new EntityList<DocflowPageItem>(
+            return new EntityList<IDocflow>(
                 async (skip, take, timeout) =>
                 {
                     checked

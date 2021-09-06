@@ -95,7 +95,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
             return PostReplyAsync(url, body, timeout);
         }
 
-        public Task<Docflow> SendReplyAsync(
+        public Task<IDocflowWithDocuments> SendReplyAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
@@ -111,7 +111,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
             return PostDocflowAsync(url, body, timeout);
         }
 
-        public Task<Docflow> SendInventoryReplyAsync(
+        public Task<IDocflowWithDocuments> SendInventoryReplyAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
@@ -126,7 +126,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
                 SenderIp = senderIp
             };
             var url = $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/send";
-            return http.PutAsync<SendReplyDocumentRequest, Docflow>(url, body, timeout);
+            return http.PutAsync<SendReplyDocumentRequest, IDocflowWithDocuments>(url, body, timeout);
         }
 
         public Task<ReplyDocument> UpdateReplySignatureAsync(
@@ -181,8 +181,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
             return http.PutAsync<byte[], ReplyDocument>(url, content, timeout);
         }
         
-        private Task<Docflow> PostDocflowAsync<TDto>(string url, TDto dto, TimeSpan? timeout) => 
-            http.PostAsync<TDto, Docflow>(new Uri(url), dto, timeout);
+        private Task<IDocflowWithDocuments> PostDocflowAsync<TDto>(string url, TDto dto, TimeSpan? timeout) => 
+            http.PostAsync<TDto, IDocflowWithDocuments>(new Uri(url), dto, timeout);
 
         private Task<ReplyDocument> PostReplyAsync<TDto>(Uri url, TDto dto, TimeSpan? timeout) => 
             http.PostAsync<TDto, ReplyDocument>(url, dto, timeout);

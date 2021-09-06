@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Testing.ExternTestTool.Commands;
 using Kontur.Extern.Client.Testing.ExternTestTool.Drive;
 using Kontur.Extern.Client.Testing.ExternTestTool.Http;
@@ -11,7 +12,6 @@ using Kontur.Extern.Client.Testing.Fakes.Logging;
 using Kontur.Extern.Client.Testing.Lifetimes;
 using Vostok.Logging.Abstractions;
 using Xunit.Abstractions;
-using Docflow = Kontur.Extern.Client.Models.Docflows.Docflow;
 
 // ReSharper disable CommentTypo
 
@@ -78,7 +78,7 @@ namespace Kontur.Extern.Client.Testing.ExternTestTool
         /// <param name="textOfLetter">Текст письма (required).</param>
         /// <param name="ifnsCode">Код тестовой инспекции, от которой придет требование. Возможные значения: 0007, 0008, 0084, 0085, 0087, 0088, 0093, 0094, 0096, 9979, 7702.</param>
         /// <returns>Документооборот</returns>
-        public Task<Docflow> GenerateCuLetterAsync(Guid accountId, Sender? sender = null, Payer? payer = null, string? textOfLetter = null, TestIfnsCode? ifnsCode = null) => 
+        public Task<IDocflowWithDocuments> GenerateCuLetterAsync(Guid accountId, Sender? sender = null, Payer? payer = null, string? textOfLetter = null, TestIfnsCode? ifnsCode = null) => 
             RunAsync(new GenerateCuLetterCommand(accountId, sender, payer, textOfLetter, ifnsCode));
 
         private Task<T> RunAsync<T>(IExternTestToolCommand<T> command) => 

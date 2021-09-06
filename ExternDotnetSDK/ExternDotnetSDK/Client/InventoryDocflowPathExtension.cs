@@ -10,13 +10,13 @@ namespace Kontur.Extern.Client
     public static class InventoryDocflowPathExtension
     {
         [ItemCanBeNull]
-        public static Task<Docflow> TryGetAsync(this in InventoryDocflowPath path, TimeSpan? timeout = null)
+        public static Task<IDocflowWithDocuments> TryGetAsync(this in InventoryDocflowPath path, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
             return apiClient.Docflows.TryGetInventoryDocflowAsync(path.AccountId, path.DocflowId, path.DocumentId, path.InventoryId, timeout);
         }
         
-        public static Task<Docflow> GetAsync(this in InventoryDocflowPath path, TimeSpan? timeout = null)
+        public static Task<IDocflowWithDocuments> GetAsync(this in InventoryDocflowPath path, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
             return apiClient.Docflows.GetInventoryDocflowAsync(path.AccountId, path.DocflowId, path.DocumentId, path.InventoryId, timeout);

@@ -67,13 +67,13 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
             return GetRelatedDocflowsAsync(urlBuilder, timeout);
         }
 
-        public Task<Docflow> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) => 
+        public Task<IDocflowWithDocuments> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) => 
             GetDocflowAsync($"/v1/{accountId}/docflows/{docflowId}", timeout);
 
-        public Task<Docflow?> TryGetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) => 
-            http.TryGetAsync<Docflow>($"/v1/{accountId}/docflows/{docflowId}", timeout);
+        public Task<IDocflowWithDocuments?> TryGetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) => 
+            http.TryGetAsync<IDocflowWithDocuments>($"/v1/{accountId}/docflows/{docflowId}", timeout);
 
-        public Task<Docflow> GetInventoryDocflowAsync(
+        public Task<IDocflowWithDocuments> GetInventoryDocflowAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
@@ -83,7 +83,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
             return GetDocflowAsync($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}", timeout);
         }
 
-        public Task<Docflow?> TryGetInventoryDocflowAsync(Guid accountId, Guid relatedDocflowId, Guid relatedDocumentId, Guid inventoryId, TimeSpan? timeout = null) => 
+        public Task<IDocflowWithDocuments?> TryGetInventoryDocflowAsync(Guid accountId, Guid relatedDocflowId, Guid relatedDocumentId, Guid inventoryId, TimeSpan? timeout = null) => 
             TryGetDocflowAsync($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}", timeout);
 
         public Task<List<Document>> GetDocumentsAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) =>
@@ -276,8 +276,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
 
         private Task<DocflowPage> GetRelatedDocflowsAsync(RequestUrlBuilder urlBuilder, TimeSpan? timeout) => http.GetAsync<DocflowPage>(urlBuilder.Build(), timeout);
 
-        private Task<Docflow> GetDocflowAsync(string url, TimeSpan? timeout) => http.GetAsync<Docflow>(url, timeout);
+        private Task<IDocflowWithDocuments> GetDocflowAsync(string url, TimeSpan? timeout) => http.GetAsync<IDocflowWithDocuments>(url, timeout);
         
-        private Task<Docflow?> TryGetDocflowAsync(string url, TimeSpan? timeout) => http.TryGetAsync<Docflow>(url, timeout);
+        private Task<IDocflowWithDocuments?> TryGetDocflowAsync(string url, TimeSpan? timeout) => http.TryGetAsync<IDocflowWithDocuments>(url, timeout);
     }
 }

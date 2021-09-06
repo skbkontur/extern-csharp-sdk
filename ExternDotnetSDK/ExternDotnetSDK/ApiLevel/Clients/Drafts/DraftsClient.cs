@@ -189,15 +189,15 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             );
         }
 
-        public Task<Docflow> SendDraftAsync(Guid accountId, Guid draftId, bool? force = null, TimeSpan? timeout = null)
+        public Task<IDocflowWithDocuments> SendDraftAsync(Guid accountId, Guid draftId, bool? force = null, TimeSpan? timeout = null)
         {
             var url = new RequestUrlBuilder($"/v1/{accountId}/drafts/{draftId}/send")
                 .AppendToQuery("force", force)
                 .Build();
-            return http.PostAsync<Docflow>(url, timeout);
+            return http.PostAsync<IDocflowWithDocuments>(url, timeout);
         }
         
-        public async Task<ApiTaskResult<Docflow, SendFailure>> StartSendDraftAsync(
+        public async Task<ApiTaskResult<IDocflowWithDocuments, SendFailure>> StartSendDraftAsync(
             Guid accountId,
             Guid draftId,
             bool? force = null,
@@ -210,15 +210,15 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
 
             var response = await http.Post(url).SendAsync(timeout, DoNotFailOnBadRequestsWithPayloads).ConfigureAwait(false);
 
-            return await response.GetMessageAsync<ApiTaskResult<Docflow, SendFailure>>().ConfigureAwait(false);
+            return await response.GetMessageAsync<ApiTaskResult<IDocflowWithDocuments, SendFailure>>().ConfigureAwait(false);
         }
 
-        public async Task<ApiTaskResult<Docflow, SendFailure>> GetSendDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null)
+        public async Task<ApiTaskResult<IDocflowWithDocuments, SendFailure>> GetSendDraftTaskStatusAsync(Guid accountId, Guid draftId, Guid taskId, TimeSpan? timeout = null)
         {
             var url = $"/v1/{accountId}/drafts/{draftId}/tasks/{taskId}";
             var response = await http.Get(url).SendAsync(timeout, DoNotFailOnBadRequestsWithPayloads).ConfigureAwait(false);
             
-            return await response.GetMessageAsync<ApiTaskResult<Docflow, SendFailure>>().ConfigureAwait(false);
+            return await response.GetMessageAsync<ApiTaskResult<IDocflowWithDocuments, SendFailure>>().ConfigureAwait(false);
         }
 
         public Task BuildDocumentAsync(
