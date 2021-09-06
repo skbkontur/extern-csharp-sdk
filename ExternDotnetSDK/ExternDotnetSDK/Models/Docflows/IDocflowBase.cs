@@ -13,8 +13,7 @@ namespace Kontur.Extern.Client.Models.Docflows
         /// Тип документооборота
         /// </summary>
         public Urn Type { get; }
-        
-        
+
         /// <summary>
         /// Описание документооборота
         /// </summary>

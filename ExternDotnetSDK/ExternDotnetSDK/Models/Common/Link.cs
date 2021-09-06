@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -6,19 +7,8 @@ namespace Kontur.Extern.Client.Models.Common
 {
     public sealed class Link : IEquatable<Link>
     {
-        public const string RelSelf = "self";
-        public const string RelPrev = "prev";
-        public const string RelNext = "next";
-
-        public readonly Uri Href;
-        public readonly string Rel;
-        public readonly string Name;
-        public readonly string Title;
-        public readonly string Profile;
-        public readonly bool Templated;
-
         [JsonConstructor]
-        public Link(Uri href, string rel, string name = null, string title = null, string profile = null, bool templated = false)
+        public Link(Uri href, string rel, string? name = null, string? title = null, string? profile = null, bool templated = false)
         {
             Href = href ?? throw new ArgumentNullException(nameof(href));
             Rel = rel ?? throw new ArgumentNullException(nameof(rel));
@@ -27,17 +17,32 @@ namespace Kontur.Extern.Client.Models.Common
             Templated = templated;
             Profile = profile;
         }
+        
+        public Uri Href { get; }
+        public string Rel { get; }
+        public string? Name { get; }
+        public string? Title { get; }
+        public string? Profile { get; }
+        public bool Templated { get; }
 
-        public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is Link link && Equals(link);
+        public override bool Equals(object obj) => 
+            ReferenceEquals(this, obj) || obj is Link link && Equals(link);
 
-        public bool Equals(Link other) =>
-            other != null &&
-            Href == other.Href &&
-            EqualsOrNulls(Rel, other.Rel) &&
-            EqualsOrNulls(Title, other.Title) &&
-            EqualsOrNulls(Name, other.Name) &&
-            EqualsOrNulls(Profile, other.Profile) &&
-            Templated == other.Templated;
+        public bool Equals(Link? other)
+        {
+            return other is not null &&
+                   Href == other.Href &&
+                   EqualsOrNulls(Rel, other.Rel) &&
+                   EqualsOrNulls(Title, other.Title) &&
+                   EqualsOrNulls(Name, other.Name) &&
+                   EqualsOrNulls(Profile, other.Profile) &&
+                   Templated == other.Templated;
+            
+            static bool EqualsOrNulls(string? string1, string? string2) =>
+                string1 is null
+                    ? string2 is null
+                    : string2 is not null && string1.Equals(string2, StringComparison.CurrentCultureIgnoreCase);
+        }
 
         public override string ToString()
         {
@@ -50,6 +55,12 @@ namespace Kontur.Extern.Client.Models.Common
                 builder.Append("templated=\"true\" ");
             builder.Append($"href=\"{Href}\" />");
             return builder.ToString();
+            
+            static void TryAppendLinkPart(StringBuilder builder, string parameterName, string? parameter)
+            {
+                if (!string.IsNullOrWhiteSpace(parameter))
+                    builder.Append($"{parameterName}=\"{parameter}\" ");
+            }
         }
 
         public override int GetHashCode()
@@ -63,26 +74,15 @@ namespace Kontur.Extern.Client.Models.Common
                 hashcode = TryIncreaseHashcode(hashcode, Profile);
                 return hashcode*23 + Templated.GetHashCode();
             }
-        }
-
-        private void TryAppendLinkPart(StringBuilder builder, string parameterName, string parameter)
-        {
-            if (!string.IsNullOrWhiteSpace(parameter))
-                builder.Append($"{parameterName}=\"{parameter}\" ");
-        }
-
-        private static bool EqualsOrNulls(string a, string b) =>
-            a == null
-                ? b == null
-                : b != null && string.Compare(a, b, StringComparison.CurrentCultureIgnoreCase) == 0;
-
-        private static int TryIncreaseHashcode(int hashcode, string linkField)
-        {
-            unchecked
+            
+            static int TryIncreaseHashcode(int hashcode, string? linkField)
             {
-                return linkField is null
-                    ? hashcode
-                    : hashcode*23 + linkField.ToLower().GetHashCode();
+                unchecked
+                {
+                    return linkField is null
+                        ? hashcode
+                        : hashcode*23 + linkField.ToLower().GetHashCode();
+                }
             }
         }
     }
