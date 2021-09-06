@@ -18,7 +18,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json
             return new SystemTextJsonSerializerFactory()
                 .WithNamingPolicy(namingPolicy)
                 .AddConverter(new UrnJsonConverter())
-                .AddConverter(new DocflowContainingConverter())
+                .AddConverter(new DocflowConverter())
                 .AddConverter(new DocflowDocumentDescriptionConverter())
                 .AddConverter(new DraftsBuilderMetaConverter())
                 .AddConverter(new DraftsBuilderDocumentMetaConverter())

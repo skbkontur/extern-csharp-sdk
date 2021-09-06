@@ -13,7 +13,7 @@ using Kontur.Extern.Client.Models.Docflows.Documents;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
 {
-    internal class DocflowContainingConverter : JsonConverter<IDocflow>
+    internal class DocflowConverter : JsonConverter<IDocflow>
     {
         private readonly Utf8String typePropName = "type";
 
@@ -28,7 +28,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
             }
             else
             {
-                throw new ArgumentNullException(nameof(value));
+                writer.WriteNullValue();
             }
         }
 

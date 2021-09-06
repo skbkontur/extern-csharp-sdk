@@ -17,7 +17,7 @@ using NUnit.Framework;
 namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
 {
     [TestFixture]
-    internal class DocflowContainingConverter_Tests
+    internal class DocflowConverter_Tests
     {
         private static IJsonSerializer serializer = null!;
         private DocflowDescriptionGenerator descriptionGenerator = null!;
@@ -112,6 +112,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             if (expectedDescription is not null)
             {
                 docflow.Description.Should().BeOfType(expectedDescription.GetType());
+                docflow.Description.Should().BeEquivalentTo(expectedDescription);
             }
         }
 
