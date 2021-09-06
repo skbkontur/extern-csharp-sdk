@@ -467,7 +467,7 @@ namespace Kontur.Extern.Client.Model.Documents
             [PublicAPI]
             public static class BusinessRegistration
             {
-                public static readonly Urn NameSpace = new("urn:document:business-registration");
+                public static readonly Urn NameSpace = Urn.Parse("urn:document:business-registration");
                 
                 /// <summary>
                 /// Служебный документ, в котором передается описание документа (установленный формат)

@@ -221,7 +221,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         public void FailToGenerateDocumentReply_WithBadParameters()
         {
             //goodUrn itself is actually not valid, but i didn't find a valid one
-            var goodUrn = new Urn("urn:document:business-registration-reply-receipt");
+            var goodUrn = Urn.Parse("urn:document:business-registration-reply-receipt");
             var goodContent = certificate.Content;
             Assert.ThrowsAsync<HttpRequestException>(
                 async () => await Client.Replies.GenerateReplyAsync(

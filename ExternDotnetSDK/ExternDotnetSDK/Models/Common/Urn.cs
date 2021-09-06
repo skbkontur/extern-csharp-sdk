@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+using System;
+using Kontur.Extern.Client.Exceptions;
 
 namespace Kontur.Extern.Client.Models.Common
 {
@@ -6,25 +8,30 @@ namespace Kontur.Extern.Client.Models.Common
     {
         private const string Schema = "urn:";
 
-        public static Urn Parse(string value) => new Urn(value);
-
-        public static bool TryParse(string value, out Urn result)
-        {
-            result = null;
-            if (value?.ToLower().StartsWith(Schema, StringComparison.Ordinal) != true)
-                return false;
-            result = Parse(value);
-            return true;
-        }
-
-        public Urn(string value)
+        public static Urn Parse(string value)
         {
             TryThrowArgumentNullException(value);
             if (0 != string.Compare(value, 0, Schema, 0, Schema.Length, StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException("Invalid URN schema", nameof(value));
-            Value = value.Substring(Schema.Length);
+                throw Errors.InvalidUrnSchema(nameof(value), value);
+            if (char.IsWhiteSpace(value[value.Length - 1]))
+                throw Errors.UrnCannotHaveTrailingWhitespaces(nameof(value), value);
+            
+            return new(value);
         }
-        
+
+        public static bool TryParse(string? value, out Urn result)
+        {
+            if (value?.ToLower().StartsWith(Schema, StringComparison.Ordinal) != true ||
+                char.IsWhiteSpace(value[value.Length - 1]))
+            {
+                result = null!;
+                return false;
+            }
+            
+            result = new Urn(value);
+            return true;
+        }
+
         public Urn(string nid, string nss)
         {
             TryThrowArgumentNullException(nid);
@@ -38,6 +45,9 @@ namespace Kontur.Extern.Client.Models.Common
             TryThrowArgumentNullException(nss);
             Value = $"{parent.Value}:{nss}";
         }
+
+        private Urn(string value) => 
+            Value = value.Substring(Schema.Length);
 
         public string Value { get; }
 
@@ -59,13 +69,7 @@ namespace Kontur.Extern.Client.Models.Common
             }
         }
 
-        public int CompareTo(Urn other) =>
-            other == null ? 1 : string.Compare(Value, other.Value, StringComparison.OrdinalIgnoreCase);
-
-        public bool Equals(Urn other) =>
-            !(other is null) && 0 == string.Compare(Value, other.Value, StringComparison.OrdinalIgnoreCase);
-
-        public Urn Append(string nss) => new Urn(this, nss);
+        public Urn Append(string nss) => new(this, nss);
 
         public bool IsParentOf(Urn urn)
         {
@@ -80,10 +84,16 @@ namespace Kontur.Extern.Client.Models.Common
             TryThrowArgumentNullException(urn);
             return urn.IsParentOf(this);
         }
+        
+        public int CompareTo(Urn? other) =>
+            other is null ? 1 : string.Compare(Value, other.Value, StringComparison.OrdinalIgnoreCase);
 
-        public static bool operator==(Urn a, Urn b) => ReferenceEquals(a, b) || a?.Equals(b) == true;
+        public bool Equals(Urn? other) =>
+            other is not null && Value.Equals(other.Value, StringComparison.OrdinalIgnoreCase);
 
-        public static bool operator!=(Urn a, Urn b) => !(a == b);
+        public static bool operator==(Urn? a, Urn? b) => ReferenceEquals(a, b) || a?.Equals(b) == true;
+
+        public static bool operator!=(Urn? a, Urn? b) => !(a == b);
 
         public override int GetHashCode() => Value.ToLowerInvariant().GetHashCode();
 
@@ -91,9 +101,9 @@ namespace Kontur.Extern.Client.Models.Common
 
         public override string ToString() => Schema + Value;
 
-        private static void TryThrowArgumentNullException(Urn urn)
+        private static void TryThrowArgumentNullException(Urn? urn)
         {
-            if (urn == null)
+            if (urn is null)
                 throw new ArgumentNullException(nameof(urn));
         }
 

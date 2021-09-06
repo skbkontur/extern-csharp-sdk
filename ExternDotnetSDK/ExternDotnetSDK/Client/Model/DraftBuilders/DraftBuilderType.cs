@@ -17,14 +17,14 @@ namespace Kontur.Extern.Client.Model.DraftBuilders
         /// <summary>
         /// Пространство имен типов документов
         /// </summary>
-        public static readonly Urn Namespace = new("urn:drafts-builder");
+        public static readonly Urn Namespace = Urn.Parse("urn:drafts-builder");
         
-        private static readonly Urn LegacyNamespace = new("urn:externapi");
+        private static readonly Urn LegacyNamespace = Urn.Parse("urn:externapi");
         
         private readonly Urn? urn;
 
         public DraftBuilderType(string urn)
-            : this(new Urn(urn))
+            : this(Urn.Parse(urn))
         {
         }
 

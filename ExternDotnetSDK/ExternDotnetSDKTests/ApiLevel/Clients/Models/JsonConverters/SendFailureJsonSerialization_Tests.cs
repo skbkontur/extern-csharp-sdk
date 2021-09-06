@@ -160,7 +160,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
                 }
             };
             return new SendFailure(
-                new Urn("urn:error:externapi:checkProtocolHasErrors"),
+                Urn.Parse("urn:error:externapi:checkProtocolHasErrors"),
                 HttpStatusCode.BadRequest,
                 "Check protocol has errors",
                 "check-protocol-has-errors",

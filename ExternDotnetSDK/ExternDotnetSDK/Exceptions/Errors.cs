@@ -149,7 +149,13 @@ namespace Kontur.Extern.Client.Exceptions
         public static Exception CannotCreateApiTaskResultWithIsEmptyResult<TResult>([InvokerParameterName] string paramName, TResult result) =>
             new ArgumentException($"Cannot create api task result when given an empty parameter. The parameter value:{NewLine}{result}.", paramName);
 
-        public static Exception InvalidSvdregCode(string paramName, string value) => 
+        public static Exception InvalidSvdregCode([InvokerParameterName] string paramName, string value) => 
             new ArgumentException($"The given SVDREG code ''{value} is invalid. It should start with 0 or X symbol then continue with 4 digits.", paramName);
+
+        public static Exception InvalidUrnSchema([InvokerParameterName] string paramName, string value) => 
+            new ArgumentException($"Invalid URN schema. Value: {value}", paramName);
+
+        public static Exception UrnCannotHaveTrailingWhitespaces([InvokerParameterName] string paramName, string value) => 
+            new ArgumentException($"URN cannot have trailing schema. Value: {value}", paramName);
     }
 }

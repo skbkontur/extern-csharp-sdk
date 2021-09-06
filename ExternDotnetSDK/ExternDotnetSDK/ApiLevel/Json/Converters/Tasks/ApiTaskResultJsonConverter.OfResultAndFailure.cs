@@ -29,7 +29,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
                 var taskState = (ApiTaskState) Enum.Parse(typeof(ApiTaskState), taskStateValue!, true);
                 
                 var taskTypeValue = jsonDocument.RootElement.GetProperty(propNames.TaskTypePropName.AsUtf8()).GetString();
-                var taskType = taskTypeValue == null ? null : new Urn(taskTypeValue);
+                var taskType = taskTypeValue == null ? null : Urn.Parse(taskTypeValue);
 
                 switch (taskState)
                 {

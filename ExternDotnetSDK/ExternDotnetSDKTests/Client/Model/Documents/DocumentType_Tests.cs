@@ -78,7 +78,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             [TestCase("some-doc", null, false)]
             public void Should_indicate_that_document_type_is_belong_to_namespace(string documentSuffix, string? namespaceValue, bool expectedResult)
             {
-                var @namespace = namespaceValue is null ? null : new Urn(namespaceValue);
+                var @namespace = namespaceValue is null ? null : Urn.Parse(namespaceValue);
                 
                 DocumentType documentType = $"urn:document:{documentSuffix}";
 

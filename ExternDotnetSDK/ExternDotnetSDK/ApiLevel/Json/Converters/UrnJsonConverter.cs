@@ -11,7 +11,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters
         public override Urn? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var urnValue = reader.GetString();
-            return urnValue == null ? null : new Urn(urnValue);
+            return urnValue == null ? null : Urn.Parse(urnValue);
         }
 
         public override void Write(Utf8JsonWriter writer, Urn value, JsonSerializerOptions options) => 

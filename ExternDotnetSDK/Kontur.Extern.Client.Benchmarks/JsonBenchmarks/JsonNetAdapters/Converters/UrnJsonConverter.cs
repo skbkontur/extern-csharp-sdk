@@ -21,7 +21,7 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Convert
                 return null;
             
             var value = reader.Value.ToString();
-            return new Urn(value);
+            return Urn.Parse(value!);
         }
 
         public override bool CanConvert(Type objectType) => typeof (Urn).IsAssignableFrom(objectType);

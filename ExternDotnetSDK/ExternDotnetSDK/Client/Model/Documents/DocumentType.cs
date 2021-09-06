@@ -14,12 +14,12 @@ namespace Kontur.Extern.Client.Model.Documents
         /// <summary>
         /// Пространство имен типов документов
         /// </summary>
-        public static readonly Urn Namespace = new("urn:document");
+        public static readonly Urn Namespace = Urn.Parse("urn:document");
         
         private readonly Urn? urn;
 
         public DocumentType(string urn)
-            : this(new Urn(urn))
+            : this(Urn.Parse(urn))
         {
         }
 

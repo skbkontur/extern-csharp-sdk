@@ -14,12 +14,12 @@ namespace Kontur.Extern.Client.Model.Docflows
         /// <summary>
         /// Пространство имен типов документооборотов
         /// </summary>
-        public static readonly Urn Namespace = new("urn:docflow");
+        public static readonly Urn Namespace = Urn.Parse("urn:docflow");
         
         private readonly Urn? urn;
 
         public DocflowType(string urn)
-            : this(new Urn(urn))
+            : this(Urn.Parse(urn))
         {
         }
 

@@ -9,7 +9,7 @@ namespace Kontur.Extern.Client.Models.ApiErrors
 {
     public class ApiError
     {
-        public static readonly Urn Namespace = new("urn:error");
+        public static readonly Urn Namespace = Urn.Parse("urn:error");
         
         public ApiError(HttpStatusCode statusCode, string? message = null, string? traceId = null, Dictionary<string, string>? properties = null)
             : this(Namespace, statusCode, message, traceId, properties)
