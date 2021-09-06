@@ -52,9 +52,9 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Organizations
             string newName,
             TimeSpan? timeout = null)
         {
-            return http.PutAsync<UpdateOrganizationRequestDto, Organization>(
+            return http.PutAsync<UpdateOrganizationRequest, Organization>(
                 $"/v1/{accountId}/organizations/{orgId}",
-                new UpdateOrganizationRequestDto {Name = newName},
+                new UpdateOrganizationRequest {Name = newName},
                 timeout
             );
         }
@@ -66,9 +66,9 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Organizations
             string name,
             TimeSpan? timeout = null)
         {
-            return http.PostAsync<CreateOrganizationRequestDto, Organization>(
+            return http.PostAsync<CreateOrganizationRequest, Organization>(
                 $"/v1/{accountId}/organizations",
-                new CreateOrganizationRequestDto
+                new CreateOrganizationRequest
                 {
                     Inn = inn,
                     Kpp = kpp,

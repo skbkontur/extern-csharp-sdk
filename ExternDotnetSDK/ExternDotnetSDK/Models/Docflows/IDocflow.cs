@@ -5,7 +5,7 @@ using Kontur.Extern.Client.Models.Docflows.Documents;
 
 namespace Kontur.Extern.Client.Models.Docflows
 {
-    public interface IDocflow : IDocflowDto
+    public interface IDocflow : IDocflowBase
     {
         Guid Id { get; }
         Guid OrganizationId { get; }

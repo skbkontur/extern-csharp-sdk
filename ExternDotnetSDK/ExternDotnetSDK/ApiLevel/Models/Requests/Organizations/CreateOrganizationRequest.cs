@@ -5,7 +5,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Organizations
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]
-    public class CreateOrganizationRequestDto
+    public class CreateOrganizationRequest
     {
         /// <summary>
         /// ИНН организации

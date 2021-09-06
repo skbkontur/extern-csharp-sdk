@@ -5,7 +5,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Accounts
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]
-    public class CreateAccountRequestDto
+    public class CreateAccountRequest
     {
         /// <summary>
         /// ИНН организации

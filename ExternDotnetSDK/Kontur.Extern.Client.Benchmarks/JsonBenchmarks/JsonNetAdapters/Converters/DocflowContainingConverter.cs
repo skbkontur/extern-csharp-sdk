@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Converters
 {
     internal class DocflowContainingConverter<T> : JsonConverter<T>
-        where T : class, IDocflowDto, new()
+        where T : class, IDocflowBase, new()
      {
          private const string TypePropName = "type";
          private const string DescriptionPropName = "description";

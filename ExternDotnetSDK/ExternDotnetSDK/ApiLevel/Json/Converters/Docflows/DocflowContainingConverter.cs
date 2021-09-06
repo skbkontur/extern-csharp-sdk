@@ -51,7 +51,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
                 }
                 else
                 {
-                    throw Errors.UnknownSubtypeOf<IDocflowDto>(value!.GetType());
+                    throw Errors.UnknownSubtypeOf<IDocflowBase>(value!.GetType());
                 }
             }
 

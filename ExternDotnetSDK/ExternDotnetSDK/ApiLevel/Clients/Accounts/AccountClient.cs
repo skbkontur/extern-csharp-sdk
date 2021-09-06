@@ -41,9 +41,9 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Accounts
             string organizationName,
             TimeSpan? timeout = null)
         {
-            return http.PostAsync<CreateAccountRequestDto, Account>(
+            return http.PostAsync<CreateAccountRequest, Account>(
                 "v1",
-                new CreateAccountRequestDto
+                new CreateAccountRequest
                 {
                     Inn = inn,
                     Kpp = kpp,

@@ -7,7 +7,7 @@ namespace Kontur.Extern.Client.Models.Docflows
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]
-    public interface IDocflowDto
+    public interface IDocflowBase
     {
         /// <summary>
         /// Тип документооборота
