@@ -29,8 +29,8 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows
             Status = status;
             SuccessState = successState;
             Links = links;
-            SendDate = sendDate;
-            LastChangeDate = lastChangeDate;
+            SendDateTime = sendDate;
+            LastChangeDateTime = lastChangeDate;
             Description = description;
         }
         
@@ -41,7 +41,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows
         public Urn Status { get; set; }
         public Urn SuccessState { get; set; }
         public List<Link> Links { get; set; }
-        public DateTime SendDate { get; set; }
-        public DateTime? LastChangeDate { get; set; }
+        public DateTime SendDateTime { get; set; }
+        public DateTime? LastChangeDateTime { get; set; }
     }
 }

@@ -34,11 +34,11 @@ namespace Kontur.Extern.Client.Models.Docflows
         /// <summary>
         /// Дата и время отправки/получения для исходящего/входящего документооборота
         /// </summary>
-        DateTime SendDate { get; }
+        DateTime SendDateTime { get; }
         
         /// <summary>
         /// Дата и время последнего изменения в документообороте
         /// </summary>
-        DateTime? LastChangeDate { get; }
+        DateTime? LastChangeDateTime { get; }
     }
 }

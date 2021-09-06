@@ -25,8 +25,8 @@ namespace Kontur.Extern.Client.Models.Docflows
             Urn successState,
             List<Document> documents,
             List<Link> links,
-            DateTime sendDate,
-            DateTime? lastChangeDate,
+            DateTime sendDateTime,
+            DateTime? lastChangeDateTime,
             DocflowDescription description)
         {
             Id = id;
@@ -36,8 +36,8 @@ namespace Kontur.Extern.Client.Models.Docflows
             SuccessState = successState;
             Documents = documents;
             Links = links;
-            SendDate = sendDate;
-            LastChangeDate = lastChangeDate;
+            SendDateTime = sendDateTime;
+            LastChangeDateTime = lastChangeDateTime;
             Description = description;
         }
         
@@ -79,13 +79,13 @@ namespace Kontur.Extern.Client.Models.Docflows
         
         /// <summary>
         /// Дата и время отправки/получения для исходящего/входящего документооборота
-        /// </summary>
-        public DateTime SendDate { get; set; }
+        // </summary>
+        public DateTime SendDateTime { get; set; }
         
         /// <summary>
         /// Дата и время последнего изменения в документообороте
         /// </summary>
-        public DateTime? LastChangeDate { get; set; }
+        public DateTime? LastChangeDateTime { get; set; }
         
         /// <summary>
         /// Дополнительные свойства документооборота

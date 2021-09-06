@@ -13,7 +13,7 @@ namespace Kontur.Extern.Client.Models.Docflows
         Urn SuccessState { get; }
         List<Document> Documents { get; }
         List<Link> Links { get; }
-        DateTime SendDate { get; }
-        DateTime? LastChangeDate { get; }
+        DateTime SendDateTime { get; }
+        DateTime? LastChangeDateTime { get; }
     }
 }

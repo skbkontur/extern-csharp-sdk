@@ -98,8 +98,8 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
                     Links = docflow.Links;
                     Id = docflow.Id;
                     OrganizationId = docflow.OrganizationId;
-                    SendDate = docflow.SendDate;
-                    LastChangeDate = docflow.LastChangeDate;
+                    SendDateTime = docflow.SendDateTime;
+                    LastChangeDateTime = docflow.LastChangeDateTime;
                     Description = (TDescription) (object) docflow.Description;
                     Documents = docflow.Documents;
                 }
@@ -112,8 +112,8 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
                     Links = docflow.Links;
                     Id = docflow.Id;
                     OrganizationId = docflow.OrganizationId;
-                    SendDate = docflow.SendDate;
-                    LastChangeDate = docflow.LastChangeDate;
+                    SendDateTime = docflow.SendDateTime;
+                    LastChangeDateTime = docflow.LastChangeDateTime;
                     Description = (TDescription) (object) docflow.Description;
                     Documents = null!;
                 }
@@ -133,9 +133,11 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
                 [UsedImplicitly]
                 public List<Link> Links { get; set; } = null!;
                 [UsedImplicitly]
-                public DateTime SendDate { get; set; }
+                [JsonPropertyName("send-date")]
+                public DateTime SendDateTime { get; set; }
                 [UsedImplicitly]
-                public DateTime? LastChangeDate { get; set; }
+                [JsonPropertyName("last-change-date")]
+                public DateTime? LastChangeDateTime { get; set; }
                 [UsedImplicitly]
                 public TDescription Description { get; set; } = default!;
 
@@ -144,11 +146,11 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
                     object docflow;
                     if (typeof (IDocflow).IsAssignableFrom(typeof (TResult)))
                     {
-                        docflow = new Docflow(Id, OrganizationId, Type, Status, SuccessState, Documents, Links, SendDate, LastChangeDate, Description as DocflowDescription);
+                        docflow = new Docflow(Id, OrganizationId, Type, Status, SuccessState, Documents, Links, SendDateTime, LastChangeDateTime, Description as DocflowDescription);
                     }
                     else if (typeof (IDocflowPageItem).IsAssignableFrom(typeof (TResult)))
                     {
-                        docflow = new DocflowPageItem(Id, OrganizationId, Type, Status, SuccessState, Links, SendDate, LastChangeDate, Description as DocflowDescription);
+                        docflow = new DocflowPageItem(Id, OrganizationId, Type, Status, SuccessState, Links, SendDateTime, LastChangeDateTime, Description as DocflowDescription);
                     }
                     else
                     {
