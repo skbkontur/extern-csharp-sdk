@@ -13,7 +13,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// <param name="kpp">КПП.</param>
         /// <param name="name">Название организации.</param>
         /// <param name="certificate">Сертификат (required).</param>
-        public Sender(string inn = default, string kpp = default, string name = default, Certificate certificate = default)
+        public Sender(string inn = default, string kpp = default, string name = default, CertificateContent certificate = default)
         {
             Inn = inn ?? throw new InvalidDataException("inn is a required property for Sender and cannot be null");
             Certificate = certificate ?? throw new InvalidDataException("certificate is a required property for Sender and cannot be null");
@@ -43,7 +43,7 @@ namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
         /// Сертификат
         /// </summary>
         /// <value>Сертификат</value>
-        public Certificate Certificate { get; set; }
+        public CertificateContent Certificate { get; set; }
 
         public override string ToString()
         {

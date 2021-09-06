@@ -97,7 +97,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         [Test]
         public async Task GenerateFufEnvdTest()
         {
-            var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new Certificate(CertificateContent)));
+            var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new CertificateContent(CertificateContent)));
             var response = await instance.GenerateFufEnvdAsync(generateFufRequest).ConfigureAwait(false);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
@@ -108,7 +108,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         [Test]
         public async Task GenerateFufNdsWithAttachmentsTest()
         {
-            var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new Certificate(CertificateContent)));
+            var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new CertificateContent(CertificateContent)));
             var response = await instance.GenerateFufNdsWithAttachmentsAsync(generateFufRequest).ConfigureAwait(false);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
@@ -119,7 +119,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         [Test]
         public async Task GenerateFufProfitTaxTest()
         {
-            var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new Certificate(CertificateContent)));
+            var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new CertificateContent(CertificateContent)));
             var response = await instance.GenerateFufProfitTaxAsync(generateFufRequest).ConfigureAwait(false);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
@@ -130,7 +130,7 @@ namespace Kontur.Extern.Client.Tests.OtherTests
         [Test]
         public async Task GenerateFufSschTest()
         {
-            var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new Certificate(CertificateContent)));
+            var generateFufRequest = new GenerateFufRequest(new Sender("183501166447", "525601001", "Romashka", new CertificateContent(CertificateContent)));
             var response = await instance.GenerateFufSschAsync(generateFufRequest).ConfigureAwait(false);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }

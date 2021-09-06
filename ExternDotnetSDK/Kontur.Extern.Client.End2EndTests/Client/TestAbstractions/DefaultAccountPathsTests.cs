@@ -23,7 +23,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestAbstractions
         }
 
         protected Account DefaultAccount { get; private set; }
-        protected CertificateDto AccountCertificate { get; private set; }
+        protected Certificate AccountCertificate { get; private set; }
 
         public async Task InitializeAsync()
         {

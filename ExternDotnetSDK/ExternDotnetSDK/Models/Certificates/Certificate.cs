@@ -6,7 +6,7 @@ namespace Kontur.Extern.Client.Models.Certificates
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]
-    public class CertificateDto
+    public class Certificate
     {
         /// <summary>
         /// ФИО владельца сертификата

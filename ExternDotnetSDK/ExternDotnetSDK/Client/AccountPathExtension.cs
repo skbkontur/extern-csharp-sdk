@@ -32,12 +32,12 @@ namespace Kontur.Extern.Client
         /// <param name="path"></param>
         /// <param name="forAllUsers">Получить сертификаты всех пользователей, которые имеют доступ к указанной учетной записи (только для администратора)</param>
         /// <returns></returns>
-        public static IEntityList<CertificateDto> Certificates(this in AccountPath path, bool? forAllUsers = null)
+        public static IEntityList<Certificate> Certificates(this in AccountPath path, bool? forAllUsers = null)
         {
             var apiClient = path.Services.Api;
             var accountId = path.AccountId;
             
-            return new EntityList<CertificateDto>(
+            return new EntityList<Certificate>(
                 async (skip, take, timeout) =>
                 {
                     int intSkip;

@@ -37,7 +37,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
         public Task<IReadOnlyList<Account>> LoadAllAccountsAsync() => 
             konturExtern.Accounts.List().SliceBy(100).LoadAllAsync();
 
-        public Task<IReadOnlyList<CertificateDto>> GetAccountCertificatesAsync(Guid accountId) => 
+        public Task<IReadOnlyList<Certificate>> GetAccountCertificatesAsync(Guid accountId) => 
             konturExtern.Accounts.WithId(accountId).Certificates().SliceBy(100).LoadAllAsync();
     }
 }

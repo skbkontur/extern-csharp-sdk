@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Kontur.Extern.Client.Tests.Infrastructure.ExternTestTools.Model
 {
-    public class Certificate
+    public class CertificateContent
     {
         /// <param name="content">Публичная часть сертификата в формате Base64</param>
-        public Certificate(string content)
+        public CertificateContent(string content)
         {
             if (string.IsNullOrEmpty(content))
                 throw new InvalidDataException("content is a required property for Certificate and cannot be null");

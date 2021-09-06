@@ -12,7 +12,7 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Certificates
         /// <summary>
         /// Данные сертификатов
         /// </summary>
-        public CertificateDto[] Certificates { get; set; }
+        public Certificate[] Certificates { get; set; }
         
         /// <summary>
         /// Общее количество сертификатов

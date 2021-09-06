@@ -22,7 +22,7 @@ namespace Kontur.Extern.Client.Tests.SwaggerMethodsTests.Tests
         private List<Document> docflowDocuments;
         private Document document;
         private Signature signature;
-        private CertificateDto certificate;
+        private Certificate certificate;
 
         [OneTimeSetUp]
         public override async Task SetUp()
