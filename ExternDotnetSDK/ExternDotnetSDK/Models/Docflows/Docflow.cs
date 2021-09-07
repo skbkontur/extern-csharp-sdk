@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.ApiTasks;
 using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Models.Docflows.Descriptions;
 using Kontur.Extern.Client.Models.Docflows.Documents;
