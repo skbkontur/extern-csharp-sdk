@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Vostok.ClusterClient.Core" Version="0.1.32" />
+    <PackageReference Include="Vostok.ClusterClient.Core" Version="0.1.36" />
     <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.21" />
   </ItemGroup>
 

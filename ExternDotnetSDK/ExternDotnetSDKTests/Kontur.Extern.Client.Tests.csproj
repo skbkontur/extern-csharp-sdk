@@ -15,9 +15,9 @@
     <PackageReference Include="NSubstitute" Version="4.2.2" />
     <PackageReference Include="nunit" Version="3.13.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
-    <PackageReference Include="Vostok.Logging.Console" Version="1.0.5" />
+    <PackageReference Include="Vostok.Logging.Console" Version="1.0.6" />
   </ItemGroup>
 
   <ItemGroup>

@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Vostok.ClusterClient.Transport" Version="0.1.17" />
+      <PackageReference Include="Vostok.ClusterClient.Transport" Version="0.1.19" />
     </ItemGroup>
 
 </Project>
