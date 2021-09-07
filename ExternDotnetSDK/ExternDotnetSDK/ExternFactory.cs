@@ -15,8 +15,8 @@ using Kontur.Extern.Client.Model.Configuration;
 using Kontur.Extern.Client.Models.ApiErrors;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives.Polling;
-using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Core.Model;
+using Vostok.Logging.Abstractions;
 
 namespace Kontur.Extern.Client
 {
@@ -26,32 +26,40 @@ namespace Kontur.Extern.Client
         
         public IExtern Create(
             ContentManagementOptions contentManagementOptions,
-            IClusterClient clusterClient, 
+            IClusterClientFactory clusterClientFactory, 
             IPollingStrategy pollingStrategy, 
             ICrypt cryptoProvider, 
             RequestTimeouts requestTimeouts, 
             IAuthenticationProvider authProvider, 
-            IJsonSerializer jsonSerializer)
+            IJsonSerializer jsonSerializer,
+            ILog log)
         {
-            var http = CreateHttp(clusterClient, requestTimeouts, authProvider, jsonSerializer);
+            var http = CreateHttp(clusterClientFactory, requestTimeouts, authProvider, jsonSerializer, log);
             var api = new KeApiClient(http);
             var services = new ExternClientServices(contentManagementOptions, http, jsonSerializer, api, pollingStrategy, authProvider, cryptoProvider);
             return new Extern(services);
         }
-
-        private HttpRequestsFactory CreateHttp(IClusterClient clusterClient, RequestTimeouts requestTimeouts, IAuthenticationProvider authenticationProvider, IJsonSerializer jsonSerializer)
+        
+        private HttpRequestsFactory CreateHttp(
+            IClusterClientFactory clusterClientFactory, 
+            RequestTimeouts requestTimeouts, 
+            IAuthenticationProvider authenticationProvider, 
+            IJsonSerializer jsonSerializer,
+            ILog log)
         {
             FailoverAsync? unauthorizedFailover =
                 EnableUnauthorizedFailover
                     ? (response, attempt) => AuthorizationErrorsFailover(requestTimeouts, authenticationProvider, response, attempt)
                     : null;
+            
             return new HttpRequestsFactory(
                 requestTimeouts,
                 (request, span) => AuthenticateRequestAsync(authenticationProvider, request, span),
                 HandleApiErrors,
                 unauthorizedFailover,
-                clusterClient,
-                jsonSerializer
+                clusterClientFactory,
+                jsonSerializer,
+                log
             );
             
             static async Task<Request> AuthenticateRequestAsync(IAuthenticationProvider authProvider, Request request, TimeSpan timeout)

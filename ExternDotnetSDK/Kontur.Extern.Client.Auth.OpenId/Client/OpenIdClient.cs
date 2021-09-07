@@ -14,7 +14,7 @@ using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies;
-using Vostok.Clusterclient.Core;
+using Vostok.Logging.Abstractions;
 
 namespace Kontur.Extern.Client.Auth.OpenId.Client
 {
@@ -24,15 +24,16 @@ namespace Kontur.Extern.Client.Auth.OpenId.Client
             .WithNamingPolicy(new SnakeCaseNamingPolicy())
             .CreateSerializer();
         
-        public static OpenIdClient Create(RequestTimeouts requestTimeouts, IClusterClient clusterClient)
+        public static OpenIdClient Create(RequestTimeouts requestTimeouts, IClusterClientFactory clusterClientFactory, ILog log)
         {
             var http = new HttpRequestsFactory(
                 requestTimeouts,
                 null,
                 HandleOpenIdErrorResponse,
                 null,
-                clusterClient,
-                Serializer
+                clusterClientFactory,
+                Serializer,
+                log
             );
             return new OpenIdClient(http);
         }

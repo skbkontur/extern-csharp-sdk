@@ -86,16 +86,12 @@ namespace Kontur.Extern.Client.Auth.OpenId.End2EndTests.Provider
             protected private IAuthenticationProvider CreateAuthProvider(Func<OpenIdAuthenticationProviderBuilder.SpecifyAuthStrategy, AuthTestData, OpenIdAuthenticationProviderBuilder.Configured> strategyFactory)
             {
                 var testData = AuthTestData.LoadFromJsonFile();
-                
-                var clusterClient = ClusterClientFactory.CreateTestClient(testData.OpenIdServer, log);
-                var authenticationProvider = new OpenIdAuthenticationProviderBuilder(log)
-                    .WithClusterClient(clusterClient)
+                return new OpenIdAuthenticationProviderBuilder(log)
+                    .WithClusterClient(new TestingClusterClientFactory(testData.OpenIdServer))
                     .WithClientIdentification(testData.ClientId, testData.ApiKey)
                     .WithAuthenticationStrategy(x => strategyFactory(x, testData))
                     .SubstituteStopwatch(stopwatchMock.StopwatchFactory)
                     .Build();
-
-                return authenticationProvider;
             }
         }
     }

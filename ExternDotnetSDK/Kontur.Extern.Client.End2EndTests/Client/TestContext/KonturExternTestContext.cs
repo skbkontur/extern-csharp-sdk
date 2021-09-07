@@ -59,7 +59,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
 
         private IExtern CreateExtern(Action<IExternBuilder>? overrideOptions = null)
         {
-            var clusterClient = ClusterClientFactory.CreateTestClient("https://extern-api.testkontur.ru/", log);
+            var clusterClient = new TestingClusterClientFactory("https://extern-api.testkontur.ru/");
             var externBuilder = ExternBuilder
                 .WithClusterClient(clusterClient, log)
                 .WithTestOpenIdAuthProvider(authTestData, credentials);

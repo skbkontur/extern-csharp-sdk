@@ -7,11 +7,10 @@ using Kontur.Extern.Client.Auth.Abstractions;
 using Kontur.Extern.Client.Auth.OpenId.Builder;
 using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Client.Http.ClusterClientAdapters;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Model.Configuration;
 using Kontur.Extern.Client.Primitives.Polling;
-using Vostok.Clusterclient.Core;
-using Vostok.Clusterclient.Transport;
 using Vostok.Commons.Time;
 using Vostok.Logging.Abstractions;
 
@@ -23,41 +22,26 @@ namespace Kontur.Extern.Client
         private static IPollingStrategy DefaultDelayPollingStrategy => new ConstantDelayPollingStrategy(5.Seconds());
         private static ICrypt DefaultCryptoProvider => new WinApiCrypt();
         
-        public static ISpecifyAuthProviderExternBuilder WithExternApiUrl(Uri url, ILog log)
-        {
-            if (url == null)
-                throw new ArgumentNullException(nameof(url));
-            if (!url.IsAbsoluteUri)
-                throw Errors.UrlShouldBeAbsolute(nameof(url), url);
+        public static ISpecifyAuthProviderExternBuilder WithExternApiUrl(Uri url, ILog log) => 
+            new ExternBuilder(new ExternalUrlClusterClientFactory(url), log);
 
-            var clusterClient = new ClusterClient(
-                log,
-                cfg =>
-                {
-                    cfg.SetupUniversalTransport();
-                    cfg.SetupExternalUrl(url);
-                    cfg.MaxReplicasUsedPerRequest = 1;
-                });
-            return new ExternBuilder(clusterClient, log);
-        }
-        
-        public static ISpecifyAuthProviderExternBuilder WithClusterClient(IClusterClient clusterClient, ILog log) => 
-            new ExternBuilder(clusterClient, log);
+        public static ISpecifyAuthProviderExternBuilder WithClusterClient(IClusterClientFactory clusterClientFactory, ILog log) => 
+            new ExternBuilder(clusterClientFactory, log);
 
         private ICrypt? cryptoProvider;
         private IPollingStrategy? pollingStrategy;
         private readonly ILog log;
-        private readonly IClusterClient clusterClient;
         private RequestTimeouts? requestTimeouts;
         // NOTE: nullable because here could be implementations of another auth providers 
         private OpenIdSetup? openIdAuthProviderSetup;
         private bool enableUnauthorizedFailover;
         private ContentManagementOptions? options;
+        private IClusterClientFactory clusterClientFactory;
 
-        private ExternBuilder(IClusterClient clusterClient, ILog log)
+        private ExternBuilder(IClusterClientFactory clusterClientFactory, ILog log)
         {
             this.log = log ?? throw new ArgumentNullException(nameof(log));
-            this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
+            this.clusterClientFactory = clusterClientFactory ?? throw new ArgumentNullException(nameof(clusterClientFactory));
         }
 
         public ExternBuilder WithCryptoProvider(ICrypt crypt)
@@ -108,12 +92,13 @@ namespace Kontur.Extern.Client
                 }
                 .Create(
                     options ?? ContentManagementOptions.Default,
-                    clusterClient,
+                    clusterClientFactory,
                     pollingStrategy ?? DefaultDelayPollingStrategy,
                     cryptoProvider ?? DefaultCryptoProvider,
                     requestTimeouts ?? new RequestTimeouts(),
                     authProvider,
-                    apiJsonSerializer
+                    apiJsonSerializer,
+                    log
                 );
         }
 

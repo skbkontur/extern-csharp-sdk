@@ -8,7 +8,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestAuthProvider
     {
         public static IExternBuilder WithTestOpenIdAuthProvider(this ISpecifyAuthProviderExternBuilder externBuilder, AuthTestData authTestData, Credentials credentials) =>
             externBuilder.WithOpenIdAuthProvider(builder => builder
-                .WithClusterClient(ClusterClientFactory.CreateTestClient(authTestData.OpenIdServer, builder.Log))
+                .WithClusterClient(new TestingClusterClientFactory(authTestData.OpenIdServer))
                 .WithClientIdentification(authTestData.ClientId, authTestData.ApiKey)
                 .WithAuthenticationByPassword(credentials.UserName, credentials.Password)
             );

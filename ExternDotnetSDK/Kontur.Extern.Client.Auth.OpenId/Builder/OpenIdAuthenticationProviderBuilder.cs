@@ -9,9 +9,8 @@ using Kontur.Extern.Client.Auth.OpenId.Provider;
 using Kontur.Extern.Client.Auth.OpenId.Provider.AuthStrategies;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Client.Common.Time;
+using Kontur.Extern.Client.Http.ClusterClientAdapters;
 using Kontur.Extern.Client.Http.Options;
-using Vostok.Clusterclient.Core;
-using Vostok.Clusterclient.Transport;
 using Vostok.Logging.Abstractions;
 
 namespace Kontur.Extern.Client.Auth.OpenId.Builder
@@ -31,32 +30,26 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
             if (!url.IsAbsoluteUri)
                 throw Errors.UrlShouldBeAbsolute(nameof(url), url);
 
-            var clusterClient = new ClusterClient(
-                Log,
-                cfg =>
-                {
-                    cfg.SetupUniversalTransport();
-                    cfg.SetupExternalUrl(url);
-                });
+            var clusterClient = new ExternalUrlClusterClientFactory(url);
             return new(Log, clusterClient, requestTimeouts);
         }
 
         [SuppressMessage("ReSharper", "ParameterHidesMember")]
-        public SpecifyClientIdentification WithClusterClient(IClusterClient clusterClient, RequestTimeouts? requestTimeouts = null) =>
-            new(Log, clusterClient, requestTimeouts);
+        public SpecifyClientIdentification WithClusterClient(IClusterClientFactory clusterClientFactory, RequestTimeouts? requestTimeouts = null) =>
+            new(Log, clusterClientFactory, requestTimeouts);
 
         [PublicAPI]
         public class SpecifyClientIdentification
         {
-            internal SpecifyClientIdentification(ILog log, IClusterClient clusterClient, RequestTimeouts? options)
+            internal SpecifyClientIdentification(ILog log, IClusterClientFactory clusterClientFactory, RequestTimeouts? options)
             {
                 Log = log;
-                ClusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
+                ClusterClientFactory = clusterClientFactory ?? throw new ArgumentNullException(nameof(clusterClientFactory));
                 RequestTimeouts = options;
             }
 
             internal RequestTimeouts? RequestTimeouts { get; }
-            internal IClusterClient ClusterClient { get; }
+            internal IClusterClientFactory ClusterClientFactory { get; }
             internal ILog Log { get; set; }
 
             [SuppressMessage("ReSharper", "ParameterHidesMember")]
@@ -84,12 +77,13 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
             }
 
             internal RequestTimeouts? RequestTimeouts => specifyClient.RequestTimeouts;
-            internal IClusterClient ClusterClient => specifyClient.ClusterClient;
+            internal IClusterClientFactory ClusterClientFactory => specifyClient.ClusterClientFactory;
+            internal ILog Log => specifyClient.Log;
             internal string ApiKey { get; }
             internal string ClientId { get; }
 
             public Configured WithAuthenticationByPassword(string username, string password) =>
-                new(new PasswordOpenIdAuthenticationStrategy(new Credentials(username, password)), this);
+                new(new PasswordOpenIdAuthenticationStrategy(new Credentials(username, password)), this, Log);
         }
 
         [PublicAPI]
@@ -99,11 +93,13 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
             private readonly SpecifyAuthStrategy specifyAuthStrategy;
             private TimeInterval? proactiveAuthTokenRefreshInterval;
             private IStopwatchFactory? stopwatchFactory;
+            private ILog log;
 
-            internal Configured(IOpenIdAuthenticationStrategy strategy, SpecifyAuthStrategy specifyAuthStrategy)
+            internal Configured(IOpenIdAuthenticationStrategy strategy, SpecifyAuthStrategy specifyAuthStrategy, ILog log)
             {
                 authenticationStrategy = strategy ?? throw new ArgumentNullException(nameof(strategy));
                 this.specifyAuthStrategy = specifyAuthStrategy;
+                this.log = log;
             }
 
             [SuppressMessage("ReSharper", "ParameterHidesMember")]
@@ -123,12 +119,12 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
             {
                 stopwatchFactory ??= new SystemStopwatchFactory();
                 var requestTimeouts = specifyAuthStrategy.RequestTimeouts ?? new RequestTimeouts();
-                var clusterClient = specifyAuthStrategy.ClusterClient;
+                var clusterClientFactory = specifyAuthStrategy.ClusterClientFactory;
                 var apiKey = specifyAuthStrategy.ApiKey;
                 var clientId = specifyAuthStrategy.ClientId;
 
                 var options = new OpenIdAuthenticationOptions(apiKey, clientId, proactiveAuthTokenRefreshInterval);
-                var openIdClient = OpenIdClient.Create(requestTimeouts, clusterClient);
+                var openIdClient = OpenIdClient.Create(requestTimeouts, clusterClientFactory, log);
                 return new OpenIdAuthenticationProvider(options, openIdClient, authenticationStrategy, stopwatchFactory);
             }
         }

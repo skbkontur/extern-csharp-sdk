@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Vostok.Clusterclient.Core;
@@ -27,38 +23,8 @@ namespace Kontur.Extern.Client.Testing.Fakes.Http
                     cfg.DefaultRequestStrategy = new SingleReplicaRequestStrategy();
                 })
         {
-            BaseUrl = baseUrl;
             this.httpMessages = httpMessages;
         }
-
-        public string BaseUrl { get; }
-        public Request? SentRequest => httpMessages.SentRequests.LastOrDefault();
-        public IEnumerable<Request> SentRequests => httpMessages.SentRequests;
-        
-        public string? SentContentString
-        {
-            get
-            {
-                var request = SentRequest;
-                if (request == null)
-                    return null;
-
-                if (request.Content != null)
-                    return request.Content.ToString();
-
-                if (request.StreamContent != null)
-                {
-                    var memoryStream = (MemoryStream) request.StreamContent.Stream;
-                    return Encoding.UTF8.GetString(memoryStream.ToArray());
-                }
-
-                return null;
-            }
-        }
-
-        public void SetResponseBody(byte[] body) => httpMessages.ReplaceResponseBody(body);
-
-        public void SetResponseCode(ResponseCode responseCode) => httpMessages.ReplaceResponseCode(responseCode);
 
         private class FakeTransport : ITransport
         {

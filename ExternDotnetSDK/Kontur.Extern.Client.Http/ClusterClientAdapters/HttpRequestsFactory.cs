@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
 using Vostok.Clusterclient.Core;
+using Vostok.Logging.Abstractions;
 using Request = Vostok.Clusterclient.Core.Model.Request;
 
 namespace Kontur.Extern.Client.Http.ClusterClientAdapters
@@ -16,21 +17,26 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
         private readonly FailoverAsync? failover;
         private readonly IClusterClient clusterClient;
         private readonly IJsonSerializer serializer;
-
+        
         public HttpRequestsFactory(
             RequestTimeouts requestTimeouts, 
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
             Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler,
             FailoverAsync? failover,
-            IClusterClient clusterClient,
-            IJsonSerializer serializer)
+            IClusterClientFactory clusterClientFactory,
+            IJsonSerializer serializer,
+            ILog log)
         {
+            if (clusterClientFactory is null)
+                throw new ArgumentNullException(nameof(clusterClientFactory));
+
             this.requestTimeouts = requestTimeouts ?? throw new ArgumentNullException(nameof(requestTimeouts));
             this.requestTransformAsync = requestTransformAsync;
             this.errorResponseHandler = errorResponseHandler;
             this.failover = failover;
-            this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            
+            clusterClient = clusterClientFactory.Create(log ?? throw new ArgumentNullException(nameof(log)));
         }
         
         public IHttpRequest Get(Uri url) => CreateHttpRequest(Request.Get(url));
