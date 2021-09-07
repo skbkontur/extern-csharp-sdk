@@ -49,11 +49,11 @@ namespace Kontur.Extern.Client.Auth.OpenId.End2EndTests.Client
             public void Should_fail_when_given_an_incorrect_client_id() => 
                 ShouldFail(RequestFactory.PasswordAuthenticationRequestWithIncorrectClientId());
 
-            private void ShouldFail(PasswordTokenRequest request)
+            private async Task ShouldFail(PasswordTokenRequest request)
             {
                 Func<Task> action = () => OpenIdClient.RequestTokenAsync(request);
 
-                var exception = action.Should().Throw<OpenIdException>().Which;
+                var exception = (await action.Should().ThrowAsync<OpenIdException>()).Which;
                 Console.WriteLine(exception);
             }
         }

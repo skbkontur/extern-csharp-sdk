@@ -21,11 +21,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         }
 
         [Fact]
-        public void Get_should_fail_if_the_account_is_not_exist()
+        public async Task Get_should_fail_if_the_account_is_not_exist()
         {
             Func<Task> func = async () => await Context.Accounts.GetAccount(Guid.Parse("6A4F8D06-1CBC-4E63-BC1F-DB5AD91A720D"));
 
-            func.Should().Throw<ApiException>();
+            await func.Should().ThrowAsync<ApiException>();
         }
 
         [Fact]
@@ -84,24 +84,24 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var account = await konturExtern.Accounts.CreateLegalEntityAccountAsync(LegalEntityInn.Parse("1754462785"), Kpp.Parse("515744582"), "org");
             await konturExtern.Accounts.WithId(account.Id).DeleteAsync();
 
-            ShouldFailWhenLoadAccounts();
+            await ShouldFailWhenLoadAccounts();
 
             await konturExtern.ReauthenticateAsync();
 
-            ShouldNotFailWhenLoadAccounts();
+            await ShouldNotFailWhenLoadAccounts();
 
-            void ShouldNotFailWhenLoadAccounts()
+            async Task ShouldNotFailWhenLoadAccounts()
             {
                 Func<Task> func = async () => await context.Accounts.LoadAllAccountsAsync();
 
-                func.Should().NotThrow();
+                await func.Should().NotThrowAsync();
             }
 
-            void ShouldFailWhenLoadAccounts()
+            async Task ShouldFailWhenLoadAccounts()
             {
                 Func<Task> func = async () => await context.Accounts.LoadAllAccountsAsync();
 
-                func.Should().Throw<ApiException>().Which.Message.Should().Contain("Unauthorized");
+                (await func.Should().ThrowAsync<ApiException>()).Which.Message.Should().Contain("Unauthorized");
             }
         }
 

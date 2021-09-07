@@ -132,14 +132,14 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         }
 
         [Test]
-        public void CreateSignedRequestAsync_should_fail_when_given_null_crypt()
+        public async Task CreateSignedRequestAsync_should_fail_when_given_null_crypt()
         {
             var contentId = Guid.NewGuid();
             var document = DraftDocument.WithNewId(CreateContent());
 
             Func<Task> func = async () => await document.As<IDraftDocument>().CreateSignedRequestAsync(contentId, null!);
 
-            func.Should().Throw<ArgumentException>();
+            await func.Should().ThrowAsync<ArgumentException>();
         }
         
         [Test]

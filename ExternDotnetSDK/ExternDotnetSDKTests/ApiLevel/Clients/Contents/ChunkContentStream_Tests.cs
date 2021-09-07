@@ -12,20 +12,20 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Contents
     public class ChunkContentStream_Tests
     {
         [Test]
-        public void Should_fail_when_given_null_part_download_function()
+        public async Task Should_fail_when_given_null_part_download_function()
         {
             Func<Task> func = async () => await ChunkContentStream.CreateAsync(null!, 100);
 
-            func.Should().Throw<ArgumentException>();
+            await func.Should().ThrowAsync<ArgumentException>();
         }
         
         [TestCase(0)]
         [TestCase(-1)]
-        public void Should_fail_when_given_invalid_part_size(int partSize)
+        public async Task Should_fail_when_given_invalid_part_size(int partSize)
         {
             Func<Task> func = async () => await ChunkContentStream.CreateAsync(_ => EmptyPartAsync(), partSize);
 
-            func.Should().Throw<ArgumentException>();
+            await func.Should().ThrowAsync<ArgumentException>();
 
             Task<(ArraySegment<byte> contentPart, long totalLength)> EmptyPartAsync() => 
                 Task.FromResult<(ArraySegment<byte> contentPart, long totalLength)>((new ArraySegment<byte>(Array.Empty<byte>()), 100));

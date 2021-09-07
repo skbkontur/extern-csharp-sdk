@@ -201,7 +201,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
             }
 
             [Fact]
-            public void Should_repeat_failed_requests_while_failover_prescribes_it()
+            public async Task Should_repeat_failed_requests_while_failover_prescribes_it()
             {
                 var expectedUrl = new Uri("https://test/some");
                 var http = CreateHttp(
@@ -213,7 +213,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
 
                 Func<Task> func = async () => await http.Get("/some").SendAsync();
 
-                func.Should().Throw<ContractException>();
+                await func.Should().ThrowAsync<ContractException>();
                 clusterClient.SentRequests.Should().HaveCount(4);
                 clusterClient.SentRequests.Should()
                     .OnlyContain(request => request.Url == expectedUrl &&
@@ -324,7 +324,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
             }
 
             [Fact]
-            public void Should_handle_wrong_response_by_the_given_error_handler()
+            public async Task Should_handle_wrong_response_by_the_given_error_handler()
             {
                 const string expectedErrorMessage = "Expected exception";
                 var http = CreateHttp(errorResponseHandler: response =>
@@ -337,11 +337,11 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 var request = MakeRequestForCommonTests(http);
                 Func<Task> sendRequest = async () => await request.SendAsync();
 
-                sendRequest.Should().NotThrow("the response is successful");
+                await sendRequest.Should().NotThrowAsync("the response is successful");
 
                 ClusterClient.SetResponseCode(ResponseCode.BadRequest);
-                sendRequest.Should()
-                    .Throw<ApplicationException>("the response is not successful and handled by the specified error response handler")
+                (await sendRequest.Should()
+                    .ThrowAsync<ApplicationException>("the response is not successful and handled by the specified error response handler"))
                     .WithMessage(expectedErrorMessage);
             }
             

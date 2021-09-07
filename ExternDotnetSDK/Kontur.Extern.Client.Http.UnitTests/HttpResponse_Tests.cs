@@ -17,13 +17,13 @@ namespace Kontur.Extern.Client.Http.UnitTests
     public class HttpResponse_Tests
     {
         [Fact]
-        public void GetBytes_should_fail_when_response_has_no_body()
+        public async Task GetBytes_should_fail_when_response_has_no_body()
         {
             var httpResponse = CreateHttpResponse();
 
             Func<Task> func = async () => await httpResponse.GetBytesAsync();
 
-            func.Should().Throw<ContractException>();
+            await func.Should().ThrowAsync<ContractException>();
         }
         
         [Fact]
@@ -60,13 +60,13 @@ namespace Kontur.Extern.Client.Http.UnitTests
         }
         
         [Fact]
-        public void GetBytesSegment_should_fail_when_response_has_no_body()
+        public async Task GetBytesSegment_should_fail_when_response_has_no_body()
         {
             var httpResponse = CreateHttpResponse();
 
             Func<Task> func = async () => await httpResponse.GetBytesSegmentAsync();
 
-            func.Should().Throw<ContractException>();
+            await func.Should().ThrowAsync<ContractException>();
         }
         
         [Fact]
@@ -126,14 +126,14 @@ namespace Kontur.Extern.Client.Http.UnitTests
         }
         
         [Fact]
-        public void GetMessage_should_fail_when_response_has_no_body()
+        public async Task GetMessage_should_fail_when_response_has_no_body()
         {
             var httpResponse = CreateHttpResponse(
                 headers: new Headers(1).Set(HeaderNames.ContentType, ContentTypes.Json));
 
             Func<Task> func = async () => await httpResponse.GetMessageAsync<Dto>();
 
-            func.Should().Throw<ContractException>();
+            await func.Should().ThrowAsync<ContractException>();
         }
         
         [Fact]
@@ -165,7 +165,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
         }
         
         [Fact]
-        public void GetMessage_should_fail_when_content_type_is_not_a_json()
+        public async Task GetMessage_should_fail_when_content_type_is_not_a_json()
         {
             const string json = @"{""data"":""some data""}";
             var httpResponse = CreateHttpResponse(
@@ -174,11 +174,11 @@ namespace Kontur.Extern.Client.Http.UnitTests
 
             Func<Task> func = async () => await httpResponse.GetMessageAsync<Dto>();
 
-            func.Should().Throw<ContractException>();
+            await func.Should().ThrowAsync<ContractException>();
         }
         
         [Fact]
-        public void GetMessage_should_fail_when_content_type_is_plain_text()
+        public async Task GetMessage_should_fail_when_content_type_is_plain_text()
         {
             const string json = @"{""data"":""some data""}";
             var httpResponse = CreateHttpResponse(
@@ -187,7 +187,7 @@ namespace Kontur.Extern.Client.Http.UnitTests
 
             Func<Task> func = async () => await httpResponse.GetMessageAsync<Dto>();
 
-            func.Should().Throw<ContractException>();
+            await func.Should().ThrowAsync<ContractException>();
         }
         
         [Fact]
@@ -218,14 +218,14 @@ namespace Kontur.Extern.Client.Http.UnitTests
         }
         
         [Fact]
-        public void GetMessage_should_fail_when_content_type_is_absent()
+        public async Task GetMessage_should_fail_when_content_type_is_absent()
         {
             const string json = @"{""data"":""some data""}";
             var httpResponse = CreateHttpResponse(ToContent(json));
 
             Func<Task> func = async () => await httpResponse.GetMessageAsync<Dto>();
 
-            func.Should().Throw<ContractException>();
+            await func.Should().ThrowAsync<ContractException>();
         }
         
         [Fact]
@@ -341,13 +341,13 @@ namespace Kontur.Extern.Client.Http.UnitTests
         }
         
         [Fact]
-        public void GetString_should_fail_when_response_has_no_body()
+        public async Task GetString_should_fail_when_response_has_no_body()
         {
             var httpResponse = CreateHttpResponse(headers: new Headers(1).Set(HeaderNames.ContentType, ContentTypes.Json));
 
             Func<Task> func = async () => await httpResponse.GetStringAsync();
 
-            func.Should().Throw<ContractException>();
+            await func.Should().ThrowAsync<ContractException>();
         }
         
         [Fact]

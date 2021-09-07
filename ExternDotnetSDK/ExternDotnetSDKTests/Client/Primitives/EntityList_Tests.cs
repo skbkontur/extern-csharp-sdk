@@ -105,14 +105,14 @@ namespace Kontur.Extern.Client.Tests.Client.Primitives
             }
 
             [Test]
-            public void LoadPageAsync_should_fail_when_given_negative_page_index()
+            public async Task LoadPageAsync_should_fail_when_given_negative_page_index()
             {
                 var theCase = new EntityListCase()
                     .MakeDataAvailable(100);
 
                 Func<Task> action = async () => await theCase.EntityList.Paging(3).LoadPageAsync(-1);
 
-                action.Should().Throw<ArgumentException>();
+                await action.Should().ThrowAsync<ArgumentException>();
             }
 
             [Test]

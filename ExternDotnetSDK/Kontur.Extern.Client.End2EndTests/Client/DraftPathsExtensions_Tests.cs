@@ -41,11 +41,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         }
         
         [Fact]
-        public void Get_should_fail_when_try_to_read_non_existent_draft()
+        public async Task Get_should_fail_when_try_to_read_non_existent_draft()
         {
             Func<Task> func = async () => await Context.Drafts.GetDraft(AccountId, Guid.NewGuid());
 
-            func.Should().Throw<ApiException>();
+            await func.Should().ThrowAsync<ApiException>();
         }
 
         [Fact]
@@ -143,7 +143,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
 
             Func<Task> func = async () => await Context.Drafts.GetDocument(AccountId, createdDraft.Id, Guid.NewGuid());
 
-            func.Should().Throw<ApiException>().And.Message.Should().Contain("NotFound");
+            (await func.Should().ThrowAsync<ApiException>()).And.Message.Should().Contain("NotFound");
         }
         
         [Fact]
@@ -270,7 +270,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
 
             Func<Task> func = async () => await Context.Drafts.GetDocument(AccountId, createdDraft.Id, documentId);
 
-            func.Should().Throw<ApiException>().And.Message.Should().Contain("NotFound");
+            (await func.Should().ThrowAsync<ApiException>()).And.Message.Should().Contain("NotFound");
         }
 
         [Fact]
@@ -363,7 +363,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
 
             Func<Task> func = async () => await Context.Drafts.SendDraftOrFail(AccountId, createdDraft.Id);
 
-            var exception = func.Should().Throw<ApiException>().Which;
+            var exception = (await func.Should().ThrowAsync<ApiException>()).Which;
             exception.Message.Should().Contain(document.DocumentId.ToString()).And.Contain(createdDraft.Id.ToString());
             
             output.WriteLine("Thrown error:");

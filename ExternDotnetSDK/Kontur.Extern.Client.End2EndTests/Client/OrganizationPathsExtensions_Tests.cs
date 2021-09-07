@@ -24,11 +24,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         }
 
         [Fact]
-        public void Get_should_fail_if_the_organization_is_not_exist()
+        public async Task Get_should_fail_if_the_organization_is_not_exist()
         {
             Func<Task> func = async () => await Context.Organizations.GetOrganization(AccountId, Guid.NewGuid());
 
-            func.Should().Throw<ApiException>();
+            await func.Should().ThrowAsync<ApiException>();
         }
 
         [Fact]

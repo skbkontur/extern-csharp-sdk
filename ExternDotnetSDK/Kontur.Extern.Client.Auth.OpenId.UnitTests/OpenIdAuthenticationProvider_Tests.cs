@@ -50,14 +50,14 @@ namespace Kontur.Extern.Client.Auth.OpenId.UnitTests
         }
 
         [Fact]
-        public void Should_fail_when_the_authentication_token_has_expired()
+        public async Task Should_fail_when_the_authentication_token_has_expired()
         {
             authStrategyMock.AuthTokenExpiresInSeconds(10);
             stopwatchMock.ActiveStopwatchAdvancedTo(11.Seconds());
             
             Func<Task> action = () => authenticationProvider.AuthenticateAsync();
 
-            action.Should().Throw<OpenIdException>();
+            await action.Should().ThrowAsync<OpenIdException>();
         }
 
         [Fact]
@@ -157,7 +157,7 @@ namespace Kontur.Extern.Client.Auth.OpenId.UnitTests
 
             Func<Task> action = () => authenticationProvider.AuthenticateAsync();
 
-            action.Should().Throw<OpenIdException>();
+            await action.Should().ThrowAsync<OpenIdException>();
         }
 
         [Fact]

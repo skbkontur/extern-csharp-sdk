@@ -17,11 +17,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         }
 
         [Fact]
-        public void Get_should_fail_when_try_to_read_non_existent_docflow()
+        public async Task Get_should_fail_when_try_to_read_non_existent_docflow()
         {
             Func<Task> func = async () => await Context.Docflows.GetDocflow(AccountId, Guid.NewGuid());
 
-            func.Should().Throw<ApiException>();
+            await func.Should().ThrowAsync<ApiException>();
         }
 
         [Fact]
