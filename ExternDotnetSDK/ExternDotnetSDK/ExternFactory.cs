@@ -2,7 +2,9 @@
 using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel;
+using Kontur.Extern.Client.ApiLevel.Json;
 using Kontur.Extern.Client.Auth.Abstractions;
+using Kontur.Extern.Client.Auth.OpenId.Builder;
 using Kontur.Extern.Client.Authentication;
 using Kontur.Extern.Client.Common;
 using Kontur.Extern.Client.Cryptography;
@@ -16,24 +18,34 @@ using Kontur.Extern.Client.Models.ApiErrors;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives.Polling;
 using Vostok.Clusterclient.Core.Model;
+using Vostok.Commons.Time;
 using Vostok.Logging.Abstractions;
 
 namespace Kontur.Extern.Client
 {
     internal class ExternFactory
     {
+        private static IPollingStrategy DefaultDelayPollingStrategy => new ConstantDelayPollingStrategy(5.Seconds());
+        private static ICrypt DefaultCryptoProvider => new WinApiCrypt();
+        
         public bool EnableUnauthorizedFailover { get; set; }
         
         public IExtern Create(
-            ContentManagementOptions contentManagementOptions,
+            ContentManagementOptions? contentManagementOptions,
             IClusterClientFactory clusterClientFactory, 
-            IPollingStrategy pollingStrategy, 
-            ICrypt cryptoProvider, 
-            RequestTimeouts requestTimeouts, 
-            IAuthenticationProvider authProvider, 
-            IJsonSerializer jsonSerializer,
+            IPollingStrategy? pollingStrategy, 
+            ICrypt? cryptoProvider, 
+            RequestTimeouts? requestTimeouts, 
+            OpenIdSetup? openIdSetup, 
             ILog log)
         {
+            contentManagementOptions ??= ContentManagementOptions.Default;
+            pollingStrategy ??= DefaultDelayPollingStrategy;
+            cryptoProvider ??= DefaultCryptoProvider;
+            requestTimeouts ??=  new RequestTimeouts();
+            
+            var authProvider = CreateAuthProvider(openIdSetup, log);
+            var jsonSerializer = JsonSerializerFactory.CreateJsonSerializer();
             var http = CreateHttp(clusterClientFactory, requestTimeouts, authProvider, jsonSerializer, log);
             var api = new KeApiClient(http);
             var services = new ExternClientServices(contentManagementOptions, http, jsonSerializer, api, pollingStrategy, authProvider, cryptoProvider);
@@ -94,6 +106,18 @@ namespace Kontur.Extern.Client
                         return FailoverDecision.LetItFail;
                 }
             }
+        }
+        
+        private IAuthenticationProvider CreateAuthProvider(OpenIdSetup? openIdSetup, ILog log)
+        {
+            if (openIdSetup is not null)
+            {
+                var builder = new OpenIdAuthenticationProviderBuilder(log);
+                var configuredBuilder = openIdSetup(builder);
+                return configuredBuilder.Build();
+            }
+
+            throw Errors.TheAuthProviderNotSpecifiedOrUnsupported();
         }
 
         private class Extern : IExtern

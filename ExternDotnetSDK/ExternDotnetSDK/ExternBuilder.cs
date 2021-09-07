@@ -1,12 +1,7 @@
 #nullable enable
 using System;
-using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Json;
-using Kontur.Extern.Client.Auth.Abstractions;
-using Kontur.Extern.Client.Auth.OpenId.Builder;
 using Kontur.Extern.Client.Cryptography;
-using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http.ClusterClientAdapters;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Model.Configuration;
@@ -32,10 +27,9 @@ namespace Kontur.Extern.Client
         private IPollingStrategy? pollingStrategy;
         private readonly ILog log;
         private RequestTimeouts? requestTimeouts;
-        // NOTE: nullable because here could be implementations of another auth providers 
         private OpenIdSetup? openIdAuthProviderSetup;
         private bool enableUnauthorizedFailover;
-        private ContentManagementOptions? options;
+        private ContentManagementOptions? contentManagementOptions;
         private IClusterClientFactory clusterClientFactory;
 
         private ExternBuilder(IClusterClientFactory clusterClientFactory, ILog log)
@@ -74,44 +68,27 @@ namespace Kontur.Extern.Client
             return this;
         }
 
-        [SuppressMessage("ReSharper", "ParameterHidesMember")]
         public IExternBuilder OverrideContentsOptions(ContentManagementOptions options)
         {
-            this.options = options ?? throw new ArgumentNullException(nameof(options));
+            contentManagementOptions = options ?? throw new ArgumentNullException(nameof(options));
             return this;
         }
 
         public IExtern Create()
         {
-            var apiJsonSerializer = JsonSerializerFactory.CreateJsonSerializer();
-            var authProvider = CreateAuthProvider();
-
             return new ExternFactory
                 {
                     EnableUnauthorizedFailover = enableUnauthorizedFailover
                 }
                 .Create(
-                    options ?? ContentManagementOptions.Default,
+                    contentManagementOptions,
                     clusterClientFactory,
-                    pollingStrategy ?? DefaultDelayPollingStrategy,
-                    cryptoProvider ?? DefaultCryptoProvider,
-                    requestTimeouts ?? new RequestTimeouts(),
-                    authProvider,
-                    apiJsonSerializer,
+                    pollingStrategy,
+                    cryptoProvider,
+                    requestTimeouts,
+                    openIdAuthProviderSetup,
                     log
                 );
-        }
-
-        private IAuthenticationProvider CreateAuthProvider()
-        {
-            if (openIdAuthProviderSetup != null)
-            {
-                var builder = new OpenIdAuthenticationProviderBuilder(log);
-                var configuredBuilder = openIdAuthProviderSetup(builder);
-                return configuredBuilder.Build();
-            }
-
-            throw Errors.TheAuthProviderNotSpecifiedOrUnsupported();
         }
     }
 }
