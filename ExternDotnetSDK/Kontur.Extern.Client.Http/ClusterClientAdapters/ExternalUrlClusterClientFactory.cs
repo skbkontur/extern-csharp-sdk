@@ -20,13 +20,19 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             this.externalUrl = externalUrl;
         }
 
-        public IClusterClient Create(ILog log) => new ClusterClient(
-            log,
-            cfg =>
-            {
-                cfg.SetupUniversalTransport();
-                cfg.SetupExternalUrl(externalUrl);
-                cfg.MaxReplicasUsedPerRequest = 1;
-            });
+        public IClusterClient Create(ILog log)
+        {
+            return new ClusterClient(
+                log,
+                cfg =>
+                {
+                    cfg.SetupUniversalTransport();
+                    cfg.SetupExternalUrl(externalUrl);
+                    cfg.MaxReplicasUsedPerRequest = 1;
+                    
+                    cfg.Logging.LogReplicaRequests = false;
+                    cfg.Logging.LogResultDetails = false;
+                });
+        }
     }
 }
