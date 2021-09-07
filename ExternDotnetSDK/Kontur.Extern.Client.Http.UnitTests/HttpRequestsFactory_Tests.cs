@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Http.ClusterClientAdapters;
+using Kontur.Extern.Client.Http.Configurations;
 using Kontur.Extern.Client.Http.Exceptions;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
@@ -191,17 +192,17 @@ namespace Kontur.Extern.Client.Http.UnitTests
         
         public class Failover
         {
-            private readonly FakeClusterClientFactory clusterClientFactory;
-            private readonly FakeClusterClientFactory.FakeClusterClientSetup clusterClientSetup;
-            private readonly FakeClusterClientFactory.FakeClusterClientVerify clusterClientVerify;
+            private readonly FakeClusterClient fakeClient;
+            private readonly FakeClusterClientSetup fakeClientSetup;
+            private readonly FakeClusterClientVerify fakeClientVerify;
             private readonly ILog log;
 
             public Failover(ITestOutputHelper output)
             {
                 log = new TestLog(output);
-                clusterClientFactory = CreateFakeClusterClientFactory();
-                clusterClientSetup = clusterClientFactory.Setup;
-                clusterClientVerify = clusterClientFactory.Verify;
+                fakeClient = CreateFakeClusterClient();
+                fakeClientSetup = fakeClient.Setup;
+                fakeClientVerify = fakeClient.Verify;
             }
 
             [Fact]
@@ -213,13 +214,13 @@ namespace Kontur.Extern.Client.Http.UnitTests
                         ? FailoverDecision.RepeatRequest
                         : FailoverDecision.LetItFail)
                 );
-                clusterClientSetup.SetResponseCode(ResponseCode.BadRequest);
+                fakeClientSetup.SetResponseCode(ResponseCode.BadRequest);
 
                 Func<Task> func = async () => await http.Get("/some").SendAsync();
 
                 await func.Should().ThrowAsync<ContractException>();
-                clusterClientVerify.SentRequests.Should().HaveCount(4);
-                clusterClientVerify.SentRequests.Should()
+                fakeClientVerify.SentRequests.Should().HaveCount(4);
+                fakeClientVerify.SentRequests.Should()
                     .OnlyContain(request => request.Url == expectedUrl &&
                                             request.Method == RequestMethods.Get);
             }
@@ -231,12 +232,12 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 {
                     if (attempt >= 3)
                     {
-                        clusterClientSetup.SetResponseCode(ResponseCode.Ok);
+                        fakeClientSetup.SetResponseCode(ResponseCode.Ok);
                     }
                     return Task.FromResult(FailoverDecision.RepeatRequest);
                 });
                 
-                clusterClientSetup.SetResponseCode(ResponseCode.BadRequest);
+                fakeClientSetup.SetResponseCode(ResponseCode.BadRequest);
 
                 var response = await http.Post("/some").SendAsync();
 
@@ -248,22 +249,22 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
                 Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler = null)
             {
-                return HttpRequestsFactory_Tests.CreateHttp(clusterClientFactory, log, requestTransformAsync, errorResponseHandler, failover);
+                return HttpRequestsFactory_Tests.CreateHttp(fakeClient.Configuration, log, requestTransformAsync, errorResponseHandler, failover);
             }
         }
 
         public class ContentRange
         {
             private readonly ILog log;
-            private readonly FakeClusterClientFactory clusterClientFactory;
+            private readonly FakeClusterClient fakeClient;
 
             public ContentRange(ITestOutputHelper output)
             {
                 log = new TestLog(output);
-                clusterClientFactory = CreateFakeClusterClientFactory();
+                fakeClient = CreateFakeClusterClient();
             }
 
-            private FakeClusterClientFactory.FakeClusterClientVerify ClusterClientVerify => clusterClientFactory.Verify;
+            private FakeClusterClientVerify ClusterClientVerify => fakeClient.Verify;
 
             [Fact]
             public async Task Should_set_content_type_range_into_request()
@@ -317,22 +318,22 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 action.Should().Throw<ArgumentException>();
             }
 
-            private HttpRequestsFactory CreateHttp() => HttpRequestsFactory_Tests.CreateHttp(clusterClientFactory, log);
+            private HttpRequestsFactory CreateHttp() => HttpRequestsFactory_Tests.CreateHttp(fakeClient.Configuration, log);
         }
 
         public abstract class VerbTestBase
         {
             private readonly TestLog log;
-            private readonly FakeClusterClientFactory clusterClientFactory;
+            private readonly FakeClusterClient fakeClient;
 
             protected VerbTestBase(ITestOutputHelper output)
             {
                 log = new TestLog(output);
-                clusterClientFactory = CreateFakeClusterClientFactory();
+                fakeClient = CreateFakeClusterClient();
             }
             
-            protected FakeClusterClientFactory.FakeClusterClientVerify ClusterClientVerify => clusterClientFactory.Verify;
-            protected FakeClusterClientFactory.FakeClusterClientSetup ClusterClientSetup => clusterClientFactory.Setup;
+            protected FakeClusterClientVerify ClusterClientVerify => fakeClient.Verify;
+            protected FakeClusterClientSetup ClusterClientSetup => fakeClient.Setup;
 
             [Fact]
             public async Task Should_handle_wrong_response_by_the_given_error_handler()
@@ -406,32 +407,34 @@ namespace Kontur.Extern.Client.Http.UnitTests
                 Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
                 Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler = null)
             {
-                return HttpRequestsFactory_Tests.CreateHttp(clusterClientFactory, log, requestTransformAsync, errorResponseHandler);
+                return HttpRequestsFactory_Tests.CreateHttp(fakeClient.Configuration, log, requestTransformAsync, errorResponseHandler);
             }
         }
 
         private static HttpRequestsFactory CreateHttp(
-            IClusterClientFactory clusterClientFactory,
+            IHttpClientConfiguration configuration,
             ILog log,
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
             Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler = null,
             FailoverAsync? failover = null)
         {
             return new(
+                configuration,
                 new RequestTimeouts(),
                 requestTransformAsync,
                 errorResponseHandler,
                 failover,
-                clusterClientFactory,
                 new SystemTextJsonSerializerFactory().CreateSerializer(),
                 log
             );
         }
 
-        private static FakeClusterClientFactory CreateFakeClusterClientFactory() =>
-            FakeClusterClientFactory
-                .WithBaseUrl("https://test/")
-                .WithJsonResponse(ResponseCode.Ok, @"{""Data"": ""expected data""}");
+        private static FakeClusterClient CreateFakeClusterClient()
+        {
+            var client = new FakeClusterClient();
+            client.Setup.SetJsonResponse(ResponseCode.Ok, @"{""Data"": ""expected data""}");
+            return client;
+        }
 
         private class ResponseDto
         {

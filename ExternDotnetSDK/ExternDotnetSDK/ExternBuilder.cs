@@ -2,7 +2,7 @@
 using System;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Cryptography;
-using Kontur.Extern.Client.Http.ClusterClientAdapters;
+using Kontur.Extern.Client.Http.Configurations;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Model.Configuration;
 using Kontur.Extern.Client.Primitives.Polling;
@@ -18,10 +18,10 @@ namespace Kontur.Extern.Client
         private static ICrypt DefaultCryptoProvider => new WinApiCrypt();
         
         public static ISpecifyAuthProviderExternBuilder WithExternApiUrl(Uri url, ILog log) => 
-            new ExternBuilder(new ExternalUrlClusterClientFactory(url), log);
+            WithHttpConfiguration(new ExternalUrlHttpClientConfiguration(url), log);
 
-        public static ISpecifyAuthProviderExternBuilder WithClusterClient(IClusterClientFactory clusterClientFactory, ILog log) => 
-            new ExternBuilder(clusterClientFactory, log);
+        public static ISpecifyAuthProviderExternBuilder WithHttpConfiguration(IHttpClientConfiguration clientConfiguration, ILog log) => 
+            new ExternBuilder(clientConfiguration, log);
 
         private ICrypt? cryptoProvider;
         private IPollingStrategy? pollingStrategy;
@@ -30,12 +30,12 @@ namespace Kontur.Extern.Client
         private OpenIdSetup? openIdAuthProviderSetup;
         private bool enableUnauthorizedFailover;
         private ContentManagementOptions? contentManagementOptions;
-        private IClusterClientFactory clusterClientFactory;
+        private readonly IHttpClientConfiguration clientConfiguration;
 
-        private ExternBuilder(IClusterClientFactory clusterClientFactory, ILog log)
+        private ExternBuilder(IHttpClientConfiguration clientConfiguration, ILog log)
         {
             this.log = log ?? throw new ArgumentNullException(nameof(log));
-            this.clusterClientFactory = clusterClientFactory ?? throw new ArgumentNullException(nameof(clusterClientFactory));
+            this.clientConfiguration = clientConfiguration ?? throw new ArgumentNullException(nameof(clientConfiguration));
         }
 
         public ExternBuilder WithCryptoProvider(ICrypt crypt)
@@ -82,7 +82,7 @@ namespace Kontur.Extern.Client
                 }
                 .Create(
                     contentManagementOptions,
-                    clusterClientFactory,
+                    clientConfiguration,
                     pollingStrategy,
                     cryptoProvider,
                     requestTimeouts,

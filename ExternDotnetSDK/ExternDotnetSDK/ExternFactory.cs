@@ -11,6 +11,7 @@ using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http;
 using Kontur.Extern.Client.Http.ClusterClientAdapters;
+using Kontur.Extern.Client.Http.Configurations;
 using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Model.Configuration;
@@ -32,7 +33,7 @@ namespace Kontur.Extern.Client
         
         public IExtern Create(
             ContentManagementOptions? contentManagementOptions,
-            IClusterClientFactory clusterClientFactory, 
+            IHttpClientConfiguration clientConfiguration, 
             IPollingStrategy? pollingStrategy, 
             ICrypt? cryptoProvider, 
             RequestTimeouts? requestTimeouts, 
@@ -46,14 +47,14 @@ namespace Kontur.Extern.Client
             
             var authProvider = CreateAuthProvider(openIdSetup, log);
             var jsonSerializer = JsonSerializerFactory.CreateJsonSerializer();
-            var http = CreateHttp(clusterClientFactory, requestTimeouts, authProvider, jsonSerializer, log);
+            var http = CreateHttp(clientConfiguration, requestTimeouts, authProvider, jsonSerializer, log);
             var api = new KeApiClient(http);
             var services = new ExternClientServices(contentManagementOptions, http, jsonSerializer, api, pollingStrategy, authProvider, cryptoProvider);
             return new Extern(services);
         }
         
         private HttpRequestsFactory CreateHttp(
-            IClusterClientFactory clusterClientFactory, 
+            IHttpClientConfiguration clientConfiguration, 
             RequestTimeouts requestTimeouts, 
             IAuthenticationProvider authenticationProvider, 
             IJsonSerializer jsonSerializer,
@@ -65,11 +66,11 @@ namespace Kontur.Extern.Client
                     : null;
             
             return new HttpRequestsFactory(
+                clientConfiguration,
                 requestTimeouts,
                 (request, span) => AuthenticateRequestAsync(authenticationProvider, request, span),
                 HandleApiErrors,
                 unauthorizedFailover,
-                clusterClientFactory,
                 jsonSerializer,
                 log
             );

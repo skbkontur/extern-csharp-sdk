@@ -7,10 +7,7 @@ namespace Kontur.Extern.Client.Auth.OpenId.End2EndTests.TestFactories
 {
     internal static class OpenIdClientFactory
     {
-        public static OpenIdClient CreateTestClient(string openIdServerUrl, ILog log)
-        {
-            var clusterClientFactory = new TestingClusterClientFactory(openIdServerUrl);
-            return OpenIdClient.Create(new RequestTimeouts(), clusterClientFactory, log);
-        }
+        public static OpenIdClient CreateTestClient(string openIdServerUrl, ILog log) => 
+            OpenIdClient.Create(new RequestTimeouts(), new TestingHttpClientConfiguration(openIdServerUrl), log);
     }
 }

@@ -9,7 +9,7 @@ using Kontur.Extern.Client.Auth.OpenId.Provider;
 using Kontur.Extern.Client.Auth.OpenId.Provider.AuthStrategies;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Client.Common.Time;
-using Kontur.Extern.Client.Http.ClusterClientAdapters;
+using Kontur.Extern.Client.Http.Configurations;
 using Kontur.Extern.Client.Http.Options;
 using Vostok.Logging.Abstractions;
 
@@ -25,31 +25,25 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
 
         public SpecifyClientIdentification WithExternApiUrl(Uri url, RequestTimeouts? requestTimeouts = null)
         {
-            if (url == null)
-                throw new ArgumentNullException(nameof(url));
-            if (!url.IsAbsoluteUri)
-                throw Errors.UrlShouldBeAbsolute(nameof(url), url);
-
-            var clusterClient = new ExternalUrlClusterClientFactory(url);
-            return new(Log, clusterClient, requestTimeouts);
+            return WithHttpConfiguration(new ExternalUrlHttpClientConfiguration(url), requestTimeouts);
         }
 
         [SuppressMessage("ReSharper", "ParameterHidesMember")]
-        public SpecifyClientIdentification WithClusterClient(IClusterClientFactory clusterClientFactory, RequestTimeouts? requestTimeouts = null) =>
-            new(Log, clusterClientFactory, requestTimeouts);
+        public SpecifyClientIdentification WithHttpConfiguration(IHttpClientConfiguration clientConfiguration, RequestTimeouts? requestTimeouts = null) =>
+            new(Log, clientConfiguration, requestTimeouts);
 
         [PublicAPI]
         public class SpecifyClientIdentification
         {
-            internal SpecifyClientIdentification(ILog log, IClusterClientFactory clusterClientFactory, RequestTimeouts? options)
+            internal SpecifyClientIdentification(ILog log, IHttpClientConfiguration clientConfiguration, RequestTimeouts? options)
             {
                 Log = log;
-                ClusterClientFactory = clusterClientFactory ?? throw new ArgumentNullException(nameof(clusterClientFactory));
+                ClientConfiguration = clientConfiguration ?? throw new ArgumentNullException(nameof(clientConfiguration));
                 RequestTimeouts = options;
             }
 
             internal RequestTimeouts? RequestTimeouts { get; }
-            internal IClusterClientFactory ClusterClientFactory { get; }
+            internal IHttpClientConfiguration ClientConfiguration { get; }
             internal ILog Log { get; set; }
 
             [SuppressMessage("ReSharper", "ParameterHidesMember")]
@@ -77,7 +71,7 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
             }
 
             internal RequestTimeouts? RequestTimeouts => specifyClient.RequestTimeouts;
-            internal IClusterClientFactory ClusterClientFactory => specifyClient.ClusterClientFactory;
+            internal IHttpClientConfiguration ClientConfiguration => specifyClient.ClientConfiguration;
             internal ILog Log => specifyClient.Log;
             internal string ApiKey { get; }
             internal string ClientId { get; }
@@ -119,12 +113,12 @@ namespace Kontur.Extern.Client.Auth.OpenId.Builder
             {
                 stopwatchFactory ??= new SystemStopwatchFactory();
                 var requestTimeouts = specifyAuthStrategy.RequestTimeouts ?? new RequestTimeouts();
-                var clusterClientFactory = specifyAuthStrategy.ClusterClientFactory;
+                var clientConfiguration = specifyAuthStrategy.ClientConfiguration;
                 var apiKey = specifyAuthStrategy.ApiKey;
                 var clientId = specifyAuthStrategy.ClientId;
 
                 var options = new OpenIdAuthenticationOptions(apiKey, clientId, proactiveAuthTokenRefreshInterval);
-                var openIdClient = OpenIdClient.Create(requestTimeouts, clusterClientFactory, log);
+                var openIdClient = OpenIdClient.Create(requestTimeouts, clientConfiguration, log);
                 return new OpenIdAuthenticationProvider(options, openIdClient, authenticationStrategy, stopwatchFactory);
             }
         }

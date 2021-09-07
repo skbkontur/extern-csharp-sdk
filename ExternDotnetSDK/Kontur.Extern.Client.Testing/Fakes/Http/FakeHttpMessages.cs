@@ -17,6 +17,7 @@ namespace Kontur.Extern.Client.Testing.Fakes.Http
             get => expectedResponse ?? throw new ArgumentNullException(nameof(expectedResponse));
             private set => expectedResponse = value;
         }
+        
         public IEnumerable<Request> SentRequests => sentRequests;
 
         public void ReplaceResponseBody(byte[] body) => ExpectedResponse = new Response(ExpectedResponse.Code, new Content(body), ExpectedResponse.Headers);

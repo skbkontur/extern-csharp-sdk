@@ -59,9 +59,9 @@ namespace Kontur.Extern.Client.End2EndTests.Client.TestContext
 
         private IExtern CreateExtern(Action<IExternBuilder>? overrideOptions = null)
         {
-            var clusterClient = new TestingClusterClientFactory("https://extern-api.testkontur.ru/");
+            var clientConfiguration = new TestingHttpClientConfiguration("https://extern-api.testkontur.ru/");
             var externBuilder = ExternBuilder
-                .WithClusterClient(clusterClient, log)
+                .WithHttpConfiguration(clientConfiguration, log)
                 .WithTestOpenIdAuthProvider(authTestData, credentials);
 
             externBuilder.TryResolveUnauthorizedResponsesAutomatically();

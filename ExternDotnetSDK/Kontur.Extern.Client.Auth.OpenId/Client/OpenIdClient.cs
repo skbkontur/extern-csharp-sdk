@@ -8,6 +8,7 @@ using Kontur.Extern.Client.Auth.OpenId.Exceptions;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Client.Http;
 using Kontur.Extern.Client.Http.ClusterClientAdapters;
+using Kontur.Extern.Client.Http.Configurations;
 using Kontur.Extern.Client.Http.Constants;
 using Kontur.Extern.Client.Http.Contents;
 using Kontur.Extern.Client.Http.Options;
@@ -24,14 +25,14 @@ namespace Kontur.Extern.Client.Auth.OpenId.Client
             .WithNamingPolicy(new SnakeCaseNamingPolicy())
             .CreateSerializer();
         
-        public static OpenIdClient Create(RequestTimeouts requestTimeouts, IClusterClientFactory clusterClientFactory, ILog log)
+        public static OpenIdClient Create(RequestTimeouts requestTimeouts, IHttpClientConfiguration clientConfiguration, ILog log)
         {
             var http = new HttpRequestsFactory(
+                clientConfiguration,
                 requestTimeouts,
                 null,
                 HandleOpenIdErrorResponse,
                 null,
-                clusterClientFactory,
                 Serializer,
                 log
             );
