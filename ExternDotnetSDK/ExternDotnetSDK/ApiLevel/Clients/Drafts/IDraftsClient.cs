@@ -52,8 +52,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="draftId">Идентификатор черновика</param>
         /// <param name="timeout"></param>
-        /// <returns></returns>
-        Task DeleteDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
+        /// <returns>Возвращает true, если черновик успешно удален; false, если черновик не существует.</returns>
+        Task<bool> DeleteDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Получение метаинформации черновика
@@ -101,8 +101,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         /// <param name="draftId">Идентификатор черновика</param>
         /// <param name="documentId">Идентификатор документа</param>
         /// <param name="timeout"></param>
-        /// <returns></returns>
-        Task DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null);
+        /// <returns>Возвращает true, если документ успешно удален; false, если документ не существует.</returns>
+        Task<bool> DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Редактирование документа
@@ -180,8 +180,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         /// <param name="documentId">Идентификатор документа</param>
         /// <param name="signatureId">Идентификатор подписи</param>
         /// <param name="timeout"></param>
-        /// <returns></returns>
-        Task DeleteSignatureAsync(
+        /// <returns>Возвращает true, если подпись успешно удален; false, если подпись не существует.</returns>
+        Task<bool> DeleteSignatureAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,

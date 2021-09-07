@@ -40,8 +40,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="draftsBuilderId">Идентификатор DraftsBuilder</param>
         /// <param name="timeout"></param>
-        /// <returns></returns>
-        Task DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null);
+        /// <returns>Возвращает true, если конструктор черновика успешно удален; false, если конструктор черновика не существует.</returns>
+        Task<bool> DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Получение метаинформации DraftsBuilder
@@ -148,8 +148,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders
         /// <param name="draftsBuilderId">Идентификатор DraftsBuilder</param>
         /// <param name="documentId">Идентификатор документа</param>
         /// <param name="timeout"></param>
-        /// <returns></returns>
-        Task DeleteDocumentAsync(Guid accountId, Guid draftsBuilderId, Guid documentId, TimeSpan? timeout = null);
+        /// <returns>Возвращает true, если документ успешно удален; false, если документ не существует.</returns>
+        Task<bool> DeleteDocumentAsync(Guid accountId, Guid draftsBuilderId, Guid documentId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Получение метаинформации документа
@@ -253,8 +253,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders
         /// <param name="documentId">Идентификатор документа в DraftsBuilder</param>
         /// <param name="fileId">Идентификатор файла в документе</param>
         /// <param name="timeout"></param>
-        /// <returns></returns>
-        Task DeleteFileAsync(
+        /// <returns>Возвращает true, если файл успешно удален; false, если файл не существует.</returns>
+        Task<bool> DeleteFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,

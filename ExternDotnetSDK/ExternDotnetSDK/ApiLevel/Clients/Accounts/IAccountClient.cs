@@ -42,7 +42,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Accounts
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="timeout"></param>
-        Task DeleteAccountAsync(Guid accountId, TimeSpan? timeout = null);
+        /// <returns>Возвращает true, если аккаунт успешно удален; false, если аккаунт не существует.</returns>
+        Task<bool> DeleteAccountAsync(Guid accountId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Создание новой учетной записи

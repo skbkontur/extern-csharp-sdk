@@ -31,8 +31,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders
         public Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) => 
             http.GetAsync<DraftsBuilder>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", timeout);
 
-        public Task DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) => 
-            http.DeleteAsync($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", timeout);
+        public Task<bool> DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) => 
+            http.TryDeleteAsync($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", timeout);
 
         public Task<DraftsBuilderMeta> GetDraftsBuilderMetaAsync(
             Guid accountId,
@@ -118,13 +118,13 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders
             );
         }
 
-        public Task DeleteDocumentAsync(
+        public Task<bool> DeleteDocumentAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             TimeSpan? timeout = null)
         {
-            return http.DeleteAsync(
+            return http.TryDeleteAsync(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}",
                 timeout
             );
@@ -195,14 +195,14 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders
             );
         }
 
-        public Task DeleteFileAsync(
+        public Task<bool> DeleteFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId,
             TimeSpan? timeout = null)
         {
-            return http.DeleteAsync(
+            return http.TryDeleteAsync(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
                 timeout
             );

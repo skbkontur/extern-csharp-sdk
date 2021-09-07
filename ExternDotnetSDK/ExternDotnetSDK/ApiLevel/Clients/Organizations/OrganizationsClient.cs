@@ -78,7 +78,7 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Organizations
             );
         }
 
-        public Task DeleteOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null) =>
-            http.DeleteAsync($"/v1/{accountId}/organizations/{orgId}", timeout);
+        public Task<bool> DeleteOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null) =>
+            http.TryDeleteAsync($"/v1/{accountId}/organizations/{orgId}", timeout);
     }
 }

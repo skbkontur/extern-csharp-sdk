@@ -32,8 +32,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Accounts
         public Task<Account?> TryGetAccountAsync(Guid accountId, TimeSpan? timeout = null) => 
             http.TryGetAsync<Account>($"v1/{accountId}", timeout);
 
-        public Task DeleteAccountAsync(Guid accountId, TimeSpan? timeout = null) => 
-            http.DeleteAsync($"v1/{accountId}", timeout);
+        public Task<bool> DeleteAccountAsync(Guid accountId, TimeSpan? timeout = null) => 
+            http.TryDeleteAsync($"v1/{accountId}", timeout);
 
         public Task<Account> CreateAccountAsync(
             string inn,

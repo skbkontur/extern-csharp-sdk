@@ -107,9 +107,22 @@ namespace Kontur.Extern.Client.Http
 
         public static Task DeleteAsync(this IHttpRequestsFactory httpRequestsFactory, Uri url, in TimeoutSpecification timeout = default) => 
             httpRequestsFactory.Delete(url).SendAsync(timeout);
+        
+        public static Task<bool> TryDeleteAsync(this IHttpRequestsFactory httpRequestsFactory, string url, in TimeoutSpecification timeout = default)
+        {
+            if (url == null)
+                throw new ArgumentNullException(nameof(url));
+            
+            return TryDeleteAsync(httpRequestsFactory, url.ToUrl(), timeout);
+        }
+        
+        public static async Task<bool> TryDeleteAsync(this IHttpRequestsFactory httpRequestsFactory, Uri url, TimeoutSpecification timeout = default)
+        {
+            var httpResponse = await httpRequestsFactory.Delete(url).SendAsync(timeout, IgnoreNotFoundApiErrors).ConfigureAwait(false);
+            var httpStatus = httpResponse.Status;
+            return !httpStatus.IsNotFound;
+        }
 
-        private static bool IgnoreNotFoundApiErrors(IHttpResponse response) =>
-            response.Status.IsNotFound && 
-            response.HasPayload;
+        private static bool IgnoreNotFoundApiErrors(IHttpResponse response) => response.Status.IsNotFound && response.HasPayload;
     }
 }

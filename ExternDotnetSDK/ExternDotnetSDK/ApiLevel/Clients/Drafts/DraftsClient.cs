@@ -32,8 +32,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
         public Task<Draft?> TryGetDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
             http.TryGetAsync<Draft>($"/v1/{accountId}/drafts/{draftId}", timeout);
 
-        public Task DeleteDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
-            http.DeleteAsync($"/v1/{accountId}/drafts/{draftId}", timeout);
+        public Task<bool> DeleteDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
+            http.TryDeleteAsync($"/v1/{accountId}/drafts/{draftId}", timeout);
 
         public Task<DraftMeta> GetDraftMetaAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
             http.GetAsync<DraftMeta>($"/v1/{accountId}/drafts/{draftId}/meta", timeout);
@@ -69,8 +69,8 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             return http.GetAsync<DraftDocument>($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}", timeout);
         }
 
-        public Task DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null) => 
-            http.DeleteAsync($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}", timeout);
+        public Task<bool> DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null) => 
+            http.TryDeleteAsync($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}", timeout);
 
         public Task<DraftDocument> UpdateDocumentAsync(
             Guid accountId,
@@ -127,14 +127,14 @@ namespace Kontur.Extern.Client.ApiLevel.Clients.Drafts
             return http.GetAsync<Signature>($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}", timeout);
         }
 
-        public Task DeleteSignatureAsync(
+        public Task<bool> DeleteSignatureAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
             Guid signatureId,
             TimeSpan? timeout = null)
         {
-            return http.DeleteAsync($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}", timeout);
+            return http.TryDeleteAsync($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}", timeout);
         }
 
         public Task<Signature> UpdateSignatureAsync(
