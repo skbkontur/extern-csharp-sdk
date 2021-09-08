@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using JetBrains.Annotations;
@@ -9,6 +10,7 @@ using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
 using Kontur.Extern.Client.Testing.Fakes.Http;
 using Kontur.Extern.Client.Testing.Fakes.Logging;
+using Kontur.Extern.Client.Testing.xUnit;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Logging.Abstractions;
 using Xunit;
@@ -188,6 +190,202 @@ namespace Kontur.Extern.Client.Http.UnitTests
             }
             
             protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestsFactory http) => http.Delete("/some-resource");
+        }
+        
+        public class Retries
+        {
+            public static TheoryData<ResponseCode> RepeatableNetworkErrors => 
+                Enum.GetValues<ResponseCode>()
+                    .Where(c => c.IsNetworkError())
+                    .Except(new[] {ResponseCode.ConnectFailure})
+                    .ToTheoryData();
+
+            public static TheoryData<ResponseCode> RepeatableServerErrors =>
+                Enum.GetValues<ResponseCode>()
+                    .Where(c => c.IsServerError())
+                    .Except(new[]
+                    {
+                        ResponseCode.NotImplemented,
+                        ResponseCode.HttpVersionNotSupported,
+                        ResponseCode.InsufficientStorage
+                    })
+                    .ToTheoryData();
+
+            private readonly FakeClusterClient fakeClient;
+            private readonly FakeClusterClientSetup fakeClientSetup;
+            private readonly FakeClusterClientVerify fakeClientVerify;
+            private readonly FakeRetryStrategyPolicy fakeRetryStrategy;
+            private readonly ILog log;
+            private readonly HttpRequestsFactory http;
+
+            public Retries(ITestOutputHelper output)
+            {
+                log = new TestLog(output);
+                fakeClient = CreateFakeClusterClient();
+                fakeRetryStrategy = fakeClient.RetryStrategy;
+                fakeClientSetup = fakeClient.Setup;
+                fakeClientVerify = fakeClient.Verify;
+                http = CreateHttp();
+            }
+
+            [Theory]
+            [InlineData(RequestMethods.Get)]
+            [InlineData(RequestMethods.Delete)]
+            [InlineData(RequestMethods.Put)]
+            [InlineData(RequestMethods.Head)]
+            [InlineData(RequestMethods.Options)]
+            [InlineData(RequestMethods.Trace)]
+            public async Task Should_repeat_failed_requests_of_given_attempts_if_the_verb_is_considered_as_idempotent(string verb)
+            {
+                fakeRetryStrategy.UseDefaultIdempotentHttpMethods();
+                fakeRetryStrategy.ImmediateAttemptsToRepeat(3);
+                fakeClientSetup.SetResponseCode(ResponseCode.InternalServerError);
+
+                var verbRequest = MakeRequestOfTheVerb(verb, new Uri("/some", UriKind.Relative));
+                
+                await SendShouldFail(verbRequest);
+                
+                ShouldSendExpectedRequests(3, verb, new Uri("https://test/some"));
+            }
+            
+            [Theory]
+            [MemberData(nameof(RepeatableNetworkErrors))]
+            [MemberData(nameof(RepeatableServerErrors))]
+            public async Task Should_repeat_requests_with_network_or_server_errors_and_requests_is_idempotent(ResponseCode responseCode)
+            {
+                fakeRetryStrategy.UseDefaultIdempotentHttpMethods();
+                fakeRetryStrategy.ImmediateAttemptsToRepeat(3);
+                fakeClientSetup.SetResponseCode(responseCode);
+
+                var verbRequest = http.Delete("/some");
+                
+                await SendShouldFail(verbRequest);
+                
+                ShouldSendExpectedRequests(3, RequestMethods.Delete, new Uri("https://test/some"));
+            }
+            
+            [Theory]
+            [InlineData(RequestMethods.Post)]
+            [InlineData(RequestMethods.Patch)]
+            public async Task Should_ignore_retry_strategy_for_non_idempotent_verb(string verb)
+            {
+                fakeRetryStrategy.UseDefaultIdempotentHttpMethods();
+                fakeRetryStrategy.ImmediateAttemptsToRepeat(3);
+                fakeClientSetup.SetResponseCode(ResponseCode.InternalServerError);
+
+                var verbRequest = MakeRequestOfTheVerb(verb, new Uri("/some", UriKind.Relative));
+                
+                await SendShouldFail(verbRequest);
+                
+                ShouldSendExpectedRequests(1, verb, new Uri("https://test/some"));
+            }
+            
+            [Theory]
+            [InlineData(RequestMethods.Get)]
+            [InlineData(RequestMethods.Delete)]
+            [InlineData(RequestMethods.Put)]
+            [InlineData(RequestMethods.Post)]
+            [InlineData(RequestMethods.Patch)]
+            [InlineData(RequestMethods.Head)]
+            [InlineData(RequestMethods.Options)]
+            [InlineData(RequestMethods.Trace)]
+            public async Task Should_ignore_retry_strategy_if_any_request_is_non_idempotent(string verb)
+            {
+                fakeRetryStrategy.NoneIdempotentRequests();
+                fakeRetryStrategy.ImmediateAttemptsToRepeat(3);
+                fakeClientSetup.SetResponseCode(ResponseCode.InternalServerError);
+
+                var verbRequest = MakeRequestOfTheVerb(verb, new Uri("/some", UriKind.Relative));
+                
+                await SendShouldFail(verbRequest);
+                
+                ShouldSendExpectedRequests(1, verb, new Uri("https://test/some"));
+            }
+            
+            [Theory]
+            [InlineData(RequestMethods.Get)]
+            [InlineData(RequestMethods.Delete)]
+            [InlineData(RequestMethods.Put)]
+            [InlineData(RequestMethods.Post)]
+            [InlineData(RequestMethods.Patch)]
+            [InlineData(RequestMethods.Head)]
+            [InlineData(RequestMethods.Options)]
+            [InlineData(RequestMethods.Trace)]
+            public async Task Should_ignore_retry_strategy_if_request_is_idempotent_but_returns_client_error(string verb)
+            {
+                fakeRetryStrategy.NoneIdempotentRequests();
+                fakeRetryStrategy.ImmediateAttemptsToRepeat(3);
+                fakeClientSetup.SetResponseCode(ResponseCode.BadRequest);
+
+                var verbRequest = MakeRequestOfTheVerb(verb, new Uri("/some", UriKind.Relative));
+                
+                await SendShouldFail(verbRequest);
+                
+                ShouldSendExpectedRequests(1, verb, new Uri("https://test/some"));
+            }
+
+            [Fact]
+            public async Task Should_repeat_the_request_until_response_is_unsuccessful_and_attempts_is_enough()
+            {
+                fakeRetryStrategy.UseDefaultIdempotentHttpMethods();
+                fakeRetryStrategy.ImmediateAttemptsToRepeat(10);
+                fakeRetryStrategy.OnAttempt(attempt =>
+                {
+                    if (attempt >= 3)
+                    {
+                        fakeClientSetup.SetResponseCode(ResponseCode.Ok);
+                    }
+                });
+                
+                fakeClientSetup.SetResponseCode(ResponseCode.InternalServerError);
+
+                var response = await http.Get("/some").SendAsync();
+
+                response.Status.IsSuccessful.Should().BeTrue();
+            }
+
+            [Fact]
+            public async Task Should_repeat_the_unsuccessful_request_until_attempts_is_enough()
+            {
+                fakeRetryStrategy.UseDefaultIdempotentHttpMethods();
+                fakeRetryStrategy.ImmediateAttemptsToRepeat(5);
+
+                fakeClientSetup.SetResponseCode(ResponseCode.InternalServerError);
+
+                await SendShouldFail(http.Get("/some"));
+
+                ShouldSendExpectedRequests(5, RequestMethods.Get, new Uri("https://test/some"));
+            }
+
+            private void ShouldSendExpectedRequests(int expectedRequests, string expectedVerb, Uri expectedUrl)
+            {
+                fakeClientVerify.SentRequests.Should().HaveCount(expectedRequests);
+                fakeClientVerify.SentRequests.Should()
+                    .OnlyContain(request => request.Url == expectedUrl && request.Method == expectedVerb);
+            }
+
+            private static async Task SendShouldFail(IHttpRequest verbRequest)
+            {
+                Func<Task> func = async () => await verbRequest.SendAsync();
+
+                await func.Should().ThrowAsync<ContractException>();
+            }
+
+            private IHttpRequest MakeRequestOfTheVerb(string verb, Uri url) => verb switch
+            {
+                RequestMethods.Get => http.Get(url),
+                RequestMethods.Put => http.Put(url),
+                RequestMethods.Post => http.Post(url),
+                RequestMethods.Delete => http.Delete(url),
+                _ => http.Verb(verb, url)
+            };
+
+            private HttpRequestsFactory CreateHttp(
+                Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
+                Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler = null)
+            {
+                return HttpRequestsFactory_Tests.CreateHttp(fakeClient.Configuration, log, requestTransformAsync, errorResponseHandler);
+            }
         }
         
         public class Failover

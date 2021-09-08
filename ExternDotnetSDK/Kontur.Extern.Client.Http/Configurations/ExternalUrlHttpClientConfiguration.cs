@@ -1,5 +1,6 @@
 using System;
 using Kontur.Extern.Client.Http.Exceptions;
+using Kontur.Extern.Client.Http.Retries;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Transport;
 
@@ -18,15 +19,21 @@ namespace Kontur.Extern.Client.Http.Configurations
             
             this.externalUrl = externalUrl;
         }
+
+        public IIdempotentRequestSpecification IdempotentRequests => HttpMethodBasedIdempotentRequestSpecification.SemanticallyIdempotentMethods;
         
+        public IRetryStrategyPolicy RetryStrategy => new ExponentialBackOffRetryStrategyPolicy();
+
         public void Apply(IClusterClientConfiguration config)
         {
             if (config == null)
                 throw new ArgumentNullException(nameof(config));
             
+            config.Logging.LogReplicaRequests = false;
+            config.Logging.LogResultDetails = false;
+            
             config.SetupUniversalTransport();
-            config.SetupExternalUrl(externalUrl);
-            config.MaxReplicasUsedPerRequest = 1;
+            config.SetupExternalUrlAsSingleReplicaCluster(externalUrl);
         }
     }
 }
