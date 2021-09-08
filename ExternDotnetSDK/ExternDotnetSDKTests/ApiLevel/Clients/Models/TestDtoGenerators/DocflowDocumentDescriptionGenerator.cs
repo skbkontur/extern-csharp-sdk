@@ -24,7 +24,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
         {
             var description = faker.Generate<DocflowDocumentDescription>(c => c.WithSkip<DocflowDocumentDescription>(x => x.Requisites));
             description.Requisites = null;
-            description.Type = documentType.ToUrn();
+            description.Type = documentType;
             return description;
         }
     }

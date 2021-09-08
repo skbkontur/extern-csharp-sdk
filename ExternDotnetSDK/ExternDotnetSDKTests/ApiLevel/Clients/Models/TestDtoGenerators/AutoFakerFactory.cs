@@ -3,9 +3,9 @@ using AutoBogus;
 using AutoBogus.Conventions;
 using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Model.Docflows;
+using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Testing.Generators;
-using Kontur.Extern.Client.Tests.Client.Model.TestAssertions;
 using Kontur.Extern.Client.Tests.TestHelpers;
 using Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions;
 using Randomizer = Bogus.Randomizer;
@@ -53,6 +53,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
                 builder.RuleForType<DateOnly>(x => x.Date.Recent(30));
                 
                 builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<DocflowType>()));
+                builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<DocumentType>()));
                 builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromOfStruct<DocflowStatus>()));
                 builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromOfStruct<DocflowState>()));
                 

@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Attributes;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Model.Documents;
 
 namespace Kontur.Extern.Client.Models.Docflows.Documents
 {
@@ -12,7 +12,7 @@ namespace Kontur.Extern.Client.Models.Docflows.Documents
         /// <summary>
         /// Тип документа
         /// </summary>
-        public Urn Type { get; set; }
+        public DocumentType Type { get; set; }
         
         /// <summary>
         /// Наименование файла

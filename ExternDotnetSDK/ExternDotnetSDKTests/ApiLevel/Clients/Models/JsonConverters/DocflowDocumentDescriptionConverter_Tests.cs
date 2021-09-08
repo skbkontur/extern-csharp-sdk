@@ -36,7 +36,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             
             var description = serializer.Deserialize<DocflowDocumentDescription>(json);
 
-            description.Type.Should().Be(requisitesCase.DocumentType.ToUrn());
+            description.Type.Should().Be(requisitesCase.DocumentType);
             DescriptionShouldBeEqual(description, expectedDescription);
         }
 
@@ -54,7 +54,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
 
             var description = serializer.Deserialize<DocflowDocumentDescription>(json);
 
-            description.Type.Should().Be(unknownDocumentType.ToUrn());
+            description.Type.Should().Be(unknownDocumentType);
             description.Requisites.Should().BeOfType<CommonDocflowDocumentRequisites>();
         }
 
@@ -63,7 +63,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         {
             var dummyDocumentType = DocumentType.Fns.Fns534.Report;
             var documentDescription = descriptionGenerator.GenerateWithoutRequisites(dummyDocumentType);
-            documentDescription.Type = null;
+            documentDescription.Type = default;
             documentDescription.Requisites = new PfrReportRequisites
             {
                 CorrectionType = PfrReportCorrectionType.PensionAssignment
@@ -73,7 +73,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
 
             var description = serializer.Deserialize<DocflowDocumentDescription>(json);
 
-            description.Type.Should().BeNull();
+            description.Type.Should().Be(new DocumentType());
             description.Requisites.Should().BeOfType<CommonDocflowDocumentRequisites>();
         }
 
@@ -90,23 +90,24 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         
         public record RequisitesCase
         {
+            private readonly Type? requisitesType;
+            
             public RequisitesCase(DocumentType documentType, Type? requisitesType)
             {
                 DocumentType = documentType;
-                RequisitesType = requisitesType;
+                this.requisitesType = requisitesType;
             }
 
             public (string json, DocflowDocumentDescription expectedDescription) GenerateDescription(IJsonSerializer serializer, DocflowDocumentDescriptionGenerator descriptionGenerator)
             {
-                var docflow = descriptionGenerator.GenerateWithRequisites(RequisitesType, DocumentType);
+                var docflow = descriptionGenerator.GenerateWithRequisites(requisitesType, DocumentType);
                 var json = serializer.SerializeToIndentedString(docflow);
                 return (json, docflow);
             }
-
+            
             public DocumentType DocumentType { get; }
-            public Type? RequisitesType { get; }
 
-            public override string ToString() => $"{DocumentType} -> {RequisitesType?.Name ?? "<null>"}";
+            public override string ToString() => $"{DocumentType} -> {requisitesType?.Name ?? "<null>"}";
         }
     }
 }
