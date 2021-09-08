@@ -9,6 +9,20 @@ namespace Kontur.Extern.Client.Tests.TestHelpers
 {
     internal static class EnumLikeType
     {
+        public static IEnumerable<(FieldInfo field, T? value)> AllEnumMembersOfStruct<T>()
+            where T : struct
+        {
+            var fields = (
+                from fieldInfo in typeof(T).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField)
+                where fieldInfo.FieldType == typeof (T)
+                select fieldInfo
+            ).ToArray();
+
+            if (fields.Length == 0)
+                throw new InvalidOperationException($"Type {typeof(T)} does not contain predefined values of {typeof(T)}");
+            return fields.Select(x => (x, (T?) x.GetValue(null!)));
+        }
+        
         public static IEnumerable<T> AllEnumValuesFromNestedTypesOfStruct<T>()
             where T : struct
         {
