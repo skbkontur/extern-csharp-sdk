@@ -10,7 +10,7 @@ namespace Kontur.Extern.Client.Http.Exceptions
     internal static class Errors
     {
         public static Exception UrlShouldBeAbsolute([InvokerParameterName] string paramName, Uri uri) => 
-            new ArgumentException($"The value '{uri}' is not be absolute url", paramName);
+            new ArgumentException($"Url must be an absolute URI. Instead, got this: '{uri}'.", paramName);
         
         public static Exception ValueShouldBeGreaterOrEqualTo([InvokerParameterName] string paramName, long actualValue, long minimumValue) => 
             new ArgumentOutOfRangeException(paramName, actualValue, $"The value should be greater or equal to {minimumValue}");
@@ -79,5 +79,8 @@ namespace Kontur.Extern.Client.Http.Exceptions
 
         public static Exception OverridingJsonStringEnumConverterIsUnsupported([InvokerParameterName] string paramName) =>
             new ArgumentException($"Overriding a {nameof(JsonStringEnumConverter)} is unsupported, use {nameof(NamingPolicyRespectJsonStringEnumConverter)} instead", paramName);
+
+        public static Exception InvalidRange<T>([InvokerParameterName] string minParamName, [InvokerParameterName] string maxParamName, T min, T max) => 
+            new ArgumentException($"Invalid range: the value {min} of the parameter {minParamName} is greater than the value {max} of the parameter {maxParamName}.");
     }
 }

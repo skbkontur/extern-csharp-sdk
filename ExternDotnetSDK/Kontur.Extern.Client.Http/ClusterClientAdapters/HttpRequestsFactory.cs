@@ -28,16 +28,13 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             IJsonSerializer serializer,
             ILog log)
         {
-            if (configuration is null)
-                throw new ArgumentNullException(nameof(configuration));
-
             this.requestTimeouts = requestTimeouts ?? throw new ArgumentNullException(nameof(requestTimeouts));
             this.requestTransformAsync = requestTransformAsync;
             this.errorResponseHandler = errorResponseHandler;
             this.failover = failover;
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
-            
-            clusterClient = CreateClusterClient(configuration, log);
+
+            clusterClient = ClusterClientFactory.CreateClusterClient(configuration, log);
         }
 
         public IHttpRequest Get(Uri url) => CreateHttpRequest(Request.Get(url));
@@ -48,23 +45,9 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
 
         public IHttpRequest Delete(Uri url) => CreateHttpRequest(Request.Delete(url));
 
+        public IPayloadHttpRequest Verb(string method, Uri url) => CreateHttpRequest(new Request(method, url));
+
         private HttpRequest CreateHttpRequest(Request request) => 
             new(request, requestTimeouts, requestTransformAsync, errorResponseHandler, failover, clusterClient, serializer);
-
-        private static IClusterClient CreateClusterClient(IHttpClientConfiguration configuration, ILog log)
-        {
-            if (configuration == null)
-                throw new ArgumentNullException(nameof(configuration));
-
-            return new ClusterClient(
-                log,
-                cfg =>
-                {
-                    cfg.Logging.LogReplicaRequests = false;
-                    cfg.Logging.LogResultDetails = false;
-
-                    configuration.Apply(cfg);
-                });
-        }
     }
 }
