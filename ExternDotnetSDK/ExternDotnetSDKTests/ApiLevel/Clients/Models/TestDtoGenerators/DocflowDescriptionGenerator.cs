@@ -15,17 +15,27 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
 
         public Docflow GenerateDocflowWithDescription(Type descriptionType, DocflowType docflowType)
         {
-            var docflow = faker.Generate<Docflow>(c => c.WithSkip<Docflow>(nameof(Docflow.Description)));
+            var docflow = GenerateDocflowWithType(docflowType);
             docflow.Description = (DocflowDescription) faker.Generate(descriptionType);
-            docflow.Type = docflowType.ToUrn();
+            docflow.Type = docflowType;
             return docflow;
         }
 
         public Docflow GenerateDocflowWithoutDescription(DocflowType docflowType)
         {
-            var docflow = faker.Generate<Docflow>(c => c.WithSkip<Docflow>(nameof(Docflow.Description)));
+            var docflow = GenerateDocflowWithType(docflowType);
             docflow.Description = null;
-            docflow.Type = docflowType.ToUrn();
+            return docflow;
+        }
+
+        private Docflow GenerateDocflowWithType(DocflowType docflowType)
+        {
+            var docflow = faker.Generate<Docflow>(c =>
+            {
+                c.WithSkip<Docflow>(nameof(Docflow.Description));
+                c.WithSkip<Docflow>(nameof(Docflow.Type));
+            });
+            docflow.Type = docflowType;
             return docflow;
         }
     }

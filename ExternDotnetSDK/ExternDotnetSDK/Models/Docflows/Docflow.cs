@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Models.Docflows.Descriptions;
 using Kontur.Extern.Client.Models.Docflows.Documents;
@@ -20,7 +21,7 @@ namespace Kontur.Extern.Client.Models.Docflows
         public Docflow(
             Guid id,
             Guid organizationId,
-            Urn type,
+            DocflowType type,
             Urn status,
             Urn successState,
             List<Document> documents,
@@ -44,7 +45,7 @@ namespace Kontur.Extern.Client.Models.Docflows
         internal Docflow(
             Guid id,
             Guid organizationId,
-            Urn type,
+            DocflowType type,
             Urn status,
             Urn successState,
             List<Link> links,
@@ -65,7 +66,7 @@ namespace Kontur.Extern.Client.Models.Docflows
         
         public Guid Id { get; set; }
         public Guid OrganizationId { get; set; }
-        public Urn Type { get; set; }
+        public DocflowType Type { get; set; }
         public Urn Status { get; set; }
         public Urn SuccessState { get; set; }
         public List<Document> Documents { get; set; }

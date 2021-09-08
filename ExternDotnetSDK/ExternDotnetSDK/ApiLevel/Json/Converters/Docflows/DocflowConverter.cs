@@ -102,7 +102,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
             [UsedImplicitly]
             public Guid OrganizationId { get; set; }
             [UsedImplicitly]
-            public Urn Type { get; set; } = null!;
+            public DocflowType Type { get; set; }
             [UsedImplicitly]
             public Urn Status { get; set; } = null!;
             [UsedImplicitly]

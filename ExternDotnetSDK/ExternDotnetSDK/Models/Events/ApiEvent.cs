@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Models.Common;
 
 namespace Kontur.Extern.Client.Models.Events
@@ -22,7 +23,7 @@ namespace Kontur.Extern.Client.Models.Events
         /// <summary>
         /// Тип документооборота
         /// </summary>
-        public Urn DocflowType { get; set; }
+        public DocflowType DocflowType { get; set; }
         
         /// <summary>
         /// Ссылка на документооборот

@@ -37,7 +37,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             
             var docflow = serializer.Deserialize<IDocflowWithDocuments>(json);
 
-            docflow.Type.Should().Be(descriptionCase.DocflowType.ToUrn()!);
+            docflow.Type.Should().Be(descriptionCase.DocflowType);
             DocflowShouldHaveExpectedDescription(docflow, expectedDocflow);
         }
 
@@ -49,7 +49,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             
             var docflow = serializer.Deserialize<IDocflow>(json);
 
-            docflow.Type.Should().Be(descriptionCase.DocflowType.ToUrn()!);
+            docflow.Type.Should().Be(descriptionCase.DocflowType);
             DocflowShouldHaveExpectedDescription(docflow, expectedDocflow);
         }
 
@@ -63,7 +63,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             
             var docflow = serializer.Deserialize<Docflow>(json);
 
-            docflow.Type.Should().Be(unknownDocflowType.ToUrn()!);
+            docflow.Type.Should().Be(unknownDocflowType);
             docflow.Description.Should().BeNull();
         }
 
@@ -81,7 +81,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             
             var docflow = serializer.Deserialize<Docflow>(json);
 
-            docflow.Type.Should().Be(unknownDocflowType.ToUrn()!);
+            docflow.Type.Should().Be(unknownDocflowType);
             docflow.Description.Should().BeOfType<UnknownDescription>();
         }
 
@@ -90,7 +90,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         {
             var dummyDocflowType = DocflowType.Fns.Fns534.Report;
             var originalDocflow = descriptionGenerator.GenerateDocflowWithoutDescription(dummyDocflowType);
-            originalDocflow.Type = null;
+            originalDocflow.Type = default;
             originalDocflow.Description = new ReportDescription
             {
                 FinalRecipient = "123"
@@ -100,7 +100,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             
             var docflow = serializer.Deserialize<Docflow>(json);
 
-            docflow.Type.Should().BeNull();
+            docflow.Type.Should().Be(default(DocflowType));
             docflow.Description.Should().BeOfType<UnknownDescription>();
         }
 
@@ -133,6 +133,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
 
         public record DescriptionCase
         {
+            private readonly Type? descriptionType;
             private readonly Func<DocflowDescriptionGenerator, Docflow> expectedDescriptionFactory;
             
             public static DescriptionCase WithDescription(Type descriptionClass, DocflowType docflowType)
@@ -157,7 +158,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             {
                 this.expectedDescriptionFactory = expectedDescriptionFactory;
                 DocflowType = docflowType;
-                DescriptionType = descriptionType;
+                this.descriptionType = descriptionType;
             }
 
             public (string json, IDocflowWithDocuments expectedDocflow) GenerateWithDocuments(IJsonSerializer serializer, DocflowDescriptionGenerator descriptionGenerator)
@@ -176,9 +177,8 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             }
 
             public DocflowType DocflowType { get; }
-            public Type? DescriptionType { get; }
 
-            public override string ToString() => $"{DocflowType} -> {DescriptionType?.Name ?? "<null>"}";
+            public override string ToString() => $"{DocflowType} -> {descriptionType?.Name ?? "<null>"}";
         }
     }
 }
