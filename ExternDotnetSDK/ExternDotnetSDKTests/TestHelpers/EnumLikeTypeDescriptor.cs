@@ -9,6 +9,15 @@ namespace Kontur.Extern.Client.Tests.TestHelpers
 {
     internal static class EnumLikeType
     {
+        public static IEnumerable<T> AllEnumValuesFromOfStruct<T>()
+            where T : struct
+        {
+            return AllEnumMembersOfStruct<T>()
+                .Select(x => x.value)
+                .Where(x => x.HasValue)
+                .Select(x => x!.Value);
+        }
+        
         public static IEnumerable<(FieldInfo field, T? value)> AllEnumMembersOfStruct<T>()
             where T : struct
         {

@@ -81,8 +81,8 @@ namespace Kontur.Extern.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Convert
              public Guid Id { get; set; }
              public Guid OrganizationId { get; set; }
              public DocflowType Type { get; set; } = null!;
-             public Urn Status { get; set; } = null!;
-             public Urn SuccessState { get; set; } = null!;
+             public DocflowStatus Status { get; set; } = null!;
+             public DocflowState SuccessState { get; set; } = null!;
              public List<Document> Documents { get; set; } = null!;
              public List<Link> Links { get; set; } = null!;
              public DateTime SendDateTime { get; set; }

@@ -104,9 +104,9 @@ namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
             [UsedImplicitly]
             public DocflowType Type { get; set; }
             [UsedImplicitly]
-            public Urn Status { get; set; } = null!;
+            public DocflowStatus Status { get; set; }
             [UsedImplicitly]
-            public Urn SuccessState { get; set; } = null!;
+            public DocflowState SuccessState { get; set; }
             [UsedImplicitly]
             public List<Document>? Documents { get; set; }
             [UsedImplicitly]

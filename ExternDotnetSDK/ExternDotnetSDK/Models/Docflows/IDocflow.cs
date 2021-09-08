@@ -35,12 +35,12 @@ namespace Kontur.Extern.Client.Models.Docflows
         /// <summary>
         /// Статус документооборота. Подробнее о значении статуса читайте в [документации](https://docs-ke.readthedocs.io/ru/latest/specification/%D1%81%D1%82%D0%B0%D1%82%D1%83%D1%81%D1%8B%20%D0%94%D0%9E.html)
         /// </summary>
-        Urn Status { get; }
+        DocflowStatus Status { get; }
         
         /// <summary>
         /// Статус отчета (квитанция о приеме): принят или не принят
         /// </summary>
-        Urn SuccessState { get; }
+        DocflowState SuccessState { get; }
         
         /// <summary>
         /// Ссылки для работы с документооборотом

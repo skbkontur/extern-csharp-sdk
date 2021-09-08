@@ -22,8 +22,8 @@ namespace Kontur.Extern.Client.Models.Docflows
             Guid id,
             Guid organizationId,
             DocflowType type,
-            Urn status,
-            Urn successState,
+            DocflowStatus status,
+            DocflowState successState,
             List<Document> documents,
             List<Link> links,
             DateTime sendDateTime,
@@ -46,8 +46,8 @@ namespace Kontur.Extern.Client.Models.Docflows
             Guid id,
             Guid organizationId,
             DocflowType type,
-            Urn status,
-            Urn successState,
+            DocflowStatus status,
+            DocflowState successState,
             List<Link> links,
             DateTime sendDateTime,
             DateTime? lastChangeDateTime,
@@ -67,8 +67,8 @@ namespace Kontur.Extern.Client.Models.Docflows
         public Guid Id { get; set; }
         public Guid OrganizationId { get; set; }
         public DocflowType Type { get; set; }
-        public Urn Status { get; set; }
-        public Urn SuccessState { get; set; }
+        public DocflowStatus Status { get; set; }
+        public DocflowState SuccessState { get; set; }
         public List<Document> Documents { get; set; }
         public List<Link> Links { get; set; }
         public DateTime SendDateTime { get; set; }
