@@ -2,6 +2,7 @@ using System.Text.Json;
 using Kontur.Extern.Client.ApiLevel.Json.Converters;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders;
+using Kontur.Extern.Client.ApiLevel.Json.Converters.EnumLikeTypes;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks;
 using Kontur.Extern.Client.Http.Serialization;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
@@ -18,6 +19,7 @@ namespace Kontur.Extern.Client.ApiLevel.Json
             return new SystemTextJsonSerializerFactory()
                 .WithNamingPolicy(namingPolicy)
                 .AddConverter(new UrnJsonConverter())
+                .AddConverter(new EnumLikeTypesConverter())
                 .AddConverter(new DocflowConverter())
                 .AddConverter(new DocflowDocumentDescriptionConverter())
                 .AddConverter(new DraftsBuilderMetaConverter())
