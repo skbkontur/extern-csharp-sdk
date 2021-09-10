@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.Models.Numbers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
+namespace Kontur.Extern.Client.Tests.Models.Numbers
 {
     [TestFixture]
-    internal class Okud_Tests
+    internal class PfrRegNumber_Tests
     {
         [TestCaseSource(nameof(InvalidStrings))]
         public void Should_fail_when_the_given_number_string_is_invalid(string value)
         {
-            Action action = () => Okud.Parser.Parse(value);
+            Action action = () => PfrRegNumber.Parser.Parse(value);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -20,9 +20,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
         [TestCaseSource(nameof(ValidStrings))]
         public void Should_successfully_return_a_number_when_the_given_value_is_valid(string value)
         {
-            var parsedValue = Okud.Parser.Parse(value);
+            var parsedValue = PfrRegNumber.Parser.Parse(value);
 
-            parsedValue.Kind.Should().Be(AuthorityNumberKind.Okud);
+            parsedValue.Kind.Should().Be(AuthorityNumberKind.PfrRegNumber);
             parsedValue.Value.Should().Be(value);
         }
             
@@ -30,13 +30,14 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
         {
             get
             {
-                yield return "12345678";
-                yield return "123456";
-                yield return "123456x";
-                yield return "123-4567";
-                yield return "123-4567";
-                yield return " 1234567";
-                yield return "1234567 ";
+                yield return "123-456123456";
+                yield return "123456-123456";
+                yield return "123456123456";
+                yield return "123-456--123456";
+                yield return "123--456-123456";
+                yield return "123-456-12345x";
+                yield return " 123-456-123456";
+                yield return "123-456-123456 ";
             }
         }
         
@@ -44,8 +45,8 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
         {
             get
             {
-                yield return "1234567";
-                yield return "8901234";
+                yield return "123-456-123456";
+                yield return "111-222-333333";
             }
         }
     }

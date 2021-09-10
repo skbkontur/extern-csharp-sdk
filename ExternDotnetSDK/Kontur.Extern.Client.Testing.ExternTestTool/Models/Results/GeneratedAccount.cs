@@ -1,7 +1,7 @@
 using System;
 using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
-using Kontur.Extern.Client.Model.Numbers;
 using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Numbers;
 
 namespace Kontur.Extern.Client.Testing.ExternTestTool.Models.Results
 {

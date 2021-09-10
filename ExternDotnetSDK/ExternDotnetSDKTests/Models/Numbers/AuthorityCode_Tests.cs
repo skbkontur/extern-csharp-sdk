@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.Models.Numbers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
+namespace Kontur.Extern.Client.Tests.Models.Numbers
 {
     [TestFixture]
     internal class AuthorityCode_Tests

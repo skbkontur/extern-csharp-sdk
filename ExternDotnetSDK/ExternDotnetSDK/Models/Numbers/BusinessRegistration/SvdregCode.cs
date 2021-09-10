@@ -2,7 +2,6 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Model.Numbers;
 
 namespace Kontur.Extern.Client.Models.Numbers.BusinessRegistration
 {

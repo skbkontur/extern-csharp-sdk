@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Common.Time;
-using Kontur.Extern.Client.Model.Numbers;
 using Kontur.Extern.Client.Models.ApiErrors;
 using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Numbers;
 using static System.Environment;
 
 namespace Kontur.Extern.Client.Exceptions

@@ -6,7 +6,7 @@ using FluentAssertions;
 using Kontur.Extern.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.Models.Numbers;
 using Vostok.Commons.Time;
 using Xunit;
 using Xunit.Abstractions;

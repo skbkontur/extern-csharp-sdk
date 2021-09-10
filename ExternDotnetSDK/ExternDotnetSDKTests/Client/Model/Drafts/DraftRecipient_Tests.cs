@@ -3,7 +3,7 @@ using System;
 using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Client.Model.Drafts;
-using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.Models.Numbers;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Client.Tests.Client.Model.Drafts

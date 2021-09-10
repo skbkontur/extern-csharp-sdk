@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.Models.Numbers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
+namespace Kontur.Extern.Client.Tests.Models.Numbers
 {
     [TestFixture]
-    internal class IfnsCode_Tests
+    internal class Togs_Tests
     {
         [TestCaseSource(nameof(InvalidStrings))]
         public void Should_fail_when_the_given_number_string_is_invalid(string value)
         {
-            Action action = () => IfnsCode.Parser.Parse(value);
+            Action action = () => TogsCode.Parser.Parse(value);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -20,9 +20,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
         [TestCaseSource(nameof(ValidStrings))]
         public void Should_successfully_return_a_number_when_the_given_value_is_valid(string value)
         {
-            var parsedValue = IfnsCode.Parser.Parse(value);
+            var parsedValue = TogsCode.Parser.Parse(value);
 
-            parsedValue.Kind.Should().Be(AuthorityNumberKind.IfnsCode);
+            parsedValue.Kind.Should().Be(AuthorityNumberKind.Togs);
             parsedValue.Value.Should().Be(value);
         }
             
@@ -30,13 +30,18 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
         {
             get
             {
-                yield return "12345";
-                yield return "123";
-                yield return "123-4";
-                yield return "123x";
-                yield return "x234";
-                yield return " 1234";
-                yield return "1234 ";
+                yield return "12-345";
+                yield return "012-34";
+                yield return "1234";
+                yield return "12-34-";
+                yield return "12--34";
+                yield return "-12-34";
+                yield return "-1234";
+                yield return "1234-";
+                yield return "12-34 ";
+                yield return " 12-34";
+                yield return "x2-34";
+                yield return "12-3x";
             }
         }
         
@@ -44,7 +49,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
         {
             get
             {
-                yield return "1234";
+                yield return "12-34";
             }
         }
     }

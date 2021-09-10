@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Model.Numbers;
 using Kontur.Extern.Client.Models.Accounts;
+using Kontur.Extern.Client.Models.Numbers;
 using Kontur.Extern.Client.Paths;
 using Kontur.Extern.Client.Primitives;
 

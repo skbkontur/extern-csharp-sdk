@@ -2,7 +2,7 @@
 using System;
 using System.Net;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
-using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.Models.Numbers;
 
 namespace Kontur.Extern.Client.Model.Drafts
 {

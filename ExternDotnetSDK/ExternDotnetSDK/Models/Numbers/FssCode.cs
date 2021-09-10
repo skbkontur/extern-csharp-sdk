@@ -1,7 +1,8 @@
 using Kontur.Extern.Client.Exceptions;
+
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.Model.Numbers
+namespace Kontur.Extern.Client.Models.Numbers
 {
     /// <summary>
     /// Код ФСС. Формат данных: пятизначный цифровой код, последняя цифра 1 или 2

@@ -1,7 +1,8 @@
 using Kontur.Extern.Client.Exceptions;
+
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.Model.Numbers
+namespace Kontur.Extern.Client.Models.Numbers
 {
     /// <summary>
     /// ОКУД – общероссийский классификатор управленческой документации. Формат данных: семизначный цифровой код

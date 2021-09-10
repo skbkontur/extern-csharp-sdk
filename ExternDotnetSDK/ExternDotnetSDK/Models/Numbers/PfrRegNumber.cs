@@ -1,7 +1,8 @@
 using Kontur.Extern.Client.Exceptions;
+
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.Model.Numbers
+namespace Kontur.Extern.Client.Models.Numbers
 {
     /// <summary>
     /// Регистрационный номер документооборота ПФР. Формат данных: ХХХ-ХХХ-ХХХХХХ, где Х - это цифра от 0 до 9
