@@ -9,6 +9,7 @@ using Kontur.Extern.Client.Model;
 using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Model.Documents.Contents;
 using Kontur.Extern.Client.Model.Drafts;
+using Kontur.Extern.Client.Model.Numbers.BusinessRegistration;
 using NSubstitute;
 using NUnit.Framework;
 using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
@@ -107,14 +108,12 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             action.Should().Throw<ArgumentException>();
         }
 
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase(" ")]
-        public void WithSvdregCode_should_fail_when_given_invalid_code(string code)
+        [Test]
+        public void WithSvdregCode_should_fail_when_given_empty_code()
         {
             var document = DraftDocument.WithNewId(CreateContent());
 
-            Action action = () => document.WithSvdregCode(code);
+            Action action = () => document.WithSvdregCode(default);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -177,7 +176,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
         public async Task CreateSignedRequestAsync_should_return_request_with_SvdregCode()
         {
             var contentId = Guid.NewGuid();
-            const string svdregCode = "the code";
+            var svdregCode = SvdregCode.ForLegalOrg.Code_010011;
             var expectedRequest = new DocumentRequest
             {
                 ContentId = contentId,

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Client.Model.Numbers.BusinessRegistration;
 
 namespace Kontur.Extern.Client.Models.Docflows.Documents.Requisites
 {
@@ -10,6 +11,6 @@ namespace Kontur.Extern.Client.Models.Docflows.Documents.Requisites
         /// <summary>
         /// Код документа по справочнику СВДРЕГ
         /// </summary>
-        public string SvdregCode { get; set; }
+        public SvdregCode SvdregCode { get; set; }
     }
 }

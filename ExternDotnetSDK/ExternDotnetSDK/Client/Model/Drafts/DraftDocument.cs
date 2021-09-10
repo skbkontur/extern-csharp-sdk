@@ -9,6 +9,7 @@ using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http.Constants;
 using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Model.Documents.Contents;
+using Kontur.Extern.Client.Model.Numbers.BusinessRegistration;
 
 namespace Kontur.Extern.Client.Model.Drafts
 {
@@ -34,7 +35,7 @@ namespace Kontur.Extern.Client.Model.Drafts
 
         private Signature? signature;
         private CertificateContent? certificate;
-        private string? svdregCode;
+        private SvdregCode? svdregCode;
         private string? fileName;
         private DocumentType type;
         private readonly IDocumentContent? DocumentContent;
@@ -69,10 +70,10 @@ namespace Kontur.Extern.Client.Model.Drafts
             return this;
         }
 
-        public DraftDocument WithSvdregCode(string code)
+        public DraftDocument WithSvdregCode(SvdregCode code)
         {
-            if (string.IsNullOrWhiteSpace(code))
-                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(code));
+            if (code.IsEmpty)
+                throw Errors.ValueShouldNotBeEmpty(nameof(code));
             svdregCode = code;
             return this;
         }
@@ -139,7 +140,7 @@ namespace Kontur.Extern.Client.Model.Drafts
                 {
                     Type = documentTypeUrn,
                     Filename = fileName,
-                    SvdregCode = svdregCode,
+                    SvdregCode = svdregCode ?? default,
                     ContentType = contentType
                 };
             }

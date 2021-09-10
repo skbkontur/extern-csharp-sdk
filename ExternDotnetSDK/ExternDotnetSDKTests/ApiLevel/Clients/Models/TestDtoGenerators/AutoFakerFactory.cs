@@ -4,6 +4,8 @@ using AutoBogus.Conventions;
 using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Documents;
+using Kontur.Extern.Client.Model.Drafts;
+using Kontur.Extern.Client.Model.Numbers.BusinessRegistration;
 using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Testing.Generators;
 using Kontur.Extern.Client.Tests.TestHelpers;
@@ -31,7 +33,6 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
                 builder.WithConventions(x => x.LastName.Aliases("LastName", "SurName", "Surname"));
                 builder.WithConventions(x => x.FirstName.Aliases("Patronymic"));
 
-                builder.RuleForPropNameOf("SvdRegCode", x => x.Random.ReplaceNumbers(PatternFor10Digits));
                 builder.RuleForPropNameOf("okpo", _ => codesGenerator.LegalEntityOkpo().ToString());
                 builder.RuleForPropNameOf("okud", _ => codesGenerator.Okud().ToString());
                 builder.RuleForPropNameOf("ogrn", x => x.Random.ReplaceNumbers(PatternFor13Digits));
@@ -54,8 +55,10 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
                 
                 builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<DocflowType>()));
                 builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<DocumentType>()));
+                builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<SvdregCode>()));
                 builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromOfStruct<DocflowStatus>()));
                 builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromOfStruct<DocflowState>()));
+                builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromOfStruct<PfrLetterType>()));
                 
                 builder.WithSkip<Urn>();
             });

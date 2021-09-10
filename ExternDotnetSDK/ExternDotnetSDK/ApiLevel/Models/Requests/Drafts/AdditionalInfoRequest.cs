@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Model.Drafts;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts
 {
@@ -21,6 +21,6 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts
         /// <summary>
         /// Тип исходящего письма в ПФР
         /// </summary>
-        public Urn PfrLetterType { get; set; }
+        public PfrLetterType PfrLetterType { get; set; }
     }
 }
