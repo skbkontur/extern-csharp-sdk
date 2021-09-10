@@ -30,27 +30,19 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
 
                 parsedValue.Code.Should().Be(value);
             }
-
-            [Test]
-            public void Should_()
-            {
-
-            }
             
             private static IEnumerable<string> InvalidStrings
             {
                 get
                 {
                     yield return "12345";
-                    yield return "012345";
-                    yield return "X02345";
-                    yield return "X12345";
-                    yield return "22345";
-                    yield return "Y2345";
-                    yield return "x2345";
-                    yield return " 01234";
-                    yield return "01234 ";
-                    yield return "012-34";
+                    yield return " 012345";
+                    yield return "012345 ";
+                    yield return "012-345";
+                    yield return "Y12345";
+                    yield return "x12345";
+                    yield return "z12345";
+                    yield return "01234X";
                 }
             }
         
@@ -58,8 +50,9 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Numbers
             {
                 get
                 {
-                    yield return "01234";
-                    yield return "X1234";
+                    yield return "012345";
+                    yield return "010011";
+                    yield return "X12345";
                 }
             }
         }

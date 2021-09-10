@@ -14,7 +14,7 @@ namespace Kontur.Extern.Client.Model.Numbers.BusinessRegistration
     public partial struct SvdregCode
     {
         public static readonly RegexBasedParser<SvdregCode> Parser = new(
-            @"^(X|0)\d{4}$",
+            @"^(X|0){1}\d{5}$",
             v => new SvdregCode(v),
             Errors.InvalidSvdregCode
         );
@@ -29,6 +29,7 @@ namespace Kontur.Extern.Client.Model.Numbers.BusinessRegistration
         private SvdregCode(string code) => Code = code;
 
         public string? Code { get; }
+        public bool IsEmpty => Code == null;
 
         public override string ToString() => Code ?? string.Empty;
 
@@ -42,6 +43,6 @@ namespace Kontur.Extern.Client.Model.Numbers.BusinessRegistration
 
         public static bool operator!=(SvdregCode left, SvdregCode right) => !left.Equals(right);
 
-        public static implicit operator SvdregCode(string value) => new(value);
+        public static implicit operator SvdregCode(string value) => Parse(value);
     }
 }
