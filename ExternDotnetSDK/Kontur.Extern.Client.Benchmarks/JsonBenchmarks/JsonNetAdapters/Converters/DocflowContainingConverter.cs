@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.IO;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
-using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Models.Docflows.Descriptions;
 using Kontur.Extern.Client.Models.Docflows.Documents;
+using Kontur.Extern.Client.Models.Docflows.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

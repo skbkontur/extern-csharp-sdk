@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Model.Numbers.BusinessRegistration;
 using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Numbers.BusinessRegistration;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents
 {

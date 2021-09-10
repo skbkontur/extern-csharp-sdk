@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders;
-using Kontur.Extern.Client.Model.DraftBuilders;
 using Kontur.Extern.Client.Models.DraftsBuilders.Documents;
 using Kontur.Extern.Client.Models.DraftsBuilders.Documents.Data;
 using Kontur.Extern.Client.Models.DraftsBuilders.Documents.Data.FnsInventory;
+using Kontur.Extern.Client.Models.DraftsBuilders.Enums;
 using Kontur.Extern.Client.Tests.TestHelpers;
 using NUnit.Framework;
 

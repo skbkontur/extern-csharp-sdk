@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Model.Drafts;
+using Kontur.Extern.Client.Models.Drafts.Enums;
 
 namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts
 {

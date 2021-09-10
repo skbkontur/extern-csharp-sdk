@@ -3,9 +3,9 @@ using FluentAssertions;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Model.DocflowFiltering;
-using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Numbers;
 using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Docflows.Enums;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering

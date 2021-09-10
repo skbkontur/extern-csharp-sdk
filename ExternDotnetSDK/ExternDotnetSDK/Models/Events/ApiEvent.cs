@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Docflows.Enums;
 
 namespace Kontur.Extern.Client.Models.Events
 {

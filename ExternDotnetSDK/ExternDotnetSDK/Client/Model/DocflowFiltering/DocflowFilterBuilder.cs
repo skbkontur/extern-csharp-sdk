@@ -6,8 +6,9 @@ using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Client.Common.Time;
 using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Model.Numbers;
+using Kontur.Extern.Client.Models.Docflows.Enums;
+
 // ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Client.Model.DocflowFiltering

@@ -1,7 +1,7 @@
 using System;
 using AutoBogus;
-using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Models.Docflows.Documents;
+using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
 using Kontur.Extern.Client.Models.Docflows.Documents.Requisites;
 using Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions;
 

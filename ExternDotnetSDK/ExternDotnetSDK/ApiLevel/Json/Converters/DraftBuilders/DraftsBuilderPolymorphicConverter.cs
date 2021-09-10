@@ -5,8 +5,8 @@ using System.Text.Json.Serialization;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies;
-using Kontur.Extern.Client.Model.DraftBuilders;
 using Kontur.Extern.Client.Models.DraftsBuilders.Builders;
+using Kontur.Extern.Client.Models.DraftsBuilders.Enums;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders
 {

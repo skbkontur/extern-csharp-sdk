@@ -1,8 +1,8 @@
 using System;
 using AutoBogus;
-using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Models.Docflows.Descriptions;
+using Kontur.Extern.Client.Models.Docflows.Enums;
 using Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions;
 
 namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators

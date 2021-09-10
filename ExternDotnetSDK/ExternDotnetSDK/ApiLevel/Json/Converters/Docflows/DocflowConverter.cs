@@ -5,11 +5,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions;
-using Kontur.Extern.Client.Model.Docflows;
 using Kontur.Extern.Client.Models.Common;
 using Kontur.Extern.Client.Models.Docflows;
 using Kontur.Extern.Client.Models.Docflows.Descriptions;
 using Kontur.Extern.Client.Models.Docflows.Documents;
+using Kontur.Extern.Client.Models.Docflows.Enums;
 
 namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
 {

@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson.Attributes;
-using Kontur.Extern.Client.Model.Documents;
+using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
 
 namespace Kontur.Extern.Client.Models.Docflows.Documents
 {

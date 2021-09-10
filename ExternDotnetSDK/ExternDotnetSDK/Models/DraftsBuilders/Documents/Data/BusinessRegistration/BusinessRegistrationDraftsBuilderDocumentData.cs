@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Model.Numbers.BusinessRegistration;
+using Kontur.Extern.Client.Models.Numbers.BusinessRegistration;
 
 namespace Kontur.Extern.Client.Models.DraftsBuilders.Documents.Data.BusinessRegistration
 {

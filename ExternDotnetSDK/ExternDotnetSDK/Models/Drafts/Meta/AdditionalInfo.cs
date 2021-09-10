@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Model.Drafts;
+using Kontur.Extern.Client.Models.Drafts.Enums;
 
 namespace Kontur.Extern.Client.Models.Drafts.Meta
 {

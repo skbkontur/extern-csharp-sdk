@@ -7,9 +7,9 @@ using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents;
 using Kontur.Extern.Client.Cryptography;
 using Kontur.Extern.Client.Exceptions;
 using Kontur.Extern.Client.Http.Constants;
-using Kontur.Extern.Client.Model.Documents;
 using Kontur.Extern.Client.Model.Documents.Contents;
-using Kontur.Extern.Client.Model.Numbers.BusinessRegistration;
+using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
+using Kontur.Extern.Client.Models.Numbers.BusinessRegistration;
 
 namespace Kontur.Extern.Client.Model.Drafts
 {
