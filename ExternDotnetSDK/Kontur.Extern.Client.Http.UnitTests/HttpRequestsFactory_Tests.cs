@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using JetBrains.Annotations;
@@ -10,7 +9,6 @@ using Kontur.Extern.Client.Http.Options;
 using Kontur.Extern.Client.Http.Serialization.SysTextJson;
 using Kontur.Extern.Client.Testing.Fakes.Http;
 using Kontur.Extern.Client.Testing.Fakes.Logging;
-using Kontur.Extern.Client.Testing.xUnit;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Logging.Abstractions;
 using Xunit;
