@@ -19,12 +19,9 @@ namespace Kontur.Extern.Client
             var accountId = path.AccountId;
             return new EntityList<IDocflow>(
                 async (skip, take, timeout) =>
-                {
-                    checked
-                    {
-                        apiFilter.Skip = (int) skip;
-                        apiFilter.Take = (int) take;
-                    }
+                { 
+                    apiFilter.Skip = skip;
+                    apiFilter.Take = take;
 
                     var docflowPage = await apiClient.Docflows.GetDocflowsAsync(accountId, apiFilter, timeout);
 

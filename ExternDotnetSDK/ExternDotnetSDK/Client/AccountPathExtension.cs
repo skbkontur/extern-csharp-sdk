@@ -41,14 +41,12 @@ namespace Kontur.Extern.Client
                 async (skip, take, timeout) =>
                 {
                     int intSkip;
-                    int intTake;
                     checked
                     {
                         intSkip = (int) skip;
-                        intTake = (int) take;
                     }
 
-                    var certificateList = await apiClient.Accounts.GetAccountCertificatesAsync(accountId, intSkip, intTake, forAllUsers, timeout);
+                    var certificateList = await apiClient.Accounts.GetAccountCertificatesAsync(accountId, intSkip, take, forAllUsers, timeout);
 
                     return (certificateList.Certificates, certificateList.TotalCount);
                 });    

@@ -34,14 +34,12 @@ namespace Kontur.Extern.Client
             return new EntityList<Organization>(async (skip, take, timeout) =>
             {
                 int skipValue;
-                int takeValue;
                 checked
                 {
                     skipValue = (int) skip;
-                    takeValue = (int) take;
                 }
 
-                var organizationBatch = await apiClient.Organizations.GetAllOrganizationsAsync(accountId, inn, kpp, skipValue, takeValue, timeout).ConfigureAwait(false);
+                var organizationBatch = await apiClient.Organizations.GetAllOrganizationsAsync(accountId, inn, kpp, skipValue, take, timeout).ConfigureAwait(false);
 
                 return (organizationBatch.Organizations, organizationBatch.TotalCount);
             });

@@ -27,12 +27,16 @@ namespace Kontur.Extern.Client.Primitives
 
         private class Pagination : IPagination<T>
         {
-            private readonly uint pageSize;
+            private readonly int pageSize;
             private readonly GetSliceAsync<T> getSliceAsync;
 
             public Pagination(uint pageSize, GetSliceAsync<T> getSliceAsync)
             {
-                this.pageSize = pageSize;
+                checked
+                {
+                    this.pageSize = (int) pageSize;
+                }
+
                 this.getSliceAsync = getSliceAsync;
             }
 
@@ -60,13 +64,13 @@ namespace Kontur.Extern.Client.Primitives
             public async Task<Page<T>> LoadPageAsync(long pageIndex, TimeSpan? timeout = null)
             {
                 var (items, totalItems) = await getSliceAsync(pageIndex*pageSize, pageSize, timeout).ConfigureAwait(false);
-                return new Page<T>(items, pageSize, pageIndex, totalItems);
+                return new Page<T>(items, (uint) pageSize, pageIndex, totalItems);
             }
         }
 
         private class Slicing : IEntityListSlicing<T>, IEntityListSliceLoading<T>
         {
-            private readonly uint sliceSize;
+            private readonly int sliceSize;
             private readonly long skipItems;
             private readonly GetSliceAsync<T> getSliceAsync;
 
@@ -75,7 +79,22 @@ namespace Kontur.Extern.Client.Primitives
                 if (sliceSize == 0)
                     throw Errors.ValueShouldBeGreaterThanZero(nameof(sliceSize), sliceSize); 
                 if (skipItems < 0)
-                    throw Errors.ValueShouldBeGreaterThan(nameof(skipItems), skipItems, -1); 
+                    throw Errors.ValueShouldBeGreaterThan(nameof(skipItems), skipItems, -1);
+                
+                checked
+                {
+                    this.sliceSize = (int) sliceSize;
+                }
+
+                this.skipItems = skipItems;
+                this.getSliceAsync = getSliceAsync;
+            }
+
+            private Slicing(int sliceSize, long skipItems, GetSliceAsync<T> getSliceAsync)
+            {
+                if (skipItems < 0)
+                    throw Errors.ValueShouldBeGreaterThan(nameof(skipItems), skipItems, -1);
+                
                 this.sliceSize = sliceSize;
                 this.skipItems = skipItems;
                 this.getSliceAsync = getSliceAsync;
@@ -107,7 +126,7 @@ namespace Kontur.Extern.Client.Primitives
 
             public Task<(IReadOnlyList<T> Items, bool HasNextSlice)> LoadSliceAsync(TimeSpan? timeout = null) => LoadSliceAsync(skipItems, sliceSize, timeout);
 
-            private async Task<(IReadOnlyList<T> Items, bool HasNextSlice)> LoadSliceAsync(long skip, long take, TimeSpan? timeout = null)
+            private async Task<(IReadOnlyList<T> Items, bool HasNextSlice)> LoadSliceAsync(long skip, int take, TimeSpan? timeout = null)
             {
                 var (items, totalItems) = await getSliceAsync(skip, take, timeout).ConfigureAwait(false);
                 return (items, items.Count > 0 && totalItems > take + skip);

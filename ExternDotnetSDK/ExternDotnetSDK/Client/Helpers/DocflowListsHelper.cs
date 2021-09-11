@@ -24,11 +24,8 @@ namespace Kontur.Extern.Client.Helpers
             return new EntityList<IDocflow>(
                 async (skip, take, timeout) =>
                 {
-                    checked
-                    {
-                        docflowFilter.Skip = (int) skip;
-                        docflowFilter.Take = (int) take;
-                    }
+                    docflowFilter.Skip = skip;
+                    docflowFilter.Take = take;
 
                     var relatedDocflows = await loadPage(apiClient, accountId, docflowId, documentId, docflowFilter, timeout).ConfigureAwait(false);
                     return (relatedDocflows.DocflowsPageItem, relatedDocflows.TotalCount);
