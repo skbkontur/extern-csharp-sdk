@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
+using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Signatures;
 using Kontur.Extern.Client.ApiLevel.Models.Responses.ApiTasks;
 using Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Check;

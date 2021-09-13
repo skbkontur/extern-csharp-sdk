@@ -24,7 +24,6 @@ using Kontur.Extern.Client.Testing.Generators;
 using Kontur.Extern.Client.Testing.Helpers;
 using Xunit;
 using Xunit.Abstractions;
-using DraftDocument = Kontur.Extern.Client.Model.Drafts.DraftDocument;
 using Sender = Kontur.Extern.Client.Models.Drafts.Meta.Sender;
 using Signature = Kontur.Extern.Client.Model.Signature;
 
@@ -108,10 +107,12 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var createdDraft = entityScope.Entity;
             var documentId = Guid.NewGuid();
 
-            var document = DraftDocument
-                .WithId(documentId, new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3})))
-                .OfType(DocumentType.Fns.Fns534.Report);
-
+            var document = DraftDocumentBuilder
+                .WithId(documentId)
+                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3})))
+                .WithType(DocumentType.Fns.Fns534.Report)
+                .ToDocument();
+            
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
             addedDocumentId.Should().Be(documentId);
@@ -125,9 +126,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var createdDraft = entityScope.Entity;
             var documentId = Guid.NewGuid();
 
-            var document = DraftDocument
-                .WithId(documentId, new ByteDocumentContent(new byte[]{1, 2, 3}))
-                .OfType(DocumentType.Fns.Fns534.Report);
+            var document = DraftDocumentBuilder
+                .WithId(documentId)
+                .WithContentToUpload(new ByteDocumentContent(new byte[]{1, 2, 3}))
+                .WithType(DocumentType.Fns.Fns534.Report)
+                .ToDocument();
 
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
@@ -135,7 +138,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         }
         
         [Fact]
-        public async Task Should_fail_when_getting_not_exists_document()
+        public async Task Should_fail_when_getting_not_exist_document()
         {
             var newDraft = CreateDraftOfDefaultAccount();
             await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
@@ -147,16 +150,18 @@ namespace Kontur.Extern.Client.End2EndTests.Client
         }
         
         [Fact]
-        public async Task Should_get_a_created_document()
+        public async Task Should_get_created_document()
         {
             var newDraft = CreateDraftOfDefaultAccount();
             await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
             
-            var document = DraftDocument
-                .WithNewId(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
-                .OfType(DocumentType.Fns.Fns534.Report)
-                .WithSignature(GeneratedAccount.CertificatePublicPart);
+            var document = DraftDocumentBuilder
+                .WithNewId()
+                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
+                .WithSignature(GeneratedAccount.CertificatePublicPart)
+                .WithType(DocumentType.Fns.Fns534.Report)
+                .ToDocument();
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
             var expectedDocument = new Models.Drafts.Documents.DraftDocument
@@ -193,9 +198,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
 
-            var document = DraftDocument
-                .WithNewId(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
-                .OfType(DocumentType.Fns.Fns534.Report);
+            var document = DraftDocumentBuilder
+                .WithNewId()
+                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[] {1, 2, 3}), "application/pdf"))
+                .WithType(DocumentType.Fns.Fns534.Report)
+                .ToDocument();
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
             
             var addedSignatureId = await Context.Drafts.AddSignature(AccountId, createdDraft.Id, addedDocumentId, GeneratedAccount.CertificatePublicPart);
@@ -218,9 +225,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var createdDraft = entityScope.Entity;
 
             Signature documentSignature = new byte[] {1, 2, 3};
-            var document = DraftDocument
-                .WithNewId(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
-                .OfType(DocumentType.Fns.Fns534.Report);
+            var document = DraftDocumentBuilder
+                .WithNewId()
+                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
+                .WithType(DocumentType.Fns.Fns534.Report)
+                .ToDocument();
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
             var signatureId = await Context.Drafts.AddSignature(AccountId, createdDraft.Id, addedDocumentId, documentSignature);
 
@@ -239,9 +248,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var createdDraft = entityScope.Entity;
 
             var contentBytes = randomizer.Bytes(500*1024);
-            var document = DraftDocument
-                .WithNewId(new StreamDocumentContent(new MemoryStream(contentBytes)))
-                .OfType(DocumentType.Fns.Fns534.Report);
+            var document = DraftDocumentBuilder
+                .WithNewId()
+                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(contentBytes)))
+                .WithType(DocumentType.Fns.Fns534.Report)
+                .ToDocument();
             var addedDocumentId = await context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
             
             var draftDocument = await context.Drafts.GetDocument(AccountId, createdDraft.Id, addedDocumentId);
@@ -261,9 +272,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
             
-            var document = DraftDocument
-                .WithNewId(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
-                .OfType(DocumentType.Fns.Fns534.Report);
+            var document = DraftDocumentBuilder
+                .WithNewId()
+                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
+                .WithType(DocumentType.Fns.Fns534.Report)
+                .ToDocument();
             var documentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
             await Context.Drafts.DeleteDocument(AccountId, createdDraft.Id, documentId);
@@ -281,8 +294,10 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var createdDraft = entityScope.Entity;
 
             var fufSschContent = await GenerateCorrectFufSschContent();
-            var document = DraftDocument
-                .WithNewId(new ByteDocumentContent(fufSschContent, "application/xml"));
+            var document = DraftDocumentBuilder
+                .WithNewId()
+                .WithContentToUpload(new ByteDocumentContent(fufSschContent, "application/xml"))
+                .ToDocument();
             await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
             var checkingStatus = await Context.Drafts.CheckDraft(AccountId, createdDraft.Id);
@@ -311,9 +326,11 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var createdDraft = entityScope.Entity;
 
             var fufSschContent = await GenerateInCorrectFufSschContent();
-            var document = DraftDocument
-                .WithNewId(new ByteDocumentContent(fufSschContent, "application/xml"))
-                .WithFileName("invalid.xml");
+            var document = DraftDocumentBuilder
+                .WithNewId()
+                .WithContentToUpload(new ByteDocumentContent(fufSschContent, "application/xml"))
+                .WithFileName("invalid.xml")
+                .ToDocument();
             await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
             var checkingStatus = await Context.Drafts.CheckDraft(AccountId, createdDraft.Id);
@@ -338,7 +355,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
 
-            var document = DraftDocument
+            var document = DraftDocumentBuilder
                 .FssSedoProviderSubscriptionSubscribeRequestForRegistrationNumber(Guid.NewGuid());
             await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
@@ -355,10 +372,12 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var createdDraft = entityScope.Entity;
 
             var fufSschContent = await GenerateIncorrectFufSschContent();
-            var document = DraftDocument
-                .WithNewId(new ByteDocumentContent(fufSschContent, "application/xml"))
+            var document = DraftDocumentBuilder
+                .WithNewId()
+                .WithContentToUpload(new ByteDocumentContent(fufSschContent, "application/xml"))
                 .WithFileName("invalid.xml")
-                .OfType(DocumentType.Fns.Fns534.Report);
+                .WithType(DocumentType.Fns.Fns534.Report)
+                .ToDocument();
             await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
             Func<Task> func = async () => await Context.Drafts.SendDraftOrFail(AccountId, createdDraft.Id);
@@ -387,10 +406,12 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             var createdDraft = entityScope.Entity;
 
             var fufSschContent = await GenerateIncorrectFufSschContent();
-            var document = DraftDocument
-                .WithNewId(new ByteDocumentContent(fufSschContent, "application/xml"))
+            var document = DraftDocumentBuilder
+                .WithNewId()
+                .WithContentToUpload(new ByteDocumentContent(fufSschContent, "application/xml"))
                 .WithFileName("invalid.xml")
-                .OfType(DocumentType.Fns.Fns534.Report);
+                .WithType(DocumentType.Fns.Fns534.Report)
+                .ToDocument();
             await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
             var result = await Context.Drafts.TrySendDraft(AccountId, createdDraft.Id);
