@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Kontur.Extern.Client.Testing.Helpers;
+using Kontur.Extern.Api.Client.Testing.Helpers;
 
-namespace Kontur.Extern.Client.Tests.TestHelpers
+namespace Kontur.Extern.Api.Client.Tests.TestHelpers
 {
     internal static class EnumLikeType
     {

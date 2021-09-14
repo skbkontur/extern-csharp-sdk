@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Auth.OpenId.Builder;
+using Kontur.Extern.Api.Client.Auth.OpenId.Builder;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     public delegate OpenIdAuthenticationProviderBuilder.Configured OpenIdSetup(OpenIdAuthenticationProviderBuilder builder);
     

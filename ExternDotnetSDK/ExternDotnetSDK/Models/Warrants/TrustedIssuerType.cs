@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Client.Models.Warrants
+namespace Kontur.Extern.Api.Client.Models.Warrants
 {
     /// <summary>
     /// Тип представителя

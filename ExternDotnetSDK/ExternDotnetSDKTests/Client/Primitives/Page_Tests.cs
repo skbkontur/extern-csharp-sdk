@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using Kontur.Extern.Client.Primitives;
+using Kontur.Extern.Api.Client.Primitives;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.Client.Primitives
+namespace Kontur.Extern.Api.Client.Tests.Client.Primitives
 {
     [TestFixture]
     internal class Page_Tests

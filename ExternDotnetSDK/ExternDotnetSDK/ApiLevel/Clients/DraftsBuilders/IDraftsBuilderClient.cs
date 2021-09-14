@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.DraftBulders.Builders;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.DraftBulders.DocumentFiles;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.DraftBulders.Documents;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.DraftBuilders.Builders;
-using Kontur.Extern.Client.Models.ApiTasks;
-using Kontur.Extern.Client.Models.DraftsBuilders.Builders;
-using Kontur.Extern.Client.Models.DraftsBuilders.DocumentFiles;
-using Kontur.Extern.Client.Models.DraftsBuilders.Documents;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Builders;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.DocumentFiles;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Documents;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.DraftBuilders.Builders;
+using Kontur.Extern.Api.Client.Models.ApiTasks;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents;
 
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.DraftsBuilders
+namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
 {
     public interface IDraftsBuilderClient
     {

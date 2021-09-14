@@ -1,13 +1,13 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions;
-using Kontur.Extern.Client.Models.ApiErrors;
-using Kontur.Extern.Client.Models.ApiTasks;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Models.ApiErrors;
+using Kontur.Extern.Api.Client.Models.ApiTasks;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Extensions;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
+namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Tasks
 {
     internal partial class ApiTaskResultJsonConverter
     {

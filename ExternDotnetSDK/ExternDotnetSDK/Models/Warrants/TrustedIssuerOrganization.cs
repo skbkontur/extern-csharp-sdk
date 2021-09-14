@@ -2,9 +2,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Common;
 
-namespace Kontur.Extern.Client.Models.Warrants
+namespace Kontur.Extern.Api.Client.Models.Warrants
 {
     /// <summary>
     /// Информация об организации-передоверителе

@@ -3,7 +3,7 @@ using System;
     using System.IO;
     using System.Threading.Tasks;
 
-namespace Kontur.Extern.Client.Uploading
+namespace Kontur.Extern.Api.Client.Uploading
 {
     public static class ContentServiceUploadingExtension
     {

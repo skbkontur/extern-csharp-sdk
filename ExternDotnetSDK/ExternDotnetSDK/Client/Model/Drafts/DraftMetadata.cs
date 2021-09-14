@@ -1,10 +1,10 @@
 #nullable enable
 using System;
 using System.Linq;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
+using Kontur.Extern.Api.Client.Exceptions;
 
-namespace Kontur.Extern.Client.Model.Drafts
+namespace Kontur.Extern.Api.Client.Model.Drafts
 {
     public class DraftMetadata
     {

@@ -1,10 +1,10 @@
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Api.Client.Exceptions;
 
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.Models.Numbers
+namespace Kontur.Extern.Api.Client.Models.Numbers
 {
     /// <summary>
     /// Контролирующий орган. Формат данных: ФНС — ХХХХ, ПФР — ХХХ-ХХХ, ФСС — ХХХХХ, Росстат — ХХ-ХХ, где Х — это цифра от 0 до 9

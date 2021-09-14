@@ -1,4 +1,4 @@
-namespace Kontur.Extern.Client.Models.Numbers
+namespace Kontur.Extern.Api.Client.Models.Numbers
 {
     public enum AuthorityNumberKind
     {

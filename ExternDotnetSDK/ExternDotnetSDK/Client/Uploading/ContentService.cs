@@ -1,11 +1,11 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Clients.Contents;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Contents;
-using Kontur.Extern.Client.Model.Configuration;
+using Kontur.Extern.Api.Client.ApiLevel.Clients.Contents;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Contents;
+using Kontur.Extern.Api.Client.Model.Configuration;
 
-namespace Kontur.Extern.Client.Uploading
+namespace Kontur.Extern.Api.Client.Uploading
 {
     internal class ContentService : IContentService
     {

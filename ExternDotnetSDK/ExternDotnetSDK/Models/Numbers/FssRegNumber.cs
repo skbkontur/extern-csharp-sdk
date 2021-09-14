@@ -1,8 +1,8 @@
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Api.Client.Exceptions;
 
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.Models.Numbers
+namespace Kontur.Extern.Api.Client.Models.Numbers
 {
     /// <summary>
     /// Регистрационный номер ФСС. Формат данных: 1234567890

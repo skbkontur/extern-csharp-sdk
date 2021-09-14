@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using AutoBogus;
 
-namespace Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions
+namespace Kontur.Extern.Api.Client.Tests.TestHelpers.BogusExtensions
 {
     internal static class AutoFakerExtension
     {

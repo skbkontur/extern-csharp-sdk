@@ -1,7 +1,7 @@
 #nullable enable
 using System;
 
-namespace Kontur.Extern.Client.Primitives.LongOperations
+namespace Kontur.Extern.Api.Client.Primitives.LongOperations
 {
     public readonly struct LongOperationResult<TResult, TFailure>
         where TFailure : ILongOperationFailure

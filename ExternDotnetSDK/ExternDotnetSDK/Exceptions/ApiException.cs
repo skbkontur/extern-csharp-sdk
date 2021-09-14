@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Kontur.Extern.Client.Exceptions
+namespace Kontur.Extern.Api.Client.Exceptions
 {
     [Serializable]
     public class ApiException : Exception

@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
-using Kontur.Extern.Client.Models.Numbers.BusinessRegistration;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
+using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents
+namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

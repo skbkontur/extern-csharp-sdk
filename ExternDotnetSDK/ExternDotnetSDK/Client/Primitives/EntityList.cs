@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Api.Client.Exceptions;
 using Vostok.Commons.Time;
 
-namespace Kontur.Extern.Client.Primitives
+namespace Kontur.Extern.Api.Client.Primitives
 {
     internal class EntityList<T> : IEntityList<T>
     {

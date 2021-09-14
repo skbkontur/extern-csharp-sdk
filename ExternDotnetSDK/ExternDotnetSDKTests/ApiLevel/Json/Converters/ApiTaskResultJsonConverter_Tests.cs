@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Net;
 using FluentAssertions;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Json;
-using Kontur.Extern.Client.Http.Serialization;
-using Kontur.Extern.Client.Models.ApiErrors;
-using Kontur.Extern.Client.Models.ApiTasks;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.ApiLevel.Json;
+using Kontur.Extern.Api.Client.Http.Serialization;
+using Kontur.Extern.Api.Client.Models.ApiErrors;
+using Kontur.Extern.Api.Client.Models.ApiTasks;
+using Kontur.Extern.Api.Client.Models.Common;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.ApiLevel.Json.Converters
+namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Json.Converters
 {
     internal class ApiTaskResultJsonConverter_Tests
     {

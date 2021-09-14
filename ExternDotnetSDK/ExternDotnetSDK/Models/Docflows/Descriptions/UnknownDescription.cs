@@ -1,4 +1,4 @@
-namespace Kontur.Extern.Client.Models.Docflows.Descriptions
+namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions
 {
     public class UnknownDescription : DocflowDescription
     {

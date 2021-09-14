@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders;
-using Kontur.Extern.Client.Models.DraftsBuilders.DocumentFiles;
-using Kontur.Extern.Client.Models.DraftsBuilders.DocumentFiles.Data;
-using Kontur.Extern.Client.Models.DraftsBuilders.Enums;
-using Kontur.Extern.Client.Tests.TestHelpers;
+using Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles.Data;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
+using Kontur.Extern.Api.Client.Tests.TestHelpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters.DraftBuilders
+namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters.DraftBuilders
 {
     [TestFixture]
     internal class DraftsBuilderDocumentFileMetaConverter_Tests

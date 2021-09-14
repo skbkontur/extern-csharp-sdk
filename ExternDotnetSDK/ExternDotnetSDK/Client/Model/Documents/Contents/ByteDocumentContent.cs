@@ -2,11 +2,11 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Cryptography;
-using Kontur.Extern.Client.Http.Constants;
-using Kontur.Extern.Client.Uploading;
+using Kontur.Extern.Api.Client.Uploading;
+using Kontur.Extern.Api.Client.Cryptography;
+using Kontur.Extern.Api.Client.Http.Constants;
 
-namespace Kontur.Extern.Client.Model.Documents.Contents
+namespace Kontur.Extern.Api.Client.Model.Documents.Contents
 {
     public class ByteDocumentContent : IDocumentContent
     {

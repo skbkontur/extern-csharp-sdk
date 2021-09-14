@@ -1,9 +1,9 @@
 ﻿using System;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.ApiTasks;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.ApiTasks;
+using Kontur.Extern.Api.Client.Models.Common;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Responses.ApiTasks
+namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ApiTasks
 {
     [PublicAPI]
     public class ApiTaskStatus

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.Docflows.Descriptions.Fns.BusinessRegistration;
+using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegistration;
 
-namespace Kontur.Extern.Client.Models.DraftsBuilders.Builders.Data.BusinessRegistration
+namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessRegistration
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

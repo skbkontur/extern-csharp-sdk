@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Authentication
+namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Authentication
 {
     public interface IAuthenticationProvider
     {

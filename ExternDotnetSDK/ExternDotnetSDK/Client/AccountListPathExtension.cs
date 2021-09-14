@@ -1,13 +1,13 @@
 #nullable enable
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Models.Accounts;
-using Kontur.Extern.Client.Models.Numbers;
-using Kontur.Extern.Client.Paths;
-using Kontur.Extern.Client.Primitives;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Models.Accounts;
+using Kontur.Extern.Api.Client.Models.Numbers;
+using Kontur.Extern.Api.Client.Paths;
+using Kontur.Extern.Api.Client.Primitives;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     [PublicAPI]
     public static class AccountListPathExtension

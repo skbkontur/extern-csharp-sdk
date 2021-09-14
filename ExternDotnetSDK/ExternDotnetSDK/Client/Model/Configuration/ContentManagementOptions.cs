@@ -1,6 +1,6 @@
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Api.Client.Exceptions;
 
-namespace Kontur.Extern.Client.Model.Configuration
+namespace Kontur.Extern.Api.Client.Model.Configuration
 {
     public class ContentManagementOptions
     {

@@ -1,11 +1,11 @@
 using System;
 using AutoBogus;
-using Kontur.Extern.Client.Models.Docflows.Documents;
-using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
-using Kontur.Extern.Client.Models.Docflows.Documents.Requisites;
-using Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites;
+using Kontur.Extern.Api.Client.Tests.TestHelpers.BogusExtensions;
 
-namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
+namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
 {
     internal class DocflowDocumentDescriptionGenerator
     {

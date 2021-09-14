@@ -4,10 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Common.Time;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Common.Time;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows
+namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

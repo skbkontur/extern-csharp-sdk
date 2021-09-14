@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Signatures;
-using Kontur.Extern.Client.Http.Models;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Paths;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Signatures;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Paths;
+using Kontur.Extern.Api.Client.Http.Models;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     [PublicAPI]
     public static class DraftDocumentSignaturePathExtension

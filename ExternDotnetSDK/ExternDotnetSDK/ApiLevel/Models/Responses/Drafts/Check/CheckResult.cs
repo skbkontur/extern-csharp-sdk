@@ -1,4 +1,4 @@
-﻿namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Check
+﻿namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Check
 {
     public class CheckResult
     {

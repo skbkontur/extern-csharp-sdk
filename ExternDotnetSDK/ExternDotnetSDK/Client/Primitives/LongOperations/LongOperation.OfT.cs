@@ -1,11 +1,11 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Models.ApiTasks;
-using Kontur.Extern.Client.Primitives.Polling;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Models.ApiTasks;
+using Kontur.Extern.Api.Client.Primitives.Polling;
 
-namespace Kontur.Extern.Client.Primitives.LongOperations
+namespace Kontur.Extern.Api.Client.Primitives.LongOperations
 {
     internal class LongOperation<T> : ILongOperation<T>
     {

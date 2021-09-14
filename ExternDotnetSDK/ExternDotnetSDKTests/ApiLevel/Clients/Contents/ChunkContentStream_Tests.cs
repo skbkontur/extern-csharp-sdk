@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Clients.Contents;
-using Kontur.Extern.Client.Testing.Helpers;
+using Kontur.Extern.Api.Client.ApiLevel.Clients.Contents;
+using Kontur.Extern.Api.Client.Testing.Helpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Contents
+namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Contents
 {
     public class ChunkContentStream_Tests
     {

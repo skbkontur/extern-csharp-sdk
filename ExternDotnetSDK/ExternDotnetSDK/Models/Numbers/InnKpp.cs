@@ -1,8 +1,8 @@
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Api.Client.Exceptions;
 
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.Models.Numbers
+namespace Kontur.Extern.Api.Client.Models.Numbers
 {
     /// <summary>
     /// ИНН-КПП для юрлиц. Формат данных: 1234567890-123456789

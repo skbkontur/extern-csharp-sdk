@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Client.Models.Docflows.Descriptions.Fns.BusinessRegistration
+namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegistration
 {
     [PublicAPI]
     public enum BusinessType

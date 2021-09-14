@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using FluentAssertions;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Docflows.Enums;
-using Kontur.Extern.Client.Tests.Client.Model.TestAssertions;
-using Kontur.Extern.Client.Tests.TestHelpers;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Docflows.Enums;
+using Kontur.Extern.Api.Client.Tests.Client.Model.TestAssertions;
+using Kontur.Extern.Api.Client.Tests.TestHelpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.Models.Docflows.Enums
+namespace Kontur.Extern.Api.Client.Tests.Models.Docflows.Enums
 {
     [TestFixture]
     internal class DocflowType_Tests

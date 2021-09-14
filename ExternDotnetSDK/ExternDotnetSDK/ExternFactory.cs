@@ -1,28 +1,28 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel;
-using Kontur.Extern.Client.ApiLevel.Json;
-using Kontur.Extern.Client.Auth.Abstractions;
-using Kontur.Extern.Client.Auth.OpenId.Builder;
-using Kontur.Extern.Client.Authentication;
-using Kontur.Extern.Client.Common;
-using Kontur.Extern.Client.Cryptography;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Http;
-using Kontur.Extern.Client.Http.ClusterClientAdapters;
-using Kontur.Extern.Client.Http.Configurations;
-using Kontur.Extern.Client.Http.Options;
-using Kontur.Extern.Client.Http.Serialization;
-using Kontur.Extern.Client.Model.Configuration;
-using Kontur.Extern.Client.Models.ApiErrors;
-using Kontur.Extern.Client.Paths;
-using Kontur.Extern.Client.Primitives.Polling;
+using Kontur.Extern.Api.Client.ApiLevel;
+using Kontur.Extern.Api.Client.ApiLevel.Json;
+using Kontur.Extern.Api.Client.Common;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Model.Configuration;
+using Kontur.Extern.Api.Client.Models.ApiErrors;
+using Kontur.Extern.Api.Client.Paths;
+using Kontur.Extern.Api.Client.Primitives.Polling;
+using Kontur.Extern.Api.Client.Auth.Abstractions;
+using Kontur.Extern.Api.Client.Auth.OpenId.Builder;
+using Kontur.Extern.Api.Client.Authentication;
+using Kontur.Extern.Api.Client.Cryptography;
+using Kontur.Extern.Api.Client.Http;
+using Kontur.Extern.Api.Client.Http.ClusterClientAdapters;
+using Kontur.Extern.Api.Client.Http.Configurations;
+using Kontur.Extern.Api.Client.Http.Options;
+using Kontur.Extern.Api.Client.Http.Serialization;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Commons.Time;
 using Vostok.Logging.Abstractions;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     internal class ExternFactory
     {

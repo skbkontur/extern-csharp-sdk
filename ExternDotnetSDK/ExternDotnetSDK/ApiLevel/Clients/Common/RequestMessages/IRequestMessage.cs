@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Common.RequestMessages
+namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Common.RequestMessages
 {
     public interface IRequestMessage
     {

@@ -2,17 +2,17 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Helpers;
-using Kontur.Extern.Client.Model;
-using Kontur.Extern.Client.Model.DocflowFiltering;
-using Kontur.Extern.Client.Models.Docflows;
-using Kontur.Extern.Client.Models.Docflows.Documents;
-using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
-using Kontur.Extern.Client.Models.Docflows.Documents.Replies;
-using Kontur.Extern.Client.Paths;
-using Kontur.Extern.Client.Primitives;
+using Kontur.Extern.Api.Client.Helpers;
+using Kontur.Extern.Api.Client.Model;
+using Kontur.Extern.Api.Client.Model.DocflowFiltering;
+using Kontur.Extern.Api.Client.Models.Docflows;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Replies;
+using Kontur.Extern.Api.Client.Paths;
+using Kontur.Extern.Api.Client.Primitives;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     [PublicAPI]
     public static class DocumentPathExtension

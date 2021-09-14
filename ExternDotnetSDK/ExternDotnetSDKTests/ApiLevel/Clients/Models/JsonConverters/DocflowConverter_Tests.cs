@@ -3,18 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Json;
-using Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows;
-using Kontur.Extern.Client.Http.Serialization;
-using Kontur.Extern.Client.Models.Docflows;
-using Kontur.Extern.Client.Models.Docflows.Descriptions;
-using Kontur.Extern.Client.Models.Docflows.Descriptions.Fns;
-using Kontur.Extern.Client.Models.Docflows.Enums;
-using Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators;
-using Kontur.Extern.Client.Tests.TestHelpers;
+using Kontur.Extern.Api.Client.ApiLevel.Json;
+using Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows;
+using Kontur.Extern.Api.Client.Http.Serialization;
+using Kontur.Extern.Api.Client.Models.Docflows;
+using Kontur.Extern.Api.Client.Models.Docflows.Descriptions;
+using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns;
+using Kontur.Extern.Api.Client.Models.Docflows.Enums;
+using Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators;
+using Kontur.Extern.Api.Client.Tests.TestHelpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
+namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
 {
     [TestFixture]
     internal class DocflowConverter_Tests

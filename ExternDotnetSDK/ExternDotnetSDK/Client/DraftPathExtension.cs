@@ -2,18 +2,18 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Send;
-using Kontur.Extern.Client.Http.Serialization;
-using Kontur.Extern.Client.Model.Drafts;
-using Kontur.Extern.Client.Model.Drafts.LongOperationStatuses;
-using Kontur.Extern.Client.Models.ApiTasks;
-using Kontur.Extern.Client.Models.Docflows;
-using Kontur.Extern.Client.Models.Drafts;
-using Kontur.Extern.Client.Models.Drafts.Meta;
-using Kontur.Extern.Client.Paths;
-using Kontur.Extern.Client.Primitives.LongOperations;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Send;
+using Kontur.Extern.Api.Client.Model.Drafts;
+using Kontur.Extern.Api.Client.Model.Drafts.LongOperationStatuses;
+using Kontur.Extern.Api.Client.Models.ApiTasks;
+using Kontur.Extern.Api.Client.Models.Docflows;
+using Kontur.Extern.Api.Client.Models.Drafts;
+using Kontur.Extern.Api.Client.Models.Drafts.Meta;
+using Kontur.Extern.Api.Client.Paths;
+using Kontur.Extern.Api.Client.Primitives.LongOperations;
+using Kontur.Extern.Api.Client.Http.Serialization;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     [PublicAPI]
     public static class DraftPathExtension

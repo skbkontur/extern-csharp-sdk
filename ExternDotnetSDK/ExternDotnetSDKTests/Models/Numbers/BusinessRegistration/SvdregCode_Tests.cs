@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using FluentAssertions;
-using Kontur.Extern.Client.Models.Numbers.BusinessRegistration;
-using Kontur.Extern.Client.Tests.Client.Model.TestAssertions;
-using Kontur.Extern.Client.Tests.TestHelpers;
+using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
+using Kontur.Extern.Api.Client.Tests.Client.Model.TestAssertions;
+using Kontur.Extern.Api.Client.Tests.TestHelpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.Models.Numbers.BusinessRegistration
+namespace Kontur.Extern.Api.Client.Tests.Models.Numbers.BusinessRegistration
 {
     [TestFixture]
     internal class SvdregCode_Tests

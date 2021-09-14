@@ -1,7 +1,7 @@
 // ReSharper disable CommentTypo
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Client.Models.Docflows.Documents.Enums
+namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
 {
     public partial struct DocumentType
     {

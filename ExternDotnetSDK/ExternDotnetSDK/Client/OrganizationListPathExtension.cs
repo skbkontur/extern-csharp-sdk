@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Organizations;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Models.Numbers;
-using Kontur.Extern.Client.Paths;
-using Kontur.Extern.Client.Primitives;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Models.Numbers;
+using Kontur.Extern.Api.Client.Paths;
+using Kontur.Extern.Api.Client.Primitives;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     public static class OrganizationListPathExtension
     {

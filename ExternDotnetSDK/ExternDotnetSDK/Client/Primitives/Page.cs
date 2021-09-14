@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Api.Client.Exceptions;
 
-namespace Kontur.Extern.Client.Primitives
+namespace Kontur.Extern.Api.Client.Primitives
 {
     public class Page<T> : IPage<T>
     {

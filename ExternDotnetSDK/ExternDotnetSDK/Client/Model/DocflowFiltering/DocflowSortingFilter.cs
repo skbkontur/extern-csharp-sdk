@@ -1,11 +1,11 @@
 #nullable enable
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
-using Kontur.Extern.Client.Common.Time;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Common.Time;
 
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.Model.DocflowFiltering
+namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
 {
     public class DocflowSortingFilter
     {

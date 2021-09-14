@@ -2,16 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows;
-using Kontur.Extern.Client.Models.ApiTasks;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Docflows;
-using Kontur.Extern.Client.Models.Docflows.Documents;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Docflows;
+using Kontur.Extern.Api.Client.Models.ApiTasks;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Docflows;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Docflows
+namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
 {
     public interface IDocflowsClient
     {

@@ -1,18 +1,18 @@
 using System;
 using AutoBogus;
 using AutoBogus.Conventions;
-using Kontur.Extern.Client.Common.Time;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
-using Kontur.Extern.Client.Models.Docflows.Enums;
-using Kontur.Extern.Client.Models.Drafts.Enums;
-using Kontur.Extern.Client.Models.Numbers.BusinessRegistration;
-using Kontur.Extern.Client.Testing.Generators;
-using Kontur.Extern.Client.Tests.TestHelpers;
-using Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions;
+using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
+using Kontur.Extern.Api.Client.Models.Docflows.Enums;
+using Kontur.Extern.Api.Client.Models.Drafts.Enums;
+using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
+using Kontur.Extern.Api.Client.Testing.Generators;
+using Kontur.Extern.Api.Client.Tests.TestHelpers;
+using Kontur.Extern.Api.Client.Tests.TestHelpers.BogusExtensions;
 using Randomizer = Bogus.Randomizer;
 
-namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
+namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
 {
     internal static class AutoFakerFactory
     {

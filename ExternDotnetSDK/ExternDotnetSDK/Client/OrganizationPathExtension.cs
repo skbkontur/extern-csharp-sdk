@@ -1,10 +1,10 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Organizations;
-using Kontur.Extern.Client.Paths;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
+using Kontur.Extern.Api.Client.Paths;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     public static class OrganizationPathExtension
     {

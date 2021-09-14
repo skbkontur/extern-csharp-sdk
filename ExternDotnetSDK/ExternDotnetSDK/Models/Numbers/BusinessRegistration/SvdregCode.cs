@@ -1,9 +1,9 @@
 #nullable enable
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Api.Client.Exceptions;
 
-namespace Kontur.Extern.Client.Models.Numbers.BusinessRegistration
+namespace Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration
 {
     /// <summary>
     /// СВДРЕГ коды, которые могут быть обязательными для регистрации ИП\ЮЛ.

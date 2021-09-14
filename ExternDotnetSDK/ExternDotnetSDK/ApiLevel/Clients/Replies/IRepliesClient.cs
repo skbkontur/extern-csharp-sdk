@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Docflows;
-using Kontur.Extern.Client.Models.Docflows.Documents.Replies;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Docflows;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Replies;
 
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
+namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
 {
     public interface IRepliesClient
     {

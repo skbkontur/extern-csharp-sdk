@@ -3,7 +3,7 @@ using System;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace Kontur.Extern.Client.Models.Common
+namespace Kontur.Extern.Api.Client.Models.Common
 {
     public sealed class Link : IEquatable<Link>
     {

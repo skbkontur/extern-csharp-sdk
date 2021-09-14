@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using Kontur.Extern.Client.Common;
+using Kontur.Extern.Api.Client.Common;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.Common
+namespace Kontur.Extern.Api.Client.Tests.Common
 {
     public class BytesComparer_Tests
     {

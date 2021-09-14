@@ -2,12 +2,12 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions;
-using Kontur.Extern.Client.Models.Docflows.Documents;
-using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
-using Kontur.Extern.Client.Models.Docflows.Documents.Requisites;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites;
+using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Extensions;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
+namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
 {
     internal class DocflowDocumentDescriptionConverter : JsonConverter<DocflowDocumentDescription>
     {

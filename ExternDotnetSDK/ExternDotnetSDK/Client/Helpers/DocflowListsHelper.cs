@@ -1,14 +1,14 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Docflows;
-using Kontur.Extern.Client.Model.DocflowFiltering;
-using Kontur.Extern.Client.Models.Docflows;
-using Kontur.Extern.Client.Primitives;
+using Kontur.Extern.Api.Client.ApiLevel;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Docflows;
+using Kontur.Extern.Api.Client.Model.DocflowFiltering;
+using Kontur.Extern.Api.Client.Models.Docflows;
+using Kontur.Extern.Api.Client.Primitives;
 
-namespace Kontur.Extern.Client.Helpers
+namespace Kontur.Extern.Api.Client.Helpers
 {
     internal static class DocflowListsHelper
     {

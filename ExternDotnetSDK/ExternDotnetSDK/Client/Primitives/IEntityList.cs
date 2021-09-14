@@ -1,4 +1,4 @@
-namespace Kontur.Extern.Client.Primitives
+namespace Kontur.Extern.Api.Client.Primitives
 {
     public interface IEntityList<T>
     {

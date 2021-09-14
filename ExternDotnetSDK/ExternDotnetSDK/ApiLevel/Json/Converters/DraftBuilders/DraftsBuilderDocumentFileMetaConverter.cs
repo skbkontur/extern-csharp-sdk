@@ -1,12 +1,12 @@
 #nullable enable
 using System;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.DraftsBuilders.DocumentFiles;
-using Kontur.Extern.Client.Models.DraftsBuilders.DocumentFiles.Data;
-using Kontur.Extern.Client.Models.DraftsBuilders.Enums;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles.Data;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders
+namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
 {
     internal class DraftsBuilderDocumentFileMetaConverter : DraftsBuilderPolymorphicConverter<DraftsBuilderDocumentFileMeta>
     {

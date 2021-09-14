@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using Kontur.Extern.Client.Models.Numbers;
+using Kontur.Extern.Api.Client.Models.Numbers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.Models.Numbers
+namespace Kontur.Extern.Api.Client.Tests.Models.Numbers
 {
     [TestFixture]
     internal class MriCode_Tests

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Client.Models.Drafts.Meta
+namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
 {
     /// <summary>
     /// Реквизиты, специфичные для ЮЛ

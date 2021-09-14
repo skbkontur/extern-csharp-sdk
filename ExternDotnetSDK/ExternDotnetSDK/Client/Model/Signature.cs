@@ -1,9 +1,9 @@
 using System;
-using Kontur.Extern.Client.Common;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Http.Models;
+using Kontur.Extern.Api.Client.Common;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Http.Models;
 
-namespace Kontur.Extern.Client.Model
+namespace Kontur.Extern.Api.Client.Model
 {
     public class Signature
     {

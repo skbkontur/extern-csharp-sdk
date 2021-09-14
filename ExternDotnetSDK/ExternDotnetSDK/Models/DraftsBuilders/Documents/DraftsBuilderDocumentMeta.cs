@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.DraftsBuilders.Documents.Data;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data;
 
-namespace Kontur.Extern.Client.Models.DraftsBuilders.Documents
+namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

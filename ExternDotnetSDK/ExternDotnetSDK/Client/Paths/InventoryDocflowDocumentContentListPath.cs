@@ -1,7 +1,7 @@
 using System;
-using Kontur.Extern.Client.Common;
+using Kontur.Extern.Api.Client.Common;
 
-namespace Kontur.Extern.Client.Paths
+namespace Kontur.Extern.Api.Client.Paths
 {
     public readonly struct InventoryDocflowDocumentContentListPath
     {

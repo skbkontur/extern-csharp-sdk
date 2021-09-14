@@ -1,13 +1,13 @@
 ﻿#nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Organizations;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Organizations;
-using Kontur.Extern.Client.Http;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
+using Kontur.Extern.Api.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Organizations
+namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
 {
     //todo Сделать нормальные тесты для методов.
     public class OrganizationsClient : IOrganizationsClient

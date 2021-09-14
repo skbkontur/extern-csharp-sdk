@@ -1,4 +1,4 @@
-namespace Kontur.Extern.Client.Models.ApiTasks
+namespace Kontur.Extern.Api.Client.Models.ApiTasks
 {
     public interface IApiTaskResult
     {

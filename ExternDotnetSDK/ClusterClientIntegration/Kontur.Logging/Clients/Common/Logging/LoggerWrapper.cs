@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using Kontur.Extern.Client.ApiLevel.Clients.Common.Logging;
-using Kontur.Extern.Client.ApiLevel.Clients.Common.ResponseMessages;
+using Kontur.Extern.Api.Client.ApiLevel.Clients.Common.Logging;
+using Kontur.Extern.Api.Client.ApiLevel.Clients.Common.ResponseMessages;
 
-namespace Kontur.Extern.Client.Vostok.Kontur.Logging.Clients.Common.Logging
+namespace Kontur.Extern.Api.Client.Vostok.Kontur.Logging.Clients.Common.Logging
 {
     public class LoggerWrapper : ILogger
     {

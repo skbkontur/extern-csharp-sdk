@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Kontur.Extern.Client.Primitives
+namespace Kontur.Extern.Api.Client.Primitives
 {
     public interface IEntityListSliceLoading<T> 
     {

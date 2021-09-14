@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
-using Kontur.Extern.Client.Models.Docflows.Enums;
-using Kontur.Extern.Client.Models.Drafts.Enums;
-using Kontur.Extern.Client.Models.Numbers.BusinessRegistration;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
+using Kontur.Extern.Api.Client.Models.Docflows.Enums;
+using Kontur.Extern.Api.Client.Models.Drafts.Enums;
+using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
 
 #nullable enable
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters.EnumLikeTypes
+namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
 {
     internal class EnumLikeTypesConverter : JsonConverterFactory
     {

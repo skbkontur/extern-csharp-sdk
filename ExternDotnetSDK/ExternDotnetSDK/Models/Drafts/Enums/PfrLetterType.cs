@@ -2,10 +2,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Models.Common;
 
-namespace Kontur.Extern.Client.Models.Drafts.Enums
+namespace Kontur.Extern.Api.Client.Models.Drafts.Enums
 {
     /// <summary>
     /// Тип пиьма ПФР, документооборота по неформализованной переписке страхователя и ПФР.

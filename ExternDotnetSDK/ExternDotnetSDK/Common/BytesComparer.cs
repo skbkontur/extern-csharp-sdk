@@ -1,6 +1,6 @@
 using System;
 
-namespace Kontur.Extern.Client.Common
+namespace Kontur.Extern.Api.Client.Common
 {
     public static class BytesComparer
     {

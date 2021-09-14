@@ -1,10 +1,10 @@
 using System;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Paths;
-using Kontur.Extern.Client.Primitives.LongOperations;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Paths;
+using Kontur.Extern.Api.Client.Primitives.LongOperations;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     [PublicAPI]
     public static class InventoryDocflowDocumentContentPathExtension

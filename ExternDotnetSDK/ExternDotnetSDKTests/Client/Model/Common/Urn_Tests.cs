@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using FluentAssertions;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Testing.Assertions;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Testing.Assertions;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.Client.Model.Common
+namespace Kontur.Extern.Api.Client.Tests.Client.Model.Common
 {
     internal class Urn_Tests
     {

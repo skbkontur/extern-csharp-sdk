@@ -1,8 +1,8 @@
 using System;
-using Kontur.Extern.Client.ApiLevel.Clients.Common.Logging;
-using Kontur.Extern.Client.ApiLevel.Clients.Common.ResponseMessages;
+using Kontur.Extern.Api.Client.ApiLevel.Clients.Common.Logging;
+using Kontur.Extern.Api.Client.ApiLevel.Clients.Common.ResponseMessages;
 
-namespace Kontur.Extern.Client.Tests.Fakes.Logging
+namespace Kontur.Extern.Api.Client.Tests.Fakes.Logging
 {
     internal class TestLogger : ILogger
     {

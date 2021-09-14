@@ -1,11 +1,11 @@
 #nullable enable
 using System;
 using AutoBogus;
-using Kontur.Extern.Client.Models.DraftsBuilders;
-using Kontur.Extern.Client.Models.DraftsBuilders.Enums;
-using Kontur.Extern.Client.Tests.TestHelpers.BogusExtensions;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
+using Kontur.Extern.Api.Client.Tests.TestHelpers.BogusExtensions;
 
-namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
+namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
 {
     internal sealed class DraftsBuilderMetasGenerator<T, TData>
         where T : class, IDraftsBuilderMeta<TData>

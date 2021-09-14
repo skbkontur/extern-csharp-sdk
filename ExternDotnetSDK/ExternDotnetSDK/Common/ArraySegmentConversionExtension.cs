@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Kontur.Extern.Client.Common
+namespace Kontur.Extern.Api.Client.Common
 {
     internal static class ArraySegmentConversionExtension
     {

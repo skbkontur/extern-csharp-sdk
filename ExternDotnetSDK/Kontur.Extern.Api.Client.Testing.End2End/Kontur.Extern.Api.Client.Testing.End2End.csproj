@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentAssertions" Version="6.1.0" />
+      <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
+      <PackageReference Include="xunit.extensibility.core" Version="2.4.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Kontur.Extern.Api.Client.Auth.OpenId\Kontur.Extern.Api.Client.Auth.OpenId.csproj" />
+      <ProjectReference Include="..\Kontur.Extern.Api.Client.Testing\Kontur.Extern.Api.Client.Testing.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="auth_params.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="auth_params.example.json">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

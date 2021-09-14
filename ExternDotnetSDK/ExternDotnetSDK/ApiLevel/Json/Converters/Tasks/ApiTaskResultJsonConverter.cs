@@ -2,9 +2,9 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Kontur.Extern.Client.Models.ApiTasks;
+using Kontur.Extern.Api.Client.Models.ApiTasks;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
+namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Tasks
 {
     internal partial class ApiTaskResultJsonConverter : JsonConverterFactory
     {

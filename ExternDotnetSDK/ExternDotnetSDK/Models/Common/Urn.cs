@@ -1,8 +1,8 @@
 ﻿#nullable enable
 using System;
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Api.Client.Exceptions;
 
-namespace Kontur.Extern.Client.Models.Common
+namespace Kontur.Extern.Api.Client.Models.Common
 {
     public sealed class Urn : IComparable<Urn>, IEquatable<Urn>
     {

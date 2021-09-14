@@ -1,13 +1,13 @@
 using System;
 using System.Net;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
-using Kontur.Extern.Client.Model;
-using Kontur.Extern.Client.Model.Drafts;
-using Kontur.Extern.Client.Testing.Generators;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
+using Kontur.Extern.Api.Client.Model;
+using Kontur.Extern.Api.Client.Model.Drafts;
+using Kontur.Extern.Api.Client.Testing.Generators;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.Client.Model.Drafts
+namespace Kontur.Extern.Api.Client.Tests.Client.Model.Drafts
 {
     public class DraftSender_Tests
     {

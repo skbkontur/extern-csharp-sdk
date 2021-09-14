@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Kontur.Extern.Client.Primitives.LongOperations
+namespace Kontur.Extern.Api.Client.Primitives.LongOperations
 {
     public interface ILongOperationAwaiter
     {

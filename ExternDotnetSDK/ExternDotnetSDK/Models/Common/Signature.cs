@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
-namespace Kontur.Extern.Client.Models.Common
+namespace Kontur.Extern.Api.Client.Models.Common
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

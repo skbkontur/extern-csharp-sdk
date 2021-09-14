@@ -1,9 +1,9 @@
 #nullable enable
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Models.ApiErrors;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Models.ApiErrors;
 
-namespace Kontur.Extern.Client.Primitives.LongOperations
+namespace Kontur.Extern.Api.Client.Primitives.LongOperations
 {
     [PublicAPI]
     public class LongOperationStatus<TResult, TFailure>

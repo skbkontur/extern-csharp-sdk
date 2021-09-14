@@ -1,11 +1,11 @@
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Json;
-using Kontur.Extern.Client.Http.Serialization;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Testing.Helpers;
+using Kontur.Extern.Api.Client.ApiLevel.Json;
+using Kontur.Extern.Api.Client.Http.Serialization;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Testing.Helpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.ApiLevel.Json.Converters
+namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Json.Converters
 {
     internal class UrnJsonConverter_Tests
     {

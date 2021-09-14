@@ -3,12 +3,12 @@ using System;
 using System.Net;
 using FluentAssertions;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.ApiErrors;
-using Kontur.Extern.Client.Models.ApiTasks;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.ApiErrors;
+using Kontur.Extern.Api.Client.Models.ApiTasks;
+using Kontur.Extern.Api.Client.Models.Common;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.Api
+namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.Api
 {
     [TestFixture]
     internal class ApiTaskResultOfTwoResults_Tests

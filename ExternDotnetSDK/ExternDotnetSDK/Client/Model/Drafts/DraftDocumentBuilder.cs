@@ -3,15 +3,15 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents.PutDocumentRequestBuilders;
-using Kontur.Extern.Client.Cryptography;
-using Kontur.Extern.Client.Model.Documents.Contents;
-using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
-using Kontur.Extern.Client.Models.Numbers.BusinessRegistration;
-using Kontur.Extern.Client.Uploading;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.PutDocumentRequestBuilders;
+using Kontur.Extern.Api.Client.Model.Documents.Contents;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
+using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
+using Kontur.Extern.Api.Client.Uploading;
+using Kontur.Extern.Api.Client.Cryptography;
 
-namespace Kontur.Extern.Client.Model.Drafts
+namespace Kontur.Extern.Api.Client.Model.Drafts
 {
     [SuppressMessage("ReSharper", "CommentTypo")]
     public static class DraftDocumentBuilder

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Text.Json.Serialization;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Common;
 
-namespace Kontur.Extern.Client.Models.ApiErrors
+namespace Kontur.Extern.Api.Client.Models.ApiErrors
 {
     public class ApiError
     {

@@ -1,18 +1,18 @@
 using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents.PutDocumentRequestBuilders;
-using Kontur.Extern.Client.Cryptography;
-using Kontur.Extern.Client.Model;
-using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
-using Kontur.Extern.Client.Models.Numbers.BusinessRegistration;
-using Kontur.Extern.Client.Uploading;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.PutDocumentRequestBuilders;
+using Kontur.Extern.Api.Client.Cryptography;
+using Kontur.Extern.Api.Client.Model;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
+using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
+using Kontur.Extern.Api.Client.Uploading;
 using NSubstitute;
 using NUnit.Framework;
 using Vostok.Commons.Time;
 
-namespace Kontur.Extern.Client.Tests.ApiLevel.Models.Requests.Drafts.Documents.PutDocumentRequestBuilders
+namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Models.Requests.Drafts.Documents.PutDocumentRequestBuilders
 {
     [TestFixture]
     internal class DocumentRequestBuilder_Tests

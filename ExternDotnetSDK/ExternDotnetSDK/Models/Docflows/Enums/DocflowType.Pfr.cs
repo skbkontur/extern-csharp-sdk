@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Client.Models.Docflows.Enums
+namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
 {
     [SuppressMessage("ReSharper", "CommentTypo")]
     public partial struct DocflowType

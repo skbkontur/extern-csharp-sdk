@@ -1,4 +1,4 @@
-namespace Kontur.Extern.Client.Models.Docflows.Documents.Requisites
+namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites
 {
     public class CommonDocflowDocumentRequisites : DocflowDocumentRequisites
     {

@@ -1,4 +1,4 @@
-﻿namespace Kontur.Extern.Client.Models.Common
+﻿namespace Kontur.Extern.Api.Client.Models.Common
 {
     public enum SortOrder
     {

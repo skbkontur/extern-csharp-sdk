@@ -1,10 +1,10 @@
 #nullable enable
 using System;
 using System.Net;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts;
-using Kontur.Extern.Client.Models.Numbers;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
-namespace Kontur.Extern.Client.Model.Drafts
+namespace Kontur.Extern.Api.Client.Model.Drafts
 {
     public class DraftSender
     {

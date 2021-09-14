@@ -1,7 +1,7 @@
 ﻿using System;
-using Kontur.Extern.Client.ApiLevel.Clients.Common.ResponseMessages;
+using Kontur.Extern.Api.Client.ApiLevel.Clients.Common.ResponseMessages;
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Common.Logging
+namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Common.Logging
 {
     public interface ILogger
     {

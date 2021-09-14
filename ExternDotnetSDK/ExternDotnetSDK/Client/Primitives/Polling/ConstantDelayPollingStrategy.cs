@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Kontur.Extern.Client.Primitives.Polling
+namespace Kontur.Extern.Api.Client.Primitives.Polling
 {
     internal class ConstantDelayPollingStrategy : IPollingStrategy
     {

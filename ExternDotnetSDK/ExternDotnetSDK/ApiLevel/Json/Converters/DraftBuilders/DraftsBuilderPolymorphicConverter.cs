@@ -2,13 +2,13 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.NamingPolicies;
-using Kontur.Extern.Client.Models.DraftsBuilders.Builders;
-using Kontur.Extern.Client.Models.DraftsBuilders.Enums;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
+using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Extensions;
+using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.NamingPolicies;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders
+namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
 {
     internal abstract class DraftsBuilderPolymorphicConverter<T> : JsonConverter<T>
         where T : class

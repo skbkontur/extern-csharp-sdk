@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Docflows;
-using Kontur.Extern.Client.Models.Docflows.Descriptions;
-using Kontur.Extern.Client.Models.Docflows.Documents;
-using Kontur.Extern.Client.Models.Docflows.Enums;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Docflows;
+using Kontur.Extern.Api.Client.Models.Docflows.Descriptions;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents;
+using Kontur.Extern.Api.Client.Models.Docflows.Enums;
+using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Extensions;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
+namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
 {
     internal class DocflowConverter : JsonConverter<IDocflow>
     {

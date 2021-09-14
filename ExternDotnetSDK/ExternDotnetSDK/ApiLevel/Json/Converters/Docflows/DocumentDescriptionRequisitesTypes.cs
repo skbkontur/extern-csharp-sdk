@@ -1,10 +1,10 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
-using Kontur.Extern.Client.Models.Docflows.Documents.Requisites;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Docflows
+namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
 {
     internal static class DocumentDescriptionRequisitesTypes
     {

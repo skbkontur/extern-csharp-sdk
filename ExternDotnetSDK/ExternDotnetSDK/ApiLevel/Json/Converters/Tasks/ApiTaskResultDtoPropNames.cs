@@ -1,7 +1,7 @@
 using System.Text.Json;
-using Kontur.Extern.Client.Http.Serialization.SysTextJson.Extensions;
+using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Extensions;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters.Tasks
+namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Tasks
 {
     internal class ApiTaskResultDtoPropNames
     {

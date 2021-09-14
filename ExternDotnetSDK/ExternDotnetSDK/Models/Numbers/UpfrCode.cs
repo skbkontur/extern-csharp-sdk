@@ -1,8 +1,8 @@
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Api.Client.Exceptions;
 
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.Models.Numbers
+namespace Kontur.Extern.Api.Client.Models.Numbers
 {
     /// <summary>
     /// Код УПФР. Формат данных: ХХХ-ХХХ, где Х - это цифра от 0 до 9

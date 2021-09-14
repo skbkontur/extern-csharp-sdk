@@ -3,7 +3,7 @@ using System;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Client.Models.Numbers
+namespace Kontur.Extern.Api.Client.Models.Numbers
 {
     [PublicAPI]
     public class RegexBasedParser<TValue>

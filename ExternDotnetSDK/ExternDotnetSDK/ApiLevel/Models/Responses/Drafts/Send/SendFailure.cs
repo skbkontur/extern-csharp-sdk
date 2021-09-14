@@ -1,11 +1,11 @@
 #nullable enable
 using System.Net;
 using System.Text.Json.Serialization;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Check;
-using Kontur.Extern.Client.Models.ApiTasks;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Check;
+using Kontur.Extern.Api.Client.Models.ApiTasks;
+using Kontur.Extern.Api.Client.Models.Common;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Send
+namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Send
 {
     public class SendFailure : IApiTaskResult
     {

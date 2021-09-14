@@ -2,18 +2,18 @@ using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using FluentAssertions.Extensions;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents;
-using Kontur.Extern.Client.Cryptography;
-using Kontur.Extern.Client.Model;
-using Kontur.Extern.Client.Model.Documents.Contents;
-using Kontur.Extern.Client.Model.Drafts;
-using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
-using Kontur.Extern.Client.Models.Numbers.BusinessRegistration;
-using Kontur.Extern.Client.Uploading;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents;
+using Kontur.Extern.Api.Client.Cryptography;
+using Kontur.Extern.Api.Client.Model;
+using Kontur.Extern.Api.Client.Model.Documents.Contents;
+using Kontur.Extern.Api.Client.Model.Drafts;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
+using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
+using Kontur.Extern.Api.Client.Uploading;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.Client.Model.Documents
+namespace Kontur.Extern.Api.Client.Tests.Client.Model.Documents
 {
     [TestFixture]
     internal class DraftDocumentBuilder_Tests

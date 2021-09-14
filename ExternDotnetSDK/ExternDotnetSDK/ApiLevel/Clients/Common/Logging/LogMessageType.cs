@@ -1,4 +1,4 @@
-﻿namespace Kontur.Extern.Client.ApiLevel.Clients.Common.Logging
+﻿namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Common.Logging
 {
     public enum LogMessageType
     {

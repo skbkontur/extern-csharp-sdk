@@ -1,15 +1,15 @@
 #nullable enable
 using System;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Cryptography;
-using Kontur.Extern.Client.Http.Configurations;
-using Kontur.Extern.Client.Http.Options;
-using Kontur.Extern.Client.Model.Configuration;
-using Kontur.Extern.Client.Primitives.Polling;
+using Kontur.Extern.Api.Client.Model.Configuration;
+using Kontur.Extern.Api.Client.Primitives.Polling;
+using Kontur.Extern.Api.Client.Cryptography;
+using Kontur.Extern.Api.Client.Http.Configurations;
+using Kontur.Extern.Api.Client.Http.Options;
 using Vostok.Commons.Time;
 using Vostok.Logging.Abstractions;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     [PublicAPI]
     public class ExternBuilder : IExternBuilder, ISpecifyAuthProviderExternBuilder

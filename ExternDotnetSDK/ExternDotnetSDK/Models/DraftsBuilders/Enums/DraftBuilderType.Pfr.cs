@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Client.Models.DraftsBuilders.Enums
+namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums
 {
     partial struct DraftBuilderType
     {

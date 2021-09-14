@@ -1,10 +1,10 @@
 ﻿#nullable enable
 using System;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Models.ApiErrors;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Models.ApiErrors;
+using Kontur.Extern.Api.Client.Models.Common;
 
-namespace Kontur.Extern.Client.Models.ApiTasks
+namespace Kontur.Extern.Api.Client.Models.ApiTasks
 {
     public class ApiTaskResult<TResult, TFailureResult>
         where TResult : IApiTaskResult

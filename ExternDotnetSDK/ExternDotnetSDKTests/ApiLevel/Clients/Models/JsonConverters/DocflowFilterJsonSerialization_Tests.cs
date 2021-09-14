@@ -1,14 +1,14 @@
 using System;
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Json;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
-using Kontur.Extern.Client.Common.Time;
-using Kontur.Extern.Client.Http.Serialization;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Docflows.Enums;
+using Kontur.Extern.Api.Client.ApiLevel.Json;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Http.Serialization;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.ApiLevel.Clients.Models.JsonConverters
+namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
 {
     [TestFixture]
     internal class DocflowFilterJsonSerialization_Tests

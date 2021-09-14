@@ -2,9 +2,9 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Common;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters
+namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters
 {
     internal class UrnJsonConverter : JsonConverter<Urn>
     {

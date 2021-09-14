@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.Certificates;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Certificates;
+using Kontur.Extern.Api.Client.Models.Common;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Certificates
+namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Certificates
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

@@ -1,10 +1,10 @@
 ﻿#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Warrants;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Warrants;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Responses.Warrants
+namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Warrants
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

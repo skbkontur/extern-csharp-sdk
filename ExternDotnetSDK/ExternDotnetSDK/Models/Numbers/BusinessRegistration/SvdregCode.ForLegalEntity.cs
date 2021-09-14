@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Client.Models.Numbers.BusinessRegistration
+namespace Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration
 {
     partial struct SvdregCode
     {

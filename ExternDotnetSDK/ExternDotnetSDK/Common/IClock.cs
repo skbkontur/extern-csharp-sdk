@@ -1,6 +1,6 @@
 using System;
 
-namespace Kontur.Extern.Client.Common
+namespace Kontur.Extern.Api.Client.Common
 {
     internal class IClock
     {

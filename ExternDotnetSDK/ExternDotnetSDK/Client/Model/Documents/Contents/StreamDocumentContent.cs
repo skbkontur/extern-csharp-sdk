@@ -2,10 +2,10 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Cryptography;
-using Kontur.Extern.Client.Uploading;
+using Kontur.Extern.Api.Client.Uploading;
+using Kontur.Extern.Api.Client.Cryptography;
 
-namespace Kontur.Extern.Client.Model.Documents.Contents
+namespace Kontur.Extern.Api.Client.Model.Documents.Contents
 {
     public class StreamDocumentContent : IDocumentContent
     {

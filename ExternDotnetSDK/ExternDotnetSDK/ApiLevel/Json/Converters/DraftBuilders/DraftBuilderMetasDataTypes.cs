@@ -1,15 +1,15 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using Kontur.Extern.Client.Models.DraftsBuilders.Builders.Data;
-using Kontur.Extern.Client.Models.DraftsBuilders.Builders.Data.BusinessRegistration;
-using Kontur.Extern.Client.Models.DraftsBuilders.DocumentFiles.Data;
-using Kontur.Extern.Client.Models.DraftsBuilders.Documents.Data;
-using Kontur.Extern.Client.Models.DraftsBuilders.Documents.Data.BusinessRegistration;
-using Kontur.Extern.Client.Models.DraftsBuilders.Documents.Data.FnsInventory;
-using Kontur.Extern.Client.Models.DraftsBuilders.Enums;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessRegistration;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles.Data;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data.BusinessRegistration;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data.FnsInventory;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 
-namespace Kontur.Extern.Client.ApiLevel.Json.Converters.DraftBuilders
+namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
 {
     internal static class DraftBuilderMetasDataTypes
     {

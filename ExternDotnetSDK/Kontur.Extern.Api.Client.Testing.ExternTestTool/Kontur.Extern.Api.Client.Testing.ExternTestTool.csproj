@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ExternDotnetSDK\Kontur.Extern.Api.Client.csproj" />
+      <ProjectReference Include="..\Kontur.Extern.Api.Client.Testing\Kontur.Extern.Api.Client.Testing.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,12 +1,12 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Cryptography;
-using Kontur.Extern.Client.Model;
-using Kontur.Extern.Client.Model.Documents.Contents;
-using Kontur.Extern.Client.Uploading;
+using Kontur.Extern.Api.Client.Model;
+using Kontur.Extern.Api.Client.Model.Documents.Contents;
+using Kontur.Extern.Api.Client.Uploading;
+using Kontur.Extern.Api.Client.Cryptography;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents.PutDocumentRequestBuilders
+namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.PutDocumentRequestBuilders
 {
     internal class DocumentContentToUpload : IDocumentContentUploadStrategy
     {

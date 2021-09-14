@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Client.Models.Docflows.Descriptions.Rosstat
+namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

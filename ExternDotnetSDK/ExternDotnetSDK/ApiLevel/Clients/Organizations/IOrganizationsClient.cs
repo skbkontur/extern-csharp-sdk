@@ -2,9 +2,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Organizations;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Organizations
+namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
 {
     [SuppressMessage("ReSharper", "CommentTypo")]
     public interface IOrganizationsClient

@@ -3,10 +3,10 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Common;
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Common;
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Contents
+namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Contents
 {
     internal class ChunkContentStream : Stream
     {

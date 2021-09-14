@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Kontur.Extern.Client.Primitives
+namespace Kontur.Extern.Api.Client.Primitives
 {
     public interface IPage
     {

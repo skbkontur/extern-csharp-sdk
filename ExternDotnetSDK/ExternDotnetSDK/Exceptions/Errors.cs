@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Common.Time;
-using Kontur.Extern.Client.Models.ApiErrors;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Numbers;
+using Kontur.Extern.Api.Client.Models.ApiErrors;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Numbers;
+using Kontur.Extern.Api.Client.Common.Time;
 using static System.Environment;
 
-namespace Kontur.Extern.Client.Exceptions
+namespace Kontur.Extern.Api.Client.Exceptions
 {
     internal static class Errors
     {

@@ -2,10 +2,10 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.Docflows;
-using Kontur.Extern.Client.Paths;
+using Kontur.Extern.Api.Client.Models.Docflows;
+using Kontur.Extern.Api.Client.Paths;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     [PublicAPI]
     public static class DocumentReplyPathExtension

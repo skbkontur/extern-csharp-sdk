@@ -1,6 +1,6 @@
-using Kontur.Extern.Client.Exceptions;
+using Kontur.Extern.Api.Client.Exceptions;
 
-namespace Kontur.Extern.Client.Primitives.LongOperations
+namespace Kontur.Extern.Api.Client.Primitives.LongOperations
 {
     public interface ILongOperationFailure
     {

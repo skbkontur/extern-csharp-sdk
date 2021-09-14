@@ -1,4 +1,4 @@
-﻿namespace Kontur.Extern.Client.ApiLevel.Models.Responses.ApiTasks
+﻿namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ApiTasks
 {
     public class ApiTaskPage
     {

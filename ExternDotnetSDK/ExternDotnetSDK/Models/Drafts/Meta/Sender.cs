@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Client.Models.Drafts.Meta
+namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

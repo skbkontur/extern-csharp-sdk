@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Model.Drafts;
-using Kontur.Extern.Client.Models.Drafts;
-using Kontur.Extern.Client.Paths;
+using Kontur.Extern.Api.Client.Model.Drafts;
+using Kontur.Extern.Api.Client.Models.Drafts;
+using Kontur.Extern.Api.Client.Paths;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     [PublicAPI]
     public static class DraftListPathExtension

@@ -2,15 +2,15 @@
 using System;
 using System.Net;
 using System.Text;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Send;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Http.Serialization;
-using Kontur.Extern.Client.Models.ApiErrors;
-using Kontur.Extern.Client.Models.ApiTasks;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Primitives.LongOperations;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Send;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Models.ApiErrors;
+using Kontur.Extern.Api.Client.Models.ApiTasks;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Primitives.LongOperations;
+using Kontur.Extern.Api.Client.Http.Serialization;
 
-namespace Kontur.Extern.Client.Model.Drafts.LongOperationStatuses
+namespace Kontur.Extern.Api.Client.Model.Drafts.LongOperationStatuses
 {
     public class DraftSendingFailure : ILongOperationFailure, IApiTaskResult
     {

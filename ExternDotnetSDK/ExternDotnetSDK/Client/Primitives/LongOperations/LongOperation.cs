@@ -1,9 +1,9 @@
 #nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Primitives.Polling;
+using Kontur.Extern.Api.Client.Primitives.Polling;
 
-namespace Kontur.Extern.Client.Primitives.LongOperations
+namespace Kontur.Extern.Api.Client.Primitives.LongOperations
 {
     internal class LongOperation : ILongOperation
     {

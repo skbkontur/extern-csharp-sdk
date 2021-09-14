@@ -1,11 +1,11 @@
 using FluentAssertions;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
-using Kontur.Extern.Client.Common.Time;
-using Kontur.Extern.Client.Model.DocflowFiltering;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Model.DocflowFiltering;
+using Kontur.Extern.Api.Client.Models.Common;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Client.Tests.Client.Model.DocflowFiltering
+namespace Kontur.Extern.Api.Client.Tests.Client.Model.DocflowFiltering
 {
     [TestFixture]
     internal class DocflowSortingFilter_Tests

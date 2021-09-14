@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows.Documents;
-using Kontur.Extern.Client.Http;
-using Kontur.Extern.Client.Models.Common;
-using Kontur.Extern.Client.Models.Docflows;
-using Kontur.Extern.Client.Models.Docflows.Documents.Replies;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows.Documents;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Docflows;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Replies;
+using Kontur.Extern.Api.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Replies
+namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
 {
     public class RepliesClient : IRepliesClient
     {

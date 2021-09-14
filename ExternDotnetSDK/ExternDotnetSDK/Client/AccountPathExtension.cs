@@ -2,14 +2,15 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.Accounts;
-using Kontur.Extern.Client.Models.Certificates;
-using Kontur.Extern.Client.Models.Warrants;
-using Kontur.Extern.Client.Paths;
-using Kontur.Extern.Client.Primitives;
+using Kontur.Extern.Api.Client.Models.Accounts;
+using Kontur.Extern.Api.Client.Models.Certificates;
+using Kontur.Extern.Api.Client.Models.Warrants;
+using Kontur.Extern.Api.Client.Paths;
+using Kontur.Extern.Api.Client.Primitives;
+
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     [PublicAPI]
     public static class AccountPathExtension

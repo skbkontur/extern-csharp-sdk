@@ -1,10 +1,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Auth.OpenId.Provider.Models;
-using Kontur.Extern.Client.Http.Configurations;
+using Kontur.Extern.Api.Client.Auth.OpenId.Provider.Models;
+using Kontur.Extern.Api.Client.Http.Configurations;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     [PublicAPI]
     public static class SpecifyAuthProviderExternBuilderExtension

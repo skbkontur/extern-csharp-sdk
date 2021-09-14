@@ -1,15 +1,15 @@
 ﻿#nullable enable
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Accounts;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Accounts;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Certificates;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Warrants;
-using Kontur.Extern.Client.Http;
-using Kontur.Extern.Client.Models.Accounts;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Accounts;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Accounts;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Certificates;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Warrants;
+using Kontur.Extern.Api.Client.Models.Accounts;
+using Kontur.Extern.Api.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Accounts
+namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts
 {
     public class AccountClient : IAccountClient
     {

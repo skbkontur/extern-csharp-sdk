@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Contents;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Contents;
 
-namespace Kontur.Extern.Client.ApiLevel.Clients.Contents
+namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Contents
 {
     public interface IContentsClient
     {

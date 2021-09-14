@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Signatures
+namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Signatures
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

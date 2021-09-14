@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Client.Paths;
+using Kontur.Extern.Api.Client.Paths;
 
-namespace Kontur.Extern.Client
+namespace Kontur.Extern.Api.Client
 {
     public interface IExtern
     {

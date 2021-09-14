@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Kontur.Extern.Client.ApiLevel.Models.Responses.Drafts.Check;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Check;
 
-namespace Kontur.Extern.Client.Model.Drafts.LongOperationStatuses
+namespace Kontur.Extern.Api.Client.Model.Drafts.LongOperationStatuses
 {
     public class DraftCheckingStatus
     {

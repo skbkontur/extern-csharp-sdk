@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentAssertions" Version="6.1.0" />
+        <PackageReference Include="NSubstitute" Version="4.2.2" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+        <PackageReference Include="Vostok.ClusterClient.Transport" Version="0.1.19" />
+        <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.21" />
+        <PackageReference Include="Vostok.Logging.Console" Version="1.0.6" />
+        <PackageReference Include="xunit" Version="2.4.1" />
+        <PackageReference Include="xunit.runner.utility" Version="2.4.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Kontur.Extern.Api.Client.Auth.OpenId\Kontur.Extern.Api.Client.Auth.OpenId.csproj" />
+      <ProjectReference Include="..\Kontur.Extern.Api.Client.Testing\Kontur.Extern.Api.Client.Testing.csproj" />
+    </ItemGroup>
+
+</Project>

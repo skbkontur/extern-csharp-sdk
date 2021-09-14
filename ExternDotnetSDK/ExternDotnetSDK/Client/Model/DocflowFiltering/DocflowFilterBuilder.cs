@@ -3,15 +3,15 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.ApiLevel.Models.Requests.Docflows;
-using Kontur.Extern.Client.Common.Time;
-using Kontur.Extern.Client.Exceptions;
-using Kontur.Extern.Client.Models.Docflows.Enums;
-using Kontur.Extern.Client.Models.Numbers;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Models.Docflows.Enums;
+using Kontur.Extern.Api.Client.Models.Numbers;
+using Kontur.Extern.Api.Client.Common.Time;
 
 // ReSharper disable CommentTypo
 
-namespace Kontur.Extern.Client.Model.DocflowFiltering
+namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "ParameterHidesMember")]
