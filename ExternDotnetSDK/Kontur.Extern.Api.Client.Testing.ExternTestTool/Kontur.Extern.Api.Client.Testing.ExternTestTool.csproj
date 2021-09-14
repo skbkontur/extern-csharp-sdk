@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ExternDotnetSDK\Kontur.Extern.Api.Client.csproj" />
+      <ProjectReference Include="..\Kontur.Extern.Api.Client\Kontur.Extern.Api.Client.csproj" />
       <ProjectReference Include="..\Kontur.Extern.Api.Client.Testing\Kontur.Extern.Api.Client.Testing.csproj" />
     </ItemGroup>
 

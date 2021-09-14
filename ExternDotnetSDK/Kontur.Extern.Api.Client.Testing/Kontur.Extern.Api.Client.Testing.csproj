@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ExternDotnetSDK\Kontur.Extern.Api.Client.csproj" />
+      <ProjectReference Include="..\Kontur.Extern.Api.Client\Kontur.Extern.Api.Client.csproj" />
       <ProjectReference Include="..\Kontur.Extern.Api.Client.Auth.OpenId\Kontur.Extern.Api.Client.Auth.OpenId.csproj" />
       <ProjectReference Include="..\Kontur.Extern.Api.Client.Common\Kontur.Extern.Api.Client.Common.csproj" />
     </ItemGroup>

@@ -12,7 +12,7 @@ Proposed 2 api styles:
 
 ### 1. Chaining contexts hierarchy with service functions 
 
-*More examples in [code](./../ExternDotnetSDK/Concept/UsageSamples.cs)*
+*More examples in [code](./../Kontur.Extern.Api.Client/Concept/UsageSamples.cs)*
 
 Contexts have lazy evaluation semantic. Similar to Linq and active recors.
 
