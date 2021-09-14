@@ -1,6 +1,4 @@
-﻿using System;
-using Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts;
-using Kontur.Extern.Api.Client.ApiLevel.Clients.Common.Logging;
+﻿using Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Contents;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts;
@@ -12,16 +10,8 @@ using Kontur.Extern.Api.Client.Http;
 
 namespace Kontur.Extern.Api.Client.ApiLevel
 {
-    public class KeApiClient : IKeApiClient
+    internal class KeApiClient : IKeApiClient
     {
-        public KeApiClient(
-            string apiKey,
-            string baseAddress,
-            ILogger logger = null)
-        {
-            throw new NotSupportedException();
-        }
-
         internal KeApiClient(IHttpRequestsFactory httpRequestsFactory)
         {
             Http = httpRequestsFactory;
