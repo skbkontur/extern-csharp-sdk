@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Text.Json.Serialization;
 using Kontur.Extern.Api.Client.Models.Common;

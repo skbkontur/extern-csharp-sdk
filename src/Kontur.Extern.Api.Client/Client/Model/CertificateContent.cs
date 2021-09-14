@@ -1,9 +1,7 @@
-#nullable enable
 using System;
 using Kontur.Extern.Api.Client.Common;
 using Kontur.Extern.Api.Client.Exceptions;
 
-#nullable enable
 
 namespace Kontur.Extern.Api.Client.Model
 {

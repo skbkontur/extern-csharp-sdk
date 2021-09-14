@@ -1,7 +1,8 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Docflows;
 using Kontur.Extern.Api.Client.Models.ApiTasks;
@@ -9,10 +10,10 @@ using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 
-// ReSharper disable CommentTypo
-
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public interface IDocflowsClient
     {
         /// <summary>

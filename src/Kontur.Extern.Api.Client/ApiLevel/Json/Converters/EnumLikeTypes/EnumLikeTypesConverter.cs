@@ -7,7 +7,6 @@ using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using Kontur.Extern.Api.Client.Models.Drafts.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
 
-#nullable enable
 namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
 {
     internal class EnumLikeTypesConverter : JsonConverterFactory

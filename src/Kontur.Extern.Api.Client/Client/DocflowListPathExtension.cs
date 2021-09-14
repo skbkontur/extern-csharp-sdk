@@ -1,4 +1,3 @@
-#nullable enable
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Api.Client.Model.DocflowFiltering;

@@ -1,4 +1,3 @@
-#nullable enable
 using System.Net;
 using System.Text.Json.Serialization;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Check;

@@ -1,15 +1,16 @@
-﻿#nullable enable
-using System;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
 using Kontur.Extern.Api.Client.Http;
 using Vostok.Clusterclient.Core.Model;
-// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
 {
-    //todo Сделать нормальные тесты для методов.
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class OrganizationsClient : IOrganizationsClient
     {
         private readonly IHttpRequestsFactory http;

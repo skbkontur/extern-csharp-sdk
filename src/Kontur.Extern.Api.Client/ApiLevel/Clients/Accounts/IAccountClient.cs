@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Accounts;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Certificates;
