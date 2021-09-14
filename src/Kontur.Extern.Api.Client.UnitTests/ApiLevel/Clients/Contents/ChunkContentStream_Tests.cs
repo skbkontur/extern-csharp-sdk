@@ -7,7 +7,7 @@ using Kontur.Extern.Api.Client.ApiLevel.Clients.Contents;
 using Kontur.Extern.Api.Client.Testing.Helpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Contents
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Contents
 {
     public class ChunkContentStream_Tests
     {

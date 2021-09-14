@@ -9,7 +9,7 @@ using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Models.Common;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConverters
 {
     [TestFixture]
     internal class SendFailureJsonSerialization_Tests

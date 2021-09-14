@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using FluentAssertions;
 
-namespace Kontur.Extern.Api.Client.Tests.Client.Model.TestAssertions
+namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.TestAssertions
 {
     public static class EnumLikeTypeAssertions
     {

@@ -7,7 +7,7 @@ using Kontur.Extern.Api.Client.Models.Numbers;
 using Kontur.Extern.Api.Client.Testing.Generators;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.Client.Model.Drafts
+namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
 {
     [TestFixture]
     internal class DraftMetadata_Tests

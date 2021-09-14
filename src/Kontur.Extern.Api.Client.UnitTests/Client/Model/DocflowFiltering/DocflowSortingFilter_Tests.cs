@@ -5,7 +5,7 @@ using Kontur.Extern.Api.Client.Model.DocflowFiltering;
 using Kontur.Extern.Api.Client.Models.Common;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.Client.Model.DocflowFiltering
+namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
 {
     [TestFixture]
     internal class DocflowSortingFilter_Tests

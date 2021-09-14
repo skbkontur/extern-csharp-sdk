@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Kontur.Extern.Api.Client.Testing.Helpers;
 
-namespace Kontur.Extern.Api.Client.Tests.TestHelpers
+namespace Kontur.Extern.Api.Client.UnitTests.TestHelpers
 {
     internal static class EnumLikeType
     {

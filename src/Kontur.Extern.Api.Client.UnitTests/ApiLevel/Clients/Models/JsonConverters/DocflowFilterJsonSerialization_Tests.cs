@@ -8,7 +8,7 @@ using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConverters
 {
     [TestFixture]
     internal class DocflowFilterJsonSerialization_Tests

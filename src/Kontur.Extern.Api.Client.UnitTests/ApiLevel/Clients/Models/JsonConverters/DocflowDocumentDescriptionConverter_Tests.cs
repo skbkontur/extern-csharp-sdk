@@ -9,11 +9,11 @@ using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites;
-using Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators;
-using Kontur.Extern.Api.Client.Tests.TestHelpers;
+using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators;
+using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConverters
 {
     [TestFixture]
     internal class DocflowDocumentDescriptionConverter_Tests

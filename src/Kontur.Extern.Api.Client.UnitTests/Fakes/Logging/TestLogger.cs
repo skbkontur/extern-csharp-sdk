@@ -2,7 +2,7 @@ using System;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Common.Logging;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Common.ResponseMessages;
 
-namespace Kontur.Extern.Api.Client.Tests.Fakes.Logging
+namespace Kontur.Extern.Api.Client.UnitTests.Fakes.Logging
 {
     internal class TestLogger : ILogger
     {

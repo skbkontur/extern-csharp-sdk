@@ -12,7 +12,7 @@ using NSubstitute;
 using NUnit.Framework;
 using Vostok.Commons.Time;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Models.Requests.Drafts.Documents.PutDocumentRequestBuilders
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Documents.PutDocumentRequestBuilders
 {
     [TestFixture]
     internal class DocumentRequestBuilder_Tests

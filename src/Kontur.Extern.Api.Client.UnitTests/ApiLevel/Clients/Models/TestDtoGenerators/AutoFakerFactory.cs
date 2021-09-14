@@ -8,11 +8,11 @@ using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using Kontur.Extern.Api.Client.Models.Drafts.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
 using Kontur.Extern.Api.Client.Testing.Generators;
-using Kontur.Extern.Api.Client.Tests.TestHelpers;
-using Kontur.Extern.Api.Client.Tests.TestHelpers.BogusExtensions;
+using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
+using Kontur.Extern.Api.Client.UnitTests.TestHelpers.BogusExtensions;
 using Randomizer = Bogus.Randomizer;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators
 {
     internal static class AutoFakerFactory
     {

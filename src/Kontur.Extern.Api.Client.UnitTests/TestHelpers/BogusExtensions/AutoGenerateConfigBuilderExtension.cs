@@ -3,7 +3,7 @@ using AutoBogus;
 using Bogus;
 using JetBrains.Annotations;
 
-namespace Kontur.Extern.Api.Client.Tests.TestHelpers.BogusExtensions
+namespace Kontur.Extern.Api.Client.UnitTests.TestHelpers.BogusExtensions
 {
     internal static class AutoGenerateConfigBuilderExtension
     {

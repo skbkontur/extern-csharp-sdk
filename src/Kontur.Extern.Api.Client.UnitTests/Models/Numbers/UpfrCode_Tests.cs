@@ -4,7 +4,7 @@ using FluentAssertions;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.Models.Numbers
+namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
 {
     [TestFixture]
     internal class UpfrCode_Tests

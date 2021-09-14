@@ -6,7 +6,7 @@ using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Testing.Assertions;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.Client.Model.Common
+namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Common
 {
     [TestFixture]
     internal class Link_Tests

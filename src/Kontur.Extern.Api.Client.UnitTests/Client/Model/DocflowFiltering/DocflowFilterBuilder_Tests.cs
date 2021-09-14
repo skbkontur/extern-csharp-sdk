@@ -8,7 +8,7 @@ using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.Client.Model.DocflowFiltering
+namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
 {
     [TestFixture]
     internal class DocflowFilterBuilder_Tests

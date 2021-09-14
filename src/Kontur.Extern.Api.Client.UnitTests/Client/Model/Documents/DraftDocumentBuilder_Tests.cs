@@ -13,7 +13,7 @@ using Kontur.Extern.Api.Client.Uploading;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.Client.Model.Documents
+namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Documents
 {
     [TestFixture]
     internal class DraftDocumentBuilder_Tests

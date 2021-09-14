@@ -4,11 +4,11 @@ using System.Reflection;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Drafts.Enums;
-using Kontur.Extern.Api.Client.Tests.Client.Model.TestAssertions;
-using Kontur.Extern.Api.Client.Tests.TestHelpers;
+using Kontur.Extern.Api.Client.UnitTests.Client.Model.TestAssertions;
+using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.Models.Drafts.Enums
+namespace Kontur.Extern.Api.Client.UnitTests.Models.Drafts.Enums
 {
     [TestFixture]
     internal class PfrLetterType_Tests

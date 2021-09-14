@@ -5,7 +5,7 @@ using FluentAssertions;
 using Kontur.Extern.Api.Client.Primitives;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.Client.Primitives
+namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
 {
     [TestFixture]
     internal class Page_Tests
