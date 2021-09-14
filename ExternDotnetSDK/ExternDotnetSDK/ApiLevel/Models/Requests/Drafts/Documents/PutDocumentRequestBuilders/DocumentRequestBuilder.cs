@@ -74,13 +74,12 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents.PutDocu
                 _ => contentType
             };
 
-            var documentTypeUrn = type.ToUrn();
             DocumentDescriptionRequest? description = null;
-            if (svdregCode is not null || fileName is not null || documentTypeUrn is not null || contentType is not null)
+            if (svdregCode is not null || fileName is not null || !type.IsEmpty || contentType is not null)
             {
                 description = new DocumentDescriptionRequest
                 {
-                    Type = documentTypeUrn,
+                    Type = type,
                     Filename = fileName,
                     SvdregCode = svdregCode ?? default,
                     ContentType = contentType

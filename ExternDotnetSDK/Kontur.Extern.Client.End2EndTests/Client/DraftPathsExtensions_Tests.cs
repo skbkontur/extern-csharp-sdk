@@ -170,7 +170,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
                 Description = new DocumentDescription
                 {
                     ContentType = "application/pdf",
-                    Type = DocumentType.Fns.Fns534.Report.ToUrn(),
+                    Type = DocumentType.Fns.Fns534.Report,
                     Properties = new Dictionary<string, string?>
                     {
                         ["Encoding"] = null,
@@ -279,7 +279,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
                 Description = new DocumentDescription
                 {
                     ContentType = contentType,
-                    Type = documentType.ToUrn(),
+                    Type = documentType,
                     Filename = fileName,
                     Properties = new Dictionary<string, string?>
                     {

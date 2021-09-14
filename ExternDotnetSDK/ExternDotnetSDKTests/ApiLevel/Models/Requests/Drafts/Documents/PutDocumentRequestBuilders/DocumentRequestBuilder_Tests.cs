@@ -70,7 +70,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Models.Requests.Drafts.Documents.P
                     Filename = fileName,
                     SvdregCode = svdregCode,
                     ContentType = expectedContentType,
-                    Type = DocumentType.Fss.Report.ReportFile.ToUrn()
+                    Type = DocumentType.Fss.Report.ReportFile
                 }
             };
             
@@ -107,7 +107,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Models.Requests.Drafts.Documents.P
                 {
                     Filename = fileName,
                     SvdregCode = svdregCode,
-                    Type = DocumentType.Fss.Report.ReportFile.ToUrn()
+                    Type = DocumentType.Fss.Report.ReportFile
                 }
             };
             
@@ -145,7 +145,7 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Models.Requests.Drafts.Documents.P
                 {
                     Filename = fileName,
                     SvdregCode = svdregCode,
-                    Type = DocumentType.Fss.Report.ReportFile.ToUrn()
+                    Type = DocumentType.Fss.Report.ReportFile
                 }
             };
             

@@ -61,7 +61,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
                     Filename = fileName,
                     SvdregCode = svdregCode,
                     ContentType = contentType,
-                    Type = documentType.ToUrn()
+                    Type = documentType
                 }
             };
             
@@ -103,7 +103,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
                 Description = new DocumentDescriptionRequest
                 {
                     ContentType = contentType,
-                    Type = documentType.ToUrn()
+                    Type = documentType
                 }
             };
             
@@ -134,7 +134,7 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             {
                 Description = new DocumentDescriptionRequest
                 {
-                    Type = DocumentType.Fss.SedoProviderSubscription.SubscribeRequestForRegistrationNumber.ToUrn()
+                    Type = DocumentType.Fss.SedoProviderSubscription.SubscribeRequestForRegistrationNumber
                 }
             };
             

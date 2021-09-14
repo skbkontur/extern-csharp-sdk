@@ -30,6 +30,8 @@ namespace Kontur.Extern.Client.Models.Docflows.Documents.Enums
                 throw Errors.UrnDoesNotBelongToNamespace(nameof(urn), urn, Namespace);
         }
 
+        public bool IsEmpty => urn is null;
+
         public Urn? ToUrn() => urn;
 
         public bool IsBelongTo(Urn @namespace)

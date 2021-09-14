@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Client.Models.Common;
+using Kontur.Extern.Client.Models.Docflows.Documents.Enums;
 
 namespace Kontur.Extern.Client.Models.Drafts.Documents
 {
@@ -12,7 +12,7 @@ namespace Kontur.Extern.Client.Models.Drafts.Documents
         /// <summary>
         /// Тип документа
         /// </summary>
-        public Urn Type { get; set; }
+        public DocumentType Type { get; set; }
         
         /// <summary>
         /// Имя файла
