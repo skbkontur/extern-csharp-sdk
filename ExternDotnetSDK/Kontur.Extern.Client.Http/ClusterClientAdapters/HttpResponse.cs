@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Kontur.Extern.Client.Common.Streams;
 using Kontur.Extern.Client.Http.Constants;
 using Kontur.Extern.Client.Http.Exceptions;
 using Kontur.Extern.Client.Http.Models.Headers;
@@ -46,7 +47,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
                 return response.Content.ToArray();
             
             if (response.HasStream)
-                return await ToArrayAsync(response.Stream).ConfigureAwait(false);
+                return await response.Stream.ToArrayAsync().ConfigureAwait(false);
 
             throw Errors.ResponseHasToHaveBody(request.ToString(true, false));
         }
@@ -58,7 +59,7 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
             
             if (response.HasStream)
             {
-                var bytes = await ToArrayAsync(response.Stream).ConfigureAwait(false);
+                var bytes = await response.Stream.ToArrayAsync().ConfigureAwait(false);
                 return new ArraySegment<byte>(bytes);
             }
 
@@ -138,19 +139,5 @@ namespace Kontur.Extern.Client.Http.ClusterClientAdapters
         }
 
         public HttpStatus Status => new(response.Code);
-
-        private static async ValueTask<byte[]> ToArrayAsync(Stream stream)
-        {
-            if (stream is MemoryStream memoryStream)
-                return memoryStream.ToArray();
-                
-            var count = stream.Length - stream.Position;
-            if (count == 0)
-                return Array.Empty<byte>();
-            
-            var copy = new byte[count];
-            await stream.ReadAsync(copy, 0, copy.Length).ConfigureAwait(false);
-            return copy;
-        }
     }
 }

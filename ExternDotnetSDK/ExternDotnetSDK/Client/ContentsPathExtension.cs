@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Client.Paths;
+using Kontur.Extern.Client.Uploading;
 
 namespace Kontur.Extern.Client
 {
@@ -13,6 +14,12 @@ namespace Kontur.Extern.Client
         {
             var contentService = path.Services.ContentService;
             return contentService.DownloadContentAsync(path.AccountId, contentId, timeout);
+        }
+        
+        public static Task<Guid> UploadAsync(this in ContentsPath path, Stream stream, TimeSpan? chunkUploadTimeout = null)
+        {
+            var contentService = path.Services.ContentService;
+            return contentService.UploadContentByPartsAsync(path.AccountId, stream, chunkUploadTimeout);
         }
     }
 }
