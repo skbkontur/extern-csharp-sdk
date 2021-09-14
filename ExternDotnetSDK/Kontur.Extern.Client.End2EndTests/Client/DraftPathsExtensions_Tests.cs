@@ -164,7 +164,7 @@ namespace Kontur.Extern.Client.End2EndTests.Client
                 .ToDocument();
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
-            var expectedDocument = new Models.Drafts.Documents.DraftDocument
+            var expectedDocument = new DraftDocument
             {
                 Id = addedDocumentId,
                 Description = new DocumentDescription
@@ -265,6 +265,58 @@ namespace Kontur.Extern.Client.End2EndTests.Client
             allBytes.ShouldHaveExpectedBytes(contentBytes);
         }
 
+        [Fact]
+        public async Task Should_add_document_to_draft_with_already_uploaded_content()
+        {
+            var context = Context.OverrideExternOptions(x => x.OverrideContentsOptions(new ContentManagementOptions(downloadChunkSize: 80*1024)));
+            var documentId = Guid.NewGuid();
+            var documentType = DocumentType.Fns.Fns534.Report;
+            const string contentType = "application/xml";
+            const string fileName = "file_name";
+            var expectedDocument = new DraftDocument
+            {
+                Id = documentId,
+                Description = new DocumentDescription
+                {
+                    ContentType = contentType,
+                    Type = documentType.ToUrn(),
+                    Filename = fileName,
+                    Properties = new Dictionary<string, string?>
+                    {
+                        ["Encoding"] = null,
+                        ["FormName"] = null,
+                        ["КНД"] = null,
+                        ["CorrectionNumber"] = 0.ToString(),
+                        ["IsPrintable"] = false.ToString(),
+                        ["Period"] = null,
+                        ["OriginalFilename"] = null,
+                        ["SvdregCode"] = null
+                    }
+                }
+            };
+            
+            var newDraft = CreateDraftOfDefaultAccount();
+            await using var entityScope = await context.Drafts.CreateNew(AccountId, newDraft);
+            var createdDraft = entityScope.Entity;
+            
+            var contentBytes = randomizer.Bytes(500*1024);
+            var contentId = await context.Contents.UploadAsync(AccountId, new MemoryStream(contentBytes));
+            
+            var document = DraftDocumentBuilder
+                .WithId(documentId)
+                .WithUploadedContent(contentId, contentType, GeneratedAccount.CertificatePublicPart, fileName)
+                .WithType(documentType)
+                .ToDocument();
+            var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
+            addedDocumentId.Should().Be(documentId);
+
+            var draftDocument = await Context.Drafts.GetDocument(AccountId, createdDraft.Id, documentId);
+
+            draftDocument.Should().BeEquivalentTo(expectedDocument, c => c.Excluding(x => x.SignatureContentLink).Excluding(x => x.Contents).Excluding(x => x.Signatures));
+            draftDocument.Signatures.Should().HaveCount(1);
+            draftDocument.Contents.Should().HaveCount(1);
+        }
+        
         [Fact]
         public async Task Should_remove_a_document_from_a_draft()
         {
