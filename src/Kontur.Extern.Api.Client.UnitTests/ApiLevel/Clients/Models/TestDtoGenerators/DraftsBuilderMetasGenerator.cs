@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using AutoBogus;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders;

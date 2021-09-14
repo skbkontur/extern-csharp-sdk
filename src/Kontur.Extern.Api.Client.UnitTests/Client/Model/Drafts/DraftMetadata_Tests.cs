@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;

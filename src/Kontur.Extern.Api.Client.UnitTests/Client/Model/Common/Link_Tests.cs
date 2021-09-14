@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.Models.Common;
