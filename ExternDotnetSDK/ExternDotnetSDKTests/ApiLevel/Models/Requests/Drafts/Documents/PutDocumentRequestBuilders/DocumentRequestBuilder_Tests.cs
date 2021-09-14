@@ -50,6 +50,8 @@ namespace Kontur.Extern.Client.Tests.ApiLevel.Models.Requests.Drafts.Documents.P
         }
 
         [TestCase(null, "application/octet-stream")]
+        [TestCase("", "application/octet-stream")]
+        [TestCase(" ", "application/octet-stream")]
         [TestCase("application/pdf", "application/pdf")]
         public async Task Should_build_request_with_uploaded_content(string contentType, string expectedContentType)
         {

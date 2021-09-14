@@ -88,6 +88,43 @@ namespace Kontur.Extern.Client.Tests.Client.Model.Documents
             signature.Should().BeEquivalentTo(uploadedSignature);
             documentRequest.Should().BeEquivalentTo(expectedRequest);
         }
+
+        [Test]
+        public async Task ToDocument_should_create_document_with_not_signed_content_to_upload()
+        {
+            var accountId = Guid.NewGuid();
+            
+            var uploadedContentId = Guid.NewGuid();
+            const string contentType = "application/octet-stream";
+            var documentType = DocumentType.Fns.Fns534.Report;
+            var expectedRequest = new DocumentRequest
+            {
+                ContentId = uploadedContentId,
+                Description = new DocumentDescriptionRequest
+                {
+                    ContentType = contentType,
+                    Type = documentType.ToUrn()
+                }
+            };
+            
+            var contentService = Substitute.For<IContentService>();
+            var crypt = Substitute.For<ICrypt>();
+
+            var documentContent = Substitute.For<IDocumentContent>();
+            documentContent.UploadAsync(contentService, accountId, Arg.Any<TimeSpan?>()).Returns(uploadedContentId);
+            
+            var document = DraftDocumentBuilder
+                .WithNewId()
+                .WithContentToUpload(documentContent)
+                .WithType(documentType)
+                .ToDocument();
+            
+            var (signature, documentRequest) = await document
+                .CreateSignedRequestAsync(accountId, contentService, crypt, 1.Seconds());
+
+            signature.Should().BeNull();
+            documentRequest.Should().BeEquivalentTo(expectedRequest);
+        }
         
         [Test]
         public async Task FssSedoProviderSubscriptionSubscribeRequestForRegistrationNumber_should_create_document_without_content()

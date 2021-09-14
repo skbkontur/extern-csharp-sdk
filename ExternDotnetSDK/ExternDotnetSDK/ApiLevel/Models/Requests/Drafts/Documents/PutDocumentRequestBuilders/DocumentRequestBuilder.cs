@@ -63,17 +63,21 @@ namespace Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents.PutDocu
         
         private DocumentRequest ToRequest(Guid? contentId, string? contentType)
         {
+            if (string.IsNullOrWhiteSpace(contentType))
+            {
+                contentType = null;
+            }
+            contentType = contentType switch
+            {
+                null when contentId.HasValue => ContentTypes.Binary,
+                not null when contentId is null => null,
+                _ => contentType
+            };
+
             var documentTypeUrn = type.ToUrn();
             DocumentDescriptionRequest? description = null;
             if (svdregCode is not null || fileName is not null || documentTypeUrn is not null || contentType is not null)
             {
-                contentType = (contentType) switch
-                {
-                    null when contentId.HasValue => ContentTypes.Binary,
-                    not null when contentId is null => null,
-                    _ => contentType
-                };
-
                 description = new DocumentDescriptionRequest
                 {
                     Type = documentTypeUrn,

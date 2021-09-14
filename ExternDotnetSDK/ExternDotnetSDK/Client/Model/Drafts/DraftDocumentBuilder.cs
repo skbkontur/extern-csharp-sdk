@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents;
 using Kontur.Extern.Client.ApiLevel.Models.Requests.Drafts.Documents.PutDocumentRequestBuilders;
 using Kontur.Extern.Client.Cryptography;
@@ -52,7 +53,8 @@ namespace Kontur.Extern.Client.Model.Drafts
                 return new(documentId, requestBuilder);
             }
         }
-
+        
+        [PublicAPI]
         private interface IConfiguredDocument<out TResult>
         {
             TResult WithType(in DocumentType documentType);
@@ -65,31 +67,25 @@ namespace Kontur.Extern.Client.Model.Drafts
             private readonly Guid documentId;
             private readonly IDocumentContent documentContent;
             private readonly DocumentRequestBuilder requestBuilder;
+            private Signature? contentSignature;
+            private CertificateContent? contentCertificate;
 
             internal SpecifyDocumentSignMethod(Guid documentId, IDocumentContent documentContent)
             {
                 this.documentId = documentId;
-                this.documentContent = documentContent;
+                this.documentContent = documentContent ?? throw new ArgumentNullException(nameof(documentContent));
                 requestBuilder = new DocumentRequestBuilder();
             }
 
             public SpecifyDocumentSignMethod WithSignature(Signature signature)
             {
-                var uploadStrategy = new DocumentContentToUpload(
-                    documentContent,
-                    signature ?? throw new ArgumentNullException(nameof(signature))
-                );
-                requestBuilder.SetContentUploadStrategy(uploadStrategy);
+                contentSignature = signature ?? throw new ArgumentNullException(nameof(signature));
                 return this;
             }
 
             public SpecifyDocumentSignMethod WithCertificate(CertificateContent certificate)
             {
-                var uploadStrategy = new DocumentContentToUpload(
-                    documentContent,
-                    certificate ?? throw new ArgumentNullException(nameof(certificate))
-                );
-                requestBuilder.SetContentUploadStrategy(uploadStrategy);
+                contentCertificate = certificate ?? throw new ArgumentNullException(nameof(certificate));
                 return this;
             }
 
@@ -111,8 +107,22 @@ namespace Kontur.Extern.Client.Model.Drafts
                 return this;
             }
 
-            public IDraftDocument ToDocument() => 
-                CreateDraftDocument(documentId, requestBuilder);
+            public IDraftDocument ToDocument()
+            {
+                requestBuilder.SetContentUploadStrategy(CreateUploadStrategy());
+                return CreateDraftDocument(documentId, requestBuilder);
+
+                DocumentContentToUpload CreateUploadStrategy()
+                {
+                    if (contentSignature is not null)
+                        return new DocumentContentToUpload(documentContent, contentSignature);
+
+                    if (contentCertificate is not null)
+                        return new DocumentContentToUpload(documentContent, contentCertificate);
+
+                    return new DocumentContentToUpload(documentContent);
+                }
+            }
         }
 
         public class Configured : IConfiguredDocument<Configured>
