@@ -42,7 +42,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 Okud = "1234567",
                 InnKpp = "1234567890-123456789",
                 RegNumber = "123-456-789012",
-                Types = new[] {DocflowType.Fns.Fns534.Report.ToUrn()!},
+                Types = new[] {DocflowType.Fns.Fns534.Report},
                 FormName = "the form",
                 CreatedFrom = createdFrom,
                 CreatedTo = createdTo,

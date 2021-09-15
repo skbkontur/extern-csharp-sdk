@@ -67,10 +67,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConvert
                 UpdatedTo = new DateOnly(2021, 08, 27),
                 CreatedFrom = new DateOnly(2021, 08, 26),
                 CreatedTo = new DateOnly(2021, 08, 27),
-                Types = new[]
-                {
-                    DocflowType.Fns.Fns534.Letter.ToUrn()!
-                },
+                Types = new[] {DocflowType.Fns.Fns534.Letter},
                 Knd = "knd",
                 Okud = "okud",
                 Okpo = "okpo",

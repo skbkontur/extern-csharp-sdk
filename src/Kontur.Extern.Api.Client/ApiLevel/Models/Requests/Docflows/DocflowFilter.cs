@@ -6,6 +6,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
 {
@@ -76,7 +77,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
         /// <summary>
         /// Типы документооборотов
         /// </summary>
-        public Urn[]? Types { get; set; }
+        public DocflowType[] Types { get; set; } = null!;
 
         /// <summary>
         /// КНД – код налоговой декларации. Задается по маске XXXXXXX, где Х - это цифра от 0 до 9
