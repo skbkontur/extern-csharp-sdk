@@ -13,11 +13,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows
     [SuppressMessage("ReSharper", "CommentTypo")]
     internal class Docflow : IDocflowWithDocuments
     {
-        [UsedImplicitly]
-        public Docflow()
-        {
-        }
-
         public Docflow(
             Guid id,
             Guid organizationId,
