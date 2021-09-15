@@ -84,9 +84,6 @@ namespace Kontur.Extern.Api.Client.Exceptions
                 _ => throw UnexpectedEnumMember(nameof(numberKind), numberKind)
             };
         }
-
-        public static Exception InvalidRange([InvokerParameterName] string fromParamName, [InvokerParameterName] string toParamName, DateTime from, DateTime to) => 
-            new ArgumentException($"Invalid range bounds, the value '{@from}' of '{fromParamName}' parameter is greater than the value '{to}' of '{toParamName}' parameter");
         
         public static Exception InvalidRange([InvokerParameterName] string fromParamName, [InvokerParameterName] string toParamName, DateOnly from, DateOnly to) => 
             new ArgumentException($"Invalid range bounds, the value '{@from}' of '{fromParamName}' parameter is greater than the value '{to}' of '{toParamName}' parameter");
