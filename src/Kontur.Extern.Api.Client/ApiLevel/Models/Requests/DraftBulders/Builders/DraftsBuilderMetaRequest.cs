@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
-using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Builders
 {
@@ -33,7 +33,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Builder
         /// Возможные варианты описаны в [документации](https://docs-ke.readthedocs.io/ru/latest/specification/%D1%82%D0%B8%D0%BF%D1%8B%20DraftsBuilder.html).
         /// </summary>
         //[Required]
-        public Urn BuilderType { get; set; } = null!;
+        public DraftBuilderType BuilderType { get; set; }
 
         /// <summary>
         /// Данные для указанного типа DraftsBuilder
