@@ -39,16 +39,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.TestHelpers
                 .Where(x => x.HasValue)
                 .Select(x => x!.Value);
         }
-        
-        public static IEnumerable<TValue> AllEnumValuesFromNestedTypesOfStruct<T, TValue>()
-            where TValue : struct
-        {
-            return AllEnumMembersFromNestedTypesOfStruct<T, TValue>()
-                .Select(x => x.value)
-                .Where(x => x.HasValue)
-                .Select(x => x!.Value);
-        }
-        
+
         public static IEnumerable<(FieldInfo field, T? value)> AllEnumMembersFromNestedTypesOfStruct<T>()
             where T : struct
         {
@@ -60,10 +51,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.TestHelpers
         {
             return EnumMembersFromNestedTypesOf<T, TValue>().Select(x => (x, (TValue?) x.GetValue(null!)));
         }
-        
-        public static IEnumerable<(FieldInfo field, T? value)> AllEnumMembersFromNestedTypesOf<T>() => 
-            AllEnumMembersFromNestedTypes<T, T>();
-        
+
         public static IEnumerable<(FieldInfo field, TValue? value)> AllEnumMembersFromNestedTypes<T, TValue>() => 
             EnumMembersFromNestedTypesOf<T, TValue>().Select(x => (x, (TValue?) x.GetValue(null!)));
 
