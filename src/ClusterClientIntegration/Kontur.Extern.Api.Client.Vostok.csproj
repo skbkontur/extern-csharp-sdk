@@ -10,6 +10,7 @@
     <PackageReleaseNotes>Work in progress. Not properly tested.</PackageReleaseNotes>
     <PackageTags>kontur, skbkontur, extern, kontur-extern, SDK, API, workInProgress</PackageTags>
     <LangVersion>latest</LangVersion>
+    <Configurations>Debug;Release;Client</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

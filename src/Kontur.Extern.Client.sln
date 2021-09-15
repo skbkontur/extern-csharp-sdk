@@ -9,104 +9,128 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Un
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Vostok", "ClusterClientIntegration\Kontur.Extern.Api.Client.Vostok.csproj", "{FE0A6C55-9C46-4A24-B07F-6058C560A839}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.End2EndTests", "Kontur.Extern.Api.Client.End2EndTests\Kontur.Extern.Api.Client.End2EndTests.csproj", "{DB68F6DE-9072-41D4-BE2C-1A1C4F7DC845}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.End2EndTests", "Kontur.Extern.Api.Client.End2EndTests\Kontur.Extern.Api.Client.End2EndTests.csproj", "{DB68F6DE-9072-41D4-BE2C-1A1C4F7DC845}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Testing", "Kontur.Extern.Api.Client.Testing\Kontur.Extern.Api.Client.Testing.csproj", "{EBA96498-830C-4F7C-90E9-B5702ADAF4CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Testing", "Kontur.Extern.Api.Client.Testing\Kontur.Extern.Api.Client.Testing.csproj", "{EBA96498-830C-4F7C-90E9-B5702ADAF4CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Http", "Kontur.Extern.Api.Client.Http\Kontur.Extern.Api.Client.Http.csproj", "{E720805A-339F-4E90-B240-81AF90F6B14C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Http", "Kontur.Extern.Api.Client.Http\Kontur.Extern.Api.Client.Http.csproj", "{E720805A-339F-4E90-B240-81AF90F6B14C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Http.UnitTests", "Kontur.Extern.Api.Client.Http.UnitTests\Kontur.Extern.Api.Client.Http.UnitTests.csproj", "{5643B91B-AAF0-4BDF-BACC-26D59BAF897E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Http.UnitTests", "Kontur.Extern.Api.Client.Http.UnitTests\Kontur.Extern.Api.Client.Http.UnitTests.csproj", "{5643B91B-AAF0-4BDF-BACC-26D59BAF897E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Auth.Abstractions", "Kontur.Extern.Api.Client.Auth.Abstractions\Kontur.Extern.Api.Client.Auth.Abstractions.csproj", "{04194769-76A1-420D-AE43-686E9F25B1B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Auth.Abstractions", "Kontur.Extern.Api.Client.Auth.Abstractions\Kontur.Extern.Api.Client.Auth.Abstractions.csproj", "{04194769-76A1-420D-AE43-686E9F25B1B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Auth.OpenId", "Kontur.Extern.Api.Client.Auth.OpenId\Kontur.Extern.Api.Client.Auth.OpenId.csproj", "{E19C2483-D29C-467A-9C65-6A87E2C74191}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Auth.OpenId", "Kontur.Extern.Api.Client.Auth.OpenId\Kontur.Extern.Api.Client.Auth.OpenId.csproj", "{E19C2483-D29C-467A-9C65-6A87E2C74191}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Cryptography", "Kontur.Extern.Api.Client.Cryptography\Kontur.Extern.Api.Client.Cryptography.csproj", "{EC5B3834-711A-42D5-891C-1F36E1E51BAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Cryptography", "Kontur.Extern.Api.Client.Cryptography\Kontur.Extern.Api.Client.Cryptography.csproj", "{EC5B3834-711A-42D5-891C-1F36E1E51BAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Auth.OpenId.UnitTests", "Kontur.Extern.Api.Client.Auth.OpenId.UnitTests\Kontur.Extern.Api.Client.Auth.OpenId.UnitTests.csproj", "{658DE758-F775-411B-886A-A072861645FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Auth.OpenId.UnitTests", "Kontur.Extern.Api.Client.Auth.OpenId.UnitTests\Kontur.Extern.Api.Client.Auth.OpenId.UnitTests.csproj", "{658DE758-F775-411B-886A-A072861645FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Common", "Kontur.Extern.Api.Client.Common\Kontur.Extern.Api.Client.Common.csproj", "{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Common", "Kontur.Extern.Api.Client.Common\Kontur.Extern.Api.Client.Common.csproj", "{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Common.UnitTests", "Kontur.Extern.Api.Client.Common.UnitTests\Kontur.Extern.Api.Client.Common.UnitTests.csproj", "{2729C3A1-965A-47EB-BEDB-9BAE34B45430}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Common.UnitTests", "Kontur.Extern.Api.Client.Common.UnitTests\Kontur.Extern.Api.Client.Common.UnitTests.csproj", "{2729C3A1-965A-47EB-BEDB-9BAE34B45430}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Auth.OpenId.End2EndTests", "Kontur.Extern.Api.Client.Auth.OpenId.End2EndTests\Kontur.Extern.Api.Client.Auth.OpenId.End2EndTests.csproj", "{017CFFF6-696B-4C41-929D-2059B4309CCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Auth.OpenId.End2EndTests", "Kontur.Extern.Api.Client.Auth.OpenId.End2EndTests\Kontur.Extern.Api.Client.Auth.OpenId.End2EndTests.csproj", "{017CFFF6-696B-4C41-929D-2059B4309CCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Testing.End2End", "Kontur.Extern.Api.Client.Testing.End2End\Kontur.Extern.Api.Client.Testing.End2End.csproj", "{8E74DA73-8A67-44CE-BEF4-805FBF391CF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Testing.End2End", "Kontur.Extern.Api.Client.Testing.End2End\Kontur.Extern.Api.Client.Testing.End2End.csproj", "{8E74DA73-8A67-44CE-BEF4-805FBF391CF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Benchmarks", "Kontur.Extern.Api.Client.Benchmarks\Kontur.Extern.Api.Client.Benchmarks.csproj", "{C7C89DB4-50FB-4F0C-BFFF-A38D6E9D1C34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Benchmarks", "Kontur.Extern.Api.Client.Benchmarks\Kontur.Extern.Api.Client.Benchmarks.csproj", "{C7C89DB4-50FB-4F0C-BFFF-A38D6E9D1C34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Testing.ExternTestTool", "Kontur.Extern.Api.Client.Testing.ExternTestTool\Kontur.Extern.Api.Client.Testing.ExternTestTool.csproj", "{6DE59DA1-9A14-422A-B84D-20DE0CECD9F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Testing.ExternTestTool", "Kontur.Extern.Api.Client.Testing.ExternTestTool\Kontur.Extern.Api.Client.Testing.ExternTestTool.csproj", "{6DE59DA1-9A14-422A-B84D-20DE0CECD9F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Client|Any CPU = Client|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC1380C5-17B7-4C82-832C-40A647FBAD58}.Client|Any CPU.ActiveCfg = Client|Any CPU
+		{BC1380C5-17B7-4C82-832C-40A647FBAD58}.Client|Any CPU.Build.0 = Client|Any CPU
 		{BC1380C5-17B7-4C82-832C-40A647FBAD58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BC1380C5-17B7-4C82-832C-40A647FBAD58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC1380C5-17B7-4C82-832C-40A647FBAD58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC1380C5-17B7-4C82-832C-40A647FBAD58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABA9A116-2F0A-4442-8449-4994A3B257AE}.Client|Any CPU.ActiveCfg = Client|Any CPU
 		{ABA9A116-2F0A-4442-8449-4994A3B257AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ABA9A116-2F0A-4442-8449-4994A3B257AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABA9A116-2F0A-4442-8449-4994A3B257AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABA9A116-2F0A-4442-8449-4994A3B257AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE0A6C55-9C46-4A24-B07F-6058C560A839}.Client|Any CPU.ActiveCfg = Client|Any CPU
 		{FE0A6C55-9C46-4A24-B07F-6058C560A839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FE0A6C55-9C46-4A24-B07F-6058C560A839}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE0A6C55-9C46-4A24-B07F-6058C560A839}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE0A6C55-9C46-4A24-B07F-6058C560A839}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB68F6DE-9072-41D4-BE2C-1A1C4F7DC845}.Client|Any CPU.ActiveCfg = Client|Any CPU
 		{DB68F6DE-9072-41D4-BE2C-1A1C4F7DC845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DB68F6DE-9072-41D4-BE2C-1A1C4F7DC845}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB68F6DE-9072-41D4-BE2C-1A1C4F7DC845}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB68F6DE-9072-41D4-BE2C-1A1C4F7DC845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBA96498-830C-4F7C-90E9-B5702ADAF4CC}.Client|Any CPU.ActiveCfg = Client|Any CPU
 		{EBA96498-830C-4F7C-90E9-B5702ADAF4CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EBA96498-830C-4F7C-90E9-B5702ADAF4CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBA96498-830C-4F7C-90E9-B5702ADAF4CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBA96498-830C-4F7C-90E9-B5702ADAF4CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E720805A-339F-4E90-B240-81AF90F6B14C}.Client|Any CPU.ActiveCfg = Client|Any CPU
+		{E720805A-339F-4E90-B240-81AF90F6B14C}.Client|Any CPU.Build.0 = Client|Any CPU
 		{E720805A-339F-4E90-B240-81AF90F6B14C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E720805A-339F-4E90-B240-81AF90F6B14C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E720805A-339F-4E90-B240-81AF90F6B14C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E720805A-339F-4E90-B240-81AF90F6B14C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5643B91B-AAF0-4BDF-BACC-26D59BAF897E}.Client|Any CPU.ActiveCfg = Client|Any CPU
 		{5643B91B-AAF0-4BDF-BACC-26D59BAF897E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5643B91B-AAF0-4BDF-BACC-26D59BAF897E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5643B91B-AAF0-4BDF-BACC-26D59BAF897E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5643B91B-AAF0-4BDF-BACC-26D59BAF897E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04194769-76A1-420D-AE43-686E9F25B1B4}.Client|Any CPU.ActiveCfg = Client|Any CPU
+		{04194769-76A1-420D-AE43-686E9F25B1B4}.Client|Any CPU.Build.0 = Client|Any CPU
 		{04194769-76A1-420D-AE43-686E9F25B1B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{04194769-76A1-420D-AE43-686E9F25B1B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04194769-76A1-420D-AE43-686E9F25B1B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04194769-76A1-420D-AE43-686E9F25B1B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E19C2483-D29C-467A-9C65-6A87E2C74191}.Client|Any CPU.ActiveCfg = Client|Any CPU
+		{E19C2483-D29C-467A-9C65-6A87E2C74191}.Client|Any CPU.Build.0 = Client|Any CPU
 		{E19C2483-D29C-467A-9C65-6A87E2C74191}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E19C2483-D29C-467A-9C65-6A87E2C74191}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E19C2483-D29C-467A-9C65-6A87E2C74191}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E19C2483-D29C-467A-9C65-6A87E2C74191}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC5B3834-711A-42D5-891C-1F36E1E51BAF}.Client|Any CPU.ActiveCfg = Client|Any CPU
+		{EC5B3834-711A-42D5-891C-1F36E1E51BAF}.Client|Any CPU.Build.0 = Client|Any CPU
 		{EC5B3834-711A-42D5-891C-1F36E1E51BAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EC5B3834-711A-42D5-891C-1F36E1E51BAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC5B3834-711A-42D5-891C-1F36E1E51BAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC5B3834-711A-42D5-891C-1F36E1E51BAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{658DE758-F775-411B-886A-A072861645FF}.Client|Any CPU.ActiveCfg = Client|Any CPU
 		{658DE758-F775-411B-886A-A072861645FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{658DE758-F775-411B-886A-A072861645FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{658DE758-F775-411B-886A-A072861645FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{658DE758-F775-411B-886A-A072861645FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}.Client|Any CPU.ActiveCfg = Client|Any CPU
+		{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}.Client|Any CPU.Build.0 = Client|Any CPU
 		{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56ED47AD-B5FB-4C6D-8A12-3B5FF221B8BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2729C3A1-965A-47EB-BEDB-9BAE34B45430}.Client|Any CPU.ActiveCfg = Client|Any CPU
 		{2729C3A1-965A-47EB-BEDB-9BAE34B45430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2729C3A1-965A-47EB-BEDB-9BAE34B45430}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2729C3A1-965A-47EB-BEDB-9BAE34B45430}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2729C3A1-965A-47EB-BEDB-9BAE34B45430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{017CFFF6-696B-4C41-929D-2059B4309CCC}.Client|Any CPU.ActiveCfg = Client|Any CPU
 		{017CFFF6-696B-4C41-929D-2059B4309CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{017CFFF6-696B-4C41-929D-2059B4309CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{017CFFF6-696B-4C41-929D-2059B4309CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{017CFFF6-696B-4C41-929D-2059B4309CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E74DA73-8A67-44CE-BEF4-805FBF391CF2}.Client|Any CPU.ActiveCfg = Client|Any CPU
 		{8E74DA73-8A67-44CE-BEF4-805FBF391CF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E74DA73-8A67-44CE-BEF4-805FBF391CF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E74DA73-8A67-44CE-BEF4-805FBF391CF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E74DA73-8A67-44CE-BEF4-805FBF391CF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7C89DB4-50FB-4F0C-BFFF-A38D6E9D1C34}.Client|Any CPU.ActiveCfg = Client|Any CPU
 		{C7C89DB4-50FB-4F0C-BFFF-A38D6E9D1C34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C7C89DB4-50FB-4F0C-BFFF-A38D6E9D1C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7C89DB4-50FB-4F0C-BFFF-A38D6E9D1C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7C89DB4-50FB-4F0C-BFFF-A38D6E9D1C34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DE59DA1-9A14-422A-B84D-20DE0CECD9F2}.Client|Any CPU.ActiveCfg = Client|Any CPU
 		{6DE59DA1-9A14-422A-B84D-20DE0CECD9F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6DE59DA1-9A14-422A-B84D-20DE0CECD9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DE59DA1-9A14-422A-B84D-20DE0CECD9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
