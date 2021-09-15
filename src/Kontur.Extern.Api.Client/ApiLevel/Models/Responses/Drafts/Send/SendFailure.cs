@@ -12,7 +12,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Send
         public SendFailure(Urn id, HttpStatusCode statusCode, string message, string status, CheckResultData? checkResult)
         {
             Id = id;
-            StatusCode = (HttpStatusCode) statusCode;
+            StatusCode = statusCode;
             Message = message;
             Status = status;
             CheckResult = checkResult;

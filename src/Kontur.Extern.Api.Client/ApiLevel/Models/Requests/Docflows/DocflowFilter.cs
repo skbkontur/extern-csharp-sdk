@@ -137,8 +137,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
                 var propValue = info.GetValue(this);
                 if (propValue is null)
                     continue;
-                if (propValue is DateTime?)
-                    result[ToLowerCamelCase(info.Name)] = ((DateTime?) propValue).Value.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK");
+                if (propValue is DateTime dateTimeValue)
+                    // ReSharper disable once StringLiteralTypo
+                    result[ToLowerCamelCase(info.Name)] = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK");
                 else
                     result[ToLowerCamelCase(info.Name)] = propValue.ToString();
             }
