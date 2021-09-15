@@ -16,7 +16,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGene
         public Docflow GenerateDocflowWithDescription(Type descriptionType, DocflowType docflowType)
         {
             var docflow = GenerateDocflowWithType(docflowType);
-            docflow.Description = (DocflowDescription) faker.Generate(descriptionType);
+            docflow.Description = (DocflowDescription?) faker.Generate(descriptionType);
             docflow.Type = docflowType;
             return docflow;
         }

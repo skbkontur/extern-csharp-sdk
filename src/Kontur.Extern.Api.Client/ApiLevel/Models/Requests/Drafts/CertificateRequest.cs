@@ -13,6 +13,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// </summary>
         //[JsonProperty(Required = Required.Always)]
         [JsonPropertyName("content")]
-        public byte[] PublicKey { get; set; }
+        public byte[] PublicKey { get; set; } = null!;
     }
 }

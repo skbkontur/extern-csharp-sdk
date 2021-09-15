@@ -47,8 +47,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
 
             public DraftsBuilderDocumentFileMeta ConvertToDto() => new()
             {
-                FileName = FileName,
-                BuilderType = BuilderType,
+                FileName = FileName!,
+                BuilderType = BuilderType!,
                 BuilderData = BuilderData as DraftsBuilderDocumentFileData ?? new UnknownDraftsBuilderDocumentFileData()
             };
         }

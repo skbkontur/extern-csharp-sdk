@@ -27,7 +27,7 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles
         /// <summary>
         ///  Внимание. Параметр устарел. Используйте вместо него content-id
         /// </summary>
-        public Link ContentLink { get; set; }
+        public Link? ContentLink { get; set; }
         
         /// <summary>
         /// Идентификатор контента файла в сервисе контентов
@@ -37,11 +37,11 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles
         /// <summary>
         /// Ссылка на контент подписи файла
         /// </summary>
-        public Link SignatureContentLink { get; set; }
+        public Link? SignatureContentLink { get; set; }
         
         /// <summary>
         /// Метаинформация файла документа DraftsBuilder
         /// </summary>
-        public DraftsBuilderDocumentFileMeta Meta { get; set; }
+        public DraftsBuilderDocumentFileMeta Meta { get; set; } = null!;
     }
 }

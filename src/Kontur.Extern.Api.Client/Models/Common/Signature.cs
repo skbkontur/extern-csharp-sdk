@@ -18,23 +18,23 @@ namespace Kontur.Extern.Api.Client.Models.Common
         /// <summary>
         /// Название подписи
         /// </summary>
-        public string Title { get; set; }
-        
+        public string Title { get; set; } = null!;
+
         /// <summary>
         /// Отпечаток сертификата
         /// </summary>
-        public string SignatureCertificateThumbprint { get; set; }
-        
+        public string SignatureCertificateThumbprint { get; set; } = null!;
+
         /// <summary>
         /// Ссылка на контент подписи
         /// </summary>
-        public Link ContentLink { get; set; }
-        
+        public Link ContentLink { get; set; } = null!;
+
         /// <summary>
         /// Ссылки для работы с подписью
         /// </summary>
-        public Link[] Links { get; set; }
-        
+        public Link[] Links { get; set; } = null!;
+
         /// <summary>
         /// Тип подписанта:
         /// organizationRepresentative — представитель организации,

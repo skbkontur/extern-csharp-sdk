@@ -11,7 +11,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Signatures
         /// Подпись документа в формате base64
         /// </summary>
         //[Required(AllowEmptyStrings = false)]
-        public string Base64Content { get; set; }
+        public string Base64Content { get; set; } = null!;
 
         /// <summary>
         /// Принадлежность подписи третьей стороне, не участвующей в документообороте. По умолчанию <code>false</code>

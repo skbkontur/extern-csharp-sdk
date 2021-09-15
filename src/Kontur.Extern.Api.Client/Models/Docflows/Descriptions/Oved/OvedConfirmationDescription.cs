@@ -11,12 +11,12 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Oved
         /// <summary>
         /// Версия формы документа
         /// </summary>
-        public FormVersion FormVersion { get; set; }
+        public FormVersion FormVersion { get; set; } = null!;
         
         /// <summary>
         /// Регистрационный номер
         /// </summary>
-        public string RegistrationNumber { get; set; }
+        public string RegistrationNumber { get; set; } = null!;
         
         /// <summary>
         /// Дата начала отчетного периода, за который сдается отчет
@@ -31,21 +31,21 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Oved
         /// <summary>
         /// ИНН организации, за которую сдается отчет
         /// </summary>
-        public string PayerInn { get; set; }
+        public string PayerInn { get; set; } = null!;
         
         /// <summary>
         /// Код отчетного периода, за который сдается отчет
         /// </summary>
-        public string PeriodCode { get; set; }
+        public string PeriodCode { get; set; } = null!;
         
         /// <summary>
         /// Идентификатор отчета, выданный порталом ФСС
         /// </summary>
-        public string RequestId { get; set; }
+        public string RequestId { get; set; } = null!;
         
         /// <summary>
         /// Отпечаток сертификата отправителя
         /// </summary>
-        public string SenderCertificateThumbprint { get; set; }
+        public string SenderCertificateThumbprint { get; set; } = null!;
     }
 }

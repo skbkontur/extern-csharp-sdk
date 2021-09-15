@@ -12,8 +12,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Warrants
         public long Skip { get; set; }
         public long Take { get; set; }
         public long TotalCount { get; set; }
-        public Warrant?[] Warrants { get; set; }
-        public OrganizationWarrantInformation[] OrganizationWarrantInformations { get; set; }
-        public Link[] Links { get; set; }
+        public Warrant?[]? Warrants { get; set; }
+        public OrganizationWarrantInformation[]? OrganizationWarrantInformations { get; set; }
+        public Link[]? Links { get; set; }
     }
 }

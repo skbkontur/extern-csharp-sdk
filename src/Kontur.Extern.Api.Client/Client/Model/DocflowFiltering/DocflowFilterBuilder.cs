@@ -103,7 +103,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithTypes(params DocflowType[] types)
         {
-            filter.Types = types.Select(x => x.ToUrn()).ToArray();
+            filter.Types = types.Select(x => x.ToUrn()).Where(x => x != null).ToArray()!;
             return this;
         }
 

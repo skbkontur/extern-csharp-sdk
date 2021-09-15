@@ -57,10 +57,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
 
             public DraftsBuilderMeta ConvertToDto() => new()
             {
-                Sender = Sender,
-                Payer = Payer,
-                Recipient = Recipient,
-                BuilderType = BuilderType,
+                Sender = Sender!,
+                Payer = Payer!,
+                Recipient = Recipient!,
+                BuilderType = BuilderType!,
                 BuilderData = BuilderData as DraftsBuilderData ?? new UnknownDraftsBuilderData()
             };
         }

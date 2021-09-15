@@ -39,7 +39,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConvert
   ""period-to"": ""2021-08-27"",
   ""for-all-users"": true
 }";
-        private IJsonSerializer serializer;
+        private IJsonSerializer serializer = null!;
 
         [SetUp]
         public void SetUp() => serializer = JsonSerializerFactory.CreateJsonSerializer();
@@ -69,7 +69,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConvert
                 CreatedTo = new DateOnly(2021, 08, 27),
                 Types = new[]
                 {
-                    DocflowType.Fns.Fns534.Letter.ToUrn()
+                    DocflowType.Fns.Fns534.Letter.ToUrn()!
                 },
                 Knd = "knd",
                 Okud = "okud",

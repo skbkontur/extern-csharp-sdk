@@ -16,12 +16,12 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Documen
         /// <summary>
         /// Контент подписи файла в формате base64
         /// </summary>
-        public string Base64SignatureContent { get; set; }
+        public string? Base64SignatureContent { get; set; }
         
         /// <summary>
         /// Метаинформация файла
         /// </summary>
         //[Required]
-        public DraftsBuilderFileMetaRequest Meta { get; set; }
+        public DraftsBuilderFileMetaRequest Meta { get; set; } = null!;
     }
 }

@@ -15,15 +15,15 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
         {
             var expectedPage = new ExpectedPage<int>
             {
-                Items = new int[0],
+                Items = Array.Empty<int>(),
                 PageSize = 10,
-                Pages = new long[0],
+                Pages = Array.Empty<long>(),
                 CurrentPage = 0,
                 TotalPages = 0,
                 TotalItems = 0
             };
             
-            var page = new Page<int>(new int[0], 10, 0, 0);
+            var page = new Page<int>(Array.Empty<int>(), 10, 0, 0);
 
             ShouldBeExpected(page, expectedPage);
         }
@@ -89,15 +89,15 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
             var expectedPage = new ExpectedPage<int>
             {
                 IsPageNonExistent = true,
-                Items = new int[0],
+                Items = Array.Empty<int>(),
                 PageSize = 4,
-                Pages = new long[0],
+                Pages = Array.Empty<long>(),
                 CurrentPage = 4,
                 TotalPages = 0,
                 TotalItems = 0
             };
 
-            var page = new Page<int>(new int[0], 4, 4, 0);
+            var page = new Page<int>(Array.Empty<int>(), 4, 4, 0);
 
             ShouldBeExpected(page, expectedPage);
         }
@@ -107,7 +107,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
         {
             var expectedPage = new ExpectedPage<int>
             {
-                Items = new int[0],
+                Items = Array.Empty<int>(),
                 PageSize = 4,
                 Pages = new [] {0L, 1L, 2L},
                 CurrentPage = 4,
@@ -115,7 +115,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
                 TotalItems = 12
             };
 
-            var page = new Page<int>(new int[0], 4, 4, 12);
+            var page = new Page<int>(Array.Empty<int>(), 4, 4, 12);
 
             ShouldBeExpected(page, expectedPage);
         }
@@ -131,7 +131,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
         [Test]
         public void Should_fail_if_given_zero_page_size()
         {
-            Action action = () => _ = new Page<int>(new int[0], 0, 0, 0);
+            Action action = () => _ = new Page<int>(Array.Empty<int>(), 0, 0, 0);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -218,8 +218,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
             public long CurrentPage { get; init; }
             public uint PageSize { get; init; }
             public long TotalPages { get; init; }
-            public IEnumerable<long> Pages { get; init; }
-            public T[] Items { get; init; }
+            public IEnumerable<long> Pages { get; init; } = null!;
+            public T[]? Items { get; init; }
         }
     }
 }

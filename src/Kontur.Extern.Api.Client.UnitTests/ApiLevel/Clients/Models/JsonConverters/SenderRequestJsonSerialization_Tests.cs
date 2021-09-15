@@ -15,7 +15,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConvert
   ""is-representative"": true,
   ""ipaddress"": ""8.8.8.8""
 }";
-        private IJsonSerializer serializer;
+        private IJsonSerializer serializer = null!;
 
         [SetUp]
         public void SetUp() => serializer = JsonSerializerFactory.CreateJsonSerializer();

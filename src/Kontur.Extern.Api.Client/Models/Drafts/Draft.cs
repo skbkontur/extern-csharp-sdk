@@ -18,17 +18,17 @@ namespace Kontur.Extern.Api.Client.Models.Drafts
         /// <summary>
         /// Ссылки на документообороты
         /// </summary>
-        public Link[] Docflows { get; set; }
+        public Link[] Docflows { get; set; } = null!;
         
         /// <summary>
         /// Ссылки на документы черновика
         /// </summary>
-        public Link[] Documents { get; set; }
+        public Link[] Documents { get; set; } = null!;
         
         /// <summary>
         /// Метаинформация черновика
         /// </summary>
-        public DraftMeta Meta { get; set; }
+        public DraftMeta Meta { get; set; } = null!;
         
         /// <summary>
         /// Статус черновика
@@ -38,6 +38,6 @@ namespace Kontur.Extern.Api.Client.Models.Drafts
         /// <summary>
         /// Ссылки для работы с черновиком
         /// </summary>
-        public Link[] Links { get; set; }
+        public Link[] Links { get; set; } = null!;
     }
 }

@@ -16,6 +16,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations
         /// <summary>
         /// Общие данные по организации
         /// </summary>
-        public OrganizationGeneral General { get; set; }
+        public OrganizationGeneral General { get; set; } = null!;
     }
 }

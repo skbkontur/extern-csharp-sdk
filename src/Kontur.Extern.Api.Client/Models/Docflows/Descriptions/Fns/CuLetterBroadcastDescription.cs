@@ -10,11 +10,11 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// Код инспекции, откуда пришла рассылка 
         /// </summary>
-        public string Cu { get; set; }
+        public string Cu { get; set; } = null!;
         
         /// <summary>
         /// Тема письма
         /// </summary>
-        public string Subject { get; set; }
+        public string Subject { get; set; } = null!;
     }
 }

@@ -79,7 +79,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConvert
         private static void DescriptionShouldBeEqual(DocflowDocumentDescription description, DocflowDocumentDescription expectedDescription)
         {
             description.Should().BeEquivalentTo(expectedDescription);
-            description.Requisites.Should().BeOfType(expectedDescription.Requisites.GetType());
+            description.Requisites.Should().BeOfType(expectedDescription.Requisites?.GetType());
         }
 
         public static IEnumerable<RequisitesCase> DocumentTypeToRequisitesCases =>
@@ -89,9 +89,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConvert
         
         public record RequisitesCase
         {
-            private readonly Type? requisitesType;
+            private readonly Type requisitesType;
             
-            public RequisitesCase(DocumentType documentType, Type? requisitesType)
+            public RequisitesCase(DocumentType documentType, Type requisitesType)
             {
                 DocumentType = documentType;
                 this.requisitesType = requisitesType;

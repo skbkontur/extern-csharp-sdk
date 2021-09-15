@@ -12,11 +12,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Documen
         /// Название файла
         /// </summary>
         //[Required]
-        public string FileName { get; set; }
-        
+        public string FileName { get; set; } = null!;
+
         /// <summary>
         /// Сведения о файле
         /// </summary>
-        public DraftsBuilderDocumentFileData BuilderData { get; set; }
+        public DraftsBuilderDocumentFileData BuilderData { get; set; } = null!;
     }
 }

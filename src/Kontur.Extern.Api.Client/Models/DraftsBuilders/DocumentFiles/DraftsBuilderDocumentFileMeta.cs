@@ -13,17 +13,17 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles
         /// Название файла
         /// </summary>
         ///[Required]
-        public string FileName { get; set; }
-        
+        public string FileName { get; set; } = null!;
+
         /// <summary>
         /// Тип DraftsBuilder
         /// </summary>
         //[Required]
-        public Urn BuilderType { get; set; }
-        
+        public Urn BuilderType { get; set; } = null!;
+
         /// <summary>
         /// Дополнительная информация о файле
         /// </summary>
-        public DraftsBuilderDocumentFileData BuilderData { get; set; }
+        public DraftsBuilderDocumentFileData BuilderData { get; set; } = null!;
     }
 }

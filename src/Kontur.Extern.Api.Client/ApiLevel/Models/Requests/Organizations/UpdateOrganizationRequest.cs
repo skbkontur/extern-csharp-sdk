@@ -10,6 +10,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations
         /// <summary>
         /// Название организации
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

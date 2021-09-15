@@ -13,18 +13,18 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
         /// ИНН
         /// </summary>
         // [JsonProperty(Required = Required.Always)]
-        public string Inn { get; set; }
+        public string Inn { get; set; } = null!;
 
         /// <summary>
         /// ФИО
         /// </summary>
         // [JsonProperty(Required = Required.Always)]
         [JsonPropertyName("fio")]
-        public PersonFullName PersonFullName { get; set; }
+        public PersonFullName PersonFullName { get; set; } = null!;
 
         /// <summary>
         /// E-mail
         /// </summary>
-        public string Email { get; set; }
+        public string? Email { get; set; }
     }
 }

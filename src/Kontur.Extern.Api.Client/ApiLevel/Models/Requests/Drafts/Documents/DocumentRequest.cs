@@ -16,11 +16,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents
         /// <summary>
         /// Подпись документа
         /// </summary>
-        public byte[] Signature { get; set; }
+        public byte[]? Signature { get; set; }
 
         /// <summary>
         /// Описание документа
         /// </summary>
-        public DocumentDescriptionRequest Description { get; set; }
+        public DocumentDescriptionRequest? Description { get; set; }
     }
 }

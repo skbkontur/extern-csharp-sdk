@@ -12,22 +12,22 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegi
         /// <summary>
         /// Код ИФНС
         /// </summary>
-        public string Recipient { get; set; }
+        public string Recipient { get; set; } = null!;
         
         /// <summary>
         /// ИНН заявителя
         /// </summary>
-        public string SenderInn { get; set; }
+        public string SenderInn { get; set; } = null!;
         
         /// <summary>
         /// Коды СВДРЕГ документов
         /// </summary>
-        public string[] SvdRegCodes { get; set; }
+        public string[] SvdRegCodes { get; set; } = null!;
         
         /// <summary>
         /// Информация для регистрации
         /// </summary>
-        public RegistrationInfoDescription RegistrationInfo { get; set; }
+        public RegistrationInfoDescription RegistrationInfo { get; set; } = null!;
 
         [PublicAPI]
         [SuppressMessage("ReSharper", "CommentTypo")]
@@ -36,7 +36,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegi
             /// <summary>
             /// Сведения о заявителе
             /// </summary>
-            public ApplicantInfoDescription[] ApplicantInfos { get; set; }
+            public ApplicantInfoDescription[] ApplicantInfos { get; set; } = null!;
             
             /// <summary>
             /// Тип регистрируемой организации
@@ -46,7 +46,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegi
             /// <summary>
             /// Информация о регистрируемом ЮЛ
             /// </summary>
-            public UlInfoDescription UlInfo { get; set; }
+            public UlInfoDescription? UlInfo { get; set; }
         }
     
         [PublicAPI]
@@ -57,12 +57,12 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegi
             /// ФИО
             /// </summary>
             [JsonPropertyName("fio")]
-            public PersonFullName PersonFullName { get; set; }
+            public PersonFullName PersonFullName { get; set; } = null!;
             
             /// <summary>
             /// ИНН физического лица заявителя
             /// </summary>
-            public string Inn { get; set; }
+            public string Inn { get; set; } = null!;
         }
     
         [PublicAPI]
@@ -72,7 +72,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegi
             /// <summary>
             /// Полное наименование юридического лица
             /// </summary>
-            public string Name { get; set; }
+            public string Name { get; set; } = null!;
         }
     }
 }

@@ -11,12 +11,12 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents
         /// <summary>
         /// Номер требования
         /// </summary>
-        public string DemandNumber { get; set; }
+        public string DemandNumber { get; set; } = null!;
 
         /// <summary>
         /// КНД распознанного поручения
         /// </summary>
-        public string DemandKnd { get; set; }
+        public string DemandKnd { get; set; } = null!;
         
         /// <summary>
         /// Дата из файла требования
@@ -36,6 +36,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents
         /// <summary>
         /// Список ИНН, которые были перечислены в pdf-файле требования
         /// </summary>
-        public string[] DemandInnList { get; set; }
+        public string[] DemandInnList { get; set; } = null!;
     }
 }

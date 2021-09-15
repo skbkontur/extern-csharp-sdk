@@ -10,7 +10,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ApiTasks
     {
         public Guid Id { get; set; }
         public ApiTaskState TaskState { get; set; }
-        public Urn TaskType { get; set; }
-        public Link TaskResultLink { get; set; }
+        public Urn? TaskType { get; set; }
+        public Link? TaskResultLink { get; set; }
     }
 }

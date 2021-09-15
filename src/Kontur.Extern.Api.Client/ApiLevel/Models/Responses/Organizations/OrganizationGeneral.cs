@@ -11,18 +11,18 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations
         /// <summary>
         /// ИНН организации
         /// </summary>
-        public string Inn { get; set; }
-        
+        public string Inn { get; set; } = null!;
+
         /// <summary>
         /// КПП организации
         /// </summary>
-        public string Kpp { get; set; }
-        
+        public string Kpp { get; set; } = null!;
+
         /// <summary>
         /// Название организации
         /// </summary>
-        public string Name { get; set; }
-        
+        public string Name { get; set; } = null!;
+
         /// <summary>
         /// Признак головной организации
         /// </summary>
@@ -31,6 +31,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations
         /// <summary>
         /// Ссылки для работы с организациями
         /// </summary>
-        public Link[] Links { get; set; }
+        public Link[] Links { get; set; } = null!;
     }
 }

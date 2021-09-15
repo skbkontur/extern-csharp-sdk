@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Exceptions;
 using Kontur.Extern.Api.Client.Helpers;
 using Kontur.Extern.Api.Client.Model;
 using Kontur.Extern.Api.Client.Model.DocflowFiltering;
@@ -42,12 +43,14 @@ namespace Kontur.Extern.Api.Client
 
         public static Task<ReplyDocument> GenerateReplyAsync(this in DocumentPath path, DocumentType documentType, CertificateContent certificate, TimeSpan? timeout = null)
         {
+            if (documentType.IsEmpty)
+                throw Errors.ValueShouldNotBeEmpty(nameof(documentType));
             var apiClient = path.Services.Api;
             return apiClient.Replies.GenerateReplyAsync(
                 path.AccountId,
                 path.DocflowId,
                 path.DocumentId,
-                documentType.ToUrn(),
+                documentType.ToUrn()!,
                 certificate.ToBytes(),
                 timeout);
         }

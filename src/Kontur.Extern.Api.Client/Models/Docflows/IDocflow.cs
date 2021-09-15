@@ -20,7 +20,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows
         /// <summary>
         /// Дополнительные свойства документооборота
         /// </summary>
-        public DocflowDescription Description { get; }
+        public DocflowDescription? Description { get; }
         
         /// <summary>
         /// Идентификатор документооборота

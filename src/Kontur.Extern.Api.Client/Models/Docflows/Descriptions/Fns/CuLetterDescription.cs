@@ -11,17 +11,17 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// Код инспекции, откуда пришло письмо
         /// </summary>
-        public string Cu { get; set; }
+        public string Cu { get; set; } = null!;
         
         /// <summary>
         /// Тема письма
         /// </summary>
-        public string Subject { get; set; }
+        public string Subject { get; set; } = null!;
         
         /// <summary>
         /// ИНН-КПП организации или ИНН индивидуального предпринимателя, которым направлен документ
         /// </summary>
-        public string RecipientInn { get; set; }
+        public string RecipientInn { get; set; } = null!;
         
         /// <summary>
         ///  Идентификатор связанного документооборота, к которому направлено письмо

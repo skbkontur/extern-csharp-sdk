@@ -16,7 +16,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGene
         public DocflowDocumentDescription GenerateWithRequisites(Type requisitesType, DocumentType documentType)
         {
             var description = GenerateWithoutRequisites(documentType);
-            description.Requisites = (DocflowDocumentRequisites) faker.Generate(requisitesType);
+            description.Requisites = (DocflowDocumentRequisites?) faker.Generate(requisitesType);
             return description;
         }
 

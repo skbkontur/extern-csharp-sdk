@@ -12,17 +12,17 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// Версия формы документа
         /// </summary>
-        public FormVersion FormVersion { get; set; }
+        public FormVersion FormVersion { get; set; } = null!;
         
         /// <summary>
         /// Код инспекции, куда направляется документ
         /// </summary>
-        public string Recipient { get; set; }
+        public string Recipient { get; set; } = null!;
         
         /// <summary>
         /// Код конечной инспекции, куда направляется документ (в случае пересылки отчета через МРИ)
         /// </summary>
-        public string FinalRecipient { get; set; }
+        public string FinalRecipient { get; set; } = null!;
         
         /// <summary>
         /// Номер корректировки
@@ -47,17 +47,17 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// ИНН-КПП организации или ИНН индивидуального предпринимателя, за которых отправляется отчетность
         /// </summary>
-        public string PayerInn { get; set; }
+        public string PayerInn { get; set; } = null!;
         
         /// <summary>
         /// ИНН из отчета
         /// </summary>
-        public string ReportInn { get; set; }
+        public string ReportInn { get; set; } = null!;
         
         /// <summary>
         /// КПП из отчета
         /// </summary>
-        public string ReportKpp { get; set; }
+        public string ReportKpp { get; set; } = null!;
         
         /// <summary>
         /// Идентификатор связанного документооборота, в ответ на который отправляется отчет
@@ -72,21 +72,21 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// ОКТМО
         /// </summary>
-        public string Oktmo { get; set; }
+        public string Oktmo { get; set; } = null!;
         
         /// <summary>
         /// Код формы реорганизации
         /// </summary>
-        public string ReorganizationForm { get; set; }
+        public string ReorganizationForm { get; set; } = null!;
         
         /// <summary>
         /// ИНН реорганизованной организации из отчета
         /// </summary>
-        public string ReorganizationInn { get; set; }
+        public string ReorganizationInn { get; set; } = null!;
         
         /// <summary>
         /// КПП реорганизованной организации из отчета
         /// </summary>
-        public string ReorganizationKpp { get; set; }
+        public string ReorganizationKpp { get; set; } = null!;
     }
 }

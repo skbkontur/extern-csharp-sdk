@@ -7,7 +7,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Contents
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class UploadChunkResponse
     {
-        public ContentResponse Content { get; set; }
+        public ContentResponse Content { get; set; } = null!;
         public bool IsCompleted { get; set; }
     }
 }

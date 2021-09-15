@@ -16,6 +16,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.DraftBuilders.Build
         /// <summary>
         /// Сообщение об ошибке
         /// </summary>
-        public string ErrorMessage { get; set; }
+        public string? ErrorMessage { get; set; }
     }
 }

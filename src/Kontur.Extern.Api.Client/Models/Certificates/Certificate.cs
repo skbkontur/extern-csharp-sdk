@@ -11,17 +11,17 @@ namespace Kontur.Extern.Api.Client.Models.Certificates
         /// <summary>
         /// ФИО владельца сертификата
         /// </summary>
-        public string Fio { get; set; }
+        public string Fio { get; set; } = null!;
 
         /// <summary>
         /// ИНН организации
         /// </summary>
-        public string Inn { get; set; }
+        public string Inn { get; set; } = null!;
 
         /// <summary>
         /// КПП организации если есть
         /// </summary>
-        public string Kpp { get; set; }
+        public string? Kpp { get; set; }
 
         /// <summary>
         /// Валидность сертификата
@@ -36,12 +36,12 @@ namespace Kontur.Extern.Api.Client.Models.Certificates
         /// <summary>
         /// Контент
         /// </summary>
-        public byte[] Content { get; set; }
+        public byte[] Content { get; set; } = null!;
 
         /// <summary>
         /// Отпечаток сертификата
         /// </summary>
-        public string Thumbprint { get; set; }
+        public string Thumbprint { get; set; } = null!;
 
         /// <summary>
         /// Действителен по 
@@ -51,6 +51,6 @@ namespace Kontur.Extern.Api.Client.Models.Certificates
         /// <summary>
         /// Серийный номер
         /// </summary>
-        public string SerialNumber { get; set; }
+        public string? SerialNumber { get; set; }
     }
 }

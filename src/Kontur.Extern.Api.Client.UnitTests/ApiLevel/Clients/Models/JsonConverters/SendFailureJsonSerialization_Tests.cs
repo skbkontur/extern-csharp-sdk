@@ -70,7 +70,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConvert
     ]
   }
 }";
-        private IJsonSerializer serializer;
+        private IJsonSerializer serializer = null!;
 
         [SetUp]
         public void SetUp()

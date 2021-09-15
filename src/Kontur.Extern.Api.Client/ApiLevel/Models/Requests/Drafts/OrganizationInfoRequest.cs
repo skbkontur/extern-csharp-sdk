@@ -10,12 +10,12 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class OrganizationInfoRequest
     {
-        private string kpp;
+        private string? kpp;
 
         /// <summary>
         /// КПП
         /// </summary>
-        public string Kpp
+        public string? Kpp
         {
             get => kpp;
             set => kpp = string.IsNullOrEmpty(value) ? null : value;

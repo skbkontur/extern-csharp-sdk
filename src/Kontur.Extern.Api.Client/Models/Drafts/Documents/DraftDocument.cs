@@ -21,23 +21,23 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Documents
         /// <summary>
         /// Ссылка на контент подписи документа
         /// </summary>
-        public Link SignatureContentLink { get; set; }
+        public Link? SignatureContentLink { get; set; }
         
         /// <summary>
         /// Список подписей документа
         /// </summary>
-        public List<Signature> Signatures { get; set; }
-        
+        public List<Signature> Signatures { get; set; } = null!;
+
         /// <summary>
         /// Данные о документе
         /// </summary>
-        public DocumentDescription Description { get; set; }
-        
+        public DocumentDescription Description { get; set; } = null!;
+
         /// <summary>
         /// Контент документа
         /// </summary>
-        public List<DraftDocumentContent> Contents { get; set; }
-        
+        public List<DraftDocumentContent> Contents { get; set; } = null!;
+
         /// <summary>
         /// Идентификатор контента подписи для формирования raw-подписи отчетов в ПФР. [Подробнее в документации](https://docs-ke.readthedocs.io/ru/latest/manuals/xmldsig.html)
         /// </summary>

@@ -14,29 +14,29 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders
         /// Отправитель
         /// </summary>
         //[Required]
-        public Sender Sender { get; set; }
-        
+        public Sender Sender { get; set; } = null!;
+
         /// <summary>
         /// Налогоплательщик
         /// </summary>
         //[Required]
-        public AccountInfo Payer { get; set; }
-        
+        public AccountInfo Payer { get; set; } = null!;
+
         /// <summary>
         /// Получатель
         /// </summary>
         //[Required]
-        public RecipientInfo Recipient { get; set; }
-        
+        public RecipientInfo Recipient { get; set; } = null!;
+
         /// <summary>
         /// Тип DraftsBuilder
         /// </summary>
         //[Required]
-        public Urn BuilderType { get; set; }
-        
+        public Urn BuilderType { get; set; } = null!;
+
         /// <summary>
         /// Данные, специфичные для указанного типа DraftsBuilder
         /// </summary>
-        public DraftsBuilderData BuilderData { get; set; }
+        public DraftsBuilderData BuilderData { get; set; } = null!;
     }
 }

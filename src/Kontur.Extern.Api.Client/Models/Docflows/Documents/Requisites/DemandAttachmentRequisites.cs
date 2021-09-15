@@ -12,7 +12,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites
         /// Номер требования
         /// </summary>
         //[Required]
-        public string DemandNumber { get; set; }
+        public string DemandNumber { get; set; } = null!;
 
         /// <summary>
         /// КНД распознанного поручения
@@ -37,6 +37,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites
         /// <summary>
         /// Список ИНН, содержащихся в требовании
         /// </summary>
-        public string[] DemandInnList { get; set; }
+        public string[] DemandInnList { get; set; } = null!;
     }
 }

@@ -11,11 +11,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.DraftBuilders.Build
         /// <summary>
         /// Идентификаторы черновиков, сформированных в результате сборки DraftsBuilder
         /// </summary>
-        public Guid[] DraftIds { get; set; }
+        public Guid[] DraftIds { get; set; } = null!;
 
         /// <summary>
         /// Документы, в которых были выявлены ошибки при сборке
         /// </summary>
-        public DraftsBuilderBuildErrorDocumentResult[] ErrorDraftsBuilderDocuments { get; set; }
+        public DraftsBuilderBuildErrorDocumentResult[] ErrorDraftsBuilderDocuments { get; set; } = null!;
     }
 }

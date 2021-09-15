@@ -76,7 +76,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
                 OrganizationId = docflow.OrganizationId;
                 SendDateTime = docflow.SendDateTime;
                 LastChangeDateTime = docflow.LastChangeDateTime;
-                Description = (TDescription) (object) docflow.Description;
+                Description = (TDescription?) (object?) docflow.Description;
                 Documents = docflow.Documents;
             }
 
@@ -90,7 +90,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
                 OrganizationId = docflow.OrganizationId;
                 SendDateTime = docflow.SendDateTime;
                 LastChangeDateTime = docflow.LastChangeDateTime;
-                Description = (TDescription) (object) docflow.Description;
+                Description = (TDescription?) (object?) docflow.Description;
                 Documents = docflow is IDocflowWithDocuments docflowWithDocuments 
                     ? docflowWithDocuments.Documents 
                     : null!;
@@ -117,13 +117,14 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
             [JsonPropertyName("last-change-date")]
             public DateTime? LastChangeDateTime { get; set; }
             [UsedImplicitly]
-            public TDescription Description { get; set; } = default!;
+            public TDescription? Description { get; set; }
 
             public IDocflow ConvertToDocflow()
             {
+                var description = (DocflowDescription?) (object?) Description;
                 return Documents is not null 
-                    ? new Docflow(Id, OrganizationId, Type, Status, SuccessState, Documents, Links, SendDateTime, LastChangeDateTime, Description as DocflowDescription) 
-                    : new Docflow(Id, OrganizationId, Type, Status, SuccessState, Links, SendDateTime, LastChangeDateTime, Description as DocflowDescription);
+                    ? new Docflow(Id, OrganizationId, Type, Status, SuccessState, Documents, Links, SendDateTime, LastChangeDateTime, description) 
+                    : new Docflow(Id, OrganizationId, Type, Status, SuccessState, Links, SendDateTime, LastChangeDateTime, description);
             }
         }
     }

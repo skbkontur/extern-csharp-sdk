@@ -2,6 +2,6 @@
 {
     public class CheckResult
     {
-        public CheckResultData Data { get; set; }
+        public CheckResultData Data { get; set; } = null!;
     }
 }

@@ -8,7 +8,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class Content
     {
-        public Link Decrypted { get; set; }
-        public Link Encrypted { get; set; }
+        public Link? Decrypted { get; set; }
+        public Link? Encrypted { get; set; }
     }
 }

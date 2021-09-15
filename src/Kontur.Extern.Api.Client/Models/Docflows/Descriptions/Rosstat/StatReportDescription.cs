@@ -11,23 +11,23 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat
         /// <summary>
         /// Версия формы документа
         /// </summary>
-        public FormVersion FormVersion { get; set; }
-        
+        public FormVersion FormVersion { get; set; } = null!;
+
         /// <summary>
         /// Код ТОГС, куда направляется отчет
         /// </summary>
-        public string Recipient { get; set; }
-        
+        public string Recipient { get; set; } = null!;
+
         /// <summary>
         /// Код ОКПО
         /// </summary>
-        public string Okpo { get; set; }
-        
+        public string Okpo { get; set; } = null!;
+
         /// <summary>
         /// Код по ОКУД
         /// </summary>
-        public string Okud { get; set; }
-        
+        public string Okud { get; set; } = null!;
+
         /// <summary> 
         /// Дата начала отчетного периода, за который сдается документ
         /// </summary>
@@ -41,8 +41,8 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat
         /// <summary>
         /// Код отчетного периода
         /// </summary>
-        public string PeriodCode { get; set; }
-        
+        public string PeriodCode { get; set; } = null!;
+
         /// <summary>
         /// Номер корректировки
         /// </summary>

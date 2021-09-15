@@ -11,12 +11,12 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
         /// ОГРН
         /// </summary>
         // [JsonProperty(Required = Required.Always)]
-        public string Ogrn { get; set; }
+        public string Ogrn { get; set; } = null!;
 
         /// <summary>
         /// Название организации
         /// </summary>
         // [JsonProperty(Required = Required.Always)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

@@ -13,11 +13,11 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents
         /// Тип DraftsBuilder
         /// </summary>
         // [Required]
-        public Urn BuilderType { get; set; }
-        
+        public Urn BuilderType { get; set; } = null!;
+
         /// <summary>
         /// Сведения о документе
         /// </summary>
-        public DraftsBuilderDocumentData BuilderData { get; set; }
+        public DraftsBuilderDocumentData BuilderData { get; set; } = null!;
     }
 }

@@ -10,12 +10,12 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// <summary>
         /// Список СНИЛС
         /// </summary>
-        public string[] SnilsList { get; set; }
+        public string[] SnilsList { get; set; } = null!;
 
         /// <summary>
         /// Название отправленной подписки
         /// </summary>
-        public string FormType { get; set; }
+        public string FormType { get; set; } = null!;
 
         /// <summary>
         /// Тип отправленной подписки

@@ -38,7 +38,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGene
         {
             var description = faker.Generate<T>(c => c.WithSkip<T>(x => x.BuilderData));
             description.BuilderData = null!;
-            description.BuilderType = draftBuilderType.ToUrn();
+            description.BuilderType = draftBuilderType.ToUrn() ?? throw new NullReferenceException(nameof(draftBuilderType));
             return description;
         }
     }

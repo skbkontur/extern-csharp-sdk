@@ -13,12 +13,12 @@ namespace Kontur.Extern.Api.Client.Models.Events
         /// <summary>
         /// ИНН организации
         /// </summary>
-        public string Inn { get; set; }
+        public string? Inn { get; set; }
         
         /// <summary>
         /// КПП организации
         /// </summary>
-        public string Kpp { get; set; }
+        public string? Kpp { get; set; }
         
         /// <summary>
         /// Тип документооборота
@@ -28,12 +28,12 @@ namespace Kontur.Extern.Api.Client.Models.Events
         /// <summary>
         /// Ссылка на документооборот
         /// </summary>
-        public Link DocflowLink { get; set; }
+        public Link? DocflowLink { get; set; }
         
         /// <summary>
         /// Тип события
         /// </summary>
-        public Urn NewState { get; set; }
+        public Urn? NewState { get; set; }
         
         /// <summary>
         /// Дата и время появления события
@@ -43,26 +43,26 @@ namespace Kontur.Extern.Api.Client.Models.Events
         /// <summary>
         /// Идентификатор события
         /// </summary>
-        public string Id { get; set; }
-        
+        public string Id { get; set; } = null!;
+
         /// <summary>
         /// Идентификатор документооборота
         /// </summary>
-        public string DocflowId { get; set; }
-        
+        public string DocflowId { get; set; } = null!;
+
         /// <summary>
         /// Идентификатор учетной записи пользователя
         /// </summary>
-        public string AccountId { get; set; }
-        
+        public string AccountId { get; set; } = null!;
+
         /// <summary>
         /// Идентификатор связанного документооборота
         /// </summary>
-        public string RelatedDocflowId { get; set; }
-        
+        public string RelatedDocflowId { get; set; } = null!;
+
         /// <summary>
         /// Идентификатор документа в связанном документообороте (требование, письмо или отчет)
         /// </summary>
-        public string RelatedDocumentId { get; set; }
+        public string RelatedDocumentId { get; set; } = null!;
     }
 }

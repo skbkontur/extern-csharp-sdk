@@ -28,7 +28,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConvert
             
             var builderMeta = tester.Deserialize(json);
 
-            builderMeta.BuilderType.Should().Be(builderType.ToUrn());
+            builderMeta.BuilderType.Should().Be(builderType.ToUrn()!);
             DraftsBuilderMetaShouldBeEqual(builderMeta, expectedBuilderMeta);
         }
 

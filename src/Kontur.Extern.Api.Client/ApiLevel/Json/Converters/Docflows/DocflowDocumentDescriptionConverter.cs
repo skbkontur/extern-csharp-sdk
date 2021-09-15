@@ -58,7 +58,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
                 DecryptedContentSize = description.DecryptedContentSize;
                 EncryptedContentSize = description.EncryptedContentSize;
                 Compressed = description.Compressed;
-                Requisites = (TRequisites) (object) description.Requisites;
+                Requisites = (TRequisites?) (object?) description.Requisites;
                 RelatedDocflowsCount = description.RelatedDocflowsCount;
                 SupportRecognition = description.SupportRecognition;
                 EncryptedCertificates = description.EncryptedCertificates;
@@ -73,7 +73,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
                 DecryptedContentSize = DecryptedContentSize,
                 EncryptedContentSize = EncryptedContentSize,
                 Compressed = Compressed,
-                Requisites = (DocflowDocumentRequisites) (object) Requisites,
+                Requisites = (DocflowDocumentRequisites?) (object?) Requisites,
                 RelatedDocflowsCount = RelatedDocflowsCount,
                 SupportRecognition = SupportRecognition,
                 EncryptedCertificates = EncryptedCertificates,

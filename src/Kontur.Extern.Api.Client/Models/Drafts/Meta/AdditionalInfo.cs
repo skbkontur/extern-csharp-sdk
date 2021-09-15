@@ -12,12 +12,12 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
         /// <summary>
         /// Тема письма
         /// </summary>
-        public string Subject { get; set; }
+        public string? Subject { get; set; }
 
         /// <summary>
         /// Сертификаты, используемые для подписания
         /// </summary>
-        public string[] AdditionalCertificates { get; set; }
+        public string[]? AdditionalCertificates { get; set; }
 
         /// <summary>
         /// DraftsBuilderId, из которого был создан черновик

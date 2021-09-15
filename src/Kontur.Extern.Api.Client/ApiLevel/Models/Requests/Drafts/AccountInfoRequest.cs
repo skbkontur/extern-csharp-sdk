@@ -10,13 +10,13 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class AccountInfoRequest
     {
-        private OrganizationInfoRequest organization;
+        private OrganizationInfoRequest? organization;
 
         /// <summary>
         /// ИНН
         /// </summary>
         //[Required]
-        public string Inn { get; set; }
+        public string Inn { get; set; } = null!;
 
         /// <summary>
         /// Данные ЮЛ
@@ -31,16 +31,16 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// <summary>
         /// Регистрационный номер ПФР
         /// </summary>
-        public string RegistrationNumberPfr { get; set; }
+        public string? RegistrationNumberPfr { get; set; }
 
         /// <summary>
         /// Регистрационный номер ФСС
         /// </summary>
-        public string RegistrationNumberFss { get; set; }
+        public string? RegistrationNumberFss { get; set; }
 
         /// <summary>
         /// ОКПО (для писем в росстат)
         /// </summary>
-        public string Okpo { get; set; }
+        public string? Okpo { get; set; }
     }
 }

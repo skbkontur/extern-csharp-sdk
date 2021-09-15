@@ -11,11 +11,11 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat
         /// <summary>
         /// Код ТОГС, куда направляется письмо
         /// </summary>
-        public string Recipient { get; set; }
+        public string Recipient { get; set; } = null!;
         /// <summary>
         /// Тема письма
         /// </summary>
-        public string Subject { get; set; }
+        public string Subject { get; set; } = null!;
         /// <summary>
         /// Идентификатор связанного документооборота, на который отправлен ответ
         /// </summary>
@@ -23,6 +23,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat
         /// <summary>
         ///  Код ОКПО
         /// </summary>
-        public string Okpo { get; set; }
+        public string Okpo { get; set; } = null!;
     }
 }

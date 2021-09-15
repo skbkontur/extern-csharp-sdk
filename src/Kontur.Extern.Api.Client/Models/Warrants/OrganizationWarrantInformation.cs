@@ -19,17 +19,17 @@ namespace Kontur.Extern.Api.Client.Models.Warrants
         /// <summary>
         /// ИНН организации учетной записи Экcтерна
         /// </summary>
-        public string Inn { get; set; }
+        public string Inn { get; set; } = null!;
 
         /// <summary>
         /// КПП организации учетной записи Экcтерна
         /// </summary>
-        public string Kpp { get; set; }
+        public string Kpp { get; set; } = null!;
 
         /// <summary>
         /// Название организации учетной записи Экcтерна
         /// </summary>
-        public string OrganizationName { get; set; }
+        public string OrganizationName { get; set; } = null!;
 
         /// <summary>
         /// Доверенность, если она есть, относящаяся к этой организации учетной записи Экcтерна

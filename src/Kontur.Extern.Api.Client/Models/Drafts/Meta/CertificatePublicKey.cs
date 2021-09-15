@@ -11,6 +11,6 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
         /// Публичная часть сертификата
         /// </summary>
         //[Required]
-        public string Content { get; set; }
+        public string Content { get; set; } = null!;
     }
 }

@@ -170,7 +170,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConvert
             public (string json, IDocflow expectedDocflow) GenerateWithoutDocuments(IJsonSerializer serializer, DocflowDescriptionGenerator descriptionGenerator)
             {
                 var docflow = expectedDescriptionFactory(descriptionGenerator);
-                docflow.Documents = null;
+                docflow.Documents = null!;
                 var json = serializer.SerializeToIndentedString(docflow);
                 return (json, docflow);
             }

@@ -11,6 +11,6 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
         /// ОГРНИП
         /// </summary>
         // [JsonProperty(Required = Required.Always)]
-        public string OgrnIp { get; set; }
+        public string OgrnIp { get; set; } = null!;
     }
 }

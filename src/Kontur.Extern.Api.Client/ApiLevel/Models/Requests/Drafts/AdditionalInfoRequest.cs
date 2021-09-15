@@ -11,12 +11,12 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// <summary>
         /// Тема письма
         /// </summary>
-        public string Subject { get; set; }
+        public string? Subject { get; set; }
 
         /// <summary>
         /// Сертификаты, используемые для подписания
         /// </summary>
-        public string[] AdditionalCertificates { get; set; }
+        public string[]? AdditionalCertificates { get; set; }
 
         /// <summary>
         /// Тип исходящего письма в ПФР
