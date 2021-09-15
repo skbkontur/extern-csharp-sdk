@@ -80,7 +80,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.Put
                 {
                     Type = type,
                     Filename = fileName,
-                    SvdregCode = svdregCode ?? default,
+                    SvdregCode = svdregCode,
                     ContentType = contentType
                 };
             }
