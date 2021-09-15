@@ -17,12 +17,12 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents
         /// <summary>
         /// Наименование файла
         /// </summary>
-        public string Filename { get; set; }
+        public string? Filename { get; set; }
         
         /// <summary>
         /// Тип контента
         /// </summary> 
-        public string ContentType { get; set; }
+        public string? ContentType { get; set; }
         
         /// <summary>
         /// Размер расшифрованного контента, если он есть
@@ -42,7 +42,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents
         /// <summary>
         /// Реквизиты документа
         /// </summary>
-        public TRequisites Requisites { get; set; }
+        public TRequisites? Requisites { get; set; }
         
         /// <summary>
         /// Количество связанных документооборотов
@@ -57,7 +57,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents
         /// <summary>
         /// Сертификаты, на которые был зашифрован документооборот
         /// </summary>
-        public EncryptedCertificate[] EncryptedCertificates { get; set; }
+        public EncryptedCertificate[] EncryptedCertificates { get; set; } = null!;
 
         /// <summary>
         /// Поддержка печати документа

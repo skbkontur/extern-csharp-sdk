@@ -17,21 +17,21 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents
         /// <summary>
         /// Имя файла
         /// </summary>
-        public string Filename { get; set; }
+        public string? Filename { get; set; }
 
         /// <summary>
         /// Тип контента
         /// </summary>
-        public string ContentType { get; set; }
+        public string? ContentType { get; set; }
 
         /// <summary>
         /// Код документа по справочнику СВДРЕГ
         /// </summary>
-        public SvdregCode SvdregCode { get; set; }
+        public SvdregCode? SvdregCode { get; set; }
 
         /// <summary>
         /// Наименование файла документа
         /// </summary>
-        public string OriginalFilename { get; set; }
+        public string? OriginalFilename { get; set; }
     }
 }

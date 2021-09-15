@@ -13,11 +13,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows
     [SuppressMessage("ReSharper", "CommentTypo")]
     internal class Docflow : IDocflowWithDocuments
     {
-        [UsedImplicitly]
-        public Docflow()
-        {
-        }
-
         public Docflow(
             Guid id,
             Guid organizationId,
@@ -28,7 +23,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows
             List<Link> links,
             DateTime sendDateTime,
             DateTime? lastChangeDateTime,
-            DocflowDescription description)
+            DocflowDescription? description)
         {
             Id = id;
             OrganizationId = organizationId;
@@ -51,7 +46,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows
             List<Link> links,
             DateTime sendDateTime,
             DateTime? lastChangeDateTime,
-            DocflowDescription description)
+            DocflowDescription? description)
         {
             Id = id;
             OrganizationId = organizationId;
@@ -62,6 +57,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows
             SendDateTime = sendDateTime;
             LastChangeDateTime = lastChangeDateTime;
             Description = description;
+            Documents = null!;
         }
         
         public Guid Id { get; set; }
@@ -73,7 +69,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows
         public List<Link> Links { get; set; }
         public DateTime SendDateTime { get; set; }
         public DateTime? LastChangeDateTime { get; set; }
-        public DocflowDescription Description { get; set; }
+        public DocflowDescription? Description { get; set; }
 
         public bool IsEmpty => Description is null && Id == default && OrganizationId == default;
     }

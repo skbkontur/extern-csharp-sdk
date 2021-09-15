@@ -11,17 +11,17 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data.FnsInven
         /// Пункт требования — номер пункта, под которым документ указан в требовании в виде 1.ХХ или 2.ХХ
         /// </summary>
         //[Required]
-        public string ClaimItemNumber { get; set; }
-        
+        public string ClaimItemNumber { get; set; } = null!;
+
         /// <summary>
         /// Метка группы документов для разделения по разным описям
         /// </summary>
-        public string LabelForGrouping { get; set; }
+        public string? LabelForGrouping { get; set; }
         
         /// <summary>
         /// Название отсканированного документа
         /// </summary>
-        public string ScannedDocumentName { get; set; }
+        public string? ScannedDocumentName { get; set; }
 
         /// <summary>
         /// Тип документа
@@ -31,6 +31,6 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data.FnsInven
         /// <summary>
         /// Условия для немедленной обработки документа
         /// </summary>
-        public FnsInventoryDraftsBuilderDocumentBackgroundProcessing BackgroundProcessing { get; set; }
+        public FnsInventoryDraftsBuilderDocumentBackgroundProcessing BackgroundProcessing { get; set; } = null!;
     }
 }

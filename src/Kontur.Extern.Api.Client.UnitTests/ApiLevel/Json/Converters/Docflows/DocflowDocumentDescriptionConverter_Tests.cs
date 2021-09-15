@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +8,11 @@ using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites;
-using Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators;
-using Kontur.Extern.Api.Client.Tests.TestHelpers;
+using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators;
+using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
 {
     [TestFixture]
     internal class DocflowDocumentDescriptionConverter_Tests
@@ -80,7 +79,7 @@ namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         private static void DescriptionShouldBeEqual(DocflowDocumentDescription description, DocflowDocumentDescription expectedDescription)
         {
             description.Should().BeEquivalentTo(expectedDescription);
-            description.Requisites.Should().BeOfType(expectedDescription.Requisites.GetType());
+            description.Requisites.Should().BeOfType(expectedDescription.Requisites?.GetType());
         }
 
         public static IEnumerable<RequisitesCase> DocumentTypeToRequisitesCases =>
@@ -90,9 +89,9 @@ namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
         
         public record RequisitesCase
         {
-            private readonly Type? requisitesType;
+            private readonly Type requisitesType;
             
-            public RequisitesCase(DocumentType documentType, Type? requisitesType)
+            public RequisitesCase(DocumentType documentType, Type requisitesType)
             {
                 DocumentType = documentType;
                 this.requisitesType = requisitesType;
@@ -107,7 +106,7 @@ namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
             
             public DocumentType DocumentType { get; }
 
-            public override string ToString() => $"{DocumentType} -> {requisitesType?.Name ?? "<null>"}";
+            public override string ToString() => $"{DocumentType} -> {requisitesType.Name}";
         }
     }
 }

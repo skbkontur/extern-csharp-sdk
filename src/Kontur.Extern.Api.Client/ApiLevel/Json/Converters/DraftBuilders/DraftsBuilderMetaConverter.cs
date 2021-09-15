@@ -1,7 +1,5 @@
-#nullable enable
 using System;
 using JetBrains.Annotations;
-using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Drafts.Meta;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data;
@@ -51,16 +49,16 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
             public RecipientInfo? Recipient { get; set; }
             
             [UsedImplicitly]
-            public Urn? BuilderType { get; set; }
+            public DraftBuilderType BuilderType { get; set; }
             
             [UsedImplicitly]
             public TData? BuilderData { get; set; }
 
             public DraftsBuilderMeta ConvertToDto() => new()
             {
-                Sender = Sender,
-                Payer = Payer,
-                Recipient = Recipient,
+                Sender = Sender!,
+                Payer = Payer!,
+                Recipient = Recipient!,
                 BuilderType = BuilderType,
                 BuilderData = BuilderData as DraftsBuilderData ?? new UnknownDraftsBuilderData()
             };

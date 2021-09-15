@@ -11,8 +11,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts
         /// <summary>
         /// Ссылки на подписанные документы
         /// </summary>
-        public Link[] SignedDocuments { get; set; }
-        
-        public Link[] Links { get; set; }
+        public Link[] SignedDocuments { get; set; } = null!;
+
+        public Link[] Links { get; set; } = null!;
     }
 }

@@ -11,17 +11,17 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations
         /// ИНН организации
         /// </summary>
         //[Required]
-        public string Inn { get; set; }
-        
+        public string Inn { get; set; } = null!;
+
         /// <summary>
         /// КПП организации
         /// </summary>
-        public string Kpp { get; set; }
-        
+        public string? Kpp { get; set; }
+
         /// <summary>
         /// Название организации
         /// </summary>
         //[Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

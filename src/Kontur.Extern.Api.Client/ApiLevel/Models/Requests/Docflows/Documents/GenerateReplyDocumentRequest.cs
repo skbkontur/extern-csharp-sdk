@@ -11,6 +11,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows.Documents
         /// Сертификат в формате base64
         /// </summary>
         //[JsonProperty(Required = Required.Always)]
-        public byte[] CertificateBase64 { get; set; }
+        public byte[] CertificateBase64 { get; set; } = null!;
     }
 }

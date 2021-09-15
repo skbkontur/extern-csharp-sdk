@@ -17,8 +17,8 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
         /// Информация о заявителе
         /// </summary>
         //[Required]
-        public ApplicantInfo[] ApplicantInfos { get; set; }
-        
+        public ApplicantInfo[] ApplicantInfos { get; set; } = null!;
+
         /// <summary>
         /// Тип регистрируемого бизнеса
         /// </summary>
@@ -27,11 +27,11 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
         /// <summary>
         /// Информация об ИП
         /// </summary>
-        public IpInfo IpInfo { get; set; }
+        public IpInfo? IpInfo { get; set; }
         
         /// <summary>
         /// Информация о ЮЛ
         /// </summary>
-        public UlInfo UlInfo { get; set; }
+        public UlInfo? UlInfo { get; set; }
     }
 }

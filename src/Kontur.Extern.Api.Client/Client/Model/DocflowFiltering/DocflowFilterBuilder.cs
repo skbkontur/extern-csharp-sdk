@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -104,7 +103,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithTypes(params DocflowType[] types)
         {
-            filter.Types = types.Select(x => x.ToUrn()).ToArray();
+            filter.Types = types;
             return this;
         }
 

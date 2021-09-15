@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Net;
 using FluentAssertions;
@@ -8,7 +7,7 @@ using Kontur.Extern.Api.Client.Models.ApiTasks;
 using Kontur.Extern.Api.Client.Models.Common;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.Api
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.Api
 {
     [TestFixture]
     internal class ApiTaskResultOfOneResult_Tests

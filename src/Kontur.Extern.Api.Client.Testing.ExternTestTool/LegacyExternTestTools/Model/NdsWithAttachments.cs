@@ -1,3 +1,4 @@
+#nullable disable
 using System.Text;
 
 // ReSharper disable CommentTypo

@@ -1,11 +1,10 @@
-#nullable enable
 using System;
 using AutoBogus;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
-using Kontur.Extern.Api.Client.Tests.TestHelpers.BogusExtensions;
+using Kontur.Extern.Api.Client.UnitTests.TestHelpers.BogusExtensions;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators
 {
     internal sealed class DraftsBuilderMetasGenerator<T, TData>
         where T : class, IDraftsBuilderMeta<TData>
@@ -23,13 +22,13 @@ namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerato
         public T GenerateWithData(Type? dataType, DraftBuilderType draftBuilderType)
         {
             var builderMeta = GenerateWithoutData(draftBuilderType);
-            if (dataType != null)
+            if (dataType is null)
             {
-                builderMeta.BuilderData = (TData?) faker.Generate(dataType) ?? unknownDataFactory();
+                builderMeta.BuilderData = unknownDataFactory();
             }
             else
             {
-                builderMeta.BuilderData = unknownDataFactory();
+                builderMeta.BuilderData = (TData?) faker.Generate(dataType) ?? unknownDataFactory();
             }
 
             return builderMeta;
@@ -39,7 +38,7 @@ namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerato
         {
             var description = faker.Generate<T>(c => c.WithSkip<T>(x => x.BuilderData));
             description.BuilderData = null!;
-            description.BuilderType = draftBuilderType.ToUrn();
+            description.BuilderType = draftBuilderType;
             return description;
         }
     }

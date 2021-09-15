@@ -25,7 +25,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Kontur.Extern.Api.Client\Kontur.Extern.Api.Client.csproj" />
         <ProjectReference Include="..\Kontur.Extern.Api.Client.Auth.OpenId\Kontur.Extern.Api.Client.Auth.OpenId.csproj" />
         <ProjectReference Include="..\Kontur.Extern.Api.Client.Testing.End2End\Kontur.Extern.Api.Client.Testing.End2End.csproj" />
         <ProjectReference Include="..\Kontur.Extern.Api.Client.Testing\Kontur.Extern.Api.Client.Testing.csproj" />

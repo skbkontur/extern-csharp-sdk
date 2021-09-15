@@ -3,9 +3,9 @@ using AutoBogus;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites;
-using Kontur.Extern.Api.Client.Tests.TestHelpers.BogusExtensions;
+using Kontur.Extern.Api.Client.UnitTests.TestHelpers.BogusExtensions;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerators
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators
 {
     internal class DocflowDocumentDescriptionGenerator
     {
@@ -16,7 +16,7 @@ namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.TestDtoGenerato
         public DocflowDocumentDescription GenerateWithRequisites(Type requisitesType, DocumentType documentType)
         {
             var description = GenerateWithoutRequisites(documentType);
-            description.Requisites = (DocflowDocumentRequisites) faker.Generate(requisitesType);
+            description.Requisites = (DocflowDocumentRequisites?) faker.Generate(requisitesType);
             return description;
         }
 

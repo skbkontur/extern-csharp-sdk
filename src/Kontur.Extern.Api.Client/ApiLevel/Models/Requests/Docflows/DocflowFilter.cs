@@ -6,6 +6,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
 {
@@ -38,7 +39,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
         /// <summary>
         /// ИНН-КПП, для которых нужно получить документообороты.Формат данных для юрлиц: 1234567890-123456789, для ИП: 123456789012
         /// </summary>
-        public string InnKpp { get; set; }
+        public string? InnKpp { get; set; }
 
         /// <summary>
         /// Идентификатор организации, для которой нужно получить документообороты
@@ -76,37 +77,37 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
         /// <summary>
         /// Типы документооборотов
         /// </summary>
-        public Urn[] Types { get; set; }
+        public DocflowType[] Types { get; set; } = null!;
 
         /// <summary>
         /// КНД – код налоговой декларации. Задается по маске XXXXXXX, где Х - это цифра от 0 до 9
         /// </summary>
-        public string Knd { get; set; }
+        public string? Knd { get; set; }
 
         /// <summary>
         /// ОКУД – общероссийский классификатор управленческой документации. Задается по маске ХХХХХХХ, где Х - это цифра от 0 до 9
         /// </summary>
-        public string Okud { get; set; }
+        public string? Okud { get; set; }
 
         /// <summary>
         /// ОКПО – общероссийский классификатор предприятий и организаций. Восьмизначный цифровой код для ЮЛ или десятизначный для ИП
         /// </summary>
-        public string Okpo { get; set; }
+        public string? Okpo { get; set; }
 
         /// <summary>
         /// Контролирующий орган. Формат данных: ФНС — ХХХХ, ПФР — ХХХ-ХХХ, ФСС — ХХХХХ, Росстат — ХХ-ХХ, где Х — это цифра от 0 до 9
         /// </summary>
-        public string Cu { get; set; }
+        public string? Cu { get; set; }
 
         /// <summary>
         /// Получить документооборот ПФР по регистрационному номеру. Маска для ввода ХХХ-ХХХ-ХХХХХХ, где Х - это цифра от 0 до 9
         /// </summary>
-        public string RegNumber { get; set; }
+        public string? RegNumber { get; set; }
 
         /// <summary>
         /// Наименование формы
         /// </summary>
-        public string FormName { get; set; }
+        public string? FormName { get; set; }
 
         /// <summary>
         /// Получить документообороты требований, которые относятся к декларациям ФНС. Только для документооборота типа fns534-demand
@@ -132,9 +133,17 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
         {
             var result = new Dictionary<string, string>();
             foreach (var info in properties.Where(x => x.GetValue(this) != null))
-                result[ToLowerCamelCase(info.Name)] = info.PropertyType == typeof (DateTime?)
-                    ? (info.GetValue(this) as DateTime?)?.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK")
-                    : info.GetValue(this)?.ToString();
+            {
+                var propValue = info.GetValue(this);
+                if (propValue is null)
+                    continue;
+                if (propValue is DateTime dateTimeValue)
+                    // ReSharper disable once StringLiteralTypo
+                    result[ToLowerCamelCase(info.Name)] = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK");
+                else
+                    result[ToLowerCamelCase(info.Name)] = propValue.ToString();
+            }
+
             return result;
         }
 

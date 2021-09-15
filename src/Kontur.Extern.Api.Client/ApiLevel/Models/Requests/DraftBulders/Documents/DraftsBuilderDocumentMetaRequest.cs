@@ -11,6 +11,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Documen
         /// <summary>
         /// Данные для создания и редактирования документа DraftsBuilder
         /// </summary>
-        public DraftsBuilderDocumentData BuilderData { get; set; }
+        public DraftsBuilderDocumentData BuilderData { get; set; } = null!;
     }
 }

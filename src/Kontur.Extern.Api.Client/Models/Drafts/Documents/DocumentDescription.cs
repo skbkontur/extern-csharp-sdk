@@ -17,21 +17,21 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Documents
         /// <summary>
         /// Имя файла
         /// </summary>
-        public string Filename { get; set; }
+        public string? Filename { get; set; }
         
         /// <summary>
         /// Тип контента документа
         /// </summary>
-        public string ContentType { get; set; }
+        public string? ContentType { get; set; }
         
         /// <summary>
         /// Свойства документа
         /// </summary>
-        public Dictionary<string, string> Properties { get; set; }
-        
+        public Dictionary<string, string?> Properties { get; set; } = null!;
+
         /// <summary>
         /// Идентификатор документа и файла из конструктора черновиков, если черновик создан с его помощью
         /// </summary>
-        public OriginalDraftsBuilder OriginalDraftsBuilder { get; set; }
+        public OriginalDraftsBuilder? OriginalDraftsBuilder { get; set; }
     }
 }

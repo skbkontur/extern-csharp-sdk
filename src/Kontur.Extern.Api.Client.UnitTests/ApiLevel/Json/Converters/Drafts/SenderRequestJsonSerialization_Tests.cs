@@ -4,7 +4,7 @@ using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Api.Client.Http.Serialization;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Drafts
 {
     [TestFixture]
     internal class SenderRequestJsonSerialization_Tests
@@ -15,7 +15,7 @@ namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
   ""is-representative"": true,
   ""ipaddress"": ""8.8.8.8""
 }";
-        private IJsonSerializer serializer;
+        private IJsonSerializer serializer = null!;
 
         [SetUp]
         public void SetUp() => serializer = JsonSerializerFactory.CreateJsonSerializer();

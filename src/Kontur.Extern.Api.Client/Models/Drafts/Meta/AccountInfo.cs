@@ -18,12 +18,12 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
         ///     ИНН
         /// </summary>
         //[Required]
-        public string Inn { get; set; }
+        public string Inn { get; set; } = null!;
 
         /// <summary>
         /// Название
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Данные о ЮЛ
@@ -31,22 +31,23 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
         public OrganizationInfo Organization
         {
             get => organization;
+            // ReSharper disable once ConstantNullCoalescingCondition
             set => organization = value ?? new OrganizationInfo();
         }
 
         /// <summary>
         /// Регистрационный номер ФСС
         /// </summary>
-        public string RegistrationNumberFss { get; set; }
+        public string? RegistrationNumberFss { get; set; }
 
         /// <summary>
         /// Регистрационный номер ПФР
         /// </summary>
-        public string RegistrationNumberPfr { get; set; }
+        public string? RegistrationNumberPfr { get; set; }
 
         /// <summary>
         /// ОКПО (для писем в росстат)
         /// </summary>
-        public string Okpo { get; set; }
+        public string Okpo { get; set; } = null!;
     }
 }

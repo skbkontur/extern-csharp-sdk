@@ -16,6 +16,6 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data.Business
         /// <summary>
         /// Данные каждого подписанта
         /// </summary>
-        public Signer[] Signers { get; set; }
+        public Signer[] Signers { get; set; } = null!;
     }
 }

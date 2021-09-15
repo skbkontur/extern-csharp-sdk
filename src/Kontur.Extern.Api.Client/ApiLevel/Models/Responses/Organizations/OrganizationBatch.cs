@@ -11,8 +11,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations
         /// <summary>
         /// Список найденных организаций
         /// </summary>
-        public Organization[] Organizations { get; set; }
-        
+        public Organization[] Organizations { get; set; } = null!;
+
         /// <summary>
         /// Общее количество найденных организаций
         /// </summary>
@@ -21,8 +21,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations
         /// <summary>
         /// Ссылки для работы со списком организаций
         /// </summary>
-        public Link[] Links { get; set; }
-        
+        public Link[] Links { get; set; } = null!;
+
         /// <summary>
         /// Количество пропущенных записей
         /// </summary>

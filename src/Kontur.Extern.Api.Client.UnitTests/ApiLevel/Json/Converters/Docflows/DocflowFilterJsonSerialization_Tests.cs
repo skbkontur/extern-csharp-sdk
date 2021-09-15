@@ -8,7 +8,7 @@ using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
 {
     [TestFixture]
     internal class DocflowFilterJsonSerialization_Tests
@@ -39,7 +39,7 @@ namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
   ""period-to"": ""2021-08-27"",
   ""for-all-users"": true
 }";
-        private IJsonSerializer serializer;
+        private IJsonSerializer serializer = null!;
 
         [SetUp]
         public void SetUp() => serializer = JsonSerializerFactory.CreateJsonSerializer();
@@ -67,10 +67,7 @@ namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Clients.Models.JsonConverters
                 UpdatedTo = new DateOnly(2021, 08, 27),
                 CreatedFrom = new DateOnly(2021, 08, 26),
                 CreatedTo = new DateOnly(2021, 08, 27),
-                Types = new[]
-                {
-                    DocflowType.Fns.Fns534.Letter.ToUrn()
-                },
+                Types = new[] {DocflowType.Fns.Fns534.Letter},
                 Knd = "knd",
                 Okud = "okud",
                 Okpo = "okpo",

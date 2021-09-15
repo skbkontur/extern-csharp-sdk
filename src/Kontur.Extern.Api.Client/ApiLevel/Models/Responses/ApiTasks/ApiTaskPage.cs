@@ -5,6 +5,6 @@
         public long Skip { get; set; }
         public long Take { get; set; }
         public long TotalCount { get; set; }
-        public ApiTaskStatus[] ApiTaskPageItems { get; set; }
+        public ApiTaskStatus[] ApiTaskPageItems { get; set; } = null!;
     }
 }

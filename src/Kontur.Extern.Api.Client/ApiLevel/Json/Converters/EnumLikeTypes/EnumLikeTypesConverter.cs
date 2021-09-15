@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using Kontur.Extern.Api.Client.Models.Drafts.Enums;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
 
-#nullable enable
 namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
 {
     internal class EnumLikeTypesConverter : JsonConverterFactory
@@ -20,6 +20,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
             AddConverter(x => new DocflowStatus(x), x => x.ToUrn()?.ToString());
             AddConverter(x => new DocflowState(x), x => x.ToUrn()?.ToString());
             AddConverter(x => new DocumentType(x), x => x.ToUrn()?.ToString());
+            AddConverter(x => new DraftBuilderType(x), x => x.ToUrn()?.ToString());
             AddConverter(x => new PfrLetterType(x), x => x.ToUrn()?.ToString());
             AddConverter(SvdregCode.Parse, x => x.Code?.ToString());
         }

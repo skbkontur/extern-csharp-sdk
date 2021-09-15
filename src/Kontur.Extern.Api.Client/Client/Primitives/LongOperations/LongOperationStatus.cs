@@ -1,4 +1,3 @@
-#nullable enable
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Exceptions;
 using Kontur.Extern.Api.Client.Models.ApiErrors;

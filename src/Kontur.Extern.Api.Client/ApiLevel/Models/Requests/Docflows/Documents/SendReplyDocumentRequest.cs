@@ -10,6 +10,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows.Documents
         /// <summary>
         /// IP адрес отправителя
         /// </summary>
-        public string SenderIp { get; set; }
+        public string SenderIp { get; set; } = null!;
     }
 }

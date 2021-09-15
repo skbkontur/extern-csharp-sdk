@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.Exceptions;
@@ -81,7 +80,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.Put
                 {
                     Type = type,
                     Filename = fileName,
-                    SvdregCode = svdregCode ?? default,
+                    SvdregCode = svdregCode,
                     ContentType = contentType
                 };
             }

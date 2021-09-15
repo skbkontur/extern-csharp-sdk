@@ -16,8 +16,8 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders
         /// <summary>
         /// Метаинформация DraftsBuilder
         /// </summary>
-        public DraftsBuilderMeta Meta { get; set; }
-        
+        public DraftsBuilderMeta Meta { get; set; } = null!;
+
         /// <summary>
         /// Статус DraftsBuilder
         /// </summary>

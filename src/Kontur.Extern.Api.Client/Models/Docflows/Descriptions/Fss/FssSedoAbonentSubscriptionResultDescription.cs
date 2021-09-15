@@ -10,6 +10,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// <summary>
         /// Название отправленной подписки
         /// </summary>
-        public string FormType { get; set; }
+        public string FormType { get; set; } = null!;
     }
 }

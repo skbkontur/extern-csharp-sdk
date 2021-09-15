@@ -26,6 +26,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Docflows
         /// <summary>
         /// Краткая информация о документообороте
         /// </summary>
-        public IDocflow[] DocflowsPageItem { get; set; }
+        public IDocflow[] DocflowsPageItem { get; set; } = null!;
     }
 }

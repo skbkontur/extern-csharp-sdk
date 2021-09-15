@@ -12,12 +12,12 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Events
         /// <summary>
         /// Идентификатор первого события на странице ленты событий
         /// </summary>
-        public string FirstEventId { get; set; }
-        
+        public string? FirstEventId { get; set; }
+
         /// <summary>
         /// Идентификатор следующего события в ленте, с которого нужно продолжать чтение. Передать в параметре fromId
         /// </summary>
-        public string NextEventId { get; set; }
+        public string? NextEventId { get; set; }
         
         /// <summary>
         /// Число запрошенных событий в параметре take
@@ -32,11 +32,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Events
         /// <summary>
         /// События
         /// </summary>
-        public ApiEvent[] ApiEvents { get; set; }
-        
+        public ApiEvent[] ApiEvents { get; set; } = null!;
+
         /// <summary>
         /// Ссылки для работы со страницей ленты событий
         /// </summary>
-        public Link[] Links { get; set; }
+        public Link[] Links { get; set; } = null!;
     }
 }

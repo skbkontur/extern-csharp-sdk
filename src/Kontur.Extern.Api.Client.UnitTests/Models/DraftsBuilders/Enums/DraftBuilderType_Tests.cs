@@ -1,15 +1,14 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
-using Kontur.Extern.Api.Client.Tests.Client.Model.TestAssertions;
-using Kontur.Extern.Api.Client.Tests.TestHelpers;
+using Kontur.Extern.Api.Client.UnitTests.Client.Model.TestAssertions;
+using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.Models.DraftsBuilders.Enums
+namespace Kontur.Extern.Api.Client.UnitTests.Models.DraftsBuilders.Enums
 {
     [TestFixture]
     internal class DraftBuilderType_Tests

@@ -11,8 +11,8 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
         /// Сведения для регистрации бизнеса
         /// </summary>
         //[Required]
-        public RegistrationInfo RegistrationInfo { get; set; }
-        
+        public RegistrationInfo RegistrationInfo { get; set; } = null!;
+
         /// <summary>
         /// Признак наличия запроса о предоставлении документов в письменном (бумажном) виде.
         /// </summary>
@@ -21,6 +21,6 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
         /// <summary>
         /// Список сертификатов подписантов, когда заявление подано от нескольких заявителей (для ЮЛ)
         /// </summary>
-        public string[] AdditionalCertificates { get; set; }
+        public string[]? AdditionalCertificates { get; set; }
     }
 }

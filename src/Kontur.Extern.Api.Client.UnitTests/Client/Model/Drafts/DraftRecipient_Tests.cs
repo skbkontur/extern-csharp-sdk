@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
@@ -6,7 +5,7 @@ using Kontur.Extern.Api.Client.Model.Drafts;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.Client.Model.Drafts
+namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
 {
     [TestFixture]
     internal class DraftRecipient_Tests

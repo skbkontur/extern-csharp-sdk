@@ -13,6 +13,6 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data.Business
         /// ФИО
         /// </summary>
         [JsonPropertyName("fio")]
-        public PersonFullName PersonFullName { get; set; }
+        public PersonFullName PersonFullName { get; set; } = null!;
     }
 }

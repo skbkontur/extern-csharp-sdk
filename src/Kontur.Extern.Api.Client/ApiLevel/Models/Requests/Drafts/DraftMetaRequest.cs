@@ -11,28 +11,28 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// Отправитель
         /// </summary>
         //[Required]
-        public SenderRequest Sender { get; set; }
+        public SenderRequest Sender { get; set; } = null!;
 
         /// <summary>
         /// Получатель
         /// </summary>
         //[Required]
-        public RecipientInfoRequest Recipient { get; set; }
+        public RecipientInfoRequest Recipient { get; set; } = null!;
 
         /// <summary>
         /// Налогоплательщик. Организация, за которую отправляется отчет
         /// </summary>
         //[Required]
-        public AccountInfoRequest Payer { get; set; }
+        public AccountInfoRequest Payer { get; set; } = null!;
 
         /// <summary>
         /// Связанный документооборот
         /// </summary>
-        public RelatedDocumentRequest RelatedDocument { get; set; }
+        public RelatedDocumentRequest? RelatedDocument { get; set; }
 
         /// <summary>
         /// Дополнительная информация
         /// </summary>
-        public AdditionalInfoRequest AdditionalInfo { get; set; }
+        public AdditionalInfoRequest? AdditionalInfo { get; set; }
     }
 }

@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -11,7 +10,7 @@ using Kontur.Extern.Api.Client.Models.ApiTasks;
 using Kontur.Extern.Api.Client.Models.Common;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.ApiLevel.Json.Converters
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters
 {
     internal class ApiTaskResultJsonConverter_Tests
     {

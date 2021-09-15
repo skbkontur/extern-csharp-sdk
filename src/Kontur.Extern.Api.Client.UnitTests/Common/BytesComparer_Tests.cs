@@ -5,7 +5,7 @@ using FluentAssertions;
 using Kontur.Extern.Api.Client.Common;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.Tests.Common
+namespace Kontur.Extern.Api.Client.UnitTests.Common
 {
     public class BytesComparer_Tests
     {

@@ -11,22 +11,22 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Pfr
         /// <summary>
         /// Регистрационный номер
         /// </summary>
-        public string RegistrationNumber { get; set; }
+        public string RegistrationNumber { get; set; } = null!;
         
         /// <summary>
         /// Код УПФР, куда отправляется письмо
         /// </summary>
-        public string FinalRecipient { get; set; }
+        public string FinalRecipient { get; set; } = null!;
         
         /// <summary>
         /// Тема письма
         /// </summary>
-        public string Subject { get; set; }
+        public string Subject { get; set; } = null!;
         
         /// <summary>
         /// Тип отправленного письма
         /// </summary>
-        public string FormType { get; set; }
+        public string FormType { get; set; } = null!;
         
         /// <summary>
         /// Идентификатор связанного документооборота, в ответ на который отправлено письмо

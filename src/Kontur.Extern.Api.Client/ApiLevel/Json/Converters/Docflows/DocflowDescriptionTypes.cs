@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Cbrf;

@@ -15,26 +15,26 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// Версия формы документа
         /// </summary>
-        public FormVersion[] FormVersions { get; set; }
+        public FormVersion[] FormVersions { get; set; } = null!;
         
         /// <summary>
         /// ИНН-КПП организации или ИНН индивидуального предпринимателя, на которые пришло требование
         /// </summary>
-        public string PayerInn { get; set; }
+        public string PayerInn { get; set; } = null!;
         
         /// <summary>
         /// Код инспекции, от которой пришло требование
         /// </summary>
-        public string Cu { get; set; }
+        public string Cu { get; set; } = null!;
         
         /// <summary>
         /// Код инспекции, через которую прошло требование (в случае пересылки требования через МРИ)
         /// </summary>
-        public string TransitCu { get; set; }
+        public string TransitCu { get; set; } = null!;
         
         /// <summary>
         /// Имя файла отчета, к которому относится требование (в случае направления требования на декларацию)
         /// </summary>
-        public string SentOnReportFilename { get; set; }
+        public string SentOnReportFilename { get; set; } = null!;
     }
 }

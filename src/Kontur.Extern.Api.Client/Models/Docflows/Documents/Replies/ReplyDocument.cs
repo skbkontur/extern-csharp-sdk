@@ -18,28 +18,28 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Replies
         /// <summary>
         /// Контент ответного документа
         /// </summary>
-        public byte[] Content { get; set; }
-        
+        public byte[] Content { get; set; } = null!;
+
         /// <summary>
         /// Печатная форма ответного документа
         /// </summary>
-        public byte[] PrintContent { get; set; }
+        public byte[]? PrintContent { get; set; }
         
         /// <summary>
         /// Название файла 
         /// </summary>
-        public string Filename { get; set; }
+        public string? Filename { get; set; }
         
         /// <summary>
         /// Подпись пользователя
         /// </summary>
-        public byte[] Signature { get; set; }
+        public byte[]? Signature { get; set; }
         
         /// <summary>
         /// Ссылки для работы с ответным документом
         /// </summary>
-        public List<Link> Links { get; set; }
-        
+        public List<Link> Links { get; set; } = null!;
+
         /// <summary>
         /// Идентификатор документооборота, в котором сформирован ответный документ
         /// </summary>

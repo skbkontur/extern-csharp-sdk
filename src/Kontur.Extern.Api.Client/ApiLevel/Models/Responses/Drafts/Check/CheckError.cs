@@ -7,11 +7,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Check
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class CheckError
     {
-        public string Description { get; set; }
-        public string Source { get; set; }
-        public string Level { get; set; }
-        public string Type { get; set; }
-        public string Tags { get; set; }
-        public string Id { get; set; }
+        public string Description { get; set; } = null!;
+        public string Source { get; set; } = null!;
+        public string Level { get; set; } = null!;
+        public string Type { get; set; } = null!;
+        public string Tags { get; set; } = null!;
+        public string Id { get; set; } = null!;
     }
 }

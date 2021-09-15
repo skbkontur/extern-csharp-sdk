@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Api.Client.Models.Numbers;

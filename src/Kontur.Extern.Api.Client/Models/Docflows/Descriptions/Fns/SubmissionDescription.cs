@@ -12,37 +12,37 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// Версия формы документа
         /// </summary>
-        public FormVersion FormVersion { get; set; }
+        public FormVersion FormVersion { get; set; } = null!;
         
         /// <summary>
         /// ИНН-КПП организации или ИНН индивидуального предпринимателя, за которых отправляется представление
         /// </summary>
-        public string PayerInn { get; set; }
+        public string PayerInn { get; set; } = null!;
         
         /// <summary>
         /// Код инспекции, куда направляется документ
         /// </summary>
-        public string Recipient { get; set; }
+        public string Recipient { get; set; } = null!;
         
         /// <summary>
         /// Код конечной инспекции, куда направляется документ (в случае пересылки отчета через МРИ)
         /// </summary>
-        public string FinalRecipient { get; set; }
+        public string? FinalRecipient { get; set; }
         
         /// <summary>
         /// ОГРН
         /// </summary>
-        public string Ogrn { get; set; }
+        public string? Ogrn { get; set; }
         
         /// <summary>
         /// ИНН из представления
         /// </summary>
-        public string ReportInn { get; set; }
+        public string? ReportInn { get; set; }
         
         /// <summary>
         ///  КПП из представления
         /// </summary>
-        public string ReportKpp { get; set; }
+        public string? ReportKpp { get; set; }
         
         /// <summary>
         /// Дата начала отчетного периода, за который сдается документ
@@ -67,6 +67,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// ОКТМО
         /// </summary>
-        public string Oktmo { get; set; }
+        public string? Oktmo { get; set; }
     }
 }

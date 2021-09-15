@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Kontur.Extern.Api.Client.Exceptions;
 
 namespace Kontur.Extern.Api.Client.Models.Common

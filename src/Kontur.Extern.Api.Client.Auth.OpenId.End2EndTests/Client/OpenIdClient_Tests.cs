@@ -34,19 +34,19 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.End2EndTests.Client
             }
 
             [Fact]
-            public void Should_fail_when_given_incorrect_credentials() => 
+            public Task Should_fail_when_given_incorrect_credentials() => 
                 ShouldFail(RequestFactory.PasswordAuthenticationRequestWithIncorrectCredentials());
 
             [Fact]
-            public void Should_fail_when_given_an_incorrect_apy_key() => 
+            public Task Should_fail_when_given_an_incorrect_apy_key() => 
                 ShouldFail(RequestFactory.PasswordAuthenticationRequestWithIncorrectApiKey());
             
             [Fact]
-            public void Should_fail_when_given_an_incorrect_scope() => 
+            public Task Should_fail_when_given_an_incorrect_scope() => 
                 ShouldFail(RequestFactory.PasswordAuthenticationRequestWithIncorrectScope());
             
             [Fact]
-            public void Should_fail_when_given_an_incorrect_client_id() => 
+            public Task Should_fail_when_given_an_incorrect_client_id() => 
                 ShouldFail(RequestFactory.PasswordAuthenticationRequestWithIncorrectClientId());
 
             private async Task ShouldFail(PasswordTokenRequest request)

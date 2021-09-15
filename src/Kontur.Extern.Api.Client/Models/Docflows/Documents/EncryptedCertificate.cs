@@ -10,6 +10,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents
         /// <summary>
         /// Серийный номер сертификата электронной подписи
         /// </summary>
-        public string SerialNumber { get; set; }
+        public string SerialNumber { get; set; } = null!;
     }
 }

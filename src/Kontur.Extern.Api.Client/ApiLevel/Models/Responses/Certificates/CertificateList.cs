@@ -12,8 +12,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Certificates
         /// <summary>
         /// Данные сертификатов
         /// </summary>
-        public Certificate[] Certificates { get; set; }
-        
+        public Certificate[] Certificates { get; set; } = null!;
+
         /// <summary>
         /// Общее количество сертификатов
         /// </summary>
@@ -32,6 +32,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Certificates
         /// <summary>
         /// Ссылки для работы с сертификатами
         /// </summary>
-        public Link[] Links { get; set; }
+        public Link[] Links { get; set; } = null!;
     }
 }

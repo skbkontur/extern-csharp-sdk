@@ -11,12 +11,12 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// <summary>
         /// Версия формы документа
         /// </summary>
-        public FormVersion FormVersion { get; set; }
+        public FormVersion FormVersion { get; set; } = null!;
         
         /// <summary>
         /// Регистрационный номер
         /// </summary>
-        public string RegistrationNumber { get; set; }
+        public string RegistrationNumber { get; set; } = null!;
         
         /// <summary>
         /// Номер корректировки
@@ -26,32 +26,32 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// <summary>
         /// Идентификатор отчета 4-ФСС на портале ФСС
         /// </summary>
-        public string FssId { get; set; }
+        public string FssId { get; set; } = null!;
         
         /// <summary>
         /// Описание стадии обработки, на которой находится отчет
         /// </summary>
-        public string FssStageDescription { get; set; }
+        public string FssStageDescription { get; set; } = null!;
         
         /// <summary>
         /// Код ошибки
         /// </summary>
-        public string FssStageErrorCode { get; set; }
+        public string FssStageErrorCode { get; set; } = null!;
         
         /// <summary>
         /// Описание ошибки
         /// </summary>
-        public string FssStageErrorExtend { get; set; }
+        public string FssStageErrorExtend { get; set; } = null!;
         
         /// <summary>
         /// Текущая стадия обработки отчета
         /// </summary>
-        public string FssStageType { get; set; }
+        public string FssStageType { get; set; } = null!;
         
         /// <summary>
         /// Статус текущей стадии обработки отчета
         /// </summary>
-        public string FssStageStatus { get; set; }
+        public string FssStageStatus { get; set; } = null!;
         
         /// <summary>
         /// Дата перехода отчета в текущую стадию обработки

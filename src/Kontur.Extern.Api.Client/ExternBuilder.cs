@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Model.Configuration;

@@ -1,3 +1,4 @@
+#nullable disable
 using System;
 
 namespace Kontur.Extern.Api.Client.Testing.ExternTestTool.LegacyExternTestTools.API

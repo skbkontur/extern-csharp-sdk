@@ -1,6 +1,7 @@
-﻿#nullable enable
-using System;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Signatures;
@@ -14,10 +15,10 @@ using Kontur.Extern.Api.Client.Models.Drafts;
 using Kontur.Extern.Api.Client.Models.Drafts.Documents;
 using Kontur.Extern.Api.Client.Models.Drafts.Meta;
 
-// ReSharper disable CommentTypo
-
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public interface IDraftsClient
     {
         /// <summary>

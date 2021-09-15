@@ -24,10 +24,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Accounts
         /// <summary>
         /// Учетные записи
         /// </summary>
-        public Account[] Accounts { get; set; }
+        public Account[] Accounts { get; set; } = null!;
         /// <summary>
         /// Ссылки для работы с учетными записями
         /// </summary>
-        public Link[] Links { get; set; }
+        public Link[] Links { get; set; } = null!;
     }
 }

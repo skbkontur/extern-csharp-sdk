@@ -10,6 +10,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// <summary>
         /// Регистрационный номер
         /// </summary>
-        public string RegistrationNumber { get; set; }
+        public string RegistrationNumber { get; set; } = null!;
     }
 }

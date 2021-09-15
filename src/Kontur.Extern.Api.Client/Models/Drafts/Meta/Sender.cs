@@ -11,23 +11,23 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
         /// <summary>
         ///  ИНН
         /// </summary>
-        public string Inn { get; set; }
+        public string Inn { get; set; } = null!;
 
         /// <summary>
         ///  КПП
         /// </summary>
-        public string Kpp { get; set; }
+        public string? Kpp { get; set; }
 
         /// <summary>
         ///  Название
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         ///  Сертификат для отправки
         /// </summary>
         // [Required]
-        public CertificatePublicKey Certificate { get; set; }
+        public CertificatePublicKey Certificate { get; set; } = null!;
 
         /// <summary>
         ///  Отправитель является представителем
@@ -38,6 +38,6 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
         ///  IP-адрес отправителя отчета
         /// </summary>
         [JsonPropertyName("ipaddress")]
-        public string IpAddress { get; set; }
+        public string? IpAddress { get; set; }
     }
 }

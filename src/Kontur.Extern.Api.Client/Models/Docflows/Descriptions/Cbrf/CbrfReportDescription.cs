@@ -11,13 +11,13 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Cbrf
         /// <summary>
         /// Версия формы документа
         /// </summary>
-        public FormVersion FormVersion { get; set; }
-        
+        public FormVersion FormVersion { get; set; } = null!;
+
         /// <summary>
         /// ОГРН
         /// </summary>
-        public string Ogrn { get; set; }
-        
+        public string Ogrn { get; set; } = null!;
+
         /// <summary>
         /// Дата начала отчетного периода, за который сдается отчет
         /// </summary>

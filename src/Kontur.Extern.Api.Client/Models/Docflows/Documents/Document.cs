@@ -20,12 +20,12 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents
         /// <summary>
         /// Описание документа
         /// </summary>
-        public DocflowDocumentDescription Description { get; set; }
+        public DocflowDocumentDescription Description { get; set; } = null!;
         
         /// <summary>
         /// Контент документа
         /// </summary>
-        public Content Content { get; set; }
+        public Content? Content { get; set; }
         
         /// <summary>
         /// Дата отправки документа
@@ -35,11 +35,11 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents
         /// <summary>
         /// Подписи документа
         /// </summary>
-        public Signature[] Signatures { get; set; }
+        public Signature[] Signatures { get; set; } = null!;
         
         /// <summary>
         /// Ссылки для работы с документом
         /// </summary>
-        public Link[] Links { get; set; }
+        public Link[] Links { get; set; } = null!;
     }
 }
