@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.UnitTests", "Kontur.Extern.Api.Client.UnitTests\Kontur.Extern.Api.Client.UnitTests.csproj", "{ABA9A116-2F0A-4442-8449-4994A3B257AE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kontur.Extern.Api.Client.Vostok", "ClusterClientIntegration\Kontur.Extern.Api.Client.Vostok.csproj", "{FE0A6C55-9C46-4A24-B07F-6058C560A839}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.End2EndTests", "Kontur.Extern.Api.Client.End2EndTests\Kontur.Extern.Api.Client.End2EndTests.csproj", "{DB68F6DE-9072-41D4-BE2C-1A1C4F7DC845}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kontur.Extern.Api.Client.Testing", "Kontur.Extern.Api.Client.Testing\Kontur.Extern.Api.Client.Testing.csproj", "{EBA96498-830C-4F7C-90E9-B5702ADAF4CC}"
@@ -51,10 +49,6 @@ Global
 		{ABA9A116-2F0A-4442-8449-4994A3B257AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABA9A116-2F0A-4442-8449-4994A3B257AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABA9A116-2F0A-4442-8449-4994A3B257AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE0A6C55-9C46-4A24-B07F-6058C560A839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE0A6C55-9C46-4A24-B07F-6058C560A839}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE0A6C55-9C46-4A24-B07F-6058C560A839}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE0A6C55-9C46-4A24-B07F-6058C560A839}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DB68F6DE-9072-41D4-BE2C-1A1C4F7DC845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DB68F6DE-9072-41D4-BE2C-1A1C4F7DC845}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB68F6DE-9072-41D4-BE2C-1A1C4F7DC845}.Release|Any CPU.ActiveCfg = Release|Any CPU
