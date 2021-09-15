@@ -1,12 +1,15 @@
+#nullable disable
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.Testing.ExternTestTool.LegacyExternTestTools.Model;
+#pragma warning disable 219
 
-// ReSharper disable CommentTypo
 #pragma warning disable 618
 
 namespace Kontur.Extern.Api.Client.Testing.ExternTestTool.LegacyExternTestTools.API
 {
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class ExternTestToolsApi : IExternTestToolsApi
     {
         /// <summary>
