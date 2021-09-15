@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles.Data;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 
 namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles
 {
@@ -19,7 +19,7 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles
         /// Тип DraftsBuilder
         /// </summary>
         //[Required]
-        public Urn BuilderType { get; set; } = null!;
+        public DraftBuilderType BuilderType { get; set; }
 
         /// <summary>
         /// Дополнительная информация о файле

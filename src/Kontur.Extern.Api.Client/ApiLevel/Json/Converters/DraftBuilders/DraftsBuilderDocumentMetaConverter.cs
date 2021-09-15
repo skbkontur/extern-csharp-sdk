@@ -1,6 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
-using Kontur.Extern.Api.Client.Models.Common;
+using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data;
@@ -38,13 +38,16 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
                 BuilderData = (TData) (object) dto.BuilderData;
             }
 
-            public Urn? BuilderType { get; set; }
+            [UsedImplicitly]
+            public DraftBuilderType BuilderType { get; set; }
+            
+            [UsedImplicitly]
             public TData? BuilderData { get; set; }
 
             public DraftsBuilderDocumentMeta ConvertToDto() => new()
             {
                 BuilderData = BuilderData as DraftsBuilderDocumentData ?? new UnknownBuilderDocumentData(),
-                BuilderType = BuilderType!
+                BuilderType = BuilderType
             };
         }
     }

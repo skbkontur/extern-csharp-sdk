@@ -42,7 +42,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConvert
         {
             var dummyKnownBuilderType = DraftBuilderType.Fns.BusinessRegistration.Registration;
             var meta = metaGenerator.GenerateWithoutData(dummyKnownBuilderType);
-            meta.BuilderType = null!;
+            meta.BuilderType = default;
             meta.BuilderData = data!;
             var json = serializer.SerializeToIndentedString(meta);
             Console.WriteLine($"Generated JSON: {json}");

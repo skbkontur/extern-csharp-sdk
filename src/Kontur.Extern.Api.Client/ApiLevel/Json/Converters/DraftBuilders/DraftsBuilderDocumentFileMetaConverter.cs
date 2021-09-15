@@ -1,6 +1,5 @@
 using System;
 using JetBrains.Annotations;
-using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles.Data;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
@@ -37,10 +36,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
                 BuilderData = (TData) (object) builderDocumentFileMeta.BuilderData;
             }
             
+            [UsedImplicitly]
             public string? FileName { get; set; }
 
             [UsedImplicitly]
-            public Urn? BuilderType { get; set; }
+            public DraftBuilderType BuilderType { get; set; }
             
             [UsedImplicitly]
             public TData? BuilderData { get; set; }
@@ -48,7 +48,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
             public DraftsBuilderDocumentFileMeta ConvertToDto() => new()
             {
                 FileName = FileName!,
-                BuilderType = BuilderType!,
+                BuilderType = BuilderType,
                 BuilderData = BuilderData as DraftsBuilderDocumentFileData ?? new UnknownDraftsBuilderDocumentFileData()
             };
         }

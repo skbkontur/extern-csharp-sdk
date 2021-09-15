@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 
 namespace Kontur.Extern.Api.Client.Models.DraftsBuilders
 {
@@ -12,7 +12,7 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders
         /// Тип DraftsBuilder
         /// </summary>
         // [Required]
-        Urn BuilderType { get; set; }
+        DraftBuilderType BuilderType { get; set; }
         
         /// <summary>
         /// Сведения о документе

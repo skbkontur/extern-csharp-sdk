@@ -28,7 +28,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConvert
             
             var builderMeta = tester.Deserialize(json);
 
-            builderMeta.BuilderType.Should().Be(builderType.ToUrn()!);
+            builderMeta.BuilderType.Should().Be(builderType);
             DraftsBuilderMetaShouldBeEqual(builderMeta, expectedBuilderMeta);
         }
 
@@ -48,13 +48,13 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.JsonConvert
         }
         
         [Test]
-        public void Should_deserialize_unknown_data_in_case_of_null_builder_type()
+        public void Should_deserialize_unknown_data_in_case_of_empty_builder_type()
         {
             var (json, originalBuilderMeta) = tester.GenerateWithoutBuilderType(null);
         
             var builderMeta = tester.Deserialize(json);
         
-            builderMeta.BuilderType.Should().BeNull();
+            builderMeta.BuilderType.Should().Be(new DraftBuilderType());
             builderMeta.BuilderData.Should().BeOfType<UnknownDraftsBuilderData>();
             builderMeta.Should().BeEquivalentTo(originalBuilderMeta, c => c.Excluding(x => x.BuilderData));
         }

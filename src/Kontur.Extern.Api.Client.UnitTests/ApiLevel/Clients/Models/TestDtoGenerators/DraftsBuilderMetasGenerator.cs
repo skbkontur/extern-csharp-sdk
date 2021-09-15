@@ -22,13 +22,13 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGene
         public T GenerateWithData(Type? dataType, DraftBuilderType draftBuilderType)
         {
             var builderMeta = GenerateWithoutData(draftBuilderType);
-            if (dataType != null)
+            if (dataType is null)
             {
-                builderMeta.BuilderData = (TData?) faker.Generate(dataType) ?? unknownDataFactory();
+                builderMeta.BuilderData = unknownDataFactory();
             }
             else
             {
-                builderMeta.BuilderData = unknownDataFactory();
+                builderMeta.BuilderData = (TData?) faker.Generate(dataType) ?? unknownDataFactory();
             }
 
             return builderMeta;
@@ -38,7 +38,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGene
         {
             var description = faker.Generate<T>(c => c.WithSkip<T>(x => x.BuilderData));
             description.BuilderData = null!;
-            description.BuilderType = draftBuilderType.ToUrn() ?? throw new NullReferenceException(nameof(draftBuilderType));
+            description.BuilderType = draftBuilderType;
             return description;
         }
     }
