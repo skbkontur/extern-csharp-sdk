@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.Common;
-using Kontur.Extern.Api.Client.Common.Time;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Documents
 {
@@ -28,9 +28,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents
         public Content? Content { get; set; }
         
         /// <summary>
-        /// Дата отправки документа
+        /// Дата и время отправки документа
         /// </summary>
-        public DateOnly? SendDate { get; set; }
+        [JsonPropertyName("send-date")]
+        public DateTime? SendDateTime { get; set; }
         
         /// <summary>
         /// Подписи документа
