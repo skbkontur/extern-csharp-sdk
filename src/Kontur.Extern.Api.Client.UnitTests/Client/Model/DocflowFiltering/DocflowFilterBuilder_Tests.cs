@@ -16,12 +16,11 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
         [Test]
         public void Should_create_an_empty_filter_when_when_builder_does_not_specify_anything()
         {
-            var expectedFilter = new DocflowFilter();
             var docflowFilterBuilder = new DocflowFilterBuilder();
 
             var docflowFilter = docflowFilterBuilder.CreateFilter();
             
-            docflowFilter.Should().BeEquivalentTo(expectedFilter);
+            ShouldHaveExpectedQueryParameters(docflowFilter, Array.Empty<(string name, string value)>());
         }
         
         [Test]
@@ -32,26 +31,6 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             var orgId = Guid.Parse("047AE3BA-6F78-48BB-8460-A59A11C65C2E");
             var periodFrom = new DateOnly(2021, 07, 08);
             var periodTo = new DateOnly(2021, 07, 18);
-            var expectedFilter = new DocflowFilter
-            {
-                Cu = "123-456",
-                Finished = true,
-                Incoming = false,
-                Knd = "1234567",
-                Okpo = "12345678",
-                Okud = "1234567",
-                InnKpp = "1234567890-123456789",
-                RegNumber = "123-456-789012",
-                Types = new[] {DocflowType.Fns.Fns534.Report},
-                FormName = "the form",
-                CreatedFrom = createdFrom,
-                CreatedTo = createdTo,
-                DemandsOnReports = true,
-                ForAllUsers = false,
-                OrgId = orgId,
-                PeriodFrom = periodFrom,
-                PeriodTo = periodTo
-            };
 
             var docflowFilter = new DocflowFilterBuilder()
                 .WithFinishedDocflows()
@@ -62,7 +41,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 .WithInnKppOfALegalEntity(InnKpp.Parse("1234567890-123456789"))
                 .WithOkud(Okud.Parse("1234567"))
                 .WithRegNumberOfPfrDocflow(PfrRegNumber.Parse("123-456-789012"))
-                .WithTypes(DocflowType.Fns.Fns534.Report)
+                .WithTypes(DocflowType.Fns.Fns534.Report, DocflowType.Fns.Fns534.Letter)
                 .WithFormName("the form")
                 .WithCreatedFrom(createdFrom)
                 .WithCreatedTo(createdTo)
@@ -71,39 +50,48 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 .WithOrganizationId(orgId)
                 .WithReportingPeriod(periodFrom, periodTo)
                 .CreateFilter();
-            
-            docflowFilter.Should().BeEquivalentTo(expectedFilter);
+
+            ShouldHaveExpectedQueryParameters(docflowFilter,
+                ("cu", "123-456"),
+                ("finished", "true"),
+                ("incoming", "false"),
+                ("knd", "1234567"),
+                ("okpo", "12345678"),
+                ("okud", "1234567"),
+                ("innKpp", "1234567890-123456789"),
+                ("regNumber", "123-456-789012"),
+                ("formName", "the form"),
+                ("createdFrom", createdFrom.ToString()),
+                ("createdTo", createdTo.ToString()),
+                ("demandsOnReports", "true"),
+                ("forAllUsers", "false"),
+                ("orgId", orgId.ToString()),
+                ("periodFrom", periodFrom.ToString()),
+                ("periodTo", periodTo.ToString()),
+                ("type", DocflowType.Fns.Fns534.Report.ToString()),
+                ("type", DocflowType.Fns.Fns534.Letter.ToString())
+            );
         }
 
         [Test]
         public void Should_apply_sorting_filter()
         {
-            var expectedFilter = new DocflowFilter
-            {
-                OrderBy = SortOrder.Ascending 
-            };
-            
             var docflowFilter = new DocflowFilterBuilder()
                 .WithSortingFilter(DocflowSortingFilter.OrderByCreationDate(SortOrder.Ascending))
                 .CreateFilter();
             
-            docflowFilter.Should().BeEquivalentTo(expectedFilter);
+            ShouldHaveExpectedQueryParameters(docflowFilter, ("orderBy", "ascending"));
         }
 
         [Test]
         public void Should_apply_inn_filter()
         {
-            var expectedFilter = new DocflowFilter
-            {
-                InnKpp = "123456789012"
-            };
-            
             var docflowFilter = new DocflowFilterBuilder()
                 .WithInnKppOfALegalEntity(InnKpp.Parse("1234567890-123456789"))
                 .WithIndividualEntrepreneurInn(Inn.Parse("123456789012"))
                 .CreateFilter();
             
-            docflowFilter.Should().BeEquivalentTo(expectedFilter);
+            ShouldHaveExpectedQueryParameters(docflowFilter, ("innKpp", "123456789012"));
         }
 
         [Test]
@@ -145,29 +133,26 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
         public void WithCreatedFrom_should_set_created_from_filter_without_created_to_bound()
         {
             var from = new DateOnly(2021, 07, 08);
-            var expectedFilter = new DocflowFilter
-            {
-                CreatedFrom = from
-            };
             var docflowFilterBuilder = new DocflowFilterBuilder().WithCreatedFrom(from);
 
             var docflowFilter = docflowFilterBuilder.CreateFilter();
             
-            docflowFilter.Should().BeEquivalentTo(expectedFilter);
+            ShouldHaveExpectedQueryParameters(docflowFilter, ("createdFrom", from.ToString()));
         }
 
         [Test]
         public void WithCreatedTo_should_set_created_to_filter_without_created_from_bound()
         {
             var to = new DateOnly(2021, 07, 08);
-            var expectedFilter = new DocflowFilter
-            {
-                CreatedTo = to
-            };
 
             var docflowFilter = new DocflowFilterBuilder().WithCreatedTo(to).CreateFilter();
             
-            docflowFilter.Should().BeEquivalentTo(expectedFilter);
+            ShouldHaveExpectedQueryParameters(docflowFilter, ("createdTo", to.ToString()));
+        }
+        
+        private static void ShouldHaveExpectedQueryParameters(DocflowFilter docflowFilter, params (string name, string value)[] expectedQueryParameters)
+        {
+            docflowFilter.ToQueryParameters().Should().BeEquivalentTo(expectedQueryParameters);
         }
     }
 }

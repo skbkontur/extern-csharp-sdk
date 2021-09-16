@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows.Documents;
@@ -25,12 +24,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         public Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter? filter = null, TimeSpan? timeout = null)
         {
             var urlBuilder = new RequestUrlBuilder($"/v1/{accountId}/docflows");
-            if (filter != null)
-            {
-                foreach (var kv in filter.ConvertToQueryParameters().Where(kv => kv.Value != null))
-                    urlBuilder.AppendToQuery(kv.Key, kv.Value);
-            }
-
+            filter?.AppendToQuery(urlBuilder);
             return GetRelatedDocflowsAsync(urlBuilder, timeout);
         }
 
@@ -42,11 +36,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             TimeSpan? timeout = null)
         {
             var urlBuilder = new RequestUrlBuilder($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/related");
-            if (filter != null)
-            {
-                foreach (var kv in filter.ConvertToQueryParameters().Where(kv => kv.Value != null))
-                    urlBuilder.AppendToQuery(kv.Key, kv.Value);
-            }
+            filter?.AppendToQuery(urlBuilder);
             return GetRelatedDocflowsAsync(urlBuilder, timeout);
         }
 
@@ -58,11 +48,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             TimeSpan? timeout = null)
         {
             var urlBuilder = new RequestUrlBuilder($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories");
-            if (filter != null)
-            {
-                foreach (var kv in filter.ConvertToQueryParameters().Where(kv => kv.Value != null))
-                    urlBuilder.AppendToQuery(kv.Key, kv.Value);
-            }
+            filter?.AppendToQuery(urlBuilder);
             return GetRelatedDocflowsAsync(urlBuilder, timeout);
         }
 

@@ -1,3 +1,4 @@
+using System;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Api.Client.Common.Time;
@@ -19,7 +20,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
 
             DocflowSortingFilter.OrderByCreationDate(sortOrder).ApplyTo(docflowFilter);
 
-            docflowFilter.OrderBy.Should().Be(sortOrder);
+            ShouldHaveExpectedQueryParameters(docflowFilter, ("orderBy", sortOrder.ToString().ToLower()));
         }
 
         [Test]
@@ -29,8 +30,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             var docflowFilter = new DocflowFilter();
 
             DocflowSortingFilter.UpdatedTo(updateTo).ApplyTo(docflowFilter);
-
-            docflowFilter.UpdatedTo.Should().Be(updateTo);
+            
+            ShouldHaveExpectedQueryParameters(docflowFilter, ("updatedTo", updateTo.ToString()));
         }
 
         [Test]
@@ -40,25 +41,26 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             var docflowFilter = new DocflowFilter();
 
             DocflowSortingFilter.UpdatedFrom(updateFrom).ApplyTo(docflowFilter);
-
-            docflowFilter.UpdatedFrom.Should().Be(updateFrom);
+            
+            ShouldHaveExpectedQueryParameters(docflowFilter, ("updatedFrom", updateFrom.ToString()));
         }
 
         [Test]
         public void NoSorting_should_reset_sorting_filter()
         {
-            var docflowFilter = new DocflowFilter
-            {
-                UpdatedTo = new DateOnly(2021, 07, 06),
-                UpdatedFrom = new DateOnly(2021, 07, 08),
-                OrderBy = SortOrder.Ascending
-            };
+            var docflowFilter = new DocflowFilter();
+            docflowFilter.SetUpdatedTo(new DateOnly(2021, 07, 06));
+            docflowFilter.SetUpdatedFrom(new DateOnly(2021, 07, 08));
+            docflowFilter.SetOrderBy(SortOrder.Ascending);
 
             DocflowSortingFilter.NoSorting.ApplyTo(docflowFilter);
 
-            docflowFilter.UpdatedFrom.Should().BeNull();
-            docflowFilter.UpdatedTo.Should().BeNull();
-            docflowFilter.OrderBy.Should().BeNull();
+            ShouldHaveExpectedQueryParameters(docflowFilter, Array.Empty<(string name, string value)>());
+        }
+
+        private static void ShouldHaveExpectedQueryParameters(DocflowFilter docflowFilter, params (string name, string value)[] expectedQueryParameters)
+        {
+            docflowFilter.ToQueryParameters().Should().BeEquivalentTo(expectedQueryParameters);
         }
     }
 }

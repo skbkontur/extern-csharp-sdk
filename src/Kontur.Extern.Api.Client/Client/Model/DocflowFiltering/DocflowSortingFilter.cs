@@ -41,9 +41,9 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
 
         public void ApplyTo(DocflowFilter docflowFilter)
         {
-            docflowFilter.OrderBy = order;
-            docflowFilter.UpdatedFrom = updatedFrom;
-            docflowFilter.UpdatedTo = updatedTo;
+            docflowFilter.SetOrderBy(order);
+            docflowFilter.SetUpdatedFrom(updatedFrom);
+            docflowFilter.SetUpdatedTo(updatedTo);
         }
     }
 }

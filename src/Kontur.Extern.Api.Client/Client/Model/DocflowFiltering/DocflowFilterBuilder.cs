@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Api.Client.Exceptions;
@@ -8,15 +7,16 @@ using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using Kontur.Extern.Api.Client.Common.Time;
 
-// ReSharper disable CommentTypo
-
 namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "ParameterHidesMember")]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class DocflowFilterBuilder
     {
         private DocflowFilter filter;
+        private DateOnly? createdTo;
+        private DateOnly? createdFrom;
 
         public DocflowFilterBuilder() => filter = new DocflowFilter();
 
@@ -25,7 +25,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithFinishedDocflows(bool incoming = true)
         {
-            filter.Finished = incoming;    
+            filter.SetFinished(incoming);    
             return this;
         }
 
@@ -34,7 +34,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithIncomingDocflows(bool incoming = true)
         {
-            filter.Incoming = incoming;
+            filter.SetIncoming(incoming);
             return this;
         }
 
@@ -43,7 +43,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithInnKppOfALegalEntity(string inn, string kpp)
         {
-            filter.InnKpp = InnKpp.Parse($"{inn}-{kpp}").Value;
+            filter.SetInnKpp(InnKpp.Parse($"{inn}-{kpp}").Value);
             return this;
         }
 
@@ -52,7 +52,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithInnKppOfALegalEntity(InnKpp innKpp)
         {
-            filter.InnKpp = innKpp.Value;
+            filter.SetInnKpp(innKpp.Value);
             return this;
         }
 
@@ -61,7 +61,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithIndividualEntrepreneurInn(Inn inn)
         {
-            filter.InnKpp = inn.Value;
+            filter.SetInnKpp(inn.Value);
             return this;
         }
 
@@ -70,7 +70,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithOrganizationId(Guid id)
         {
-            filter.OrgId = id;
+            filter.SetOrgId(id);
             return this;
         }
 
@@ -79,10 +79,11 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithCreatedFrom(DateOnly dateFrom)
         {
-            if (filter.CreatedTo < dateFrom)
-                throw Errors.InvalidRange(nameof(dateFrom), nameof(filter.CreatedTo), dateFrom, filter.CreatedTo.Value);
+            if (createdTo < dateFrom)
+                throw Errors.InvalidRange(nameof(dateFrom), nameof(createdTo), dateFrom, createdTo.Value);
 
-            filter.CreatedFrom = dateFrom;
+            filter.SetCreatedFrom(dateFrom);
+            createdFrom = dateFrom;
             return this;
         }
 
@@ -91,10 +92,11 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithCreatedTo(DateOnly dateTo)
         {
-            if (filter.CreatedFrom > dateTo)
-                throw Errors.InvalidRange(nameof(dateTo), nameof(filter.CreatedFrom), filter.CreatedFrom.Value, dateTo);
+            if (createdFrom > dateTo)
+                throw Errors.InvalidRange(nameof(dateTo), nameof(createdFrom), createdFrom.Value, dateTo);
             
-            filter.CreatedTo = dateTo;
+            filter.SetCreatedTo(dateTo);
+            createdTo = dateTo;
             return this;
         }
 
@@ -103,7 +105,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithTypes(params DocflowType[] types)
         {
-            filter.Types = types;
+            filter.SetTypes(types);
             return this;
         }
 
@@ -112,7 +114,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithKnd(Knd knd)
         {
-            filter.Knd = knd.Value;
+            filter.SetKnd(knd.Value);
             return this;
         }
 
@@ -121,7 +123,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithOkud(Okud okud)
         {
-            filter.Okud = okud.Value;
+            filter.SetOkud(okud.Value);
             return this;
         }
 
@@ -130,7 +132,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithOkpo(Okpo okpo)
         {
-            filter.Okpo = okpo.Value;
+            filter.SetOkpo(okpo.Value);
             return this;
         }
         
@@ -139,7 +141,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithCu(AuthorityCode code)
         {
-            filter.Cu = code.Value;
+            filter.SetCu(code.Value);
             return this;
         }
 
@@ -148,7 +150,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithRegNumberOfPfrDocflow(PfrRegNumber regNumber)
         {
-            filter.RegNumber = regNumber.Value;
+            filter.SetRegNumber(regNumber.Value);
             return this;
         }
 
@@ -157,7 +159,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithFormName(string name)
         {
-            filter.FormName = name;
+            filter.SetFormName(name);
             return this;
         }
 
@@ -166,7 +168,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder WithDemandsOnReports(bool enabled = true)
         {
-            filter.DemandsOnReports = enabled;
+            filter.SetDemandsOnReports(enabled);
             return this;
         }
 
@@ -178,8 +180,8 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
             if (from > to)
                 throw Errors.InvalidRange(nameof(from), nameof(to), from, to);
             
-            filter.PeriodFrom = from;
-            filter.PeriodTo = to;
+            filter.SetPeriodFrom(@from);
+            filter.SetPeriodTo(to);
             return this;
         }
 
@@ -188,7 +190,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         /// </summary>
         public DocflowFilterBuilder ForAllUsers(bool enabled = true)
         {
-            filter.ForAllUsers = enabled;
+            filter.SetForAllUsers(enabled);
             return this;
         }
 
