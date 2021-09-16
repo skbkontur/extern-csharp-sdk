@@ -128,6 +128,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var account = accountScope.Entity;
             await using (accountScope)
             {
+                await Task.Delay(1.Seconds());
                 var accountAfterCreate = await Context.Accounts.GetAccount(account.Id);
                 accountAfterCreate.Should().BeEquivalentTo(account);
             }
