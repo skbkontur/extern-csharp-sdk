@@ -1,16 +1,9 @@
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.IO;
-using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Text.Unicode;
 using System.Threading.Tasks;
-using Kontur.Extern.Api.Client.Http.Exceptions;
 using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Buffers;
-using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Converters;
-using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Converters.EnumConverters;
 
 namespace Kontur.Extern.Api.Client.Http.Serialization.SysTextJson
 {
