@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
@@ -42,12 +43,12 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// <summary>
         ///  Текущая стадия обработки реестра
         /// </summary>
-        public string FssStageType { get; set; } = null!;
+        public FssStageType FssStageType { get; set; }
         
         /// <summary>
         /// Статус текущей стадии обработки отчета
         /// </summary>
-        public string FssStageStatus { get; set; } = null!;
+        public FssStageStatus FssStageStatus { get; set; }
         
         /// <summary>
         /// Дата перехода реестра в текущую стадию обработки

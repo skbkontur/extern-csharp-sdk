@@ -8,6 +8,7 @@ using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessRegis
 using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson;
 using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.NamingPolicies;
+using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss.Enums;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Json
 {
@@ -27,6 +28,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json
                 .AddConverter(new DraftsBuilderDocumentFileMetaConverter())
                 .AddConverter(new ApiTaskResultJsonConverter(namingPolicy))
                 .SetCustomNamingPolicyForSerializationEnumOf<PaperDocumentsDeliveryType>(JsonNamingPolicy.CamelCase)
+                .SetCustomNamingPolicyForSerializationEnumOf<FssStageStatus>(null)
+                .SetCustomNamingPolicyForSerializationEnumOf<FssStageType>(null)
                 .IgnoreIndentation(ignoreIndentation)
                 .IgnoreNullValues(ignoreNullValues)
                 .CreateSerializer();
