@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
 {
@@ -57,7 +58,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// КПП из отчета
         /// </summary>
-        public string ReportKpp { get; set; } = null!;
+        public Kpp ReportKpp { get; set; } = null!;
         
         /// <summary>
         /// Идентификатор связанного документооборота, в ответ на который отправляется отчет

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Pfr
 {
@@ -11,12 +12,12 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Pfr
         /// <summary>
         ///  Код УПФР, откуда пришло письмо
         /// </summary>
-        public string Cu { get; set; } = null!;
+        public UpfrCode Cu { get; set; } = null!;
         
         /// <summary>
         /// Регистрационный номер
         /// </summary>
-        public string RegistrationNumber { get; set; } = null!;
+        public PfrRegNumber RegistrationNumber { get; set; } = null!;
         
         /// <summary>
         /// Тема письма

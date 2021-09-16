@@ -36,8 +36,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
                 },
                 Recipient = new RecipientInfoRequest
                 {
-                    IfnsCode = "1234",
-                    MriCode = "5678"
+                    IfnsCode = IfnsCode.Parse("1234"),
+                    MriCode = MriCode.Parse("5678")
                 }
             };
 
@@ -220,7 +220,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
                 },
                 Recipient = new RecipientInfoRequest
                 {
-                    IfnsCode = "1234"
+                    IfnsCode = IfnsCode.Parse("1234")
                 }
             };
 

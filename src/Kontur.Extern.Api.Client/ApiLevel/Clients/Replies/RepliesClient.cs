@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows.Documents;
 using Kontur.Extern.Api.Client.Models.Common;
@@ -95,12 +96,17 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
             return PostReplyAsync(url, body, timeout);
         }
 
+        public Task<IDocflowWithDocuments> SendReplyAsync(Guid accountId, Guid docflowId, Guid documentId, Guid replyId, string senderIp, TimeSpan? timeout = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IDocflowWithDocuments> SendReplyAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
             Guid replyId,
-            string senderIp,
+            IPAddress senderIp,
             TimeSpan? timeout = null)
         {
             var body = new SendReplyDocumentRequest
@@ -118,7 +124,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
             Guid inventoryId,
             Guid documentId,
             Guid replyId,
-            string senderIp,
+            IPAddress senderIp,
             TimeSpan? timeout = null)
         {
             var body = new SendReplyDocumentRequest

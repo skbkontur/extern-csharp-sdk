@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations
 {
@@ -16,7 +17,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations
         /// <summary>
         /// КПП организации
         /// </summary>
-        public string? Kpp { get; set; }
+        public Kpp? Kpp { get; set; }
 
         /// <summary>
         /// Название организации

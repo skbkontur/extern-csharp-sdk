@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
 {
@@ -42,7 +43,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         ///  КПП из представления
         /// </summary>
-        public string? ReportKpp { get; set; }
+        public Kpp? ReportKpp { get; set; }
         
         /// <summary>
         /// Дата начала отчетного периода, за который сдается документ

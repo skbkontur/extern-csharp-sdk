@@ -1,12 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
 using Kontur.Extern.Api.Client.Exceptions;
-
-// ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Api.Client.Models.Numbers
 {
     /// <summary>
     /// КНД – код налоговой декларации. Формат данных: семизначный цифровой код, где Х - это цифра от 0 до 9
     /// </summary>
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public record Knd
     {
         public static readonly RegexBasedParser<Knd> Parser = 

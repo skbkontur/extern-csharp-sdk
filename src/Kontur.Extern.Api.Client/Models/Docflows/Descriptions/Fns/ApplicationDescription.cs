@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
 {
@@ -40,7 +41,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// КПП из заявления
         /// </summary>
-        public string ReportKpp { get; set; } = null!;
+        public Kpp ReportKpp { get; set; } = null!;
         
         /// <summary>
         /// ОКТМО

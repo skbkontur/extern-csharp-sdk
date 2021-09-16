@@ -1,7 +1,9 @@
+using System.Net;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Json;
 using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Models.Drafts.Meta;
+using Kontur.Extern.Api.Client.Models.Numbers;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Drafts
@@ -33,10 +35,10 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Drafts
             return new Sender
             {
                 Inn = "3077668269",
-                Kpp = "561650781",
+                Kpp = Kpp.Parse("561650781"),
                 Name = null,
                 IsRepresentative = true,
-                IpAddress = "8.8.8.8"
+                IpAddress = IPAddress.Parse("8.8.8.8")
             };
         }
     }

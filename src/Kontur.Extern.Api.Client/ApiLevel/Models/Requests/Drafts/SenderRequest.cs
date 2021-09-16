@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
 {
@@ -17,7 +19,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// <summary>
         /// КПП
         /// </summary>
-        public string? Kpp { get; set; }
+        public Kpp? Kpp { get; set; }
 
         /// <summary>
         /// Сертификат для отправки
@@ -35,6 +37,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// IP адрес отправителя отчета
         /// </summary>
         [JsonPropertyName("ipaddress")]
-        public string? IpAddress { get; set; }
+        public IPAddress? IpAddress { get; set; }
     }
 }

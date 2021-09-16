@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Numbers;
+using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegistration
 {
@@ -22,7 +24,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegi
         /// <summary>
         /// Коды СВДРЕГ документов
         /// </summary>
-        public string[] SvdRegCodes { get; set; } = null!;
+        public SvdregCode[] SvdRegCodes { get; set; } = null!;
         
         /// <summary>
         /// Информация для регистрации
@@ -62,7 +64,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegi
             /// <summary>
             /// ИНН физического лица заявителя
             /// </summary>
-            public string Inn { get; set; } = null!;
+            public Inn Inn { get; set; } = null!;
         }
     
         [PublicAPI]

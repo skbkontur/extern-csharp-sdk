@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
 {
@@ -10,6 +11,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// <summary>
         /// Регистрационный номер
         /// </summary>
-        public string RegistrationNumber { get; set; } = null!;
+        public FssRegNumber RegistrationNumber { get; set; } = null!;
     }
 }

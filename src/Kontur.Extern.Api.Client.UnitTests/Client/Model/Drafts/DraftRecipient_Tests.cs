@@ -26,8 +26,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             {
                 var expectedRequest = new RecipientInfoRequest
                 {
-                    IfnsCode = "1234",
-                    MriCode = "5678"
+                    IfnsCode = IfnsCode.Parse("1234"),
+                    MriCode = MriCode.Parse("5678")
                 };
                     
                 var request = DraftRecipient
@@ -54,7 +54,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             {
                 var expectedRequest = new RecipientInfoRequest
                 {
-                    UpfrCode = "123-456"
+                    UpfrCode = UpfrCode.Parse("123-456")
                 };
                     
                 var request = DraftRecipient
@@ -81,7 +81,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             {
                 var expectedRequest = new RecipientInfoRequest
                 {
-                    TogsCode = "12-45"
+                    TogsCode = TogsCode.Parse("12-45")
                 };
                     
                 var request = DraftRecipient
@@ -108,11 +108,38 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             {
                 var expectedRequest = new RecipientInfoRequest
                 {
-                    FssCode = "12341"
+                    FssCode = FssCode.Parse("12341")
                 };
                     
                 var request = DraftRecipient
                     .Fss(FssCode.Parse("12341"))
+                    .ToRequest();
+                
+                request.Should().BeEquivalentTo(expectedRequest);
+            }
+        }
+        
+        [TestFixture]
+        internal class RegistrationIfns
+        {
+            [Test]
+            public void Should_fail_when_given_null_code()
+            {
+                Action action = () => DraftRecipient.RegistrationIfns(null!);
+
+                action.Should().Throw<ArgumentException>();
+            }
+
+            [Test]
+            public void Should_create_upfr_recipient()
+            {
+                var expectedRequest = new RecipientInfoRequest
+                {
+                    RegistrationIfnsCode = IfnsCode.Parse("1234")
+                };
+                    
+                var request = DraftRecipient
+                    .RegistrationIfns(IfnsCode.Parse("1234"))
                     .ToRequest();
                 
                 request.Should().BeEquivalentTo(expectedRequest);

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
 {
@@ -10,31 +11,31 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// <summary>
         /// ИФНС
         /// </summary>
-        public string? IfnsCode { get; set; }
+        public IfnsCode? IfnsCode { get; set; }
 
         /// <summary>
         /// МРИ
         /// </summary>
-        public string? MriCode { get; set; }
+        public MriCode? MriCode { get; set; }
 
         /// <summary>
         /// ТОГС
         /// </summary>
-        public string? TogsCode { get; set; }
+        public TogsCode? TogsCode { get; set; }
 
         /// <summary>
         /// УПФР
         /// </summary>
-        public string? UpfrCode { get; set; }
+        public UpfrCode? UpfrCode { get; set; }
 
         /// <summary>
         /// ФСС 
         /// </summary>
-        public string? FssCode { get; set; }
+        public FssCode? FssCode { get; set; }
 
         /// <summary>
         /// ИФНС для регистрации бизнеса 
         /// </summary>
-        public string? RegistrationIfnsCode { get; set; }
+        public IfnsCode? RegistrationIfnsCode { get; set; }
     }
 }

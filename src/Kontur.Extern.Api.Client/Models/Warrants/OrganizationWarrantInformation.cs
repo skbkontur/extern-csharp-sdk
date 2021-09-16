@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Warrants
 {
@@ -24,7 +25,7 @@ namespace Kontur.Extern.Api.Client.Models.Warrants
         /// <summary>
         /// КПП организации учетной записи Экcтерна
         /// </summary>
-        public string Kpp { get; set; } = null!;
+        public Kpp Kpp { get; set; } = null!;
 
         /// <summary>
         /// Название организации учетной записи Экcтерна

@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows.Enums;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Events
 {
@@ -18,7 +19,7 @@ namespace Kontur.Extern.Api.Client.Models.Events
         /// <summary>
         /// КПП организации
         /// </summary>
-        public string? Kpp { get; set; }
+        public Kpp? Kpp { get; set; }
         
         /// <summary>
         /// Тип документооборота

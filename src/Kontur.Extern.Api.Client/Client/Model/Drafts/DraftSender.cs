@@ -16,7 +16,7 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
             if (certificatePublicKey is null)
                 throw new ArgumentNullException(nameof(certificatePublicKey));
             
-            return new(inn.ToString(), kpp.ToString(), certificatePublicKey);
+            return new(inn.ToString(), kpp, certificatePublicKey);
         }
 
         public static DraftSender IndividualEntrepreneur(Inn inn, CertificateContent certificatePublicKey)
@@ -30,12 +30,12 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
         }
 
         private readonly string inn;
-        private readonly string? kpp;
+        private readonly Kpp? kpp;
         private IPAddress? ip;
         private bool isRepresentative;
         private readonly CertificateContent certificatePublicKey;
 
-        private DraftSender(string inn, string? kpp, CertificateContent certificatePublicKey)
+        private DraftSender(string inn, Kpp? kpp, CertificateContent certificatePublicKey)
         {
             this.inn = inn;
             this.kpp = kpp;
@@ -60,7 +60,7 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
         {
             Inn = inn,
             Kpp = kpp,
-            IpAddress = ip?.ToString(),
+            IpAddress = ip,
             IsRepresentative = isRepresentative,
             Certificate = new CertificateRequest
             {

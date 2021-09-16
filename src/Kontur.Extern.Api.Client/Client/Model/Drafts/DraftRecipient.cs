@@ -1,11 +1,16 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Model.Drafts
 {
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class DraftRecipient
     {
+        /// <summary>
+        /// ИФНС + МРИ
+        /// </summary>
         public static DraftRecipient Ifns(IfnsCode ifnsCode, MriCode? mriCode = null)
         {
             if (ifnsCode is null)
@@ -13,11 +18,14 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
             
             return new(new RecipientInfoRequest
             {
-                IfnsCode = ifnsCode.ToString(),
-                MriCode = mriCode?.ToString()
+                IfnsCode = ifnsCode,
+                MriCode = mriCode
             });
         }
 
+        /// <summary>
+        /// ФСС 
+        /// </summary>
         public static DraftRecipient Fss(FssCode fssCode)
         {
             if (fssCode is null)
@@ -25,10 +33,13 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
             
             return new(new RecipientInfoRequest
             {
-                FssCode = fssCode?.ToString()
+                FssCode = fssCode
             });
         }
 
+        /// <summary>
+        /// ТОГС
+        /// </summary>
         public static DraftRecipient Togs(TogsCode togsCode)
         {
             if (togsCode is null)
@@ -36,10 +47,13 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
             
             return new(new RecipientInfoRequest
             {
-                TogsCode = togsCode?.ToString()
+                TogsCode = togsCode
             });
         }
-
+        
+        /// <summary>
+        /// УПФР
+        /// </summary>
         public static DraftRecipient Upfr(UpfrCode upfrCode)
         {
             if (upfrCode is null)
@@ -47,7 +61,21 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
             
             return new(new RecipientInfoRequest
             {
-                UpfrCode = upfrCode.ToString()
+                UpfrCode = upfrCode
+            });
+        }
+        
+        /// <summary>
+        /// ИФНС для регистрации бизнеса 
+        /// </summary>
+        public static DraftRecipient RegistrationIfns(IfnsCode ifnsCode)
+        {
+            if (ifnsCode is null)
+                throw new ArgumentNullException(nameof(ifnsCode));
+            
+            return new(new RecipientInfoRequest
+            {
+                RegistrationIfnsCode = ifnsCode
             });
         }
 

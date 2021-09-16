@@ -24,7 +24,7 @@ namespace Kontur.Extern.Api.Client
                 throw Errors.StringShouldNotBeNullOrWhiteSpace(name);
             
             var apiClient = path.Services.Api;
-            return apiClient.Organizations.CreateOrganizationAsync(path.AccountId, inn.ToString(), kpp.ToString(), name, timeout);
+            return apiClient.Organizations.CreateOrganizationAsync(path.AccountId, inn.ToString(), kpp, name, timeout);
         }
         
         public static IEntityList<Organization> List(this in OrganizationListPath path, string? inn = null, string? kpp = null)

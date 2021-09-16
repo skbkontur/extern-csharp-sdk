@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows.Documents
@@ -10,6 +11,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows.Documents
         /// <summary>
         /// IP адрес отправителя
         /// </summary>
-        public string SenderIp { get; set; } = null!;
+        public IPAddress SenderIp { get; set; } = null!;
     }
 }

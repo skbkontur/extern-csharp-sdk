@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat
 {
@@ -11,7 +12,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat
         /// <summary>
         /// Код ТОГС, откуда направлено письмо
         /// </summary>
-        public string Cu { get; set; } = null!;
+        public TogsCode Cu { get; set; } = null!;
 
         /// <summary>
         /// Тема письма
@@ -26,6 +27,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat
         /// <summary>
         /// Код ОКПО
         /// </summary>
-        public string Okpo { get; set; } = null!;
+        public Okpo Okpo { get; set; } = null!;
     }
 }

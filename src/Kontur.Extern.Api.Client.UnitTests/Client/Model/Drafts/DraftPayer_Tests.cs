@@ -63,7 +63,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
                 Inn = inn.ToString(),
                 Organization = new OrganizationInfoRequest
                 {
-                    Kpp = kpp.ToString()
+                    Kpp = kpp
                 }
             };
 
@@ -95,9 +95,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
                 Inn = inn.ToString(),
                 Organization = new OrganizationInfoRequest
                 {
-                    Kpp = kpp.ToString()
+                    Kpp = kpp
                 },
-                RegistrationNumberFss = fssRegNumber.ToString()
+                RegistrationNumberFss = fssRegNumber
             };
             var payer = DraftPayer
                 .LegalEntityPayer(inn, kpp)
@@ -131,9 +131,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
                 Inn = inn.ToString(),
                 Organization = new OrganizationInfoRequest
                 {
-                    Kpp = kpp.ToString()
+                    Kpp = kpp
                 },
-                RegistrationNumberPfr = pfrRegNumber.ToString()
+                RegistrationNumberPfr = pfrRegNumber
             };
             var payer = DraftPayer
                 .LegalEntityPayer(inn, kpp)

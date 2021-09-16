@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
 {
@@ -10,15 +11,9 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class OrganizationInfo
     {
-        private string? kpp;
-
         /// <summary>
         /// КПП
         /// </summary>
-        public string? Kpp
-        {
-            get => kpp;
-            set => kpp = string.IsNullOrEmpty(value) ? null : value;
-        }
+        public Kpp? Kpp { get; set; }
     }
 }

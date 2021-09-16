@@ -99,7 +99,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
                     PublicKey = certificate
                 },
                 Inn = inn.ToString(),
-                Kpp = kpp.ToString()
+                Kpp = kpp
             };
 
             var request = DraftSender.LegalEntity(inn, kpp, certificate).ToRequest();
@@ -120,8 +120,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
                     PublicKey = certificate
                 },
                 Inn = inn.ToString(),
-                Kpp = kpp.ToString(),
-                IpAddress = "127.0.0.1"
+                Kpp = kpp,
+                IpAddress = IPAddress.Parse("127.0.0.1")
             };
 
             var request = DraftSender

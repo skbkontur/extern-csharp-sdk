@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Warrants
 {
@@ -23,6 +24,6 @@ namespace Kontur.Extern.Api.Client.Models.Warrants
         /// <summary>
         /// КПП
         /// </summary>
-        public string? Kpp { get; set; }
+        public Kpp? Kpp { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Oved
 {
@@ -16,7 +17,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Oved
         /// <summary>
         /// Регистрационный номер
         /// </summary>
-        public string RegistrationNumber { get; set; } = null!;
+        public PfrRegNumber RegistrationNumber { get; set; } = null!;
         
         /// <summary>
         /// Дата начала отчетного периода, за который сдается отчет

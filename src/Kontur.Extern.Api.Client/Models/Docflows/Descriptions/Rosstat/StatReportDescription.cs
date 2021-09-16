@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat
 {
@@ -16,17 +17,17 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat
         /// <summary>
         /// Код ТОГС, куда направляется отчет
         /// </summary>
-        public string Recipient { get; set; } = null!;
+        public TogsCode Recipient { get; set; } = null!;
 
         /// <summary>
         /// Код ОКПО
         /// </summary>
-        public string Okpo { get; set; } = null!;
+        public Okpo Okpo { get; set; } = null!;
 
         /// <summary>
         /// Код по ОКУД
         /// </summary>
-        public string Okud { get; set; } = null!;
+        public Okud Okud { get; set; } = null!;
 
         /// <summary> 
         /// Дата начала отчетного периода, за который сдается документ

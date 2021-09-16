@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
 {
@@ -19,7 +20,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
         Task<Organization> GetOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null);
         Task<Organization?> TryGetOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null);
         Task<Organization> UpdateOrganizationAsync(Guid accountId, Guid orgId, string newName, TimeSpan? timeout = null);
-        Task<Organization> CreateOrganizationAsync(Guid accountId, string inn, string? kpp, string name, TimeSpan? timeout = null);
+        Task<Organization> CreateOrganizationAsync(Guid accountId, string inn, Kpp? kpp, string name, TimeSpan? timeout = null);
         
         /// <summary>
         /// Удаление организации

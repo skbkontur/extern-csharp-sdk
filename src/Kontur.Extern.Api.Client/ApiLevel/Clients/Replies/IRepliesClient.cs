@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows;
@@ -143,7 +144,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
             Guid inventoryId,
             Guid documentId,
             Guid replyId,
-            string senderIp,
+            IPAddress senderIp,
             TimeSpan? timeout = null);
 
         /// <summary>

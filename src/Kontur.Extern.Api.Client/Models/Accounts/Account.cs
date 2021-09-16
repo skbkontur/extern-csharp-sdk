@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Accounts
 {
@@ -20,7 +21,7 @@ namespace Kontur.Extern.Api.Client.Models.Accounts
         /// <summary>
         /// КПП головной организации
         /// </summary>
-        public string? Kpp { get; set; }
+        public Kpp? Kpp { get; set; }
         /// <summary>
         /// Название организации
         /// </summary>

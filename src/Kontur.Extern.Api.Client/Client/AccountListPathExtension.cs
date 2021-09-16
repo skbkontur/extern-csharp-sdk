@@ -24,7 +24,7 @@ namespace Kontur.Extern.Api.Client
             if (string.IsNullOrWhiteSpace(organizationName))
                 throw Errors.StringShouldNotBeNullOrWhiteSpace(organizationName);
             var apiClient = path.Services.Api;
-            return apiClient.Accounts.CreateAccountAsync(inn.ToString(), kpp.ToString(), organizationName);
+            return apiClient.Accounts.CreateAccountAsync(inn.ToString(), kpp, organizationName);
         }
 
         public static IEntityList<Account> List(this in AccountListPath path)

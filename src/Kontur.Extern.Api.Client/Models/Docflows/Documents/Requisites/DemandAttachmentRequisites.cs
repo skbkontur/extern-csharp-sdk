@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites
 {
@@ -17,7 +18,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites
         /// <summary>
         /// КНД распознанного поручения
         /// </summary>
-        public string? DemandKnd { get; set; }
+        public Knd? DemandKnd { get; set; }
 
         /// <summary>
         /// Дата из требования

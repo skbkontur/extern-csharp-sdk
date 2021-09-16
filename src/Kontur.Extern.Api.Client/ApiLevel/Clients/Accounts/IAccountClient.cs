@@ -4,6 +4,7 @@ using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Accounts;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Certificates;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Warrants;
 using Kontur.Extern.Api.Client.Models.Accounts;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 // ReSharper disable CommentTypo
 
@@ -52,7 +53,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts
         /// <param name="organizationName">Название организации</param>
         /// <param name="timeout"></param>
         /// <returns>Учетная запись</returns>
-        Task<Account> CreateAccountAsync(string inn, string? kpp, string organizationName, TimeSpan? timeout = null);
+        Task<Account> CreateAccountAsync(string inn, Kpp? kpp, string organizationName, TimeSpan? timeout = null);
 
         /// <summary>
         /// Получение списка сертификатов

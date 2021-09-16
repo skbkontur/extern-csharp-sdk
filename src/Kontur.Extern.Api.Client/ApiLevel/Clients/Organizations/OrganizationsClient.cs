@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
 using Kontur.Extern.Api.Client.Http;
+using Kontur.Extern.Api.Client.Models.Numbers;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
@@ -63,7 +64,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
         public Task<Organization> CreateOrganizationAsync(
             Guid accountId,
             string inn,
-            string? kpp,
+            Kpp? kpp,
             string name,
             TimeSpan? timeout = null)
         {

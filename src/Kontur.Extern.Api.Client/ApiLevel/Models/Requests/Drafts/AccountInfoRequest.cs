@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
 {
@@ -31,16 +32,16 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// <summary>
         /// Регистрационный номер ПФР
         /// </summary>
-        public string? RegistrationNumberPfr { get; set; }
+        public PfrRegNumber? RegistrationNumberPfr { get; set; }
 
         /// <summary>
         /// Регистрационный номер ФСС
         /// </summary>
-        public string? RegistrationNumberFss { get; set; }
+        public FssRegNumber? RegistrationNumberFss { get; set; }
 
         /// <summary>
         /// ОКПО (для писем в росстат)
         /// </summary>
-        public string? Okpo { get; set; }
+        public Okpo? Okpo { get; set; }
     }
 }

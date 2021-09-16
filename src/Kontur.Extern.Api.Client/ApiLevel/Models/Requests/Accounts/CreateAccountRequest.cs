@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Accounts
 {
@@ -12,10 +13,12 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Accounts
         /// </summary>
 //        [Required]
         public string Inn { get; set; } = null!;
+        
         /// <summary>
         /// КПП организации
         /// </summary>
-        public string? Kpp { get; set; }
+        public Kpp? Kpp { get; set; }
+        
         /// <summary>
         /// Название организации
         /// </summary>

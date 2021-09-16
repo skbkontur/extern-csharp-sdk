@@ -13,7 +13,7 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
             if (kpp is null)
                 throw new ArgumentNullException(nameof(kpp));
             
-            return new(inn.ToString(), kpp.ToString());
+            return new(inn.ToString(), kpp);
         }
 
         public static DraftPayer IndividualEntrepreneur(Inn inn)
@@ -28,9 +28,9 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
         private FssRegNumber? fssRegNumber;
         private PfrRegNumber? pfrRegNumber;
         private readonly string inn;
-        private readonly string? kpp;
+        private readonly Kpp? kpp;
 
-        private DraftPayer(string inn, string? kpp)
+        private DraftPayer(string inn, Kpp? kpp)
         {
             this.inn = inn;
             this.kpp = kpp;
@@ -53,8 +53,8 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
             var request = new AccountInfoRequest
             {
                 Inn = inn,
-                RegistrationNumberFss = fssRegNumber?.ToString(),
-                RegistrationNumberPfr = pfrRegNumber?.ToString()
+                RegistrationNumberFss = fssRegNumber,
+                RegistrationNumberPfr = pfrRegNumber
             };
             if (kpp != null)
             {

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions
 {
@@ -10,12 +11,12 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions
         /// <summary>
         /// КНД
         /// </summary>
-        public string Knd { get; set; } = null!;
+        public Knd Knd { get; set; } = null!;
         
         /// <summary>
         /// ОКУД
         /// </summary>
-        public string Okud { get; set; } = null!;
+        public Okud Okud { get; set; } = null!;
         
         /// <summary>
         /// Уникальный идентификатор формы в Экстерне

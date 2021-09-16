@@ -52,7 +52,10 @@ namespace Kontur.Extern.Api.Client.Exceptions
         {
             return new($"The given KPP '{value}' does not match the KPP format. The KPP code should have 9 digits, except 5th and 6th positions which are able to be digits or UPPER case latin letters (A..Z)", paramName);
         }
-        
+
+        public static ArgumentException InvalidOkpo([InvokerParameterName] string paramName, string value) => 
+            new($"The given OKPO '{value}' does not match to one of OKPO formats. The OKPO should have 10 digits code (for individual entrepreneur) or 8 digits code (for legal entity)", paramName);
+
         public static ArgumentException InvalidAuthorityNumber([InvokerParameterName] string paramName, string value, AuthorityNumberKind numberKind, string format)
         {
             var formatName = GetFormatName(numberKind);
