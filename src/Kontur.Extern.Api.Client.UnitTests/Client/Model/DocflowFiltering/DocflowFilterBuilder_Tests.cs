@@ -68,8 +68,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 ("orgId", orgId.ToString()),
                 ("periodFrom", "2021-07-08T00:00:00.0000000"),
                 ("periodTo", "2021-07-18T00:00:00.0000000"),
-                ("type", DocflowType.Fns.Fns534.Report.ToString()),
-                ("type", DocflowType.Fns.Fns534.Letter.ToString())
+                ("type", "fns534-report"),
+                ("type", "fns534-letter")
             );
         }
 

@@ -210,7 +210,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
                 {
                     foreach (var docflowType in docflowTypes)
                     {
-                        types.Add(docflowType.ToString());
+                        var urn = docflowType.ToUrn();
+                        if (urn is not null)
+                        {
+                            types.Add(urn.Nss);
+                        }
                     }
                 }
             }
