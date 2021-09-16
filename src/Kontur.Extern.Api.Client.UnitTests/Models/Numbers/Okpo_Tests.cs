@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using NUnit.Framework;
@@ -28,8 +29,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
                 parsedValue.Kind.Should().Be(AuthorityNumberKind.Okpo);
                 parsedValue.Value.Should().Be(value);
             }
-            
-            private static IEnumerable<string> InvalidStrings
+
+            public static IEnumerable<string> InvalidStrings
             {
                 get
                 {
@@ -41,8 +42,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
                     yield return "1234567890 ";
                 }
             }
-        
-            private static IEnumerable<string> ValidStrings
+
+            public static IEnumerable<string> ValidStrings
             {
                 get
                 {
@@ -70,8 +71,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
                 parsedValue.Kind.Should().Be(AuthorityNumberKind.Okpo);
                 parsedValue.Value.Should().Be(value);
             }
-            
-            private static IEnumerable<string> InvalidStrings
+
+            public static IEnumerable<string> InvalidStrings
             {
                 get
                 {
@@ -83,8 +84,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
                     yield return "12345678 ";
                 }
             }
-        
-            private static IEnumerable<string> ValidStrings
+
+            public static IEnumerable<string> ValidStrings
             {
                 get
                 {
@@ -92,6 +93,33 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
                     yield return "89012345";
                 }
             }
+        }
+        
+        [TestFixture]
+        internal class ParseAny
+        {
+            [TestCaseSource(nameof(InvalidStrings))]
+            public void Should_fail_when_the_given_number_string_is_invalid_okpo(string value)
+            {
+                Action action = () => Okpo.ParseAny(value);
+
+                action.Should().Throw<ArgumentException>();
+            }
+
+            [TestCaseSource(nameof(ValidStrings))]
+            public void Should_successfully_return_a_number_when_the_given_value_is_valid(string value)
+            {
+                var parsedValue = Okpo.ParseAny(value);
+
+                parsedValue.Kind.Should().Be(AuthorityNumberKind.Okpo);
+                parsedValue.Value.Should().Be(value);
+            }
+            
+            private static IEnumerable<string> InvalidStrings => 
+                IndividualEntrepreneurOkpo.InvalidStrings.Concat(LegalEntityOkpo.InvalidStrings);
+
+            private static IEnumerable<string> ValidStrings =>
+                IndividualEntrepreneurOkpo.ValidStrings.Concat(LegalEntityOkpo.ValidStrings);
         }
     }
 }
