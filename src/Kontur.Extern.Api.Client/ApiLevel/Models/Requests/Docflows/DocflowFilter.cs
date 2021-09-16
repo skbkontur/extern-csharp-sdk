@@ -53,26 +53,26 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
         public void SetOrderBy(SortOrder? value) => queryParameters.Set(QueryParameters.orderBy, value);
 
         /// <summary>
-        /// Дата обновления документооборотов, от которой нужно получить список.
+        /// Дата и время обновления документооборотов, от которой нужно получить список.
         /// Документы автоматически будут отсортированы по дате изменения
         /// </summary>
-        public void SetUpdatedFrom(DateOnly? value) => queryParameters.Set(QueryParameters.updatedFrom, value);
+        public void SetUpdatedFrom(DateTime? value) => queryParameters.Set(QueryParameters.updatedFrom, value);
 
         /// <summary>
-        /// Дата обновления документооборотов, до которой нужно получить список.
+        /// Дата и время обновления документооборотов, до которой нужно получить список.
         /// Документы автоматически будут отсортированы по дате изменения
         /// </summary>
-        public void SetUpdatedTo(DateOnly? value) => queryParameters.Set(QueryParameters.updatedTo, value);
+        public void SetUpdatedTo(DateTime? value) => queryParameters.Set(QueryParameters.updatedTo, value);
 
         /// <summary>
-        /// Дата создания документооборотов, от которой нужно получить список
+        /// Дата и время создания документооборотов, от которой нужно получить список
         /// </summary>
-        public void SetCreatedFrom(DateOnly? value) => queryParameters.Set(QueryParameters.createdFrom, value);
+        public void SetCreatedFrom(DateTime? value) => queryParameters.Set(QueryParameters.createdFrom, value);
 
         /// <summary>
-        /// Дата создания документооборотов, до которой нужно получить список
+        /// Дата и время создания документооборотов, до которой нужно получить список
         /// </summary>
-        public void SetCreatedTo(DateOnly? value) => queryParameters.Set(QueryParameters.createdTo, value);
+        public void SetCreatedTo(DateTime? value) => queryParameters.Set(QueryParameters.createdTo, value);
 
         /// <summary>
         /// Типы документооборотов
@@ -160,6 +160,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
             public const string periodFrom = nameof(periodFrom);
             public const string periodTo = nameof(periodTo);
             public const string forAllUsers = nameof(forAllUsers);
+            
             private const string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffffffK";
 
             private readonly Dictionary<string, string> queryParameters = new();
@@ -194,7 +195,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
                 SetValue(parameterName, sortOrder?.ToString().ToLowerInvariant());
 
             public void Set(string parameterName, DateOnly? value) => 
-                SetValue(parameterName, value?.ToString());
+                SetValue(parameterName, value?.ToString(DateTimeFormat));
 
             public void Set(string parameterName, DateTime? value) =>
                 SetValue(parameterName, value?.ToString(DateTimeFormat));

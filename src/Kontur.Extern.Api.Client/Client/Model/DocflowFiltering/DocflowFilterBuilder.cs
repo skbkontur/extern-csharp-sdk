@@ -15,8 +15,8 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
     public class DocflowFilterBuilder
     {
         private DocflowFilter filter;
-        private DateOnly? createdTo;
-        private DateOnly? createdFrom;
+        private DateTime? createdTo;
+        private DateTime? createdFrom;
 
         public DocflowFilterBuilder() => filter = new DocflowFilter();
 
@@ -75,9 +75,9 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         }
 
         /// <summary>
-        /// Установить дату создания документооборотов, от которой нужно получить список
+        /// Установить дату и время создания документооборотов, от которой нужно получить список
         /// </summary>
-        public DocflowFilterBuilder WithCreatedFrom(DateOnly dateFrom)
+        public DocflowFilterBuilder WithCreatedFrom(DateTime dateFrom)
         {
             if (createdTo < dateFrom)
                 throw Errors.InvalidRange(nameof(dateFrom), nameof(createdTo), dateFrom, createdTo.Value);
@@ -88,9 +88,9 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         }
 
         /// <summary>
-        /// Установить дату создания документооборотов, до которой нужно получить список
+        /// Установить дату и время создания документооборотов, до которой нужно получить список
         /// </summary>
-        public DocflowFilterBuilder WithCreatedTo(DateOnly dateTo)
+        public DocflowFilterBuilder WithCreatedTo(DateTime dateTo)
         {
             if (createdFrom > dateTo)
                 throw Errors.InvalidRange(nameof(dateTo), nameof(createdFrom), createdFrom.Value, dateTo);
