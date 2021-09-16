@@ -12,6 +12,7 @@
     <PackageTags>kontur, skbkontur, extern, kontur-extern, SDK, API, workInProgress, technicallyTheyFiredMeAfterIMadeThis</PackageTags>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <Configurations>Debug;Release;Client</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
