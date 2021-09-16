@@ -96,6 +96,7 @@ namespace Kontur.Extern.Api.Client.Http.Serialization.SysTextJson
             }
 
             serializerOptions.Converters.Add(new DateOnlyConverter());
+            serializerOptions.Converters.Add(new IPAddressConverter());
             return serializerOptions;
         }
     }
