@@ -34,6 +34,8 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums
                 throw Errors.UrnDoesNotBelongToNamespace(nameof(urn), urn, Namespace);
         }
 
+        public bool IsEmpty => urn is null;
+
         public Urn? ToUrn() => urn;
 
         public override string ToString() => urn?.ToString() ?? string.Empty;

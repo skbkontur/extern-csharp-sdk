@@ -42,6 +42,5 @@
     <Folder Include="ApiLevel\Models\Responses\DraftBuilders\Documents" />
     <Folder Include="ApiLevel\Models\Responses\Errors" />
     <Folder Include="Client\Model\Docflows" />
-    <Folder Include="Client\Model\DraftBuilders" />
   </ItemGroup>  
 </Project>
