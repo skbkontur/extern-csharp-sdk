@@ -10,7 +10,7 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
     [SuppressMessage("ReSharper", "CommentTypo")]
     public enum ApplicationCode
     {
-        #region ip
+        #region individual entrepreneur
 
         /// <summary>
         /// Заявление о государственной регистрации физического лица в качестве индивидуального предпринимателя
@@ -44,7 +44,7 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
 
         #endregion ip
 
-        #region ul
+        #region legal entity
 
         /// <summary>
         /// Заявление о государственной регистрации юридического лица
