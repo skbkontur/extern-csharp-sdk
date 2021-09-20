@@ -36,10 +36,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftBuild
         [Test]
         public void Should_deserialize_unknown_data_in_case_of_unknown_builder_type()
         {
-            var (json, originalBuilderMeta) = tester.GenerateUnknownBuilder(new FnsInventoryDraftsBuilderDocumentData
-            {
-                ClaimItemNumber = "123"
-            });
+            var (json, originalBuilderMeta) = tester.GenerateWithUnknownTypeAndDataOf<FnsInventoryDraftsBuilderDocumentData>();
         
             var builderMeta = tester.Deserialize(json);
         

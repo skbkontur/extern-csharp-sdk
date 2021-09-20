@@ -27,6 +27,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json
                 .AddConverter(new DraftsBuilderDocumentMetaConverter())
                 .AddConverter(new DraftsBuilderDocumentFileMetaConverter())
                 .AddConverter(new ApiTaskResultJsonConverter(namingPolicy))
+                .AddConverter(new WriteAbstractTypeValueAsConcreteTypeValueConverter())
                 .SetCustomNamingPolicyForSerializationEnumOf<PaperDocumentsDeliveryType>(JsonNamingPolicy.CamelCase)
                 .SetCustomNamingPolicyForSerializationEnumOf<FssStageStatus>(null)
                 .SetCustomNamingPolicyForSerializationEnumOf<FssStageType>(null)
