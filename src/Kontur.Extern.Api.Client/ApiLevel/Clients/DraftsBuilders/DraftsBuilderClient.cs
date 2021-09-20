@@ -31,6 +31,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         public Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) => 
             http.GetAsync<DraftsBuilder>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", timeout);
 
+        public Task<DraftsBuilder?> TryGetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) => 
+            http.TryGetAsync<DraftsBuilder>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", timeout);
+
         public Task<bool> DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) => 
             http.TryDeleteAsync($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", timeout);
 

@@ -33,6 +33,15 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         /// <param name="timeout"></param>
         /// <returns>DraftsBuilder</returns>
         Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null);
+        
+        /// <summary>
+        /// Получение DraftsBuilder по идентификатору
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftsBuilderId">Идентификатор DraftsBuilder</param>
+        /// <param name="timeout"></param>
+        /// <returns>DraftsBuilder или null, если DraftsBuilder с указанными идентификаторами не существует</returns>
+        Task<DraftsBuilder?> TryGetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null);
 
         /// <summary>
         /// Удаление DraftsBuilder
