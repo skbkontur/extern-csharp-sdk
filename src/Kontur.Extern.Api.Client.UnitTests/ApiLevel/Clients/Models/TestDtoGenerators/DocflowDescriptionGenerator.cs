@@ -11,7 +11,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGene
     {
         private readonly IAutoFaker faker;
 
-        public DocflowDescriptionGenerator() => faker = AutoFakerFactory.Create();
+        public DocflowDescriptionGenerator() => faker = AutoFakerFactory.CreateFaker();
 
         public Docflow GenerateDocflowWithDescription(Type descriptionType, DocflowType docflowType)
         {

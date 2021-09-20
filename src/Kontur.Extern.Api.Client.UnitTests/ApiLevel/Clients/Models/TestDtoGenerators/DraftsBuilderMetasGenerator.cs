@@ -16,7 +16,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGene
         public DraftsBuilderMetasGenerator(Func<TData> unknownDataFactory)
         {
             this.unknownDataFactory = unknownDataFactory;
-            faker = AutoFakerFactory.Create();
+            faker = AutoFakerFactory.CreateFaker();
         }
 
         public T GenerateWithData(Type? dataType, DraftBuilderType draftBuilderType)
