@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data;
 
-namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Documents
+namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Documents
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

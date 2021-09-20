@@ -8,7 +8,7 @@ using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites;
-using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.Docflow;
+using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.Docflows;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using NUnit.Framework;
 

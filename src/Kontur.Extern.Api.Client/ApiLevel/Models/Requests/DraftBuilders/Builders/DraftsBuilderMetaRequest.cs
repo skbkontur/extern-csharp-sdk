@@ -5,7 +5,7 @@ using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 
-namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Builders
+namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Builders
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]

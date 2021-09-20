@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Builders;
-using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.DocumentFiles;
-using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Documents;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Builders;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.DocumentFiles;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Documents;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.DraftBuilders.Builders;
 using Kontur.Extern.Api.Client.Models.ApiTasks;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders;

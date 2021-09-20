@@ -6,7 +6,7 @@ using Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites;
 using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.AutoFaker;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers.BogusExtensions;
 
-namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.Docflow
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.Docflows
 {
     internal class DocflowDocumentDescriptionGenerator
     {

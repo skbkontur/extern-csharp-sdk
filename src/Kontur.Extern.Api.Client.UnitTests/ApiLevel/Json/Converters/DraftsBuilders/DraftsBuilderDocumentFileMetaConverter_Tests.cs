@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders;
-using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders;
-using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles.Data;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftBuilders
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuilders
 {
     [TestFixture]
-    internal class DraftsBuilderMetaConverter_Tests
+    internal class DraftsBuilderDocumentFileMetaConverter_Tests
     {
-        private DraftsBuilderMetasSerializationTester<DraftsBuilderMeta, DraftsBuilderData> tester = null!;
+        private DraftsBuilderMetasSerializationTester<DraftsBuilderDocumentFileMeta, DraftsBuilderDocumentFileData> tester = null!;
 
         [SetUp]
         public void SetUp() => 
-            tester = new(() => new UnknownDraftsBuilderData());
+            tester = new(() => new UnknownDraftsBuilderDocumentFileData());
 
         [TestCaseSource(nameof(BuilderTypeToBuilderDataCases))]
         public void Should_deserialize_builder_meta_with_data_by_its_builder_type((DraftBuilderType builderType, Type? builderDataType) builderDataCase)
@@ -29,18 +29,18 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftBuild
             var builderMeta = tester.Deserialize(json);
 
             builderMeta.BuilderType.Should().Be(builderType);
-            DraftsBuilderMetaShouldBeEqual(builderMeta, expectedBuilderMeta);
+            DraftsBuilderDocumentMetaShouldBeEqual(builderMeta, expectedBuilderMeta);
         }
 
         [Test]
         public void Should_deserialize_unknown_data_in_case_of_unknown_builder_type()
         {
-            var (json, originalBuilderMeta) = tester.GenerateWithUnknownTypeAndDataOf<FnsInventoryDraftsBuilderData>();
+            var (json, originalBuilderMeta) = tester.GenerateWithUnknownTypeAndDataOf<FnsInventoryDraftsBuilderDocumentFileData>();
         
             var builderMeta = tester.Deserialize(json);
         
             builderMeta.BuilderType.Should().Be(originalBuilderMeta.BuilderType);
-            builderMeta.BuilderData.Should().BeOfType<UnknownDraftsBuilderData>();
+            builderMeta.BuilderData.Should().BeOfType<UnknownDraftsBuilderDocumentFileData>();
             builderMeta.Should().BeEquivalentTo(originalBuilderMeta, c => c.Excluding(x => x.BuilderData));
         }
         
@@ -52,7 +52,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftBuild
             var builderMeta = tester.Deserialize(json);
         
             builderMeta.BuilderType.Should().Be(new DraftBuilderType());
-            builderMeta.BuilderData.Should().BeOfType<UnknownDraftsBuilderData>();
+            builderMeta.BuilderData.Should().BeOfType<UnknownDraftsBuilderDocumentFileData>();
             builderMeta.Should().BeEquivalentTo(originalBuilderMeta, c => c.Excluding(x => x.BuilderData));
         }
         
@@ -64,10 +64,10 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftBuild
             
             var builderMeta = tester.Deserialize(json);
 
-            builderMeta.BuilderData.Should().BeOfType<UnknownDraftsBuilderData>();
+            builderMeta.BuilderData.Should().BeOfType<UnknownDraftsBuilderDocumentFileData>();
         }
 
-        private static void DraftsBuilderMetaShouldBeEqual(DraftsBuilderMeta meta, DraftsBuilderMeta expectedMeta)
+        private static void DraftsBuilderDocumentMetaShouldBeEqual(DraftsBuilderDocumentFileMeta meta, DraftsBuilderDocumentFileMeta expectedMeta)
         {
             meta.Should().BeEquivalentTo(expectedMeta);
             meta.BuilderData.Should().BeOfType(expectedMeta.BuilderData.GetType());
@@ -79,6 +79,6 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftBuild
         public static IEnumerable<(DraftBuilderType builderType, Type? builderDataType)> BuilderTypeToBuilderDataCases =>
             EnumLikeType
                 .AllEnumValuesFromNestedTypesOfStruct<DraftBuilderType>()
-                .Select(bt => (bt, DraftBuilderMetasDataTypes.TryGetBuildersDataType(bt)));
+                .Select(bt => (bt, DraftBuilderMetasDataTypes.TryGetBuilderDocumentFileDataType(bt)));
     }
 }

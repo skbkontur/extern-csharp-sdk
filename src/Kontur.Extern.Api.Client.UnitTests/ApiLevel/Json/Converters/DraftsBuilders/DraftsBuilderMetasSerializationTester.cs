@@ -3,9 +3,9 @@ using Kontur.Extern.Api.Client.ApiLevel.Json;
 using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
-using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.DraftBuilders;
+using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.DraftsBuilders;
 
-namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftBuilders
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuilders
 {
     internal class DraftsBuilderMetasSerializationTester<TMeta, TData>
         where TMeta : class, IDraftsBuilderMeta<TData>

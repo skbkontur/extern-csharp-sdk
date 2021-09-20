@@ -6,19 +6,19 @@ using AutoBogus;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Json;
 using Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders;
-using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Builders;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Builders;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.AutoFaker;
-using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.DraftBuilders;
+using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.DraftsBuilders;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers.BogusExtensions;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftBuilders
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuilders
 {
     [TestFixture]
     internal class DraftsBuilderMetaRequestSerialization_Tests

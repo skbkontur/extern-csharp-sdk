@@ -5,7 +5,7 @@ using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.AutoFaker;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers.BogusExtensions;
 
-namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.DraftBuilders
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.DraftsBuilders
 {
     internal sealed class DraftsBuilderMetasGenerator<T, TData>
         where T : class, IDraftsBuilderMeta<TData>

@@ -10,7 +10,7 @@ using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using NUnit.Framework;
 
-namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftBuilders
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuilders
 {
     [TestFixture]
     internal class DraftsBuilderDocumentMetaConverter_Tests

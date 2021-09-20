@@ -6,7 +6,7 @@ using Kontur.Extern.Api.Client.Testing.Generators;
 using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.AutoFaker;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers.BogusExtensions;
 
-namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.DraftBuilders
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.DraftsBuilders
 {
     internal static class AutoFakerFactoryDraftsBuilderEntitiesExtension
     {
