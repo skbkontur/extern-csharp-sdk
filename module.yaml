@@ -1,11 +1,11 @@
 full-build > client:
   build:
-    target: src/Kontur.Extern.Client.sln
+    target: src/Kontur.Extern.Api.Client.sln
     configuration: Release
     
 client *default:
   build:
-    target: src/Kontur.Extern.Client.sln
+    target: src/Kontur.Extern.Api.Client.sln
     configuration: Client
   install:
     - src/Kontur.Extern.Api.Client/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.dll    
