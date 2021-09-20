@@ -12,8 +12,7 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
         private readonly DraftRecipient recipient;
         private string? subject;
         private string[]? additionalCertificates;
-        private Guid? relatedDocflowId;
-        private Guid? relatedDocumentId;
+        private RelatedDocument? relatedDocumentRequest;
 
         public DraftMetadata(DraftPayer payer, DraftSender sender, DraftRecipient recipient)
         {
@@ -45,8 +44,7 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
 
         public DraftMetadata WithRelatedDocument(Guid docflowId, Guid documentId)
         {
-            relatedDocflowId = docflowId;
-            relatedDocumentId = documentId;
+            relatedDocumentRequest = new RelatedDocument(docflowId, documentId);
             return this;
         }
 
@@ -59,16 +57,6 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
                 {
                     Subject = subject,
                     AdditionalCertificates = additionalCertificates
-                };
-            }
-
-            RelatedDocumentRequest? relatedDocumentRequest = null;
-            if (relatedDocflowId.HasValue && relatedDocumentId.HasValue)
-            {
-                relatedDocumentRequest = new RelatedDocumentRequest
-                {
-                    RelatedDocflowId = relatedDocflowId.Value,
-                    RelatedDocumentId = relatedDocumentId.Value
                 };
             }
 

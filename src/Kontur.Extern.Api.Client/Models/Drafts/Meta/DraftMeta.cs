@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Model.Drafts;
 
 namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
 {

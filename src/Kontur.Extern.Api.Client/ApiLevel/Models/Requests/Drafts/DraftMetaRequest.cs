@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Model.Drafts;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
 {
@@ -28,7 +29,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// <summary>
         /// Связанный документооборот
         /// </summary>
-        public RelatedDocumentRequest? RelatedDocument { get; set; }
+        public RelatedDocument? RelatedDocument { get; set; }
 
         /// <summary>
         /// Дополнительная информация

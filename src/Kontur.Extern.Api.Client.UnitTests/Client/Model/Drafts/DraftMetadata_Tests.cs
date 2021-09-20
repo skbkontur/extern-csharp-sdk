@@ -188,11 +188,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             var (newDraft, expectedRequest) = RandomDraft();
             var documentId = Guid.NewGuid();
             var docflowId = Guid.NewGuid();
-            expectedRequest.RelatedDocument = new RelatedDocumentRequest
-            {
-                RelatedDocflowId = docflowId,
-                RelatedDocumentId = documentId
-            };
+            expectedRequest.RelatedDocument = new RelatedDocument(docflowId, documentId);
 
             var request = newDraft.WithRelatedDocument(docflowId, documentId).ToRequest();
 

@@ -512,23 +512,13 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 };
             }
 
-            RelatedDocument? relatedDocumentRequest = null;
-            if (request.RelatedDocument != null)
-            {
-                relatedDocumentRequest = new RelatedDocument
-                {
-                    RelatedDocflowId = request.RelatedDocument.RelatedDocflowId,
-                    RelatedDocumentId = request.RelatedDocument.RelatedDocumentId
-                };
-            }
-
             return new DraftMeta
             {
                 Payer = PayerToApiModel(orgName, request.Payer),
                 Sender = SenderToApiModel(orgName, request.Sender),
                 Recipient = RecipientToApiModel(request.Recipient),
                 AdditionalInfo = additionalInfoRequest,
-                RelatedDocument = relatedDocumentRequest
+                RelatedDocument = request.RelatedDocument
             };
 
             static AccountInfo PayerToApiModel(string orgName, AccountInfoRequest payer)

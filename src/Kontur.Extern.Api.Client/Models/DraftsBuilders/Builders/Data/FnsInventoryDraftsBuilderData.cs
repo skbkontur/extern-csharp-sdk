@@ -11,8 +11,7 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data
         /// <summary>
         /// Связанный документ (требование, письмо или отчет), на который формируется ответ
         /// </summary>
-        //[Required]
-        public RelatedDocumentRequest RelatedDocument { get; set; } = null!;
+        public RelatedDocument RelatedDocument { get; set; }
 
         /// <summary>
         /// Идентификатор файла основания (отчета), в ответ на который формируется данный файл (опись).
