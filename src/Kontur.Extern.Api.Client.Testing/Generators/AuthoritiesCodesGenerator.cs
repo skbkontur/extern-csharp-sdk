@@ -73,5 +73,7 @@ namespace Kontur.Extern.Api.Client.Testing.Generators
         public Okud Okud() => Models.Numbers.Okud.Parse(randomizer.DigitsString(7));
         
         public Okpo LegalEntityOkpo() => Okpo.LegalEntity.Parse(randomizer.DigitsString(8));
+        
+        public string Ogrn() => randomizer.DigitsString(13);
     }
 }

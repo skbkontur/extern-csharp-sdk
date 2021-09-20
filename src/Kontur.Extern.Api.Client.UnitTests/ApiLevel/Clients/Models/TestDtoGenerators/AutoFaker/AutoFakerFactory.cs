@@ -15,7 +15,7 @@ using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers.BogusExtensions;
 using Randomizer = Bogus.Randomizer;
 
-namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators
+namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.AutoFaker
 {
     internal class AutoFakerFactory
     {
@@ -41,7 +41,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGene
             return this;
         }
 
-        public IAutoFaker Create() => AutoFaker.Create(builder =>
+        public IAutoFaker Create() => AutoBogus.AutoFaker.Create(builder =>
         {
             DefaultConfiguration(builder);
             foreach (var configuration in additionalConfigurations)
@@ -81,7 +81,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGene
             builder.RuleForType(_ => codesGenerator.Okud());
             builder.RuleForType(_ => codesGenerator.Knd());
             builder.RuleForType(_ => codesGenerator.LegalEntityInn());
-            builder.RuleForType(_ => codesGenerator.LegalEntityInn());
+            builder.RuleForType(_ => codesGenerator.PersonInn());
             builder.RuleForType(_ => codesGenerator.FssCode());
             builder.RuleForType(_ => codesGenerator.UpfrCode());
             builder.RuleForType(_ => codesGenerator.TogsCode());

@@ -109,13 +109,12 @@ namespace Kontur.Extern.Api.Client.Model.DraftBuilders
             this.builderData = builderData;
         }
 
-        public DraftsBuilderMetaRequest ToRequest() => new()
-        {
-            Payer = payer.ToRequest(),
-            Sender = sender.ToRequest(),
-            Recipient = recipient.ToRequest(),
-            BuilderType = builderType,
-            BuilderData = builderData ?? new UnknownDraftsBuilderData()
-        };
+        public DraftsBuilderMetaRequest ToRequest() => new(
+            sender.ToRequest(),
+            payer.ToRequest(),
+            recipient.ToRequest(),
+            builderType,
+            builderData ?? new UnknownDraftsBuilderData()
+        );
     }
 }

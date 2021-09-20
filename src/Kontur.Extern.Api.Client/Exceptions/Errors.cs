@@ -6,6 +6,10 @@ using Kontur.Extern.Api.Client.Models.ApiErrors;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Http.Exceptions;
+using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.NamingPolicies;
+using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegistration;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessRegistration;
 using static System.Environment;
 
 namespace Kontur.Extern.Api.Client.Exceptions
@@ -159,5 +163,22 @@ namespace Kontur.Extern.Api.Client.Exceptions
 
         public static Exception UrnCannotHaveTrailingWhitespaces([InvokerParameterName] string paramName, string value) => 
             new ArgumentException($"URN cannot have trailing schema. Value: {value}", paramName);
+
+        public static Exception RequiredJsonPropertyIsMissed([InvokerParameterName] string paramName) => 
+            new ContractException($"The '{paramName.ToKebabCase()}' property is required but not present.");
+
+        public static Exception JsonPropertyIsMissedButRequiredBecauseOfOtherHaveValue<T>(
+            [InvokerParameterName] string paramName, 
+            [InvokerParameterName] string otherParamName,
+            T otherParamValue)
+        {
+            return new ContractException($"The property '{paramName.ToKebabCase()}' must be present in the JSON if '{otherParamName.ToKebabCase()}' has the value '{otherParamValue}'.");
+        }
+
+        public static Exception UnknownBusinessTypeCannotHaveParticularData() => 
+            new ContractException("The business type is unknown, but some properties has particular data");
+
+        public static Exception WrongApplicationCodeForBusinessRegistrationType(BusinessType businessType, ApplicationCode applicationCode) => 
+            new ContractException($"The application code {applicationCode.ToString().ToKebabCase()} does not belong to of business registration type {businessType.ToString().ToKebabCase()}");
     }
 }

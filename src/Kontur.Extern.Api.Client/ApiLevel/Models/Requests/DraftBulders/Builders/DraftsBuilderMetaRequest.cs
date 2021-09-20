@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data;
@@ -10,34 +11,47 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Builder
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class DraftsBuilderMetaRequest
     {
+        public DraftsBuilderMetaRequest(
+            SenderRequest sender,
+            AccountInfoRequest payer,
+            RecipientInfoRequest recipient,
+            DraftBuilderType builderType,
+            DraftsBuilderData? builderData)
+        {
+            Sender = sender ?? throw new ArgumentNullException(nameof(sender));
+            Payer = payer ?? throw new ArgumentNullException(nameof(payer));
+            Recipient = recipient ?? throw new ArgumentNullException(nameof(recipient));
+            BuilderType = builderType;
+            BuilderData = builderData;
+        }
+        
         /// <summary>
         /// Информация об отправителе
         /// </summary>
-        //[Required]
-        public SenderRequest Sender { get; set; } = null!;
+        public SenderRequest Sender { get; }
 
         /// <summary>
         /// Информация о налогоплательщике
         /// </summary>
-        //[Required]
-        public AccountInfoRequest Payer { get; set; } = null!;
+        public AccountInfoRequest Payer { get; }
 
         /// <summary>
         /// Информация о получателе, контролирующий орган
         /// </summary>
-        //[Required]
-        public RecipientInfoRequest Recipient { get; set; } = null!;
+        public RecipientInfoRequest Recipient { get; }
 
         /// <summary>
         /// Тип DraftsBuilder. Нужно передавать полностью, например, urn:drafts-builder:fns534-inventory.
         /// Возможные варианты описаны в [документации](https://docs-ke.readthedocs.io/ru/latest/specification/%D1%82%D0%B8%D0%BF%D1%8B%20DraftsBuilder.html).
         /// </summary>
-        //[Required]
-        public DraftBuilderType BuilderType { get; set; }
+        public DraftBuilderType BuilderType { get; }
 
         /// <summary>
         /// Данные для указанного типа DraftsBuilder
         /// </summary>
-        public DraftsBuilderData BuilderData { get; set; } = null!;
+        public DraftsBuilderData? BuilderData { get; }
+
+        public DraftsBuilderMetaRequest ChangeBuilderType(DraftBuilderType builderType, DraftsBuilderData? data) => 
+            new(Sender, Payer, Recipient, builderType, data);
     }
 }

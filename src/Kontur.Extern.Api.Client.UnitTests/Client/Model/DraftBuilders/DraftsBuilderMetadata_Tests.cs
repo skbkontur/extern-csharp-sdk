@@ -1,3 +1,4 @@
+using AutoBogus;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBulders.Builders;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
@@ -7,7 +8,8 @@ using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessRegistration;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
-using Kontur.Extern.Api.Client.Testing.Generators;
+using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.AutoFaker;
+using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.DraftBuilders;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DraftBuilders
@@ -15,31 +17,31 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DraftBuilders
     [TestFixture]
     internal class DraftsBuilderMetadata_Tests
     {
-        private readonly Randomizer randomizer = new();
-        private readonly AuthoritiesCodesGenerator codesGenerator = new();
         private DraftPayer payer = null!;
         private DraftSender sender = null!;
         private DraftRecipient recipient = null!;
-        private DraftsBuilderMetaRequest expectedRequest = null!;
+        private DraftsBuilderMetaRequest expectedRequestPrototype = null!;
+        private IAutoFaker autoFaker = null!;
 
         [SetUp]
         public void SetUp()
         {
-            var payerInn = codesGenerator.PersonInn();
-            var senderInn = codesGenerator.PersonInn();
-            var senderCert = randomizer.Bytes(10);
+            autoFaker = new AutoFakerFactory()
+                .AddDraftsBuilderEntitiesGeneration()
+                .Create();
+            
+            var payerInn = autoFaker.Generate<Inn>();
+            var senderInn = autoFaker.Generate<Inn>();
+            var senderCert = autoFaker.Generate<byte[]>();
+            var ifnsCode = autoFaker.Generate<IfnsCode>();
+            var mriCode = autoFaker.Generate<MriCode>();
 
             payer = DraftPayer.IndividualEntrepreneur(payerInn);
             sender = DraftSender.IndividualEntrepreneur(senderInn, senderCert);
-            recipient = DraftRecipient.Ifns(IfnsCode.Parse("1234"), MriCode.Parse("5678"));
-            
-            expectedRequest = new DraftsBuilderMetaRequest
-            {
-                Payer = new AccountInfoRequest
-                {
-                    Inn = payerInn.ToString()
-                },
-                Sender = new SenderRequest
+            recipient = DraftRecipient.Ifns(ifnsCode, mriCode);
+
+            expectedRequestPrototype = new DraftsBuilderMetaRequest(
+                new SenderRequest
                 {
                     Inn = senderInn.ToString(),
                     Certificate = new CertificateRequest
@@ -47,20 +49,25 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DraftBuilders
                         PublicKey = senderCert
                     }
                 },
-                Recipient = new RecipientInfoRequest
+                new AccountInfoRequest
                 {
-                    IfnsCode = IfnsCode.Parse("1234"),
-                    MriCode = MriCode.Parse("5678")
-                }
-            };
+                    Inn = payerInn.ToString()
+                },
+                new RecipientInfoRequest
+                {
+                    IfnsCode = ifnsCode,
+                    MriCode = mriCode
+                },
+                default,
+                null
+            );
         }
         
         [Test]
         public void BusinessRegistrationDraftsBuilder_should_initialise_with_given_parameters()
         {
-            var data = new BusinessRegistrationDraftsBuilderData();
-            expectedRequest.BuilderData = data;
-            expectedRequest.BuilderType = DraftBuilderType.Fns.BusinessRegistration.Registration;
+            var data = autoFaker.Generate<BusinessRegistrationDraftsBuilderData>();
+            var expectedRequest = expectedRequestPrototype.ChangeBuilderType(DraftBuilderType.Fns.BusinessRegistration.Registration, data);
             
             var request = DraftsBuilderMetadata
                 .BusinessRegistrationDraftsBuilder(payer, sender, recipient, data)
@@ -68,13 +75,12 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DraftBuilders
 
             request.Should().BeEquivalentTo(expectedRequest);
         }
-        
+
         [Test]
         public void BusinessRegistrationDraftsBuilderLegacy_should_initialise_with_given_parameters()
         {
-            var data = new BusinessRegistrationDraftsBuilderData();
-            expectedRequest.BuilderData = data;
-            expectedRequest.BuilderType = DraftBuilderType.Fns.BusinessRegistration.RegistrationLegacy;
+            var data = autoFaker.Generate<BusinessRegistrationDraftsBuilderData>();
+            var expectedRequest = expectedRequestPrototype.ChangeBuilderType(DraftBuilderType.Fns.BusinessRegistration.RegistrationLegacy, data);
 
             var request = DraftsBuilderMetadata
                 .BusinessRegistrationDraftsBuilderLegacy(payer, sender, recipient, data)
@@ -86,9 +92,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DraftBuilders
         [Test]
         public void FnsInventoryDraftsBuilder_should_initialise_with_given_parameters()
         {
-            var data = new FnsInventoryDraftsBuilderData();
-            expectedRequest.BuilderData = data;
-            expectedRequest.BuilderType = DraftBuilderType.Fns.Fns534.Inventory;
+            var data = autoFaker.Generate<FnsInventoryDraftsBuilderData>();
+            var expectedRequest = expectedRequestPrototype.ChangeBuilderType(DraftBuilderType.Fns.Fns534.Inventory, data);
 
             var request = DraftsBuilderMetadata
                 .FnsInventoryDraftsBuilder(payer, sender, recipient, data)
@@ -100,8 +105,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DraftBuilders
         [Test]
         public void FnsLetterDraftsBuilder_should_initialise_with_given_parameters()
         {
-            expectedRequest.BuilderData = new UnknownDraftsBuilderData();
-            expectedRequest.BuilderType = DraftBuilderType.Fns.Fns534.Letter;
+            var expectedRequest = expectedRequestPrototype.ChangeBuilderType(DraftBuilderType.Fns.Fns534.Letter, new UnknownDraftsBuilderData());
 
             var request = DraftsBuilderMetadata
                 .FnsLetterDraftsBuilder(payer, sender, recipient)
@@ -113,8 +117,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DraftBuilders
         [Test]
         public void PfrIosDraftsBuilder_should_initialise_with_given_parameters()
         {
-            expectedRequest.BuilderData = new UnknownDraftsBuilderData();
-            expectedRequest.BuilderType = DraftBuilderType.Pfr.Ios;
+            var expectedRequest = expectedRequestPrototype.ChangeBuilderType(DraftBuilderType.Pfr.Ios, new UnknownDraftsBuilderData());
 
             var request = DraftsBuilderMetadata
                 .PfrIosDraftsBuilder(payer, sender, recipient)
@@ -126,8 +129,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DraftBuilders
         [Test]
         public void PfrLetterDraftsBuilder_should_initialise_with_given_parameters()
         {
-            expectedRequest.BuilderData = new UnknownDraftsBuilderData();
-            expectedRequest.BuilderType = DraftBuilderType.Pfr.Letter;
+            var expectedRequest = expectedRequestPrototype.ChangeBuilderType(DraftBuilderType.Pfr.Letter, new UnknownDraftsBuilderData());
 
             var request = DraftsBuilderMetadata
                 .PfrLetterDraftsBuilder(payer, sender, recipient)
@@ -140,8 +142,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DraftBuilders
         public void PfrReportDraftsBuilder_should_initialise_with_given_parameters()
         {
             var data = new PfrReportDraftsBuilderData();
-            expectedRequest.BuilderData = data;
-            expectedRequest.BuilderType = DraftBuilderType.Pfr.Report;
+            var expectedRequest = expectedRequestPrototype.ChangeBuilderType(DraftBuilderType.Pfr.Report, data);
 
             var request = DraftsBuilderMetadata
                 .PfrReportDraftsBuilder(payer, sender, recipient, data)
@@ -153,8 +154,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DraftBuilders
         [Test]
         public void RosstatLetterDraftsBuilder_should_initialise_with_given_parameters()
         {
-            expectedRequest.BuilderData = new UnknownDraftsBuilderData();
-            expectedRequest.BuilderType = DraftBuilderType.Rosstat.Letter;
+            var expectedRequest = expectedRequestPrototype.ChangeBuilderType(DraftBuilderType.Rosstat.Letter, new UnknownDraftsBuilderData());
 
             var request = DraftsBuilderMetadata
                 .RosstatLetterDraftsBuilder(payer, sender, recipient)
