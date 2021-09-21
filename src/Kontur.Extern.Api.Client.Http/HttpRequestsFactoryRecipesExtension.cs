@@ -13,6 +13,17 @@ namespace Kontur.Extern.Api.Client.Http
             var response = await httpRequestsFactory.Get(url.ToUrl()).SendAsync(timeout).ConfigureAwait(false);
             return await response.GetBytesAsync().ConfigureAwait(false);
         }
+        
+        public static async Task<byte[]?> TryGetBytesAsync(this IHttpRequestsFactory httpRequestsFactory, string url, TimeoutSpecification timeout = default)
+        {
+            if (url == null)
+                throw new ArgumentNullException(nameof(url));
+            
+            var response = await httpRequestsFactory.Get(url.ToUrl()).SendAsync(timeout, IgnoreNotFoundApiErrors).ConfigureAwait(false);
+            return response.Status.IsNotFound
+                ? default
+                : await response.GetBytesAsync().ConfigureAwait(false);
+        }
 
         public static Task<TResponseDto?> TryGetAsync<TResponseDto>(this IHttpRequestsFactory httpRequestsFactory, string url, in TimeoutSpecification timeout = default)
         {
