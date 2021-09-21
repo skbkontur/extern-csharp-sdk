@@ -3,9 +3,9 @@ using Kontur.Extern.Api.Client.Common;
 
 namespace Kontur.Extern.Api.Client.Paths
 {
-    public readonly struct DraftBuilderPath
+    public readonly struct DraftBuilderDocumentListPath
     {
-        public DraftBuilderPath(Guid accountId, Guid draftBuilderId, IExternClientServices services)
+        public DraftBuilderDocumentListPath(Guid accountId, Guid draftBuilderId, IExternClientServices services)
         {
             AccountId = accountId;
             DraftBuilderId = draftBuilderId;
@@ -16,6 +16,6 @@ namespace Kontur.Extern.Api.Client.Paths
         public Guid DraftBuilderId { get; }
         public IExternClientServices Services { get; }
 
-        public DraftBuilderDocumentListPath Documents => new(AccountId, DraftBuilderId, Services);
+        public DraftBuilderDocumentPath WithId(Guid documentId) => new(AccountId, DraftBuilderId, documentId, Services);
     }
 }
