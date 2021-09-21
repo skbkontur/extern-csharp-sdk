@@ -54,7 +54,7 @@ namespace Kontur.Extern.Api.Client
         
         public static IEntityList<Warrant> Warrants(this in AccountPath path) => throw new NotImplementedException();
 
-        public static Task DeleteAsync(this in AccountPath path)
+        public static Task<bool> DeleteAsync(this in AccountPath path)
         {
             var apiClient = path.Services.Api;
             return apiClient.Accounts.DeleteAccountAsync(path.AccountId);

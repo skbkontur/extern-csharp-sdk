@@ -29,7 +29,7 @@ namespace Kontur.Extern.Api.Client
             return apiClient.Drafts.TryGetDraftAsync(path.AccountId, path.DraftId, timeout);
         }
         
-        public static Task DeleteAsync(this in DraftPath path, TimeSpan? timeout = null)
+        public static Task<bool> DeleteAsync(this in DraftPath path, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
             return apiClient.Drafts.DeleteDraftAsync(path.AccountId, path.DraftId, timeout);

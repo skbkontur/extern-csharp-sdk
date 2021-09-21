@@ -19,7 +19,7 @@ namespace Kontur.Extern.Api.Client
             return apiClient.Organizations.TryGetOrganizationAsync(path.AccountId, path.OrganizationId, timeout);
         }
 
-        public static Task DeleteAsync(this in OrganizationPath path, TimeSpan? timeout = null)
+        public static Task<bool> DeleteAsync(this in OrganizationPath path, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
             return apiClient.Organizations.DeleteOrganizationAsync(path.AccountId, path.OrganizationId, timeout);
