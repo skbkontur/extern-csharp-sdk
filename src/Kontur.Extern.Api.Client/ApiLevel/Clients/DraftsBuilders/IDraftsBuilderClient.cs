@@ -151,6 +151,20 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             TimeSpan? timeout = null);
 
         /// <summary>
+        /// Получение документа по идентификатору
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftsBuilderId">Идентификатор DraftsBuilder</param>
+        /// <param name="documentId">Идентификатор документа</param>
+        /// <param name="timeout"></param>
+        /// <returns>Документ DraftsBuilder или null, если документ с указанными идентификаторами не существует</returns>
+        Task<DraftsBuilderDocument?> TryGetDocumentAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
         /// Удаление документа в DraftBuilder
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
@@ -173,6 +187,20 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             Guid draftsBuilderId,
             Guid documentId,
             TimeSpan? timeout = null);
+        
+        /// <summary>
+        /// Получение метаинформации документа
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftsBuilderId">Идентификатор DraftsBuilder</param>
+        /// <param name="documentId">Идентификатор документа</param>
+        /// <param name="timeout"></param>
+        /// <returns>Метаинформация документа или null, если метаинформация с указанными идентификаторами не существует</returns>
+        Task<DraftsBuilderDocumentMeta?> TryGetDocumentMetaAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            TimeSpan? timeout = null);
 
         /// <summary>
         /// Редактирование метаинформации документа
@@ -187,7 +215,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
-            DraftsBuilderMetaRequest meta,
+            DraftsBuilderDocumentMetaRequest meta,
             TimeSpan? timeout = null);
 
         /// <summary>
@@ -230,6 +258,22 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         /// <param name="timeout"></param>
         /// <returns>Файл DraftsBuilder</returns>
         Task<DraftsBuilderDocumentFile> GetFileAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            Guid fileId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Получение файла по идентификатору
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftsBuilderId">Идентификатор DraftsBuilder</param>
+        /// <param name="documentId">Идентификатор документа в DraftsBuilder</param>
+        /// <param name="fileId">Идентификатор файла в документе</param>
+        /// <param name="timeout"></param>
+        /// <returns>Файл DraftsBuilder или null, если файл с указанными идентификаторами не существует</returns>
+        Task<DraftsBuilderDocumentFile?> TryGetFileAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
@@ -285,6 +329,22 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             Guid documentId,
             Guid fileId,
             TimeSpan? timeout = null);
+        
+        /// <summary>
+        /// Получение метаинформации файла
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftsBuilderId">Идентификатор DraftsBuilder</param>
+        /// <param name="documentId">Идентификатор документа в DraftsBuilder</param>
+        /// <param name="fileId">Идентификатор файла в документе</param>
+        /// <param name="timeout"></param>
+        /// <returns>Метаинформация файла или null, если метаинформация с указанными идентификаторами не существует</returns>
+        Task<DraftsBuilderDocumentFileMeta?> TryGetFileMetaAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            Guid fileId,
+            TimeSpan? timeout = null);
 
         /// <summary>
         /// Редактирование метаинформации файла
@@ -314,6 +374,22 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         /// <param name="timeout"></param>
         /// <returns>Контент подписи</returns>
         Task<byte[]> GetSignatureAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            Guid fileId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Получение подписи файла
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftsBuilderId">Идентификатор DraftsBuilder</param>
+        /// <param name="documentId">Идентификатор документа в DraftsBuilder</param>
+        /// <param name="fileId">Идентификатор файла в документе</param>
+        /// <param name="timeout"></param>
+        /// <returns>Контент подписи или null, если подпись с указанными идентификаторами не существует</returns>
+        Task<byte[]?> TryGetSignatureAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
