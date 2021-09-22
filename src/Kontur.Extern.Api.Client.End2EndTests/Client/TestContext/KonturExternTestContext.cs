@@ -16,23 +16,13 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext
         private readonly AuthTestData authTestData;
         private readonly Credentials credentials;
         private readonly IExtern konturExtern;
-        
-        public KonturExternTestContext(ITestOutputHelper output)
-            : this(new TestLog(output), AuthTestData.LoadFromJsonFile())
-        {
-        }
 
-        public KonturExternTestContext(ILog log, AuthTestData authTestData, Action<IExternBuilder>? overrideOptions = null)
-            : this(log, authTestData, authTestData.UserCredentials, overrideOptions)
-        {
-        }
-
-        public KonturExternTestContext(ITestOutputHelper output, AuthTestData authTestData, Credentials credentials, Action<IExternBuilder>? overrideOptions = null)
+        public KonturExternTestContext(ITestOutputHelper output, AuthTestData authTestData, Credentials credentials, Action<ExternBuilder.Configured>? overrideOptions = null)
             : this(new TestLog(output), authTestData, credentials, overrideOptions)
         {
         }
 
-        public KonturExternTestContext(ILog log, AuthTestData authTestData, Credentials credentials, Action<IExternBuilder>? overrideOptions = null)
+        private KonturExternTestContext(ILog log, AuthTestData authTestData, Credentials credentials, Action<ExternBuilder.Configured>? overrideOptions = null)
         {
             this.log = log;
             this.authTestData = authTestData;
@@ -40,7 +30,8 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext
             konturExtern = CreateExtern(overrideOptions);
         }
         
-        internal KonturExternTestContext OverrideExternOptions(Action<IExternBuilder> overrideOptions) => new(log, authTestData, credentials, overrideOptions);
+        internal KonturExternTestContext OverrideExternOptions(Action<ExternBuilder.Configured> overrideOptions) => 
+            new(log, authTestData, credentials, overrideOptions);
 
         public IExtern Extern => konturExtern;
 
@@ -57,14 +48,14 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext
             return EntityScope<TEntity>.Create(entityCreate, entityDelete, log);
         }
 
-        private IExtern CreateExtern(Action<IExternBuilder>? overrideOptions = null)
+        private IExtern CreateExtern(Action<ExternBuilder.Configured>? overrideOptions = null)
         {
             var clientConfiguration = new TestingHttpClientConfiguration("https://extern-api.testkontur.ru/");
-            var externBuilder = ExternBuilder
+            var externBuilder = new ExternBuilder()
                 .WithHttpConfiguration(clientConfiguration, log)
-                .WithTestOpenIdAuthProvider(authTestData, credentials);
-
-            externBuilder.TryResolveUnauthorizedResponsesAutomatically();
+                .WithTestOpenIdAuthProvider(authTestData, credentials)
+                .TryResolveUnauthorizedResponsesAutomatically();
+            
             overrideOptions?.Invoke(externBuilder);
 
             return externBuilder.Create();

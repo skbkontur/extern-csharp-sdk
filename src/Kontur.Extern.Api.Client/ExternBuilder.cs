@@ -11,83 +11,98 @@ using Vostok.Logging.Abstractions;
 namespace Kontur.Extern.Api.Client
 {
     [PublicAPI]
-    public class ExternBuilder : IExternBuilder, ISpecifyAuthProviderExternBuilder
+    public class ExternBuilder
     {
         private static IPollingStrategy DefaultDelayPollingStrategy => new ConstantDelayPollingStrategy(5.Seconds());
         private static ICrypt DefaultCryptoProvider => new WinApiCrypt();
-        
-        public static ISpecifyAuthProviderExternBuilder WithExternApiUrl(Uri url, ILog log) => 
+
+        public SpecifyAuthProvider WithExternApiUrl(Uri url, ILog log) => 
             WithHttpConfiguration(new ExternalUrlHttpClientConfiguration(url), log);
 
-        public static ISpecifyAuthProviderExternBuilder WithHttpConfiguration(IHttpClientConfiguration clientConfiguration, ILog log) => 
-            new ExternBuilder(clientConfiguration, log);
+        public SpecifyAuthProvider WithHttpConfiguration(IHttpClientConfiguration clientConfiguration, ILog log) => 
+            new(clientConfiguration, log);
 
-        private ICrypt? cryptoProvider;
-        private IPollingStrategy? pollingStrategy;
-        private readonly ILog log;
-        private RequestTimeouts? requestTimeouts;
-        private OpenIdSetup? openIdAuthProviderSetup;
-        private bool enableUnauthorizedFailover;
-        private ContentManagementOptions? contentManagementOptions;
-        private readonly IHttpClientConfiguration clientConfiguration;
-
-        private ExternBuilder(IHttpClientConfiguration clientConfiguration, ILog log)
+        [PublicAPI]
+        public class SpecifyAuthProvider
         {
-            this.log = log ?? throw new ArgumentNullException(nameof(log));
-            this.clientConfiguration = clientConfiguration ?? throw new ArgumentNullException(nameof(clientConfiguration));
+            private readonly ILog log;
+            private readonly IHttpClientConfiguration clientConfiguration;
+
+            internal SpecifyAuthProvider(IHttpClientConfiguration clientConfiguration, ILog log)
+            {
+                this.log = log ?? throw new ArgumentNullException(nameof(log));
+                this.clientConfiguration = clientConfiguration ?? throw new ArgumentNullException(nameof(clientConfiguration));
+            }
+
+            public Configured WithOpenIdAuthProvider(OpenIdSetup setup) =>
+                new(clientConfiguration, log, setup ?? throw new ArgumentNullException(nameof(setup)));
         }
 
-        public ExternBuilder WithCryptoProvider(ICrypt crypt)
+        [PublicAPI]
+        public class Configured
         {
-            cryptoProvider = crypt ?? throw new ArgumentNullException(nameof(crypt));
-            return this;
-        }
-        
-        public ExternBuilder WithLongOperationsPollingStrategy(IPollingStrategy strategy)
-        {
-            pollingStrategy = strategy ?? throw new ArgumentNullException(nameof(strategy));
-            return this;
-        }
+            private ICrypt? cryptoProvider;
+            private IPollingStrategy? pollingStrategy;
+            private readonly ILog log;
+            private RequestTimeouts? requestTimeouts;
+            private readonly OpenIdSetup openIdAuthProviderSetup;
+            private bool enableUnauthorizedFailover;
+            private ContentManagementOptions? contentManagementOptions;
+            private readonly IHttpClientConfiguration clientConfiguration;
 
-        public ExternBuilder WithDefaultRequestTimeouts(TimeSpan defaultReadTimeout, TimeSpan defaultWriteTimeout, TimeSpan defaultLongOperationTimeout)
-        {
-            requestTimeouts = new RequestTimeouts(defaultReadTimeout, defaultWriteTimeout, defaultLongOperationTimeout);
-            return this;
-        }
+            internal Configured(IHttpClientConfiguration clientConfiguration, ILog log, OpenIdSetup openIdAuthProviderSetup)
+            {
+                this.log = log ?? throw new ArgumentNullException(nameof(log));
+                this.openIdAuthProviderSetup = openIdAuthProviderSetup ?? throw new ArgumentNullException(nameof(openIdAuthProviderSetup));
+                this.clientConfiguration = clientConfiguration ?? throw new ArgumentNullException(nameof(clientConfiguration));
+            }
 
-        IExternBuilder ISpecifyAuthProviderExternBuilder.WithOpenIdAuthProvider(OpenIdSetup setup)
-        {
-            openIdAuthProviderSetup = setup ?? throw new ArgumentNullException(nameof(setup));
-            return this;
-        }
+            public Configured WithCryptoProvider(ICrypt crypt)
+            {
+                cryptoProvider = crypt ?? throw new ArgumentNullException(nameof(crypt));
+                return this;
+            }
 
-        public IExternBuilder TryResolveUnauthorizedResponsesAutomatically(bool enabled = true)
-        {
-            enableUnauthorizedFailover = enabled;
-            return this;
-        }
+            public Configured WithLongOperationsPollingStrategy(IPollingStrategy strategy)
+            {
+                pollingStrategy = strategy ?? throw new ArgumentNullException(nameof(strategy));
+                return this;
+            }
 
-        public IExternBuilder OverrideContentsOptions(ContentManagementOptions options)
-        {
-            contentManagementOptions = options ?? throw new ArgumentNullException(nameof(options));
-            return this;
-        }
+            public Configured WithDefaultRequestTimeouts(TimeSpan defaultReadTimeout, TimeSpan defaultWriteTimeout, TimeSpan defaultLongOperationTimeout)
+            {
+                requestTimeouts = new RequestTimeouts(defaultReadTimeout, defaultWriteTimeout, defaultLongOperationTimeout);
+                return this;
+            }
 
-        public IExtern Create()
-        {
-            return new ExternFactory
-                {
-                    EnableUnauthorizedFailover = enableUnauthorizedFailover
-                }
-                .Create(
-                    contentManagementOptions,
-                    clientConfiguration,
-                    pollingStrategy,
-                    cryptoProvider,
-                    requestTimeouts,
-                    openIdAuthProviderSetup,
-                    log
-                );
+            public Configured TryResolveUnauthorizedResponsesAutomatically(bool enabled = true)
+            {
+                enableUnauthorizedFailover = enabled;
+                return this;
+            }
+
+            public Configured OverrideContentsOptions(ContentManagementOptions options)
+            {
+                contentManagementOptions = options ?? throw new ArgumentNullException(nameof(options));
+                return this;
+            }
+
+            public IExtern Create()
+            {
+                return new ExternFactory
+                    {
+                        EnableUnauthorizedFailover = enableUnauthorizedFailover
+                    }
+                    .Create(
+                        contentManagementOptions,
+                        clientConfiguration,
+                        pollingStrategy,
+                        cryptoProvider,
+                        requestTimeouts,
+                        openIdAuthProviderSetup,
+                        log
+                    );
+            }
         }
     }
 }

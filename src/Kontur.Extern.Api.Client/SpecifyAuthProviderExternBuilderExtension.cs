@@ -13,8 +13,8 @@ namespace Kontur.Extern.Api.Client
         private const string ClientId = "keapi.dotnetsdk";
         private static readonly Uri IdentityUrl = new("https://identity.skbkontur.ru");
 
-        public static IExternBuilder WithPasswordAuthorization(this ISpecifyAuthProviderExternBuilder externBuilder, Credentials credentials, string apiKey) =>
-            externBuilder.WithOpenIdAuthProvider(builder => builder
+        public static ExternBuilder.Configured WithPasswordAuthorization(this ExternBuilder.SpecifyAuthProvider specifyAuthProvider, Credentials credentials, string apiKey) =>
+            specifyAuthProvider.WithOpenIdAuthProvider(builder => builder
                 .WithHttpConfiguration(new ExternalUrlHttpClientConfiguration(IdentityUrl))
                 .WithClientIdentification(ClientId, apiKey)
                 .WithAuthenticationByPassword(credentials.UserName, credentials.Password)
