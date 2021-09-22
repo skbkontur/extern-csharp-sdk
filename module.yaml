@@ -4,6 +4,8 @@ full-build > client:
     configuration: Release
     
 client *default:
+  deps:    
+    - vostok.logging.abstractions
   build:
     target: src/Kontur.Extern.Api.Client.sln
     configuration: Client
