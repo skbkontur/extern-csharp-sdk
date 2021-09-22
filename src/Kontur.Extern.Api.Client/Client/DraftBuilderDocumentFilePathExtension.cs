@@ -50,11 +50,7 @@ namespace Kontur.Extern.Api.Client
                 path.DraftBuilderId,
                 path.DocumentId,
                 path.FileId,
-                new DraftsBuilderFileMetaRequest
-                {
-                    FileName = fileName,
-                    BuilderData = data!
-                },
+                new DraftsBuilderFileMetaRequest(fileName, data),
                 timeout
             );
         }

@@ -9,9 +9,23 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Docume
     public class DraftsBuilderFileRequest
     {
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contentId">Идентификатор контента в сервисе контентов</param>
+        /// <param name="base64SignatureContent">Контент подписи файла в формате base64</param>
+        /// <param name="meta">Метаинформация файла</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public DraftsBuilderFileRequest(Guid? contentId, string? base64SignatureContent, DraftsBuilderFileMetaRequest meta)
+        {
+            ContentId = contentId;
+            Base64SignatureContent = base64SignatureContent;
+            Meta = meta ?? throw new ArgumentNullException(nameof(meta));
+        }
+        
+        /// <summary>
         /// Идентификатор контента в сервисе контентов
         /// </summary>
-        public Guid? ContentId { get; set; }
+        public Guid? ContentId { get; }
         
         /// <summary>
         /// Контент подписи файла в формате base64
@@ -21,7 +35,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Docume
         /// <summary>
         /// Метаинформация файла
         /// </summary>
-        //[Required]
-        public DraftsBuilderFileMetaRequest Meta { get; set; } = null!;
+        public DraftsBuilderFileMetaRequest Meta { get; }
     }
 }
