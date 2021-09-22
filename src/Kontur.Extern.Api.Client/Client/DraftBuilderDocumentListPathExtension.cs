@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Documents;
-using Kontur.Extern.Api.Client.Model.DraftBuilders;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data;
 using Kontur.Extern.Api.Client.Paths;
+using DraftsBuilderDocument = Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.DraftsBuilderDocument;
 
 namespace Kontur.Extern.Api.Client
 {
@@ -14,8 +14,7 @@ namespace Kontur.Extern.Api.Client
     public static class DraftBuilderDocumentListPathExtension
     {
         public static Task<DraftsBuilderDocumentMeta> SetAsync(
-            this in DraftBuilderDocumentListPath path, 
-            IDraftsBuilderDocument document,
+            this in DraftBuilderDocumentListPath path,
             DraftsBuilderDocumentData? data,
             TimeSpan? timeout = null)
         {
@@ -28,7 +27,7 @@ namespace Kontur.Extern.Api.Client
             return apiClient.DraftsBuilder.UpdateDocumentMetaAsync(path.AccountId, path.DraftBuilderId, documentId, request, timeout);
         }
         
-        public static Task<IReadOnlyCollection<DraftsBuilderDocument>> ListAsync(this in DraftBuilderDocumentListPath path, IDraftsBuilderDocument document, TimeSpan? timeout = null)
+        public static Task<IReadOnlyCollection<DraftsBuilderDocument>> ListAsync(this in DraftBuilderDocumentListPath path, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
             return apiClient.DraftsBuilder.GetDocumentsAsync(path.AccountId, path.DraftBuilderId, timeout);
