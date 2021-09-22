@@ -4,8 +4,10 @@ full-build > client:
     configuration: Release
     
 client *default:
-  deps:    
-    - vostok.logging.abstractions
+  deps:
+    - vostok.logging.abstractions    
+    - vostok.clusterclient.core
+    - vostok.clusterclient.transport
   build:
     target: src/Kontur.Extern.Api.Client.sln
     configuration: Client
