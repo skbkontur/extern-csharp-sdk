@@ -35,7 +35,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
             public SerializationDraftsBuilderDocumentMeta(DraftsBuilderDocumentMeta dto)
             {
                 BuilderType = dto.BuilderType;
-                BuilderData = (TData) (object) dto.BuilderData;
+                BuilderData = (TData?) (object?) dto.BuilderData;
             }
 
             [UsedImplicitly]
@@ -44,11 +44,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
             [UsedImplicitly]
             public TData? BuilderData { get; set; }
 
-            public DraftsBuilderDocumentMeta ConvertToDto() => new()
-            {
-                BuilderData = BuilderData as DraftsBuilderDocumentData ?? new UnknownBuilderDocumentData(),
-                BuilderType = BuilderType
-            };
+            public DraftsBuilderDocumentMeta ConvertToDto() => new(
+                BuilderType,
+                BuilderData as DraftsBuilderDocumentData ?? new UnknownBuilderDocumentData()
+            );
         }
     }
 }

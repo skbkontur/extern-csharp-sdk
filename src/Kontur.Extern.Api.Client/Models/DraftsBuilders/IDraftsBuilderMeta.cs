@@ -11,12 +11,11 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders
         /// <summary>
         /// Тип DraftsBuilder
         /// </summary>
-        // [Required]
-        DraftBuilderType BuilderType { get; set; }
+        DraftBuilderType BuilderType { get; }
         
         /// <summary>
         /// Сведения о документе
         /// </summary>
-        TData BuilderData { get; set; }
+        TData? BuilderData { get; }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using AutoBogus;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders;
+using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data.FnsInventory;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.AutoFaker;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers.BogusExtensions;
@@ -19,30 +20,37 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGene
             this.unknownDataFactory = unknownDataFactory;
             faker = new AutoFakerFactory()
                 .AddDraftsBuilderEntitiesGeneration()
+                .AddConfiguration((c, _) => c.RuleForPropNameOf(nameof(FnsInventoryDraftsBuilderDocumentBackgroundProcessing.TotalFileCount), x => x.Random.Int(0)))
                 .Create();
         }
 
         public T GenerateWithData(Type? dataType, DraftBuilderType draftBuilderType)
         {
-            var builderMeta = GenerateWithoutData(draftBuilderType);
-            if (dataType is null)
-            {
-                builderMeta.BuilderData = unknownDataFactory();
-            }
-            else
-            {
-                builderMeta.BuilderData = (TData?) faker.Generate(dataType) ?? unknownDataFactory();
-            }
-
-            return builderMeta;
+            var data = dataType is null ? unknownDataFactory() : (TData?) faker.Generate(dataType) ?? unknownDataFactory();
+            return Generate(draftBuilderType, data);
         }
 
-        public T GenerateWithoutData(DraftBuilderType draftBuilderType)
+        public T GenerateWithoutData(DraftBuilderType draftBuilderType) =>
+            faker.Generate<T>(c =>
+            {
+                c.RuleForType(_ => draftBuilderType);
+                c.WithSkip<T>(x => x.BuilderData);
+            });
+        
+        public T GenerateWithoutType(DraftBuilderType draftBuilderType) =>
+            faker.Generate<T>(c =>
+            {
+                c.RuleForType(_ => draftBuilderType);
+                c.WithSkip<T>(x => x.BuilderData);
+            });
+
+        private T Generate(DraftBuilderType draftBuilderType, TData? data)
         {
-            var description = faker.Generate<T>(c => c.WithSkip<T>(x => x.BuilderData));
-            description.BuilderData = null!;
-            description.BuilderType = draftBuilderType;
-            return description;
+            return faker.Generate<T>(c =>
+            {
+                c.RuleForType(_ => draftBuilderType);
+                c.RuleForPropNameOf(nameof(IDraftsBuilderMeta<TData>.BuilderData), _ => data);
+            });
         }
     }
 }

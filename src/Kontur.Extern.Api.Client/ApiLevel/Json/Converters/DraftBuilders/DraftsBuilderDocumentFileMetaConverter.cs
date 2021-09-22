@@ -33,7 +33,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
             {
                 FileName = builderDocumentFileMeta.FileName;
                 BuilderType = builderDocumentFileMeta.BuilderType;
-                BuilderData = (TData) (object) builderDocumentFileMeta.BuilderData;
+                BuilderData = (TData?) (object?) builderDocumentFileMeta.BuilderData;
             }
             
             [UsedImplicitly]
@@ -45,12 +45,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
             [UsedImplicitly]
             public TData? BuilderData { get; set; }
 
-            public DraftsBuilderDocumentFileMeta ConvertToDto() => new()
-            {
-                FileName = FileName!,
-                BuilderType = BuilderType,
-                BuilderData = BuilderData as DraftsBuilderDocumentFileData ?? new UnknownDraftsBuilderDocumentFileData()
-            };
+            public DraftsBuilderDocumentFileMeta ConvertToDto() => new(
+                FileName!,
+                BuilderType,
+                BuilderData as DraftsBuilderDocumentFileData ?? new UnknownDraftsBuilderDocumentFileData()
+            );
         }
     }
 }

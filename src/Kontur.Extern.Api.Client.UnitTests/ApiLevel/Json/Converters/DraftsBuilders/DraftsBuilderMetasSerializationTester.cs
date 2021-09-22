@@ -21,12 +21,6 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuil
             metaGenerator = new DraftsBuilderMetasGenerator<TMeta, TData>(unknownDataFactory);
         }
 
-        public (string json, TMeta meta) GenerateWithData<T>(DraftBuilderType builderType)
-            where T:TData
-        {
-            return GenerateWithData(typeof (T), builderType);
-        }
-
         public (string json, TMeta meta) GenerateWithData(Type? builderDataType, DraftBuilderType builderType)
         {
             var builderMeta = metaGenerator.GenerateWithData(builderDataType, builderType);
@@ -37,15 +31,6 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuil
             where T:TData
         {
             return GenerateWithData(typeof (T), unknownBuilderType);
-        }
-        
-        public (string json, TMeta meta) GenerateWithoutBuilderType(TData? data)
-        {
-            var dummyKnownBuilderType = DraftBuilderType.Fns.BusinessRegistration.Registration;
-            var meta = metaGenerator.GenerateWithoutData(dummyKnownBuilderType);
-            meta.BuilderType = default;
-            meta.BuilderData = data!;
-            return (Serialize(meta), meta);
         }
 
         public TMeta Deserialize(string json) => serializer.Deserialize<TMeta>(json);

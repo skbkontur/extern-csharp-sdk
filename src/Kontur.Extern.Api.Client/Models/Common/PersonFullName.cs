@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Exceptions;
 
 namespace Kontur.Extern.Api.Client.Models.Common
 {
@@ -10,6 +11,12 @@ namespace Kontur.Extern.Api.Client.Models.Common
     {
         public PersonFullName(string lastSurname, string firstName, string patronymicName)
         {
+            if (string.IsNullOrWhiteSpace(lastSurname))
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(lastSurname));
+            
+            if (string.IsNullOrWhiteSpace(firstName))
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(firstName));
+            
             LastSurname = lastSurname;
             FirstName = firstName;
             PatronymicName = patronymicName;

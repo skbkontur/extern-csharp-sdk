@@ -45,18 +45,6 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuil
             builderMeta.Should().BeEquivalentTo(originalBuilderMeta, c => c.Excluding(x => x.BuilderData));
         }
         
-        [Test]
-        public void Should_deserialize_unknown_data_in_case_of_empty_builder_type()
-        {
-            var (json, originalBuilderMeta) = tester.GenerateWithoutBuilderType(null);
-        
-            var builderMeta = tester.Deserialize(json);
-        
-            builderMeta.BuilderType.Should().Be(new DraftBuilderType());
-            builderMeta.BuilderData.Should().BeOfType<UnknownBuilderDocumentData>();
-            builderMeta.Should().BeEquivalentTo(originalBuilderMeta, c => c.Excluding(x => x.BuilderData));
-        }
-        
         [TestCaseSource(nameof(BuilderTypesWithoutData))]
         public void Should_deserialize_empty_data_in_case_of_builder_type_have_no_data((DraftBuilderType builderType, Type? builderDataType) builderDataCase)
         {

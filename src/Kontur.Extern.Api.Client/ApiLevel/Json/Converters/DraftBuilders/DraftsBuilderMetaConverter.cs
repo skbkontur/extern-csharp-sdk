@@ -36,7 +36,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
                 Payer = draftsBuilderMeta.Payer;
                 Recipient = draftsBuilderMeta.Recipient;
                 BuilderType = draftsBuilderMeta.BuilderType;
-                BuilderData = (TData) (object) draftsBuilderMeta.BuilderData;
+                BuilderData = (TData?) (object?) draftsBuilderMeta.BuilderData;
             }
 
             [UsedImplicitly]
@@ -54,14 +54,13 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
             [UsedImplicitly]
             public TData? BuilderData { get; set; }
 
-            public DraftsBuilderMeta ConvertToDto() => new()
-            {
-                Sender = Sender!,
-                Payer = Payer!,
-                Recipient = Recipient!,
-                BuilderType = BuilderType,
-                BuilderData = BuilderData as DraftsBuilderData ?? new UnknownDraftsBuilderData()
-            };
+            public DraftsBuilderMeta ConvertToDto() => new(
+                BuilderType,
+                BuilderData as DraftsBuilderData ?? new UnknownDraftsBuilderData(),
+                Sender!,
+                Payer!,
+                Recipient!
+            );
         }
     }
 }
