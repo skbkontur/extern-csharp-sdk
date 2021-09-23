@@ -1,8 +1,8 @@
 using System;
 using FluentAssertions;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Responses;
 using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
-using Kontur.Extern.Api.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Api.Client.Common.Time;
 using NSubstitute;
 using Vostok.Commons.Time;

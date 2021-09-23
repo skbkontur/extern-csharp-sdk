@@ -1,5 +1,5 @@
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Requests;
-using Kontur.Extern.Api.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Api.Client.Testing.End2End.Environment;
 
 namespace Kontur.Extern.Api.Client.Auth.OpenId.End2EndTests.TestFactories

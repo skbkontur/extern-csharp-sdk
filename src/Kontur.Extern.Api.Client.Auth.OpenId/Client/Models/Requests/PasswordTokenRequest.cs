@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System.Text.Json.Serialization;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
 using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
-using Kontur.Extern.Api.Client.Auth.OpenId.Provider.Models;
 
 // ReSharper disable CommentTypo
 

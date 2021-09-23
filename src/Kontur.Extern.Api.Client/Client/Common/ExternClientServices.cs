@@ -18,14 +18,14 @@ namespace Kontur.Extern.Api.Client.Common
             IJsonSerializer jsonSerializer,
             IKeApiClient api,
             IPollingStrategy longOperationsPollingStrategy,
-            IAuthenticationProvider authProvider,
+            IAuthenticator authenticator,
             ICrypt crypt)
         {
             Http = http ?? throw new ArgumentNullException(nameof(http));
             JsonSerializer = jsonSerializer ?? throw new ArgumentNullException(nameof(jsonSerializer));
             Api = api ?? throw new ArgumentNullException(nameof(api));
             LongOperationsPollingStrategy = longOperationsPollingStrategy ?? throw new ArgumentNullException(nameof(longOperationsPollingStrategy));
-            AuthProvider = authProvider ?? throw new ArgumentNullException(nameof(authProvider));
+            Authenticator = authenticator ?? throw new ArgumentNullException(nameof(authenticator));
             Crypt = crypt ?? throw new ArgumentNullException(nameof(crypt));
             ContentService = new ContentService(api.Contents, contentManagementOptions);
         }
@@ -35,7 +35,7 @@ namespace Kontur.Extern.Api.Client.Common
         public IKeApiClient Api { get; }
         public IPollingStrategy LongOperationsPollingStrategy { get; }
         
-        public IAuthenticationProvider AuthProvider { get; }
+        public IAuthenticator Authenticator { get; }
         public ICrypt Crypt { get; }
         public IContentService ContentService { get; }
     }

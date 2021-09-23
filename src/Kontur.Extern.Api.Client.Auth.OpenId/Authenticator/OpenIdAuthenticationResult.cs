@@ -2,7 +2,7 @@ using Kontur.Extern.Api.Client.Auth.Abstractions;
 using Kontur.Extern.Api.Client.Common.Time;
 using Vostok.Clusterclient.Core.Model;
 
-namespace Kontur.Extern.Api.Client.Auth.OpenId.Provider
+namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator
 {
     internal class OpenIdAuthenticationResult : IAuthenticationResult
     {

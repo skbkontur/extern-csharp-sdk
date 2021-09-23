@@ -1,5 +1,5 @@
 using System;
-using Kontur.Extern.Api.Client.Auth.OpenId.Provider.Models;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Numbers;
 

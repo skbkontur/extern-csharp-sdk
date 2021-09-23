@@ -3,11 +3,11 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Auth.Abstractions;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client;
 using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
-using Kontur.Extern.Api.Client.Auth.OpenId.Provider;
-using Kontur.Extern.Api.Client.Auth.OpenId.Provider.AuthStrategies;
-using Kontur.Extern.Api.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Api.Client.Common.Time;
 using Kontur.Extern.Api.Client.Http.Configurations;
 using Kontur.Extern.Api.Client.Http.Options;
@@ -16,9 +16,9 @@ using Vostok.Logging.Abstractions;
 namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
 {
     [PublicAPI]
-    public class OpenIdAuthenticationProviderBuilder
+    public class OpenIdAuthenticatorBuilder
     {
-        public OpenIdAuthenticationProviderBuilder(ILog log) => 
+        public OpenIdAuthenticatorBuilder(ILog log) => 
             Log = log ?? throw new ArgumentNullException(nameof(log));
 
         public ILog Log { get; }
@@ -109,7 +109,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
                 return this;
             }
 
-            public IAuthenticationProvider Build()
+            public IAuthenticator Build()
             {
                 stopwatchFactory ??= new SystemStopwatchFactory();
                 var requestTimeouts = specifyAuthStrategy.RequestTimeouts ?? new RequestTimeouts();
@@ -119,7 +119,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
 
                 var options = new OpenIdAuthenticationOptions(apiKey, clientId, proactiveAuthTokenRefreshInterval);
                 var openIdClient = OpenIdClient.Create(requestTimeouts, clientConfiguration, log);
-                return new OpenIdAuthenticationProvider(options, openIdClient, authenticationStrategy, stopwatchFactory);
+                return new OpenIdAuthenticator(options, openIdClient, authenticationStrategy, stopwatchFactory);
             }
         }
     }

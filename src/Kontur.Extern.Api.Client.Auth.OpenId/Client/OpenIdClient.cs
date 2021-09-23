@@ -1,11 +1,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client.Models;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Requests;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Responses;
 using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
-using Kontur.Extern.Api.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Http.ClusterClientAdapters;
 using Kontur.Extern.Api.Client.Http.Configurations;

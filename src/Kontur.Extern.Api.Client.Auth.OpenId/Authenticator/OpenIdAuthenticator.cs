@@ -2,16 +2,16 @@
 using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.Auth.Abstractions;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Requests;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Responses;
-using Kontur.Extern.Api.Client.Auth.OpenId.Provider.AuthStrategies;
-using Kontur.Extern.Api.Client.Auth.OpenId.Provider.Models;
 using Kontur.Extern.Api.Client.Common.Time;
 
-namespace Kontur.Extern.Api.Client.Auth.OpenId.Provider
+namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator
 {
-    internal class OpenIdAuthenticationProvider : IAuthenticationProvider
+    internal class OpenIdAuthenticator : IAuthenticator
     {
         private readonly OpenIdAuthenticationOptions options;
         private readonly IOpenIdClient openId;
@@ -19,7 +19,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Provider
         private readonly OpenIdAuthenticationContext context = new();
         private readonly IStopwatchFactory stopwatchFactory;
 
-        public OpenIdAuthenticationProvider(
+        public OpenIdAuthenticator(
             OpenIdAuthenticationOptions options, 
             IOpenIdClient openId,
             IOpenIdAuthenticationStrategy authenticationStrategy,

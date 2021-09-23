@@ -1,6 +1,6 @@
 using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
 
-namespace Kontur.Extern.Api.Client.Auth.OpenId.Provider.Models
+namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models
 {
     public class Credentials
     {

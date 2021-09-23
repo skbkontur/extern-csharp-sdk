@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Api.Client.Auth.OpenId.Provider.Models;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Testing.ExternTestTool.Drive;
 using Kontur.Extern.Api.Client.Testing.ExternTestTool.Http;

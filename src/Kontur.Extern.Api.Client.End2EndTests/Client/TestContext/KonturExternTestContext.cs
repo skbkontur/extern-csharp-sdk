@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Kontur.Extern.Api.Client.Auth.OpenId.Provider.Models;
-using Kontur.Extern.Api.Client.End2EndTests.Client.TestAuthProvider;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
+using Kontur.Extern.Api.Client.End2EndTests.Client.TestAuthenticator;
 using Kontur.Extern.Api.Client.Testing.End2End.ClusterClient;
 using Kontur.Extern.Api.Client.Testing.End2End.Environment;
 using Kontur.Extern.Api.Client.Testing.Fakes.Logging;
@@ -53,7 +53,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext
             var clientConfiguration = new TestingHttpClientConfiguration("https://extern-api.testkontur.ru/");
             var externBuilder = new ExternBuilder()
                 .WithHttpConfiguration(clientConfiguration, log)
-                .WithTestOpenIdAuthProvider(authTestData, credentials)
+                .WithTestOpenIdAuthenticator(authTestData, credentials)
                 .TryResolveUnauthorizedResponsesAutomatically();
             
             overrideOptions?.Invoke(externBuilder);

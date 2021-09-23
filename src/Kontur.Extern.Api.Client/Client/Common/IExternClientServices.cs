@@ -14,7 +14,7 @@ namespace Kontur.Extern.Api.Client.Common
         IJsonSerializer JsonSerializer { get; }
         IKeApiClient Api { get; }
         IPollingStrategy LongOperationsPollingStrategy { get; }
-        IAuthenticationProvider AuthProvider { get; }
+        IAuthenticator Authenticator { get; }
         ICrypt Crypt { get; }
         IContentService ContentService { get; }
     }

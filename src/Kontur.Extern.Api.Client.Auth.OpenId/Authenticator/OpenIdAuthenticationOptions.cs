@@ -2,7 +2,7 @@ using System;
 using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
 using Kontur.Extern.Api.Client.Common.Time;
 
-namespace Kontur.Extern.Api.Client.Auth.OpenId.Provider
+namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator
 {
     internal class OpenIdAuthenticationOptions
     {

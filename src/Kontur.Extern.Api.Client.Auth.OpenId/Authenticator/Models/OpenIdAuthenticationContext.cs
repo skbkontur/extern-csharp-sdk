@@ -1,5 +1,5 @@
 #nullable enable
-namespace Kontur.Extern.Api.Client.Auth.OpenId.Provider.Models
+namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models
 {
     internal class OpenIdAuthenticationContext
     {
