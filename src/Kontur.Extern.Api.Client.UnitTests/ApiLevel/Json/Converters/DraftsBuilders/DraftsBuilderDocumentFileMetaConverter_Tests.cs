@@ -58,7 +58,14 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuil
         private static void DraftsBuilderDocumentMetaShouldBeEqual(DraftsBuilderDocumentFileMeta meta, DraftsBuilderDocumentFileMeta expectedMeta)
         {
             meta.Should().BeEquivalentTo(expectedMeta);
-            meta.BuilderData.Should().BeOfType(expectedMeta.BuilderData.GetType());
+            if (expectedMeta.BuilderData is null)
+            {
+                meta.BuilderData.Should().BeNull();
+            }
+            else
+            {
+                meta.BuilderData.Should().BeOfType(expectedMeta.BuilderData.GetType());
+            }
         }
 
         public static IEnumerable<(DraftBuilderType builderType, Type? builderDataType)> BuilderTypesWithoutData =>
