@@ -6,7 +6,7 @@ using Kontur.Extern.Api.Client.Primitives.Polling;
 
 namespace Kontur.Extern.Api.Client.Primitives.LongOperations
 {
-    internal class LongOperation<T> : ILongOperation<T>
+    public class LongOperation<T> : ILongOperation<T>
     {
         private readonly Func<Guid, Task<ApiTaskResult<T>>> checkStatusAsync;
         private readonly Func<Task<ApiTaskResult<T>>> startAsync;
@@ -105,7 +105,7 @@ namespace Kontur.Extern.Api.Client.Primitives.LongOperations
         }
     }
 
-    internal class LongOperation<TResult, TFailure> : ILongOperation<TResult, TFailure>
+    public class LongOperation<TResult, TFailure> : ILongOperation<TResult, TFailure>
         where TFailure : ILongOperationFailure, IApiTaskResult
         where TResult : IApiTaskResult
     {
