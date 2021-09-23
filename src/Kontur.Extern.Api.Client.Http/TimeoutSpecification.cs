@@ -14,12 +14,12 @@ namespace Kontur.Extern.Api.Client.Http
         public static TimeoutSpecification SpecificTimeout(TimeSpan timeout) => new(false, timeout);
         
         public static TimeoutSpecification SpecificOrLongOperationTimeout(TimeSpan? timeout) => 
-            timeout.HasValue 
+            timeout.HasValue
                 ? SpecificTimeout(timeout.Value) 
                 : LongOperationTimeout;
         
         public static TimeoutSpecification SpecificOrRegularOperationTimeout(TimeSpan? timeout) => 
-            timeout.HasValue 
+            timeout.HasValue
                 ? SpecificTimeout(timeout.Value) 
                 : RegularOperationTimeout;
         

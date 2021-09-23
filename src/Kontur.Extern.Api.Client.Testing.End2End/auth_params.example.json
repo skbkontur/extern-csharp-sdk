@@ -5,5 +5,5 @@
   "clientId": "REQUIRED",
   "apiKey": "REQUIRED",
   "openIdServer" : "OPTIONAL -- by default it is https://identity.testkontur.ru",
-  "testDataGenerateLevel": "OPTIONAL -- possible values: TempFolder, TestRun, ProjectFolder. default value -- TestRun"
+  "testDataGenerateLevel": "OPTIONAL -- possible values: TempFolder, TestRun, CurrentDirectory. default value -- TestRun"
 }

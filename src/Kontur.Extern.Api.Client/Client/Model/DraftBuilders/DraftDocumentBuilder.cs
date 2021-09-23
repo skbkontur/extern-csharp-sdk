@@ -56,6 +56,7 @@ namespace Kontur.Extern.Api.Client.Model.DraftBuilders
                 .CreateRequestAsync(accountId, fileName, data, uploadStrategy, uploader, crypt, uploadTimeout);
         }
 
+        [PublicAPI]
         public class SpecifyId
         {
             private readonly DraftsBuilderDocumentFileData? data;
@@ -67,6 +68,7 @@ namespace Kontur.Extern.Api.Client.Model.DraftBuilders
             public SpecifyFile WithId(Guid documentId) => new(documentId, data);
         }
 
+        [PublicAPI]
         public class SpecifyFile
         {
             private readonly Guid documentId;
@@ -87,6 +89,7 @@ namespace Kontur.Extern.Api.Client.Model.DraftBuilders
             }
         }
 
+        [PublicAPI]
         public class SpecifyContent
         {
             private readonly Guid fileId;
@@ -118,6 +121,7 @@ namespace Kontur.Extern.Api.Client.Model.DraftBuilders
             }
         }
 
+        [PublicAPI]
         public class SpecifyDocumentSignMethod
         {
             private readonly IDocumentContent documentContent;
