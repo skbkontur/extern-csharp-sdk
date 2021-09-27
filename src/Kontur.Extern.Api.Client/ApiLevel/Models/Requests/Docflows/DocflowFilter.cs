@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Common.Time;
@@ -13,7 +12,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class DocflowFilter
     {
-        private static PropertyInfo[] properties = typeof (DocflowFilter).GetProperties();
         private QueryParameters queryParameters = new();
 
         /// <summary>
