@@ -16,9 +16,9 @@ using Vostok.Logging.Abstractions;
 namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
 {
     [PublicAPI]
-    public class OpenIdAuthenticatorBuilder
+    public class OpenIdAuthenticatorBuilder : IAuthenticatorBuilder
     {
-        public OpenIdAuthenticatorBuilder(ILog log) => 
+        public OpenIdAuthenticatorBuilder(ILog log) =>
             Log = log ?? throw new ArgumentNullException(nameof(log));
 
         public ILog Log { get; }
@@ -81,7 +81,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
         }
 
         [PublicAPI]
-        public class Configured
+        public class Configured : IConfigured
         {
             private readonly IOpenIdAuthenticationStrategy authenticationStrategy;
             private readonly SpecifyAuthStrategy specifyAuthStrategy;

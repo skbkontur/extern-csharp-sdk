@@ -9,7 +9,6 @@ using Kontur.Extern.Api.Client.Models.ApiErrors;
 using Kontur.Extern.Api.Client.Paths;
 using Kontur.Extern.Api.Client.Primitives.Polling;
 using Kontur.Extern.Api.Client.Auth.Abstractions;
-using Kontur.Extern.Api.Client.Auth.OpenId.Builder;
 using Kontur.Extern.Api.Client.Authentication;
 using Kontur.Extern.Api.Client.Cryptography;
 using Kontur.Extern.Api.Client.Http;
@@ -27,35 +26,35 @@ namespace Kontur.Extern.Api.Client
     {
         private static IPollingStrategy DefaultDelayPollingStrategy => new ConstantDelayPollingStrategy(5.Seconds());
         private static ICrypt DefaultCryptoProvider => new WinApiCrypt();
-        
+
         public bool EnableUnauthorizedFailover { get; set; }
-        
+
         public IExtern Create(
             ContentManagementOptions? contentManagementOptions,
-            IHttpClientConfiguration clientConfiguration, 
-            IPollingStrategy? pollingStrategy, 
-            ICrypt? cryptoProvider, 
-            RequestTimeouts? requestTimeouts, 
-            OpenIdSetup? openIdSetup, 
+            IHttpClientConfiguration clientConfiguration,
+            IPollingStrategy? pollingStrategy,
+            ICrypt? cryptoProvider,
+            RequestTimeouts? requestTimeouts,
+            Func<IConfigured>? configureAuthBuilder,
             ILog log)
         {
             contentManagementOptions ??= ContentManagementOptions.Default;
             pollingStrategy ??= DefaultDelayPollingStrategy;
             cryptoProvider ??= DefaultCryptoProvider;
-            requestTimeouts ??=  new RequestTimeouts();
-            
-            var authProvider = CreateAuthenticator(openIdSetup, log);
+            requestTimeouts ??= new RequestTimeouts();
+
+            var authProvider = CreateAuthenticator(configureAuthBuilder);
             var jsonSerializer = JsonSerializerFactory.CreateJsonSerializer();
             var http = CreateHttp(clientConfiguration, requestTimeouts, authProvider, jsonSerializer, log);
             var api = new KeApiClient(http);
             var services = new ExternClientServices(contentManagementOptions, http, jsonSerializer, api, pollingStrategy, authProvider, cryptoProvider);
             return new Extern(services);
         }
-        
+
         private HttpRequestsFactory CreateHttp(
-            IHttpClientConfiguration clientConfiguration, 
-            RequestTimeouts requestTimeouts, 
-            IAuthenticator authenticator, 
+            IHttpClientConfiguration clientConfiguration,
+            RequestTimeouts requestTimeouts,
+            IAuthenticator authenticator,
             IJsonSerializer jsonSerializer,
             ILog log)
         {
@@ -63,7 +62,7 @@ namespace Kontur.Extern.Api.Client
                 EnableUnauthorizedFailover
                     ? (response, attempt) => AuthorizationErrorsFailover(requestTimeouts, authenticator, response, attempt)
                     : null;
-            
+
             return new HttpRequestsFactory(
                 clientConfiguration,
                 requestTimeouts,
@@ -73,7 +72,7 @@ namespace Kontur.Extern.Api.Client
                 jsonSerializer,
                 log
             );
-            
+
             static async Task<Request> AuthenticateRequestAsync(IAuthenticator authProvider, Request request, TimeSpan timeout)
             {
                 return await authProvider.AuthenticateRequestAsync(request, false, timeout).ConfigureAwait(false);
@@ -107,13 +106,12 @@ namespace Kontur.Extern.Api.Client
                 }
             }
         }
-        
-        private static IAuthenticator CreateAuthenticator(OpenIdSetup? openIdSetup, ILog log)
+
+        private static IAuthenticator CreateAuthenticator(Func<IConfigured>? configureAuthBuilder)
         {
-            if (openIdSetup is not null)
+            if (configureAuthBuilder is not null)
             {
-                var builder = new OpenIdAuthenticatorBuilder(log);
-                var configuredBuilder = openIdSetup(builder);
+                var configuredBuilder = configureAuthBuilder();
                 return configuredBuilder.Build();
             }
 
@@ -126,7 +124,7 @@ namespace Kontur.Extern.Api.Client
 
             public Extern(IExternClientServices services) => this.services = services;
 
-            public Task ReauthenticateAsync(TimeSpan? timeout) => 
+            public Task ReauthenticateAsync(TimeSpan? timeout) =>
                 services.Authenticator.AuthenticateAsync(true, timeout);
 
             public AccountListPath Accounts => new(services);

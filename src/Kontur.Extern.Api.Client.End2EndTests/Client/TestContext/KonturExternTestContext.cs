@@ -53,7 +53,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext
             var clientConfiguration = new TestingHttpClientConfiguration("https://extern-api.testkontur.ru/");
             var externBuilder = new ExternBuilder()
                 .WithHttpConfiguration(clientConfiguration, log)
-                .WithTestOpenIdAuthenticator(authTestData, credentials)
+                .WithTestOpenIdAuthenticator(authTestData, credentials, log)
                 .TryResolveUnauthorizedResponsesAutomatically();
             
             overrideOptions?.Invoke(externBuilder);

@@ -1,5 +1,7 @@
 using System;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
+using Kontur.Extern.Api.Client.Auth.OpenId.Builder;
 
 namespace Kontur.Extern.Api.Client.Auth.OpenId.Exceptions
 {
@@ -25,5 +27,9 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Exceptions
         
         public static Exception TokenResponseInvalidExpirationSeconds(int expiresInSeconds) => 
             new OpenIdException($"The token response has invalid token expiration seconds {expiresInSeconds}");
+
+        public static Exception WrongAuthSetupParameter() =>
+            new ArgumentException($"Builder must be of type {typeof (OpenIdAuthenticatorBuilder)} " +
+                                  $"and credentials must be of type {typeof (Credentials)}");
     }
 }

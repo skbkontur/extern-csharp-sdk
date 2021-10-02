@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Auth.Abstractions;
 using Kontur.Extern.Api.Client.Model.Configuration;
 using Kontur.Extern.Api.Client.Primitives.Polling;
 using Kontur.Extern.Api.Client.Cryptography;
@@ -16,10 +17,10 @@ namespace Kontur.Extern.Api.Client
         private static IPollingStrategy DefaultDelayPollingStrategy => new ConstantDelayPollingStrategy(5.Seconds());
         private static ICrypt DefaultCryptoProvider => new WinApiCrypt();
 
-        public SpecifyAuthenticator WithExternApiUrl(Uri url, ILog log) => 
+        public SpecifyAuthenticator WithExternApiUrl(Uri url, ILog log) =>
             WithHttpConfiguration(new ExternalUrlHttpClientConfiguration(url), log);
 
-        public SpecifyAuthenticator WithHttpConfiguration(IHttpClientConfiguration clientConfiguration, ILog log) => 
+        public SpecifyAuthenticator WithHttpConfiguration(IHttpClientConfiguration clientConfiguration, ILog log) =>
             new(clientConfiguration, log);
 
         [PublicAPI]
@@ -34,7 +35,7 @@ namespace Kontur.Extern.Api.Client
                 this.clientConfiguration = clientConfiguration ?? throw new ArgumentNullException(nameof(clientConfiguration));
             }
 
-            public Configured WithOpenIdAuthenticator(OpenIdSetup setup) =>
+            public Configured WithAuthenticator(Func<IConfigured> setup) =>
                 new(clientConfiguration, log, setup ?? throw new ArgumentNullException(nameof(setup)));
         }
 
@@ -45,15 +46,15 @@ namespace Kontur.Extern.Api.Client
             private IPollingStrategy? pollingStrategy;
             private readonly ILog log;
             private RequestTimeouts? requestTimeouts;
-            private readonly OpenIdSetup openIdAuthenticatorSetup;
+            private readonly Func<IConfigured> configureAuthBuilder;
             private bool enableUnauthorizedFailover;
             private ContentManagementOptions? contentManagementOptions;
             private readonly IHttpClientConfiguration clientConfiguration;
 
-            internal Configured(IHttpClientConfiguration clientConfiguration, ILog log, OpenIdSetup openIdAuthProviderSetup)
+            internal Configured(IHttpClientConfiguration clientConfiguration, ILog log, Func<IConfigured> configureAuthBuilder)
             {
                 this.log = log ?? throw new ArgumentNullException(nameof(log));
-                this.openIdAuthenticatorSetup = openIdAuthProviderSetup ?? throw new ArgumentNullException(nameof(openIdAuthProviderSetup));
+                this.configureAuthBuilder = configureAuthBuilder ?? throw new ArgumentNullException(nameof(configureAuthBuilder));
                 this.clientConfiguration = clientConfiguration ?? throw new ArgumentNullException(nameof(clientConfiguration));
             }
 
@@ -99,7 +100,7 @@ namespace Kontur.Extern.Api.Client
                         pollingStrategy,
                         cryptoProvider,
                         requestTimeouts,
-                        openIdAuthenticatorSetup,
+                        configureAuthBuilder,
                         log
                     );
             }
