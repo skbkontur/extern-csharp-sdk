@@ -16,7 +16,7 @@ using Vostok.Logging.Abstractions;
 namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
 {
     [PublicAPI]
-    public class OpenIdAuthenticatorBuilder : IAuthenticatorBuilder
+    public class OpenIdAuthenticatorBuilder
     {
         public OpenIdAuthenticatorBuilder(ILog log) =>
             Log = log ?? throw new ArgumentNullException(nameof(log));

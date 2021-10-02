@@ -3,7 +3,7 @@ using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
 
 namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models
 {
-    public class Credentials : ICredentials
+    public class Credentials
     {
         public Credentials(string userName, string password)
         {

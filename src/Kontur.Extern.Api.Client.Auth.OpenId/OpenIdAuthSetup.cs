@@ -10,14 +10,14 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId
     public class OpenIdAuthSetup : IAuthSetup
     {
         private readonly OpenIdAuthenticatorBuilder builder;
-        private readonly ICredentials creds;
+        private readonly Credentials creds;
         private readonly string apiKey;
         private readonly string clientId;
         private readonly string identityUrl;
 
         public OpenIdAuthSetup(
             OpenIdAuthenticatorBuilder builder,
-            ICredentials creds,
+            Credentials creds,
             string apiKey,
             string clientId,
             string identityUrl)
@@ -31,12 +31,9 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId
 
         public IConfigured Configure()
         {
-            if (builder is not {} openIdBuilder || creds is not Credentials openIdCreds)
-                throw Errors.WrongAuthSetupParameter();
-
-            return openIdBuilder.WithHttpConfiguration(new ExternalUrlHttpClientConfiguration(new Uri(identityUrl)))
+            return builder.WithHttpConfiguration(new ExternalUrlHttpClientConfiguration(new Uri(identityUrl)))
                 .WithClientIdentification(clientId, apiKey)
-                .WithAuthenticationByPassword(openIdCreds.UserName, openIdCreds.Password);
+                .WithAuthenticationByPassword(creds.UserName, creds.Password);
         }
     }
 }

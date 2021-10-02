@@ -8,10 +8,6 @@ namespace Kontur.Extern.Api.Client.Auth.Abstractions
         Task<IAuthenticationResult> AuthenticateAsync(bool force = false, TimeSpan? timeout = null);
     }
 
-    public interface ICredentials
-    {
-    }
-
     public interface IAuthSetup
     {
         IConfigured Configure();
@@ -20,9 +16,5 @@ namespace Kontur.Extern.Api.Client.Auth.Abstractions
     public interface IConfigured
     {
         IAuthenticator Build();
-    }
-
-    public interface IAuthenticatorBuilder
-    {
     }
 }
