@@ -15,6 +15,6 @@ client *default:
     - src/Kontur.Extern.Api.Client/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.dll    
     - src/Kontur.Extern.Api.Client.Common/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.Common.dll
     - src/Kontur.Extern.Api.Client.Cryptography/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.Cryptography.dll
-    - src/Kontur.Extern.Api.Client.Auth.OpenId/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.Auth.OpenId.dll
+    - src/Kontur.Extern.Api.Client.Auth.Abstractions/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.Auth.Abstractions.dll
     - src/Kontur.Extern.Api.Client.Http/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.Http.dll
     
