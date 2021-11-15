@@ -10,9 +10,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Events
     //todo Сделать нормальные тесты для методов.
     public class EventsClient : IEventsClient
     {
-        private readonly IHttpRequestsFactory http;
+        private readonly IHttpRequestFactory http;
 
-        public EventsClient(IHttpRequestsFactory http) => this.http = http;
+        public EventsClient(IHttpRequestFactory http) => this.http = http;
 
         public Task<EventsPage> GetEventsAsync(int take, string fromId = "0_0", TimeSpan? timeout = null)
         {

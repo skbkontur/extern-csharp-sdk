@@ -17,9 +17,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
     //todo Сделать нормальные тесты для методов.
     public class DocflowsClient : IDocflowsClient
     {
-        private readonly IHttpRequestsFactory http;
+        private readonly IHttpRequestFactory http;
 
-        public DocflowsClient(IHttpRequestsFactory http) => this.http = http;
+        public DocflowsClient(IHttpRequestFactory http) => this.http = http;
 
         public Task<DocflowPage> GetDocflowsAsync(Guid accountId, DocflowFilter? filter = null, TimeSpan? timeout = null)
         {

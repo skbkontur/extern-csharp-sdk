@@ -1,11 +1,13 @@
 using System;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.ApiLevel;
 using Kontur.Extern.Api.Client.Auth.Abstractions;
 using Kontur.Extern.Api.Client.Auth.OpenId.Builder;
 using Kontur.Extern.Api.Client.Model.Configuration;
 using Kontur.Extern.Api.Client.Primitives.Polling;
 using Kontur.Extern.Api.Client.Cryptography;
 using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Http.Configurations;
 using Kontur.Extern.Api.Client.Http.Options;
 using Vostok.Commons.Time;
@@ -55,6 +57,8 @@ namespace Kontur.Extern.Api.Client
             private bool enableUnauthorizedFailover;
             private ContentManagementOptions? contentManagementOptions;
             private readonly IHttpClientConfiguration clientConfiguration;
+            private IExternHttpClient? apiClient;
+            private IHttpRequestFactory? httpRequestFactory;
 
             internal Configured(IHttpClientConfiguration clientConfiguration, ILog log, IAuthenticator authenticator)
             {
@@ -88,6 +92,18 @@ namespace Kontur.Extern.Api.Client
                 return this;
             }
 
+            public Configured WithExternHttpClient(IExternHttpClient client)
+            {
+                apiClient = client;
+                return this;
+            }
+
+            public Configured WithHttpRequestFactory(IHttpRequestFactory factory)
+            {
+                httpRequestFactory = factory;
+                return this;
+            }
+
             public Configured TryResolveUnauthorizedResponsesAutomatically(bool enabled = true)
             {
                 enableUnauthorizedFailover = enabled;
@@ -113,6 +129,8 @@ namespace Kontur.Extern.Api.Client
                         cryptoProvider,
                         requestTimeouts,
                         authenticator,
+                        apiClient,
+                        httpRequestFactory,
                         log
                     );
             }

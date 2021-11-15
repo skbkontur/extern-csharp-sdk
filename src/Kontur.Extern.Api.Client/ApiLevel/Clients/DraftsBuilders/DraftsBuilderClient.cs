@@ -16,9 +16,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
 {
     public class DraftsBuilderClient : IDraftsBuilderClient
     {
-        private readonly IHttpRequestsFactory http;
+        private readonly IHttpRequestFactory http;
 
-        public DraftsBuilderClient(IHttpRequestsFactory http) => this.http = http;
+        public DraftsBuilderClient(IHttpRequestFactory http) => this.http = http;
 
         public Task<DraftsBuilder> CreateDraftsBuilderAsync(
             Guid accountId,

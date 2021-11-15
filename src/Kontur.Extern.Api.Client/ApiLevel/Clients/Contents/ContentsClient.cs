@@ -11,9 +11,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Contents
 {
     public class ContentsClient : IContentsClient
     {
-        private readonly IHttpRequestsFactory http;
+        private readonly IHttpRequestFactory http;
 
-        public ContentsClient(IHttpRequestsFactory http) => this.http = http;
+        public ContentsClient(IHttpRequestFactory http) => this.http = http;
 
         public Task<ContentResponse> StartUploadAsync(Guid accountId, byte[] content, long from, long to, long? contentLength = null, TimeSpan? timeout = null)
         {

@@ -28,29 +28,31 @@ namespace Kontur.Extern.Api.Client
         private static ICrypt DefaultCryptoProvider => new WinApiCrypt();
         
         public bool EnableUnauthorizedFailover { get; set; }
-        
+
         public IExtern Create(
             ContentManagementOptions? contentManagementOptions,
-            IHttpClientConfiguration clientConfiguration, 
-            IPollingStrategy? pollingStrategy, 
-            ICrypt? cryptoProvider, 
-            RequestTimeouts? requestTimeouts, 
-            IAuthenticator authenticator, 
+            IHttpClientConfiguration clientConfiguration,
+            IPollingStrategy? pollingStrategy,
+            ICrypt? cryptoProvider,
+            RequestTimeouts? requestTimeouts,
+            IAuthenticator authenticator,
+            IExternHttpClient? api,
+            IHttpRequestFactory? httpRequestFactory,
             ILog log)
         {
             contentManagementOptions ??= ContentManagementOptions.Default;
             pollingStrategy ??= DefaultDelayPollingStrategy;
             cryptoProvider ??= DefaultCryptoProvider;
-            requestTimeouts ??=  new RequestTimeouts();
-            
+            requestTimeouts ??= new RequestTimeouts();
+
             var jsonSerializer = JsonSerializerFactory.CreateJsonSerializer();
-            var http = CreateHttp(clientConfiguration, requestTimeouts, authenticator, jsonSerializer, log);
-            var api = new KeApiClient(http);
-            var services = new ExternClientServices(contentManagementOptions, http, jsonSerializer, api, pollingStrategy, authenticator, cryptoProvider);
+            httpRequestFactory ??= CreateHttp(clientConfiguration, requestTimeouts, authenticator, jsonSerializer, log);
+            api ??= new ExternHttpClient(httpRequestFactory);
+            var services = new ExternClientServices(contentManagementOptions, httpRequestFactory, jsonSerializer, api, pollingStrategy, authenticator, cryptoProvider);
             return new Extern(services);
         }
-        
-        private HttpRequestsFactory CreateHttp(
+
+        private HttpRequestFactory CreateHttp(
             IHttpClientConfiguration clientConfiguration, 
             RequestTimeouts requestTimeouts, 
             IAuthenticator authenticator, 
@@ -62,7 +64,7 @@ namespace Kontur.Extern.Api.Client
                     ? (response, attempt) => AuthorizationErrorsFailover(requestTimeouts, authenticator, response, attempt)
                     : null;
             
-            return new HttpRequestsFactory(
+            return new HttpRequestFactory(
                 clientConfiguration,
                 requestTimeouts,
                 (request, span) => AuthenticateRequestAsync(authenticator, request, span),

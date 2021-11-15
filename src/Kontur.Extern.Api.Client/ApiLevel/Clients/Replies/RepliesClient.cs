@@ -12,9 +12,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
 {
     public class RepliesClient : IRepliesClient
     {
-        private readonly IHttpRequestsFactory http;
+        private readonly IHttpRequestFactory http;
         
-        public RepliesClient(IHttpRequestsFactory http) => this.http = http;
+        public RepliesClient(IHttpRequestFactory http) => this.http = http;
 
         public Task<ReplyDocument> GetReplyAsync(
             Guid accountId,

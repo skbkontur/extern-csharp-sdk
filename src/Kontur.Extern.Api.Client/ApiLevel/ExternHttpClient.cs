@@ -10,22 +10,22 @@ using Kontur.Extern.Api.Client.Http;
 
 namespace Kontur.Extern.Api.Client.ApiLevel
 {
-    internal class KeApiClient : IKeApiClient
+    internal class ExternHttpClient : IExternHttpClient
     {
-        internal KeApiClient(IHttpRequestsFactory httpRequestsFactory)
+        internal ExternHttpClient(IHttpRequestFactory httpRequestFactory)
         {
-            Http = httpRequestsFactory;
-            Accounts = new AccountClient(httpRequestsFactory);
-            Docflows = new DocflowsClient(httpRequestsFactory);
-            Replies = new RepliesClient(httpRequestsFactory);
-            Drafts = new DraftsClient(httpRequestsFactory);
-            Events = new EventsClient(httpRequestsFactory);
-            Contents = new ContentsClient(httpRequestsFactory);
-            DraftsBuilder = new DraftsBuilderClient(httpRequestsFactory);
-            Organizations = new OrganizationsClient(httpRequestsFactory);
+            Http = httpRequestFactory;
+            Accounts = new AccountClient(httpRequestFactory);
+            Docflows = new DocflowsClient(httpRequestFactory);
+            Replies = new RepliesClient(httpRequestFactory);
+            Drafts = new DraftsClient(httpRequestFactory);
+            Events = new EventsClient(httpRequestFactory);
+            Contents = new ContentsClient(httpRequestFactory);
+            DraftsBuilder = new DraftsBuilderClient(httpRequestFactory);
+            Organizations = new OrganizationsClient(httpRequestFactory);
         }
 
-        public IHttpRequestsFactory Http { get; }
+        public IHttpRequestFactory Http { get; }
         public IAccountClient Accounts { get; }
         public IDocflowsClient Docflows { get; }
         public IRepliesClient Replies { get; }

@@ -27,7 +27,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client
         
         public static OpenIdClient Create(RequestTimeouts requestTimeouts, IHttpClientConfiguration clientConfiguration, ILog log)
         {
-            var http = new HttpRequestsFactory(
+            var http = new HttpRequestFactory(
                 clientConfiguration,
                 requestTimeouts,
                 null,
@@ -39,9 +39,9 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client
             return new OpenIdClient(http);
         }
 
-        private readonly IHttpRequestsFactory http;
+        private readonly IHttpRequestFactory http;
 
-        private OpenIdClient(IHttpRequestsFactory http) => this.http = http;
+        private OpenIdClient(IHttpRequestFactory http) => this.http = http;
 
         public async Task<TokenResponse> RequestTokenAsync(RefreshTokenRequest tokenRequest, TimeSpan? timeout = null)
         {

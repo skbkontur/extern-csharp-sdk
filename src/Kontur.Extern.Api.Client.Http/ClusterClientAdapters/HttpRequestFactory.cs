@@ -10,7 +10,7 @@ using Request = Vostok.Clusterclient.Core.Model.Request;
 
 namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
 {
-    public class HttpRequestsFactory : IHttpRequestsFactory
+    public class HttpRequestFactory : IHttpRequestFactory
     {
         private readonly RequestTimeouts requestTimeouts;
         private readonly Func<Request, TimeSpan, Task<Request>>? requestTransformAsync;
@@ -19,7 +19,7 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
         private readonly IClusterClient clusterClient;
         private readonly IJsonSerializer serializer;
 
-        public HttpRequestsFactory(
+        public HttpRequestFactory(
             IHttpClientConfiguration configuration,
             RequestTimeouts requestTimeouts, 
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,

@@ -12,7 +12,7 @@ namespace Kontur.Extern.Api.Client.Helpers
     internal static class DocflowListsHelper
     {
         internal static IEntityList<IDocflow> DocflowsList(
-            IKeApiClient apiClient,
+            IExternHttpClient apiClient,
             Guid accountId,
             Guid docflowId,
             Guid documentId,
@@ -31,7 +31,7 @@ namespace Kontur.Extern.Api.Client.Helpers
                 });
         }
 
-        internal delegate Task<DocflowPage> LoadPage(IKeApiClient apiClient, 
+        internal delegate Task<DocflowPage> LoadPage(IExternHttpClient apiClient, 
                                                      Guid accountId,
                                                      Guid docflowId,
                                                      Guid documentId,
