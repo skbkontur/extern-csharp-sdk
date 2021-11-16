@@ -99,7 +99,7 @@ namespace Kontur.Extern.Api.Client.Exceptions
             new ArgumentException($"Invalid range bounds, the value '{@from}' of '{fromParamName}' parameter is greater than the value '{to}' of '{toParamName}' parameter");
 
         public static ApiException LongOperationFailed(ApiError startApiError) => 
-            new($"{startApiError}{NewLine}{startApiError.Message}");
+            new(startApiError);
 
         public static Exception StringShouldNotBeNullOrWhiteSpace([InvokerParameterName] string paramName) => 
             new ArgumentException("The given value cannot be null, or empty, or a whitespace string.", paramName);
@@ -111,7 +111,7 @@ namespace Kontur.Extern.Api.Client.Exceptions
             new InvalidOperationException("There is no specified an authentication provider or the specified one is not supported");
 
         public static Exception UnsuccessfulApiResponse(ApiError apiErrorResponse) =>
-            new ApiException(apiErrorResponse.ToString());
+            new ApiException(apiErrorResponse);
 
         public static Exception UrlShouldBeAbsolute([InvokerParameterName] string paramName, Uri uri) => 
             new ArgumentException($"The value '{uri}' is not be absolute url", paramName);
