@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
@@ -40,11 +41,19 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }
         
         [Fact]
-        public async Task Get_should_fail_when_try_to_read_non_existent_draft()
+        public void Get_should_fail_when_try_to_read_non_existent_draft()
         {
-            Func<Task> func = async () => await Context.Drafts.GetDraft(AccountId, Guid.NewGuid());
+            var apiException = Assert.ThrowsAsync<ApiException>(
+                () => Context.Drafts.GetDraft(AccountId, Guid.NewGuid()));
+            apiException.Result.Message.Should().Contain("NotFound");
+        }
 
-            await func.Should().ThrowAsync<ApiException>();
+        [Fact]
+        public void Get_should_return_BadRequest_when_try_use_null_guid_in_draftId()
+        {
+            var apiException = Assert.ThrowsAsync<ApiException>(
+                () => Context.Drafts.GetDraft(AccountId, Guid.Empty));
+            apiException.Result.Message.Should().Contain("BadRequest");
         }
 
         [Fact]
@@ -53,6 +62,15 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var draft = await Context.Drafts.GetDraftOrNull(AccountId, Guid.NewGuid());
 
             draft.Should().BeNull();
+        }
+
+        [Fact]
+        public void TryGet_should_return_BadRequest_when_use_empty_guid()
+        {
+            var apiException = Assert.ThrowsAsync<ApiException>(
+                () => Context.Drafts.GetDraftOrNull(AccountId, Guid.Empty));
+           
+            apiException.Result.Message.Should().Contain("BadRequest");
         }
 
         [Fact]
@@ -69,10 +87,21 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }
 
         [Fact]
+        public void Should_return_forbidden_when_try_get_incorrect_accountId()
+        {
+            var apiException = Assert.ThrowsAsync<ApiException>(
+                () => Context.Drafts.GetDraft(Guid.NewGuid(), Guid.NewGuid()));
+            apiException.Result.Message.Should().Contain("Forbidden"); 
+
+        }
+
+        [Fact]
         public async Task Deleted_draft_should_cannot_be_loaded()
         {
             var newDraft = CreateDraftOfDefaultAccount();
             Guid draftId;
+            
+            //draft deleted after using
             await using (var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft))
             {
                 draftId = entityScope.Entity.Id;
@@ -106,15 +135,15 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
             var documentId = Guid.NewGuid();
+            var content = new StreamDocumentContent(new MemoryStream(new byte[] {1, 2, 3}));
 
             var document = DraftDocumentBuilder
                 .WithId(documentId)
-                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3})))
+                .WithContentToUpload(content)
                 .WithType(DocumentType.Fns.Fns534.Report)
                 .ToDocument();
             
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
-
             addedDocumentId.Should().Be(documentId);
         }
 
@@ -360,7 +389,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             {
                 var inn = GeneratedAccount.Inn.ToString();
                 var kpp = GeneratedAccount.Kpp.ToString();
-                var orgName = GeneratedAccount.OrganizationName;// "the_org";
+                var orgName = GeneratedAccount.OrganizationName;
                 var (surname, firstName, patronymicName) = GeneratedAccount.ChiefName;
                 return await ExternTestTool.GenerateFufSschFileContentAsync(
                     generateCertificateIfAbsentInSender: true,
@@ -415,7 +444,12 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             docflow.Should().NotBeNull();
         }
-        
+
+        [Fact]
+        public async Task Should_send_a_correct_draft()
+        {
+        }
+
         [Fact]
         public async Task Should_fail_if_send_an_incorrect_draft()
         {
@@ -436,20 +470,16 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             var exception = (await func.Should().ThrowAsync<ApiException>()).Which;
             exception.Message.Should().Contain(document.DocumentId.ToString()).And.Contain(createdDraft.Id.ToString());
-            
-            output.WriteLine("Thrown error:");
-            output.WriteLine(exception.ToString());
-
-            async Task<byte[]> GenerateIncorrectFufSschContent()
-            {
-                var inn = GeneratedAccount.Inn.ToString();
-                return await ExternTestTool.GenerateFufSschFileContentAsync(
-                    new Extern.Api.Client.Testing.ExternTestTool.Models.Requests.Sender(inn),
-                    generateCertificateIfAbsentInSender: true
-                );
-            }
         }
-        
+
+        private async Task<byte[]> GenerateIncorrectFufSschContent()
+        {
+            var inn = GeneratedAccount.Inn.ToString();
+            return await ExternTestTool.GenerateFufSschFileContentAsync(
+                new Extern.Api.Client.Testing.ExternTestTool.Models.Requests.Sender(inn),
+                generateCertificateIfAbsentInSender: true
+            );
+        }
         [Fact]
         public async Task Should_return_error_if_trying_to_send_an_incorrect_draft()
         {

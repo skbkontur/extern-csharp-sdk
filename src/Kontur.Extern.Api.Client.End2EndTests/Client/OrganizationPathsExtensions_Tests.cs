@@ -157,6 +157,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         [Fact]
         public async Task Should_rename_an_organization()
         {
+
             await using var organizationScope = await Context.Organizations
                 .AddLegalEntityOrganization(AccountId, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org");
 
