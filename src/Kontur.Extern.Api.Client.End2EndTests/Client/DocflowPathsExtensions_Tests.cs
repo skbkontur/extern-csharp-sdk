@@ -94,7 +94,17 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         {
             var docflow = await Context.Docflows.ListAll(AccountId);
             docflow.Should().BeEmpty();
+        }  
+        
+        [Fact]
+        public async Task TryGet_should__not_return_docflows_when_filtered_by_some_filter()
+        {
+            var type = DocflowType.Fss.Sedo.ProviderSubscription;
+            var filter = new DocflowFilterBuilder().WithTypes(type).WithOrganizationId(Guid.Parse("f169f420-bce5-4228-928e-9cf40cef5eb9")).ForAllUsers();
+            var docflow = await Context.Docflows.ListByFilter(AccountId,filter);
+            docflow.Should().NotBeEmpty();
         }
+
 
         [Fact]
         public async Task TryGet_should__not_return_docflows_when_filtered_by_not_existing_type()
