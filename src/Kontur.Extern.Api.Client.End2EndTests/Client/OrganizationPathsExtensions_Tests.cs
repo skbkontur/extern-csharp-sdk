@@ -82,11 +82,14 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         [Fact]
         public async Task List_should_return_default_organization_of_the_account()
         {
-            var expectedOrganization = GetMainOrganizationOfTheAccount();
             var organizationsOfAccount = await Context.Organizations.LoadAll(AccountId);
 
             organizationsOfAccount.Should().HaveCount(1);
-            organizationsOfAccount[0].General.Should().BeEquivalentTo(expectedOrganization);
+            var organization = organizationsOfAccount.First().General;
+            organization.Inn.Should().Be(GeneratedAccount.Inn.ToString());
+            organization.Kpp.Should().Be(GeneratedAccount.Kpp.ToString());
+            organization.IsMainOrg.Should().BeTrue();
+
         }
 
         [Fact]
@@ -199,12 +202,13 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
         private object GetMainOrganizationOfTheAccount()
         {
-            return new
+            return new 
             {
                 GeneratedAccount.Inn,
+                IsMainOrg = true,
                 GeneratedAccount.Kpp,
                 Name = GeneratedAccount.OrganizationName,
-                IsMainOrg = true
+                
             };
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
@@ -75,8 +76,13 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         [Fact]
         public async Task TryGet_should_return_docflow()
         {
-            var docflow = await Context.Docflows.GetDocflowOrNull(AccountId, Guid.Parse("04c2f153-84e3-42c4-87c6-a8d1c39204d4"));
-            docflow.Should().NotBeNull();
+            var type = DocflowType.Fss.Sedo.ProviderSubscription;
+            var filter = new DocflowFilterBuilder().WithTypes(type);
+            var getDocflow = await Context.Docflows.ListByFilter(AccountId, filter);
+            
+            var docflow = await Context.Docflows.GetDocflowOrNull(AccountId, getDocflow.Last().Id);
+            
+            docflow.Should().BeEquivalentTo(getDocflow.Last());
         } 
         
         
@@ -97,10 +103,10 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }  
         
         [Fact]
-        public async Task TryGet_should__not_return_docflows_when_filtered_by_some_filter()
+        public async Task TryGet_should_return_docflows_when_filtered_by_some_filter()
         {
             var type = DocflowType.Fss.Sedo.ProviderSubscription;
-            var filter = new DocflowFilterBuilder().WithTypes(type).WithOrganizationId(Guid.Parse("f169f420-bce5-4228-928e-9cf40cef5eb9")).ForAllUsers();
+            var filter = new DocflowFilterBuilder().WithTypes(type).WithFinishedDocflows(false).ForAllUsers();
             var docflow = await Context.Docflows.ListByFilter(AccountId,filter);
             docflow.Should().NotBeEmpty();
         }
