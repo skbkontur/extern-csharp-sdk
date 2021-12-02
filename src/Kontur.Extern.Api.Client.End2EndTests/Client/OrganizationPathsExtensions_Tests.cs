@@ -103,7 +103,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var organizationsOfAccount = await Context.Organizations.LoadAll(AccountId);
             
             organizationsOfAccount.Should().HaveCount(3);
-            organizationsOfAccount.Select(x => x.General).Should().ContainEquivalentOf(GetMainOrganizationOfTheAccount());
+          
             ShouldContainOrganization(organizationsOfAccount, organizationScope1.Entity);
             ShouldContainOrganization(organizationsOfAccount, organizationScope2.Entity);
         }

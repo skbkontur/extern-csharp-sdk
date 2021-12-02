@@ -97,10 +97,12 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var orgName = "org";
 
 
-            await using var accountScope1 = await Context.Accounts.CreateAccount(firstInn, firstKpp, orgName);
-            await using var accountScope2 = await Context.Accounts.CreateAccount(Inn.Parse("678050110389"), orgName);
-            await using var accountScope3 = await Context.Accounts.CreateAccount(secondInn, secondKpp, orgName);
+            await using var accountScope1 = await Context.Accounts.CreateAccount(firstInn, firstKpp, orgName).ConfigureAwait(false);
+            await using var accountScope2 = await Context.Accounts.CreateAccount(Inn.Parse("678050110389"), orgName).ConfigureAwait(false);
+            await using var accountScope3 = await Context.Accounts.CreateAccount(secondInn, secondKpp, orgName).ConfigureAwait(false);
             
+            
+
             var accountsAfterCreate = await Context.Accounts.LoadAllAccountsAsync();
 
             accountsAfterCreate.Count.Should().Be(3);
