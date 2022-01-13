@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Exceptions;
@@ -11,20 +12,20 @@ namespace Kontur.Extern.Api.Client
     [PublicAPI]
     public static class AccountListPathExtension
     {
-        public static Task<Account> CreateIndividualEntrepreneurAccountAsync(this in AccountListPath path, Inn inn, string organizationName)
+        public static Task<Account> CreateIndividualEntrepreneurAccountAsync(this in AccountListPath path, Inn inn, string organizationName, TimeSpan? timeout = null)
         {
             if (string.IsNullOrWhiteSpace(organizationName))
                 throw Errors.StringShouldNotBeNullOrWhiteSpace(organizationName);
             var apiClient = path.Services.Api;
-            return apiClient.Accounts.CreateAccountAsync(inn.ToString(), null, organizationName);
+            return apiClient.Accounts.CreateAccountAsync(inn.ToString(), null, organizationName, timeout);
         }
         
-        public static Task<Account> CreateLegalEntityAccountAsync(this in AccountListPath path, LegalEntityInn inn, Kpp kpp, string organizationName)
+        public static Task<Account> CreateLegalEntityAccountAsync(this in AccountListPath path, LegalEntityInn inn, Kpp kpp, string organizationName, TimeSpan? timeout = null)
         {
             if (string.IsNullOrWhiteSpace(organizationName))
                 throw Errors.StringShouldNotBeNullOrWhiteSpace(organizationName);
             var apiClient = path.Services.Api;
-            return apiClient.Accounts.CreateAccountAsync(inn.ToString(), kpp, organizationName);
+            return apiClient.Accounts.CreateAccountAsync(inn.ToString(), kpp, organizationName, timeout);
         }
 
         public static IEntityList<Account> List(this in AccountListPath path)

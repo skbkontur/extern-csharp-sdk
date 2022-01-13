@@ -19,9 +19,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
 {
     public class DraftsClient : IDraftsClient
     {
-        private readonly IHttpRequestsFactory http;
+        private readonly IHttpRequestFactory http;
 
-        public DraftsClient(IHttpRequestsFactory http) => this.http = http;
+        public DraftsClient(IHttpRequestFactory http) => this.http = http;
 
         public Task<Draft> CreateDraftAsync(Guid accountId, DraftMetaRequest meta, TimeSpan? timeout = null) => 
             http.PostAsync<DraftMetaRequest, Draft>($"/v1/{accountId}/drafts", meta, timeout);

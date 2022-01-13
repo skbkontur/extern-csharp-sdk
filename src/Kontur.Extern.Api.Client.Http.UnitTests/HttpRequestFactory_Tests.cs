@@ -16,7 +16,7 @@ using Xunit.Abstractions;
 
 namespace Kontur.Extern.Api.Client.Http.UnitTests
 {
-    public static class HttpRequestsFactory_Tests
+    public static class HttpRequestFactory_Tests
     {
         public class Get : VerbTestBase
         {
@@ -69,7 +69,7 @@ namespace Kontur.Extern.Api.Client.Http.UnitTests
                 bytes.Should().BeEquivalentTo(responseBytes);
             }
 
-            protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestsFactory http) => http.Get("/some-resource");
+            protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestFactory http) => http.Get("/some-resource");
         }
 
         public class Post : VerbTestBase
@@ -118,7 +118,7 @@ namespace Kontur.Extern.Api.Client.Http.UnitTests
                 ClusterClientVerify.SentContentString.Should().Be(@"{""Data"":""sent data""}");
             }
 
-            protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestsFactory http) => http.Post("/some-resource");
+            protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestFactory http) => http.Post("/some-resource");
         }
 
         public class Put : VerbTestBase
@@ -157,7 +157,7 @@ namespace Kontur.Extern.Api.Client.Http.UnitTests
                 ClusterClientVerify.SentContentString.Should().Be(@"{""Data"":""sent data""}");
             }
             
-            protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestsFactory http) => http.Put("/some-resource");
+            protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestFactory http) => http.Put("/some-resource");
         }
 
         public class Delete : VerbTestBase
@@ -187,7 +187,7 @@ namespace Kontur.Extern.Api.Client.Http.UnitTests
                 ClusterClientVerify.SentRequest!.Method.Should().Be("DELETE");
             }
             
-            protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestsFactory http) => http.Delete("/some-resource");
+            protected override IHttpRequest MakeRequestForCommonTests(IHttpRequestFactory http) => http.Delete("/some-resource");
         }
         
         public class Failover
@@ -244,12 +244,12 @@ namespace Kontur.Extern.Api.Client.Http.UnitTests
                 response.Status.IsSuccessful.Should().BeTrue();
             }
 
-            private HttpRequestsFactory CreateHttp(
+            private HttpRequestFactory CreateHttp(
                 FailoverAsync failover,
                 Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
                 Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler = null)
             {
-                return HttpRequestsFactory_Tests.CreateHttp(fakeClient.Configuration, log, requestTransformAsync, errorResponseHandler, failover);
+                return HttpRequestFactory_Tests.CreateHttp(fakeClient.Configuration, log, requestTransformAsync, errorResponseHandler, failover);
             }
         }
 
@@ -318,7 +318,7 @@ namespace Kontur.Extern.Api.Client.Http.UnitTests
                 action.Should().Throw<ArgumentException>();
             }
 
-            private HttpRequestsFactory CreateHttp() => HttpRequestsFactory_Tests.CreateHttp(fakeClient.Configuration, log);
+            private HttpRequestFactory CreateHttp() => HttpRequestFactory_Tests.CreateHttp(fakeClient.Configuration, log);
         }
 
         public abstract class VerbTestBase
@@ -401,17 +401,17 @@ namespace Kontur.Extern.Api.Client.Http.UnitTests
                 userAgent.Should().Be(expectedUserAgent);
             }
 
-            protected abstract IHttpRequest MakeRequestForCommonTests(IHttpRequestsFactory http);
+            protected abstract IHttpRequest MakeRequestForCommonTests(IHttpRequestFactory http);
 
-            protected HttpRequestsFactory CreateHttp(
+            protected HttpRequestFactory CreateHttp(
                 Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,
                 Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler = null)
             {
-                return HttpRequestsFactory_Tests.CreateHttp(fakeClient.Configuration, log, requestTransformAsync, errorResponseHandler);
+                return HttpRequestFactory_Tests.CreateHttp(fakeClient.Configuration, log, requestTransformAsync, errorResponseHandler);
             }
         }
 
-        private static HttpRequestsFactory CreateHttp(
+        private static HttpRequestFactory CreateHttp(
             IHttpClientConfiguration configuration,
             ILog log,
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync = null,

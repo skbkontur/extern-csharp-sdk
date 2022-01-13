@@ -13,9 +13,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts
 {
     public class AccountClient : IAccountClient
     {
-        private readonly IHttpRequestsFactory http;
+        private readonly IHttpRequestFactory http;
 
-        public AccountClient(IHttpRequestsFactory http) => this.http = http;
+        public AccountClient(IHttpRequestFactory http) => this.http = http;
 
         public Task<AccountList> GetAccountsAsync(int? skip = null, int? take = null, TimeSpan? timeout = null)
         {

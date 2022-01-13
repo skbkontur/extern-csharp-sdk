@@ -14,16 +14,16 @@ namespace Kontur.Extern.Api.Client
     [PublicAPI]
     public static class AccountPathExtension
     {
-        public static Task<Account> GetAsync(this in AccountPath path)
+        public static Task<Account> GetAsync(this in AccountPath path, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
-            return apiClient.Accounts.GetAccountAsync(path.AccountId);
+            return apiClient.Accounts.GetAccountAsync(path.AccountId, timeout);
         }
         
-        public static Task<Account?> TryGetAsync(this in AccountPath path)
+        public static Task<Account?> TryGetAsync(this in AccountPath path, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
-            return apiClient.Accounts.TryGetAccountAsync(path.AccountId);
+            return apiClient.Accounts.TryGetAccountAsync(path.AccountId, timeout);
         }
 
         /// <summary>
@@ -54,10 +54,10 @@ namespace Kontur.Extern.Api.Client
         
         public static IEntityList<Warrant> Warrants(this in AccountPath path) => throw new NotImplementedException();
 
-        public static Task<bool> DeleteAsync(this in AccountPath path)
+        public static Task<bool> DeleteAsync(this in AccountPath path, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
-            return apiClient.Accounts.DeleteAccountAsync(path.AccountId);
+            return apiClient.Accounts.DeleteAccountAsync(path.AccountId, timeout);
         }
     }
 }

@@ -12,9 +12,9 @@ using Kontur.Extern.Api.Client.Http;
 namespace Kontur.Extern.Api.Client.ApiLevel
 {
     //todo Сделать нормальные тесты для всех методов всех реализованных подклиентов этого интерфейса.
-    public interface IKeApiClient
+    public interface IExternHttpClient
     {
-        IHttpRequestsFactory Http { get; }
+        IHttpRequestFactory Http { get; }
         IAccountClient Accounts { get; }
         IDocflowsClient Docflows { get; }
         IRepliesClient Replies { get; }

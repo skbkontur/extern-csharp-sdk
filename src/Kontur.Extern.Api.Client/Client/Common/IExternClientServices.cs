@@ -10,9 +10,9 @@ namespace Kontur.Extern.Api.Client.Common
 {
     public interface IExternClientServices
     {
-        IHttpRequestsFactory Http { get; }
+        IHttpRequestFactory Http { get; }
         IJsonSerializer JsonSerializer { get; }
-        IKeApiClient Api { get; }
+        IExternHttpClient Api { get; }
         IPollingStrategy LongOperationsPollingStrategy { get; }
         IAuthenticator Authenticator { get; }
         ICrypt Crypt { get; }

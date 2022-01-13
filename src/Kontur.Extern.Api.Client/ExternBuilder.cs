@@ -1,8 +1,13 @@
 using System;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.ApiLevel;
+using Kontur.Extern.Api.Client.Auth.Abstractions;
+using Kontur.Extern.Api.Client.Auth.OpenId.Builder;
 using Kontur.Extern.Api.Client.Model.Configuration;
 using Kontur.Extern.Api.Client.Primitives.Polling;
 using Kontur.Extern.Api.Client.Cryptography;
+using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Http.Configurations;
 using Kontur.Extern.Api.Client.Http.Options;
 using Vostok.Commons.Time;
@@ -34,6 +39,9 @@ namespace Kontur.Extern.Api.Client
                 this.clientConfiguration = clientConfiguration ?? throw new ArgumentNullException(nameof(clientConfiguration));
             }
 
+            public Configured WithAuthenticator(IAuthenticator authenticator) =>
+                new(clientConfiguration, log, authenticator ?? throw new ArgumentNullException(nameof(authenticator)));
+
             public Configured WithOpenIdAuthenticator(OpenIdSetup setup) =>
                 new(clientConfiguration, log, setup ?? throw new ArgumentNullException(nameof(setup)));
         }
@@ -45,15 +53,24 @@ namespace Kontur.Extern.Api.Client
             private IPollingStrategy? pollingStrategy;
             private readonly ILog log;
             private RequestTimeouts? requestTimeouts;
-            private readonly OpenIdSetup openIdAuthenticatorSetup;
+            private readonly IAuthenticator authenticator;
             private bool enableUnauthorizedFailover;
             private ContentManagementOptions? contentManagementOptions;
             private readonly IHttpClientConfiguration clientConfiguration;
+            private IExternHttpClient? apiClient;
+            private IHttpRequestFactory? httpRequestFactory;
+
+            internal Configured(IHttpClientConfiguration clientConfiguration, ILog log, IAuthenticator authenticator)
+            {
+                this.log = log ?? throw new ArgumentNullException(nameof(log));
+                this.authenticator = authenticator ?? throw new ArgumentNullException(nameof(authenticator));
+                this.clientConfiguration = clientConfiguration ?? throw new ArgumentNullException(nameof(clientConfiguration));
+            }
 
             internal Configured(IHttpClientConfiguration clientConfiguration, ILog log, OpenIdSetup openIdAuthProviderSetup)
             {
                 this.log = log ?? throw new ArgumentNullException(nameof(log));
-                this.openIdAuthenticatorSetup = openIdAuthProviderSetup ?? throw new ArgumentNullException(nameof(openIdAuthProviderSetup));
+                authenticator = CreateAuthenticator(openIdAuthProviderSetup, log);
                 this.clientConfiguration = clientConfiguration ?? throw new ArgumentNullException(nameof(clientConfiguration));
             }
 
@@ -72,6 +89,18 @@ namespace Kontur.Extern.Api.Client
             public Configured WithDefaultRequestTimeouts(TimeSpan defaultReadTimeout, TimeSpan defaultWriteTimeout, TimeSpan defaultLongOperationTimeout)
             {
                 requestTimeouts = new RequestTimeouts(defaultReadTimeout, defaultWriteTimeout, defaultLongOperationTimeout);
+                return this;
+            }
+
+            public Configured WithExternHttpClient(IExternHttpClient client)
+            {
+                apiClient = client;
+                return this;
+            }
+
+            public Configured WithHttpRequestFactory(IHttpRequestFactory factory)
+            {
+                httpRequestFactory = factory;
                 return this;
             }
 
@@ -99,9 +128,23 @@ namespace Kontur.Extern.Api.Client
                         pollingStrategy,
                         cryptoProvider,
                         requestTimeouts,
-                        openIdAuthenticatorSetup,
+                        authenticator,
+                        apiClient,
+                        httpRequestFactory,
                         log
                     );
+            }
+
+            private static IAuthenticator CreateAuthenticator(OpenIdSetup? openIdSetup, ILog log)
+            {
+                if (openIdSetup is not null)
+                {
+                    var builder = new OpenIdAuthenticatorBuilder(log);
+                    var configuredBuilder = openIdSetup(builder);
+                    return configuredBuilder.Build();
+                }
+
+                throw Errors.TheAuthenticatorNotSpecifiedOrUnsupported();
             }
         }
     }

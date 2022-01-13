@@ -14,9 +14,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class OrganizationsClient : IOrganizationsClient
     {
-        private readonly IHttpRequestsFactory http;
+        private readonly IHttpRequestFactory http;
 
-        public OrganizationsClient(IHttpRequestsFactory http) => this.http = http;
+        public OrganizationsClient(IHttpRequestFactory http) => this.http = http;
 
         public async Task<OrganizationBatch> GetAllOrganizationsAsync(
             Guid accountId,

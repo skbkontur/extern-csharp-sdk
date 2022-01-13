@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace Kontur.Extern.Api.Client.Http
 {
     [PublicAPI]
-    public interface IHttpRequestsFactory
+    public interface IHttpRequestFactory
     {
         IHttpRequest Get(Uri url);
         IPayloadHttpRequest Put(Uri url);

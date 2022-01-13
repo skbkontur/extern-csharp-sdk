@@ -14,9 +14,9 @@ namespace Kontur.Extern.Api.Client.Common
     {
         public ExternClientServices(
             ContentManagementOptions contentManagementOptions,
-            IHttpRequestsFactory http,
+            IHttpRequestFactory http,
             IJsonSerializer jsonSerializer,
-            IKeApiClient api,
+            IExternHttpClient api,
             IPollingStrategy longOperationsPollingStrategy,
             IAuthenticator authenticator,
             ICrypt crypt)
@@ -30,9 +30,9 @@ namespace Kontur.Extern.Api.Client.Common
             ContentService = new ContentService(api.Contents, contentManagementOptions);
         }
         
-        public IHttpRequestsFactory Http { get; }
+        public IHttpRequestFactory Http { get; }
         public IJsonSerializer JsonSerializer { get; }
-        public IKeApiClient Api { get; }
+        public IExternHttpClient Api { get; }
         public IPollingStrategy LongOperationsPollingStrategy { get; }
         
         public IAuthenticator Authenticator { get; }
