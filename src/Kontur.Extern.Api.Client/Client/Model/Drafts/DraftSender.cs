@@ -44,7 +44,7 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
 
         public DraftSender WithIpAddress(IPAddress ipAddress)
         {
-            if (ipAddress is null!)
+            if (ipAddress == null!)
                 throw new ArgumentNullException(nameof(ipAddress));
             ip = ipAddress;
             return this;
