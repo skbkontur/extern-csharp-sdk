@@ -39,6 +39,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Documents
                 .ToDocument();
 
             document.DocumentId.Should().Be(documentId);
+
         }
         
         [Test]

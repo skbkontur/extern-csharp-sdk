@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
@@ -25,16 +24,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         {
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Docflows.GetDocflow(AccountId, Guid.NewGuid()));
-            
-            apiException.Result.Message.Should().Contain("NotFound");
-        }    
-        
-        [Fact]
-        public void Get_should_return_error_when_try_to_read_empty_docflowId()
-        {
-            var apiException = Assert.ThrowsAsync<ApiException>(
-                () => Context.Docflows.GetDocflow(AccountId, Guid.Empty));
-            
+
             apiException.Result.Message.Should().Contain("NotFound");
         }
 
@@ -43,19 +33,18 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         {
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Docflows.GetDocflow(Guid.Empty, Guid.Empty));
-            
+
             apiException.Result.Message.Should().Contain("BadRequest");
-        } 
-        
+        }
+
         [Fact]
         public void Get_should_return_error_when_try_get_other_accountId()
         {
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Docflows.GetDocflow(Guid.NewGuid(), Guid.Empty));
-            
+
             apiException.Result.Message.Should().Contain("Forbidden");
         }
-
 
         [Fact]
         public async Task TryGet_should_return_null_when_try_to_read_non_existent_docflow()
@@ -66,32 +55,12 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }
 
         [Fact]
-        public async Task TryGet_should_return_null_when_try_to_read_empty_docflowId()
-        {
-            var docflow = await Context.Docflows.GetDocflowOrNull(AccountId, Guid.Empty);
-
-            docflow.Should().BeNull();
-        }
-
-        [Fact]
-        public async Task TryGet_should_return_docflow()
-        {
-            var type = DocflowType.Fss.Sedo.ProviderSubscription;
-            var filter = new DocflowFilterBuilder().WithTypes(type);
-            var getDocflow = await Context.Docflows.ListByFilter(AccountId, filter);
-            
-            var docflow = await Context.Docflows.GetDocflowOrNull(AccountId, getDocflow.Last().Id);
-            
-            docflow.Should().BeEquivalentTo(getDocflow.Last());
-        } 
-        
-        
-        [Fact]
         public async Task TryGet_should_return_docflows_when_filtered_by_fss_type()
         {
             var type = DocflowType.Fss.Sedo.ProviderSubscription;
             var filter = new DocflowFilterBuilder().WithTypes(type);
-            var docflow = await Context.Docflows.ListByFilter(AccountId,filter);
+            var docflow = await Context.Docflows.ListByFilter(AccountId, filter).ConfigureAwait(false);
+
             docflow.Should().NotBeNull();
         }
 
@@ -100,26 +69,15 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         {
             var docflow = await Context.Docflows.ListAll(AccountId);
             docflow.Should().BeEmpty();
-        }  
-        
-        [Fact]
-        public async Task TryGet_should_return_docflows_when_filtered_by_some_filter()
-        {
-            var type = DocflowType.Fss.Sedo.ProviderSubscription;
-            var filter = new DocflowFilterBuilder().WithTypes(type).WithFinishedDocflows(false).ForAllUsers();
-            var docflow = await Context.Docflows.ListByFilter(AccountId,filter);
-            docflow.Should().NotBeEmpty();
         }
 
-
         [Fact]
-        public async Task TryGet_should__not_return_docflows_when_filtered_by_not_existing_type()
+        public async Task TryGet_should_not_return_docflows_when_filtered_by_not_existing_type()
         {
             var cu = AuthorityCode.Pfr.Parse("000-007");
             var filter = new DocflowFilterBuilder().WithCu(cu);
-            var docflow = await Context.Docflows.ListByFilter(AccountId,filter);
+            var docflow = await Context.Docflows.ListByFilter(AccountId, filter);
             docflow.Should().BeEmpty();
         }
-
     }
 }

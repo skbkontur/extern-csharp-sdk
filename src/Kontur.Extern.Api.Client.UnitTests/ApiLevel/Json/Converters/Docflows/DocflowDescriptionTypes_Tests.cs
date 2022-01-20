@@ -26,6 +26,14 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
             description.Should().BeNull();
         }
 
+        [Test]
+        public void Should_return_null_when_given_null()
+        {
+            var description = DocflowDescriptionTypes.TryGetDescriptionType("");
+
+            description.Should().BeNull();
+        }
+
         private static IEnumerable<DocflowType> AllDocflowTypes => EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<DocflowType>();
     }
 }

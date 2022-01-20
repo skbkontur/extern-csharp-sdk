@@ -24,6 +24,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Kontur.Extern.Api.Client\Kontur.Extern.Api.Client.csproj" />
     <ProjectReference Include="..\Kontur.Extern.Api.Client.Testing\Kontur.Extern.Api.Client.Testing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Client\ApiLevel\Models\Requests\Account\" />
+    <Folder Include="Client\ApiLevel\Models\Requests\Documents\" />
+    <Folder Include="Client\ApiLevel\Models\Requests\Organization\" />
   </ItemGroup>  
   
 </Project>
