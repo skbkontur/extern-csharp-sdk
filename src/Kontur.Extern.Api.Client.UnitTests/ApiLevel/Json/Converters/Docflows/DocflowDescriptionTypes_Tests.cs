@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows;
@@ -19,19 +20,18 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
         }
 
         [Test]
-        public void Should_return_null_when_given_unknown_document_type()
+        public void Should_return_null_when_given_unknown_docflow_type()
         {
-            var description = DocflowDescriptionTypes.TryGetDescriptionType("urn:docflow:fss-stimulative-payment");
+            var description = DocflowDescriptionTypes.TryGetDescriptionType("urn:docflow:unknown-type");
 
             description.Should().BeNull();
         }
 
-        [Test]
-        public void Should_return_null_when_given_null()
+        [TestCase(null)]
+        [TestCase("")]
+        public void Should_throw_argument_null_exception_when_given_null_or_empty(string value)
         {
-            var description = DocflowDescriptionTypes.TryGetDescriptionType("");
-
-            description.Should().BeNull();
+            Assert.Throws<ArgumentNullException>(() => DocflowDescriptionTypes.TryGetDescriptionType(value));
         }
 
         private static IEnumerable<DocflowType> AllDocflowTypes => EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<DocflowType>();

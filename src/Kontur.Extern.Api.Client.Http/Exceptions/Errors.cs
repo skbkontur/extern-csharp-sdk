@@ -42,10 +42,10 @@ namespace Kontur.Extern.Api.Client.Http.Exceptions
             new ArgumentOutOfRangeException(paramName, totalLength, $"The total length must be greater or equal to content-length value, which is {contentLength}");
 
         public static Exception ContentRangeMustHaveValidBounds([InvokerParameterName] string paramName, long from, long to) => 
-            new ArgumentException($"The specified content-range have wrong bounds: it starts from {@from} and ends on {to}", paramName);
+            new ArgumentException($"The specified content-range has wrong bounds: it starts from {@from} and ends on {to}", paramName);
         
         public static Exception ContentRangeMustHaveEqualBytesAsContentLength([InvokerParameterName] string paramName, long from, long to, long contentLength) => 
-            new ArgumentException($"The specified content-range [{from}, {to}] have contains different bytes as the CONTENT-LENGTH {contentLength}", paramName);
+            new ArgumentException($"The specified content-range [{from}, {to}] has different length from the CONTENT-LENGTH {contentLength}", paramName);
         
         public static Exception JsonIsNotAnObject() => 
             new JsonException("Json is not an object");

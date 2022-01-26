@@ -24,7 +24,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }
 
         [Fact]
-        public async Task Get_should_fail_if_the_organization_is_not_exist()
+        public async Task Get_should_fail_if_the_organization_does_not_exist()
         {
             Func<Task> func = async () => await Context.Organizations.GetOrganization(AccountId, Guid.NewGuid());
 
@@ -32,7 +32,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }
 
         [Fact]
-        public async Task TryGet_should_return_null_if_the_organization_is_not_exist()
+        public async Task TryGet_should_return_null_if_the_organization_does_not_exist()
         {
             var organization = await Context.Organizations.GetOrganizationOrNull(AccountId, Guid.NewGuid());
 
@@ -196,17 +196,6 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         private static void ShouldNotContainOrganization(IEnumerable<Organization> organizations, Organization expectedOrganization)
         {
             organizations.Select(x => x.Id).Should().NotContain(expectedOrganization.Id);
-        }
-
-        private object GetMainOrganizationOfTheAccount()
-        {
-            return new
-            {
-                GeneratedAccount.Inn,
-                IsMainOrg = true,
-                GeneratedAccount.Kpp,
-                Name = GeneratedAccount.OrganizationName,
-            };
         }
     }
 }

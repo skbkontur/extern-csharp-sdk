@@ -50,7 +50,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }
 
         [Fact]
-        public void Get_should_return_BadRequest_when_try_use_null_guid_in_draftId()
+        public void Get_should_return_BadRequest_when_try_to_use_empty_guid_in_draftId()
         {
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Drafts.GetDraft(AccountId, Guid.Empty));
@@ -79,15 +79,16 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }
 
         [Fact]
-        public void Should_return_forbidden_when_try_get_incorrect_accountId()
+        public void Should_return_forbidden_when_try_to_get_draft_with_random_accountId()
         {
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Drafts.GetDraft(Guid.NewGuid(), Guid.NewGuid()));
+
             apiException.Result.Message.Should().Contain("Forbidden");
         }
 
         [Fact]
-        public async Task Deleted_draft_should_cannot_be_loaded()
+        public async Task Deleted_draft_should_not_be_loaded()
         {
             var newDraft = CreateDraftOfDefaultAccount();
             Guid draftId;
@@ -458,15 +459,6 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             exception.Message.Should().Contain(document.DocumentId.ToString()).And.Contain(createdDraft.Id.ToString());
         }
 
-        private async Task<byte[]> GenerateIncorrectFufSschContent()
-        {
-            var inn = GeneratedAccount.Inn.ToString();
-            return await ExternTestTool.GenerateFufSschFileContentAsync(
-                new Sender(inn),
-                generateCertificateIfAbsentInSender: true
-            );
-        }
-
         [Fact]
         public async Task Should_return_error_if_trying_to_send_an_incorrect_draft()
         {
@@ -487,15 +479,6 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             result.TryGetFailureResult(out var sendingFailure).Should().BeTrue();
             sendingFailure.CheckStatus.Should().NotBeNull();
-
-            async Task<byte[]> GenerateIncorrectFufSschContent()
-            {
-                var inn = GeneratedAccount.Inn.ToString();
-                return await ExternTestTool.GenerateFufSschFileContentAsync(
-                    new Sender(inn),
-                    generateCertificateIfAbsentInSender: true
-                );
-            }
         }
 
         private DraftMetadata CreateDraftOfDefaultAccount(DraftRecipient? recipient = null, FssRegNumber? fssRegNumber = null)
@@ -514,6 +497,15 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 payer,
                 DraftSender.LegalEntity(certInn, certKpp, senderCert).WithIpAddress(IPAddress.Parse("8.8.8.8")),
                 recipient ?? DraftRecipient.Ifns(IfnsCode.Parse("0087"), MriCode.Parse("9660"))
+            );
+        }
+
+        private async Task<byte[]> GenerateIncorrectFufSschContent()
+        {
+            var inn = GeneratedAccount.Inn.ToString();
+            return await ExternTestTool.GenerateFufSschFileContentAsync(
+                new Sender(inn),
+                generateCertificateIfAbsentInSender: true
             );
         }
 

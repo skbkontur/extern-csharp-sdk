@@ -11,8 +11,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
 {
     internal class DocflowFilterBuilderTimeFilter_Tests
     {
-        private readonly string nameOfCreateTo = "createdTo";
-        private readonly string nameOfCreateFrom = "createdFrom";
+        private readonly string nameOfCreatedTo = "createdTo";
+        private readonly string nameOfCreatedFrom = "createdFrom";
         private readonly DateTime someDate = new(2021, 07, 08, 01, 01, 01);
 
         [Test]
@@ -27,8 +27,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             var docflowFilter = docflowFilterBuilder.CreateFilter();
             ShouldHaveExpectedQueryParameters(
                 docflowFilter,
-                (nameOfCreateFrom, "2021-07-08T01:01:01.0000000"),
-                (nameOfCreateTo, "2021-07-09T01:01:01.0000000"));
+                (nameOfCreatedFrom, "2021-07-08T01:01:01.0000000"),
+                (nameOfCreatedTo, "2021-07-09T01:01:01.0000000"));
 
             docflowFilterBuilder.Should().NotBeNull();
         }
@@ -45,8 +45,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
 
             ShouldHaveExpectedQueryParameters(
                 docflowFilter,
-                (nameOfCreateFrom, "2021-07-08T01:01:01.0000000"),
-                (nameOfCreateTo, "2021-07-09T01:01:01.0000000"));
+                (nameOfCreatedFrom, "2021-07-08T01:01:01.0000000"),
+                (nameOfCreatedTo, "2021-07-09T01:01:01.0000000"));
 
             docflowFilter.Should().NotBeNull();
         }
@@ -57,31 +57,34 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             var from = DateTime.MinValue;
             var to = DateTime.MaxValue;
 
-            var docflowFilterBuilder = new DocflowFilterBuilder().WithCreatedFrom(from);
-            docflowFilterBuilder.WithCreatedTo(to);
+            var docflowFilter = new DocflowFilterBuilder()
+                .WithCreatedFrom(from)
+                .WithCreatedTo(to)
+                .CreateFilter();
 
-            docflowFilterBuilder.CreateFilter();
-            docflowFilterBuilder.Should().NotBeNull();
+            ShouldHaveExpectedQueryParameters(
+                docflowFilter,
+                (nameOfCreatedFrom, "0001-01-01T00:00:00.0000000"),
+                (nameOfCreatedTo, "9999-12-31T23:59:59.9999999"));
         }
 
-        [Ignore("В ошибке перепутаны параметры from и to + d итоговом параметре используется dateTo вместо createdTo ")]
         [Test]
-        public void WithCreatedTo_should_fail_when_created_from_is_bigger_than_created_to_filter()
+        public void WithCreatedTo_should_fail_when_created_from_is_greater_than_created_to_filter()
         {
             var from = new DateTime(2021, 07, 08, 01, 01, 01);
             var to = from.AddDays(-1);
-            var expectedMessageOfException = Errors.InvalidRange(nameOfCreateFrom, "dateTo", from, to).Message;
+            var expectedMessageOfException = Errors.InvalidRange(nameOfCreatedFrom, nameOfCreatedTo, from, to).Message;
 
             var docflowFilterBuilder = new DocflowFilterBuilder().WithCreatedFrom(from);
             var apiException = Assert.Throws<ArgumentException>(
                 () => docflowFilterBuilder.WithCreatedTo(to));
 
             apiException.Should().NotBeNull();
-            apiException?.Message.Should().Be(expectedMessageOfException);
+            apiException!.Message.Should().Be(expectedMessageOfException);
         }
 
         [Test]
-        public void WithFilter_should_not_fail_when_created_from_is_bigger_than_created_to_filter()
+        public void WithFilter_should_not_fail_when_created_from_is_greater_than_created_to_filter()
         {
             var from = new DateTime(2021, 07, 08, 01, 01, 01);
             var to = from.AddDays(-1);
@@ -90,7 +93,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             docflowFilter.SetCreatedFrom(from);
             docflowFilter.SetCreatedTo(to);
 
-            docflowFilter.Should().NotBeNull();
+            docflowFilter.ToQueryParameters().Should().NotBeNullOrEmpty();
         }
 
         [Test]
@@ -99,11 +102,12 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             var docflowFilter = new DocflowFilterBuilder().CreateFilter();
             docflowFilter.SetCreatedFrom(null);
             docflowFilter.SetCreatedTo(null);
+
             docflowFilter.ToQueryParameters().Should().BeEmpty();
         }
 
         [Test]
-        public void WithFilter_should_be_empty_when_build_with_created_to_and__set_created_to_is_null()
+        public void WithFilter_should_be_empty_when_build_with_created_to_and_set_created_to_is_null()
         {
             var docflowFilter = new DocflowFilterBuilder().WithCreatedTo(someDate).CreateFilter();
 
@@ -113,7 +117,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
         }
 
         [Test]
-        public void WithCreatedTo_should_not_fail_when_created_from_same_than_created_to_filter()
+        public void WithCreatedTo_should_not_fail_when_created_from_same_as_created_to_filter()
         {
             var from = someDate;
             var to = from;
@@ -124,11 +128,11 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
         }
 
         [Test]
-        public void WithCreatedFrom_should_fail_when_created_from_is_bigger_than_created_to_filter()
+        public void WithCreatedFrom_should_fail_when_created_from_is_greater_than_created_to_filter()
         {
             var from = someDate;
             var to = from.AddDays(-1);
-            var expectedMessageOfException = Errors.InvalidRange("dateFrom", nameOfCreateTo, from, to).Message;
+            var expectedMessageOfException = Errors.InvalidRange(nameOfCreatedFrom, nameOfCreatedTo, from, to).Message;
 
             var docflowFilterBuilder = new DocflowFilterBuilder().WithCreatedTo(to);
 
@@ -136,7 +140,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 () => docflowFilterBuilder.WithCreatedFrom(from));
 
             apiException.Should().NotBeNull();
-            apiException?.Message.Should().Be(expectedMessageOfException);
+            apiException!.Message.Should().Be(expectedMessageOfException);
         }
 
         [Test]
@@ -147,7 +151,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
 
             var docflowFilter = docflowFilterBuilder.CreateFilter();
 
-            ShouldHaveExpectedQueryParameters(docflowFilter, (nameOfCreateFrom, "2021-07-08T01:01:01.0000000"));
+            ShouldHaveExpectedQueryParameters(docflowFilter, (nameOfCreatedFrom, "2021-07-08T01:01:01.0000000"));
         }
 
         [Test]
@@ -157,7 +161,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
 
             var docflowFilter = new DocflowFilterBuilder().WithCreatedTo(to).CreateFilter();
 
-            ShouldHaveExpectedQueryParameters(docflowFilter, (nameOfCreateTo, "2021-07-08T01:01:01.0000000"));
+            ShouldHaveExpectedQueryParameters(docflowFilter, (nameOfCreatedTo, "2021-07-08T01:01:01.0000000"));
         }
 
         [Test]
@@ -171,7 +175,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 () => new DocflowFilterBuilder().WithReportingPeriod(from, to));
 
             apiException.Should().NotBeNull();
-            apiException?.Message.Should().Be(expectedMessageOfException);
+            apiException!.Message.Should().Be(expectedMessageOfException);
         }
 
         [Test]

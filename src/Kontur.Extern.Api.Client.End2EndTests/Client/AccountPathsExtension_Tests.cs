@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -44,7 +43,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }
 
         [Fact]
-        public void Get_should_fail_if_the_account_is_not_exist()
+        public void Get_should_fail_if_the_account_does_not_exist()
         {
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Accounts.GetAccount(Guid.NewGuid()));
@@ -53,7 +52,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }   
         
         [Fact]
-        public async Task Get_accounts_should_return_empty_when_accounts_not_exist()
+        public async Task Get_accounts_should_return_empty_when_accounts_does_not_exist()
         {
             var accounts =  await Context.Accounts.LoadAllAccountsAsync().ConfigureAwait(false);
 
@@ -61,16 +60,15 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }
 
         [Fact]
-        public async Task TryGet_should_return_null_if_the_account_is_not_exist()
+        public async Task TryGet_should_return_null_if_the_account_does_not_exist()
         {
             var account = await Context.Accounts.GetAccountOrNull(Guid.NewGuid()).ConfigureAwait(false);
 
             account.Should().BeNull();
         }
 
-
         [Fact]
-        public async Task Should_dont_create_the_same_org()
+        public async Task Should_not_create_the_same_org()
         {
             var inn = LegalEntityInn.Parse("1754462785");
             var kpp = Kpp.Parse("515744582");
@@ -82,7 +80,6 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             accountsAfterCreate.Count.Should().Be(1);
             accountsAfterCreate.Should().ContainEquivalentOf(accountScope1.Entity);
-
         } 
         
         [Fact]
@@ -100,8 +97,8 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             await using var accountScope1 = await Context.Accounts.CreateAccount(firstInn, firstKpp, orgName).ConfigureAwait(false);
             await using var accountScope2 = await Context.Accounts.CreateAccount(Inn.Parse("678050110389"), orgName).ConfigureAwait(false);
             await using var accountScope3 = await Context.Accounts.CreateAccount(secondInn, secondKpp, orgName).ConfigureAwait(false);
-            
-            
+            await Task.Delay(1.Seconds());
+
 
             var accountsAfterCreate = await Context.Accounts.LoadAllAccountsAsync();
 
@@ -109,37 +106,6 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             accountsAfterCreate.Should().ContainEquivalentOf(accountScope1.Entity);
             accountsAfterCreate.Should().ContainEquivalentOf(accountScope2.Entity);
             accountsAfterCreate.Should().ContainEquivalentOf(accountScope3.Entity);
-        }
-
-        [Fact]
-        [SuppressMessage("ReSharper", "ArgumentsStyleLiteral")]
-        public async Task Should_sign_off_user_after_deletion_an_account()
-        {
-            var context = Context.OverrideExternOptions(x => x.TryResolveUnauthorizedResponsesAutomatically(false));
-            var konturExtern = context.Extern;
-
-            var account = await konturExtern.Accounts.CreateLegalEntityAccountAsync(LegalEntityInn.Parse("1754462785"), Kpp.Parse("515744582"), "org");
-            await konturExtern.Accounts.WithId(account.Id).DeleteAsync();
-
-            await ShouldFailWhenLoadAccounts();
-
-            await konturExtern.ReauthenticateAsync();
-
-            await ShouldNotFailWhenLoadAccounts();
-
-            async Task ShouldNotFailWhenLoadAccounts()
-            {
-                Func<Task> func = async () => await context.Accounts.LoadAllAccountsAsync();
-
-                await func.Should().NotThrowAsync();
-            }
-
-            async Task ShouldFailWhenLoadAccounts()
-            {
-                Func<Task> func = async () => await context.Accounts.LoadAllAccountsAsync();
-
-                (await func.Should().ThrowAsync<ApiException>()).Which.Message.Should().Contain("Unauthorized");
-            }
         }
 
         [Fact]

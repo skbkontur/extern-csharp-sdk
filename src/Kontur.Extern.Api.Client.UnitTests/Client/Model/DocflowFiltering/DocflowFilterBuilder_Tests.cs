@@ -102,13 +102,13 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
         };
 
         [Test]
-        public void Should_create_correct_filter_with_non_exist_type_in_sdk()
+        public void Should_create_correct_filter_with_non_existing_type_in_sdk()
         {
             var filter = new DocflowFilterBuilder()
-                .WithTypes(new DocflowType("urn:docflow:fss-sedo-insured-person-registration"))
+                .WithTypes(new DocflowType("urn:docflow:unknown-type"))
                 .CreateFilter();
 
-            ShouldHaveExpectedQueryParameters(filter, ("type", "fss-sedo-insured-person-registration"));
+            ShouldHaveExpectedQueryParameters(filter, ("type", "unknown-type"));
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
         }
 
         [TestCaseSource(nameof(TypeCases))]
-        public void Should_create_correct_filter_with_existed_docflow_type(DocflowType type)
+        public void Should_create_correct_filter_with_existing_docflow_type(DocflowType type)
         {
             var filter = new DocflowFilterBuilder()
                 .WithTypes(type)

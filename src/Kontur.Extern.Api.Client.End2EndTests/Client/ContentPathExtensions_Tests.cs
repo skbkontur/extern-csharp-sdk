@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.Common.Streams;
 using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
+using Kontur.Extern.Api.Client.End2EndTests.Client.TestContext;
 using Kontur.Extern.Api.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Api.Client.Exceptions;
 using Kontur.Extern.Api.Client.Model.Configuration;
@@ -41,10 +42,8 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         [Fact]
         public void Should_error_when_try_to_upload_null_content()
         {
-            var context = Context.OverrideExternOptions(x => x.OverrideContentsOptions(new ContentManagementOptions(downloadChunkSize: 80*1024)));
-
             var apiException = Assert.ThrowsAsync<ArgumentNullException>(
-                () => context.Contents.UploadAsync(AccountId, null));
+                () => Context.Contents.UploadAsync(AccountId, null!));
            
             apiException.Result.Message.Should().Contain("Value cannot be null");
         } 
@@ -52,10 +51,8 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         [Fact]
         public void Should_error_when_try_to_upload_empty_memory_stream_content()
         {
-            var context = Context.OverrideExternOptions(x => x.OverrideContentsOptions(new ContentManagementOptions(downloadChunkSize: 80*1024)));
-
             var apiException = Assert.ThrowsAsync<ArgumentException>(
-                () => context.Contents.UploadAsync(AccountId, new MemoryStream()));
+                () => Context.Contents.UploadAsync(AccountId, new MemoryStream()));
            
             apiException.Result.Message.Should().Contain("wrong bounds");
         } 
@@ -63,10 +60,8 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         [Fact]
         public void Should_error_when_try_to_download_not_existing_content()
         {
-            var context = Context.OverrideExternOptions(x => x.OverrideContentsOptions(new ContentManagementOptions(downloadChunkSize: 80*1024)));
-
             var apiException = Assert.ThrowsAsync<ApiException>(
-                () => context.Contents.GetContentStream(AccountId, Guid.NewGuid()));
+                () => Context.Contents.GetContentStream(AccountId, Guid.NewGuid()));
            
             apiException.Result.Message.Should().Contain("NotFound");
         }  
@@ -74,10 +69,8 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         [Fact]
         public void Should_error_when_try_to_download_by_empty_content_id()
         {
-            var context = Context.OverrideExternOptions(x => x.OverrideContentsOptions(new ContentManagementOptions(downloadChunkSize: 80*1024)));
-
             var apiException = Assert.ThrowsAsync<ApiException>(
-                () => context.Contents.GetContentStream(AccountId, Guid.Empty));
+                () => Context.Contents.GetContentStream(AccountId, Guid.Empty));
            
             apiException.Result.Message.Should().Contain("BadRequest");
         }

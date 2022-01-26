@@ -39,17 +39,6 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             filter.ToQueryParameters().Should().BeEmpty();
         }
 
-        [Test]
-        public void Should_correct_create_filter_by_random_org_id()
-        {
-            var id = Guid.Parse("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-            var filter = new DocflowFilterBuilder()
-                .WithOrganizationId(id)
-                .CreateFilter();
-
-            ShouldHaveExpectedQueryParameters(filter, ("orgId", id.ToString()));
-        }
-
         private static void ShouldHaveExpectedQueryParameters(DocflowFilter docflowFilter, params (string name, string value)[] expectedQueryParameters)
         {
             docflowFilter.ToQueryParameters().Should().BeEquivalentTo(expectedQueryParameters);

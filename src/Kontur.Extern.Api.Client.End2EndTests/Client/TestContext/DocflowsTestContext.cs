@@ -19,7 +19,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext
 
         public Task<IReadOnlyList<IDocflow>> ListAll(Guid accountId) => 
             konturExtern.Accounts.WithId(accountId).Docflows.List().SliceBy(100).LoadAllAsync();
-        public Task<IReadOnlyList<IDocflow>> ListByFilter(Guid accountId,DocflowFilterBuilder filter) => 
+        public Task<IReadOnlyList<IDocflow>> ListByFilter(Guid accountId, DocflowFilterBuilder filter) =>
             konturExtern.Accounts.WithId(accountId).Docflows.List(filter).SliceBy(100).LoadAllAsync();
 
         public Task<IDocflowWithDocuments?> GetDocflowOrNull(Guid accountId, Guid docflowId) => 
