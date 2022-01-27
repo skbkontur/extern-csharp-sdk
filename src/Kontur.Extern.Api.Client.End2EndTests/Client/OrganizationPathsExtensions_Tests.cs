@@ -24,7 +24,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }
 
         [Fact]
-        public async Task Get_should_fail_if_the_organization_is_not_exist()
+        public async Task Get_should_fail_if_the_organization_does_not_exist()
         {
             Func<Task> func = async () => await Context.Organizations.GetOrganization(AccountId, Guid.NewGuid());
 
@@ -32,7 +32,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }
 
         [Fact]
-        public async Task TryGet_should_return_null_if_the_organization_is_not_exist()
+        public async Task TryGet_should_return_null_if_the_organization_does_not_exist()
         {
             var organization = await Context.Organizations.GetOrganizationOrNull(AccountId, Guid.NewGuid());
 
@@ -47,7 +47,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var organization = organizationScope.Entity;
 
             var loadedOrganization = await Context.Organizations.GetOrganization(AccountId, organization.Id);
-            
+
             loadedOrganization.Should().BeEquivalentTo(organization);
         }
 
@@ -59,7 +59,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var organization = organizationScope.Entity;
 
             var loadedOrganization = await Context.Organizations.GetOrganization(AccountId, organization.Id);
-            
+
             loadedOrganization.Should().BeEquivalentTo(organization);
         }
 
@@ -67,14 +67,14 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         public async Task TryGet_should_not_load_deleted_organization()
         {
             Organization createdOrganization;
-            await using(var organizationScope = await Context.Organizations
+            await using (var organizationScope = await Context.Organizations
                 .AddLegalEntityOrganization(AccountId, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org"))
             {
                 createdOrganization = organizationScope.Entity;
                 var loadedOrganization = await Context.Organizations.GetOrganization(AccountId, createdOrganization.Id);
                 ShouldBeEqual(loadedOrganization, createdOrganization);
             }
-         
+
             var loadedOrgAfterDelete = await Context.Organizations.GetOrganizationOrNull(AccountId, createdOrganization.Id);
             loadedOrgAfterDelete.Should().BeNull();
         }
@@ -82,11 +82,13 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         [Fact]
         public async Task List_should_return_default_organization_of_the_account()
         {
-            var expectedOrganization = GetMainOrganizationOfTheAccount();
             var organizationsOfAccount = await Context.Organizations.LoadAll(AccountId);
 
             organizationsOfAccount.Should().HaveCount(1);
-            organizationsOfAccount[0].General.Should().BeEquivalentTo(expectedOrganization);
+            var organization = organizationsOfAccount.First().General;
+            organization.Inn.Should().Be(GeneratedAccount.Inn.ToString());
+            organization.Kpp.Should().Be(GeneratedAccount.Kpp.ToString());
+            organization.IsMainOrg.Should().BeTrue();
         }
 
         [Fact]
@@ -96,11 +98,11 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 .AddIndividualEntrepreneurOrganization(AccountId, codesGenerator.PersonInn(), "the org");
             await using var organizationScope2 = await Context.Organizations
                 .AddLegalEntityOrganization(AccountId, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org");
-            
+
             var organizationsOfAccount = await Context.Organizations.LoadAll(AccountId);
-            
+
             organizationsOfAccount.Should().HaveCount(3);
-            organizationsOfAccount.Select(x => x.General).Should().ContainEquivalentOf(GetMainOrganizationOfTheAccount());
+
             ShouldContainOrganization(organizationsOfAccount, organizationScope1.Entity);
             ShouldContainOrganization(organizationsOfAccount, organizationScope2.Entity);
         }
@@ -109,14 +111,14 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         public async Task List_should_not_load_deleted_organization()
         {
             Organization createdOrganization;
-            await using(var organizationScope = await Context.Organizations
+            await using (var organizationScope = await Context.Organizations
                 .AddLegalEntityOrganization(AccountId, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org"))
             {
                 createdOrganization = organizationScope.Entity;
                 var organizationsAfterCreate = await Context.Organizations.LoadAll(AccountId);
                 ShouldContainOrganization(organizationsAfterCreate, createdOrganization);
             }
-         
+
             var organizationsAfterDelete = await Context.Organizations.LoadAll(AccountId);
             ShouldNotContainOrganization(organizationsAfterDelete, createdOrganization);
         }
@@ -129,9 +131,9 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 .AddIndividualEntrepreneurOrganization(AccountId, personInn, "the org");
             await using var organizationScope2 = await Context.Organizations
                 .AddLegalEntityOrganization(AccountId, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org");
-            
+
             var organizationsOfAccount = await Context.Organizations.FilterByInn(AccountId, personInn.ToString());
-            
+
             organizationsOfAccount.Should().HaveCount(1);
             organizationsOfAccount.Select(x => x.Id).Should().Contain(organizationScope1.Entity.Id);
         }
@@ -146,10 +148,10 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 .AddLegalEntityOrganization(AccountId, legalEntityInn, codesGenerator.Kpp(), "the org");
             await using var organizationScope3 = await Context.Organizations
                 .AddLegalEntityOrganization(AccountId, legalEntityInn, codesGenerator.Kpp(), "the org");
-            
+
             var organizationsOfAccount = await Context.Organizations
                 .FilterByInnKpp(AccountId, legalEntityInn.ToString(), organizationScope2.Entity.General.Kpp);
-            
+
             organizationsOfAccount.Should().HaveCount(1);
             organizationsOfAccount.Select(x => x.Id).Should().Contain(organizationScope2.Entity.Id);
         }
@@ -174,7 +176,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                     Links = organization.General.Links
                 }
             };
-            
+
             await Context.Organizations.Rename(AccountId, organization.Id, newName);
 
             var loadedOrg = await Context.Organizations.GetOrganization(AccountId, organization.Id);
@@ -194,17 +196,6 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         private static void ShouldNotContainOrganization(IEnumerable<Organization> organizations, Organization expectedOrganization)
         {
             organizations.Select(x => x.Id).Should().NotContain(expectedOrganization.Id);
-        }
-
-        private object GetMainOrganizationOfTheAccount()
-        {
-            return new
-            {
-                GeneratedAccount.Inn,
-                GeneratedAccount.Kpp,
-                Name = GeneratedAccount.OrganizationName,
-                IsMainOrg = true
-            };
         }
     }
 }

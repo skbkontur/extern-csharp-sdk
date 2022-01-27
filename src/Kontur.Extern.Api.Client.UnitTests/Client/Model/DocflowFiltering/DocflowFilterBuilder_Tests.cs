@@ -3,7 +3,6 @@ using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Api.Client.Common.Time;
 using Kontur.Extern.Api.Client.Model.DocflowFiltering;
-using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using NUnit.Framework;
@@ -19,10 +18,10 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             var docflowFilterBuilder = new DocflowFilterBuilder();
 
             var docflowFilter = docflowFilterBuilder.CreateFilter();
-            
+
             ShouldHaveExpectedQueryParameters(docflowFilter, Array.Empty<(string name, string value)>());
         }
-        
+
         [Test]
         public void Should_build_filter_with_non_dependent_fields()
         {
@@ -51,7 +50,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 .WithReportingPeriod(periodFrom, periodTo)
                 .CreateFilter();
 
-            ShouldHaveExpectedQueryParameters(docflowFilter,
+            ShouldHaveExpectedQueryParameters(
+                docflowFilter,
                 ("cu", "123-456"),
                 ("finished", "true"),
                 ("incoming", "false"),
@@ -73,15 +73,89 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             );
         }
 
-        [Test]
-        public void Should_apply_sorting_filter()
+        [TestCaseSource(nameof(ControlUnitCases))]
+        public void Should_create_correct_control_unit_filter(AuthorityCode cu)
         {
-            var docflowFilter = new DocflowFilterBuilder()
-                .WithSortingFilter(DocflowSortingFilter.OrderByCreationDate(SortOrder.Ascending))
+            var filter = new DocflowFilterBuilder()
+                .WithCu(cu)
                 .CreateFilter();
-            
-            ShouldHaveExpectedQueryParameters(docflowFilter, ("orderBy", "ascending"));
+
+            ShouldHaveExpectedQueryParameters(filter, ("cu", cu.ToString()));
         }
+
+        [Test]
+        public void Should_create_correct_control_unit_filter_when_cu_is_null()
+        {
+            var filter = new DocflowFilterBuilder()
+                .CreateFilter();
+            filter.SetCu(null);
+
+            filter.ToQueryParameters().Should().BeEmpty();
+        }
+
+        private static readonly AuthorityCode[] ControlUnitCases =
+        {
+            AuthorityCode.Pfr.Parse("000-007"),
+            AuthorityCode.Fss.Parse("00007"),
+            AuthorityCode.Fns.Parse("0007"),
+            AuthorityCode.Rosstat.Parse("00-07")
+        };
+
+        [Test]
+        public void Should_create_correct_filter_with_non_existing_type_in_sdk()
+        {
+            var filter = new DocflowFilterBuilder()
+                .WithTypes(new DocflowType("urn:docflow:unknown-type"))
+                .CreateFilter();
+
+            ShouldHaveExpectedQueryParameters(filter, ("type", "unknown-type"));
+        }
+
+        [Test]
+        public void Should_correct_create_filter_by_types()
+        {
+            var types = new[]
+            {
+                DocflowType.Pfr.Report,
+                DocflowType.Cbrf.Report,
+                DocflowType.Fns.Fns534.Inventory,
+                DocflowType.Fns.BusinessRegistration
+            };
+
+            var filter = new DocflowFilterBuilder().WithTypes(types).CreateFilter();
+
+            ShouldHaveExpectedQueryParameters(
+                filter,
+                ("type", DocflowType.Pfr.Report.ToUrn()!.Nss),
+                ("type", DocflowType.Cbrf.Report.ToUrn()!.Nss),
+                ("type", DocflowType.Fns.Fns534.Inventory.ToUrn()!.Nss),
+                ("type", DocflowType.Fns.BusinessRegistration.ToUrn()!.Nss));
+        }
+
+        [TestCaseSource(nameof(TypeCases))]
+        public void Should_create_correct_filter_with_existing_docflow_type(DocflowType type)
+        {
+            var filter = new DocflowFilterBuilder()
+                .WithTypes(type)
+                .CreateFilter();
+
+            ShouldHaveExpectedQueryParameters(filter, ("type", type.ToUrn()!.Nss));
+        }
+
+        private static readonly DocflowType[] TypeCases =
+        {
+            DocflowType.Pfr.Ancillary,
+            DocflowType.Pfr.Letter,
+            DocflowType.Pfr.Report,
+            DocflowType.Cbrf.Report,
+            DocflowType.Fns.Fns534.CuLetter,
+            DocflowType.Fns.Fns534.Inventory,
+            DocflowType.Fns.BusinessRegistration,
+            DocflowType.Fss.Report,
+            DocflowType.Fss.SickReport,
+            DocflowType.Fss.Sedo.PvsoNotification,
+            DocflowType.Rosstat.CuBroadcast
+        };
 
         [Test]
         public void Should_apply_inn_filter()
@@ -90,66 +164,10 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 .WithInnKppOfALegalEntity(InnKpp.Parse("1234567890-123456789"))
                 .WithIndividualEntrepreneurInn(Inn.Parse("123456789012"))
                 .CreateFilter();
-            
+
             ShouldHaveExpectedQueryParameters(docflowFilter, ("innKpp", "123456789012"));
         }
 
-        [Test]
-        public void Should_fail_when_reporting_period_bounds_are_invalid()
-        {
-            var from = new DateOnly(2021, 07, 08);
-            var to = from.AddDays(-1);
-            
-            Action action = () => new DocflowFilterBuilder().WithReportingPeriod(from, to);
-
-            action.Should().Throw<ArgumentException>();
-        }
-
-        [Test]
-        public void WithCreatedTo_should_fail_when_created_from_is_bigger_than_created_to_filter()
-        {
-            var from = new DateTime(2021, 07, 08, 01, 01, 01);
-            var to = from.AddDays(-1);
-            var docflowFilterBuilder = new DocflowFilterBuilder().WithCreatedFrom(from);
-
-            Action action = () => docflowFilterBuilder.WithCreatedTo(to);
-
-            action.Should().Throw<ArgumentException>();
-        }
-
-        [Test]
-        public void WithCreatedFrom_should_fail_when_created_from_is_bigger_than_created_to_filter()
-        {
-            var from = new DateTime(2021, 07, 08, 01, 01, 01);
-            var to = from.AddDays(-1);
-            var docflowFilterBuilder = new DocflowFilterBuilder().WithCreatedTo(to);
-            
-            Action action = () => docflowFilterBuilder.WithCreatedFrom(from);
-
-            action.Should().Throw<ArgumentException>();
-        }
-
-        [Test]
-        public void WithCreatedFrom_should_set_created_from_filter_without_created_to_bound()
-        {
-            var from = new DateTime(2021, 07, 08, 01, 01, 01);
-            var docflowFilterBuilder = new DocflowFilterBuilder().WithCreatedFrom(from);
-
-            var docflowFilter = docflowFilterBuilder.CreateFilter();
-            
-            ShouldHaveExpectedQueryParameters(docflowFilter, ("createdFrom", "2021-07-08T01:01:01.0000000"));
-        }
-
-        [Test]
-        public void WithCreatedTo_should_set_created_to_filter_without_created_from_bound()
-        {
-            var to = new DateTime(2021, 07, 08, 01, 01, 01);
-
-            var docflowFilter = new DocflowFilterBuilder().WithCreatedTo(to).CreateFilter();
-            
-            ShouldHaveExpectedQueryParameters(docflowFilter, ("createdTo", "2021-07-08T01:01:01.0000000"));
-        }
-        
         private static void ShouldHaveExpectedQueryParameters(DocflowFilter docflowFilter, params (string name, string value)[] expectedQueryParameters)
         {
             docflowFilter.ToQueryParameters().Should().BeEquivalentTo(expectedQueryParameters);

@@ -19,12 +19,14 @@ using Kontur.Extern.Api.Client.Models.Drafts.Documents;
 using Kontur.Extern.Api.Client.Models.Drafts.Meta;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using Kontur.Extern.Api.Client.Testing.Assertions;
-using Kontur.Extern.Api.Client.Testing.ExternTestTool.Models.Requests;
+using Kontur.Extern.Api.Client.Testing.ExternTestTool.LegacyExternTestTools.Model;
 using Kontur.Extern.Api.Client.Testing.Generators;
 using Kontur.Extern.Api.Client.Testing.Helpers;
 using Xunit;
 using Xunit.Abstractions;
-using Sender = Kontur.Extern.Api.Client.Models.Drafts.Meta.Sender;
+using OrganizationInfo = Kontur.Extern.Api.Client.Models.Drafts.Meta.OrganizationInfo;
+using Payer = Kontur.Extern.Api.Client.Testing.ExternTestTool.Models.Requests.Payer;
+using Sender = Kontur.Extern.Api.Client.Testing.ExternTestTool.Models.Requests.Sender;
 using Signature = Kontur.Extern.Api.Client.Model.Signature;
 
 namespace Kontur.Extern.Api.Client.End2EndTests.Client
@@ -38,13 +40,21 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             : base(output, environment)
         {
         }
-        
-        [Fact]
-        public async Task Get_should_fail_when_try_to_read_non_existent_draft()
-        {
-            Func<Task> func = async () => await Context.Drafts.GetDraft(AccountId, Guid.NewGuid());
 
-            await func.Should().ThrowAsync<ApiException>();
+        [Fact]
+        public void Get_should_fail_when_try_to_read_non_existent_draft()
+        {
+            var apiException = Assert.ThrowsAsync<ApiException>(
+                () => Context.Drafts.GetDraft(AccountId, Guid.NewGuid()));
+            apiException.Result.Message.Should().Contain("NotFound");
+        }
+
+        [Fact]
+        public void Get_should_return_BadRequest_when_try_to_use_empty_guid_in_draftId()
+        {
+            var apiException = Assert.ThrowsAsync<ApiException>(
+                () => Context.Drafts.GetDraft(AccountId, Guid.Empty));
+            apiException.Result.Message.Should().Contain("BadRequest");
         }
 
         [Fact]
@@ -64,15 +74,26 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             var createdDraft = entityScope.Entity;
             var loadedDraft = await Context.Drafts.GetDraft(AccountId, createdDraft.Id);
-            
+
             loadedDraft.Should().BeEquivalentTo(createdDraft);
         }
 
         [Fact]
-        public async Task Deleted_draft_should_cannot_be_loaded()
+        public void Should_return_forbidden_when_try_to_get_draft_with_random_accountId()
+        {
+            var apiException = Assert.ThrowsAsync<ApiException>(
+                () => Context.Drafts.GetDraft(Guid.NewGuid(), Guid.NewGuid()));
+
+            apiException.Result.Message.Should().Contain("Forbidden");
+        }
+
+        [Fact]
+        public async Task Deleted_draft_should_not_be_loaded()
         {
             var newDraft = CreateDraftOfDefaultAccount();
             Guid draftId;
+
+            //draft deleted after using
             await using (var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft))
             {
                 draftId = entityScope.Entity.Id;
@@ -95,7 +116,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             await Context.Drafts.UpdateDraftMetadata(AccountId, createdDraft.Id, updatedMetadata);
 
             var loadedDraft = await Context.Drafts.GetDraft(AccountId, createdDraft.Id);
-            
+
             loadedDraft.Meta.Should().BeEquivalentTo(expectedMetadata, c => c.Excluding(x => x.Sender.Certificate));
         }
 
@@ -106,15 +127,15 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
             var documentId = Guid.NewGuid();
+            var content = new StreamDocumentContent(new MemoryStream(new byte[] {1, 2, 3}));
 
             var document = DraftDocumentBuilder
                 .WithId(documentId)
-                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3})))
+                .WithContentToUpload(content)
                 .WithType(DocumentType.Fns.Fns534.Report)
                 .ToDocument();
-            
-            var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
+            var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
             addedDocumentId.Should().Be(documentId);
         }
 
@@ -128,7 +149,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             var document = DraftDocumentBuilder
                 .WithId(documentId)
-                .WithContentToUpload(new ByteDocumentContent(new byte[]{1, 2, 3}))
+                .WithContentToUpload(new ByteDocumentContent(new byte[] {1, 2, 3}))
                 .WithType(DocumentType.Fns.Fns534.Report)
                 .ToDocument();
 
@@ -136,7 +157,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             addedDocumentId.Should().Be(documentId);
         }
-        
+
         [Fact]
         public async Task Should_fail_when_getting_not_exist_document()
         {
@@ -148,17 +169,17 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             (await func.Should().ThrowAsync<ApiException>()).And.Message.Should().Contain("NotFound");
         }
-        
+
         [Fact]
         public async Task Should_get_created_document()
         {
             var newDraft = CreateDraftOfDefaultAccount();
             await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
-            
+
             var document = DraftDocumentBuilder
                 .WithNewId()
-                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
+                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[] {1, 2, 3}), "application/pdf"))
                 .WithSignature(GeneratedAccount.CertificatePublicPart)
                 .WithType(DocumentType.Fns.Fns534.Report)
                 .ToDocument();
@@ -190,7 +211,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             draftDocument.Should().BeEquivalentTo(expectedDocument, c => c.Excluding(x => x.SignatureContentLink).Excluding(x => x.Contents).Excluding(x => x.Signatures));
             draftDocument.Signatures.Should().HaveCount(1);
         }
-        
+
         [Fact]
         public async Task Should_add_a_signature_to_a_drafts_document()
         {
@@ -204,10 +225,10 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 .WithType(DocumentType.Fns.Fns534.Report)
                 .ToDocument();
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
-            
+
             var addedSignatureId = await Context.Drafts.AddSignature(AccountId, createdDraft.Id, addedDocumentId, GeneratedAccount.CertificatePublicPart);
             addedSignatureId.Should().NotBeEmpty();
-            
+
             await DocumentShouldContainSignatureWithId(addedSignatureId);
 
             async Task DocumentShouldContainSignatureWithId(Guid signatureId)
@@ -216,7 +237,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 draftDocument.Signatures.Should().ContainSingle(s => s.Id == signatureId);
             }
         }
-        
+
         [Fact]
         public async Task Should_download_a_signature_of_a_drafts_document()
         {
@@ -227,7 +248,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             Signature documentSignature = new byte[] {1, 2, 3};
             var document = DraftDocumentBuilder
                 .WithNewId()
-                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
+                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[] {1, 2, 3}), "application/pdf"))
                 .WithType(DocumentType.Fns.Fns534.Report)
                 .ToDocument();
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
@@ -242,7 +263,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         public async Task Should_download_a_content_of_a_document()
         {
             var context = Context.OverrideExternOptions(x => x.OverrideContentsOptions(new ContentManagementOptions(downloadChunkSize: 80*1024)));
-            
+
             var newDraft = CreateDraftOfDefaultAccount();
             await using var entityScope = await context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
@@ -254,12 +275,12 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 .WithType(DocumentType.Fns.Fns534.Report)
                 .ToDocument();
             var addedDocumentId = await context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
-            
+
             var draftDocument = await context.Drafts.GetDocument(AccountId, createdDraft.Id, addedDocumentId);
 
             var contentId = draftDocument.Contents.Single().ContentId;
             await using var stream = await context.Contents.GetContentStream(AccountId, contentId);
-            
+
             var allBytes = await stream.ReadAllBytesAsync();
 
             allBytes.ShouldHaveExpectedBytes(contentBytes);
@@ -294,14 +315,14 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                     }
                 }
             };
-            
+
             var newDraft = CreateDraftOfDefaultAccount();
             await using var entityScope = await context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
-            
+
             var contentBytes = randomizer.Bytes(500*1024);
             var contentId = await context.Contents.UploadAsync(AccountId, new MemoryStream(contentBytes));
-            
+
             var document = DraftDocumentBuilder
                 .WithId(documentId)
                 .WithUploadedContent(contentId, contentType, GeneratedAccount.CertificatePublicPart, fileName)
@@ -316,17 +337,17 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             draftDocument.Signatures.Should().HaveCount(1);
             draftDocument.Contents.Should().HaveCount(1);
         }
-        
+
         [Fact]
         public async Task Should_remove_a_document_from_a_draft()
         {
             var newDraft = CreateDraftOfDefaultAccount();
             await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
-            
+
             var document = DraftDocumentBuilder
                 .WithNewId()
-                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[]{1, 2, 3}), "application/pdf"))
+                .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[] {1, 2, 3}), "application/pdf"))
                 .WithType(DocumentType.Fns.Fns534.Report)
                 .ToDocument();
             var documentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
@@ -360,11 +381,11 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             {
                 var inn = GeneratedAccount.Inn.ToString();
                 var kpp = GeneratedAccount.Kpp.ToString();
-                var orgName = GeneratedAccount.OrganizationName;// "the_org";
+                var orgName = GeneratedAccount.OrganizationName;
                 var (surname, firstName, patronymicName) = GeneratedAccount.ChiefName;
                 return await ExternTestTool.GenerateFufSschFileContentAsync(
                     generateCertificateIfAbsentInSender: true,
-                    sender: new Extern.Api.Client.Testing.ExternTestTool.Models.Requests.Sender(inn, Kpp: kpp, OrgName: orgName),
+                    sender: new Sender(inn, Kpp: kpp, OrgName: orgName),
                     payer: new Payer(inn, orgName, kpp, new PersonFullName(surname, firstName, patronymicName))
                 );
             }
@@ -393,12 +414,12 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             {
                 var inn = GeneratedAccount.Inn.ToString();
                 return await ExternTestTool.GenerateFufSschFileContentAsync(
-                    new Extern.Api.Client.Testing.ExternTestTool.Models.Requests.Sender(inn),
+                    new Sender(inn),
                     generateCertificateIfAbsentInSender: true
                 );
             }
         }
-        
+
         [Fact]
         public async Task Should_send_a_correct_draft_without_content()
         {
@@ -415,7 +436,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             docflow.Should().NotBeNull();
         }
-        
+
         [Fact]
         public async Task Should_fail_if_send_an_incorrect_draft()
         {
@@ -436,20 +457,8 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             var exception = (await func.Should().ThrowAsync<ApiException>()).Which;
             exception.Message.Should().Contain(document.DocumentId.ToString()).And.Contain(createdDraft.Id.ToString());
-            
-            output.WriteLine("Thrown error:");
-            output.WriteLine(exception.ToString());
-
-            async Task<byte[]> GenerateIncorrectFufSschContent()
-            {
-                var inn = GeneratedAccount.Inn.ToString();
-                return await ExternTestTool.GenerateFufSschFileContentAsync(
-                    new Extern.Api.Client.Testing.ExternTestTool.Models.Requests.Sender(inn),
-                    generateCertificateIfAbsentInSender: true
-                );
-            }
         }
-        
+
         [Fact]
         public async Task Should_return_error_if_trying_to_send_an_incorrect_draft()
         {
@@ -470,17 +479,8 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             result.TryGetFailureResult(out var sendingFailure).Should().BeTrue();
             sendingFailure.CheckStatus.Should().NotBeNull();
-
-            async Task<byte[]> GenerateIncorrectFufSschContent()
-            {
-                var inn = GeneratedAccount.Inn.ToString();
-                return await ExternTestTool.GenerateFufSschFileContentAsync(
-                    new Extern.Api.Client.Testing.ExternTestTool.Models.Requests.Sender(inn),
-                    generateCertificateIfAbsentInSender: true
-                );
-            }
         }
-        
+
         private DraftMetadata CreateDraftOfDefaultAccount(DraftRecipient? recipient = null, FssRegNumber? fssRegNumber = null)
         {
             var certInn = GeneratedAccount.Inn;
@@ -499,7 +499,16 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 recipient ?? DraftRecipient.Ifns(IfnsCode.Parse("0087"), MriCode.Parse("9660"))
             );
         }
-        
+
+        private async Task<byte[]> GenerateIncorrectFufSschContent()
+        {
+            var inn = GeneratedAccount.Inn.ToString();
+            return await ExternTestTool.GenerateFufSschFileContentAsync(
+                new Sender(inn),
+                generateCertificateIfAbsentInSender: true
+            );
+        }
+
         private static DraftMeta ToApiModel(string orgName, DraftMetadata metadata)
         {
             var request = metadata.ToRequest();
@@ -540,8 +549,8 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
                 return accountInfo;
             }
-            
-            static Sender SenderToApiModel(string orgName, SenderRequest sender) => new()
+
+            static Models.Drafts.Meta.Sender SenderToApiModel(string orgName, SenderRequest sender) => new()
             {
                 Name = orgName,
                 Inn = sender.Inn,

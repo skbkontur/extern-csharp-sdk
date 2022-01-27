@@ -80,7 +80,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         public DocflowFilterBuilder WithCreatedFrom(DateTime dateFrom)
         {
             if (createdTo < dateFrom)
-                throw Errors.InvalidRange(nameof(dateFrom), nameof(createdTo), dateFrom, createdTo.Value);
+                throw Errors.InvalidRange(nameof(createdFrom), nameof(createdTo), dateFrom, createdTo.Value);
 
             filter.SetCreatedFrom(dateFrom);
             createdFrom = dateFrom;
@@ -93,7 +93,7 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         public DocflowFilterBuilder WithCreatedTo(DateTime dateTo)
         {
             if (createdFrom > dateTo)
-                throw Errors.InvalidRange(nameof(dateTo), nameof(createdFrom), createdFrom.Value, dateTo);
+                throw Errors.InvalidRange(nameof(createdFrom), nameof(createdTo), createdFrom.Value, dateTo);
             
             filter.SetCreatedTo(dateTo);
             createdTo = dateTo;

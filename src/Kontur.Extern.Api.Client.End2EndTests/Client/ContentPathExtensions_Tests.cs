@@ -1,9 +1,12 @@
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.Common.Streams;
 using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
+using Kontur.Extern.Api.Client.End2EndTests.Client.TestContext;
 using Kontur.Extern.Api.Client.End2EndTests.TestEnvironment;
+using Kontur.Extern.Api.Client.Exceptions;
 using Kontur.Extern.Api.Client.Model.Configuration;
 using Kontur.Extern.Api.Client.Testing.Assertions;
 using Kontur.Extern.Api.Client.Testing.Generators;
@@ -34,6 +37,42 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var bytes = await stream.ToArrayAsync();
 
             bytes.ShouldHaveExpectedBytes(contentBytes);
+        }   
+        
+        [Fact]
+        public void Should_error_when_try_to_upload_null_content()
+        {
+            var apiException = Assert.ThrowsAsync<ArgumentNullException>(
+                () => Context.Contents.UploadAsync(AccountId, null!));
+           
+            apiException.Result.Message.Should().Contain("Value cannot be null");
+        } 
+        
+        [Fact]
+        public void Should_error_when_try_to_upload_empty_memory_stream_content()
+        {
+            var apiException = Assert.ThrowsAsync<ArgumentException>(
+                () => Context.Contents.UploadAsync(AccountId, new MemoryStream()));
+           
+            apiException.Result.Message.Should().Contain("wrong bounds");
+        } 
+        
+        [Fact]
+        public void Should_error_when_try_to_download_not_existing_content()
+        {
+            var apiException = Assert.ThrowsAsync<ApiException>(
+                () => Context.Contents.GetContentStream(AccountId, Guid.NewGuid()));
+           
+            apiException.Result.Message.Should().Contain("NotFound");
+        }  
+        
+        [Fact]
+        public void Should_error_when_try_to_download_by_empty_content_id()
+        {
+            var apiException = Assert.ThrowsAsync<ApiException>(
+                () => Context.Contents.GetContentStream(AccountId, Guid.Empty));
+           
+            apiException.Result.Message.Should().Contain("BadRequest");
         }
     }
 }

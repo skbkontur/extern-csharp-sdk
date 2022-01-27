@@ -12,6 +12,9 @@ using Kontur.Extern.Api.Client.Testing.Fakes.Logging;
 using Kontur.Extern.Api.Client.Testing.Lifetimes;
 using Vostok.Logging.Abstractions;
 using Xunit.Abstractions;
+using Payer = Kontur.Extern.Api.Client.Testing.ExternTestTool.Models.Requests.Payer;
+using Sender = Kontur.Extern.Api.Client.Testing.ExternTestTool.Models.Requests.Sender;
+using WarrantInfo = Kontur.Extern.Api.Client.Testing.ExternTestTool.Models.Requests.WarrantInfo;
 
 // ReSharper disable CommentTypo
 
@@ -31,7 +34,7 @@ namespace Kontur.Extern.Api.Client.Testing.ExternTestTool
             this.cache = cache;
             this.lifetime = lifetime;
             httpClient = new HttpClientImplementation("https://extern-api.testkontur.ru/test-tools/v1/", apiKey, lifetime, log);
-            
+
             driveCertificatesReader = new DriveCertificatesReader(lifetime);
         }
 
@@ -43,8 +46,9 @@ namespace Kontur.Extern.Api.Client.Testing.ExternTestTool
         /// <param name="organizationName">Имя организации ЮЛ и выпускаемого сертификата</param>
         /// <param name="chiefName">Имя руководителя</param>
         /// <returns>Сгенерированный аккаунт</returns>
-        public Task<GeneratedAccount> GenerateLegalEntityAccountAsync(string organizationName, 
-                                                                      PersonFullName chiefName) => 
+        public Task<GeneratedAccount> GenerateLegalEntityAccountAsync(
+            string organizationName,
+            PersonFullName chiefName) =>
             RunAsync(new GenerateLegalEntityAccountCommand(organizationName, chiefName, driveCertificatesReader));
 
         /// <summary>
@@ -78,10 +82,10 @@ namespace Kontur.Extern.Api.Client.Testing.ExternTestTool
         /// <param name="textOfLetter">Текст письма (required).</param>
         /// <param name="ifnsCode">Код тестовой инспекции, от которой придет требование. Возможные значения: 0007, 0008, 0084, 0085, 0087, 0088, 0093, 0094, 0096, 9979, 7702.</param>
         /// <returns>Документооборот</returns>
-        public Task<IDocflowWithDocuments> GenerateCuLetterAsync(Guid accountId, Sender? sender = null, Payer? payer = null, string? textOfLetter = null, TestIfnsCode? ifnsCode = null) => 
+        public Task<IDocflowWithDocuments> GenerateCuLetterAsync(Guid accountId, Sender? sender = null, Payer? payer = null, string? textOfLetter = null, TestIfnsCode? ifnsCode = null) =>
             RunAsync(new GenerateCuLetterCommand(accountId, sender, payer, textOfLetter, ifnsCode));
 
-        private Task<T> RunAsync<T>(IExternTestToolCommand<T> command) => 
+        private Task<T> RunAsync<T>(IExternTestToolCommand<T> command) =>
             command.ExecuteAsync(httpClient, cache);
     }
 }

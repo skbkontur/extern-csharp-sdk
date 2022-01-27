@@ -32,6 +32,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Docflows.Enums
             [TestCase("")]
             [TestCase(" ")]
             [TestCase("not a urn")]
+            [TestCase("fss-sedo-sick-report-change-notification")]
             public void Should_fail_when_given_invalid_urn(string urn)
             {
                 Action action = () => _ = new DocflowType(urn);
