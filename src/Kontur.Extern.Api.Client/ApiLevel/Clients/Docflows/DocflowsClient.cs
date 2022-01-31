@@ -9,6 +9,7 @@ using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 using Kontur.Extern.Api.Client.Http;
+using Kontur.Extern.Api.Client.Models.Docflows.DocumentsRequests;
 using Vostok.Clusterclient.Core.Model;
 // ReSharper disable CommentTypo
 
@@ -52,10 +53,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             return GetRelatedDocflowsAsync(urlBuilder, timeout);
         }
 
-        public Task<IDocflowWithDocuments> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) => 
+        public Task<IDocflowWithDocuments> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) =>
             GetDocflowAsync($"/v1/{accountId}/docflows/{docflowId}", timeout);
 
-        public Task<IDocflowWithDocuments?> TryGetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) => 
+        public Task<IDocflowWithDocuments?> TryGetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) =>
             http.TryGetAsync<IDocflowWithDocuments>($"/v1/{accountId}/docflows/{docflowId}", timeout);
 
         public Task<IDocflowWithDocuments> GetInventoryDocflowAsync(
@@ -68,7 +69,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             return GetDocflowAsync($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}", timeout);
         }
 
-        public Task<IDocflowWithDocuments?> TryGetInventoryDocflowAsync(Guid accountId, Guid relatedDocflowId, Guid relatedDocumentId, Guid inventoryId, TimeSpan? timeout = null) => 
+        public Task<IDocflowWithDocuments?> TryGetInventoryDocflowAsync(Guid accountId, Guid relatedDocflowId, Guid relatedDocumentId, Guid inventoryId, TimeSpan? timeout = null) =>
             TryGetDocflowAsync($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}", timeout);
 
         public Task<List<Document>> GetDocumentsAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) =>
@@ -77,10 +78,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
                 TimeoutSpecification.SpecificOrLongOperationTimeout(timeout)
             );
 
-        public Task<Document> GetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null) => 
+        public Task<Document> GetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null) =>
             http.GetAsync<Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}", timeout);
 
-        public Task<Document?> TryGetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null) => 
+        public Task<Document?> TryGetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null) =>
             http.TryGetAsync<Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}", timeout);
 
         public Task<DocflowDocumentDescription> GetDocumentDescriptionAsync(
@@ -195,14 +196,14 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             );
         }
 
-         public Task<ApiTaskResult<PrintDocumentResult>> StartPrintInventoryDocumentAsync(
-             Guid accountId,
-             Guid relatedDocflowId,
-             Guid relatedDocumentId,
-             Guid inventoryId,
-             Guid documentId,
-             Guid contentId,
-             TimeSpan? timeout = null)
+        public Task<ApiTaskResult<PrintDocumentResult>> StartPrintInventoryDocumentAsync(
+            Guid accountId,
+            Guid relatedDocflowId,
+            Guid relatedDocumentId,
+            Guid inventoryId,
+            Guid documentId,
+            Guid contentId,
+            TimeSpan? timeout = null)
         {
             var url = new RequestUrlBuilder($"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/print")
                 .AppendToQuery("deferred", true)
@@ -214,20 +215,20 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             );
         }
 
-         public Task<ApiTaskResult<PrintDocumentResult>> GetPrintDocumentTaskAsync(
-             Guid accountId,
-             Guid docflowId,
-             Guid documentId,
-             Guid taskId,
-             TimeSpan? timeout = null)
-         {
-             return http.GetAsync<ApiTaskResult<PrintDocumentResult>>(
-                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/tasks/{taskId}",
-                 timeout
-             );
-         }
+        public Task<ApiTaskResult<PrintDocumentResult>> GetPrintDocumentTaskAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid taskId,
+            TimeSpan? timeout = null)
+        {
+            return http.GetAsync<ApiTaskResult<PrintDocumentResult>>(
+                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/tasks/{taskId}",
+                timeout
+            );
+        }
 
-         public Task<ApiTaskResult<PrintDocumentResult>> GetPrintInventoryDocumentTaskAsync(
+        public Task<ApiTaskResult<PrintDocumentResult>> GetPrintInventoryDocumentTaskAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
@@ -259,10 +260,48 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             );
         }
 
+        public Task<DocumentsRequest> GetDocumentsRequestAsync(Guid accountId, Guid docflowId, Guid requestId, TimeSpan? timeout = null) =>
+            http.GetAsync<DocumentsRequest>(
+                $"/v1/{accountId}/docflows/{docflowId}/documents-requests/{requestId}",
+                timeout
+            );
+
+        public Task<DocumentsRequest> GenerateDocumentsRequestAsync(Guid accountId, Guid docflowId, byte[] certificate, TimeSpan? timeout = null)
+        {
+            return http.PostAsync<GenerateDocumentsRequestRequest, DocumentsRequest>(
+                $"/v1/{accountId}/docflows/{docflowId}/generate-documents-request",
+                new GenerateDocumentsRequestRequest
+                {
+                    CertificateBase64 = certificate
+                },
+                timeout
+            );
+        }
+
+        public Task<IDocflowWithDocuments> SendDocumentsRequestAsync(Guid accountId, Guid docflowId, Guid requestId, TimeSpan? timeout = null)
+        {
+            return http.PostAsync<IDocflowWithDocuments>(
+                $"/v1/{accountId}/docflows/{docflowId}/documents-requests/{requestId}/send",
+                timeout);
+        }
+
+        public Task<DocumentsRequest> SaveDocumentsRequestSignatureAsync(Guid accountId, Guid docflowId, Guid requestId, byte[] signature, TimeSpan? timeout = null)
+        {
+            var request = http.Put($"v1/{accountId}/docflows/{docflowId}/documents-requests/{requestId}/signature")
+                .WithBytes(signature);
+            return SendRequestAsync<DocumentsRequest>(request, timeout);
+        }
+
         private Task<DocflowPage> GetRelatedDocflowsAsync(RequestUrlBuilder urlBuilder, TimeSpan? timeout) => http.GetAsync<DocflowPage>(urlBuilder.Build(), timeout);
 
         private Task<IDocflowWithDocuments> GetDocflowAsync(string url, TimeSpan? timeout) => http.GetAsync<IDocflowWithDocuments>(url, timeout);
-        
+
         private Task<IDocflowWithDocuments?> TryGetDocflowAsync(string url, TimeSpan? timeout) => http.TryGetAsync<IDocflowWithDocuments>(url, timeout);
+
+        private static async Task<TResult> SendRequestAsync<TResult>(IHttpRequest httpRequest, TimeSpan? timeout)
+        {
+            var httpResponse = await httpRequest.SendAsync(timeout).ConfigureAwait(false);
+            return await httpResponse.GetMessageAsync<TResult>().ConfigureAwait(false);
+        }
     }
 }

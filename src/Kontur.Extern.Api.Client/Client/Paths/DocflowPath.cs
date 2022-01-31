@@ -17,5 +17,7 @@ namespace Kontur.Extern.Api.Client.Paths
         public IExternClientServices Services { get; }
 
         public DocumentListPath Documents => new(AccountId, DocflowId, Services);
+
+        public DocumentsRequestPath DocumentsRequest(Guid requestId) => new(AccountId, DocflowId, requestId, Services);
     }
 }

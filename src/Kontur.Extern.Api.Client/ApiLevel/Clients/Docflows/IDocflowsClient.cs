@@ -9,6 +9,7 @@ using Kontur.Extern.Api.Client.Models.ApiTasks;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents;
+using Kontur.Extern.Api.Client.Models.Docflows.DocumentsRequests;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
 {
@@ -65,7 +66,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         /// <param name="timeout"></param>
         /// <returns>Документооборот</returns>
         Task<IDocflowWithDocuments> GetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null);
-        
+
         /// <summary>
         /// Получение документооборота по идентификатору
         /// </summary>
@@ -90,7 +91,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             Guid relatedDocumentId,
             Guid inventoryId,
             TimeSpan? timeout = null);
-        
+
         /// <summary>
         /// Получение документооборота описи по идентификатору
         /// </summary>
@@ -125,7 +126,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         /// <param name="timeout"></param>
         /// <returns>Документ из документооборота</returns>
         Task<Document> GetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null);
-        
+
         /// <summary>
         /// Получение документа из документооборота по его идентификатору
         /// </summary>
@@ -328,6 +329,64 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             Guid docflowId,
             Guid documentId,
             Guid contentId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Получение запроса на получение входящих документов ФСС
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="docflowId">Идентификатор документооборота</param>
+        /// <param name="requestId">Идентификатор запроса</param>
+        /// <param name="timeout"></param>
+        /// <returns>Запрос на получение входящих документов ФСС</returns>
+        Task<DocumentsRequest> GetDocumentsRequestAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid requestId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Создание запроса на получение входящих документов ФСС
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="docflowId">Идентификатор документооборота</param>
+        /// <param name="certificate">Сертификат</param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
+        Task<DocumentsRequest> GenerateDocumentsRequestAsync(
+            Guid accountId,
+            Guid docflowId,
+            byte[] certificate,
+            TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Отправка запроса на получение входящих документов ФСС
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="docflowId">Идентификатор документооборота</param>
+        /// <param name="requestId">Идентификатор запроса</param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
+        Task<IDocflowWithDocuments> SendDocumentsRequestAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid requestId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Добавление подписи к запросу на получение входящих документов ФСС
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="docflowId">Идентификатор документооборота</param>
+        /// <param name="requestId">Идентификатор запроса</param>
+        /// <param name="signature"></param>
+        /// <param name="timeout">Сертификат</param>
+        /// <returns></returns>
+        Task<DocumentsRequest> SaveDocumentsRequestSignatureAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid requestId,
+            byte[] signature,
             TimeSpan? timeout = null);
     }
 }
