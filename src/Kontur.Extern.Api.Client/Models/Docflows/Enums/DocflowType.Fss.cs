@@ -21,7 +21,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
             /// Подтверждение основного вида экономической деятельности
             /// </summary>
             public static readonly DocflowType OvedConfirmation = "urn:docflow:oved-confirmation";
-            
+
             /// <summary>
             /// Листки нетрудоспособности ФСС
             /// </summary>
@@ -62,6 +62,41 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
                 /// Результат приема подписки страхователя
                 /// </summary>
                 public static readonly DocflowType AbonentSubscriptionResult = "urn:docflow:fss-sedo-abonent-subscription-result";
+
+                /// <summary>
+                /// Запрос недостающих сведений для назначения пособия ФСС
+                /// </summary>
+                public static readonly DocflowType FssSedoProactivePaymentsDemand = "urn:docflow:fss-sedo-proactive-payments-demand";
+                
+                /// <summary>
+                /// Сведения для назначения пособия ФСС
+                /// </summary>
+                public static readonly DocflowType FssSedoProactivePaymentsReply = "urn:docflow:fss-sedo-proactive-payments-reply";
+                
+                /// <summary>
+                /// Результат обработки сведений для назначения пособия ФСС
+                /// </summary>
+                public static readonly DocflowType FssSedoProactivePaymentsReplyResult = "urn:docflow:fss-sedo-proactive-payments-reply-result";
+                
+                /// <summary>
+                /// Выплата пособия ФСС
+                /// </summary>
+                public static readonly DocflowType FssSedoProactivePaymentsBenefit = "urn:docflow:fss-sedo-proactive-payments-benefit";
+                
+                /// <summary>
+                /// Регистрация сведений о застрахованном лице ФСС
+                /// </summary>
+                public static readonly DocflowType FssSedoInsuredPersonRegistration = "urn:docflow:fss-sedo-insured-person-registration";
+                
+                /// <summary>
+                /// Результат регистрации сведений о застрахованном лице ФСС
+                /// </summary>
+                public static readonly DocflowType FssSedoInsuredPersonRegistrationResult = "urn:docflow:fss-sedo-insured-person-registration-result";
+                
+                /// <summary>
+                /// Информация о несоответствии сведений о застрахованном лице ФСС
+                /// </summary>
+                public static readonly DocflowType FssSedoInsuredPersonMismatch = "urn:docflow:fss-sedo-insured-person-mismatch";
             }
         }
     }
