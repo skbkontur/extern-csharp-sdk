@@ -23,10 +23,10 @@ namespace Kontur.Extern.Api.Client
             return apiClient.Docflows.SendDocumentsRequestAsync(path.AccountId, path.DocflowId, path.RequestId, timeout);
         }
 
-        public static Task<DocumentsRequest> SaveSignatureAsync(this in DocumentsRequestPath path, Signature signature, TimeSpan? timeout = null)
+        public static Task<DocumentsRequest> UpdateSignatureAsync(this in DocumentsRequestPath path, Signature signature, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
-            return apiClient.Docflows.SaveDocumentsRequestSignatureAsync(path.AccountId, path.DocflowId, path.RequestId, signature.ToBytes(), timeout);
+            return apiClient.Docflows.UpdateDocumentsRequestSignatureAsync(path.AccountId, path.DocflowId, path.RequestId, signature.ToBytes(), timeout);
         }
     }
 }

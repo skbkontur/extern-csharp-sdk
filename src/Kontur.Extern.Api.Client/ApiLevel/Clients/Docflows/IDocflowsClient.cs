@@ -382,7 +382,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         /// <param name="signature"></param>
         /// <param name="timeout">Сертификат</param>
         /// <returns></returns>
-        Task<DocumentsRequest> SaveDocumentsRequestSignatureAsync(
+        Task<DocumentsRequest> UpdateDocumentsRequestSignatureAsync(
             Guid accountId,
             Guid docflowId,
             Guid requestId,

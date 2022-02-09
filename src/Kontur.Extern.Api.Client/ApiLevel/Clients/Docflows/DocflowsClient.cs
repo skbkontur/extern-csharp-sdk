@@ -286,7 +286,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
                 timeout);
         }
 
-        public Task<DocumentsRequest> SaveDocumentsRequestSignatureAsync(Guid accountId, Guid docflowId, Guid requestId, byte[] signature, TimeSpan? timeout = null)
+        public Task<DocumentsRequest> UpdateDocumentsRequestSignatureAsync(Guid accountId, Guid docflowId, Guid requestId, byte[] signature, TimeSpan? timeout = null)
         {
             return http.PutAsync<byte[], DocumentsRequest>(
                 $"v1/{accountId}/docflows/{docflowId}/documents-requests/{requestId}/signature",
