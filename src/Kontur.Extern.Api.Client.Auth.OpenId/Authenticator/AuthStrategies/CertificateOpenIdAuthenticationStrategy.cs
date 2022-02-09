@@ -41,7 +41,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies
             var request = new CertificateAuthenticationRequest(
                 credentials.PublicKey,
                 credentials.Free,
-                options.Scope,
+                "",
                 options.ClientId,
                 options.ApiKey);
             return openId.CertificateAuthenticationAsync(request, timeout);

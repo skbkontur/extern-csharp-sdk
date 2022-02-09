@@ -20,7 +20,7 @@ namespace Kontur.Extern.Api.Client.Http.Contents
             => value.IsEmpty ? this : AddEntryCore(name.ToString(), value.ToString());
 
         public FormUrlEncodedContent AddEntry(in UrlEncodedString name, byte[] value) => 
-            AddEntryCore(name.ToString(), Convert.ToBase64String(value));
+            AddEntryCore(name.ToString(), new UrlEncodedString(Convert.ToBase64String(value)).ToString());
 
         public FormUrlEncodedContent AddEntry(in UrlEncodedString name, in UrlEncodedString value)
         {

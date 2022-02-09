@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography.X509Certificates;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Auth.Abstractions;
 using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator;
@@ -9,6 +10,7 @@ using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client;
 using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Cryptography;
 using Kontur.Extern.Api.Client.Http.Configurations;
 using Kontur.Extern.Api.Client.Http.Options;
 using Vostok.Logging.Abstractions;
@@ -78,6 +80,9 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
 
             public Configured WithAuthenticationByPassword(string username, string password) =>
                 new(new PasswordOpenIdAuthenticationStrategy(new Credentials(username, password)), this, Log);
+
+            public Configured WithAuthenticationByCertificate(X509Certificate2 userCertificate, bool free, ICrypt cryptoProvider) =>
+                new(new CertificateOpenIdAuthenticationStrategy(new CertificateCredentials{ PublicKey = userCertificate, Free = free, }, cryptoProvider), this, Log);
         }
 
         [PublicAPI]

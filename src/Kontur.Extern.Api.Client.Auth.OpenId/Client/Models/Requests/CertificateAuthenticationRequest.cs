@@ -15,8 +15,8 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Requests
         public CertificateAuthenticationRequest(X509Certificate2 publicKey, bool free, string partialFactorToken, string clientId, string clientSecret)
             : base(clientId, clientSecret)
         {
-            if (string.IsNullOrWhiteSpace(partialFactorToken))
-                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(partialFactorToken));
+            // if (string.IsNullOrWhiteSpace(partialFactorToken))
+            //     throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(partialFactorToken));
             
             PublicKey = publicKey ?? throw new ArgumentNullException(nameof(publicKey));
             Free = free;
