@@ -11,6 +11,7 @@ using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Models.Docflows.DocumentsRequests;
 using Vostok.Clusterclient.Core.Model;
+
 // ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
@@ -287,9 +288,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
 
         public Task<DocumentsRequest> SaveDocumentsRequestSignatureAsync(Guid accountId, Guid docflowId, Guid requestId, byte[] signature, TimeSpan? timeout = null)
         {
-            var request = http.Put($"v1/{accountId}/docflows/{docflowId}/documents-requests/{requestId}/signature")
-                .WithBytes(signature);
-            return SendRequestAsync<DocumentsRequest>(request, timeout);
+            return http.PutAsync<byte[], DocumentsRequest>(
+                $"v1/{accountId}/docflows/{docflowId}/documents-requests/{requestId}/signature",
+                signature,
+                timeout);
         }
 
         private Task<DocflowPage> GetRelatedDocflowsAsync(RequestUrlBuilder urlBuilder, TimeSpan? timeout) => http.GetAsync<DocflowPage>(urlBuilder.Build(), timeout);
@@ -297,11 +299,5 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         private Task<IDocflowWithDocuments> GetDocflowAsync(string url, TimeSpan? timeout) => http.GetAsync<IDocflowWithDocuments>(url, timeout);
 
         private Task<IDocflowWithDocuments?> TryGetDocflowAsync(string url, TimeSpan? timeout) => http.TryGetAsync<IDocflowWithDocuments>(url, timeout);
-
-        private static async Task<TResult> SendRequestAsync<TResult>(IHttpRequest httpRequest, TimeSpan? timeout)
-        {
-            var httpResponse = await httpRequest.SendAsync(timeout).ConfigureAwait(false);
-            return await httpResponse.GetMessageAsync<TResult>().ConfigureAwait(false);
-        }
     }
 }
