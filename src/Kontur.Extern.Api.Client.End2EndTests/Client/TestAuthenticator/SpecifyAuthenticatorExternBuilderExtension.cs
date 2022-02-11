@@ -11,6 +11,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestAuthenticator
                 .WithHttpConfiguration(new TestingHttpClientConfiguration(authTestData.OpenIdServer))
                 .WithClientIdentification(authTestData.ClientId, authTestData.ApiKey)
                 .WithAuthenticationByPassword(credentials.UserName, credentials.Password)
+                .Build()
             );
     }
 }

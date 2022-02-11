@@ -20,32 +20,38 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
     [PublicAPI]
     public class OpenIdAuthenticatorBuilder
     {
-        public OpenIdAuthenticatorBuilder(ILog log) => 
+        public OpenIdAuthenticatorBuilder(ICrypt cryptoProvider, ILog log)
+        {
+            this.cryptoProvider = cryptoProvider;
             Log = log ?? throw new ArgumentNullException(nameof(log));
+        }
 
         public ILog Log { get; }
+        private readonly ICrypt cryptoProvider;
 
-        public SpecifyClientIdentification WithExternApiUrl(Uri url, RequestTimeouts? requestTimeouts = null)
+        public SpecifyClientIdentification WithOpenIdProviderUrl(Uri url, RequestTimeouts? requestTimeouts = null)
         {
             return WithHttpConfiguration(new ExternalUrlHttpClientConfiguration(url), requestTimeouts);
         }
 
         [SuppressMessage("ReSharper", "ParameterHidesMember")]
         public SpecifyClientIdentification WithHttpConfiguration(IHttpClientConfiguration clientConfiguration, RequestTimeouts? requestTimeouts = null) =>
-            new(Log, clientConfiguration, requestTimeouts);
+            new(clientConfiguration, cryptoProvider, requestTimeouts, Log);
 
         [PublicAPI]
         public class SpecifyClientIdentification
         {
-            internal SpecifyClientIdentification(ILog log, IHttpClientConfiguration clientConfiguration, RequestTimeouts? options)
+            internal SpecifyClientIdentification(IHttpClientConfiguration clientConfiguration, ICrypt cryptoProvider, RequestTimeouts? options, ILog log)
             {
-                Log = log;
                 ClientConfiguration = clientConfiguration ?? throw new ArgumentNullException(nameof(clientConfiguration));
+                CryptoProvider = cryptoProvider;
                 RequestTimeouts = options;
+                Log = log;
             }
 
-            internal RequestTimeouts? RequestTimeouts { get; }
             internal IHttpClientConfiguration ClientConfiguration { get; }
+            internal RequestTimeouts? RequestTimeouts { get; }
+            internal readonly ICrypt CryptoProvider;
             internal ILog Log { get; set; }
 
             [SuppressMessage("ReSharper", "ParameterHidesMember")]
@@ -72,17 +78,24 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
                 ApiKey = apiKey;
             }
 
-            internal RequestTimeouts? RequestTimeouts => specifyClient.RequestTimeouts;
-            internal IHttpClientConfiguration ClientConfiguration => specifyClient.ClientConfiguration;
-            internal ILog Log => specifyClient.Log;
             internal string ApiKey { get; }
             internal string ClientId { get; }
+            internal RequestTimeouts? RequestTimeouts => specifyClient.RequestTimeouts;
+            internal IHttpClientConfiguration ClientConfiguration => specifyClient.ClientConfiguration;
+            private ICrypt CryptoProvider => specifyClient.CryptoProvider;
+            private ILog Log => specifyClient.Log;
 
             public Configured WithAuthenticationByPassword(string username, string password) =>
                 new(new PasswordOpenIdAuthenticationStrategy(new Credentials(username, password)), this, Log);
 
-            public Configured WithAuthenticationByCertificate(X509Certificate2 userCertificate, bool free, ICrypt cryptoProvider) =>
-                new(new CertificateOpenIdAuthenticationStrategy(new CertificateCredentials{ PublicKey = userCertificate, Free = free, }, cryptoProvider), this, Log);
+            public Configured WithAuthenticationByCertificate(string certificateThumbprint)
+            {
+                var certificate = CryptoProvider.GetCertificateWithPrivateKey(certificateThumbprint);
+                return WithAuthenticationByCertificate(certificate);
+            }
+
+            public Configured WithAuthenticationByCertificate(X509Certificate2 certificate) =>
+                new(new CertificateOpenIdAuthenticationStrategy(new CertificateCredentials {PublicKey = certificate}, CryptoProvider), this, Log);
         }
 
         [PublicAPI]
@@ -108,7 +121,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
                 return this;
             }
 
-            public Configured RefreshAccessTokensBeforeExpirationsProactivelyWithinInterval(TimeSpan interval)
+            public Configured RefreshAccessTokensBeforeExpirationProactivelyWithinInterval(TimeSpan interval)
             {
                 proactiveAuthTokenRefreshInterval = interval;
                 return this;

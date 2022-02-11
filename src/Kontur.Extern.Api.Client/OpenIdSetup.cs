@@ -1,6 +1,7 @@
+using Kontur.Extern.Api.Client.Auth.Abstractions;
 using Kontur.Extern.Api.Client.Auth.OpenId.Builder;
 
 namespace Kontur.Extern.Api.Client
 {
-    public delegate OpenIdAuthenticatorBuilder.Configured OpenIdSetup(OpenIdAuthenticatorBuilder builder);
+    public delegate IAuthenticator OpenIdSetup(OpenIdAuthenticatorBuilder builder);
 }

@@ -18,7 +18,15 @@ namespace Kontur.Extern.Api.Client.Testing.End2End.Environment
             return JsonConvert.DeserializeObject<AuthTestData>(json) ?? throw new NotSupportedException("Null JSON is invalid");
         }
 
-        public AuthTestData(string userName, string password, string scope, string apiKey, string clientId, TestDataGenerationLevel testDataGenerateLevel, string? openIdServer = DefaultOpenIdServer)
+        public AuthTestData(
+            string userName,
+            string password,
+            string certificateThumbprint,
+            string scope,
+            string apiKey,
+            string clientId,
+            TestDataGenerationLevel testDataGenerateLevel,
+            string? openIdServer = DefaultOpenIdServer)
         {
             openIdServer ??= DefaultOpenIdServer;
             ShouldNotBeNullOrEmpty(userName, nameof(userName));
@@ -27,9 +35,10 @@ namespace Kontur.Extern.Api.Client.Testing.End2End.Environment
             ShouldNotBeNullOrEmpty(apiKey, nameof(apiKey));
             ShouldNotBeNullOrEmpty(clientId, nameof(clientId));
             ShouldNotBeNullOrEmpty(openIdServer, nameof(openIdServer));
-            
+
             UserName = userName;
             Password = password;
+            CertificateThumbprint = certificateThumbprint;
             Scope = scope;
             ApiKey = apiKey;
             ClientId = clientId;
@@ -39,6 +48,7 @@ namespace Kontur.Extern.Api.Client.Testing.End2End.Environment
 
         public string UserName { get; }
         public string Password { get; }
+        public string CertificateThumbprint { get; }
         public Credentials UserCredentials => new(UserName, Password);
         public string Scope { get; }
         public string ApiKey { get; }

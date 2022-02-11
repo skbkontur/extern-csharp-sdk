@@ -12,12 +12,19 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Requests
     /// <seealso cref="ClientAuthenticatedRequest" />
     public class CertificateAuthenticationRequest : ClientAuthenticatedRequest
     {
+        public CertificateAuthenticationRequest(X509Certificate2 publicKey, bool free, string clientId, string clientSecret)
+            : base(clientId, clientSecret)
+        {
+            PublicKey = publicKey ?? throw new ArgumentNullException(nameof(publicKey));
+            Free = free;
+        }
+
         public CertificateAuthenticationRequest(X509Certificate2 publicKey, bool free, string partialFactorToken, string clientId, string clientSecret)
             : base(clientId, clientSecret)
         {
-            // if (string.IsNullOrWhiteSpace(partialFactorToken))
-            //     throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(partialFactorToken));
-            
+            if (string.IsNullOrWhiteSpace(partialFactorToken))
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(partialFactorToken));
+
             PublicKey = publicKey ?? throw new ArgumentNullException(nameof(publicKey));
             Free = free;
             PartialFactorToken = partialFactorToken;
