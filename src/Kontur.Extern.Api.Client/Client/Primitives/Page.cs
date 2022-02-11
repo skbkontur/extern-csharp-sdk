@@ -50,8 +50,6 @@ namespace Kontur.Extern.Api.Client.Primitives
             TotalPages = totalPages;
         }
         
-        public bool IsPageNonExistent => CurrentPage >= TotalPages;
-        
         public long TotalItems { get; }
         public long CurrentPage { get; }
         public uint PageSize { get; }

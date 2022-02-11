@@ -9,6 +9,6 @@ namespace Kontur.Extern.Api.Client.Primitives
         IEntityListSliceLoading<T> Skip(long skip);
 
         Task<IReadOnlyList<T>> LoadAllAsync(TimeSpan? timeout = null);
-        Task<(IReadOnlyList<T> Items, bool HasNextSlice)> LoadSliceAsync(TimeSpan? timeout = null);
+        Task<Slice<T>> LoadSliceAsync(TimeSpan? timeout = null);
     }
 }

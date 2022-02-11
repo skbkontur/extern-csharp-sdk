@@ -160,10 +160,11 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
             {
                 var theCase = new EntityListCase();
 
-                var (items, hasNextSlice) = await theCase.EntityList.SliceBy(10).LoadSliceAsync();
+                var slice = await theCase.EntityList.SliceBy(10).LoadSliceAsync();
 
-                items.Should().BeEmpty();
-                hasNextSlice.Should().BeFalse();
+                slice.Items.Should().BeEmpty();
+                slice.HasNextSlice.Should().BeFalse();
+                slice.TotalItems.Should().Be(0);
             }
 
             [Test]
@@ -174,10 +175,11 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
 
                 var expectedSliceData = theCase.GetExpectedSliceData(0, 10);
 
-                var (items, hasNextSlice) = await theCase.EntityList.SliceBy(10).LoadSliceAsync();
+                var slice = await theCase.EntityList.SliceBy(10).LoadSliceAsync();
 
-                items.Should().BeEquivalentTo(expectedSliceData);
-                hasNextSlice.Should().BeTrue();
+                slice.Items.Should().BeEquivalentTo(expectedSliceData);
+                slice.HasNextSlice.Should().BeTrue();
+                slice.TotalItems.Should().Be(100);
             }
 
             [Test]
@@ -188,10 +190,11 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
 
                 var expectedSliceData = theCase.GetExpectedSliceData(0, 10);
 
-                var (items, hasNextSlice) = await theCase.EntityList.SliceBy(10).Skip(0).LoadSliceAsync();
+                var slice = await theCase.EntityList.SliceBy(10).Skip(0).LoadSliceAsync();
 
-                items.Should().BeEquivalentTo(expectedSliceData);
-                hasNextSlice.Should().BeTrue();
+                slice.Items.Should().BeEquivalentTo(expectedSliceData);
+                slice.HasNextSlice.Should().BeTrue();
+                slice.TotalItems.Should().Be(100);
             }
 
             [Test]
@@ -202,10 +205,11 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
 
                 var expectedSliceData = theCase.GetExpectedSliceData(21, 11);
 
-                var (items, hasNextSlice) = await theCase.EntityList.SliceBy(11).Skip(21).LoadSliceAsync();
+                var slice = await theCase.EntityList.SliceBy(11).Skip(21).LoadSliceAsync();
 
-                items.Should().BeEquivalentTo(expectedSliceData);
-                hasNextSlice.Should().BeTrue();
+                slice.Items.Should().BeEquivalentTo(expectedSliceData);
+                slice.HasNextSlice.Should().BeTrue();
+                slice.TotalItems.Should().Be(100);
             }
 
             [Test]
@@ -216,10 +220,11 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
 
                 var expectedSliceData = theCase.GetExpectedSliceData(91, 9);
 
-                var (items, hasNextSlice) = await theCase.EntityList.SliceBy(10).Skip(91).LoadSliceAsync();
+                var slice = await theCase.EntityList.SliceBy(10).Skip(91).LoadSliceAsync();
 
-                items.Should().BeEquivalentTo(expectedSliceData);
-                hasNextSlice.Should().BeFalse();
+                slice.Items.Should().BeEquivalentTo(expectedSliceData);
+                slice.HasNextSlice.Should().BeFalse();
+                slice.TotalItems.Should().Be(100);
             }
 
             [Test]

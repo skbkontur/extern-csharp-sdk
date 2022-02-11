@@ -109,26 +109,26 @@ namespace Kontur.Extern.Api.Client.Primitives
                 var skip = 0L;
                 while (true)
                 {
-                    var (items, hasNextSlice) = await LoadSliceAsync(skip, sliceSize, timeBudget?.Remaining).ConfigureAwait(false);
-                    if (items.Count > 0)
+                    var slice = await LoadSliceAsync(skip, sliceSize, timeBudget?.Remaining).ConfigureAwait(false);
+                    if (slice.Items.Count > 0)
                     {
                         skip += sliceSize;
-                        data.AddRange(items);
+                        data.AddRange(slice.Items);
                     }
 
-                    if (!hasNextSlice)
+                    if (!slice.HasNextSlice)
                         break;
                 }
 
                 return data;
             }
 
-            public Task<(IReadOnlyList<T> Items, bool HasNextSlice)> LoadSliceAsync(TimeSpan? timeout = null) => LoadSliceAsync(skipItems, sliceSize, timeout);
+            public Task<Slice<T>> LoadSliceAsync(TimeSpan? timeout = null) => LoadSliceAsync(skipItems, sliceSize, timeout);
 
-            private async Task<(IReadOnlyList<T> Items, bool HasNextSlice)> LoadSliceAsync(long skip, int take, TimeSpan? timeout = null)
+            private async Task<Slice<T>> LoadSliceAsync(long skip, int take, TimeSpan? timeout = null)
             {
                 var (items, totalItems) = await getSliceAsync(skip, take, timeout).ConfigureAwait(false);
-                return (items, items.Count > 0 && totalItems > take + skip);
+                return new Slice<T>(items, items.Count > 0 && totalItems > take + skip, totalItems);
             }
         }
     }
