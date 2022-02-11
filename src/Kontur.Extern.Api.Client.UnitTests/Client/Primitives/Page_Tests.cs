@@ -69,7 +69,6 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
         {
             var expectedPage = new ExpectedPage<int>
             {
-                IsPageNonExistent = true,
                 Items = new[] {1, 2},
                 PageSize = 4,
                 Pages = new[] {0L, 1L, 2L},
@@ -88,7 +87,6 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
         {
             var expectedPage = new ExpectedPage<int>
             {
-                IsPageNonExistent = true,
                 Items = Array.Empty<int>(),
                 PageSize = 4,
                 Pages = Array.Empty<long>(),

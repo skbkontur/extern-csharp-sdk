@@ -4,7 +4,6 @@ namespace Kontur.Extern.Api.Client.Primitives
 {
     public interface IPage
     {
-        bool IsPageNonExistent { get; }
         long TotalItems { get; }
         long CurrentPage { get; }
         uint PageSize { get; }
