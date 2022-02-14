@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
@@ -48,7 +49,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Accounts.GetAccount(Guid.NewGuid()));
 
-            apiException.Result.Message.Should().Contain("NotFound");
+            apiException.Result.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }   
         
         [Fact]
