@@ -29,7 +29,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies
         {
             var request = new CertificateTokenRequest(
                 cryptoProvider.Decrypt(authResponse.EncryptedKey),
-                credentials.PublicKey.Thumbprint,
+                credentials.PublicKeyCertificate.Thumbprint,
                 options.Scope,
                 options.ClientId,
                 options.ApiKey);
@@ -39,9 +39,8 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies
         private Task<CertificateAuthenticationResponse> AuthorizeByPublicKeyAsync(IOpenIdClient openId, OpenIdAuthenticationOptions options, TimeSpan? timeout)
         {
             var request = new CertificateAuthenticationRequest(
-                credentials.PublicKey,
+                credentials.PublicKeyCertificate,
                 credentials.Free,
-                options.Scope,
                 options.ClientId,
                 options.ApiKey);
             return openId.CertificateAuthenticationAsync(request, timeout);

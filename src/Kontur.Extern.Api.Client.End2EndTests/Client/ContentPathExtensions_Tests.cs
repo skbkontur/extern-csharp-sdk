@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.Common.Streams;
@@ -63,7 +64,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Contents.GetContentStream(AccountId, Guid.NewGuid()));
            
-            apiException.Result.Message.Should().Contain("NotFound");
+            apiException.Result.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }  
         
         [Fact]
@@ -72,7 +73,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Contents.GetContentStream(AccountId, Guid.Empty));
            
-            apiException.Result.Message.Should().Contain("BadRequest");
+            apiException.Result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
     }
 }

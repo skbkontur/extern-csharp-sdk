@@ -29,9 +29,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
                 Sender = new SenderRequest
                 {
                     Inn = senderInn.ToString(),
-                    Certificate = new CertificateRequest
+                    Certificate = new PublicKeyCertificateRequest
                     {
-                        PublicKey = senderCert
+                        Content = senderCert
                     }
                 },
                 Recipient = new RecipientInfoRequest
@@ -209,9 +209,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
                 Sender = new SenderRequest
                 {
                     Inn = senderInn.ToString(),
-                    Certificate = new CertificateRequest
+                    Certificate = new PublicKeyCertificateRequest
                     {
-                        PublicKey = senderCert
+                        Content = senderCert
                     }
                 },
                 Recipient = new RecipientInfoRequest

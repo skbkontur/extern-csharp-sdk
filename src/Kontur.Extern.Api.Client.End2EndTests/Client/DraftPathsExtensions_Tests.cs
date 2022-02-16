@@ -46,7 +46,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         {
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Drafts.GetDraft(AccountId, Guid.NewGuid()));
-            apiException.Result.Message.Should().Contain("NotFound");
+            apiException.Result.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         {
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Drafts.GetDraft(AccountId, Guid.Empty));
-            apiException.Result.Message.Should().Contain("BadRequest");
+            apiException.Result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Drafts.GetDraft(Guid.NewGuid(), Guid.NewGuid()));
 
-            apiException.Result.Message.Should().Contain("Forbidden");
+            apiException.Result.StatusCode.Should().Be(HttpStatusCode.Forbidden);
         }
 
         [Fact]
@@ -167,7 +167,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             Func<Task> func = async () => await Context.Drafts.GetDocument(AccountId, createdDraft.Id, Guid.NewGuid());
 
-            (await func.Should().ThrowAsync<ApiException>()).And.Message.Should().Contain("NotFound");
+            (await func.Should().ThrowAsync<ApiException>()).And.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
@@ -356,7 +356,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
 
             Func<Task> func = async () => await Context.Drafts.GetDocument(AccountId, createdDraft.Id, documentId);
 
-            (await func.Should().ThrowAsync<ApiException>()).And.Message.Should().Contain("NotFound");
+            (await func.Should().ThrowAsync<ApiException>()).And.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
@@ -557,9 +557,9 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 Kpp = sender.Kpp,
                 IpAddress = sender.IpAddress,
                 IsRepresentative = sender.IsRepresentative,
-                Certificate = new CertificatePublicKey
+                Certificate = new PublicKeyCertificate
                 {
-                    Content = Encoding.UTF8.GetString(sender.Certificate.PublicKey)
+                    Content = sender.Certificate.Content
                 }
             };
 

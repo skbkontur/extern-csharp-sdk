@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
@@ -25,7 +26,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Docflows.GetDocflow(AccountId, Guid.NewGuid()));
 
-            apiException.Result.Message.Should().Contain("NotFound");
+            apiException.Result.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
@@ -34,7 +35,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Docflows.GetDocflow(Guid.Empty, Guid.Empty));
 
-            apiException.Result.Message.Should().Contain("BadRequest");
+            apiException.Result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact]
@@ -43,7 +44,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var apiException = Assert.ThrowsAsync<ApiException>(
                 () => Context.Docflows.GetDocflow(Guid.NewGuid(), Guid.Empty));
 
-            apiException.Result.Message.Should().Contain("Forbidden");
+            apiException.Result.StatusCode.Should().Be(HttpStatusCode.Forbidden);
         }
 
         [Fact]

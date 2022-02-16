@@ -29,7 +29,7 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
         ///  Сертификат для отправки
         /// </summary>
         // [Required]
-        public CertificatePublicKey Certificate { get; set; } = null!;
+        public PublicKeyCertificate Certificate { get; set; } = null!;
 
         /// <summary>
         ///  Отправитель является представителем

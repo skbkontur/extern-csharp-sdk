@@ -5,6 +5,7 @@ using FluentAssertions;
 using Kontur.Extern.Api.Client.Auth.Abstractions;
 using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator;
 using Kontur.Extern.Api.Client.Auth.OpenId.Builder;
+using Kontur.Extern.Api.Client.Cryptography;
 using Kontur.Extern.Api.Client.Testing.End2End.ClusterClient;
 using Kontur.Extern.Api.Client.Testing.End2End.Environment;
 using Kontur.Extern.Api.Client.Testing.Fakes.Logging;
@@ -72,6 +73,43 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.End2EndTests.Authenticator
                 builder.WithAuthenticationByPassword(authTestData.UserName, authTestData.Password);
         }
 
+        public class Authenticate_By_Certificate : BaseTests
+        {
+            public Authenticate_By_Certificate(ITestOutputHelper output)
+                : base(output)
+            {
+            }
+
+            [Fact]
+            public async Task Should_authenticate_by_certificate()
+            {
+                var authenticator = CreateAuthenticator(CreateStrategy);
+
+                var result = await authenticator.AuthenticateAsync();
+
+                var authResult = result.Should().BeOfType<OpenIdAuthenticationResult>().Subject;
+                authResult.AccessToken.Should().NotBeNullOrWhiteSpace();
+            }
+
+            [Fact]
+            public async Task Should_reauthenticate_if_the_access_token_expired()
+            {
+                var authenticator = CreateAuthenticator(CreateStrategy);
+
+                var firstTimeResult = (await authenticator.AuthenticateAsync()).As<OpenIdAuthenticationResult>();
+                var firstTimeAccessToken = firstTimeResult.AccessToken;
+                stopwatchMock.ActiveStopwatchAdvancedTo(firstTimeResult.RemainingTime);
+
+                var result = await authenticator.AuthenticateAsync();
+
+                var authResult = result.Should().BeOfType<OpenIdAuthenticationResult>().Subject;
+                authResult.AccessToken.Should().NotBeNullOrWhiteSpace().And.NotBe(firstTimeAccessToken);
+            }
+
+            private static OpenIdAuthenticatorBuilder.Configured CreateStrategy(OpenIdAuthenticatorBuilder.SpecifyAuthStrategy builder, AuthTestData authTestData) =>
+                builder.WithAuthenticationByCertificate(authTestData.CertificateThumbprint);
+        }
+
         public abstract class BaseTests
         {
             internal readonly StopwatchMock stopwatchMock;
@@ -86,7 +124,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.End2EndTests.Authenticator
             protected private IAuthenticator CreateAuthenticator(Func<OpenIdAuthenticatorBuilder.SpecifyAuthStrategy, AuthTestData, OpenIdAuthenticatorBuilder.Configured> strategyFactory)
             {
                 var testData = AuthTestData.LoadFromJsonFile();
-                return new OpenIdAuthenticatorBuilder(log)
+                return new OpenIdAuthenticatorBuilder(new WinApiCrypt(), log)
                     .WithHttpConfiguration(new TestingHttpClientConfiguration(testData.OpenIdServer))
                     .WithClientIdentification(testData.ClientId, testData.ApiKey)
                     .WithAuthenticationStrategy(x => strategyFactory(x, testData))
