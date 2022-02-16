@@ -41,9 +41,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             var inn = codesGenerator.PersonInn();
             var expectedRequest = new SenderRequest
             {
-                Certificate = new CertificateRequest
+                Certificate = new PublicKeyCertificateRequest
                 {
-                    PublicKey = certificate
+                    Content = certificate
                 },
                 Inn = inn.ToString()
             };
@@ -94,9 +94,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             var kpp = codesGenerator.Kpp();
             var expectedRequest = new SenderRequest
             {
-                Certificate = new CertificateRequest
+                Certificate = new PublicKeyCertificateRequest
                 {
-                    PublicKey = certificate
+                    Content = certificate
                 },
                 Inn = inn.ToString(),
                 Kpp = kpp
@@ -115,9 +115,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             var kpp = codesGenerator.Kpp();
             var expectedRequest = new SenderRequest
             {
-                Certificate = new CertificateRequest
+                Certificate = new PublicKeyCertificateRequest
                 {
-                    PublicKey = certificate
+                    Content = certificate
                 },
                 Inn = inn.ToString(),
                 Kpp = kpp,
@@ -154,9 +154,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             var inn = codesGenerator.PersonInn();
             var expectedRequest = new SenderRequest
             {
-                Certificate = new CertificateRequest
+                Certificate = new PublicKeyCertificateRequest
                 {
-                    PublicKey = certificate
+                    Content = certificate
                 },
                 Inn = inn.ToString(),
                 IsRepresentative = true

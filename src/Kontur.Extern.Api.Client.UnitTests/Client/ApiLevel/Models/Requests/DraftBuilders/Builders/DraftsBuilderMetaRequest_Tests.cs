@@ -38,9 +38,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.ApiLevel.Models.Requests.Dra
                 new SenderRequest
                 {
                     Inn = senderInn.ToString(),
-                    Certificate = new CertificateRequest
+                    Certificate = new PublicKeyCertificateRequest
                     {
-                        PublicKey = senderCert
+                        Content = senderCert
                     }
                 },
                 new AccountInfoRequest

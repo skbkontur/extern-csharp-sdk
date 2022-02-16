@@ -80,9 +80,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuil
                 new SenderRequest
                 {
                     Inn = senderInn.ToString(),
-                    Certificate = new CertificateRequest
+                    Certificate = new PublicKeyCertificateRequest
                     {
-                        PublicKey = senderCert
+                        Content = senderCert
                     }
                 },
                 new AccountInfoRequest

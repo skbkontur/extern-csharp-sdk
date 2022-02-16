@@ -557,9 +557,9 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 Kpp = sender.Kpp,
                 IpAddress = sender.IpAddress,
                 IsRepresentative = sender.IsRepresentative,
-                Certificate = new CertificatePublicKey
+                Certificate = new PublicKeyCertificate
                 {
-                    Content = Encoding.UTF8.GetString(sender.Certificate.PublicKey)
+                    Content = sender.Certificate.Content
                 }
             };
 

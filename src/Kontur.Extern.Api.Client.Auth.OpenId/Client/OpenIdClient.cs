@@ -99,7 +99,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client
         public async Task<CertificateAuthenticationResponse> CertificateAuthenticationAsync(CertificateAuthenticationRequest request, TimeSpan? timeout = null)
         {
             var content = new FormUrlEncodedContent()
-                .AddEntry(ContractConstants.CertificateAuthenticationRequest.PublicKey, request.PublicKey.GetRawCertData())
+                .AddEntry(ContractConstants.CertificateAuthenticationRequest.PublicKey, request.PublicKeyCertificate.GetRawCertData())
                 .AddEntry(ContractConstants.CertificateAuthenticationRequest.IsFree, request.Free.ToString())
                 .AddEntryIfNotEmpty(ContractConstants.CertificateAuthenticationRequest.PartialFactorToken, request.PartialFactorToken)
                 .AddRequestAuthentication(request);

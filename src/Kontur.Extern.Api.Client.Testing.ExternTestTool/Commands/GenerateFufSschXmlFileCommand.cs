@@ -50,7 +50,7 @@ namespace Kontur.Extern.Api.Client.Testing.ExternTestTool.Commands
             var generatedCertificate = await new GenerateCertificateCommand(certificateGenerationData).ExecuteAsync(httpClient, cache);
             return sender with
             {
-                Certificate = Base64String.Encode(generatedCertificate.PublicKey)
+                Certificate = Base64String.Encode(generatedCertificate.PublicKeyCertificate)
             };
         }
         

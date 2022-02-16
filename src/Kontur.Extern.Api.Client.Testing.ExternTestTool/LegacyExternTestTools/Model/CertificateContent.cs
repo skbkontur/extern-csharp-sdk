@@ -11,7 +11,7 @@ namespace Kontur.Extern.Api.Client.Testing.ExternTestTool.LegacyExternTestTools.
         public CertificateContent(string content)
         {
             if (string.IsNullOrEmpty(content))
-                throw new InvalidDataException("content is a required property for Certificate and cannot be null");
+                throw new InvalidDataException("content is a required property for CertificateContent and cannot be null");
 
             Content = content;
         }
@@ -25,7 +25,7 @@ namespace Kontur.Extern.Api.Client.Testing.ExternTestTool.LegacyExternTestTools.
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Certificate {\n");
+            sb.Append("class CertificateContent {\n");
             sb.Append("  Content: ").Append(Content).Append("\n");
             sb.Append("}\n");
             return sb.ToString();

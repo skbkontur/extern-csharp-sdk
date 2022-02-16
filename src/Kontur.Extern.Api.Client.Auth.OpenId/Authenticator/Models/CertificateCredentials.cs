@@ -9,7 +9,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models
         /// <summary>
         /// Публичный ключ пользователя
         /// </summary>
-        public X509Certificate2 PublicKey { get; set; }
+        public X509Certificate2 PublicKeyCertificate { get; set; }
 
         /// <summary>
         /// Пропускать валидацию сертификата пользователя

@@ -95,7 +95,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
             }
 
             public Configured WithAuthenticationByCertificate(X509Certificate2 certificate) =>
-                new(new CertificateOpenIdAuthenticationStrategy(new CertificateCredentials {PublicKey = certificate}, CryptoProvider), this, Log);
+                new(new CertificateOpenIdAuthenticationStrategy(new CertificateCredentials {PublicKeyCertificate = certificate}, CryptoProvider), this, Log);
         }
 
         [PublicAPI]

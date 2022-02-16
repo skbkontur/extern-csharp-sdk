@@ -44,9 +44,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DraftBuilders
                 new SenderRequest
                 {
                     Inn = senderInn.ToString(),
-                    Certificate = new CertificateRequest
+                    Certificate = new PublicKeyCertificateRequest
                     {
-                        PublicKey = senderCert
+                        Content = senderCert
                     }
                 },
                 new AccountInfoRequest
