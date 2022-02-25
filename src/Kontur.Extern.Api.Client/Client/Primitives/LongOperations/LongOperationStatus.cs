@@ -82,6 +82,7 @@ namespace Kontur.Extern.Api.Client.Primitives.LongOperations
         {
             this.result = result;
             this.error = error;
+            IsCompleted = isCompleted;
         }
 
         public bool IsFailed => error != null;
