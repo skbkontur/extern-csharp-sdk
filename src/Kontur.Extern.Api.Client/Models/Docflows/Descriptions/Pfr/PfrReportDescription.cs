@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Pfr
@@ -33,5 +35,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Pfr
         /// Дата конца отчетного периода, за который сдается документ
         /// </summary>
         public DateOnly? PeriodEnd { get; set; }
+
+        /// <summary>
+        /// Дополнительный статус документооборота
+        /// </summary>
+        public DocflowExtendedStatus ExtendedStatus { get; set; }
     }
 }
