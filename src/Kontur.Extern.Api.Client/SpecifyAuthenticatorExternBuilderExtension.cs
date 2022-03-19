@@ -10,7 +10,7 @@ namespace Kontur.Extern.Api.Client
     public static class SpecifyAuthenticatorExternBuilderExtension
     {
         [SuppressMessage("ReSharper", "StringLiteralTypo")]
-        private static readonly Uri IdentityUrl = new("https://identity.skbkontur.ru");
+        private static readonly Uri IdentityUrl = new("https://identity.kontur.ru");
 
         public static ExternBuilder.Configured WithPasswordAuthentication(this ExternBuilder.SpecifyAuthenticator specifyAuthenticator, Credentials credentials, string clientId, string apiKey) =>
             specifyAuthenticator.WithOpenIdAuthenticator(
