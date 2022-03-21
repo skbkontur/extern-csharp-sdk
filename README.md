@@ -54,28 +54,11 @@
 
     IReadOnlyList<Account> accounts = await externApi.Accounts.List().SliceBy(100).LoadAllAsync();
 
-### (!) Дополнительно аутентифицироваться до выполнения запросов не нужно (!)
-Cдк автоматически выполнит попытку аутентифицироваться, если код ответа на запрос будет 403.
+### :warning: Дополнительно аутентифицироваться до выполнения запросов не нужно :warning:
+Cдк автоматически выполнит попытку аутентифицироваться, если код ответа на запрос будет 401.
 
-Данное поведение можно отключить, вызвав 
 
-     .TryResolveUnauthorizedResponsesAutomatically(false) 
-
-при настройке IExtern после вызова
-    
-    .WithPasswordAuthentication(...) или .WithOpenIdAuthenticator(...)
-
-В таком случае перед выполнением запросов нужно будет выполнить код 
-
-    await externApi.ReauthenticateAsync();
-
-Также сдк автоматически выполнит реаутенификакцию при приблежении времени истечения токена. 
-Интервал можно задать, вызвав
-
-    RefreshAccessTokensBeforeExpirationProactivelyWithinInterval(...)
-    
-при настройке внутри вызова .WithOpenIdAuthenticator(...). Например, после вызова .WithAuthenticationByPassword(...).
-
+Также сдк автоматически выполнит реаутенификакцию при приближении времени истечения токена. 
 
 ## Другие методы аутентификации
 
