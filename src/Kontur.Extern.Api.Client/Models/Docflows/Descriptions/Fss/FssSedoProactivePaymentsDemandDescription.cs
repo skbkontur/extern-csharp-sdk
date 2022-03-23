@@ -1,4 +1,6 @@
+using System.Text.Json.Serialization;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Common;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
 {
@@ -19,5 +21,11 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// Номер ЭЛН
         /// </summary>
         public string? SickListNumber { get; set; }
+
+        /// <summary>
+        /// ФИО
+        /// </summary>
+        [JsonPropertyName("fio")]
+        public PersonFullName PersonFullName { get; set; } = null!;
     }
 }

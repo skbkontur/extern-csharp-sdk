@@ -43,9 +43,9 @@ namespace Kontur.Extern.Api.Client.Testing.ExternTestTool.Commands
                 sender.Inn,
                 sender.Kpp,
                 sender.OrgName,
-                Surname: payer?.ChiefFullName?.LastSurname,
-                FirstName: payer?.ChiefFullName?.FirstName,
-                Patronymic: payer?.ChiefFullName?.PatronymicName
+                Surname: payer?.ChiefFullName?.Surname,
+                FirstName: payer?.ChiefFullName?.Name,
+                Patronymic: payer?.ChiefFullName?.Patronymic
             );
             var generatedCertificate = await new GenerateCertificateCommand(certificateGenerationData).ExecuteAsync(httpClient, cache);
             return sender with
