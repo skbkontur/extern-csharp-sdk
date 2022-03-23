@@ -63,9 +63,9 @@ namespace Kontur.Extern.Api.Client.Testing.ExternTestTool.Commands
                     new NewLegalEntityAccountRequest
                     {
                         OrganizationName = organizationName,
-                        FirstName = chiefName.FirstName,
-                        Surname = chiefName.LastSurname,
-                        Patronymic = chiefName.PatronymicName
+                        FirstName = chiefName.Name,
+                        Surname = chiefName.Surname,
+                        Patronymic = chiefName.Patronymic
                     }
                 );
                 

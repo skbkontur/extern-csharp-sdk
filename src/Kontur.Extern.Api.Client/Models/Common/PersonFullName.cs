@@ -9,42 +9,42 @@ namespace Kontur.Extern.Api.Client.Models.Common
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class PersonFullName
     {
-        public PersonFullName(string lastSurname, string firstName, string patronymicName)
+        public PersonFullName(string surname, string name, string patronymic)
         {
-            if (string.IsNullOrWhiteSpace(lastSurname))
-                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(lastSurname));
+            if (string.IsNullOrWhiteSpace(surname))
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(surname));
             
-            if (string.IsNullOrWhiteSpace(firstName))
-                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(firstName));
+            if (string.IsNullOrWhiteSpace(name))
+                throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(name));
             
-            LastSurname = lastSurname;
-            FirstName = firstName;
-            PatronymicName = patronymicName;
+            Surname = surname;
+            Name = name;
+            Patronymic = patronymic;
         }
         
         /// <summary>
         /// Фамилия
         /// </summary>
         [JsonPropertyName("surname")]
-        public string LastSurname { get; }
+        public string Surname { get; }
 
         /// <summary>
         /// Имя
         /// </summary>
         [JsonPropertyName("name")]
-        public string FirstName { get; }
+        public string Name { get; }
 
         /// <summary>
         /// Отчество
         /// </summary>
         [JsonPropertyName("patronymic")]
-        public string PatronymicName { get; }
+        public string Patronymic { get; }
 
-        public void Deconstruct(out string lastSurname, out string firstName, out string patronymicName)
+        public void Deconstruct(out string surname, out string name, out string patronymic)
         {
-            lastSurname = LastSurname;
-            firstName = FirstName;
-            patronymicName = PatronymicName;
+            surname = Surname;
+            name = Name;
+            patronymic = Patronymic;
         }
     }
 }
