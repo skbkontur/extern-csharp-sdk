@@ -96,12 +96,12 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
         }
         
         [TestFixture]
-        internal class ParseAny
+        internal class Parse
         {
             [TestCaseSource(nameof(InvalidStrings))]
             public void Should_fail_when_the_given_number_string_is_invalid_okpo(string value)
             {
-                Action action = () => Okpo.ParseAny(value);
+                Action action = () => Okpo.Parse(value);
 
                 action.Should().Throw<ArgumentException>();
             }
@@ -109,7 +109,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
             [TestCaseSource(nameof(ValidStrings))]
             public void Should_successfully_return_a_number_when_the_given_value_is_valid(string value)
             {
-                var parsedValue = Okpo.ParseAny(value);
+                var parsedValue = Okpo.Parse(value);
 
                 parsedValue.Kind.Should().Be(AuthorityNumberKind.Okpo);
                 parsedValue.Value.Should().Be(value);

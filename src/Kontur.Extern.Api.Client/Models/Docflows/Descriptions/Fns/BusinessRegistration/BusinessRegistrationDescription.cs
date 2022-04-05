@@ -41,11 +41,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegi
             public ApplicantInfoDescription[] ApplicantInfos { get; set; } = null!;
             
             /// <summary>
-            /// Тип регистрируемой организации
-            /// </summary>
-            public BusinessType BusinessType { get; set; }
-            
-            /// <summary>
             /// Информация о регистрируемом ЮЛ
             /// </summary>
             public UlInfoDescription? UlInfo { get; set; }

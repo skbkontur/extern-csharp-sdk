@@ -19,7 +19,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
         /// <returns></returns>
         public static Okud Parse(string value) => Parser.Parse(value);
         
-        private Okud(string value) => Value = value;
+        internal Okud(string value) => Value = value;
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.Okud;

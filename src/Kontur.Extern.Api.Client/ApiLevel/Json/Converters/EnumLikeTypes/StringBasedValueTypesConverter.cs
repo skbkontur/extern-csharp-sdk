@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Kontur.Extern.Api.Client.Models.Common.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Enums;
-using Kontur.Extern.Api.Client.Models.Drafts.Enums;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
@@ -29,8 +29,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
             AddConverterForClass(Knd.Parse, x => x.Value.ToString());
             AddConverterForClass(Kpp.Parse, x => x.Value.ToString());
             AddConverterForClass(InnKpp.Parse, x => x.Value.ToString());
-            AddConverterForClass(Okud.Parse, x => x.Value.ToString());
-            AddConverterForClass(Okpo.ParseAny, x => x.Value.ToString());
+            AddConverterForClass(s => new Okud(s), x => x.Value.ToString());
+            AddConverterForClass(s => new Okpo(s), x => x.Value.ToString());
             AddConverterForClass(Inn.Parse, x => x.Value.ToString());
             AddConverterForClass(LegalEntityInn.Parse, x => x.Value.ToString());
             
@@ -40,8 +40,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
             AddConverterForClass(TogsCode.Parse, x => x.Value.ToString());
             AddConverterForClass(UpfrCode.Parse, x => x.Value.ToString());
             
-            AddConverterForClass(PfrRegNumber.Parse, x => x.Value.ToString());
-            AddConverterForClass(FssRegNumber.Parse, x => x.Value.ToString());
+            AddConverterForClass(s => new PfrRegNumber(s), x => x.Value.ToString());
+            AddConverterForClass(s => new FssRegNumber(s), x => x.Value.ToString());
         }
 
         public override bool CanConvert(Type typeToConvert) => 

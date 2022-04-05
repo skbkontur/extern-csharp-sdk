@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Kontur.Extern.Api.Client.Models.Drafts.Enums
+namespace Kontur.Extern.Api.Client.Models.Common.Enums
 {
     [SuppressMessage("ReSharper", "CommentTypo")]
     partial struct PfrLetterType

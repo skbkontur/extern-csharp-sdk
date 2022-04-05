@@ -13,7 +13,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration
     public partial struct SvdregCode
     {
         public static readonly RegexBasedParser<SvdregCode> Parser = new(
-            @"^(X|0){1}\d{5}$",
+            @"^(X|\d){1}\d{5}$",
             v => new SvdregCode(v),
             Errors.InvalidSvdregCode
         );
