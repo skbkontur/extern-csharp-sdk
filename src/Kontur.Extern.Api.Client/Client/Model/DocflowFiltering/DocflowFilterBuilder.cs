@@ -6,6 +6,7 @@ using Kontur.Extern.Api.Client.Exceptions;
 using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Common.Enums;
 
 namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
 {
@@ -17,6 +18,8 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         private DocflowFilter filter;
         private DateTime? createdTo;
         private DateTime? createdFrom;
+        private DateTime? updatedTo;
+        private DateTime? updatedFrom;
 
         public DocflowFilterBuilder() => filter = new DocflowFilter();
 
@@ -101,6 +104,32 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         }
 
         /// <summary>
+        /// Установить дату и время создания документооборотов, от которой нужно получить список
+        /// </summary>
+        public DocflowFilterBuilder WithUpdatedFrom(DateTime dateFrom)
+        {
+            if (updatedTo < dateFrom)
+                throw Errors.InvalidRange(nameof(updatedFrom), nameof(updatedTo), dateFrom, updatedTo.Value);
+
+            filter.SetUpdatedFrom(dateFrom);
+            updatedFrom = dateFrom;
+            return this;
+        }
+
+        /// <summary>
+        /// Установить дату и время создания документооборотов, до которой нужно получить список
+        /// </summary>
+        public DocflowFilterBuilder WithUpdatedTo(DateTime dateTo)
+        {
+            if (updatedFrom > dateTo)
+                throw Errors.InvalidRange(nameof(updatedFrom), nameof(updatedTo), updatedFrom.Value, dateTo);
+            
+            filter.SetUpdatedTo(dateTo);
+            updatedTo = dateTo;
+            return this;
+        }
+
+        /// <summary>
         /// Типы документооборотов
         /// </summary>
         public DocflowFilterBuilder WithTypes(params DocflowType[] types)
@@ -160,6 +189,15 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         public DocflowFilterBuilder WithFormName(string name)
         {
             filter.SetFormName(name);
+            return this;
+        }
+
+        /// <summary>
+        /// Типы писем ПФР. Только для документооборотов типа pfr-letter и pfr-cu-letter
+        /// </summary>
+        public DocflowFilterBuilder WithPfrLetterTypes(params PfrLetterType[] types)
+        {
+            filter.SetPfrLetterTypes(types);
             return this;
         }
 
