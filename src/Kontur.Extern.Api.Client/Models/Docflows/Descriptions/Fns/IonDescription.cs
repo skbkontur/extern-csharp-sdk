@@ -25,7 +25,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// Код конечной инспекции, куда направляется документ (в случае пересылки отчета через МРИ)
         /// </summary>
-        public string FinalRecipient { get; set; } = null!;
+        public string? FinalRecipient { get; set; } = null!;
         
         /// <summary>
         /// Тип запроса ИОН
