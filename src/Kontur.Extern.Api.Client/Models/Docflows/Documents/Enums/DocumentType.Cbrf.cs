@@ -20,27 +20,27 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
                 /// <summary>
                 /// Отчет
                 /// </summary>
-                public static readonly DocumentType CbrfReportV2 = "urn:document:cbrf-report-v2";
+                public static readonly DocumentType ReportV2 = "urn:document:cbrf-report-report-v2";
 
                 /// <summary>
                 /// Результат приема отчета
                 /// </summary>
-                public static readonly DocumentType CbrfReportEsodReceipt = "urn:document:cbrf-report-esod-receipt";
+                public static readonly DocumentType EsodReceipt = "urn:document:cbrf-report-esod-receipt";
 
                 /// <summary>
                 /// Технологический документ
                 /// </summary>
-                public static readonly DocumentType CbrfReportStatusInfo = "urn:document:cbrf-report-status-info";
+                public static readonly DocumentType StatusInfo = "urn:document:cbrf-report-status-info";
 
                 /// <summary>
                 /// Результат обработки отчета
                 /// </summary>
-                public static readonly DocumentType CbrfReportProcessingStatus = "urn:document:cbrf-report-processing-status";
+                public static readonly DocumentType ProcessingStatus = "urn:document:cbrf-report-processing-status";
 
                 /// <summary>
                 /// Протокол с перечнем ошибок, возникшими при проверке отчета
                 /// </summary>
-                public static readonly DocumentType CbrfReportProcessingErrorProtocol = "urn:document:cbrf-report-processing-error-protocol";
+                public static readonly DocumentType ProcessingErrorProtocol = "urn:document:cbrf-report-processing-error-protocol";
             }
 
             /// <summary>
@@ -52,17 +52,17 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
                 /// <summary>
                 /// Отчет
                 /// </summary>
-                public static readonly DocumentType CbrfReport = "urn:document:cbrf-report";
+                public static readonly DocumentType Report = "urn:document:cbrf-report";
 
                 /// <summary>
                 /// Сообщение о приеме
                 /// </summary>
-                public static readonly DocumentType CbrfReportReceptionResult = "urn:document:cbrf-report-reception-result";
+                public static readonly DocumentType ReceptionResult = "urn:document:cbrf-report-reception-result";
 
                 /// <summary>
                 /// Результат обработки
                 /// </summary>
-                public static readonly DocumentType CbrfReportProcessingResult = "urn:document:cbrf-report-processing-result";
+                public static readonly DocumentType ProcessingResult = "urn:document:cbrf-report-processing-result";
             }
         }
     }

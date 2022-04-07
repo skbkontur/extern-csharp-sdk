@@ -233,7 +233,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Служебный документ ПФР
             /// </summary>
             [PublicAPI]
-            public static class AncillaryDocument
+            public static class Ancillary
             {
                 /// <summary>
                 /// Служебный документ	

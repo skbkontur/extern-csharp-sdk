@@ -17,13 +17,13 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Расчёт 4-ФСС
             /// </summary>
             [PublicAPI]
-            public static class Report
+            public static class FssReport
             {
                 /// <summary>
                 /// Исходный отчет с присоединенной подписью
                 /// Имя (согласно нормативным документам): Файл Расчета
                 /// </summary>
-                public static readonly DocumentType ReportFile = "urn:document:fss-report";
+                public static readonly DocumentType Report = "urn:document:fss-report";
 
                 /// <summary>
                 /// Подтверждение спецоператора (не утверждено форматом, формирует Контур.Экстерн при отправке из веб-приложения, юридической силы не имеет)
@@ -139,7 +139,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
                 /// <summary>
                 /// Результат приёма запроса порталом
                 /// </summary>
-                public static readonly DocumentType SubscriptionReceipt = "urn:document:fss-sedo-abonent-subscription-receipt";
+                public static readonly DocumentType Receipt = "urn:document:fss-sedo-abonent-subscription-receipt";
                 /// <summary>
                 /// Результат подписки/отписки страхователя на оповещение об ЭЛН работника
                 /// </summary>
@@ -156,37 +156,37 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
                 /// Ошибка взаимодействия с СЭДО (синхронная ошибка обработки запроса в СЭДО)
                 /// </summary>
                 public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-abonent-subscription-exchange-error";
+            }
+
+            /// <summary>
+            /// Результат приема подписки страхователя
+            /// </summary>
+            [PublicAPI]
+            public static class SedoAbonentSubscriptionResult
+            {
+                /// <summary>
+                /// Запрос на получение результата подписки абонента
+                /// </summary>
+                public static readonly DocumentType StatusRequestMessage = "urn:document:fss-sedo-abonent-subscription-result-status-request-message";
+                /// <summary>
+                /// Результат подписки/отписки страхователя на оповещение об ЭЛН работника
+                /// </summary>
+                public static readonly DocumentType SubscribeStatusForSnils = "urn:document:fss-sedo-abonent-subscription-result-subscribe-status-for-snils";
+                /// <summary>
+                /// Результат подписки/отписки работника(-ов) страхователя на уведомления по ЭЛН
+                /// </summary>
+                public static readonly DocumentType SubscribeStatusForRegistrationNumber = "urn:document:fss-sedo-abonent-subscription-result-subscribe-status-for-registration-number";
+                /// <summary>
+                /// Ошибка обработки документа (асинхронная ошибка, приходит в urn:docflow:fss-sedo-error)
+                /// </summary>
+                [SuppressMessage("ReSharper", "MemberHidesStaticFromOuterClass")]
+                public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-abonent-subscription-result-error-message";
                 
                 /// <summary>
-                /// Результат приема подписки страхователя
+                /// Ошибка взаимодействия с СЭДО (синхронная ошибка обработки запроса в СЭДО)
                 /// </summary>
-                [PublicAPI]
-                public static class Result
-                {
-                    /// <summary>
-                    /// Запрос на получение результата подписки абонента
-                    /// </summary>
-                    public static readonly DocumentType StatusRequestMessage = "urn:document:fss-sedo-abonent-subscription-result-status-request-message";
-                    /// <summary>
-                    /// Результат подписки/отписки страхователя на оповещение об ЭЛН работника
-                    /// </summary>
-                    public static readonly DocumentType SubscribeStatusForSnils = "urn:document:fss-sedo-abonent-subscription-result-subscribe-status-for-snils";
-                    /// <summary>
-                    /// Результат подписки/отписки работника(-ов) страхователя на уведомления по ЭЛН
-                    /// </summary>
-                    public static readonly DocumentType SubscribeStatusForRegistrationNumber = "urn:document:fss-sedo-abonent-subscription-result-subscribe-status-for-registration-number";
-                    /// <summary>
-                    /// Ошибка обработки документа (асинхронная ошибка, приходит в urn:docflow:fss-sedo-error)
-                    /// </summary>
-                    [SuppressMessage("ReSharper", "MemberHidesStaticFromOuterClass")]
-                    public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-abonent-subscription-result-error-message";
-                    
-                    /// <summary>
-                    /// Ошибка взаимодействия с СЭДО (синхронная ошибка обработки запроса в СЭДО)
-                    /// </summary>
-                    [SuppressMessage("ReSharper", "MemberHidesStaticFromOuterClass")]
-                    public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-abonent-subscription-result-exchange-error";
-                }
+                [SuppressMessage("ReSharper", "MemberHidesStaticFromOuterClass")]
+                public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-abonent-subscription-result-exchange-error";
             }
 
             /// <summary>

@@ -70,7 +70,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
                     Filename = fileName,
                     SvdregCode = svdregCode,
                     ContentType = expectedContentType,
-                    Type = DocumentType.Fss.Report.ReportFile
+                    Type = DocumentType.Fss.FssReport.Report
                 }
             };
             
@@ -84,7 +84,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
                 .Returns((uploadedContentId, uploadedSignature));
             
             var (signature, documentRequest) = await new DocumentRequestBuilder()
-                .SetType(DocumentType.Fss.Report.ReportFile)
+                .SetType(DocumentType.Fss.FssReport.Report)
                 .SetFileName(fileName)
                 .SetSvdregCode(svdregCode)
                 .SetContentUploadStrategy(uploadStrategy)
@@ -107,7 +107,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
                 {
                     Filename = fileName,
                     SvdregCode = svdregCode,
-                    Type = DocumentType.Fss.Report.ReportFile
+                    Type = DocumentType.Fss.FssReport.Report
                 }
             };
             
@@ -121,7 +121,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
                 .Returns((null, null));
             
             var (signature, documentRequest) = await new DocumentRequestBuilder()
-                .SetType(DocumentType.Fss.Report.ReportFile)
+                .SetType(DocumentType.Fss.FssReport.Report)
                 .SetFileName(fileName)
                 .SetSvdregCode(svdregCode)
                 .SetContentUploadStrategy(uploadStrategy)
@@ -145,7 +145,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
                 {
                     Filename = fileName,
                     SvdregCode = svdregCode,
-                    Type = DocumentType.Fss.Report.ReportFile
+                    Type = DocumentType.Fss.FssReport.Report
                 }
             };
             
@@ -153,7 +153,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
             var crypt = Substitute.For<ICrypt>();
             
             var (signature, documentRequest) = await new DocumentRequestBuilder()
-                .SetType(DocumentType.Fss.Report.ReportFile)
+                .SetType(DocumentType.Fss.FssReport.Report)
                 .SetFileName(fileName)
                 .SetSvdregCode(svdregCode)
                 .CreateRequestAsync(accountId, contentService, crypt, 1.Seconds());

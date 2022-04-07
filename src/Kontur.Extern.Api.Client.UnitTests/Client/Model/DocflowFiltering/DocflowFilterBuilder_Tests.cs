@@ -40,7 +40,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 .WithInnKppOfALegalEntity(InnKpp.Parse("1234567890-123456789"))
                 .WithOkud(Okud.Parse("1234567"))
                 .WithRegNumberOfPfrDocflow(PfrRegNumber.Parse("123-456-789012"))
-                .WithTypes(DocflowType.Fns.Fns534.Report, DocflowType.Fns.Fns534.Letter)
+                .WithTypes(DocflowType.Fns.Fns534Report, DocflowType.Fns.Fns534Letter)
                 .WithFormName("the form")
                 .WithCreatedFrom(createdFrom)
                 .WithCreatedTo(createdTo)
@@ -118,7 +118,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             {
                 DocflowType.Pfr.Report,
                 DocflowType.Cbrf.Report,
-                DocflowType.Fns.Fns534.Inventory,
+                DocflowType.Fns.Fns534Inventory,
                 DocflowType.Fns.BusinessRegistration
             };
 
@@ -128,7 +128,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 filter,
                 ("type", DocflowType.Pfr.Report.ToUrn()!.Nss),
                 ("type", DocflowType.Cbrf.Report.ToUrn()!.Nss),
-                ("type", DocflowType.Fns.Fns534.Inventory.ToUrn()!.Nss),
+                ("type", DocflowType.Fns.Fns534Inventory.ToUrn()!.Nss),
                 ("type", DocflowType.Fns.BusinessRegistration.ToUrn()!.Nss));
         }
 
@@ -148,12 +148,12 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             DocflowType.Pfr.Letter,
             DocflowType.Pfr.Report,
             DocflowType.Cbrf.Report,
-            DocflowType.Fns.Fns534.CuLetter,
-            DocflowType.Fns.Fns534.Inventory,
+            DocflowType.Fns.Fns534CuLetter,
+            DocflowType.Fns.Fns534Inventory,
             DocflowType.Fns.BusinessRegistration,
             DocflowType.Fss.Report,
             DocflowType.Fss.SickReport,
-            DocflowType.Fss.Sedo.PvsoNotification,
+            DocflowType.Fss.SedoPvsoNotification,
             DocflowType.Rosstat.CuBroadcast
         };
 

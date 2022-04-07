@@ -28,7 +28,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Декларация и 2-НДФЛ
             /// </summary>
             [PublicAPI]
-            public static class Fns534
+            public static class Fns534Report
             {
                 /// <summary>                
                 /// Налоговая декларация или бухгалтерская отчетность (установленный формат).
@@ -62,7 +62,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
                 /// Уведомление об отказе в приеме налоговой декларации (установленный формат).
                 /// Имя (согласно нормативным документам): УведомлениеОбОтказе
                 /// </summary>
-                public static readonly DocumentType ReportAcceptanceResultNegative = "urn:document:fns534-report-acceptance-result-negative";
+                public static readonly DocumentType AcceptanceResultNegative = "urn:document:fns534-report-acceptance-result-negative";
 
                 /// <summary>
                 /// Извещение о вводе декларации в информационную систему налогового органа (установленный формат).
@@ -474,31 +474,37 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
                 /// Имя (согласно нормативным документам): Опись представляемого пакета документов
                 ///</summary>
                 public static readonly DocumentType Inventory = "urn:document:business-registration-inventory";
+
                 /// <summary>
                 /// Документ об уплате государственной пошлины
                 /// Имя (согласно нормативным документам): Госпошлина
                 ///</summary>
                 public static readonly DocumentType Duty = "urn:document:business-registration-duty";
+
                 /// <summary>
                 /// Заявление о государственной регистрации юридического лица, физического лица в качестве индивидуального предпринимателя
                 /// Имя (согласно нормативным документам): Заявление по установленной форме
                 ///</summary>
                 public static readonly DocumentType Application = "urn:document:business-registration-application";
+
                 /// <summary>
                 /// Заявление о переходе на упрощенную систему налогообложения (форма №26.2-1)
                 /// Имя (согласно нормативным документам): Заявление о переходе на УСН
                 ///</summary>
                 public static readonly DocumentType ApplicationUsn = "urn:document:business-registration-application-usn";
+
                 /// <summary>
                 /// Учредительный документ
                 /// Имя (согласно нормативным документам): Учредительный документ
                 ///</summary>
                 public static readonly DocumentType FoundingDocument = "urn:document:business-registration-founding-document";
+
                 /// <summary>
                 /// Изменения в учредительный документ
                 /// Имя (согласно нормативным документам): Изменения в учредительный документ
                 ///</summary>
                 public static readonly DocumentType FoundingDocumentCorrection = "urn:document:business-registration-founding-document-correction";
+
                 /// <summary>
                 /// Документы, необходимые для государственной регистрации
                 /// Имя (согласно нормативным документам): Иные документы
@@ -506,71 +512,84 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
                 public static readonly DocumentType Attachment = "urn:document:business-registration-attachment";
 
                 /// <summary>
-                /// Ответные документы
-                /// </summary>
-                [PublicAPI]
-                public static class Replies
-                {
-                    /// <summary>
-                    /// Протокол с информацией о выявленных несоответствиях форматно-логического контроля
-                    /// Имя (согласно нормативным документам): Сообщение о невозможности обработки электронных документов
-                    ///</summary>
-                    public static readonly DocumentType CheckProtocol = "urn:document:business-registration-check-protocol";
+                /// Протокол с информацией о выявленных несоответствиях форматно-логического контроля
+                /// Имя (согласно нормативным документам): Сообщение о невозможности обработки электронных документов
+                ///</summary>
+                public static readonly DocumentType CheckProtocol = "urn:document:business-registration-check-protocol";
 
-                    /// <summary>
-                    /// Расписка о принятии заявления
-                    /// Имя (согласно нормативным документам): Расписка в получении налоговым(регистрирующим) органом документов в электронном виде
-                    ///</summary>
-                    public static readonly DocumentType Receipt = "urn:document:business-registration-receipt";
+                /// <summary>
+                /// Расписка о принятии заявления
+                /// Имя (согласно нормативным документам): Расписка в получении налоговым(регистрирующим) органом документов в электронном виде
+                ///</summary>
+                public static readonly DocumentType Receipt = "urn:document:business-registration-receipt";
 
-                    /// <summary>
-                    /// Решение об отказе в регистрации
-                    /// Имя (согласно нормативным документам): Решение об отказе в государственной регистрации
-                    ///</summary>
-                    public static readonly DocumentType AcceptanceResultNegative = "urn:document:business-registration-acceptance-result-negative";
+                /// <summary>
+                /// Решение об отказе в регистрации
+                /// Имя (согласно нормативным документам): Решение об отказе в государственной регистрации
+                ///</summary>
+                public static readonly DocumentType AcceptanceResultNegative = "urn:document:business-registration-acceptance-result-negative";
 
-                    /// <summary>
-                    /// Уведомление о постановке на учёт
-                    /// Имя (согласно нормативным документам): Уведомление о постановке на учет в качестве индивидуального предпринимателя в налоговом органе
-                    ///</summary>
-                    public static readonly DocumentType RegistrationNotice = "urn:document:business-registration-registration-notice";
+                /// <summary>
+                /// Уведомление о постановке на учёт
+                /// Имя (согласно нормативным документам): Уведомление о постановке на учет в качестве индивидуального предпринимателя в налоговом органе
+                ///</summary>
+                public static readonly DocumentType RegistrationNotice = "urn:document:business-registration-registration-notice";
 
-                    /// <summary>
-                    /// Свидетельство о постановке на учет
-                    /// Имя (согласно нормативным документам): Свидетельство о постановке на учет в налоговом органе
-                    ///</summary>
-                    public static readonly DocumentType RegistrationCertificate = "urn:document:business-registration-registration-certificate";
+                /// <summary>
+                /// Свидетельство о постановке на учет
+                /// Имя (согласно нормативным документам): Свидетельство о постановке на учет в налоговом органе
+                ///</summary>
+                public static readonly DocumentType RegistrationCertificate = "urn:document:business-registration-registration-certificate";
 
-                    /// <summary>
-                    /// Уведомление о снятии с учета
-                    /// Имя (согласно нормативным документам): Уведомление о снятии с учета в налоговом органе
-                    ///</summary>
-                    public static readonly DocumentType DeregistrationNotice = "urn:document:business-registration-deregistration-notice";
+                /// <summary>
+                /// Уведомление о снятии с учета
+                /// Имя (согласно нормативным документам): Уведомление о снятии с учета в налоговом органе
+                ///</summary>
+                public static readonly DocumentType DeregistrationNotice = "urn:document:business-registration-deregistration-notice";
 
-                    /// <summary>
-                    /// Выписка или лист записи ЕГРИП
-                    /// Имя (согласно нормативным документам): Выписка или лист записи ЕГРИП
-                    ///</summary>
-                    public static readonly DocumentType EgripExtract = "urn:document:business-registration-egrip-extract";
+                /// <summary>
+                /// Выписка или лист записи ЕГРИП
+                /// Имя (согласно нормативным документам): Выписка или лист записи ЕГРИП
+                ///</summary>
+                public static readonly DocumentType EgripExtract = "urn:document:business-registration-egrip-extract";
 
-                    /// <summary>
-                    /// Выписка или лист записи ЕГРЮЛ
-                    /// Имя (согласно нормативным документам): Выписка или лист записи ЕГРЮЛ
-                    ///</summary>
-                    public static readonly DocumentType EgrulExtract = "urn:document:business-registration-egrul-extract";
+                /// <summary>
+                /// Выписка или лист записи ЕГРЮЛ
+                /// Имя (согласно нормативным документам): Выписка или лист записи ЕГРЮЛ
+                ///</summary>
+                public static readonly DocumentType EgrulExtract = "urn:document:business-registration-egrul-extract";
 
-                    /// <summary>
-                    /// Уведомление об оставлении документов без рассмотрения
-                    /// Имя (согласно нормативным документам): Уведомление об оставлении документов без рассмотрения
-                    ///</summary>
-                    public static readonly DocumentType DeclineNotice = "urn:document:business-registration-decline-notice";
+                /// <summary>
+                /// Уведомление об оставлении документов без рассмотрения
+                /// Имя (согласно нормативным документам): Уведомление об оставлении документов без рассмотрения
+                ///</summary>
+                public static readonly DocumentType DeclineNotice = "urn:document:business-registration-decline-notice";
 
-                    /// <summary>
-                    /// Решение о приостановлении регистрации
-                    /// Имя (согласно нормативным документам): Решение о приостановлении государственной регистрации
-                    ///</summary>
-                    public static readonly DocumentType AcceptanceResultSuspension = "urn:document:business-registration-acceptance-result-suspension";
-                }
+                /// <summary>
+                /// Решение о приостановлении регистрации
+                /// Имя (согласно нормативным документам): Решение о приостановлении государственной регистрации
+                ///</summary>
+                public static readonly DocumentType AcceptanceResultSuspension = "urn:document:business-registration-acceptance-result-suspension";
+
+                /// <summary>
+                /// Патент на право применения патентной системы налогообложения
+                ///</summary>
+                public static readonly DocumentType Patent = "urn:document:business-registration-patent";
+
+                /// <summary>
+                /// Уведомление об отказе в выдаче патента
+                ///</summary>
+                public static readonly DocumentType PatentDeclineNotice = "urn:document:business-registration-patent-decline-notice";
+
+                /// <summary>
+                /// Информационное письмо
+                ///</summary>
+                public static readonly DocumentType CuLetter = "urn:document:business-registration-cu-letter";
+
+                /// <summary>
+                /// Любое приложение, содержит дополнительные сведения от органа ФНС
+                ///</summary>
+                public static readonly DocumentType IncomingAttachment = "urn:document:business-registration-incoming-attachment";
             }
 
             /// <summary>

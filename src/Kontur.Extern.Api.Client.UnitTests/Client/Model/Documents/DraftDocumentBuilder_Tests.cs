@@ -53,7 +53,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Documents
             const string fileName = "file_name";
             var svdregCode = SvdregCode.ForIndividualEntrepreneur.Code_011011;
             const string contentType = "application/pdf";
-            var documentType = DocumentType.Fss.Report.ReportFile;
+            var documentType = DocumentType.Fss.FssReport.Report;
             var expectedRequest = new DocumentRequest
             {
                 ContentId = uploadedContentId,
@@ -97,7 +97,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Documents
             
             var uploadedContentId = Guid.NewGuid();
             const string contentType = "application/octet-stream";
-            var documentType = DocumentType.Fns.Fns534.Report;
+            var documentType = DocumentType.Fns.Fns534Report.Report;
             var expectedRequest = new DocumentRequest
             {
                 ContentId = uploadedContentId,

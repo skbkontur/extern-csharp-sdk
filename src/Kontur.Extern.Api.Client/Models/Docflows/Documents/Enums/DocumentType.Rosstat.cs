@@ -38,7 +38,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
                 /// Неформализованное приложение к отчету	
                 /// Имя (согласно нормативным документам): ПриложениеПисьма
                 /// </summary>
-                public static readonly DocumentType Attachment = "urn:document:stat-report-attachment";
+                public static readonly DocumentType ReportAttachment = "urn:document:stat-report-report-attachment";
                 /// <summary>
                 /// Извещение о получении документа его получателем (установленный формат)	
                 /// Имя (согласно нормативным документам): ИзвещениеОПолучении
@@ -105,7 +105,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Письмо из Росстата
             /// </summary>
             [PublicAPI]
-            public static class StatCuLetter
+            public static class CuLetter
             {
                 /// <summary>
                 /// Неформализованный текст письма	
@@ -139,13 +139,13 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Массовая рассылка из Росстата
             /// </summary>
             [PublicAPI]
-            public static class StatCuBroadcast
+            public static class CuBroadcast
             {
                 /// <summary>
                 /// Неформализованный текст информационной рассылки	
                 /// Имя (согласно нормативным документам): Рассылка
                 /// </summary>
-                public static readonly DocumentType Broadcast = "urn:document:stat-cu-broadcast";
+                public static readonly DocumentType Letter = "urn:document:stat-cu-broadcast-letter";
                 /// <summary>
                 /// Служебный документ, в котором передается описание рассылки (установленный формат)	
                 /// Имя (согласно нормативным документам): ОписаниеПисьма

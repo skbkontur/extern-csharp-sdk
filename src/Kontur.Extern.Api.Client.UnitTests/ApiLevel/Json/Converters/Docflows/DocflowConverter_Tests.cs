@@ -55,7 +55,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
         [Test]
         public void Should_return_null_description_if_its_known_but_missed()
         {
-            var docflowType = DocflowType.Fns.Fns534.Report;
+            var docflowType = DocflowType.Fns.Fns534Report;
             var originalDocflow = descriptionGenerator.GenerateDocflowWithoutDescription(docflowType);
             var json = serializer.SerializeToIndentedString(originalDocflow);
             Console.WriteLine($"Generated JSON: {json}");
@@ -87,7 +87,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
         [Test]
         public void Should_return_unknown_description_in_case_of_null_docflow_type()
         {
-            var dummyDocflowType = DocflowType.Fns.Fns534.Report;
+            var dummyDocflowType = DocflowType.Fns.Fns534Report;
             var originalDocflow = descriptionGenerator.GenerateDocflowWithoutDescription(dummyDocflowType);
             originalDocflow.Type = default;
             originalDocflow.Description = new ReportDescription

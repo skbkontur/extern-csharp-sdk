@@ -60,7 +60,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
         [Test]
         public void Should_deserialize_common_requisites_in_case_of_null_document_type()
         {
-            var dummyDocumentType = DocumentType.Fns.Fns534.Report;
+            var dummyDocumentType = DocumentType.Fns.Fns534Report.Report;
             var documentDescription = descriptionGenerator.GenerateWithoutRequisites(dummyDocumentType);
             documentDescription.Type = default;
             documentDescription.Requisites = new PfrReportRequisites
