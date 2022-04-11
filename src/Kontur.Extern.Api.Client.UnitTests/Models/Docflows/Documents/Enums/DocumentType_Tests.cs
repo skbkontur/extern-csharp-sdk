@@ -74,14 +74,13 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Docflows.Documents.Enums
             [TestCase("doc", "urn:document:some-doc", false)]
             [TestCase("some-doc", "urn:some-doc", false)]
             [TestCase("some-doc", "urn:docflow:some-doc", false)]
-            [TestCase("some-doc", null, false)]
-            public void Should_indicate_that_document_type_is_belong_to_namespace(string documentSuffix, string? namespaceValue, bool expectedResult)
+            public void Should_indicate_that_document_type_is_belong_to_namespace(string documentSuffix, string namespaceValue, bool expectedResult)
             {
-                var @namespace = namespaceValue is null ? null : Urn.Parse(namespaceValue);
+                var @namespace = Urn.Parse(namespaceValue);
                 
                 DocumentType documentType = $"urn:document:{documentSuffix}";
 
-                documentType.IsBelongTo(@namespace!).Should().Be(expectedResult);
+                documentType.IsBelongTo(@namespace).Should().Be(expectedResult);
             }
         }
         

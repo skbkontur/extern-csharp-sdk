@@ -15,7 +15,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
         /// </summary>
         public static readonly Urn Namespace = Urn.Parse("urn:document");
         
-        private readonly Urn? urn;
+        private readonly Urn urn;
 
         public DocumentType(string urn)
             : this(Urn.Parse(urn))
@@ -31,24 +31,20 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
 
         public bool IsEmpty => urn is null;
 
-        public Urn? ToUrn() => urn;
+        public Urn ToUrn() => urn;
 
         public bool IsBelongTo(Urn @namespace)
         {
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            if (@namespace is null)
-                return false;
-            
-            return urn is not null && urn.Value.StartsWith(@namespace.Value);
+            return urn.Value.StartsWith(@namespace.Value);
         }
 
-        public override string ToString() => urn?.ToString() ?? string.Empty;
+        public override string ToString() => urn.ToString();
 
         public bool Equals(DocumentType other) => Equals(urn, other.urn);
 
         public override bool Equals(object? obj) => obj is DocumentType other && Equals(other);
 
-        public override int GetHashCode() => urn != null ? urn.GetHashCode() : 0;
+        public override int GetHashCode() => urn.GetHashCode();
 
         public static bool operator==(DocumentType left, DocumentType right) => left.Equals(right);
 

@@ -15,7 +15,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// </summary>
         public static readonly Urn Namespace = Urn.Parse("urn:docflow");
         
-        private readonly Urn? urn;
+        private readonly Urn urn;
 
         public DocflowType(string urn)
             : this(Urn.Parse(urn))
@@ -30,15 +30,15 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         }
 
         [Pure]
-        public Urn? ToUrn() => urn;
+        public Urn ToUrn() => urn;
 
-        public override string ToString() => urn?.ToString() ?? string.Empty;
+        public override string ToString() => urn.ToString();
 
         public bool Equals(DocflowType other) => Equals(urn, other.urn);
 
         public override bool Equals(object? obj) => obj is DocflowType other && Equals(other);
 
-        public override int GetHashCode() => urn != null ? urn.GetHashCode() : 0;
+        public override int GetHashCode() => urn.GetHashCode();
 
         public static bool operator==(DocflowType left, DocflowType right) => left.Equals(right);
 
