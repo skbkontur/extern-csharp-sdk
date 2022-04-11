@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
 {
@@ -7,90 +6,83 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
     public partial struct DocflowType
     {
         /// <summary>
-        /// ФСС
+        /// Расчет по форме 4-ФСС
         /// </summary>
-        [PublicAPI]
-        public static class Fss
-        {
-            /// <summary>
-            /// Расчет по форме 4-ФСС
-            /// </summary>
-            public static readonly DocflowType Report = "urn:docflow:fss-report";
+        public static readonly DocflowType FssReport = "urn:docflow:fss-report";
 
-            /// <summary>
-            /// Подтверждение основного вида экономической деятельности
-            /// </summary>
-            public static readonly DocflowType OvedConfirmation = "urn:docflow:oved-confirmation";
+        /// <summary>
+        /// Подтверждение основного вида экономической деятельности
+        /// </summary>
+        public static readonly DocflowType OvedConfirmation = "urn:docflow:oved-confirmation";
 
-            /// <summary>
-            /// Листки нетрудоспособности ФСС
-            /// </summary>
-            public static readonly DocflowType SickReport = "urn:docflow:fss-sick-report";
+        /// <summary>
+        /// Листки нетрудоспособности ФСС
+        /// </summary>
+        public static readonly DocflowType FssSickReport = "urn:docflow:fss-sick-report";
 
-            /// <summary>
-            /// Уведомления об изменении статуса электронного больничного листа
-            /// </summary>
-            public static readonly DocflowType SedoSickReportChangeNotification = "urn:docflow:fss-sedo-sick-report-change-notification";
+        /// <summary>
+        /// Уведомления об изменении статуса электронного больничного листа
+        /// </summary>
+        public static readonly DocflowType FssSedoSickReportChangeNotification = "urn:docflow:fss-sedo-sick-report-change-notification";
 
-            /// <summary>
-            /// Извещение о прямых выплатах мер социального обеспечения
-            /// </summary>
-            public static readonly DocflowType SedoPvsoNotification = "urn:docflow:fss-sedo-pvso-notification";
+        /// <summary>
+        /// Извещение о прямых выплатах мер социального обеспечения
+        /// </summary>
+        public static readonly DocflowType FssSedoPvsoNotification = "urn:docflow:fss-sedo-pvso-notification";
 
-            /// <summary>
-            /// Сообщения об ошибках в документообортах ФСС через СЭДО
-            /// </summary>
-            public static readonly DocflowType SedoError = "urn:docflow:fss-sedo-error";
+        /// <summary>
+        /// Сообщения об ошибках в документообортах ФСС через СЭДО
+        /// </summary>
+        public static readonly DocflowType FssSedoError = "urn:docflow:fss-sedo-error";
 
-            /// <summary>
-            /// Подписка страхователя на документооборот с ФСС
-            /// </summary>
-            public static readonly DocflowType SedoAbonentSubscription = "urn:docflow:fss-sedo-abonent-subscription";
+        /// <summary>
+        /// Подписка страхователя на документооборот с ФСС
+        /// </summary>
+        public static readonly DocflowType FssSedoAbonentSubscription = "urn:docflow:fss-sedo-abonent-subscription";
 
-            /// <summary>
-            /// Подписка оператора на документооборот с ФСС по абоненту
-            /// </summary>
-            public static readonly DocflowType SedoProviderSubscription = "urn:docflow:fss-sedo-provider-subscription";
+        /// <summary>
+        /// Подписка оператора на документооборот с ФСС по абоненту
+        /// </summary>
+        public static readonly DocflowType FssSedoProviderSubscription = "urn:docflow:fss-sedo-provider-subscription";
 
-            /// <summary>
-            /// Результат приема подписки страхователя
-            /// </summary>
-            public static readonly DocflowType SedoAbonentSubscriptionResult = "urn:docflow:fss-sedo-abonent-subscription-result";
+        /// <summary>
+        /// Результат приема подписки страхователя
+        /// </summary>
+        public static readonly DocflowType FssSedoAbonentSubscriptionResult = "urn:docflow:fss-sedo-abonent-subscription-result";
 
-            /// <summary>
-            /// Запрос недостающих сведений для назначения пособия ФСС
-            /// </summary>
-            public static readonly DocflowType SedoProactivePaymentsDemand = "urn:docflow:fss-sedo-proactive-payments-demand";
+        /// <summary>
+        /// Запрос недостающих сведений для назначения пособия ФСС
+        /// </summary>
+        public static readonly DocflowType FssSedoProactivePaymentsDemand = "urn:docflow:fss-sedo-proactive-payments-demand";
 
-            /// <summary>
-            /// Сведения для назначения пособия ФСС
-            /// </summary>
-            public static readonly DocflowType SedoProactivePaymentsReply = "urn:docflow:fss-sedo-proactive-payments-reply";
+        /// <summary>
+        /// Сведения для назначения пособия ФСС
+        /// </summary>
+        public static readonly DocflowType FssSedoProactivePaymentsReply = "urn:docflow:fss-sedo-proactive-payments-reply";
 
-            /// <summary>
-            /// Результат обработки сведений для назначения пособия ФСС
-            /// </summary>
-            public static readonly DocflowType SedoProactivePaymentsReplyResult = "urn:docflow:fss-sedo-proactive-payments-reply-result";
+        /// <summary>
+        /// Результат обработки сведений для назначения пособия ФСС
+        /// </summary>
+        public static readonly DocflowType FssSedoProactivePaymentsReplyResult = "urn:docflow:fss-sedo-proactive-payments-reply-result";
 
-            /// <summary>
-            /// Выплата пособия ФСС
-            /// </summary>
-            public static readonly DocflowType SedoProactivePaymentsBenefit = "urn:docflow:fss-sedo-proactive-payments-benefit";
+        /// <summary>
+        /// Выплата пособия ФСС
+        /// </summary>
+        public static readonly DocflowType FssSedoProactivePaymentsBenefit = "urn:docflow:fss-sedo-proactive-payments-benefit";
 
-            /// <summary>
-            /// Регистрация сведений о застрахованном лице ФСС
-            /// </summary>
-            public static readonly DocflowType SedoInsuredPersonRegistration = "urn:docflow:fss-sedo-insured-person-registration";
+        /// <summary>
+        /// Регистрация сведений о застрахованном лице ФСС
+        /// </summary>
+        public static readonly DocflowType FssSedoInsuredPersonRegistration = "urn:docflow:fss-sedo-insured-person-registration";
 
-            /// <summary>
-            /// Результат регистрации сведений о застрахованном лице ФСС
-            /// </summary>
-            public static readonly DocflowType SedoInsuredPersonRegistrationResult = "urn:docflow:fss-sedo-insured-person-registration-result";
+        /// <summary>
+        /// Результат регистрации сведений о застрахованном лице ФСС
+        /// </summary>
+        public static readonly DocflowType FssSedoInsuredPersonRegistrationResult = "urn:docflow:fss-sedo-insured-person-registration-result";
 
-            /// <summary>
-            /// Информация о несоответствии сведений о застрахованном лице ФСС
-            /// </summary>
-            public static readonly DocflowType SedoInsuredPersonMismatch = "urn:docflow:fss-sedo-insured-person-mismatch";
-        }
+        /// <summary>
+        /// Информация о несоответствии сведений о застрахованном лице ФСС
+        /// </summary>
+        public static readonly DocflowType FssSedoInsuredPersonMismatch = "urn:docflow:fss-sedo-insured-person-mismatch";
     }
 }

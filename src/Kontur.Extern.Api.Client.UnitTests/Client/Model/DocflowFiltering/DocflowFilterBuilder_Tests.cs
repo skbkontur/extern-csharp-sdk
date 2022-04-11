@@ -40,7 +40,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 .WithInnKppOfALegalEntity(InnKpp.Parse("1234567890-123456789"))
                 .WithOkud(Okud.Parse("1234567"))
                 .WithRegNumberOfPfrDocflow(PfrRegNumber.Parse("123-456-789012"))
-                .WithTypes(DocflowType.Fns.Fns534Report, DocflowType.Fns.Fns534Letter)
+                .WithTypes(DocflowType.Fns534Report, DocflowType.Fns534Letter)
                 .WithFormName("the form")
                 .WithCreatedFrom(createdFrom)
                 .WithCreatedTo(createdTo)
@@ -116,20 +116,20 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
         {
             var types = new[]
             {
-                DocflowType.Pfr.Report,
-                DocflowType.Cbrf.Report,
-                DocflowType.Fns.Fns534Inventory,
-                DocflowType.Fns.BusinessRegistration
+                DocflowType.PfrReport,
+                DocflowType.CbrfReport,
+                DocflowType.Fns534Inventory,
+                DocflowType.BusinessRegistration
             };
 
             var filter = new DocflowFilterBuilder().WithTypes(types).CreateFilter();
 
             ShouldHaveExpectedQueryParameters(
                 filter,
-                ("type", DocflowType.Pfr.Report.ToUrn()!.Nss),
-                ("type", DocflowType.Cbrf.Report.ToUrn()!.Nss),
-                ("type", DocflowType.Fns.Fns534Inventory.ToUrn()!.Nss),
-                ("type", DocflowType.Fns.BusinessRegistration.ToUrn()!.Nss));
+                ("type", DocflowType.PfrReport.ToUrn()!.Nss),
+                ("type", DocflowType.CbrfReport.ToUrn()!.Nss),
+                ("type", DocflowType.Fns534Inventory.ToUrn()!.Nss),
+                ("type", DocflowType.BusinessRegistration.ToUrn()!.Nss));
         }
 
         [TestCaseSource(nameof(TypeCases))]
@@ -144,17 +144,17 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
 
         private static readonly DocflowType[] TypeCases =
         {
-            DocflowType.Pfr.Ancillary,
-            DocflowType.Pfr.Letter,
-            DocflowType.Pfr.Report,
-            DocflowType.Cbrf.Report,
-            DocflowType.Fns.Fns534CuLetter,
-            DocflowType.Fns.Fns534Inventory,
-            DocflowType.Fns.BusinessRegistration,
-            DocflowType.Fss.Report,
-            DocflowType.Fss.SickReport,
-            DocflowType.Fss.SedoPvsoNotification,
-            DocflowType.Rosstat.CuBroadcast
+            DocflowType.PfrAncillary,
+            DocflowType.PfrLetter,
+            DocflowType.PfrReport,
+            DocflowType.CbrfReport,
+            DocflowType.Fns534CuLetter,
+            DocflowType.Fns534Inventory,
+            DocflowType.BusinessRegistration,
+            DocflowType.FssReport,
+            DocflowType.FssSickReport,
+            DocflowType.FssSedoPvsoNotification,
+            DocflowType.StatCuBroadcast
         };
 
         [Test]

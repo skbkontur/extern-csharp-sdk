@@ -13,7 +13,8 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// <summary>
         /// Пространство имен типов документооборотов
         /// </summary>
-        public static readonly Urn Namespace = Urn.Parse("urn:docflow");
+        private static Urn? @namespace;
+        public static Urn Namespace => @namespace ??= Urn.Parse("urn:docflow");
         
         private readonly Urn urn;
 

@@ -93,14 +93,14 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGene
             builder.RuleForType(x => IPAddress.Parse(x.Internet.Ip()));
             builder.RuleForType(x => x.Person.PersonFullName());
 
-            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<DocflowType>()));
-            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<DocumentType>()));
+            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesOfStruct<DocflowType>()));
+            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesOfStruct<DocumentType>()));
             builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<DraftBuilderType>()));
             builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<SvdregCode>()));
-            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromOfStruct<DocflowStatus>()));
-            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromOfStruct<DocflowState>()));
-            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromOfStruct<PfrLetterType>()));
-            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesFromOfStruct<DocflowExtendedStatus>()));
+            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesOfStruct<DocflowStatus>()));
+            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesOfStruct<DocflowState>()));
+            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesOfStruct<PfrLetterType>()));
+            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesOfStruct<DocflowExtendedStatus>()));
 
             builder.WithSkip<Urn>();
         }

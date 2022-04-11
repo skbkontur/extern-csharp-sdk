@@ -17,13 +17,13 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
 
         public StringBasedValueTypesConverter()
         {
-            AddConverter(x => new DocflowType(x), x => x.ToUrn()?.ToString());
-            AddConverter(x => new DocflowStatus(x), x => x.ToUrn()?.ToString());
-            AddConverter(x => new DocflowState(x), x => x.ToUrn()?.ToString());
-            AddConverter(x => new DocumentType(x), x => x.ToUrn()?.ToString());
-            AddConverter(x => new DraftBuilderType(x), x => x.ToUrn()?.ToString());
-            AddConverter(x => new PfrLetterType(x), x => x.ToUrn()?.ToString());
-            AddConverter(x => new DocflowExtendedStatus(x), x => x.ToUrn()?.ToString());
+            AddConverter(x => new DocflowType(x), x => x.ToUrn().ToString());
+            AddConverter(x => new DocflowStatus(x), x => x.ToUrn().ToString());
+            AddConverter(x => new DocflowState(x), x => x.ToUrn().ToString());
+            AddConverter(x => new DocumentType(x), x => x.ToUrn().ToString());
+            AddConverter(x => new DraftBuilderType(x), x => x.ToUrn().ToString());
+            AddConverter(x => new PfrLetterType(x), x => x.ToUrn().ToString());
+            AddConverter(x => new DocflowExtendedStatus(x), x => x.ToUrn().ToString());
             AddConverter(SvdregCode.Parse, x => x.Code?.ToString());
             
             AddConverterForClass(Knd.Parse, x => x.Value.ToString());

@@ -107,8 +107,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Docflows.Documents.Enums
             [Test]
             public void Should_have_unique_document_types() =>
                 AllPredefinedDocumentTypes.MembersShouldHaveUniqueValuesExcept(
-                    DocumentType.Pfr.PfrReportV2.Attachment,
-                    DocumentType.Pfr.PfrReportV2.ProtocolAppendix
+                    DocumentType.PfrReportV2.Attachment,
+                    DocumentType.PfrReportV2.ProtocolAppendix
                 );
 
             [Test]
