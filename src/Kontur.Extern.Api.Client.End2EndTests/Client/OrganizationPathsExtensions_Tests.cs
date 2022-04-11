@@ -183,6 +183,25 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             ShouldBeEqual(loadedOrg, expectedOrganization);
         }
 
+        [Fact]
+        public async Task Count_should_return_organization_count()
+        {
+            await using var organizationScope2 = await Context.Organizations
+                .AddLegalEntityOrganization(AccountId, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org");
+
+            var organizationCount = await Context.Organizations.Count(AccountId);
+
+            organizationCount.Should().Be(2);
+        }
+
+        [Fact]
+        public async Task Count_should_return_zero_organization_count_when_no_organizations()
+        {
+            var organizationCount = await Context.Organizations.Count(AccountId, codesGenerator.LegalEntityInn().Value);
+
+            organizationCount.Should().Be(0);
+        }
+
         private static void ShouldBeEqual(Organization organization, Organization expectedOrganization)
         {
             organization.Should().BeEquivalentTo(expectedOrganization);

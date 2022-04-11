@@ -24,6 +24,12 @@ namespace Kontur.Extern.Api.Client.Primitives
             return new Pagination(pageSize, getSlice);
         }
 
+        public async Task<long> CountAsync(TimeSpan? timeout = null)
+        {
+            var (_, totalItems) = await getSlice(0, 1, timeout).ConfigureAwait(false);
+            return totalItems;
+        }
+
         private class Pagination : IPagination<T>
         {
             private readonly int pageSize;
