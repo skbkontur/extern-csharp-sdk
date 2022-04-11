@@ -47,19 +47,7 @@ namespace Kontur.Extern.Api.Client.Model.DraftBuilders
             DraftBuilderType.Fns.BusinessRegistration.Registration,
             data ?? throw new ArgumentNullException(nameof(data))
         );
-        
-        public static DraftsBuilderMetadata BusinessRegistrationDraftsBuilderLegacy(
-            DraftPayer payer,
-            DraftSender sender,
-            DraftRecipient recipient,
-            BusinessRegistrationDraftsBuilderData data) => new(
-            payer,
-            sender,
-            recipient,
-            DraftBuilderType.Fns.BusinessRegistration.RegistrationLegacy,
-            data ?? throw new ArgumentNullException(nameof(data))
-        );
-        
+
         public static DraftsBuilderMetadata PfrReportDraftsBuilder(
             DraftPayer payer,
             DraftSender sender,

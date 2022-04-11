@@ -37,7 +37,6 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums
             [SuppressMessage("ReSharper", "CommentTypo")]
             public static class BusinessRegistration 
             {
-                public static readonly DraftBuilderType RegistrationLegacy = "urn:externapi:business-registration:registration"; 
                 public static readonly DraftBuilderType Registration = "urn:drafts-builder:business-registration";
             }
         }

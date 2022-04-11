@@ -16,7 +16,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
         {
             [DraftBuilderType.Fns.Fns534.Inventory] = typeof (FnsInventoryDraftsBuilderData),
             [DraftBuilderType.Fns.BusinessRegistration.Registration] = typeof (BusinessRegistrationDraftsBuilderData),
-            [DraftBuilderType.Fns.BusinessRegistration.RegistrationLegacy] = typeof (BusinessRegistrationDraftsBuilderData),
             [DraftBuilderType.Pfr.Report] = typeof (PfrReportDraftsBuilderData)
         };
         
@@ -24,7 +23,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
         {
             [DraftBuilderType.Fns.Fns534.Inventory] = typeof (FnsInventoryDraftsBuilderDocumentData),
             [DraftBuilderType.Fns.BusinessRegistration.Registration] = typeof (BusinessRegistrationDraftsBuilderDocumentData),
-            [DraftBuilderType.Fns.BusinessRegistration.RegistrationLegacy] = typeof (BusinessRegistrationDraftsBuilderDocumentData),
             [DraftBuilderType.Pfr.Report] = typeof (PfrReportDraftsBuilderDocumentData)
         };
         
@@ -32,7 +30,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.DraftBuilders
         {
             [DraftBuilderType.Fns.Fns534.Inventory] = typeof (FnsInventoryDraftsBuilderDocumentFileData),
             [DraftBuilderType.Fns.BusinessRegistration.Registration] = typeof (BusinessRegistrationDraftsBuilderDocumentFileData),
-            [DraftBuilderType.Fns.BusinessRegistration.RegistrationLegacy] = typeof (BusinessRegistrationDraftsBuilderDocumentFileData),
             [DraftBuilderType.Pfr.Report] = typeof (PfrReportDraftsBuilderDocumentFileData)
         };
     

@@ -24,8 +24,6 @@ namespace Kontur.Extern.Api.Client.Model.DraftBuilders
         
         public static SpecifyId BusinessRegistrationDraftsBuilder(BusinessRegistrationDraftsBuilderDocumentFileData data) => new(data ?? throw new ArgumentNullException(nameof(data)));
         
-        public static SpecifyId BusinessRegistrationDraftsBuilderLegacy(BusinessRegistrationDraftsBuilderDocumentFileData data) => new(data ?? throw new ArgumentNullException(nameof(data)));
-        
         public static SpecifyId PfrReportDraftsBuilder(PfrReportDraftsBuilderDocumentFileData data) => new(data ?? throw new ArgumentNullException(nameof(data)));
         
         public static SpecifyId PfrIosDraftsBuilder() => new();

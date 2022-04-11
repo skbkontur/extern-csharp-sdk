@@ -77,19 +77,6 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DraftBuilders
         }
 
         [Test]
-        public void BusinessRegistrationDraftsBuilderLegacy_should_initialise_with_given_parameters()
-        {
-            var data = autoFaker.Generate<BusinessRegistrationDraftsBuilderData>();
-            var expectedRequest = expectedRequestPrototype.ChangeBuilderType(DraftBuilderType.Fns.BusinessRegistration.RegistrationLegacy, data);
-
-            var request = DraftsBuilderMetadata
-                .BusinessRegistrationDraftsBuilderLegacy(payer, sender, recipient, data)
-                .ToRequest();
-
-            request.Should().BeEquivalentTo(expectedRequest);
-        }
-        
-        [Test]
         public void FnsInventoryDraftsBuilder_should_initialise_with_given_parameters()
         {
             var data = autoFaker.Generate<FnsInventoryDraftsBuilderData>();
