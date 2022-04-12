@@ -53,9 +53,23 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
         }
 
         [Test]
-        public void Should_return_null_description_if_its_known_but_missed()
+        public void Should_return_null_description_if_it_is_known_but_missed()
         {
             var docflowType = DocflowType.Fns534Report;
+            var originalDocflow = descriptionGenerator.GenerateDocflowWithoutDescription(docflowType);
+            var json = serializer.SerializeToIndentedString(originalDocflow);
+            Console.WriteLine($"Generated JSON: {json}");
+            
+            var docflow = serializer.Deserialize<Docflow>(json);
+
+            docflow.Type.Should().Be(docflowType);
+            docflow.Description.Should().BeNull();
+        }
+
+        [Test]
+        public void Should_return_null_description_if_it_is_unknown_and_missed()
+        {
+            var docflowType = new DocflowType(DocflowType.Namespace.Append("unknown-docflow"));
             var originalDocflow = descriptionGenerator.GenerateDocflowWithoutDescription(docflowType);
             var json = serializer.SerializeToIndentedString(originalDocflow);
             Console.WriteLine($"Generated JSON: {json}");
