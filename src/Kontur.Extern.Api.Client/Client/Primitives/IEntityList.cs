@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Threading.Tasks;
 
 namespace Kontur.Extern.Api.Client.Primitives
@@ -19,7 +19,7 @@ namespace Kontur.Extern.Api.Client.Primitives
         IPagination<T> Paging(uint pageSize);
 
         /// <summary>
-        /// Общее количество элементов списка
+        /// РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ СЃРїРёСЃРєР°
         /// </summary>
         /// <returns></returns>
         Task<long> CountAsync(TimeSpan? timeout = null);
