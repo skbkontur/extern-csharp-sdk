@@ -39,6 +39,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Pfr
         /// <summary>
         /// Дополнительный статус документооборота
         /// </summary>
-        public DocflowExtendedStatus ExtendedStatus { get; set; }
+        public DocflowExtendedStatus? ExtendedStatus { get; set; }
     }
 }
