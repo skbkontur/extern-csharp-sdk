@@ -14,7 +14,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.Put
     {
         private SvdregCode? svdregCode;
         private string? fileName;
-        private DocumentType type;
+        private DocumentType? type;
         private IDocumentContentUploadStrategy? contentUploadStrategy;
         
         public DocumentRequestBuilder SetSvdregCode(SvdregCode code)
@@ -74,7 +74,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.Put
             };
 
             DocumentDescriptionRequest? description = null;
-            if (svdregCode is not null || fileName is not null || !type.IsEmpty || contentType is not null)
+            if (svdregCode is not null || fileName is not null || type is not null || contentType is not null)
             {
                 description = new DocumentDescriptionRequest
                 {

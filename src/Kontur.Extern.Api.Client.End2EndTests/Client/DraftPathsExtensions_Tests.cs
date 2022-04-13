@@ -272,7 +272,6 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var document = DraftDocumentBuilder
                 .WithNewId()
                 .WithContentToUpload(new StreamDocumentContent(new MemoryStream(contentBytes)))
-                .WithType(DocumentType.Fns534Report.Report)
                 .ToDocument();
             var addedDocumentId = await context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
