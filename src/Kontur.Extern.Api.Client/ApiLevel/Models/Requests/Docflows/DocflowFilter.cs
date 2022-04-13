@@ -222,10 +222,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
                     foreach (var docflowType in docflowTypes)
                     {
                         var urn = docflowType.ToUrn();
-                        if (urn is not null)
-                        {
+                        if (!types.Contains(urn.Nss))
                             types.Add(urn.Nss);
-                        }
                     }
                 }
             }
@@ -241,7 +239,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
                     foreach (var letterType in letterTypes)
                     {
                         var urn = letterType.ToUrn();
-                        if (urn is not null)
+                        if (!pfrLetterTypes.Contains(urn.Nss))
                             pfrLetterTypes.Add(urn.Nss);
                     }
                 }
