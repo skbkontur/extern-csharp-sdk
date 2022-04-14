@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Kontur.Extern.Api.Client.Models.Common.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Enums;
-using Kontur.Extern.Api.Client.Models.Drafts.Enums;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
@@ -17,20 +17,20 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
 
         public StringBasedValueTypesConverter()
         {
-            AddConverter(x => new DocflowType(x), x => x.ToUrn()?.ToString());
-            AddConverter(x => new DocflowStatus(x), x => x.ToUrn()?.ToString());
-            AddConverter(x => new DocflowState(x), x => x.ToUrn()?.ToString());
-            AddConverter(x => new DocumentType(x), x => x.ToUrn()?.ToString());
-            AddConverter(x => new DraftBuilderType(x), x => x.ToUrn()?.ToString());
-            AddConverter(x => new PfrLetterType(x), x => x.ToUrn()?.ToString());
-            AddConverter(x => new DocflowExtendedStatus(x), x => x.ToUrn()?.ToString());
+            AddConverter(x => new DocflowType(x), x => x.ToUrn().ToString());
+            AddConverter(x => new DocflowStatus(x), x => x.ToUrn().ToString());
+            AddConverter(x => new DocflowState(x), x => x.ToUrn().ToString());
+            AddConverter(x => new DocumentType(x), x => x.ToUrn().ToString());
+            AddConverter(x => new DraftBuilderType(x), x => x.ToUrn().ToString());
+            AddConverter(x => new PfrLetterType(x), x => x.ToUrn().ToString());
+            AddConverter(x => new DocflowExtendedStatus(x), x => x.ToUrn().ToString());
             AddConverter(SvdregCode.Parse, x => x.Code?.ToString());
             
             AddConverterForClass(Knd.Parse, x => x.Value.ToString());
             AddConverterForClass(Kpp.Parse, x => x.Value.ToString());
             AddConverterForClass(InnKpp.Parse, x => x.Value.ToString());
-            AddConverterForClass(Okud.Parse, x => x.Value.ToString());
-            AddConverterForClass(Okpo.ParseAny, x => x.Value.ToString());
+            AddConverterForClass(s => new Okud(s), x => x.Value.ToString());
+            AddConverterForClass(s => new Okpo(s), x => x.Value.ToString());
             AddConverterForClass(Inn.Parse, x => x.Value.ToString());
             AddConverterForClass(LegalEntityInn.Parse, x => x.Value.ToString());
             
@@ -40,8 +40,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
             AddConverterForClass(TogsCode.Parse, x => x.Value.ToString());
             AddConverterForClass(UpfrCode.Parse, x => x.Value.ToString());
             
-            AddConverterForClass(PfrRegNumber.Parse, x => x.Value.ToString());
-            AddConverterForClass(FssRegNumber.Parse, x => x.Value.ToString());
+            AddConverterForClass(s => new PfrRegNumber(s), x => x.Value.ToString());
+            AddConverterForClass(s => new FssRegNumber(s), x => x.Value.ToString());
         }
 
         public override bool CanConvert(Type typeToConvert) => 

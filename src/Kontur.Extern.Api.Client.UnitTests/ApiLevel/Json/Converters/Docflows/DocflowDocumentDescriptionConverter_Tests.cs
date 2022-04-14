@@ -57,25 +57,6 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
             description.Requisites.Should().BeOfType<CommonDocflowDocumentRequisites>();
         }
 
-        [Test]
-        public void Should_deserialize_common_requisites_in_case_of_null_document_type()
-        {
-            var dummyDocumentType = DocumentType.Fns.Fns534.Report;
-            var documentDescription = descriptionGenerator.GenerateWithoutRequisites(dummyDocumentType);
-            documentDescription.Type = default;
-            documentDescription.Requisites = new PfrReportRequisites
-            {
-                CorrectionType = PfrReportCorrectionType.PensionAssignment
-            };
-            var json = serializer.SerializeToIndentedString(documentDescription);
-            Console.WriteLine($"Generated JSON: {json}");
-
-            var description = serializer.Deserialize<DocflowDocumentDescription>(json);
-
-            description.Type.Should().Be(new DocumentType());
-            description.Requisites.Should().BeOfType<CommonDocflowDocumentRequisites>();
-        }
-
         private static void DescriptionShouldBeEqual(DocflowDocumentDescription description, DocflowDocumentDescription expectedDescription)
         {
             description.Should().BeEquivalentTo(expectedDescription);

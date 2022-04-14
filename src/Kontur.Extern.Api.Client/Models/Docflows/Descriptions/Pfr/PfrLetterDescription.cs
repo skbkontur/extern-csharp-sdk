@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Common.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Pfr
@@ -27,7 +28,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Pfr
         /// <summary>
         /// Тип отправленного письма
         /// </summary>
-        public string FormType { get; set; } = null!;
+        public PfrLetterType FormType { get; set; }
         
         /// <summary>
         /// Идентификатор связанного документооборота, в ответ на который отправлено письмо

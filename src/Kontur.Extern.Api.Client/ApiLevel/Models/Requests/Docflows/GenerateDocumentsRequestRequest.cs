@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
 {
@@ -9,6 +8,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
         /// <summary>
         /// Сертификат в формате base64
         /// </summary>
-        public byte[] CertificateBase64 { get; set; }
+        public byte[] CertificateBase64 { get; set; } = null!;
     }
 }

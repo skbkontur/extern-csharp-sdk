@@ -15,19 +15,19 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.DocumentsRequests
         /// <summary>
         /// Контент запроса
         /// </summary>
-        public byte[] Content { get; set; }
+        public byte[] Content { get; set; } = null!;
         /// <summary>
         /// Данные для подписи
         /// </summary>
-        public byte[] DataToSign { get; set; }
+        public byte[] DataToSign { get; set; } = null!;
         /// <summary>
         /// Подпись пользователя
         /// </summary>
-        public byte[] Signature { get; set; }
+        public byte[] Signature { get; set; } = null!;
         /// <summary>
         /// Ссылки для работы с запросом
         /// </summary>
-        public List<Link> Links { get; set; }
+        public List<Link> Links { get; set; } = null!;
         /// <summary>
         /// Идентификатор документооборота, в котором сформирован запрос
         /// </summary>

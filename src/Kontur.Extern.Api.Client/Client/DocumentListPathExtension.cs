@@ -10,7 +10,7 @@ namespace Kontur.Extern.Api.Client
     [PublicAPI]
     public static class DocumentListPathExtension
     {
-        public static Task<List<Document>> List(this DocumentListPath path, TimeSpan? timeout = null)
+        public static Task<List<Document>> ListAsync(this DocumentListPath path, TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
             return apiClient.Docflows.GetDocumentsAsync(path.AccountId, path.DocflowId, timeout);

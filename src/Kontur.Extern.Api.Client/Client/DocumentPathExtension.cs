@@ -50,7 +50,7 @@ namespace Kontur.Extern.Api.Client
                 path.AccountId,
                 path.DocflowId,
                 path.DocumentId,
-                documentType.ToUrn()!,
+                documentType.ToUrn(),
                 certificate.ToBytes(),
                 timeout);
         }

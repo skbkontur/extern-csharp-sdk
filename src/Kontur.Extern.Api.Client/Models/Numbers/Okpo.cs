@@ -21,7 +21,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
         public static readonly RegexBasedParser<Okpo> LegalEntity =
             new(@"^\d{8}$", v => new Okpo(v), (param, value) => Errors.InvalidAuthorityNumber(param, value, AuthorityNumberKind.Okpo, "XXXXXXXX"));
 
-        public static Okpo ParseAny(string value)
+        public static Okpo Parse(string value)
         {
             if (LegalEntity.TryParse(value, out var okpo))
                 return okpo;
@@ -32,7 +32,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
             throw Errors.InvalidOkpo(nameof(value), value);
         }
         
-        private Okpo(string value) => Value = value;
+        internal Okpo(string value) => Value = value;
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.Okpo;

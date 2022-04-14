@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Common.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
@@ -127,6 +128,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
         /// </summary>
         public void SetForAllUsers(bool? value) => queryParameters.Set(QueryParameters.forAllUsers, value);
 
+        /// <summary>
+        /// Категории писем ПФР. Только для документооборотов типа pfr-letter и pfr-cu-letter
+        /// </summary>
+        public void SetPfrLetterTypes(PfrLetterType[] value) => queryParameters.Set(value);
+
         public IEnumerable<(string name, string value)> ToQueryParameters() => 
             queryParameters.GetParameters();
 
@@ -158,11 +164,13 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
             public const string periodFrom = nameof(periodFrom);
             public const string periodTo = nameof(periodTo);
             public const string forAllUsers = nameof(forAllUsers);
+            public const string pfrLetterCategory = nameof(pfrLetterCategory);
             
             private const string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffffffK";
 
             private readonly Dictionary<string, string> queryParameters = new();
             private readonly List<string> types = new(0);
+            private readonly List<string> pfrLetterTypes = new(0);
 
             public IEnumerable<(string name, string value)> GetParameters()
             {
@@ -174,6 +182,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
                 foreach (var typeValue in types)
                 {
                     yield return (type, typeValue);
+                }
+
+                foreach (var category in pfrLetterTypes)
+                {
+                    yield return (pfrLetterCategory, category);
                 }
             }
             
@@ -209,10 +222,25 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
                     foreach (var docflowType in docflowTypes)
                     {
                         var urn = docflowType.ToUrn();
-                        if (urn is not null)
-                        {
+                        if (!types.Contains(urn.Nss))
                             types.Add(urn.Nss);
-                        }
+                    }
+                }
+            }
+
+            public void Set(PfrLetterType[]? letterTypes)
+            {
+                if (letterTypes is null)
+                {
+                    pfrLetterTypes.Clear();
+                }
+                else
+                {
+                    foreach (var letterType in letterTypes)
+                    {
+                        var urn = letterType.ToUrn();
+                        if (!pfrLetterTypes.Contains(urn.Nss))
+                            pfrLetterTypes.Add(urn.Nss);
                     }
                 }
             }

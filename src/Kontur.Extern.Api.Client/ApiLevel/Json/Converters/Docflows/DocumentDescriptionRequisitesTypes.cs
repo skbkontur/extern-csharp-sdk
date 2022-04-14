@@ -9,16 +9,16 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
     {
         private static readonly Dictionary<DocumentType, Type> RequisitesTypesMap = new()
         {
-            [DocumentType.Fns.Fns534Demand.Attachment] = typeof(DemandAttachmentRequisites),
-            [DocumentType.Pfr.PfrReport.Report] = typeof(PfrReportRequisites),
-            [DocumentType.Pfr.PfrReportV2.Report] = typeof(PfrReportRequisites)
+            [DocumentType.Fns534Demand.Attachment] = typeof(DemandAttachmentRequisites),
+            [DocumentType.PfrReport.Report] = typeof(PfrReportRequisites),
+            [DocumentType.PfrReportV2.Report] = typeof(PfrReportRequisites)
         };
 
         public static Type GetRequisiteType(DocumentType documentType)
         {
             return RequisitesTypesMap.TryGetValue(documentType, out var descriptionType)
                 ? descriptionType
-                : documentType.IsBelongTo(DocumentType.Fns.BusinessRegistration.NameSpace)
+                : documentType.IsBelongTo(DocumentType.BusinessRegistration.NameSpace)
                     ? typeof (BusinessRegistrationDocflowDocumentRequisites)
                     : typeof (CommonDocflowDocumentRequisites);
         }

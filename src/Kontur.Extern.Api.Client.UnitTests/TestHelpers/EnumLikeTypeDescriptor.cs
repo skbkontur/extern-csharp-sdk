@@ -8,7 +8,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.TestHelpers
 {
     internal static class EnumLikeType
     {
-        public static IEnumerable<T> AllEnumValuesFromOfStruct<T>()
+        public static IEnumerable<T> AllEnumValuesOfStruct<T>()
             where T : struct
         {
             return AllEnumMembersOfStruct<T>()

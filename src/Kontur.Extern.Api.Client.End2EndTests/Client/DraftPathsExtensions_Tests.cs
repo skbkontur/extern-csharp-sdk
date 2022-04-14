@@ -132,7 +132,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var document = DraftDocumentBuilder
                 .WithId(documentId)
                 .WithContentToUpload(content)
-                .WithType(DocumentType.Fns.Fns534.Report)
+                .WithType(DocumentType.Fns534Report.Report)
                 .ToDocument();
 
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
@@ -150,7 +150,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var document = DraftDocumentBuilder
                 .WithId(documentId)
                 .WithContentToUpload(new ByteDocumentContent(new byte[] {1, 2, 3}))
-                .WithType(DocumentType.Fns.Fns534.Report)
+                .WithType(DocumentType.Fns534Report.Report)
                 .ToDocument();
 
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
@@ -181,7 +181,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 .WithNewId()
                 .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[] {1, 2, 3}), "application/pdf"))
                 .WithSignature(GeneratedAccount.CertificatePublicPart)
-                .WithType(DocumentType.Fns.Fns534.Report)
+                .WithType(DocumentType.Fns534Report.Report)
                 .ToDocument();
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
@@ -191,7 +191,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 Description = new DocumentDescription
                 {
                     ContentType = "application/pdf",
-                    Type = DocumentType.Fns.Fns534.Report,
+                    Type = DocumentType.Fns534Report.Report,
                     Properties = new Dictionary<string, string?>
                     {
                         ["Encoding"] = null,
@@ -222,7 +222,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var document = DraftDocumentBuilder
                 .WithNewId()
                 .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[] {1, 2, 3}), "application/pdf"))
-                .WithType(DocumentType.Fns.Fns534.Report)
+                .WithType(DocumentType.Fns534Report.Report)
                 .ToDocument();
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
@@ -249,7 +249,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var document = DraftDocumentBuilder
                 .WithNewId()
                 .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[] {1, 2, 3}), "application/pdf"))
-                .WithType(DocumentType.Fns.Fns534.Report)
+                .WithType(DocumentType.Fns534Report.Report)
                 .ToDocument();
             var addedDocumentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
             var signatureId = await Context.Drafts.AddSignature(AccountId, createdDraft.Id, addedDocumentId, documentSignature);
@@ -272,7 +272,6 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var document = DraftDocumentBuilder
                 .WithNewId()
                 .WithContentToUpload(new StreamDocumentContent(new MemoryStream(contentBytes)))
-                .WithType(DocumentType.Fns.Fns534.Report)
                 .ToDocument();
             var addedDocumentId = await context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
@@ -291,7 +290,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         {
             var context = Context.OverrideExternOptions(x => x.OverrideContentsOptions(new ContentManagementOptions(downloadChunkSize: 80*1024)));
             var documentId = Guid.NewGuid();
-            var documentType = DocumentType.Fns.Fns534.Report;
+            var documentType = DocumentType.Fns534Report.Report;
             const string contentType = "application/xml";
             const string fileName = "file_name";
             var expectedDocument = new DraftDocument
@@ -348,7 +347,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             var document = DraftDocumentBuilder
                 .WithNewId()
                 .WithContentToUpload(new StreamDocumentContent(new MemoryStream(new byte[] {1, 2, 3}), "application/pdf"))
-                .WithType(DocumentType.Fns.Fns534.Report)
+                .WithType(DocumentType.Fns534Report.Report)
                 .ToDocument();
             var documentId = await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
@@ -449,7 +448,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 .WithNewId()
                 .WithContentToUpload(new ByteDocumentContent(fufSschContent, "application/xml"))
                 .WithFileName("invalid.xml")
-                .WithType(DocumentType.Fns.Fns534.Report)
+                .WithType(DocumentType.Fns534Report.Report)
                 .ToDocument();
             await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 
@@ -471,7 +470,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 .WithNewId()
                 .WithContentToUpload(new ByteDocumentContent(fufSschContent, "application/xml"))
                 .WithFileName("invalid.xml")
-                .WithType(DocumentType.Fns.Fns534.Report)
+                .WithType(DocumentType.Fns534Report.Report)
                 .ToDocument();
             await Context.Drafts.SetDocument(AccountId, createdDraft.Id, document);
 

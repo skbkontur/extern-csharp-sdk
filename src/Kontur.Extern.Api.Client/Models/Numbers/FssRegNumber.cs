@@ -22,7 +22,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
         /// <returns></returns>
         public static FssRegNumber Parse(string value) => Parser.Parse(value);
 
-        private FssRegNumber(string value) => Value = value;
+        internal FssRegNumber(string value) => Value = value;
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.FssRegNumber;

@@ -82,7 +82,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Docflows.Enums
                 AllPredefinedDocflowTypes.MembersShouldHaveUniqueValues();
 
             private static IEnumerable<(FieldInfo field, DocflowType? docflowType)> AllPredefinedDocflowTypes => 
-                EnumLikeType.AllEnumMembersFromNestedTypesOfStruct<DocflowType>();
+                EnumLikeType.AllEnumMembersOfStruct<DocflowType>();
         }
     }
 }

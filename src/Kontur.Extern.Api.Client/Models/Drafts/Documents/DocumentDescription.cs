@@ -12,7 +12,7 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Documents
         /// <summary>
         /// Тип документа
         /// </summary>
-        public DocumentType Type { get; set; }
+        public DocumentType? Type { get; set; }
         
         /// <summary>
         /// Имя файла

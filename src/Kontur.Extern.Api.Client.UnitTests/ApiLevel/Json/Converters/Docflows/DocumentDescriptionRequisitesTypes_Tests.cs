@@ -31,7 +31,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
         [Test]
         public void Should_return_demands_requisites_for_demand_attachment()
         {
-            var requisiteType = DocumentDescriptionRequisitesTypes.GetRequisiteType(DocumentType.Fns.Fns534Demand.Attachment);
+            var requisiteType = DocumentDescriptionRequisitesTypes.GetRequisiteType(DocumentType.Fns534Demand.Attachment);
 
             requisiteType.Should().Be<DemandAttachmentRequisites>();
         }
@@ -39,7 +39,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
         [Test]
         public void Should_return_pfr_requisites_for_pfr_report()
         {
-            var requisiteType = DocumentDescriptionRequisitesTypes.GetRequisiteType(DocumentType.Pfr.PfrReport.Report);
+            var requisiteType = DocumentDescriptionRequisitesTypes.GetRequisiteType(DocumentType.PfrReport.Report);
 
             requisiteType.Should().Be<PfrReportRequisites>();
         }
@@ -47,7 +47,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
         [Test]
         public void Should_return_pfr_requisites_for_pfr_report_v2()
         {
-            var requisiteType = DocumentDescriptionRequisitesTypes.GetRequisiteType(DocumentType.Pfr.PfrReportV2.Report);
+            var requisiteType = DocumentDescriptionRequisitesTypes.GetRequisiteType(DocumentType.PfrReportV2.Report);
 
             requisiteType.Should().Be<PfrReportRequisites>();
         }
@@ -73,13 +73,13 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
                 .Except(BusinessRegistrationDocumentTypes)
                 .Except(new[]
                 {
-                    DocumentType.Fns.Fns534Demand.Attachment,
-                    DocumentType.Pfr.PfrReportV2.Report,
-                    DocumentType.Pfr.PfrReport.Report
+                    DocumentType.Fns534Demand.Attachment,
+                    DocumentType.PfrReportV2.Report,
+                    DocumentType.PfrReport.Report
                 });
         
         private static IEnumerable<DocumentType> BusinessRegistrationDocumentTypes => 
-            AllDocumentTypes.Where(t => t.IsBelongTo(DocumentType.Fns.BusinessRegistration.NameSpace));
+            AllDocumentTypes.Where(t => t.IsBelongTo(DocumentType.BusinessRegistration.NameSpace));
         
         private static IEnumerable<DocumentType> AllDocumentTypes => EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<DocumentType>();
     }

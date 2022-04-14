@@ -18,7 +18,7 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
         public static IDraftDocument FssSedoProviderSubscriptionSubscribeRequestForRegistrationNumber(Guid documentId) =>
             WithId(documentId)
                 .WithoutContent()
-                .WithType(DocumentType.Fss.SedoProviderSubscription.SubscribeRequestForRegistrationNumber)
+                .WithType(DocumentType.FssSedoProviderSubscription.SubscribeRequestForRegistrationNumber)
                 .ToDocument();
 
         public static SpecifyContent WithNewId() => 

@@ -34,6 +34,6 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
             Assert.Throws<ArgumentNullException>(() => DocflowDescriptionTypes.TryGetDescriptionType(value));
         }
 
-        private static IEnumerable<DocflowType> AllDocflowTypes => EnumLikeType.AllEnumValuesFromNestedTypesOfStruct<DocflowType>();
+        private static IEnumerable<DocflowType> AllDocflowTypes => EnumLikeType.AllEnumValuesOfStruct<DocflowType>();
     }
 }

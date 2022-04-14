@@ -6,7 +6,6 @@ using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Api.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Api.Client.Exceptions;
 using Kontur.Extern.Api.Client.Model.DocflowFiltering;
-using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using Xunit;
 using Xunit.Abstractions;

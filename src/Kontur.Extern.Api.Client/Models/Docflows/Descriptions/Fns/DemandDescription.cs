@@ -30,11 +30,11 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// Код инспекции, через которую прошло требование (в случае пересылки требования через МРИ)
         /// </summary>
-        public string TransitCu { get; set; } = null!;
+        public string? TransitCu { get; set; }
         
         /// <summary>
         /// Имя файла отчета, к которому относится требование (в случае направления требования на декларацию)
         /// </summary>
-        public string SentOnReportFilename { get; set; } = null!;
+        public string? SentOnReportFilename { get; set; }
     }
 }

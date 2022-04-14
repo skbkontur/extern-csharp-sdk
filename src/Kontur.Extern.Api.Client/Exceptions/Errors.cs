@@ -156,7 +156,7 @@ namespace Kontur.Extern.Api.Client.Exceptions
             new ArgumentException($"Cannot create api task result when given an empty parameter. The parameter value:{NewLine}{result}.", paramName);
 
         public static Exception InvalidSvdregCode([InvokerParameterName] string paramName, string value) => 
-            new ArgumentException($"The given SVDREG code '{value}' is invalid. It should start with 0 or X symbol then continue with 4 digits.", paramName);
+            new ArgumentException($"The given SVDREG code '{value}' is invalid. It should start with 0, 1 or X symbol then continue with 5 digits.", paramName);
 
         public static Exception InvalidUrnSchema([InvokerParameterName] string paramName, string value) => 
             new ArgumentException($"Invalid URN schema. Value: {value}", paramName);

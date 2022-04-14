@@ -19,7 +19,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// Код инспекции, куда направляется документ
         /// </summary>
         public string Recipient { get; set; } = null!;
-        
+
         /// <summary>
         /// Код конечной инспекции, куда направляется документ (в случае пересылки отчета через МРИ)
         /// </summary>
@@ -39,11 +39,11 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// Дата окончания отчетного периода, за который сдается документ
         /// </summary>
         public DateOnly PeriodEnd { get; set; }
-        
+
         /// <summary>
         /// Код отчетного периода
         /// </summary>
-        public int PeriodCode { get; set; }
+        public string PeriodCode { get; set; } = null!;
         
         /// <summary>
         /// ИНН-КПП организации или ИНН индивидуального предпринимателя, за которых отправляется отчетность
@@ -73,21 +73,21 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// ОКТМО
         /// </summary>
-        public string Oktmo { get; set; } = null!;
+        public string? Oktmo { get; set; }
         
         /// <summary>
         /// Код формы реорганизации
         /// </summary>
-        public string ReorganizationForm { get; set; } = null!;
+        public string? ReorganizationForm { get; set; }
         
         /// <summary>
         /// ИНН реорганизованной организации из отчета
         /// </summary>
-        public string ReorganizationInn { get; set; } = null!;
+        public string? ReorganizationInn { get; set; }
         
         /// <summary>
         /// КПП реорганизованной организации из отчета
         /// </summary>
-        public string ReorganizationKpp { get; set; } = null!;
+        public string? ReorganizationKpp { get; set; }
     }
 }

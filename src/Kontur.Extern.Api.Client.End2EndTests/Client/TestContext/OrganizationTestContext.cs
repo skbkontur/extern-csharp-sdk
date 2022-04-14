@@ -44,6 +44,9 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext
         public Task<IReadOnlyList<Organization>> FilterByInnKpp(Guid accountId, string inn, string kpp) => 
             konturExtern.Accounts.WithId(accountId).Organizations.List(inn, kpp).SliceBy(100).LoadAllAsync();
 
+        public Task<long> Count(Guid accountId, string? inn = null) => 
+            konturExtern.Accounts.WithId(accountId).Organizations.List(inn).CountAsync();
+
         public Task Rename(Guid accountId, Guid organizationId, string newName) => 
             konturExtern.Accounts.WithId(accountId).Organizations.WithId(organizationId).RenameAsync(newName);
     }

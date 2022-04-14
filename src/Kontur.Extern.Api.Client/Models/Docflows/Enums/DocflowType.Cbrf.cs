@@ -8,12 +8,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// <summary>
         /// Отчетность в ЦБ РФ
         /// </summary>
-        public static class Cbrf 
-        {
-            /// <summary>
-            /// Отчетность в ЦБ РФ
-            /// </summary>
-            public static readonly DocflowType Report = "urn:docflow:cbrf-report";
-        }
+        public static readonly DocflowType CbrfReport = "urn:docflow:cbrf-report";
     }
 }

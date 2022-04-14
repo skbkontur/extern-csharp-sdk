@@ -2,9 +2,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Exceptions;
-using Kontur.Extern.Api.Client.Models.Common;
 
-namespace Kontur.Extern.Api.Client.Models.Drafts.Enums
+namespace Kontur.Extern.Api.Client.Models.Common.Enums
 {
     /// <summary>
     /// Тип пиьма ПФР, документооборота по неформализованной переписке страхователя и ПФР.
@@ -18,7 +17,7 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Enums
         /// </summary>
         public static readonly Urn Namespace = Urn.Parse("urn:pfr-letter-category");
         
-        private readonly Urn? urn;
+        private readonly Urn urn;
 
         public PfrLetterType(string urn)
             : this(Urn.Parse(urn))
@@ -33,15 +32,15 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Enums
         }
 
         [Pure]
-        public Urn? ToUrn() => urn;
+        public Urn ToUrn() => urn;
 
-        public override string ToString() => urn?.ToString() ?? string.Empty;
+        public override string ToString() => urn.ToString();
 
         public bool Equals(PfrLetterType other) => Equals(urn, other.urn);
 
         public override bool Equals(object? obj) => obj is PfrLetterType other && Equals(other);
 
-        public override int GetHashCode() => urn != null ? urn.GetHashCode() : 0;
+        public override int GetHashCode() => urn.GetHashCode();
 
         public static bool operator==(PfrLetterType left, PfrLetterType right) => left.Equals(right);
 

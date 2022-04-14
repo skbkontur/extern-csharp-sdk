@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.Models.Common;
-using Kontur.Extern.Api.Client.Models.Drafts.Enums;
+using Kontur.Extern.Api.Client.Models.Common.Enums;
 using Kontur.Extern.Api.Client.UnitTests.Client.Model.TestAssertions;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using NUnit.Framework;
