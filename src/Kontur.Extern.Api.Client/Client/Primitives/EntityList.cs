@@ -81,8 +81,6 @@ namespace Kontur.Extern.Api.Client.Primitives
 
             public Slicing(uint sliceSize, long skipItems, GetSliceAsync<T> getSliceAsync)
             {
-                if (sliceSize == 0)
-                    throw Errors.ValueShouldBeGreaterThanZero(nameof(sliceSize), sliceSize); 
                 if (skipItems < 0)
                     throw Errors.ValueShouldBeGreaterThan(nameof(skipItems), skipItems, -1);
                 

@@ -146,13 +146,16 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Primitives
         internal class Slicing
         {
             [Test]
-            public void SliceBy_should_fail_when_given_empty_slice_size()
+            public async Task LoadSliceAsync_should_return_empty_slice_when_given_empty_slice_size()
             {
-                var theCase = new EntityListCase();
+                var theCase = new EntityListCase()
+                    .MakeDataAvailable(100);
 
-                Action action = () => theCase.EntityList.SliceBy(0);
+                var slice = await theCase.EntityList.SliceBy(0).LoadSliceAsync();
 
-                action.Should().Throw<ArgumentException>();
+                slice.Items.Should().BeEmpty();
+                slice.HasNextSlice.Should().BeFalse();
+                slice.TotalItems.Should().Be(100);
             }
 
             [Test]
