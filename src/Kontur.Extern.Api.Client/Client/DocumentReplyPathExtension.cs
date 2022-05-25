@@ -18,7 +18,7 @@ namespace Kontur.Extern.Api.Client
                 path.DocflowId,
                 path.DocumentId,
                 path.ReplyId,
-                address.ToString(),
+                address,
                 timeout);
         }
     }

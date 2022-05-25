@@ -122,7 +122,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
             Guid docflowId,
             Guid documentId,
             Guid replyId,
-            string senderIp,
+            IPAddress senderIp,
             TimeSpan? timeout = null);
 
         /// <summary>
