@@ -216,7 +216,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType NotificationReceipt = "urn:document:fss-sedo-pvso-notification-receipt";
+            public static readonly DocumentType Receipt = "urn:document:fss-sedo-pvso-notification-receipt";
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType NotificationReceipt = "urn:document:fss-sedo-sick-report-change-notification-receipt";
+            public static readonly DocumentType Receipt = "urn:document:fss-sedo-sick-report-change-notification-receipt";
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType DemandReceipt = "urn:document:fss-sedo-proactive-payments-demand-receipt";
+            public static readonly DocumentType Receipt = "urn:document:fss-sedo-proactive-payments-demand-receipt";
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType ReplyReadReceipt = "urn:document:fss-sedo-proactive-payments-reply-read-receipt";
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-proactive-payments-reply-read-receipt";
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType BenefitReceipt = "urn:document:fss-sedo-proactive-payments-benefit-receipt";
+            public static readonly DocumentType Receipt = "urn:document:fss-sedo-proactive-payments-benefit-receipt";
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType InitiationReadReceipt = "urn:document:fss-sedo-benefit-payment-initiation-read-receipt";
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-benefit-payment-initiation-read-receipt";
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType RegistrationReadReceipt = "urn:document:fss-sedo-insured-person-registration-read-receipt";
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-insured-person-registration-read-receipt";
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType MismatchReceipt = "urn:document:fss-sedo-insured-person-mismatch-receipt";
+            public static readonly DocumentType Receipt = "urn:document:fss-sedo-insured-person-mismatch-receipt";
         }
 
         /// <summary>

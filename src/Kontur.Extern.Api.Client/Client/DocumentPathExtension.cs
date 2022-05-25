@@ -67,7 +67,7 @@ namespace Kontur.Extern.Api.Client
             
             var documentTypeParameter = HttpUtility.ParseQueryString(link.Href.Query).Get("documentType");
 
-            if (string.IsNullOrEmpty(documentTypeParameter) || documentTypeParameter.Split(',').Length != 1)
+            if (string.IsNullOrEmpty(documentTypeParameter) || documentTypeParameter.Contains(","))
                 throw Errors.InappropriateReplyLink(nameof(link));
             
             var apiClient = path.Services.Api;
