@@ -280,19 +280,19 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Запрос на получение документов
             /// </summary>
-            public static DocumentType RequestMessage = "urn:document:fss-sedo-proactive-payments-demand-request-message";
+            public static readonly DocumentType RequestMessage = "urn:document:fss-sedo-proactive-payments-demand-request-message";
             /// <summary>
             /// Документ запроса
             /// </summary>
-            public static DocumentType DemandMessage = "urn:document:fss-sedo-proactive-payments-demand-demand-message";
+            public static readonly DocumentType DemandMessage = "urn:document:fss-sedo-proactive-payments-demand-demand-message";
             /// <summary>
             /// Ошибка обработки
             /// </summary>
-            public static DocumentType ErrorMessage = "urn:document:fss-sedo-proactive-payments-demand-error-message";
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-proactive-payments-demand-error-message";
             /// <summary>
             /// Ошибка взаимодействия с СЭДО
             /// </summary>
-            public static DocumentType ExchangeError = "urn:document:fss-sedo-proactive-payments-demand-exchange-error";
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-proactive-payments-demand-exchange-error";
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
@@ -308,23 +308,23 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Запрос на отправку сведений
             /// </summary>
-            public static DocumentType Request = "urn:document:fss-sedo-proactive-payments-reply-request";
+            public static readonly DocumentType Request = "urn:document:fss-sedo-proactive-payments-reply-request";
             /// <summary>
             /// Результат приёма запроса порталом
             /// </summary>
-            public static DocumentType Receipt = "urn:document:fss-sedo-proactive-payments-reply-receipt";
+            public static readonly DocumentType Receipt = "urn:document:fss-sedo-proactive-payments-reply-receipt";
             /// <summary>
             /// Результат обработки запроса
             /// </summary>
-            public static DocumentType ResponseResult = "urn:document:fss-sedo-proactive-payments-reply-response-result";
+            public static readonly DocumentType ResponseResult = "urn:document:fss-sedo-proactive-payments-reply-response-result";
             /// <summary>
             /// Ошибка обработки
             /// </summary>
-            public static DocumentType ErrorMessage = "urn:document:fss-sedo-proactive-payments-reply-error-message";
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-proactive-payments-reply-error-message";
             /// <summary>
             /// Ошибка взаимодействия с СЭДО
             /// </summary>
-            public static DocumentType ExchangeError = "urn:document:fss-sedo-proactive-payments-reply-exchange-error";
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-proactive-payments-reply-exchange-error";
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
@@ -340,19 +340,19 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Запрос на получение документов
             /// </summary>
-            public static DocumentType StatusRequestMessage = "urn:document:fss-sedo-proactive-payments-reply-result-status-request-message";
+            public static readonly DocumentType StatusRequestMessage = "urn:document:fss-sedo-proactive-payments-reply-result-status-request-message";
             /// <summary>
             /// Результат обработки запроса
             /// </summary>
-            public static DocumentType ResponseResult = "urn:document:fss-sedo-proactive-payments-reply-result-response-result";
+            public static readonly DocumentType ResponseResult = "urn:document:fss-sedo-proactive-payments-reply-result-response-result";
             /// <summary>
             /// Ошибка обработки
             /// </summary>
-            public static DocumentType ErrorMessage = "urn:document:fss-sedo-proactive-payments-reply-result-error-message";
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-proactive-payments-reply-result-error-message";
             /// <summary>
             /// Ошибка взаимодействия с СЭДО
             /// </summary>
-            public static DocumentType ExchangeError = "urn:document:fss-sedo-proactive-payments-reply-result-exchange-error";
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-proactive-payments-reply-result-exchange-error";
         }
 
         /// <summary>
@@ -364,19 +364,19 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Запрос на получение документов
             /// </summary>
-            public static DocumentType RequestMessage = "urn:document:fss-sedo-proactive-payments-benefit-request-message";
+            public static readonly DocumentType RequestMessage = "urn:document:fss-sedo-proactive-payments-benefit-request-message";
             /// <summary>
             /// Документ с выплатами
             /// </summary>
-            public static DocumentType BenefitMessage = "urn:document:fss-sedo-proactive-payments-benefit-benefit-message";
+            public static readonly DocumentType BenefitMessage = "urn:document:fss-sedo-proactive-payments-benefit-benefit-message";
             /// <summary>
             /// Ошибка обработки
             /// </summary>
-            public static DocumentType ErrorMessage = "urn:document:fss-sedo-proactive-payments-benefit-error-message";
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-proactive-payments-benefit-error-message";
             /// <summary>
             /// Ошибка взаимодействия с СЭДО
             /// </summary>
-            public static DocumentType ExchangeError = "urn:document:fss-sedo-proactive-payments-benefit-exchange-error";
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-proactive-payments-benefit-exchange-error";
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
@@ -392,23 +392,23 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Запрос на отправку сообщения "Инициация выплат пособия"
             /// </summary>
-            public static DocumentType Request = "urn:document:fss-sedo-benefit-payment-initiation-request";
+            public static readonly DocumentType Request = "urn:document:fss-sedo-benefit-payment-initiation-request";
             /// <summary>
             /// Результат отправки соощения на портал
             /// </summary>
-            public static DocumentType ReceptionResult = "urn:document:fss-sedo-benefit-payment-initiation-reception-result";
+            public static readonly DocumentType ReceptionResult = "urn:document:fss-sedo-benefit-payment-initiation-reception-result";
             /// <summary>
             /// Сообщение "Результат обработки сообщения инициации выплат ФСС"
             /// </summary>
-            public static DocumentType ResultDocument = "urn:document:fss-sedo-benefit-payment-initiation-result-document";
+            public static readonly DocumentType ResultDocument = "urn:document:fss-sedo-benefit-payment-initiation-result-document";
             /// <summary>
             /// Ошибка обработки
             /// </summary>
-            public static DocumentType ErrorMessage = "urn:document:fss-sedo-benefit-payment-initiation-error-message";
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-benefit-payment-initiation-error-message";
             /// <summary>
             /// Ошибка взаимодействия с порталом СЭДО
             /// </summary>
-            public static DocumentType ExchangeError = "urn:document:fss-sedo-benefit-payment-initiation-exchange-error";
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-benefit-payment-initiation-exchange-error";
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
@@ -424,19 +424,19 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Запрос на получение "Результата обработки сообщения инициации выплат ФСС"
             /// </summary>
-            public static DocumentType RequestMessage = "urn:document:fss-sedo-benefit-payment-initiation-result-request-message";
+            public static readonly DocumentType RequestMessage = "urn:document:fss-sedo-benefit-payment-initiation-result-request-message";
             /// <summary>
             /// Сообщение "Результат обработки сообщения инициации выплат ФСС"
             /// </summary>
-            public static DocumentType StatusDocument = "urn:document:fss-sedo-benefit-payment-initiation-result-status-document";
+            public static readonly DocumentType StatusDocument = "urn:document:fss-sedo-benefit-payment-initiation-result-status-document";
             /// <summary>
             /// Ошибка обработки
             /// </summary>
-            public static DocumentType ErrorMessage = "urn:document:fss-sedo-benefit-payment-initiation-result-error-message";
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-benefit-payment-initiation-result-error-message";
             /// <summary>
             /// Ошибка взаимодействия с порталом СЭДО
             /// </summary>
-            public static DocumentType ExchangeError = "urn:document:fss-sedo-benefit-payment-initiation-result-exchange-error";
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-benefit-payment-initiation-result-exchange-error";
         }
 
         /// <summary>
@@ -448,23 +448,23 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Запрос на регистрацию сведений
             /// </summary>
-            public static DocumentType Request = "urn:document:fss-sedo-insured-person-registration-request";
+            public static readonly DocumentType Request = "urn:document:fss-sedo-insured-person-registration-request";
             /// <summary>
             /// Результат приёма запроса порталом
             /// </summary>
-            public static DocumentType Receipt = "urn:document:fss-sedo-insured-person-registration-receipt";
+            public static readonly DocumentType Receipt = "urn:document:fss-sedo-insured-person-registration-receipt";
             /// <summary>
             /// Результат регистрации сведений
             /// </summary>
-            public static DocumentType ResponseResult = "urn:document:fss-sedo-insured-person-registration-response-result";
+            public static readonly DocumentType ResponseResult = "urn:document:fss-sedo-insured-person-registration-response-result";
             /// <summary>
             /// Ошибка обработки
             /// </summary>
-            public static DocumentType ErrorMessage = "urn:document:fss-sedo-insured-person-registration-error-message";
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-insured-person-registration-error-message";
             /// <summary>
             /// Ошибка взаимодействия с СЭДО
             /// </summary>
-            public static DocumentType ExchangeError = "urn:document:fss-sedo-insured-person-registration-exchange-error";
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-insured-person-registration-exchange-error";
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
@@ -480,19 +480,19 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Запрос на получение документов
             /// </summary>
-            public static DocumentType StatusRequestMessage = "urn:document:fss-sedo-insured-person-registration-result-status-request-message";
+            public static readonly DocumentType StatusRequestMessage = "urn:document:fss-sedo-insured-person-registration-result-status-request-message";
             /// <summary>
             /// Результат регистрации сведений
             /// </summary>
-            public static DocumentType ResponseResult = "urn:document:fss-sedo-insured-person-registration-result-response-result";
+            public static readonly DocumentType ResponseResult = "urn:document:fss-sedo-insured-person-registration-result-response-result";
             /// <summary>
             /// Ошибка обработки
             /// </summary>
-            public static DocumentType ErrorMessage = "urn:document:fss-sedo-insured-person-registration-result-error-message";
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-insured-person-registration-result-error-message";
             /// <summary>
             /// Ошибка взаимодействия с СЭДО
             /// </summary>
-            public static DocumentType ExchangeError = "urn:document:fss-sedo-insured-person-registration-result-exchange-error";
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-insured-person-registration-result-exchange-error";
         }
 
         /// <summary>
@@ -504,19 +504,19 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Запрос на получение документов
             /// </summary>
-            public static DocumentType RequestMessage = "urn:document:fss-sedo-insured-person-mismatch-request-message";
+            public static readonly DocumentType RequestMessage = "urn:document:fss-sedo-insured-person-mismatch-request-message";
             /// <summary>
             /// Документ с информацией
             /// </summary>
-            public static DocumentType MismatchMessage = "urn:document:fss-sedo-insured-person-mismatch-mismatch-message";
+            public static readonly DocumentType MismatchMessage = "urn:document:fss-sedo-insured-person-mismatch-mismatch-message";
             /// <summary>
             /// Ошибка обработки
             /// </summary>
-            public static DocumentType ErrorMessage = "urn:document:fss-sedo-insured-person-mismatch-error-message";
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-insured-person-mismatch-error-message";
             /// <summary>
             /// Ошибка взаимодействия с СЭДО
             /// </summary>
-            public static DocumentType ExchangeError = "urn:document:fss-sedo-insured-person-mismatch-exchange-error";
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-insured-person-mismatch-exchange-error";
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
@@ -532,27 +532,27 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// SOAP-сообщение запроса на отправку "Создание/отзыв доверенности"
             /// </summary>
-            public static DocumentType RequestMessage = "urn:document:fss-warrant-management-request-message";
+            public static readonly DocumentType RequestMessage = "urn:document:fss-warrant-management-request-message";
             /// <summary>
             /// Исходный документ "Создание/отзыв доверенности" до момента создания SOAP-запроса
             /// </summary>
-            public static DocumentType RequestDocument = "urn:document:fss-warrant-management-request-document";
+            public static readonly DocumentType RequestDocument = "urn:document:fss-warrant-management-request-document";
             /// <summary>
             /// Ошибка взаимодействия с порталом СЭДО
             /// </summary>
-            public static DocumentType ExchangeError = "urn:document:fss-warrant-management-exchange-error";
+            public static readonly DocumentType ExchangeError = "urn:document:fss-warrant-management-exchange-error";
             /// <summary>
             /// Результат отправки сообщения на портал
             /// </summary>
-            public static DocumentType ReceptionResult = "urn:document:fss-warrant-management-reception-result";
+            public static readonly DocumentType ReceptionResult = "urn:document:fss-warrant-management-reception-result";
             /// <summary>
             /// Ошибка обработки
             /// </summary>
-            public static DocumentType ErrorMessage = "urn:document:fss-warrant-management-error-message";
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-warrant-management-error-message";
             /// <summary>
             /// Сообщение "Результат создания/отзыва доверенности"
             /// </summary>
-            public static DocumentType ResponseMessage = "urn:document:fss-warrant-management-response-message";
+            public static readonly DocumentType ResponseMessage = "urn:document:fss-warrant-management-response-message";
         }
 
         /// <summary>
@@ -564,19 +564,19 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Запрос на получение "Результат создания/отзыва доверенности"
             /// </summary>
-            public static DocumentType RequestMessage = "urn:document:fss-warrant-management-result-request-message";
+            public static readonly DocumentType RequestMessage = "urn:document:fss-warrant-management-result-request-message";
             /// <summary>
             /// Сообщение "Результат создания/отзыва доверенности"
             /// </summary>
-            public static DocumentType StatusDocument = "urn:document:fss-warrant-management-result-status-document";
+            public static readonly DocumentType StatusDocument = "urn:document:fss-warrant-management-result-status-document";
             /// <summary>
             /// Ошибка обработки
             /// </summary>
-            public static DocumentType ErrorMessage = "urn:document:fss-warrant-management-result-error-message";
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-warrant-management-result-error-message";
             /// <summary>
             /// Ошибка взаимодействия с порталом СЭДО
             /// </summary>
-            public static DocumentType ExchangeError = "urn:document:fss-warrant-management-result-exchange-error";
+            public static readonly DocumentType ExchangeError = "urn:document:fss-warrant-management-result-exchange-error";
         }
     }
 }
