@@ -216,7 +216,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType Receipt = "urn:document:fss-sedo-pvso-notification-receipt";
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-pvso-notification-receipt";
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType Receipt = "urn:document:fss-sedo-sick-report-change-notification-receipt";
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-sick-report-change-notification-receipt";
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType Receipt = "urn:document:fss-sedo-proactive-payments-demand-receipt";
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-proactive-payments-demand-receipt";
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType Receipt = "urn:document:fss-sedo-proactive-payments-benefit-receipt";
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-proactive-payments-benefit-receipt";
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType Receipt = "urn:document:fss-sedo-insured-person-mismatch-receipt";
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-insured-person-mismatch-receipt";
         }
 
         /// <summary>
