@@ -183,7 +183,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
         }
 
         private Task<IDocflowWithDocuments> PostDocflowAsync<TDto>(string url, TDto dto, TimeSpan? timeout) =>
-            http.PostAsync<TDto, IDocflowWithDocuments>(new Uri(url), dto, timeout);
+            http.PostAsync<TDto, IDocflowWithDocuments>(url, dto, timeout);
 
         private Task<ReplyDocument> PostReplyAsync<TDto>(Uri url, TDto dto, TimeSpan? timeout) =>
             http.PostAsync<TDto, ReplyDocument>(url, dto, timeout);
