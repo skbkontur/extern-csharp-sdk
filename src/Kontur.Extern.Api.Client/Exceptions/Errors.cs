@@ -180,5 +180,11 @@ namespace Kontur.Extern.Api.Client.Exceptions
 
         public static Exception WrongApplicationCodeForBusinessRegistrationType(BusinessType businessType, ApplicationCode applicationCode) => 
             new ContractException($"The application code {applicationCode.ToString().ToKebabCase()} does not belong to of business registration type {businessType.ToString().ToKebabCase()}");
+
+        public static Exception InappropriateLink(string actualLinkRel, string expectedLinkRel, string paramName) =>
+            new ArgumentException($"Link Rel must be {expectedLinkRel}, but was {actualLinkRel}", paramName);
+
+        public static Exception InappropriateReplyLink(string paramName) =>
+            new ArgumentException("Reply link must fit format: 'https://{baseUrl}/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/generate-reply?documentType={documentType}", paramName);
     }
 }

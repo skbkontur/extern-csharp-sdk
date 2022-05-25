@@ -213,6 +213,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Ошибка взаимодействия с СЭДО (синхронная ошибка обработки запроса в СЭДО)
             /// </summary>
             public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-pvso-notification-exchange-error";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-pvso-notification-receipt";
         }
 
         /// <summary>
@@ -245,6 +249,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Ошибка взаимодействия с СЭДО (синхронная ошибка обработки запроса в СЭДО)
             /// </summary>
             public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-sick-report-change-notification-exchange-error";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-sick-report-change-notification-receipt";
         }
 
         /// <summary>
@@ -261,6 +269,314 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Ошибка взаимодействия с СЭДО (синхронная ошибка обработки запроса в СЭДО)
             /// </summary>
             public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-error-exchange-error";
+        }
+
+        /// <summary>
+        /// Запрос недостающих сведений для назначения пособия ФСС
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoProactivePaymentsDemand
+        {
+            /// <summary>
+            /// Запрос на получение документов
+            /// </summary>
+            public static readonly DocumentType RequestMessage = "urn:document:fss-sedo-proactive-payments-demand-request-message";
+            /// <summary>
+            /// Документ запроса
+            /// </summary>
+            public static readonly DocumentType DemandMessage = "urn:document:fss-sedo-proactive-payments-demand-demand-message";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-proactive-payments-demand-error-message";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-proactive-payments-demand-exchange-error";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-proactive-payments-demand-receipt";
+        }
+
+        /// <summary>
+        /// Сведения для назначения пособия ФСС
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoProactivePaymentsReply
+        {
+            /// <summary>
+            /// Запрос на отправку сведений
+            /// </summary>
+            public static readonly DocumentType Request = "urn:document:fss-sedo-proactive-payments-reply-request";
+            /// <summary>
+            /// Результат приёма запроса порталом
+            /// </summary>
+            public static readonly DocumentType Receipt = "urn:document:fss-sedo-proactive-payments-reply-receipt";
+            /// <summary>
+            /// Результат обработки запроса
+            /// </summary>
+            public static readonly DocumentType ResponseResult = "urn:document:fss-sedo-proactive-payments-reply-response-result";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-proactive-payments-reply-error-message";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-proactive-payments-reply-exchange-error";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-proactive-payments-reply-read-receipt";
+        }
+
+        /// <summary>
+        /// Результат обработки сведений для назначения пособия ФСС
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoProactivePaymentsReplyResult
+        {
+            /// <summary>
+            /// Запрос на получение документов
+            /// </summary>
+            public static readonly DocumentType StatusRequestMessage = "urn:document:fss-sedo-proactive-payments-reply-result-status-request-message";
+            /// <summary>
+            /// Результат обработки запроса
+            /// </summary>
+            public static readonly DocumentType ResponseResult = "urn:document:fss-sedo-proactive-payments-reply-result-response-result";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-proactive-payments-reply-result-error-message";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-proactive-payments-reply-result-exchange-error";
+        }
+
+        /// <summary>
+        /// Выплата пособия ФСС
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoProactivePaymentsBenefit
+        {
+            /// <summary>
+            /// Запрос на получение документов
+            /// </summary>
+            public static readonly DocumentType RequestMessage = "urn:document:fss-sedo-proactive-payments-benefit-request-message";
+            /// <summary>
+            /// Документ с выплатами
+            /// </summary>
+            public static readonly DocumentType BenefitMessage = "urn:document:fss-sedo-proactive-payments-benefit-benefit-message";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-proactive-payments-benefit-error-message";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-proactive-payments-benefit-exchange-error";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-proactive-payments-benefit-receipt";
+        }
+
+        /// <summary>
+        /// Инициация выплат пособия ФСС
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoBenefitPaymentInitiation
+        {
+            /// <summary>
+            /// Запрос на отправку сообщения "Инициация выплат пособия"
+            /// </summary>
+            public static readonly DocumentType Request = "urn:document:fss-sedo-benefit-payment-initiation-request";
+            /// <summary>
+            /// Результат отправки соощения на портал
+            /// </summary>
+            public static readonly DocumentType ReceptionResult = "urn:document:fss-sedo-benefit-payment-initiation-reception-result";
+            /// <summary>
+            /// Сообщение "Результат обработки сообщения инициации выплат ФСС"
+            /// </summary>
+            public static readonly DocumentType ResultDocument = "urn:document:fss-sedo-benefit-payment-initiation-result-document";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-benefit-payment-initiation-error-message";
+            /// <summary>
+            /// Ошибка взаимодействия с порталом СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-benefit-payment-initiation-exchange-error";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-benefit-payment-initiation-read-receipt";
+        }
+
+        /// <summary>
+        /// Результат инициации выплат пособия ФСС
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoBenefitPaymentInitiationResult
+        {
+            /// <summary>
+            /// Запрос на получение "Результата обработки сообщения инициации выплат ФСС"
+            /// </summary>
+            public static readonly DocumentType RequestMessage = "urn:document:fss-sedo-benefit-payment-initiation-result-request-message";
+            /// <summary>
+            /// Сообщение "Результат обработки сообщения инициации выплат ФСС"
+            /// </summary>
+            public static readonly DocumentType StatusDocument = "urn:document:fss-sedo-benefit-payment-initiation-result-status-document";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-benefit-payment-initiation-result-error-message";
+            /// <summary>
+            /// Ошибка взаимодействия с порталом СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-benefit-payment-initiation-result-exchange-error";
+        }
+
+        /// <summary>
+        /// Регистрация сведений о застрахованном лице ФСС
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoInsuredPersonRegistration
+        {
+            /// <summary>
+            /// Запрос на регистрацию сведений
+            /// </summary>
+            public static readonly DocumentType Request = "urn:document:fss-sedo-insured-person-registration-request";
+            /// <summary>
+            /// Результат приёма запроса порталом
+            /// </summary>
+            public static readonly DocumentType Receipt = "urn:document:fss-sedo-insured-person-registration-receipt";
+            /// <summary>
+            /// Результат регистрации сведений
+            /// </summary>
+            public static readonly DocumentType ResponseResult = "urn:document:fss-sedo-insured-person-registration-response-result";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-insured-person-registration-error-message";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-insured-person-registration-exchange-error";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-insured-person-registration-read-receipt";
+        }
+
+        /// <summary>
+        /// Результат регистрации сведений о застрахованном лице ФСС
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoInsuredPersonRegistrationResult
+        {
+            /// <summary>
+            /// Запрос на получение документов
+            /// </summary>
+            public static readonly DocumentType StatusRequestMessage = "urn:document:fss-sedo-insured-person-registration-result-status-request-message";
+            /// <summary>
+            /// Результат регистрации сведений
+            /// </summary>
+            public static readonly DocumentType ResponseResult = "urn:document:fss-sedo-insured-person-registration-result-response-result";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-insured-person-registration-result-error-message";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-insured-person-registration-result-exchange-error";
+        }
+
+        /// <summary>
+        /// Информация о несоответствии сведений о застрахованном лице ФСС
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoInsuredPersonMismatch
+        {
+            /// <summary>
+            /// Запрос на получение документов
+            /// </summary>
+            public static readonly DocumentType RequestMessage = "urn:document:fss-sedo-insured-person-mismatch-request-message";
+            /// <summary>
+            /// Документ с информацией
+            /// </summary>
+            public static readonly DocumentType MismatchMessage = "urn:document:fss-sedo-insured-person-mismatch-mismatch-message";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-insured-person-mismatch-error-message";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-insured-person-mismatch-exchange-error";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-insured-person-mismatch-receipt";
+        }
+
+        /// <summary>
+        /// Запрос регистрации/отзыва доверенности ФСС
+        /// </summary>
+        [PublicAPI]
+        public static class FssWarrantManagement
+        {
+            /// <summary>
+            /// SOAP-сообщение запроса на отправку "Создание/отзыв доверенности"
+            /// </summary>
+            public static readonly DocumentType RequestMessage = "urn:document:fss-warrant-management-request-message";
+            /// <summary>
+            /// Исходный документ "Создание/отзыв доверенности" до момента создания SOAP-запроса
+            /// </summary>
+            public static readonly DocumentType RequestDocument = "urn:document:fss-warrant-management-request-document";
+            /// <summary>
+            /// Ошибка взаимодействия с порталом СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-warrant-management-exchange-error";
+            /// <summary>
+            /// Результат отправки сообщения на портал
+            /// </summary>
+            public static readonly DocumentType ReceptionResult = "urn:document:fss-warrant-management-reception-result";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-warrant-management-error-message";
+            /// <summary>
+            /// Сообщение "Результат создания/отзыва доверенности"
+            /// </summary>
+            public static readonly DocumentType ResponseMessage = "urn:document:fss-warrant-management-response-message";
+        }
+
+        /// <summary>
+        /// Результат создания/отзыва доверенности ФСС
+        /// </summary>
+        [PublicAPI]
+        public static class FssWarrantManagementResult
+        {
+            /// <summary>
+            /// Запрос на получение "Результат создания/отзыва доверенности"
+            /// </summary>
+            public static readonly DocumentType RequestMessage = "urn:document:fss-warrant-management-result-request-message";
+            /// <summary>
+            /// Сообщение "Результат создания/отзыва доверенности"
+            /// </summary>
+            public static readonly DocumentType StatusDocument = "urn:document:fss-warrant-management-result-status-document";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-warrant-management-result-error-message";
+            /// <summary>
+            /// Ошибка взаимодействия с порталом СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-warrant-management-result-exchange-error";
         }
     }
 }

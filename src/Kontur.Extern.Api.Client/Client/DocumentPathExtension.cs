@@ -1,10 +1,12 @@
 using System;
 using System.Threading.Tasks;
+using System.Web;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Exceptions;
 using Kontur.Extern.Api.Client.Helpers;
 using Kontur.Extern.Api.Client.Model;
 using Kontur.Extern.Api.Client.Model.DocflowFiltering;
+using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
@@ -51,6 +53,29 @@ namespace Kontur.Extern.Api.Client
                 path.DocflowId,
                 path.DocumentId,
                 documentType.ToUrn(),
+                certificate.ToBytes(),
+                timeout);
+        }
+
+        public static Task<ReplyDocument> GenerateReplyAsync(this in DocumentPath path, Link link, CertificateContent certificate, TimeSpan? timeout = null)
+        {
+            if (link is null)
+                throw Errors.ValueShouldNotBeEmpty(nameof(link));
+
+            if (link.Rel != LinksRelations.ToReply)
+                throw Errors.InappropriateLink(link.Rel, LinksRelations.ToReply, nameof(link));
+            
+            var documentTypeParameter = HttpUtility.ParseQueryString(link.Href.Query).Get("documentType");
+
+            if (string.IsNullOrEmpty(documentTypeParameter) || documentTypeParameter.Contains(","))
+                throw Errors.InappropriateReplyLink(nameof(link));
+            
+            var apiClient = path.Services.Api;
+            return apiClient.Replies.GenerateReplyAsync(
+                path.AccountId,
+                path.DocflowId,
+                path.DocumentId,
+                new Urn("document", documentTypeParameter),
                 certificate.ToBytes(),
                 timeout);
         }

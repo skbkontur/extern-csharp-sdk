@@ -13,7 +13,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
     public class RepliesClient : IRepliesClient
     {
         private readonly IHttpRequestFactory http;
-        
+
         public RepliesClient(IHttpRequestFactory http) => this.http = http;
 
         public Task<ReplyDocument> GetReplyAsync(
@@ -94,11 +94,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
                 .AppendToQuery("documentType", documentType.Nss)
                 .Build();
             return PostReplyAsync(url, body, timeout);
-        }
-
-        public Task<IDocflowWithDocuments> SendReplyAsync(Guid accountId, Guid docflowId, Guid documentId, Guid replyId, string senderIp, TimeSpan? timeout = null)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<IDocflowWithDocuments> SendReplyAsync(
@@ -186,11 +181,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
             var url = $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/content";
             return http.PutAsync<byte[], ReplyDocument>(url, content, timeout);
         }
-        
-        private Task<IDocflowWithDocuments> PostDocflowAsync<TDto>(string url, TDto dto, TimeSpan? timeout) => 
-            http.PostAsync<TDto, IDocflowWithDocuments>(new Uri(url), dto, timeout);
 
-        private Task<ReplyDocument> PostReplyAsync<TDto>(Uri url, TDto dto, TimeSpan? timeout) => 
+        private Task<IDocflowWithDocuments> PostDocflowAsync<TDto>(string url, TDto dto, TimeSpan? timeout) =>
+            http.PostAsync<TDto, IDocflowWithDocuments>(url, dto, timeout);
+
+        private Task<ReplyDocument> PostReplyAsync<TDto>(Uri url, TDto dto, TimeSpan? timeout) =>
             http.PostAsync<TDto, ReplyDocument>(url, dto, timeout);
 
         private Task<ReplyDocument> GetReplyAsync(string url, TimeSpan? timeout) => http.GetAsync<ReplyDocument>(url, timeout);
