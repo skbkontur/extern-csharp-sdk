@@ -11,6 +11,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Tasks
         public ApiTaskState TaskState { get; set; }
         public Urn? TaskType { get; set; }
         public object? TaskResult { get; set; }
-        public ApiError? ApiError { get; set; }
+        public ApiError? Error { get; set; }
     }
 }

@@ -10,14 +10,14 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Tasks
             TaskStatePropName = namingPolicy.ConvertName(nameof(ApiTaskResultDto.TaskState));
             TaskTypePropName = namingPolicy.ConvertName(nameof(ApiTaskResultDto.TaskType));
             IdPropName = namingPolicy.ConvertName(nameof(ApiTaskResultDto.Id));
-            ApiErrorPropName = namingPolicy.ConvertName(nameof(ApiTaskResultDto.ApiError));
+            ErrorPropName = namingPolicy.ConvertName(nameof(ApiTaskResultDto.Error));
             TaskResultPropName = namingPolicy.ConvertName(nameof(ApiTaskResultDto.TaskResult));
         }
 
         public Utf8String TaskStatePropName { get; set; }
         public Utf8String TaskTypePropName { get; set; }
         public Utf8String IdPropName { get; set; }
-        public Utf8String ApiErrorPropName { get; set; }
+        public Utf8String ErrorPropName { get; set; }
         public Utf8String TaskResultPropName { get; set; }
     }
 }

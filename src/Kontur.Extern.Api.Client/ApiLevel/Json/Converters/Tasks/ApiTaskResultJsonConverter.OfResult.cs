@@ -39,8 +39,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Tasks
                         return ApiTaskResult<TResult>.Success(successResult, taskId, taskType);
 
                     case ApiTaskState.Failed:
-                        var errorJson = jsonDocument.RootElement.GetProperty(propNames.ApiErrorPropName.AsUtf8()).GetRawText();
-                        var error = DeserializeAs<ApiError>(errorJson, propNames.ApiErrorPropName, taskStateValue);
+                        var errorJson = jsonDocument.RootElement.GetProperty(propNames.ErrorPropName.AsUtf8()).GetRawText();
+                        var error = DeserializeAs<ApiError>(errorJson, propNames.ErrorPropName, taskStateValue);
                         return ApiTaskResult<TResult>.TaskFailure(error, taskId, taskType);
 
                     default:
@@ -62,7 +62,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Tasks
                 var dto = ToDto();
                 if (value.TryGetTaskError(out var error))
                 {
-                    dto.ApiError = error;
+                    dto.Error = error;
                 }
                 else if (value.TryGetSuccessResult(out var successResult))
                 {
