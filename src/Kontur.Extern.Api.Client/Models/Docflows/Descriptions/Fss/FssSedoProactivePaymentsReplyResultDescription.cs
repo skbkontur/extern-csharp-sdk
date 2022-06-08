@@ -19,5 +19,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// Номер ЭЛН
         /// </summary>
         public string? SickListNumber { get; set; }
+        
+        /// <summary>
+        /// Версия формы документа
+        /// </summary>
+        public FormVersion? FormVersion { get; set; }
     }
 }

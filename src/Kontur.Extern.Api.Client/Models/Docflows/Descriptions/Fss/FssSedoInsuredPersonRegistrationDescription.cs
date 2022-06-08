@@ -27,5 +27,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// </summary>
         [JsonPropertyName("fio")]
         public PersonFullName PersonFullName { get; set; } = null!;
+        
+        /// <summary>
+        /// Версия формы документа
+        /// </summary>
+        public FormVersion? FormVersion { get; set; }
     }
 }
