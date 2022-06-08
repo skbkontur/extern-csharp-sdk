@@ -3,7 +3,7 @@
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
 {
     [PublicAPI]
-    public class FssSedoBenefitPaymentInitiationResultDescription: FssSedoDescription
+    public class FssSedoBenefitPaymentInitiationResultDescription: FssSedoResultDescription
     {
         /// <summary>
         /// ИНН организации, за которую сдается отчет

@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
 {
     [PublicAPI]
-    public class FssSedoProactivePaymentsReplyResultDescription : FssSedoDescription
+    public class FssSedoProactivePaymentsReplyResultDescription : FssSedoResultDescription
     {
         /// <summary>
         /// Номер процесса социальной поддержки
