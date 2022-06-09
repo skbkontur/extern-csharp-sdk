@@ -84,5 +84,15 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Информация о несоответствии сведений о застрахованном лице ФСС
         /// </summary>
         public static readonly DocflowType FssSedoInsuredPersonMismatch = "urn:docflow:fss-sedo-insured-person-mismatch";
+        
+        /// <summary>
+        /// Инициация выплат пособия ФСС
+        /// </summary>
+        public static readonly DocflowType FssSedoBenefitPaymentInitiation = "urn:docflow:fss-sedo-benefit-payment-initiation";
+        
+        /// <summary>
+        /// Результат инициации выплат пособия ФСС
+        /// </summary>
+        public static readonly DocflowType FssSedoBenefitPaymentInitiationResult = "urn:docflow:fss-sedo-benefit-payment-initiation-result";
     }
 }

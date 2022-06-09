@@ -12,5 +12,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// Время окончания актуальности уведомления
         /// </summary>
         public DateTime? ExpiryDate { get; set; }
+        
+        /// <summary>
+        /// Версия формы документа
+        /// </summary>
+        public FormVersion? FormVersion { get; set; }
     }
 }

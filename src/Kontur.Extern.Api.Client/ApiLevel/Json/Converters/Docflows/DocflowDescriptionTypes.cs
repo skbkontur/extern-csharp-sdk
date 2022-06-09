@@ -37,7 +37,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
             [DocflowType.FssSickReport] = typeof(FssSickReportDescription),
             [DocflowType.FssSedoProviderSubscription] = typeof(FssSedoDescription),
             [DocflowType.FssSedoAbonentSubscription] = typeof(FssSedoAbonentSubscriptionDescription),
-            [DocflowType.FssSedoError] = typeof(FssSedoDescription),
             [DocflowType.FssSedoAbonentSubscriptionResult] = typeof(FssSedoAbonentSubscriptionResultDescription),
             [DocflowType.FssSedoPvsoNotification] = typeof(FssSedoPvsoNotificationDescription),
             [DocflowType.FssSedoSickReportChangeNotification] = typeof(FssSedoSickReportChangeNotificationDescription),
@@ -48,6 +47,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
             [DocflowType.FssSedoProactivePaymentsReplyResult] = typeof(FssSedoProactivePaymentsReplyResultDescription),
             [DocflowType.FssSedoProactivePaymentsBenefit] = typeof(FssSedoProactivePaymentsBenefitDescription),
             [DocflowType.FssSedoInsuredPersonMismatch] = typeof(FssSedoInsuredPersonMismatchDescription),
+            [DocflowType.FssSedoBenefitPaymentInitiation] = typeof(FssSedoBenefitPaymentInitiationDescription),
+            [DocflowType.FssSedoBenefitPaymentInitiationResult] = typeof(FssSedoBenefitPaymentInitiationResultDescription),
+            [DocflowType.FssSedoError] = typeof(FssSedoErrorDescription),
             [DocflowType.OvedConfirmation] = typeof(OvedConfirmationDescription),
             [DocflowType.CbrfReport] = typeof(CbrfReportDescription),
             [DocflowType.BusinessRegistration] = typeof(BusinessRegistrationDescription)

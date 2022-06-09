@@ -1,11 +1,9 @@
-using System.Text.Json.Serialization;
-using JetBrains.Annotations;
-using Kontur.Extern.Api.Client.Models.Common;
+﻿using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
 {
     [PublicAPI]
-    public class FssSedoInsuredPersonRegistrationDescription : FssSedoDescription
+    public class FssSedoBenefitPaymentInitiationDescription: FssSedoDescription
     {
         /// <summary>
         /// Отпечаток сертификата отправителя
@@ -17,17 +15,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// </summary>
         public string? PayerInn { get; set; }
 
-        /// <summary>
-        /// СНИЛС
-        /// </summary>
-        public string? Snils { get; set; }
-
-        /// <summary>
-        /// ФИО
-        /// </summary>
-        [JsonPropertyName("fio")]
-        public PersonFullName PersonFullName { get; set; } = null!;
-        
         /// <summary>
         /// Версия формы документа
         /// </summary>
