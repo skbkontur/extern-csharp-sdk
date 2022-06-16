@@ -22,7 +22,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
         /// <returns></returns>
         public static TogsCode Parse(string value) => Parser.Parse(value);
 
-        private TogsCode(string value) => Value = value;
+        internal TogsCode(string value) => Value = value;
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.Togs;

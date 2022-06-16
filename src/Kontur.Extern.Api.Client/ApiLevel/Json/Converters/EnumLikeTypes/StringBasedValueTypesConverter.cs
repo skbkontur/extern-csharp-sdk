@@ -24,21 +24,21 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
             AddConverter(x => new DraftBuilderType(x), x => x.ToUrn().ToString());
             AddConverter(x => new PfrLetterType(x), x => x.ToUrn().ToString());
             AddConverter(x => new DocflowExtendedStatus(x), x => x.ToUrn().ToString());
-            AddConverter(SvdregCode.Parse, x => x.Code?.ToString());
+            AddConverter(x => new SvdregCode(x), x => x.Code?.ToString());
             
-            AddConverterForClass(Knd.Parse, x => x.Value.ToString());
-            AddConverterForClass(Kpp.Parse, x => x.Value.ToString());
-            AddConverterForClass(InnKpp.Parse, x => x.Value.ToString());
+            AddConverterForClass(s => new Knd(s), x => x.Value.ToString());
+            AddConverterForClass(s => new Kpp(s), x => x.Value.ToString());
+            AddConverterForClass(s => new InnKpp(s), x => x.Value.ToString());
             AddConverterForClass(s => new Okud(s), x => x.Value.ToString());
             AddConverterForClass(s => new Okpo(s), x => x.Value.ToString());
-            AddConverterForClass(Inn.Parse, x => x.Value.ToString());
-            AddConverterForClass(LegalEntityInn.Parse, x => x.Value.ToString());
+            AddConverterForClass(s => new Inn(s), x => x.Value.ToString());
+            AddConverterForClass(s => new LegalEntityInn(s), x => x.Value.ToString());
             
-            AddConverterForClass(FssCode.Parse, x => x.Value.ToString());
-            AddConverterForClass(IfnsCode.Parse, x => x.Value.ToString());
-            AddConverterForClass(MriCode.Parse, x => x.Value.ToString());
-            AddConverterForClass(TogsCode.Parse, x => x.Value.ToString());
-            AddConverterForClass(UpfrCode.Parse, x => x.Value.ToString());
+            AddConverterForClass(s => new FssCode(s), x => x.Value.ToString());
+            AddConverterForClass(s => new IfnsCode(s), x => x.Value.ToString());
+            AddConverterForClass(s => new MriCode(s), x => x.Value.ToString());
+            AddConverterForClass(s => new TogsCode(s), x => x.Value.ToString());
+            AddConverterForClass(s => new UpfrCode(s), x => x.Value.ToString());
             
             AddConverterForClass(s => new PfrRegNumber(s), x => x.Value.ToString());
             AddConverterForClass(s => new FssRegNumber(s), x => x.Value.ToString());

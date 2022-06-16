@@ -22,7 +22,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
         /// <returns></returns>
         public static Kpp Parse(string value) => Parser.Parse(value);
 
-        private Kpp(string value) => Value = value;
+        internal Kpp(string value) => Value = value;
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.Kpp;

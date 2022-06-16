@@ -19,7 +19,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
         /// <returns></returns>
         public static Knd Parse(string value) => Parser.Parse(value);
 
-        private Knd(string value) => Value = value;
+        internal Knd(string value) => Value = value;
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.Knd;

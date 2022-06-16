@@ -22,7 +22,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
         /// <returns></returns>
         public static IfnsCode Parse(string value) => Parser.Parse(value);
 
-        private IfnsCode(string value) => Value = value;
+        internal IfnsCode(string value) => Value = value;
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.IfnsCode;

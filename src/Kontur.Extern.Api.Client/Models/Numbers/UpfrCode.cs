@@ -20,7 +20,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
         /// </summary>
         public static UpfrCode Parse(string value) => Parser.Parse(value);
         
-        private UpfrCode(string value) => Value = value;
+        internal UpfrCode(string value) => Value = value;
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.UpfrCode;

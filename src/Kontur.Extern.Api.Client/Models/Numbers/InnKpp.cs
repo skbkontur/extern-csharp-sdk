@@ -19,7 +19,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
         /// <returns></returns>
         public static InnKpp Parse(string value) => Parser.Parse(value);
 
-        private InnKpp(string value) => Value = value;
+        internal InnKpp(string value) => Value = value;
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.InnKpp;

@@ -25,7 +25,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration
         /// <returns></returns>
         public static SvdregCode Parse(string value) => Parser.Parse(value);
 
-        private SvdregCode(string code) => Code = code;
+        internal SvdregCode(string code) => Code = code;
 
         public string? Code { get; }
         public bool IsEmpty => Code == null;

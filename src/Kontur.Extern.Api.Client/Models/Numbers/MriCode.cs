@@ -22,7 +22,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
         /// <returns></returns>
         public static MriCode Parse(string value) => Parser.Parse(value);
 
-        private MriCode(string value) => Value = value;
+        internal MriCode(string value) => Value = value;
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.MriCode;

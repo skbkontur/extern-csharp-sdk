@@ -14,7 +14,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
 
         public static Inn Parse(string value) => Parser.Parse(value);
 
-        private Inn(string value) => Value = value;
+        internal Inn(string value) => Value = value;
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.Inn;
