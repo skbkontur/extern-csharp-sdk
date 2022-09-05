@@ -6,6 +6,7 @@ using Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Events;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Replies;
+using Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;
 using Kontur.Extern.Api.Client.Http;
 
 namespace Kontur.Extern.Api.Client.ApiLevel
@@ -23,6 +24,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel
             Contents = new ContentsClient(httpRequestFactory);
             DraftsBuilder = new DraftsBuilderClient(httpRequestFactory);
             Organizations = new OrganizationsClient(httpRequestFactory);
+            ReportsTables = new ReportsTablesClient(httpRequestFactory);
         }
 
         public IHttpRequestFactory Http { get; }
@@ -34,5 +36,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel
         public IEventsClient Events { get; }
         public IOrganizationsClient Organizations { get; }
         public IContentsClient Contents { get; }
+        public IReportsTablesClient ReportsTables { get; }
     }
 }

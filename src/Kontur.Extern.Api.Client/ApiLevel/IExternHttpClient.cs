@@ -6,6 +6,7 @@ using Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Events;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Replies;
+using Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;
 using Kontur.Extern.Api.Client.Http;
 // ReSharper disable CommentTypo
 
@@ -23,5 +24,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel
         IEventsClient Events { get; }
         IOrganizationsClient Organizations { get; }
         IContentsClient Contents { get; }
+        IReportsTablesClient ReportsTables { get; }
     }
 }
