@@ -1,6 +1,5 @@
 ﻿using System;
 using JetBrains.Annotations;
-using Kontur.Extern.Api.Client.Models.Accounts;
 using Kontur.Extern.Api.Client.Models.ReportsTables;
 using Kontur.Extern.Api.Client.Paths;
 using Kontur.Extern.Api.Client.Primitives;
@@ -15,10 +14,7 @@ public static class ReportsTablesListPathExtension
         Guid[]? organizationIds = null,
         DateTime? dateFrom = null,
         DateTime? dateTo = null,
-        bool? includeDeleted = false,
-        int? skip = null,
-        int? take = null,
-        TimeSpan? timeout = null)
+        bool? includeDeleted = false)
     {
         var apiClient = path.Services.Api;
         var accountId = path.AccountId;

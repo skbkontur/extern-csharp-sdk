@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.ReportsTables;
-using Kontur.Extern.Api.Client.Models.ReportsTables;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;
 
@@ -22,7 +20,12 @@ public interface IReportsTablesClient
     /// Поиск форм с дедлайнами по нескольким организациям
     /// </summary>
     /// <param name="accountId"></param>
-    /// <param name="searchReportsRequest"></param>
+    /// <param name="organizationIds"></param>
+    /// <param name="dateFrom"></param>
+    /// <param name="dateTo"></param>
+    /// <param name="includeDeleted"></param>
+    /// <param name="skip"></param>
+    /// <param name="take"></param>
     /// <param name="timeout"></param>
     /// <returns></returns>
     public Task<ReportsTableResult> GetReportsTablesAsync(
