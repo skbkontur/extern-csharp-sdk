@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.Common;
@@ -29,7 +30,14 @@ namespace Kontur.Extern.Api.Client.Models.Accounts
         /// <summary>
         /// Продукт, с которым может работать пользователь
         /// </summary>
+        [Obsolete("use Products")]
         public string ProductName { get; set; } = null!;
+        
+        /// <summary>
+        /// Список продуктов Контура
+        /// </summary>
+        public Product[] Products { get; set; } = null!;
+
         /// <summary>
         /// Роль пользователя в данной учетной записи: администратор, пользователь, директор
         /// </summary>
