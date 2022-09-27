@@ -34,13 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApiLevel\Models\Requests\ApiTasks" />
-    <Folder Include="ApiLevel\Models\Requests\Contents" />
-    <Folder Include="ApiLevel\Models\Requests\Events" />
-    <Folder Include="ApiLevel\Models\Requests\Warrants" />
     <Folder Include="ApiLevel\Models\Responses\DraftBuilders\DocumentFiles" />
     <Folder Include="ApiLevel\Models\Responses\DraftBuilders\Documents" />
-    <Folder Include="ApiLevel\Models\Responses\Errors" />
-    <Folder Include="Client\Model\Docflows" />
   </ItemGroup>  
 </Project>
