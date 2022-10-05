@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.ReportsTables;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ReportsTables;
 using Kontur.Extern.Api.Client.Http;
+using Kontur.Extern.Api.Client.Models.ReportsTables;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;
@@ -15,15 +18,15 @@ public class ReportsTablesClient : IReportsTablesClient
         this.http = http;
     }
 
-    public Task<FormsResult> GetFormsAsync(Guid accountId, Guid organizationId, bool? includeDeleted = false, TimeSpan? timeout = null)
+    public Task<IReadOnlyCollection<FormInfo>> GetFormsAsync(Guid accountId, Guid organizationId, bool? includeDeleted = false, TimeSpan? timeout = null)
     {
         var url = new RequestUrlBuilder($"/v1/{accountId}/reports-tables/{organizationId}/forms")
             .AppendToQuery("includeDeleted", includeDeleted)
             .Build();
-        return http.GetAsync<FormsResult>(url, timeout);
+        return http.GetAsync<IReadOnlyCollection<FormInfo>>(url, timeout);
     }
 
-    public Task<ReportsTableResult> GetReportsTablesAsync(
+    public Task<ReportsTableList> GetReportsTablesAsync(
         Guid accountId,
         Guid[]? organizationIds = null,
         DateTime? dateFrom = null,
@@ -33,7 +36,7 @@ public class ReportsTablesClient : IReportsTablesClient
         TimeSpan? timeout = null)
     {
         var url = new RequestUrlBuilder($"/v1/{accountId}/reports-tables/search").Build();
-        return http.PostAsync<SearchReportsRequest, ReportsTableResult>(
+        return http.PostAsync<SearchReportsRequest, ReportsTableList>(
             url, 
             new SearchReportsRequest
             {

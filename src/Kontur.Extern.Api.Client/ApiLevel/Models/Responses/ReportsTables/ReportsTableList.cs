@@ -1,10 +1,10 @@
 ﻿using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.ReportsTables;
 
-namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.ReportsTables;
+namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ReportsTables;
 
 [PublicAPI]
-public class ReportsTableResult
+public class ReportsTableList
 {
     /// <summary>
     /// Список таблиц отчётностей

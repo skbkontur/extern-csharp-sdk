@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.Models.ReportsTables;
 
-[Flags]
 [PublicAPI]
 [SuppressMessage("ReSharper", "CommentTypo")]
 public enum PeriodEnum
@@ -12,15 +11,15 @@ public enum PeriodEnum
     /// <summary>
     /// Ежегодный
     /// </summary>
-    Yearly = 1,
+    Yearly,
 
     /// <summary>
     /// Ежеквартальный
     /// </summary>
-    Quarterly = 2,
+    Quarterly,
 
     /// <summary>
     /// Ежемесячный
     /// </summary>
-    Monthly = 4,
+    Monthly,
 }
