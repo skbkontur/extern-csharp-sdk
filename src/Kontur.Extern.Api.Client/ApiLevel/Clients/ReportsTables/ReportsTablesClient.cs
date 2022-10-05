@@ -18,12 +18,12 @@ public class ReportsTablesClient : IReportsTablesClient
         this.http = http;
     }
 
-    public Task<IReadOnlyCollection<FormInfo>> GetFormsAsync(Guid accountId, Guid organizationId, bool? includeDeleted = false, TimeSpan? timeout = null)
+    public Task<FormsList> GetFormsAsync(Guid accountId, Guid organizationId, bool? includeDeleted = false, TimeSpan? timeout = null)
     {
         var url = new RequestUrlBuilder($"/v1/{accountId}/reports-tables/{organizationId}/forms")
             .AppendToQuery("includeDeleted", includeDeleted)
             .Build();
-        return http.GetAsync<IReadOnlyCollection<FormInfo>>(url, timeout);
+        return http.GetAsync<FormsList>(url, timeout);
     }
 
     public Task<ReportsTableList> GetReportsTablesAsync(

@@ -23,7 +23,7 @@ public class SearchReportsRequest
     /// </summary>
     public bool? IncludeDeleted { get; set; }
     /// <summary>
-    /// Количество организаций, которые были пропущены, значение по умолчанию - 0.
+    /// Количество пропущенных организаций, значение по умолчанию - 0.
     /// </summary>
     public int? Skip { get; set; }
     /// <summary>

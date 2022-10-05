@@ -16,7 +16,7 @@ public interface IReportsTablesClient
     /// <param name="includeDeleted">Флаг отображения удаленных форм отчетности</param>
     /// <param name="timeout"></param>
     /// <returns></returns>
-    public Task<IReadOnlyCollection<FormInfo>> GetFormsAsync(Guid accountId, Guid organizationId, bool? includeDeleted = false, TimeSpan? timeout = null);
+    public Task<FormsList> GetFormsAsync(Guid accountId, Guid organizationId, bool? includeDeleted = false, TimeSpan? timeout = null);
 
     /// <summary>
     /// Поиск форм с дедлайнами по нескольким организациям
