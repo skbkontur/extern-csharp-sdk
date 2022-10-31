@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.ReportsTables;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ReportsTables;
 using Kontur.Extern.Api.Client.Http;
-using Kontur.Extern.Api.Client.Models.ReportsTables;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;
@@ -31,7 +29,6 @@ public class ReportsTablesClient : IReportsTablesClient
         Guid[]? organizationIds = null,
         DateTime? dateFrom = null,
         DateTime? dateTo = null,
-        bool? includeDeleted = false,
         int? skip = null, int? take = null,
         TimeSpan? timeout = null)
     {
@@ -43,7 +40,6 @@ public class ReportsTablesClient : IReportsTablesClient
                 OrganizationIds = organizationIds,
                 DateFrom = dateFrom,
                 DateTo = dateTo,
-                IncludeDeleted = includeDeleted,
                 Skip = skip,
                 Take = take,
             },

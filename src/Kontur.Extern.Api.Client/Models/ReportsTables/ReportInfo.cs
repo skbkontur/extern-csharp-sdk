@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.Models.ReportsTables;
@@ -15,5 +14,5 @@ public class ReportInfo
     /// <summary>
     /// Список дедлайнов формы
     /// </summary>
-    public DateTime[] Deadlines { get; set; }
+    public DeadlineInfo[] Deadlines { get; set; }
 }
