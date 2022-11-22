@@ -13,7 +13,15 @@ public class DeadlineInfo
     /// </summary>
     public DateTime Deadline { get; set; }
     /// <summary>
-    /// Статус ячейки
+    /// Год периода
+    /// </summary>
+    public int PeriodYear { get; set; }
+    /// <summary>
+    /// Номер периода
+    /// </summary>
+    public int PeriodNumber { get; set; }
+    /// <summary>
+    /// Статус отчёта
     /// </summary>
     public ReportDeadlineStatus Status { get; set; }
 }
