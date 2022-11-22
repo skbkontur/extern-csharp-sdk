@@ -19,10 +19,6 @@ public class SearchReportsRequest
     /// </summary>
     public DateTime? DateTo { get; set; }
     /// <summary>
-    /// Флаг отображения удаленных форм отчетности. (false/true)
-    /// </summary>
-    public bool? IncludeDeleted { get; set; }
-    /// <summary>
     /// Количество пропускаемых организаций, значение по умолчанию - 0.
     /// </summary>
     public int? Skip { get; set; }

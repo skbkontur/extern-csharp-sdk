@@ -13,8 +13,7 @@ public static class ReportsTablesListPathExtension
         this in ReportsTableListPath path,
         Guid[]? organizationIds = null,
         DateTime? dateFrom = null,
-        DateTime? dateTo = null,
-        bool? includeDeleted = false)
+        DateTime? dateTo = null)
     {
         var apiClient = path.Services.Api;
         var accountId = path.AccountId;
@@ -34,7 +33,6 @@ public static class ReportsTablesListPathExtension
                         organizationIds,
                         dateFrom,
                         dateTo,
-                        includeDeleted,
                         intSkip,
                         take,
                         timeout);
