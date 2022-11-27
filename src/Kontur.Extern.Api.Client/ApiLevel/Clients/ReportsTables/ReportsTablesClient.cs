@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.ReportsTables;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ReportsTables;
 using Kontur.Extern.Api.Client.Http;
+using Kontur.Extern.Api.Client.Models.ReportsTables;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;
@@ -45,4 +46,17 @@ public class ReportsTablesClient : IReportsTablesClient
             },
             timeout);
     }
+    
+    public Task<ReportsTableDocflows> GetDocflowsAsync(Guid accountId, Guid organizationId, int formId, DateTime deadline, int periodYear, int periodNumber, TimeSpan? timeout = null)
+    {
+        var url = new RequestUrlBuilder($"/v1/{accountId}/reports-tables/{organizationId}/docflows")
+            .AppendToQuery("formId", formId)
+            .AppendToQuery("deadline", deadline.ToString("yyyy-MM-ddTHH:mm:ssK"))
+            .AppendToQuery("periodYear", periodYear)
+            .AppendToQuery("periodNumber", periodNumber)
+            .Build();
+        
+        return http.GetAsync<ReportsTableDocflows>(url, timeout);
+    }
+    
 }
