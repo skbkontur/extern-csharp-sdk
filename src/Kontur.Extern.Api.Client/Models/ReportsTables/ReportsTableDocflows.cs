@@ -1,5 +1,8 @@
-﻿namespace Kontur.Extern.Api.Client.Models.ReportsTables;
+﻿using JetBrains.Annotations;
 
+namespace Kontur.Extern.Api.Client.Models.ReportsTables;
+
+[PublicAPI]
 public class ReportsTableDocflows
 {
     /// <summary>
