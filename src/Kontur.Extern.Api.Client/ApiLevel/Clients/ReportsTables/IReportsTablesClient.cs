@@ -38,7 +38,7 @@ public interface IReportsTablesClient
         TimeSpan? timeout = null);
     
     /// <summary>
-    /// Поиск форм с дедлайнами по нескольким организациям
+    /// Детализация по форме отчетности
     /// </summary>
     /// <param name="accountId"></param>
     /// <param name="organizationId"></param>

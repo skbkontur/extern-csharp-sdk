@@ -6,7 +6,7 @@ namespace Kontur.Extern.Api.Client.Models.ReportsTables;
 public class ReportsTableDocflow
 {
     /// <summary>
-    /// Идентификатор ДО
+    /// Идентификатор документооборота
     /// </summary>
     public Guid DocflowId { get; set; }
     /// <summary>
@@ -14,15 +14,16 @@ public class ReportsTableDocflow
     /// </summary>
     public string OrganizationShortName { get; set; }
     /// <summary>
-    /// Информация о форме
+    /// Информация о форме отчетности
     /// </summary>
     public FormInfo Form { get; set; }
     /// <summary>
     /// Код инспекции
     /// </summary>
+    [CanBeNull]
     public string Recipient { get; set; }
     /// <summary>
-    /// Дата отправки ДО
+    /// Дата отправки документооборота
     /// </summary>
     public DateTime SendDate { get; set; }
     /// <summary>
@@ -30,7 +31,7 @@ public class ReportsTableDocflow
     /// </summary>
     public int? CorrectionNumber { get; set; }
     /// <summary>
-    /// Статус ДО
+    /// Статус документооборота
     /// </summary>
     public DocflowReportStatus ReportStatus { get; set; }
 }
