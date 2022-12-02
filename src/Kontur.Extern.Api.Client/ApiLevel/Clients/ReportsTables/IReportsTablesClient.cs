@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ReportsTables;
-using Kontur.Extern.Api.Client.Models.ReportsTables;
+using Kontur.Extern.Api.Client.Models.ReportsTables.Payments;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;
 
@@ -16,6 +16,26 @@ public interface IReportsTablesClient
     /// <param name="timeout"></param>
     /// <returns></returns>
     public Task<FormsList> GetFormsAsync(Guid accountId, Guid organizationId, bool? includeDeleted = false, TimeSpan? timeout = null);
+
+    /// <summary>
+    /// Получение списка платежей для организации
+    /// </summary>
+    /// <param name="accountId">Идентификатор учетной записи</param>
+    /// <param name="organizationIds">Идентификаторы организаций</param>
+    /// <param name="deadlineFrom">Начальная дата крайнего срока платежей</param>
+    /// <param name="deadlineTo">Конечная дата крайнего срока платежа</param>
+    /// <param name="skip">Количество пропускаемых организаций</param>
+    /// <param name="take">Количество возвращаемых организаций</param>
+    /// <param name="timeout"></param>
+    /// <returns></returns>
+    public Task<PaymentsList> GetPaymentsAsync(
+        Guid accountId,
+        Guid[]? organizationIds = null,
+        DateTime? deadlineFrom = null,
+        DateTime? deadlineTo = null,
+        int? skip = null,
+        int? take = null,
+        TimeSpan? timeout = null);
 
     /// <summary>
     /// Поиск форм с дедлайнами по нескольким организациям
