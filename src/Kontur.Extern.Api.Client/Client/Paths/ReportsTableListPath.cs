@@ -18,4 +18,6 @@ public readonly struct ReportsTableListPath
     {
         return new(AccountId, organizationId, Services);
     }
+
+    public PaymentsListPath Payments => new(AccountId, Services);
 }
