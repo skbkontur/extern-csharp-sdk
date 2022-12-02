@@ -1,5 +1,5 @@
 ﻿using JetBrains.Annotations;
-using Kontur.Extern.Api.Client.Models.ReportsTables;
+using Kontur.Extern.Api.Client.Models.ReportsTables.Forms;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ReportsTables;
 

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.ReportsTables.Reports;
 
-namespace Kontur.Extern.Api.Client.Models.ReportsTables;
+namespace Kontur.Extern.Api.Client.Models.ReportsTables.Common;
 
 [PublicAPI]
 [SuppressMessage("ReSharper", "CommentTypo")]

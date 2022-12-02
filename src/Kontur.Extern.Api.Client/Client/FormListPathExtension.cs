@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
-using Kontur.Extern.Api.Client.Models.ReportsTables;
+using Kontur.Extern.Api.Client.Models.ReportsTables.Forms;
 using Kontur.Extern.Api.Client.Paths;
 
 namespace Kontur.Extern.Api.Client;
