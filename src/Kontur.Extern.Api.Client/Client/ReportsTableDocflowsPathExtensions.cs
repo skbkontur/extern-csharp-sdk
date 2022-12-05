@@ -12,7 +12,7 @@ public static class ReportsTableDocflowsPathExtensions
     public static async Task<ReportsTableDocflows> ListAsync(
         this ReportsTableDocflowsPath path,
         int formId,
-        DateTime deadline,
+        string deadline,
         int periodYear,
         int periodNumber,
         TimeSpan? timeout = null)

@@ -47,13 +47,13 @@ public class ReportsTablesClient : IReportsTablesClient
             timeout);
     }
     
-    public Task<ReportsTableDocflows> GetDocflowsAsync(Guid accountId, Guid organizationId, int formId, DateTime deadline, int periodYear, int periodNumber, TimeSpan? timeout = null)
+    public Task<ReportsTableDocflows> GetDocflowsAsync(Guid accountId, Guid organizationId, int formId, string deadline, int periodYear, int periodNumber, TimeSpan? timeout = null)
     {
         var url = new RequestUrlBuilder($"/v1/{accountId}/reports-tables/{organizationId}/docflows")
-            .AppendToQuery("formId", formId)
-            .AppendToQuery("deadline", deadline.ToString("yyyy-MM-ddTHH:mm:ssK"))
-            .AppendToQuery("periodYear", periodYear)
-            .AppendToQuery("periodNumber", periodNumber)
+            .AppendToQuery(nameof(formId), formId)
+            .AppendToQuery(nameof(deadline), deadline)
+            .AppendToQuery(nameof(periodYear), periodYear)
+            .AppendToQuery(nameof(periodNumber), periodNumber)
             .Build();
         
         return http.GetAsync<ReportsTableDocflows>(url, timeout);

@@ -52,7 +52,7 @@ public interface IReportsTablesClient
         Guid accountId,
         Guid organizationId,
         int formId,
-        DateTime deadline,
+        string deadline,
         int periodYear,
         int periodNumber,
         TimeSpan? timeout = null);
