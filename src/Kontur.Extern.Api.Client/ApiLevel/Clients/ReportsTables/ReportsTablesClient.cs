@@ -49,7 +49,7 @@ public class ReportsTablesClient : IReportsTablesClient
     
     public Task<ReportsTableDocflows> GetDocflowsAsync(Guid accountId, Guid organizationId, int formId, string deadline, int periodYear, int periodNumber, TimeSpan? timeout = null)
     {
-        var url = new RequestUrlBuilder($"/v1/{accountId}/reports-tables/{organizationId}/docflows")
+        var url = new RequestUrlBuilder($"/v1/{accountId}/reports-tables/{organizationId}/report-docflows")
             .AppendToQuery(nameof(formId), formId)
             .AppendToQuery(nameof(deadline), deadline)
             .AppendToQuery(nameof(periodYear), periodYear)
