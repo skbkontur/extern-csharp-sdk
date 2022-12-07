@@ -40,13 +40,15 @@ public interface IReportsTablesClient
     /// <summary>
     /// Детализация по форме отчетности
     /// </summary>
-    /// <param name="accountId"></param>
-    /// <param name="organizationId"></param>
-    /// <param name="formId"></param>
-    /// <param name="deadline"></param>
-    /// <param name="periodYear"></param>
-    /// <param name="periodNumber"></param>
-    /// <param name="timeout"></param>
+    /// <param name="accountId">Идентификатор учетной записи</param>
+    /// <param name="organizationId">Идентификатор организации</param>
+    /// <param name="formId">Идентификатор формы отчетности</param>
+    /// <param name="deadline">Крайний срок подачи формы отчетности, дедлайн. 
+    /// Возможный формат данных: "yyyy-MM-ddTHH:mm:ssK", "yyyy-MM-ddTHH:mm:ss.fffffffK"</param>
+    /// <param name="periodYear">Год подачи формы отчетности.
+    /// Год указывается в формате: "yyyy"</param>
+    /// <param name="periodNumber">Номер периода подачи формы отчетности</param>
+    /// /// <param name="timeout"></param>
     /// <returns></returns>
     public Task<ReportsTableDocflows> GetDocflowsAsync(
         Guid accountId,

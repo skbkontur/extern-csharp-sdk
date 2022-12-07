@@ -18,7 +18,15 @@ public static class ReportsTableDocflowsPathExtensions
         TimeSpan? timeout = null)
     {
         var apiClient = path.Services.Api;
-        var docflows = await apiClient.ReportsTables.GetDocflowsAsync(path.AccountId, path.OrganizationId, formId, deadline, periodYear, periodNumber).ConfigureAwait(false);
+        var docflows = await apiClient.ReportsTables.GetDocflowsAsync(
+                path.AccountId,
+                path.OrganizationId,
+                formId,
+                deadline,
+                periodYear,
+                periodNumber,
+                timeout)
+            .ConfigureAwait(false);
         return docflows;
     }
 }

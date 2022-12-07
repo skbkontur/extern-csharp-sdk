@@ -46,7 +46,7 @@ public class ReportsTablesClient : IReportsTablesClient
             },
             timeout);
     }
-    
+
     public Task<ReportsTableDocflows> GetDocflowsAsync(Guid accountId, Guid organizationId, int formId, string deadline, int periodYear, int periodNumber, TimeSpan? timeout = null)
     {
         var url = new RequestUrlBuilder($"/v1/{accountId}/reports-tables/{organizationId}/report-docflows")
@@ -55,8 +55,7 @@ public class ReportsTablesClient : IReportsTablesClient
             .AppendToQuery(nameof(periodYear), periodYear)
             .AppendToQuery(nameof(periodNumber), periodNumber)
             .Build();
-        
+
         return http.GetAsync<ReportsTableDocflows>(url, timeout);
     }
-    
 }
