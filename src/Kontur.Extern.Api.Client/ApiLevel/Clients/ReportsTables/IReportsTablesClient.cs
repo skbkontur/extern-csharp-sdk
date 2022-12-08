@@ -48,9 +48,9 @@ public interface IReportsTablesClient
     /// <param name="periodYear">Год подачи формы отчетности.
     /// Год указывается в формате: "yyyy"</param>
     /// <param name="periodNumber">Номер периода подачи формы отчетности</param>
-    /// /// <param name="timeout"></param>
+    /// <param name="timeout"></param>
     /// <returns></returns>
-    public Task<ReportsTableDocflows> GetDocflowsAsync(
+    public Task<ReportsTableDocflows> GetReportDocflowsAsync(
         Guid accountId,
         Guid organizationId,
         int formId,
