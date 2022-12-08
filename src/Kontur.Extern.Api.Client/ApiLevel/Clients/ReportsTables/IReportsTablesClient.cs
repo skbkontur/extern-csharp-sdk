@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ReportsTables;
+using Kontur.Extern.Api.Client.Models.ReportsTables;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;
 
@@ -35,4 +36,25 @@ public interface IReportsTablesClient
         int? skip = null,
         int? take = null,
         TimeSpan? timeout = null);
+    
+    /// <summary>
+    /// Детализация по форме отчетности
+    /// </summary>
+    /// <param name="accountId">Идентификатор учетной записи</param>
+    /// <param name="organizationId">Идентификатор организации</param>
+    /// <param name="formId">Идентификатор формы отчетности</param>
+    /// <param name="deadline">Крайний срок подачи формы отчетности, дедлайн</param>
+    /// <param name="periodYear">Год подачи формы отчетности</param>
+    /// <param name="periodNumber">Номер периода подачи формы отчетности</param>
+    /// <param name="timeout"></param>
+    /// <returns></returns>
+    public Task<ReportsTableDocflows> GetReportDocflowsAsync(
+        Guid accountId,
+        Guid organizationId,
+        int formId,
+        DateTime deadline,
+        int periodYear,
+        int periodNumber,
+        TimeSpan? timeout = null);
+
 }

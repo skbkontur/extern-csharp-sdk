@@ -9,19 +9,19 @@ namespace Kontur.Extern.Api.Client.Models.ReportsTables;
 public class DeadlineInfo
 {
     /// <summary>
-    /// Дедлайн
+    /// Крайний срок подачи отчетности, дедлайн
     /// </summary>
     public DateTime Deadline { get; set; }
     /// <summary>
-    /// Год периода
+    /// Год периода подачи формы отчетности 
     /// </summary>
     public int PeriodYear { get; set; }
     /// <summary>
-    /// Номер периода
+    /// Номер периода подачи формы отчетности
     /// </summary>
     public int PeriodNumber { get; set; }
     /// <summary>
-    /// Статус отчёта
+    /// Статус формы отчетности
     /// </summary>
     public ReportDeadlineStatus Status { get; set; }
 }
