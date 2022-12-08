@@ -17,5 +17,5 @@ public readonly struct ReportsTablePath
     public IExternClientServices Services { get; }
 
     public FormListPath Forms => new(AccountId, OrganizationId, Services);
-    public ReportsTableDocflowsPath Docflows => new(AccountId, OrganizationId, Services);
+    public ReportsTableDocflowsPath ReportDocflows => new(AccountId, OrganizationId, Services);
 }

@@ -12,16 +12,15 @@ public class ReportsTableDocflow
     /// <summary>
     /// Краткое имя организации
     /// </summary>
-    public string OrganizationShortName { get; set; }
+    public string OrganizationShortName { get; set; } = null!;
     /// <summary>
     /// Информация о форме отчетности
     /// </summary>
-    public FormInfo Form { get; set; }
+    public FormInfo Form { get; set; } = null!;
     /// <summary>
     /// Код инспекции
     /// </summary>
-    [CanBeNull]
-    public string Recipient { get; set; }
+    public string? Recipient { get; set; }
     /// <summary>
     /// Дата отправки документооборота
     /// </summary>
@@ -33,5 +32,5 @@ public class ReportsTableDocflow
     /// <summary>
     /// Статус документооборота
     /// </summary>
-    public DocflowReportStatus ReportStatus { get; set; }
+    public ReportDocflowStatus ReportStatus { get; set; }
 }

@@ -8,5 +8,5 @@ public class ReportsTableDocflows
     /// <summary>
     /// Список документооборотов
     /// </summary>
-    public ReportsTableDocflow[] Docflows { get; set; }
+    public ReportsTableDocflow[] Docflows { get; set; } = null!;
 }

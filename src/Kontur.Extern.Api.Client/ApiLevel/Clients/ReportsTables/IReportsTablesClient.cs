@@ -43,10 +43,8 @@ public interface IReportsTablesClient
     /// <param name="accountId">Идентификатор учетной записи</param>
     /// <param name="organizationId">Идентификатор организации</param>
     /// <param name="formId">Идентификатор формы отчетности</param>
-    /// <param name="deadline">Крайний срок подачи формы отчетности, дедлайн. 
-    /// Возможный формат данных: "yyyy-MM-ddTHH:mm:ssK", "yyyy-MM-ddTHH:mm:ss.fffffffK"</param>
-    /// <param name="periodYear">Год подачи формы отчетности.
-    /// Год указывается в формате: "yyyy"</param>
+    /// <param name="deadline">Крайний срок подачи формы отчетности, дедлайн</param>
+    /// <param name="periodYear">Год подачи формы отчетности</param>
     /// <param name="periodNumber">Номер периода подачи формы отчетности</param>
     /// <param name="timeout"></param>
     /// <returns></returns>
@@ -54,7 +52,7 @@ public interface IReportsTablesClient
         Guid accountId,
         Guid organizationId,
         int formId,
-        string deadline,
+        DateTime deadline,
         int periodYear,
         int periodNumber,
         TimeSpan? timeout = null);

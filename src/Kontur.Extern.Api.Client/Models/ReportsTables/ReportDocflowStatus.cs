@@ -3,7 +3,7 @@
 namespace Kontur.Extern.Api.Client.Models.ReportsTables;
 
 [PublicAPI]
-public enum DocflowReportStatus
+public enum ReportDocflowStatus
 {
     /// <summary>
     /// Cтатус не был заполнен, произошел сбой
