@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.Models.ReportsTables.Payments;
 
+[PublicAPI]
 [SuppressMessage("ReSharper", "CommentTypo")]
 public class OrganizationPayments
 {
@@ -11,7 +13,7 @@ public class OrganizationPayments
     /// </summary>
     public Guid OrganizationId { get; set; }
     /// <summary>
-    /// Платежи организации
+    /// Сведения о платежах организации
     /// </summary>
     public PaymentInfo[] Payments { get; set; }
 }

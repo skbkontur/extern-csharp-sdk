@@ -8,11 +8,11 @@ namespace Kontur.Extern.Api.Client.Models.ReportsTables.Payments;
 public class PaymentsList
 {
     /// <summary>
-    /// Примененный пропуск по организациям
+    /// Количество организаций, которые будут пропущены. Значение по умолчанию: 0
     /// </summary>
     public int Skip;
     /// <summary>
-    /// Примененное взятие по организациям
+    /// Количество организаций, которые вернутся в запросе. Значение по умолчанию: 1000. Минимум: 0. Максимум: 1000
     /// </summary>
     public int Take;
     /// <summary>

@@ -15,15 +15,15 @@ public class PaymentInfo
     /// </summary>
     public string ShortName;
     /// <summary>
-    /// Id платежа (если платеж по форме, то id как у формы)
+    /// Идентификатор платежа. Если платеж по форме отчетности, то идентификатор будет такой же, как у формы
     /// </summary>
     public int PaymentFormId;
     /// <summary>
-    /// Периодичность оплаты платежа
+    /// Периодичность оплаты платежа: ежегодный, ежеквартальный, ежемесячный
     /// </summary>
     public PeriodEnum Periodicity;
     /// <summary>
-    /// Периоды, в которые происходят платежи
+    /// Сведения о платежах: периоды поступлений, сроки уплаты
     /// </summary>
     public PaymentPeriod[] PaymentPeriods;
 }
