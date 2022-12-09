@@ -9,21 +9,21 @@ public class PaymentInfo
     /// <summary>
     /// Наименование платежа
     /// </summary>
-    public string FullName;
+    public string FullName { get; set; }
     /// <summary>
     /// Краткое наименование платежа
     /// </summary>
-    public string ShortName;
+    public string ShortName { get; set; }
     /// <summary>
     /// Идентификатор платежа. Если платеж по форме отчетности, то идентификатор будет такой же, как у формы
     /// </summary>
-    public int PaymentFormId;
+    public int PaymentFormId { get; set; }
     /// <summary>
     /// Периодичность оплаты платежа: ежегодный, ежеквартальный, ежемесячный
     /// </summary>
-    public PeriodEnum Periodicity;
+    public PeriodEnum Periodicity { get; set; }
     /// <summary>
     /// Сведения о платежах: периоды поступлений, сроки уплаты
     /// </summary>
-    public PaymentPeriod[] PaymentPeriods;
+    public PaymentPeriod[] PaymentPeriods { get; set; }
 }

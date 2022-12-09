@@ -18,7 +18,7 @@ public class PaymentPeriod
     /// </summary>
     public int PeriodYear { get; set; }
     /// <summary>
-    /// Тип периода, относительно которого определяется <see cref="PeriodNumber"/>: ежегодный, ежеквартальный, ежемесячный
+    /// Тип периода, относительно которого определяется PeriodNumber: ежегодный, ежеквартальный, ежемесячный
     /// </summary>
     public PeriodEnum PeriodType { get; set; }
     /// <summary>
@@ -29,7 +29,4 @@ public class PaymentPeriod
     /// Порядковый номер платежа внутри текущего периода. Для случаев, когда за один период происходит несколько платежей
     /// </summary>
     public int? PaymentNumberInPeriod { get; set; }
-    
-    // Для добавления в будущем
-    // public dynamic Status { get; set; }
 }
