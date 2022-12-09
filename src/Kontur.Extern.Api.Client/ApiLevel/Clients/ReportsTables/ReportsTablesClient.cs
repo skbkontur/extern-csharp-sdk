@@ -4,7 +4,7 @@ using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.ReportsTables;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ReportsTables;
 using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Models.ReportsTables.Payments;
-using Kontur.Extern.Api.Client.Models.ReportsTables;
+using Kontur.Extern.Api.Client.Models.ReportsTables.Reports;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;

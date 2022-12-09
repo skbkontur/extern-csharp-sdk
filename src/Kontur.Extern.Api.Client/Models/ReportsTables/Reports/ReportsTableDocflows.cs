@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace Kontur.Extern.Api.Client.Models.ReportsTables;
+namespace Kontur.Extern.Api.Client.Models.ReportsTables.Reports;
 
 [PublicAPI]
 public class ReportsTableDocflows
