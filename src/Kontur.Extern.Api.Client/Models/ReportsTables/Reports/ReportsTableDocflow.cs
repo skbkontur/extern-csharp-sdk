@@ -1,7 +1,8 @@
 ﻿using System;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.ReportsTables.Forms;
 
-namespace Kontur.Extern.Api.Client.Models.ReportsTables;
+namespace Kontur.Extern.Api.Client.Models.ReportsTables.Reports;
 [PublicAPI]
 public class ReportsTableDocflow
 {

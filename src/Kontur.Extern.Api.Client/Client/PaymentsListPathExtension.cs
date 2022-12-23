@@ -1,23 +1,23 @@
-﻿using System;
+using System;
 using JetBrains.Annotations;
-using Kontur.Extern.Api.Client.Models.ReportsTables.Reports;
+using Kontur.Extern.Api.Client.Models.ReportsTables.Payments;
 using Kontur.Extern.Api.Client.Paths;
 using Kontur.Extern.Api.Client.Primitives;
 
 namespace Kontur.Extern.Api.Client;
 
 [PublicAPI]
-public static class ReportsTablesListPathExtension
+public static class PaymentsListPathExtension
 {
-    public static IEntityList<ReportsTable> List(
-        this in ReportsTableListPath path,
+    public static IEntityList<OrganizationPayments> List(
+        this in PaymentsListPath path,
         Guid[]? organizationIds = null,
-        DateTime? dateFrom = null,
-        DateTime? dateTo = null)
+        DateTime? deadlineFrom = null,
+        DateTime? deadlineTo = null)
     {
         var apiClient = path.Services.Api;
         var accountId = path.AccountId;
-        return new EntityList<ReportsTable>(
+        return new EntityList<OrganizationPayments>(
             async (skip, take, timeout) =>
             {
                 int intSkip;
@@ -26,18 +26,18 @@ public static class ReportsTablesListPathExtension
                     intSkip = (int)skip;
                 }
 
-                var reportsTableResult = await apiClient
+                var paymentsResult = await apiClient
                     .ReportsTables
-                    .GetReportsTablesAsync(
+                    .GetPaymentsAsync(
                         accountId,
                         organizationIds,
-                        dateFrom,
-                        dateTo,
+                        deadlineFrom,
+                        deadlineTo,
                         intSkip,
                         take,
                         timeout);
 
-                return (reportsTableResult.ReportsTables, reportsTableResult.ReportsTables.Length);
+                return (paymentsResult.OrganizationPayments, paymentsResult.TotalCount);
             });
     }
 }
