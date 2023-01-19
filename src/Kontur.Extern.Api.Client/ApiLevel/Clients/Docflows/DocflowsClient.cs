@@ -296,7 +296,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
 
         private Task<DocflowPage> GetRelatedDocflowsAsync(RequestUrlBuilder urlBuilder, TimeSpan? timeout) => http.GetAsync<DocflowPage>(urlBuilder.Build(), timeout);
 
-        private Task<IDocflowWithDocuments> GetDocflowAsync(string url, TimeSpan? timeout) => http.GetAsync<IDocflowWithDocuments>(url, timeout);
+        private Task<IDocflowWithDocuments> GetDocflowAsync(string url, TimeSpan? timeout)
+        {
+            return http.GetAsync<IDocflowWithDocuments>(url, timeout);
+        }
 
         private Task<IDocflowWithDocuments?> TryGetDocflowAsync(string url, TimeSpan? timeout) => http.TryGetAsync<IDocflowWithDocuments>(url, timeout);
     }

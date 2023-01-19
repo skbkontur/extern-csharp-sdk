@@ -119,7 +119,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 DocflowType.PfrReport,
                 DocflowType.CbrfReport,
                 DocflowType.Fns534Inventory,
-                DocflowType.BusinessRegistration
+                DocflowType.BusinessRegistration,
+                DocflowType.SfrReport
             };
 
             var filter = new DocflowFilterBuilder().WithTypes(types).CreateFilter();
@@ -129,7 +130,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 ("type", DocflowType.PfrReport.ToUrn()!.Nss),
                 ("type", DocflowType.CbrfReport.ToUrn()!.Nss),
                 ("type", DocflowType.Fns534Inventory.ToUrn()!.Nss),
-                ("type", DocflowType.BusinessRegistration.ToUrn()!.Nss));
+                ("type", DocflowType.BusinessRegistration.ToUrn()!.Nss),
+                ("type", DocflowType.SfrReport.ToUrn().Nss));
         }
 
         [TestCaseSource(nameof(TypeCases))]
@@ -154,7 +156,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             DocflowType.FssReport,
             DocflowType.FssSickReport,
             DocflowType.FssSedoPvsoNotification,
-            DocflowType.StatCuBroadcast
+            DocflowType.StatCuBroadcast,
+            DocflowType.SfrReport
         };
 
         [Test]
