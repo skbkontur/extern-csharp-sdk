@@ -7,6 +7,7 @@ using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Oved;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Pfr;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat;
+using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Sfr;
 using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
@@ -29,6 +30,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
             [DocflowType.StatCuLetter] = typeof(StatCuLetterDescription),
             [DocflowType.StatCuBroadcast] = typeof(StatCuLetterBroadcastDescription),
             [DocflowType.PfrReport] = typeof(PfrReportDescription),
+            [DocflowType.SfrReport] = typeof(SfrReportDescription),
             [DocflowType.PfrAncillary] = typeof(PfrAncillaryDescription),
             [DocflowType.PfrIos] = typeof(PfrIosDescription),
             [DocflowType.PfrLetter] = typeof(PfrLetterDescription),
