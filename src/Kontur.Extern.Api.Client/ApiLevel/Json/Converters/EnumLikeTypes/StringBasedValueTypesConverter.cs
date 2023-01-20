@@ -24,6 +24,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
             AddConverter(x => new DraftBuilderType(x), x => x.ToUrn().ToString());
             AddConverter(x => new PfrLetterType(x), x => x.ToUrn().ToString());
             AddConverter(x => new DocflowExtendedStatus(x), x => x.ToUrn().ToString());
+            AddConverter(x => new SfrReportCorrectionType(x), x => x.ToUrn().ToString());
             AddConverter(x => new SvdregCode(x), x => x.Code?.ToString());
             
             AddConverterForClass(s => new Knd(s), x => x.Value.ToString());

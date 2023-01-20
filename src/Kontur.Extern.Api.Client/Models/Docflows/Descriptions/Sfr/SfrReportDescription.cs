@@ -1,6 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
-using Kontur.Extern.Api.Client.Models.Common;
+using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Sfr
@@ -51,25 +51,25 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Sfr
         /// <summary>
         /// Тип корректировки
         /// </summary>
-        public Urn CorrectionType { get; set; } = null!;
+        public SfrReportCorrectionType? CorrectionType { get; set; }
         /// <summary>
         /// Номер корректировки
         /// </summary>
         public int? CorrectionNumber { get; set; }
         /// <summary>
-        /// Дата и время начала периода. Формат ISO8601 – YYYY-MM-DDThh:mm:ss[.SSSSSS].
+        /// Дата и время начала периода
         /// </summary>
         public DateTime? PeriodBegin { get; set; }
         /// <summary>
-        /// Дата и время конца периода. Формат ISO8601 – YYYY-MM-DDThh:mm:ss[.SSSSSS].
+        /// Дата и время конца периода
         /// </summary>
         public DateTime? PeriodEnd { get; set; }
         /// <summary>
-        /// Дата и время начала периода корректировки. Формат ISO8601 – YYYY-MM-DDThh:mm:ss[.SSSSSS].
+        /// Дата и время начала периода корректировки
         /// </summary>
         public DateTime? CorrectionPeriodBegin { get; set; }
         /// <summary>
-        /// Дата и время конца периода корректировки. Формат ISO8601 – YYYY-MM-DDThh:mm:ss[.SSSSSS].
+        /// Дата и время конца периода корректировки
         /// </summary>
         public DateTime? CorrectionPeriodEnd { get; set; }
     }
