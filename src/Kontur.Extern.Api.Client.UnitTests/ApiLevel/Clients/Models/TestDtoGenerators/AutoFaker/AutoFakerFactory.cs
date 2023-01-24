@@ -101,6 +101,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGene
             builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesOfStruct<DocflowState>()));
             builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesOfStruct<PfrLetterType>()));
             builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesOfStruct<DocflowExtendedStatus>()));
+            builder.RuleForType(x => x.PickRandom(EnumLikeType.AllEnumValuesOfStruct<SfrReportCorrectionType>()));
 
             builder.WithSkip<Urn>();
         }
