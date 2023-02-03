@@ -108,11 +108,11 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// <summary>
         /// Запрос на формирование справки о расчетах ФСС
         /// </summary>
-        public static readonly DocflowType FssBillingInformationDemand = "urn:docflow:sedo-billing-information-demand";
+        public static readonly DocflowType FssSedoBillingInformationDemand = "urn:docflow:fss-sedo-billing-information-demand";
 
         /// <summary>
         /// Справка о расчетах ФСС
         /// </summary>
-        public static readonly DocflowType FssBillingInformation = "urn:docflow:fss-sedo-billing-information";
+        public static readonly DocflowType FssSedoBillingInformation = "urn:docflow:fss-sedo-billing-information";
     }
 }
