@@ -94,5 +94,25 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Результат инициации выплат пособия ФСС
         /// </summary>
         public static readonly DocflowType FssSedoBenefitPaymentInitiationResult = "urn:docflow:fss-sedo-benefit-payment-initiation-result";
+
+        /// <summary>
+        /// Требование ФСС
+        /// </summary>
+        public static readonly DocflowType FssSedoDemand = "urn:docflow:fss-sedo-demand";
+
+        /// <summary>
+        /// Ответ на требование ФСС
+        /// </summary>
+        public static readonly DocflowType FssSedoDemandReply = "urn:docflow:fss-sedo-demand-reply";
+
+        /// <summary>
+        /// Запрос на формирование справки о расчетах ФСС
+        /// </summary>
+        public static readonly DocflowType FssBillingInformationDemand = "urn:docflow:sedo-billing-information-demand";
+
+        /// <summary>
+        /// Справка о расчетах ФСС
+        /// </summary>
+        public static readonly DocflowType FssBillingInformation = "urn:docflow:fss-sedo-billing-information";
     }
 }
