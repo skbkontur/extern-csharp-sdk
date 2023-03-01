@@ -84,12 +84,12 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Информация о несоответствии сведений о застрахованном лице ФСС
         /// </summary>
         public static readonly DocflowType FssSedoInsuredPersonMismatch = "urn:docflow:fss-sedo-insured-person-mismatch";
-        
+
         /// <summary>
         /// Инициация выплат пособия ФСС
         /// </summary>
         public static readonly DocflowType FssSedoBenefitPaymentInitiation = "urn:docflow:fss-sedo-benefit-payment-initiation";
-        
+
         /// <summary>
         /// Результат инициации выплат пособия ФСС
         /// </summary>
@@ -114,5 +114,13 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Справка о расчетах ФСС
         /// </summary>
         public static readonly DocflowType FssSedoBillingInformation = "urn:docflow:fss-sedo-billing-information";
+        /// <summary>
+        /// Результат обработки уведомления о прекращении отпуска по уходу за ребенком до полутора лет
+        /// </summary>
+        public static readonly DocflowType FssSedoBabyCareVacationCloseNoticeResult = "urn:docflow:fss-sedo-baby-care-vacation-close-notice-result";
+        /// <summary>
+        /// Уведомление о статусе выплаты пособия
+        /// </summary>
+        public static readonly DocflowType FssSedoBenefitPaymentStatusNotice = "urn:docflow:fss-sedo-benefit-payment-status-notice";
     }
 }
