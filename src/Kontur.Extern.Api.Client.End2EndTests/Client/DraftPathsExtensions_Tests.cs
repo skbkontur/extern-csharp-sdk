@@ -361,7 +361,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         [Fact]
         public async Task Should_check_a_correct_draft()
         {
-            var newDraft = CreateDraftOfDefaultAccount();
+            var newDraft = CreateDraftOfDefaultAccount(DraftRecipient.Ifns(IfnsCode.Parse("0007"), MriCode.Parse("9660")));
             await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
             var createdDraft = entityScope.Entity;
 
