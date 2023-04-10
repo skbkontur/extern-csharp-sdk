@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
 {
@@ -19,5 +20,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// Версия формы документа
         /// </summary>
         public FormVersion? FormVersion { get; set; }
+
+        /// <summary>
+        /// Идентификатор доверенности
+        /// </summary>
+        public Guid? WarrantId { get; set; }
     }
 }
