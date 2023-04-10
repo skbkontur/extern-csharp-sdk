@@ -28,5 +28,10 @@ namespace Kontur.Extern.Api.Client.Models.Drafts.Meta
         /// Тип исходящего письма в ПФР
         /// </summary>
         public PfrLetterType PfrLetterType { get; set; }
+
+        /// <summary>
+        /// Идентификатор машиночитаемой доверенности
+        /// </summary>
+        public Guid? MachineReadableWarrantId { get; set; }
     }
 }
