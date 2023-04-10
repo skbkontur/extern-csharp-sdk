@@ -13,7 +13,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
     {
         private readonly Randomizer randomizer = new();
         private readonly AuthoritiesCodesGenerator codesGenerator = new();
-        
+
         [Test]
         public void Should_initialise_with_required_parameters()
         {
@@ -50,7 +50,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
 
             request.Should().BeEquivalentTo(expectedRequest);
         }
-        
+
         [Test]
         public void Should_fail_when_given_null_payer()
         {
@@ -72,18 +72,18 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
 
             action.Should().Throw<ArgumentException>();
         }
-        
+
         [Test]
         public void Should_fail_when_given_null_recipient()
         {
             var payer = RandomPayer();
             var sender = RandomSender();
-            
+
             Action action = () => _ = new DraftMetadata(payer, sender, null!);
 
             action.Should().Throw<ArgumentException>();
         }
-        
+
         [Test]
         public void WithSubject_should_set_subject()
         {
@@ -92,12 +92,12 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             {
                 Subject = "the subject"
             };
-            
+
             var request = newDraft.WithSubject("the subject").ToRequest();
 
             request.Should().BeEquivalentTo(expectedRequest);
         }
-        
+
         [TestCase(null)]
         [TestCase("")]
         [TestCase(" ")]
@@ -109,7 +109,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
 
             action.Should().Throw<ArgumentException>();
         }
-        
+
         [Test]
         public void WithAdditionalCertificates_should_set_additional_certificates()
         {
@@ -123,7 +123,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             {
                 AdditionalCertificates = certificates
             };
-            
+
             var request = newDraft.WithAdditionalCertificates(certificates).ToRequest();
 
             request.Should().BeEquivalentTo(expectedRequest);
@@ -133,7 +133,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
         public void WithAdditionalCertificates_should_fail_when_given_certificates_is_null()
         {
             var (newDraft, _) = RandomDraft();
-            
+
             Action action = () => newDraft.WithAdditionalCertificates(null!);
 
             action.Should().Throw<ArgumentException>();
@@ -143,7 +143,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
         public void WithAdditionalCertificates_should_fail_when_given_empty_certificates_array()
         {
             var (newDraft, _) = RandomDraft();
-            
+
             Action action = () => newDraft.WithAdditionalCertificates(new string[0]);
 
             action.Should().Throw<ArgumentException>();
@@ -191,6 +191,21 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             expectedRequest.RelatedDocument = new RelatedDocument(docflowId, documentId);
 
             var request = newDraft.WithRelatedDocument(docflowId, documentId).ToRequest();
+
+            request.Should().BeEquivalentTo(expectedRequest);
+        }
+
+        [Test]
+        public void WithMachineReadableWarrantId_should_set_warrant_id()
+        {
+            var (newDraft, expectedRequest) = RandomDraft();
+            var warrantId = Guid.NewGuid();
+            expectedRequest.AdditionalInfo = new AdditionalInfoRequest
+            {
+                MachineReadableWarrantId = warrantId
+            };
+
+            var request = newDraft.WithMachineReadableWarrantId(warrantId).ToRequest();
 
             request.Should().BeEquivalentTo(expectedRequest);
         }
