@@ -746,7 +746,11 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// </summary>
             public static readonly DocumentType Request = "urn:document:fss-sedo-baby-care-vacation-close-notice-request";
             /// <summary>
-            /// Результат отправки соощения на портал
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-baby-care-vacation-close-notice-read-receipt";
+            /// <summary>
+            /// Результат отправки сообщения
             /// </summary>
             public static readonly DocumentType ReceptionResult = "urn:document:fss-sedo-baby-care-vacation-close-notice-reception-result";
             /// <summary>
