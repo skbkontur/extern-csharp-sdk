@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Models.Common.Enums;
 
@@ -22,5 +23,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// Тип исходящего письма в ПФР
         /// </summary>
         public PfrLetterType PfrLetterType { get; set; }
+
+        /// <summary>
+        /// Идентификатор машиночитаемой доверенности
+        /// </summary>
+        public Guid? MachineReadableWarrantId { get; set; }
     }
 }

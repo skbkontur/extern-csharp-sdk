@@ -12,6 +12,7 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
         private readonly DraftRecipient recipient;
         private string? subject;
         private string[]? additionalCertificates;
+        private Guid? machineReadableWarrantId;
         private RelatedDocument? relatedDocumentRequest;
 
         public DraftMetadata(DraftPayer payer, DraftSender sender, DraftRecipient recipient)
@@ -37,7 +38,7 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
                 throw Errors.ArrayCannotBeEmpty(nameof(certificates));
             if (certificates.Any(s => string.IsNullOrWhiteSpace(s)))
                 throw Errors.StringsCannotContainNullOrWhitespace(nameof(certificates));
-            
+
             additionalCertificates = certificates;
             return this;
         }
@@ -48,15 +49,22 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
             return this;
         }
 
+        public DraftMetadata WithMachineReadableWarrantId(Guid warrantId)
+        {
+            machineReadableWarrantId = warrantId;
+            return this;
+        }
+
         public DraftMetaRequest ToRequest()
         {
             AdditionalInfoRequest? additionalInfoRequest = null;
-            if (subject != null || additionalCertificates != null)
+            if (subject != null || additionalCertificates != null || machineReadableWarrantId != null)
             {
                 additionalInfoRequest = new AdditionalInfoRequest
                 {
                     Subject = subject,
-                    AdditionalCertificates = additionalCertificates
+                    AdditionalCertificates = additionalCertificates,
+                    MachineReadableWarrantId = machineReadableWarrantId
                 };
             }
 
