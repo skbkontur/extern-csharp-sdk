@@ -791,5 +791,32 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-benefit-payment-status-notice-exchange-error";
         }
 
+        /// <summary>
+        /// Сведения о зарплате сотрудника
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoEmployeeSalaryInformation
+        {
+            /// <summary>
+            /// Запрос на отправку сообщения "Запрос сведений о зарплате сотрудника"
+            /// </summary>
+            public static readonly DocumentType Request = "urn:document:fss-sedo-employee-salary-information-request";
+            /// <summary>
+            /// Результат отправки сообщения на портал
+            /// </summary>
+            public static readonly DocumentType ReceptionResult = "urn:document:fss-sedo-employee-salary-information-reception-result";
+            /// <summary>
+            /// Сообщение "Результат обработки запроса сведений о зарплате сотрудника"
+            /// </summary>
+            public static readonly DocumentType ResultDocument = "urn:document:fss-sedo-employee-salary-information-result-document";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-employee-salary-information-exchange-error";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-employee-salary-information-error-message";
+        }
     }
 }

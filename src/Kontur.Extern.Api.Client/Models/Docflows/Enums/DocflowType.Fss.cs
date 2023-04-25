@@ -122,5 +122,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Уведомление о статусе выплаты пособия
         /// </summary>
         public static readonly DocflowType FssSedoBenefitPaymentStatusNotice = "urn:docflow:fss-sedo-benefit-payment-status-notice";
+
+        /// <summary>
+        /// Сведения о зарплате сотрудника
+        /// </summary>
+        public static readonly DocflowType FssSedoEmployeeSalaryInformation = "urn:docflow:fss-sedo-employee-salary-information";
     }
 }
