@@ -11,7 +11,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
         {
             [DocumentType.Fns534Demand.Attachment] = typeof(DemandAttachmentRequisites),
             [DocumentType.PfrReport.Report] = typeof(PfrReportRequisites),
-            [DocumentType.PfrReportV2.Report] = typeof(PfrReportRequisites)
+            [DocumentType.PfrReportV2.Report] = typeof(PfrReportRequisites),
+            [DocumentType.FssSedoDemandReply.ResultDocument] = typeof(FssSedoDemandReplyResultDocumentRequisites)
         };
 
         public static Type GetRequisiteType(DocumentType documentType)
