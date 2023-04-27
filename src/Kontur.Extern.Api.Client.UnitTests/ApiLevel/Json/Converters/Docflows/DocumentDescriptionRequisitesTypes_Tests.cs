@@ -37,6 +37,14 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
         }
 
         [Test]
+        public void Should_return_fss_sedo_requisites_for_demand_reply_result_document()
+        {
+            var requisiteType = DocumentDescriptionRequisitesTypes.GetRequisiteType(DocumentType.FssSedoDemandReply.ResultDocument);
+
+            requisiteType.Should().Be<FssSedoDemandReplyResultDocumentRequisites>();
+        }
+
+        [Test]
         public void Should_return_pfr_requisites_for_pfr_report()
         {
             var requisiteType = DocumentDescriptionRequisitesTypes.GetRequisiteType(DocumentType.PfrReport.Report);
@@ -75,7 +83,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
                 {
                     DocumentType.Fns534Demand.Attachment,
                     DocumentType.PfrReportV2.Report,
-                    DocumentType.PfrReport.Report
+                    DocumentType.PfrReport.Report,
+                    DocumentType.FssSedoDemandReply.ResultDocument
                 });
         
         private static IEnumerable<DocumentType> BusinessRegistrationDocumentTypes => 
