@@ -83,7 +83,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
                 {
                     DocumentType.Fns534Demand.Attachment,
                     DocumentType.PfrReportV2.Report,
-                    DocumentType.PfrReport.Report
+                    DocumentType.PfrReport.Report,
+                    DocumentType.FssSedoDemandReply.ResultDocument
                 });
         
         private static IEnumerable<DocumentType> BusinessRegistrationDocumentTypes => 
