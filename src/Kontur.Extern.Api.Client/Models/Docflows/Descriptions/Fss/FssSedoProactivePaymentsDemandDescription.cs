@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Common.Time;
 using Kontur.Extern.Api.Client.Models.Common;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
@@ -27,10 +28,15 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// </summary>
         [JsonPropertyName("fio")]
         public PersonFullName PersonFullName { get; set; } = null!;
-        
+
         /// <summary>
         /// Версия формы документа
         /// </summary>
         public FormVersion? FormVersion { get; set; }
+
+        /// <summary>
+        /// Крайний срок ответа
+        /// </summary>
+        public DateOnly? ReplyDeadlineDate { get; set; }
     }
 }
