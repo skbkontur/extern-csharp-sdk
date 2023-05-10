@@ -41,6 +41,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// <summary>
         /// Статус квитанции
         /// </summary>
-        public ReceiptStatus ReceiptStatus { get; set; }
+        public ReceiptStatus? ReceiptStatus { get; set; }
     }
 }
