@@ -5,9 +5,10 @@ namespace Kontur.Extern.Api.Client.Models.Common.Enums;
 [PublicAPI]
 public enum ReceiptStatus
 {
+    Unknown = -1,
     Waiting,
     Accepted,
     Rejected,
     Warning,
-    AcceptedDeferred,
+    AcceptedDeferred
 }
