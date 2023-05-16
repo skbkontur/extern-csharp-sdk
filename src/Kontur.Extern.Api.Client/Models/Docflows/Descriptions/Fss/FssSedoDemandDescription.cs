@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Common.Time;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
 {
@@ -14,5 +15,20 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// Версия формы документа
         /// </summary>
         public FormVersion? FormVersion { get; set; }
+
+        /// <summary>
+        /// Дедлайн отправки квитанции на требование ФСС
+        /// </summary>
+        public DateOnly? ReceiptDeadlineDate { get; set; }
+
+        /// <summary>
+        /// Дата отправки квитанции на требование ФСС
+        /// </summary>
+        public DateOnly? ReceiptDate { get; set; }
+
+        /// <summary>
+        /// Крайний срок ответа на требование
+        /// </summary>
+        public DateOnly? ReplyDeadlineDate { get; set; }
     }
 }
