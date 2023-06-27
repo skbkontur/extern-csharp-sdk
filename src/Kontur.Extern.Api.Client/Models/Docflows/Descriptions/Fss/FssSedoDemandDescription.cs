@@ -30,5 +30,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// Крайний срок ответа на требование
         /// </summary>
         public DateOnly? ReplyDeadlineDate { get; set; }
+
+        /// <summary>
+        /// Дата отправки ответа на требование
+        /// </summary>
+        public DateOnly? ReplyDate { get; set; }
     }
 }
