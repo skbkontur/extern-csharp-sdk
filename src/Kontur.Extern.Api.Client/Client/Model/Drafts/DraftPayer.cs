@@ -12,7 +12,7 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
                 throw new ArgumentNullException(nameof(inn));
             if (kpp is null)
                 throw new ArgumentNullException(nameof(kpp));
-            
+
             return new(inn.ToString(), kpp);
         }
 
@@ -27,8 +27,12 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
 
         private FssRegNumber? fssRegNumber;
         private PfrRegNumber? pfrRegNumber;
+        private SfrRegNumber? sfrRegNumber;
         private readonly string inn;
         private readonly Kpp? kpp;
+        private Okpo? okpo;
+        private Ogrn? ogrn;
+        private Snils? snils;
 
         private DraftPayer(string inn, Kpp? kpp)
         {
@@ -48,13 +52,41 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
             return this;
         }
 
+        public DraftPayer WithSfrRegNumber(SfrRegNumber value)
+        {
+            sfrRegNumber = value ?? throw new ArgumentNullException(nameof(value));
+            return this;
+        }
+
+        public DraftPayer WithOkpo(Okpo value)
+        {
+            okpo = value ?? throw new ArgumentNullException(nameof(value));
+            return this;
+        }
+
+        public DraftPayer WithOgrn(Ogrn value)
+        {
+            ogrn = value ?? throw new ArgumentNullException(nameof(value));
+            return this;
+        }
+
+        public DraftPayer WithSnils(Snils value)
+        {
+            snils = value ?? throw new ArgumentNullException(nameof(value));
+            return this;
+        }
+
         public AccountInfoRequest ToRequest()
         {
             var request = new AccountInfoRequest
             {
                 Inn = inn,
                 RegistrationNumberFss = fssRegNumber,
-                RegistrationNumberPfr = pfrRegNumber
+                RegistrationNumberPfr = pfrRegNumber,
+                RegistrationNumberSfr = sfrRegNumber,
+                Okpo = okpo,
+                Ogrn = ogrn,
+                Snils = snils
             };
             if (kpp != null)
             {

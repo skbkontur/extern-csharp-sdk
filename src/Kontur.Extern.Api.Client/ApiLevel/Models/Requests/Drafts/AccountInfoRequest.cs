@@ -35,6 +35,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         public PfrRegNumber? RegistrationNumberPfr { get; set; }
 
         /// <summary>
+        /// Регистрационный номер СФР
+        /// </summary>
+        public SfrRegNumber? RegistrationNumberSfr { get; set; }
+
+        /// <summary>
         /// Регистрационный номер ФСС
         /// </summary>
         public FssRegNumber? RegistrationNumberFss { get; set; }
@@ -43,5 +48,15 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// ОКПО (для писем в росстат)
         /// </summary>
         public Okpo? Okpo { get; set; }
+
+        /// <summary>
+        /// ОГРН
+        /// </summary>
+        public Ogrn? Ogrn { get; set; }
+
+        /// <summary>
+        /// СНИЛС
+        /// </summary>
+        public Snils? Snils { get; set; }
     }
 }
