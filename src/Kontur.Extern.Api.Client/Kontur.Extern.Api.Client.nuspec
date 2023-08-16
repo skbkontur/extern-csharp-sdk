@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Kontur.Extern.Api.Sdk</id>
+    <version>0.1.0-alpha</version>
+    <authors>Kontur</authors>
+    <description>Kontur.Extern API client</description>
+    <tags>kontur extern extern-api</tags>
+    <repository url="https://github.com/skbkontur/extern-csharp-sdk" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="JetBrains.Annotations" version="2021.2.0" exclude="Build,Analyzers" />
+        <dependency id="System.ComponentModel.Annotations" version="5.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime" version="4.3.1" exclude="Build,Analyzers" />
+        <dependency id="System.Text.Encodings.Web" version="5.0.1" exclude="Build,Analyzers" />
+        <dependency id="System.Text.Json" version="5.0.2" exclude="Build,Analyzers" />
+        <dependency id="Vostok.ClusterClient.Core" version="0.1.36" exclude="Build,Analyzers" />
+        <dependency id="Vostok.ClusterClient.Transport" version="0.1.19" exclude="Build,Analyzers" />
+        <dependency id="Vostok.Commons.Time" version="0.1.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Client\netstandard2.0\Kontur.Extern.Api.Client.dll" target="lib\netstandard2.0\Kontur.Extern.Api.Client.dll" />
+    <file src="bin\Client\netstandard2.0\Kontur.Extern.Api.Client.Common.dll" target="lib\netstandard2.0\Kontur.Extern.Api.Client.Common.dll" />
+    <file src="bin\Client\netstandard2.0\Kontur.Extern.Api.Client.Auth.Abstractions.dll" target="lib\netstandard2.0\Kontur.Extern.Api.Client.Auth.Abstractions.dll" />
+    <file src="bin\Client\netstandard2.0\Kontur.Extern.Api.Client.Auth.OpenId.dll" target="lib\netstandard2.0\Kontur.Extern.Api.Client.Auth.OpenId.dll" />
+    <file src="bin\Client\netstandard2.0\Kontur.Extern.Api.Client.Cryptography.dll" target="lib\netstandard2.0\Kontur.Extern.Api.Client.Cryptography.dll" />
+    <file src="bin\Client\netstandard2.0\Kontur.Extern.Api.Client.Http.dll" target="lib\netstandard2.0\Kontur.Extern.Api.Client.Http.dll" />
+  </files>
+</package>
