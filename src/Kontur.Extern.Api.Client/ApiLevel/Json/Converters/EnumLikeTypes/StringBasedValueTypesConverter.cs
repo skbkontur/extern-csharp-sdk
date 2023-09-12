@@ -26,29 +26,32 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
             AddConverter(x => new DocflowExtendedStatus(x), x => x.ToUrn().ToString());
             AddConverter(x => new SfrReportCorrectionType(x), x => x.ToUrn().ToString());
             AddConverter(x => new SvdregCode(x), x => x.Code?.ToString());
-            
+
             AddConverterForClass(s => new Knd(s), x => x.Value.ToString());
             AddConverterForClass(s => new Kpp(s), x => x.Value.ToString());
             AddConverterForClass(s => new InnKpp(s), x => x.Value.ToString());
             AddConverterForClass(s => new Okud(s), x => x.Value.ToString());
             AddConverterForClass(s => new Okpo(s), x => x.Value.ToString());
+            AddConverterForClass(s => new Ogrn(s), x => x.Value.ToString());
+            AddConverterForClass(s => new Snils(s), x => x.Value.ToString());
             AddConverterForClass(s => new Inn(s), x => x.Value.ToString());
             AddConverterForClass(s => new LegalEntityInn(s), x => x.Value.ToString());
-            
+
             AddConverterForClass(s => new FssCode(s), x => x.Value.ToString());
             AddConverterForClass(s => new IfnsCode(s), x => x.Value.ToString());
             AddConverterForClass(s => new MriCode(s), x => x.Value.ToString());
             AddConverterForClass(s => new TogsCode(s), x => x.Value.ToString());
             AddConverterForClass(s => new UpfrCode(s), x => x.Value.ToString());
-            
+
             AddConverterForClass(s => new PfrRegNumber(s), x => x.Value.ToString());
+            AddConverterForClass(s => new SfrRegNumber(s), x => x.Value.ToString());
             AddConverterForClass(s => new FssRegNumber(s), x => x.Value.ToString());
         }
 
-        public override bool CanConvert(Type typeToConvert) => 
+        public override bool CanConvert(Type typeToConvert) =>
             converters.ContainsKey(typeToConvert);
 
-        public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options) => 
+        public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options) =>
             converters[typeToConvert];
 
         private void AddConverter<T>(Func<string, T> fromString, Func<T, string?> toString)
@@ -74,7 +77,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
                 this.fromString = fromString;
                 this.toString = toString;
             }
-        
+
             public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var value = reader.GetString();
@@ -106,7 +109,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.EnumLikeTypes
                 this.fromString = fromString;
                 this.toString = toString;
             }
-        
+
             public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var value = reader.GetString();
