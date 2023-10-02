@@ -19,7 +19,7 @@
               log)
           .WithOpenIdAuthenticator(
                 builder => builder
-                .WithHttpConfiguration(new TestingHttpClientConfiguration("https://identity.testkontur.ru")) // урл ТЕСТОВОЙ площадки сервиса аутентификации
+                .WithHttpConfiguration(new ExternalUrlHttpClientConfiguration("https://identity.testkontur.ru")) // урл ТЕСТОВОЙ площадки сервиса аутентификации
                 .WithClientIdentification(clientId, apiKey)
                 .WithAuthenticationByPassword(someUserLogin, someUserPassword)
                 .Build())                
