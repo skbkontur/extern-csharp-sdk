@@ -1,9 +1,9 @@
 using System;
 using System.Net;
+using Kontur.Extern.Api.Client.Http.ClusterClientAdapters.SystemNetHttp;
 using Kontur.Extern.Api.Client.Http.Exceptions;
 using Kontur.Extern.Api.Client.Http.Retries;
 using Vostok.Clusterclient.Core;
-using Vostok.Clusterclient.Transport;
 
 namespace Kontur.Extern.Api.Client.Http.Configurations
 {
@@ -35,7 +35,7 @@ namespace Kontur.Extern.Api.Client.Http.Configurations
             config.Logging.LogReplicaRequests = false;
             config.Logging.LogResultDetails = false;
 
-            config.SetupUniversalTransport(new UniversalTransportSettings
+            config.SetupHttpClientTransport(new HttpClientTransportSettings
             {
                 Proxy = proxy
             });
