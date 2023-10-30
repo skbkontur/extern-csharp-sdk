@@ -48,7 +48,7 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters.SystemNetHttp.Mess
             }
         }
 
-        private static HttpContent TranslateContent(Request request, CancellationToken cancellationToken)
+        private static HttpContent? TranslateContent(Request request, CancellationToken cancellationToken)
         {
             if (request.Content != null && request.Content.Length > 0)
                 return new BufferContent(request.Content, cancellationToken);
@@ -59,7 +59,7 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters.SystemNetHttp.Mess
             if (request.StreamContent != null)
                 return new StreamContent(request.StreamContent, cancellationToken);
 
-            return new EmptyContent();
+            return null;
         }
     }
 }
