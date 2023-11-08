@@ -10,7 +10,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
     public record Kpp
     {
         public static readonly RegexBasedParser<Kpp> Parser = new(
-            @"^(\d{4})((\d|[A..Z]){2})(\d{3})$",
+            @"^(\d{4})((\d|[A-Z]){2})(\d{3})$",
             v => new Kpp(v),
             (param, value) => Errors.InvalidKppAuthorityNumber(param, value)
         );
@@ -26,7 +26,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
 
         public string Value { get; }
         public AuthorityNumberKind Kind => AuthorityNumberKind.Kpp;
-        
+
         public override string ToString() => Value;
     }
 }
