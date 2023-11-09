@@ -26,7 +26,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
 
             action.Should().Throw<ArgumentException>();
         }
-        
+
         [TestCase(null)]
         [TestCase("")]
         [TestCase(" ")]
@@ -49,14 +49,14 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
             action.Should().Throw<ArgumentException>();
         }
 
-        [TestCase(null, "application/octet-stream")]
-        [TestCase("", "application/octet-stream")]
-        [TestCase(" ", "application/octet-stream")]
+        [TestCase(null, null)]
+        [TestCase("", null)]
+        [TestCase(" ", null)]
         [TestCase("application/pdf", "application/pdf")]
         public async Task Should_build_request_with_uploaded_content(string contentType, string expectedContentType)
         {
             var accountId = Guid.NewGuid();
-            
+
             var uploadedContentId = Guid.NewGuid();
             var uploadedSignature = Signature.FromBytes(new byte[] {1, 2, 3});
 
@@ -73,16 +73,16 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
                     Type = DocumentType.FssReport.Report
                 }
             };
-            
+
             var contentService = Substitute.For<IContentService>();
             var crypt = Substitute.For<ICrypt>();
-            
+
             var uploadStrategy = Substitute.For<IDocumentContentUploadStrategy>();
             uploadStrategy.ContentType.Returns(contentType);
             uploadStrategy
                 .UploadAndSignAsync(accountId, contentService, crypt, Arg.Any<TimeSpan>())
                 .Returns((uploadedContentId, uploadedSignature));
-            
+
             var (signature, documentRequest) = await new DocumentRequestBuilder()
                 .SetType(DocumentType.FssReport.Report)
                 .SetFileName(fileName)
@@ -93,7 +93,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
             signature.Should().BeEquivalentTo(uploadedSignature);
             documentRequest.Should().BeEquivalentTo(expectedRequest);
         }
-        
+
         [Test]
         public async Task Should_build_request_without_content_if_upload_strategy_do_not_upload()
         {
@@ -110,16 +110,16 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
                     Type = DocumentType.FssReport.Report
                 }
             };
-            
+
             var contentService = Substitute.For<IContentService>();
             var crypt = Substitute.For<ICrypt>();
-            
+
             var uploadStrategy = Substitute.For<IDocumentContentUploadStrategy>();
             uploadStrategy.ContentType.Returns("application/pdf");
             uploadStrategy
                 .UploadAndSignAsync(accountId, contentService, crypt, Arg.Any<TimeSpan>())
                 .Returns((null, null));
-            
+
             var (signature, documentRequest) = await new DocumentRequestBuilder()
                 .SetType(DocumentType.FssReport.Report)
                 .SetFileName(fileName)
@@ -135,7 +135,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
         public async Task Should_build_request_without_content()
         {
             var accountId = Guid.NewGuid();
-            
+
             const string fileName = "file_name";
             var svdregCode = SvdregCode.ForIndividualEntrepreneur.Code_011011;
             var expectedRequest = new DocumentRequest
@@ -148,10 +148,10 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
                     Type = DocumentType.FssReport.Report
                 }
             };
-            
+
             var contentService = Substitute.For<IContentService>();
             var crypt = Substitute.For<ICrypt>();
-            
+
             var (signature, documentRequest) = await new DocumentRequestBuilder()
                 .SetType(DocumentType.FssReport.Report)
                 .SetFileName(fileName)
@@ -161,17 +161,17 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
             signature.Should().BeNull();
             documentRequest.Should().BeEquivalentTo(expectedRequest);
         }
-        
+
         [Test]
         public async Task Should_build_request_without_content_and_metadata()
         {
             var accountId = Guid.NewGuid();
-            
+
             var expectedRequest = new DocumentRequest();
-            
+
             var contentService = Substitute.For<IContentService>();
             var crypt = Substitute.For<ICrypt>();
-            
+
             var (signature, documentRequest) = await new DocumentRequestBuilder()
                 .CreateRequestAsync(accountId, contentService, crypt, 1.Seconds());
 

@@ -6,7 +6,6 @@ using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers.BusinessRegistration;
 using Kontur.Extern.Api.Client.Uploading;
 using Kontur.Extern.Api.Client.Cryptography;
-using Kontur.Extern.Api.Client.Http.Constants;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.PutDocumentRequestBuilders
 {
@@ -16,7 +15,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.Put
         private string? fileName;
         private DocumentType? type;
         private IDocumentContentUploadStrategy? contentUploadStrategy;
-        
+
         public DocumentRequestBuilder SetSvdregCode(SvdregCode code)
         {
             if (code.IsEmpty)
@@ -40,13 +39,13 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.Put
             type = documentType;
             return this;
         }
-        
+
         public DocumentRequestBuilder SetContentUploadStrategy(IDocumentContentUploadStrategy uploadStrategy)
         {
             contentUploadStrategy = uploadStrategy;
             return this;
         }
-        
+
         public async ValueTask<(Signature? signature, DocumentRequest documentRequest)> CreateRequestAsync(
             Guid accountId,
             IContentService uploader,
@@ -55,11 +54,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.Put
         {
             if (contentUploadStrategy == null)
                 return (null, ToRequest(null, null));
-            
+
             var (contentId, signature) = await contentUploadStrategy.UploadAndSignAsync(accountId, uploader, crypt, uploadTimeout).ConfigureAwait(false);
             return (signature, ToRequest(contentId, contentUploadStrategy.ContentType));
         }
-        
+
         private DocumentRequest ToRequest(Guid? contentId, string? contentType)
         {
             if (string.IsNullOrWhiteSpace(contentType))
@@ -68,7 +67,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.Put
             }
             contentType = contentType switch
             {
-                null when contentId.HasValue => ContentTypes.Binary,
+                null when contentId.HasValue => null,
                 not null when contentId is null => null,
                 _ => contentType
             };
