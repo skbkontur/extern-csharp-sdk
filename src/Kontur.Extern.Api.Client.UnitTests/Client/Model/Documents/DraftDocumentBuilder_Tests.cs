@@ -28,7 +28,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Documents
 
             document.DocumentId.Should().NotBeEmpty();
         }
-        
+
         [Test]
         public void WithId_should_specify_given_document_id()
         {
@@ -41,12 +41,12 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Documents
             document.DocumentId.Should().Be(documentId);
 
         }
-        
+
         [Test]
         public async Task ToDocument_should_create_document_with_signed_content_to_upload()
         {
             var accountId = Guid.NewGuid();
-            
+
             var uploadedContentId = Guid.NewGuid();
             var uploadedSignature = Signature.FromBytes(new byte[] {1, 2, 3});
 
@@ -65,7 +65,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Documents
                     Type = documentType
                 }
             };
-            
+
             var contentService = Substitute.For<IContentService>();
             var crypt = Substitute.For<ICrypt>();
 
@@ -73,7 +73,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Documents
             documentContent.ContentType.Returns(contentType);
             documentContent.SignAsync(Arg.Any<CertificateContent>(), crypt).Returns(uploadedSignature);
             documentContent.UploadAsync(contentService, accountId, Arg.Any<TimeSpan?>()).Returns(uploadedContentId);
-            
+
             var document = DraftDocumentBuilder
                 .WithNewId()
                 .WithContentToUpload(documentContent)
@@ -82,7 +82,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Documents
                 .WithSvdregCode(svdregCode)
                 .WithType(documentType)
                 .ToDocument();
-            
+
             var (signature, documentRequest) = await document
                 .CreateSignedRequestAsync(accountId, contentService, crypt, 1.Seconds());
 
@@ -94,39 +94,39 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Documents
         public async Task ToDocument_should_create_document_with_not_signed_content_to_upload()
         {
             var accountId = Guid.NewGuid();
-            
+
             var uploadedContentId = Guid.NewGuid();
-            const string contentType = "application/octet-stream";
-            var documentType = DocumentType.Fns534Report.Report;
+            const string expectedContentType = null!;
+            var expectedDocumentType = DocumentType.Fns534Report.Report;
             var expectedRequest = new DocumentRequest
             {
                 ContentId = uploadedContentId,
                 Description = new DocumentDescriptionRequest
                 {
-                    ContentType = contentType,
-                    Type = documentType
+                    ContentType = expectedContentType,
+                    Type = expectedDocumentType
                 }
             };
-            
+
             var contentService = Substitute.For<IContentService>();
             var crypt = Substitute.For<ICrypt>();
 
             var documentContent = Substitute.For<IDocumentContent>();
             documentContent.UploadAsync(contentService, accountId, Arg.Any<TimeSpan?>()).Returns(uploadedContentId);
-            
+
             var document = DraftDocumentBuilder
                 .WithNewId()
                 .WithContentToUpload(documentContent)
-                .WithType(documentType)
+                .WithType(expectedDocumentType)
                 .ToDocument();
-            
+
             var (signature, documentRequest) = await document
                 .CreateSignedRequestAsync(accountId, contentService, crypt, 1.Seconds());
 
             signature.Should().BeNull();
             documentRequest.Should().BeEquivalentTo(expectedRequest);
         }
-        
+
         [Test]
         public async Task FssSedoProviderSubscriptionSubscribeRequestForRegistrationNumber_should_create_document_without_content()
         {
@@ -138,16 +138,16 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Documents
                     Type = DocumentType.FssSedoProviderSubscription.SubscribeRequestForRegistrationNumber
                 }
             };
-            
+
             var contentService = Substitute.For<IContentService>();
             var crypt = Substitute.For<ICrypt>();
             var documentId = Guid.NewGuid();
-            
+
             var document = DraftDocumentBuilder
                 .FssSedoProviderSubscriptionSubscribeRequestForRegistrationNumber(documentId);
 
             document.DocumentId.Should().Be(documentId);
-            
+
             var (signature, documentRequest) = await document
                 .CreateSignedRequestAsync(accountId, contentService, crypt, 1.Seconds());
 

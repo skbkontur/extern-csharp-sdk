@@ -13,7 +13,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
         public void Should_fail_when_the_given_number_string_is_invalid((string value, string reason) theCase)
         {
             var (value, reason) = theCase;
-            
+
             Action action = () => Kpp.Parser.Parse(value);
 
             action.Should().Throw<ArgumentException>(reason);
@@ -23,7 +23,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
         public void Should_successfully_return_a_number_when_the_given_value_is_valid((string value, string reason) theCase)
         {
             var (value, reason) = theCase;
-            
+
             var parsedValue = Kpp.Parser.Parse(value);
 
             parsedValue.Kind.Should().Be(AuthorityNumberKind.Kpp);
@@ -58,6 +58,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
                 yield return ("123456789", "code with 9 digits");
                 yield return ("451601694", "code with 9 digits");
                 yield return ("4516AZ694", "code 9 symbols, all digits except 5th and 6th symbols, which are be UPPER case latin letters");
+                yield return ("6664NP123", "code 9 symbols, all digits except 5th and 6th symbols, which are be UPPER case latin letters");
             }
         }
     }
