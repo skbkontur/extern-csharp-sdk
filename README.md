@@ -8,6 +8,7 @@
 
 #### Тестовая площадка
 
+```csharp
     string apiKey = "..."; // Апи-ключ, назначенный вашему приложению, для использования на ТЕСТОВОЙ площадке
     string someUserLogin = "..."; // Логин пользователя (на ТЕСТОВОЙ площадке), от имени которого выполняется аутентификация
     string someUserPassword = "..."; // Пароль пользователя (на ТЕСТОВОЙ площадке), от имени которого выполняется аутентификация
@@ -24,11 +25,11 @@
                 .WithAuthenticationByPassword(someUserLogin, someUserPassword)
                 .Build())                
            .Create();
-           
+```   
            
 #### Продуктовая площадка
 
-
+```csharp
     // Значения параметров для продуктовой площадки не будут совпадать с аналогичными значениями для тестовой площадки
     string apiKey = "..."; // Апи-ключ, назначенный вашему приложению, для использования на ПРОДУКТОВОЙ площадке
     string someUserLogin = "..."; // Логин пользователя (на ПРОДУКТОВОЙ площадке), от имени которого выполняется аутентификация
@@ -47,12 +48,15 @@
                 clientId,
                 apiKey)
             .Create();
+```
             
 ### Шаг 2. Выполнение запросов
 
 После создания и настройки объекта IExtern можно использовать его для выполнения запросов к АПИ. Например, загрузить все учетные записи, доступные аутентифицированному пользователю:
 
+```csharp
     IReadOnlyList<Account> accounts = await externApi.Accounts.List().SliceBy(100).LoadAllAsync();
+```
 
 ## Аутентификация для выполнения запросов
 :warning: Дополнительно аутентифицироваться до выполнения запросов не нужно :warning:
@@ -69,3 +73,64 @@
 
 Более подробно про процесс аутентификации можно прочитать [ в документации к АПИ](https://developer.kontur.ru/Docs/extern-api/index.html)
 
+## Примеры выполнения запросов
+
+### Загрузка контента документа в Сервис Контентов
+
+```csharp
+    Stream contentStream =  new MemoryStream(new byte[] {1, 2, 3});
+    Guid contentId = await externApi.Accounts.WithId(accountId).Contents.UploadAsync(contentStream);
+```
+
+### Создание черновика и документа с подписью в черновике
+
+```csharp
+    Draft draft = await externApi
+        .Accounts.WithId(accountId)
+        .Drafts.CreateDraftAsync(draftMetadata);
+
+    byte[] signature = new byte[] {1, 2, 3};
+    IDraftDocument document = DraftDocumentBuilder
+        .WithNewId()
+        .WithUploadedContent(contentId, "application/xml", signature)
+        .ToDocument();
+
+    await externApi
+        .Accounts.WithId(accountId)
+        .Drafts.WithId(draft.Id)
+        .SetDocumentAsync(document);
+```
+
+### Проверка черновика
+
+```csharp
+    ILongOperationAwaiter<DraftCheckingStatus> checkAwaiter = await externApi
+        .Accounts.WithId(accountId)
+        .Drafts.WithId(draft.Id)
+        .Check()
+        .StartAsync();
+    
+    DraftCheckingStatus draftCheckingStatus = await checkAwaiter.WaitForCompletion();
+```
+
+### Отправка черновика
+
+```csharp
+    ILongOperationAwaiter<IDocflowWithDocuments, DraftSendingFailure> sendAwaiter = await externApi
+        .Accounts.WithId(accountId)
+        .Drafts.WithId(draft.Id)
+        .TrySend()
+        .StartAsync();
+    
+    LongOperationResult<IDocflowWithDocuments, DraftSendingFailure> draftSendResult = await sendAwaiter.WaitForSuccessOrFailure();
+    IDocflowWithDocuments docflow = draftSendResult.GetSuccessResult();
+```
+
+### Получение ДО по идентификатору
+
+```csharp
+    IDocflowWithDocuments docflow = await externApi
+        .Accounts.WithId(accountId)
+        .Docflows.WithId(docflowId)
+        .GetAsync();
+```
