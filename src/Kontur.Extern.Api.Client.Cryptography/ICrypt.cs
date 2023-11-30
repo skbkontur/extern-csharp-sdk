@@ -50,5 +50,13 @@ namespace Kontur.Extern.Api.Client.Cryptography
         /// <returns>Найденный сертификат</returns>
         /// <exception cref="Exception">бросается в случае если сертификат не найден</exception>
         X509Certificate2 GetCertificateWithPrivateKey(string thumbprint, bool useLocalSystemStorage = false);
+
+        /// <summary>
+        /// Подписание данных сырой подписью
+        /// </summary>
+        /// <param name="certificate">Данные для подписания</param>
+        /// <param name="dataToSign">Сертификат с приватным ключом для подписания</param>
+        /// <returns>Подпись</returns>
+        byte[] RawSign(byte[] dataToSign, X509Certificate2 certificate);
     }
 }

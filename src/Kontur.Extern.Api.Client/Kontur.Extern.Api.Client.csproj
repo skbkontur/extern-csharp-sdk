@@ -34,5 +34,5 @@
   <ItemGroup>
     <Folder Include="ApiLevel\Models\Responses\DraftBuilders\DocumentFiles" />
     <Folder Include="ApiLevel\Models\Responses\DraftBuilders\Documents" />
-  </ItemGroup>  
+  </ItemGroup>
 </Project>

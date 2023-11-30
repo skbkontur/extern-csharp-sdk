@@ -3,6 +3,17 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <Configurations>Debug;Release;Client</Configurations>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
+    
+    <ItemGroup>
+        <Reference Include="GostCryptography">
+            <HintPath>ExternalLibs\GostCryptography.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="System.Security.Cryptography.Xml" Version="6.0.0" />
+    </ItemGroup>
 
 </Project>

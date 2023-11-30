@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using GostCryptography.Base;
 
 namespace Kontur.Extern.Api.Client.Cryptography
 {
@@ -88,6 +89,19 @@ namespace Kontur.Extern.Api.Client.Cryptography
                 certificatesHandle.Free();
                 Api.CertFreeCertificateContext(certificate);
             }
+        }
+
+        public byte[] RawSign(byte[] dataToSign, X509Certificate2 certificate)
+        {
+            var privateKeyAlgorithm = (GostAsymmetricAlgorithm)certificate.GetPrivateKeyAlgorithm();
+            byte[] hash;
+
+            using (var hashAlg = privateKeyAlgorithm.CreateHashAlgorithm())
+                hash = hashAlg.ComputeHash(dataToSign);
+
+            var signature = privateKeyAlgorithm.CreateSignature(hash);
+            Array.Reverse(signature);
+            return signature;
         }
 
         protected static byte[] Sign(byte[] content, IntPtr certificate, GCHandle certificatesHandle)
