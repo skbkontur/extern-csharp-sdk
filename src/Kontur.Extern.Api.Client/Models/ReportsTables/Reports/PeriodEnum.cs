@@ -21,4 +21,9 @@ public enum PeriodEnum
     /// Ежемесячный
     /// </summary>
     Monthly,
+
+    /// <summary>
+    /// Дважды в месяц
+    /// </summary>
+    TwiceAMonth
 }
