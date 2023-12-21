@@ -25,7 +25,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             DraftsBuilderMetaRequest meta,
             TimeSpan? timeout = null)
         {
-            return http.PostAsync<DraftsBuilder>($"/v1/{accountId}/drafts/builders", timeout);
+            return http.PostAsync<DraftsBuilderMetaRequest, DraftsBuilder>($"/v1/{accountId}/drafts/builders", meta, timeout);
         }
 
         public Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) => 
@@ -92,8 +92,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             DraftsBuilderDocumentMetaRequest meta,
             TimeSpan? timeout = null)
         {
-            return http.PostAsync<DraftsBuilderDocument>(
+            return http.PostAsync<DraftsBuilderDocumentMetaRequest, DraftsBuilderDocument>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents",
+                meta,
                 timeout
             );
         }
