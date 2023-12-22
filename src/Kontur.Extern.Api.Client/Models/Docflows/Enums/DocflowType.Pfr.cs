@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
 {

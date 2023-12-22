@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.Common.Streams;
 using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
-using Kontur.Extern.Api.Client.End2EndTests.Client.TestContext;
 using Kontur.Extern.Api.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Api.Client.Exceptions;
 using Kontur.Extern.Api.Client.Model.Configuration;
