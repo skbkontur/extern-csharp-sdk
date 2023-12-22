@@ -9,32 +9,30 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class RegistrationInfo
     {
-        public RegistrationInfo(ApplicantInfo[] applicantInfos, BusinessType? businessType, IpInfo? ipInfo, UlInfo? ulInfo, ApplicationCode? applicationCode)
+        public RegistrationInfo(ApplicantInfo[] applicantInfos, IpInfo? ipInfo, UlInfo? ulInfo, ApplicationCode? applicationCode)
         {
-            if (businessType == Docflows.Descriptions.Fns.BusinessRegistration.BusinessType.Ul)
+            if (ipInfo != null && ulInfo != null)
             {
-                if (ulInfo == null)
-                    throw Errors.JsonPropertyIsMissedButRequiredBecauseOfOtherHaveValue(nameof(ulInfo), nameof(businessType), businessType);
+                throw Errors.UlInfoAndIpInfoAreFilledAtTheSameTime();
+            }
 
+            if (ipInfo == null && ulInfo == null)
+            {
+                throw Errors.JsonDoesNotContainOneOfProperties(new[] {nameof(ipInfo), nameof(ulInfo)});
+            }
+
+            if (ulInfo != null)
+            {
                 if (applicationCode is not null && applicationCode.Value.IsIndividualEntrepreneur())
-                    throw Errors.WrongApplicationCodeForBusinessRegistrationType(businessType.Value, applicationCode.Value);
+                    throw Errors.WrongApplicationCodeForBusinessRegistrationType(BusinessType.Ul, applicationCode.Value);
             }
-            else if (businessType == Docflows.Descriptions.Fns.BusinessRegistration.BusinessType.Ip)
+            else if (ipInfo != null)
             {
-                if (ipInfo == null)
-                    throw Errors.JsonPropertyIsMissedButRequiredBecauseOfOtherHaveValue(nameof(ipInfo), nameof(businessType), businessType);
-
                 if (applicationCode is not null && !applicationCode.Value.IsIndividualEntrepreneur())
-                    throw Errors.WrongApplicationCodeForBusinessRegistrationType(businessType.Value, applicationCode.Value);
-            }
-            else
-            {
-                if (ipInfo != null || ulInfo != null || applicationCode != null)
-                    throw Errors.UnknownBusinessTypeCannotHaveParticularData();
+                    throw Errors.WrongApplicationCodeForBusinessRegistrationType(BusinessType.Ip, applicationCode.Value);
             }
 
             ApplicantInfos = applicantInfos;
-            BusinessType = businessType;
             IpInfo = ipInfo;
             UlInfo = ulInfo;
             ApplicationCode = applicationCode;
@@ -52,15 +50,10 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
         public ApplicantInfo[] ApplicantInfos { get; }
 
         /// <summary>
-        /// Тип регистрируемого бизнеса
-        /// </summary>
-        public BusinessType? BusinessType { get; }
-        
-        /// <summary>
         /// Информация об ИП
         /// </summary>
         public IpInfo? IpInfo { get; }
-        
+
         /// <summary>
         /// Информация о ЮЛ
         /// </summary>
