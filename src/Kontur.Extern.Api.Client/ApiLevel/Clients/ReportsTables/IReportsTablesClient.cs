@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ReportsTables;
-using Kontur.Extern.Api.Client.Models.ReportsTables.Payments;
 using Kontur.Extern.Api.Client.Models.ReportsTables.Reports;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;

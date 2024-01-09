@@ -4,7 +4,6 @@ using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Api.Client.Common.Time;
 using Kontur.Extern.Api.Client.Exceptions;
 using Kontur.Extern.Api.Client.Model.DocflowFiltering;
-using Kontur.Extern.Api.Client.Testing.xUnit;
 using NUnit.Framework;
 
 namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering

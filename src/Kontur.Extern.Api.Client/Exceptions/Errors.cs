@@ -155,6 +155,9 @@ namespace Kontur.Extern.Api.Client.Exceptions
         public static Exception JsonDoesNotContainProperty(string propName) =>
             new JsonException($"The JSON does not contain property {propName}.");
 
+        public static Exception JsonDoesNotContainOneOfProperties(string[] propNames) =>
+            new JsonException($"The JSON does not contain one of required properties: {string.Join(", ", propNames)}.");
+
         public static Exception UnknownSubtypeOf<T>(Type subType) =>
             new InvalidOperationException($"Unknown subtype {subType} of {typeof(T)}");
 
@@ -184,8 +187,8 @@ namespace Kontur.Extern.Api.Client.Exceptions
             return new ContractException($"The property '{paramName.ToKebabCase()}' must be present in the JSON if '{otherParamName.ToKebabCase()}' has the value '{otherParamValue}'.");
         }
 
-        public static Exception UnknownBusinessTypeCannotHaveParticularData() =>
-            new ContractException("The business type is unknown, but some properties has particular data");
+        public static Exception UlInfoAndIpInfoAreFilledAtTheSameTime() =>
+            new ContractException("UlInfo and IpInfo are filled at the same type");
 
         public static Exception WrongApplicationCodeForBusinessRegistrationType(BusinessType businessType, ApplicationCode applicationCode) =>
             new ContractException($"The application code {applicationCode.ToString().ToKebabCase()} does not belong to of business registration type {businessType.ToString().ToKebabCase()}");
