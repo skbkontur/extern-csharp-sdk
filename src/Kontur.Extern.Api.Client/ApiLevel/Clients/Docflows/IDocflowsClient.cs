@@ -10,6 +10,7 @@ using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 using Kontur.Extern.Api.Client.Models.Docflows.DocumentsRequests;
+using Kontur.Extern.Api.Client.Models.Docflows.TransportPackage;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
 {
@@ -388,5 +389,14 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             Guid requestId,
             byte[] signature,
             TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Получение пакета транзакции
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="docflowId">Идентификатор документооборота</param>
+        /// <param name="timeout">Сертификат</param>
+        /// <returns></returns>
+        Task<TransportPackage> GetTransportPackageAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null);
     }
 }

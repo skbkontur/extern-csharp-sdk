@@ -10,6 +10,7 @@ using Kontur.Extern.Api.Client.Models.Docflows;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Models.Docflows.DocumentsRequests;
+using Kontur.Extern.Api.Client.Models.Docflows.TransportPackage;
 using Vostok.Clusterclient.Core.Model;
 
 // ReSharper disable CommentTypo
@@ -292,6 +293,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
                 $"v1/{accountId}/docflows/{docflowId}/documents-requests/{requestId}/signature",
                 signature,
                 timeout);
+        }
+
+        public Task<TransportPackage> GetTransportPackageAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null)
+        {
+            return http.GetAsync<TransportPackage>($"/v1/{accountId}/docflows/{docflowId}/initial-transport-package", timeout);
         }
 
         private Task<DocflowPage> GetRelatedDocflowsAsync(RequestUrlBuilder urlBuilder, TimeSpan? timeout) => http.GetAsync<DocflowPage>(urlBuilder.Build(), timeout);
