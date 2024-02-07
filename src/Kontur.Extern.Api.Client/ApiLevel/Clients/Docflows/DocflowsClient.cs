@@ -135,6 +135,19 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             );
         }
 
+        public Task<string> GetSignatureContentAsBase64StringAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid signatureId,
+            TimeSpan? timeout = null)
+        {
+            return http.GetAsync<string>(
+                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}/content",
+                timeout
+            );
+        }
+
         public Task<byte[]> GetInventorySignatureContentAsync(
             Guid accountId,
             Guid relatedDocflowId,
