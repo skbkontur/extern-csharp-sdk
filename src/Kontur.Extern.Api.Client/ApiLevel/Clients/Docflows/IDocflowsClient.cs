@@ -198,6 +198,22 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             TimeSpan? timeout = null);
 
         /// <summary>
+        /// Получение контента подписи документа в виде строки
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="docflowId">Идентификатор документооборота</param>
+        /// <param name="documentId">Идентификатор документа</param>
+        /// <param name="signatureId">Идентификатор подписи</param>
+        /// <param name="timeout"></param>
+        /// <returns>Контент подписи документа</returns>
+        public Task<string> GetSignatureContentAsBase64StringAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            Guid signatureId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
         /// Получение контента подписи документа документооборота описи
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
