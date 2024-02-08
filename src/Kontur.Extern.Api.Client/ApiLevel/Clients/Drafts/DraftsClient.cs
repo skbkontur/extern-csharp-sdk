@@ -271,6 +271,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
             return http.GetAsync<ApiTaskPage>(url, timeout);
         }
 
+        public async Task PrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null)
+        {
+            await http.Post($"/v1/{accountId}/drafts/{draftId}/prepare").SendAsync(timeout).ConfigureAwait(false);
+        }
+
         private static bool DoNotFailOnBadRequestsWithPayloads(IHttpResponse httpResponse) => 
             httpResponse.Status.IsBadRequest && httpResponse.HasPayload && httpResponse.ContentType.IsJson;
     }

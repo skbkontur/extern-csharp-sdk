@@ -341,5 +341,13 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
             int? take = null,
             bool? includeReleased = null,
             TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Подготовка черновика к отправке
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftId">Идентификатор черновика</param>
+        /// <param name="timeout"></param>
+        Task PrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
     }
 }
