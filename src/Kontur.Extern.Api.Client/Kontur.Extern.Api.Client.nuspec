@@ -14,7 +14,7 @@
         <dependency id="System.Runtime" version="4.3.1" exclude="Build,Analyzers" />
         <dependency id="System.Text.Encodings.Web" version="5.0.1" exclude="Build,Analyzers" />
         <dependency id="System.Text.Json" version="5.0.2" exclude="Build,Analyzers" />
-        <dependency id="Vostok.ClusterClient.Core" version="0.1.36" exclude="Build,Analyzers" />
+        <dependency id="Vostok.ClusterClient.Core" version="0.1.46" exclude="Build,Analyzers" />
         <dependency id="Vostok.ClusterClient.Transport" version="0.1.19" exclude="Build,Analyzers" />
         <dependency id="Vostok.Commons.Time" version="0.1.0" exclude="Build,Analyzers" />
       </group>
