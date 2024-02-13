@@ -11,7 +11,7 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class ApplicantInfo
     {
-        public ApplicantInfo(Inn inn, PersonFullName personFullName, string? email)
+        public ApplicantInfo(Inn? inn, PersonFullName personFullName, string? email)
         {
             Inn = inn;
             PersonFullName = personFullName ?? throw Errors.JsonDoesNotContainProperty(nameof(personFullName));
@@ -21,7 +21,7 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
         /// <summary>
         /// ИНН
         /// </summary>
-        public Inn Inn { get; }
+        public Inn? Inn { get; }
 
         /// <summary>
         /// ФИО
