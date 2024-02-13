@@ -21,11 +21,11 @@ namespace Kontur.Extern.Api.Client.Http.Configurations
             configuration.ClusterProvider = new FixedClusterProvider(url);
             configuration.MaxReplicasUsedPerRequest = 1;
             configuration.ReplicaOrdering = new AsIsReplicaOrdering();
+            configuration.TargetServiceName = url.AbsoluteUri;
             configuration.SetupReplicaBudgeting(minimumRequests: 10);
 
             configuration.DefaultRequestStrategy = Strategy.Sequential1;
             configuration.DeduplicateRequestUrl = true;
-            configuration.TargetServiceName = url.AbsoluteUri;
         }
     }
 }
