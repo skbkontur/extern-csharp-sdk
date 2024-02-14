@@ -11,6 +11,8 @@ public enum ReceiptStatus
     Rejected,
     Warning,
     AcceptedDeferred,
+    AcceptedByCu,
+    RejectedByCu,
     DenialAcceptedByCu,
     DenialRejectedByCu
 }
