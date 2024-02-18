@@ -14,6 +14,7 @@ using Kontur.Extern.Api.Client.Models.Docflows;
 using Kontur.Extern.Api.Client.Models.Drafts;
 using Kontur.Extern.Api.Client.Models.Drafts.Documents;
 using Kontur.Extern.Api.Client.Models.Drafts.Meta;
+using Kontur.Extern.Api.Client.Models.Drafts.Prepare;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
 {
@@ -348,6 +349,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="draftId">Идентификатор черновика</param>
         /// <param name="timeout"></param>
-        Task PrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
+        Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
     }
 }
