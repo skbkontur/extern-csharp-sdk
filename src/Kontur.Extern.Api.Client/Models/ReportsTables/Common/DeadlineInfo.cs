@@ -14,13 +14,21 @@ public class DeadlineInfo
     /// </summary>
     public DateTime Deadline { get; set; }
     /// <summary>
-    /// Год периода подачи формы отчетности 
+    /// Год периода подачи формы отчетности
     /// </summary>
     public int PeriodYear { get; set; }
     /// <summary>
     /// Номер периода подачи формы отчетности
     /// </summary>
     public int PeriodNumber { get; set; }
+    /// <summary>
+    /// Начальная дата периода, за который сдается отчет НДФЛ: Уведомление
+    /// </summary>
+    public DateTime? PeriodStart { get; set; }
+    /// <summary>
+    /// Конечная дата периода, за который сдается отчет НДФЛ: Уведомление
+    /// </summary>
+    public DateTime? PeriodEnd { get; set; }
     /// <summary>
     /// Статус формы отчетности
     /// </summary>
