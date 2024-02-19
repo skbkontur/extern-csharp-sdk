@@ -13,6 +13,7 @@ using Kontur.Extern.Api.Client.Models.Drafts;
 using Kontur.Extern.Api.Client.Models.Drafts.Documents;
 using Kontur.Extern.Api.Client.Models.Drafts.Meta;
 using Kontur.Extern.Api.Client.Http;
+using Kontur.Extern.Api.Client.Models.Drafts.Prepare;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
@@ -270,6 +271,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
                 .Build();
             return http.GetAsync<ApiTaskPage>(url, timeout);
         }
+
+        public Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) 
+            => http.PostAsync<PrepareResult>($"/v1/{accountId}/drafts/{draftId}/prepare", timeout);
 
         private static bool DoNotFailOnBadRequestsWithPayloads(IHttpResponse httpResponse) => 
             httpResponse.Status.IsBadRequest && httpResponse.HasPayload && httpResponse.ContentType.IsJson;
