@@ -15,7 +15,7 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
         <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
         <PackageReference Include="Vostok.ClusterClient.Transport" Version="0.1.19" />
-        <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.21" />
+        <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.31" />
         <PackageReference Include="Vostok.Logging.Console" Version="1.0.6" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.utility" Version="2.4.1" />

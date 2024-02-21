@@ -30,16 +30,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
         {
             get
             {
-                yield return "12345";
-                yield return "12343";
-                yield return "12340";
-                yield return "123451";
-                yield return "1234";
-                yield return "123-41";
-                yield return "1234x";
-                yield return "x2341";
-                yield return " 12342";
-                yield return "12342 ";
+                yield return "";
+                yield return null;
             }
         }
         
@@ -49,6 +41,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
             {
                 yield return "12341";
                 yield return "12342";
+                yield return "SEDO-TEST";
             }
         }
     }
