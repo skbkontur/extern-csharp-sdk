@@ -10,9 +10,9 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
     public record FssCode
     {
         public static readonly RegexBasedParser<FssCode> Parser = new(
-            @"^\d{4}[1..2]$",
+            @".+",
             v => new FssCode(v),
-            (param, value) => Errors.InvalidAuthorityNumber(param, value, AuthorityNumberKind.FssCode, "XXXXX")
+            (param, value) => Errors.InvalidAuthorityNumber(param, value, AuthorityNumberKind.FssCode, "NOT EMPTY")
         );
 
         /// <summary>
