@@ -39,7 +39,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
         /// <param name="timeout"></param>
         /// <returns>Черновик</returns>
         Task<Draft> GetDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null);
-        
+
         /// <summary>
         /// Получение черновика по идентификатору
         /// </summary>
@@ -218,7 +218,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
         /// <param name="signatureId">Идентификатор подписи</param>
         /// <param name="timeout"></param>
         /// <returns>Контент подписи документа в формате Base64</returns>
-        Task<string> GetSignatureContentAsync(
+        Task<byte[]> GetSignatureContentAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,

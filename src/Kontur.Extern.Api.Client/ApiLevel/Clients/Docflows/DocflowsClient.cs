@@ -122,33 +122,21 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             );
         }
 
-        public Task<byte[]> GetSignatureContentAsync(
+        public async Task<byte[]> GetSignatureContentAsync(
             Guid accountId,
             Guid docflowId,
             Guid documentId,
             Guid signatureId,
             TimeSpan? timeout = null)
         {
-            return http.GetBytesAsync(
+            var base64String = await http.GetAsync<string>(
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}/content",
                 timeout
             );
+            return Convert.FromBase64String(base64String);
         }
 
-        public Task<string> GetSignatureContentAsBase64StringAsync(
-            Guid accountId,
-            Guid docflowId,
-            Guid documentId,
-            Guid signatureId,
-            TimeSpan? timeout = null)
-        {
-            return http.GetAsync<string>(
-                $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}/content",
-                timeout
-            );
-        }
-
-        public Task<byte[]> GetInventorySignatureContentAsync(
+        public async Task<byte[]> GetInventorySignatureContentAsync(
             Guid accountId,
             Guid relatedDocflowId,
             Guid relatedDocumentId,
@@ -157,10 +145,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             Guid signatureId,
             TimeSpan? timeout = null)
         {
-            return http.GetBytesAsync(
+            var base64String = await http.GetAsync<string>(
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/signatures/{signatureId}/content",
                 timeout
             );
+            return Convert.FromBase64String(base64String);
         }
 
         public Task<PrintDocumentResult> PrintDocumentAsync(

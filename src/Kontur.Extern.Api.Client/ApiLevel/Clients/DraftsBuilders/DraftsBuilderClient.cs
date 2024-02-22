@@ -28,13 +28,13 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             return http.PostAsync<DraftsBuilderMetaRequest, DraftsBuilder>($"/v1/{accountId}/drafts/builders", meta, timeout);
         }
 
-        public Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) => 
+        public Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) =>
             http.GetAsync<DraftsBuilder>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", timeout);
 
-        public Task<DraftsBuilder?> TryGetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) => 
+        public Task<DraftsBuilder?> TryGetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) =>
             http.TryGetAsync<DraftsBuilder>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", timeout);
 
-        public Task<bool> DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) => 
+        public Task<bool> DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) =>
             http.TryDeleteAsync($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", timeout);
 
         public Task<DraftsBuilderMeta> GetDraftsBuilderMetaAsync(
@@ -292,19 +292,26 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             );
         }
 
-        public Task<byte[]> GetSignatureAsync(
+        public async Task<byte[]> GetSignatureAsync(
             Guid accountId,
             Guid draftsBuilderId,
             Guid documentId,
             Guid fileId,
             TimeSpan? timeout = null)
         {
-            return http.GetBytesAsync($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/signature", timeout);
+            var base64String = await http.GetAsync<string>(
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/signature",
+                timeout
+            );
+            return Convert.FromBase64String(base64String);
         }
 
-        public Task<byte[]?> TryGetSignatureAsync(Guid accountId, Guid draftsBuilderId, Guid documentId, Guid fileId, TimeSpan? timeout = null)
+        public async Task<byte[]?> TryGetSignatureAsync(Guid accountId, Guid draftsBuilderId, Guid documentId, Guid fileId, TimeSpan? timeout = null)
         {
-            return http.TryGetBytesAsync($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/signature", timeout);
+            var base64String = await http.TryGetAsync<string>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/signature", timeout);
+            if (base64String is null)
+                return null;
+            return Convert.FromBase64String(base64String);
         }
     }
 }
