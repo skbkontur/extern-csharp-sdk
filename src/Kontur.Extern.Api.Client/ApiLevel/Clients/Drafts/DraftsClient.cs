@@ -24,19 +24,19 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
 
         public DraftsClient(IHttpRequestFactory http) => this.http = http;
 
-        public Task<Draft> CreateDraftAsync(Guid accountId, DraftMetaRequest meta, TimeSpan? timeout = null) => 
+        public Task<Draft> CreateDraftAsync(Guid accountId, DraftMetaRequest meta, TimeSpan? timeout = null) =>
             http.PostAsync<DraftMetaRequest, Draft>($"/v1/{accountId}/drafts", meta, timeout);
 
-        public Task<Draft> GetDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
+        public Task<Draft> GetDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) =>
             http.GetAsync<Draft>($"/v1/{accountId}/drafts/{draftId}", timeout);
 
-        public Task<Draft?> TryGetDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
+        public Task<Draft?> TryGetDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) =>
             http.TryGetAsync<Draft>($"/v1/{accountId}/drafts/{draftId}", timeout);
 
-        public Task<bool> DeleteDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
+        public Task<bool> DeleteDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) =>
             http.TryDeleteAsync($"/v1/{accountId}/drafts/{draftId}", timeout);
 
-        public Task<DraftMeta> GetDraftMetaAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
+        public Task<DraftMeta> GetDraftMetaAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) =>
             http.GetAsync<DraftMeta>($"/v1/{accountId}/drafts/{draftId}/meta", timeout);
 
         public Task<DraftMeta> UpdateDraftMetaAsync(
@@ -70,7 +70,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
             return http.GetAsync<DraftDocument>($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}", timeout);
         }
 
-        public Task<bool> DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null) => 
+        public Task<bool> DeleteDocumentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null) =>
             http.TryDeleteAsync($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}", timeout);
 
         public Task<DraftDocument> UpdateDocumentAsync(
@@ -87,13 +87,17 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
             );
         }
 
-        public Task<byte[]> PrintDocumentAsync(
+        public async Task<byte[]> PrintDocumentAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
             TimeSpan? timeout = null)
         {
-            return http.GetBytesAsync($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/print", timeout);
+            var base64String = await http.GetAsync<string>(
+                $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/print",
+                timeout
+            );
+            return Convert.FromBase64String(base64String);
         }
 
         public Task<ApiTaskResult<PrintDocumentResult>> StartPrintDocumentAsync(Guid accountId, Guid draftId, Guid documentId, TimeSpan? timeout = null)
@@ -153,18 +157,21 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
             );
         }
 
-        public async Task<string> GetSignatureContentAsync(
+        public async Task<byte[]> GetSignatureContentAsync(
             Guid accountId,
             Guid draftId,
             Guid documentId,
             Guid signatureId,
             TimeSpan? timeout = null)
         {
-            var response = await http.Get($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}/content".ToUrl()).SendAsync(timeout).ConfigureAwait(false);
-            return await response.GetMessageAsync<string>().ConfigureAwait(false);
+            var base64String = await http.GetAsync<string>(
+                    $"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/signatures/{signatureId}/content".ToUrl(),
+                    timeout)
+                .ConfigureAwait(false);
+            return Convert.FromBase64String(base64String);
         }
 
-        public Task<CheckResult> CheckDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) => 
+        public Task<CheckResult> CheckDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) =>
             http.PostAsync<CheckResult>($"/v1/{accountId}/drafts/{draftId}/check", timeout);
 
         public Task<ApiTaskResult<CheckResult>> StartCheckDraftAsync(
@@ -177,7 +184,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
                 .Build();
             return http.PostAsync<ApiTaskResult<CheckResult>>(url);
         }
-        
+
         public Task<ApiTaskResult<CheckResult>> GetCheckDraftTaskStatusAsync(
             Guid accountId,
             Guid draftId,
@@ -197,7 +204,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
                 .Build();
             return http.PostAsync<IDocflowWithDocuments>(url, timeout);
         }
-        
+
         public async Task<ApiTaskResult<IDocflowWithDocuments, SendFailure>> StartSendDraftAsync(
             Guid accountId,
             Guid draftId,
@@ -218,7 +225,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
         {
             var url = $"/v1/{accountId}/drafts/{draftId}/tasks/{taskId}";
             var response = await http.Get(url).SendAsync(timeout, DoNotFailOnBadRequestsWithPayloads).ConfigureAwait(false);
-            
+
             return await response.GetMessageAsync<ApiTaskResult<IDocflowWithDocuments, SendFailure>>().ConfigureAwait(false);
         }
 
@@ -272,10 +279,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
             return http.GetAsync<ApiTaskPage>(url, timeout);
         }
 
-        public Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null) 
+        public Task<PrepareResult> PrepareDraftAsync(Guid accountId, Guid draftId, TimeSpan? timeout = null)
             => http.PostAsync<PrepareResult>($"/v1/{accountId}/drafts/{draftId}/prepare", timeout);
 
-        private static bool DoNotFailOnBadRequestsWithPayloads(IHttpResponse httpResponse) => 
+        private static bool DoNotFailOnBadRequestsWithPayloads(IHttpResponse httpResponse) =>
             httpResponse.Status.IsBadRequest && httpResponse.HasPayload && httpResponse.ContentType.IsJson;
     }
 }
