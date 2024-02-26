@@ -217,7 +217,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
         /// <param name="documentId">Идентификатор документа</param>
         /// <param name="signatureId">Идентификатор подписи</param>
         /// <param name="timeout"></param>
-        /// <returns>Контент подписи документа в формате Base64</returns>
+        /// <returns>Контент подписи документа</returns>
         Task<byte[]> GetSignatureContentAsync(
             Guid accountId,
             Guid draftId,
