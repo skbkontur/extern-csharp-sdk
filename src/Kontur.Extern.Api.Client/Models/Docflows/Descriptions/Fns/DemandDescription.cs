@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Common.Time;
 using Kontur.Extern.Api.Client.Models.Common.Enums;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
@@ -42,5 +43,25 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns
         /// Статус квитанции
         /// </summary>
         public ReceiptStatus? ReceiptStatus { get; set; }
+
+        /// <summary>
+        /// Дата окончания срока отправки квитанции
+        /// </summary>
+        public DateOnly? ReceiptDeadlineDate { get; set; }
+
+        /// <summary>
+        /// Дата отправки квитанции
+        /// </summary>
+        public DateOnly? ReceiptDate { get; set; }
+
+        /// <summary>
+        /// Дата окончания срока ответа на требование
+        /// </summary>
+        public DateOnly? ReplyDeadlineDate { get; set; }
+
+        /// <summary>
+        /// Статус отправленного ответа на требование
+        /// </summary>
+        public DemandRepliesStatus? RepliesStatus { get; set; }
     }
 }
