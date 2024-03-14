@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Accounts;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Certificates;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Warrants;
+using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Models.Accounts;
 using Kontur.Extern.Api.Client.Models.Numbers;
 
@@ -12,6 +13,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts
 {
     public interface IAccountClient
     {
+        IHttpRequestFactory HttpRequestFactory { get; }
+
         /// <summary>
         /// Получение списка учетных записей пользователя
         /// </summary>
