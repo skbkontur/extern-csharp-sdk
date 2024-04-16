@@ -10,9 +10,6 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
     {
         public UlInfo(string ogrn, string name)
         {
-            if (string.IsNullOrWhiteSpace(ogrn))
-                throw Errors.RequiredJsonPropertyIsMissed(nameof(ogrn));
-            
             if (string.IsNullOrWhiteSpace(name))
                 throw Errors.RequiredJsonPropertyIsMissed(nameof(name));
             
