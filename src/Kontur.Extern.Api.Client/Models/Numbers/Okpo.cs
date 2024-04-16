@@ -21,12 +21,21 @@ namespace Kontur.Extern.Api.Client.Models.Numbers
         public static readonly RegexBasedParser<Okpo> LegalEntity =
             new(@"^\d{8}$", v => new Okpo(v), (param, value) => Errors.InvalidAuthorityNumber(param, value, AuthorityNumberKind.Okpo, "XXXXXXXX"));
 
+        /// <summary>
+        /// ОКПО для ОП. Формат данных: четырнадцатизначный цифровой код
+        /// </summary>
+        public static readonly RegexBasedParser<Okpo> SeparateDivision =
+            new(@"^\d{14}$", v => new Okpo(v), (param, value) => Errors.InvalidAuthorityNumber(param, value, AuthorityNumberKind.Okpo, "XXXXXXXXXXXXXX"));
+
         public static Okpo Parse(string value)
         {
             if (LegalEntity.TryParse(value, out var okpo))
                 return okpo;
 
             if (IndividualEntrepreneur.TryParse(value, out okpo))
+                return okpo;
+
+            if (SeparateDivision.TryParse(value, out okpo))
                 return okpo;
 
             throw Errors.InvalidOkpo(nameof(value), value);

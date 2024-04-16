@@ -94,6 +94,48 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
                 }
             }
         }
+
+        [TestFixture]
+        internal class SeparateDivisionOkpo
+        {
+            [TestCaseSource(nameof(InvalidStrings))]
+            public void Should_fail_when_the_given_number_string_is_invalid(string value)
+            {
+                Action action = () => Okpo.SeparateDivision.Parse(value);
+
+                action.Should().Throw<ArgumentException>();
+            }
+
+            [TestCaseSource(nameof(ValidStrings))]
+            public void Should_successfully_return_a_number_when_the_given_value_is_valid(string value)
+            {
+                var parsedValue = Okpo.SeparateDivision.Parse(value);
+
+                parsedValue.Kind.Should().Be(AuthorityNumberKind.Okpo);
+                parsedValue.Value.Should().Be(value);
+            }
+
+            public static IEnumerable<string> InvalidStrings
+            {
+                get
+                {
+                    yield return "123456789";
+                    yield return "1234567";
+                    yield return "1234567x";
+                    yield return "123-45678";
+                    yield return " 12345678";
+                    yield return "12345678 ";
+                }
+            }
+
+            public static IEnumerable<string> ValidStrings
+            {
+                get
+                {
+                    yield return "12345678901234";
+                }
+            }
+        }
         
         [TestFixture]
         internal class Parse
@@ -119,7 +161,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Models.Numbers
                 IndividualEntrepreneurOkpo.InvalidStrings.Concat(LegalEntityOkpo.InvalidStrings);
 
             private static IEnumerable<string> ValidStrings =>
-                IndividualEntrepreneurOkpo.ValidStrings.Concat(LegalEntityOkpo.ValidStrings);
+                IndividualEntrepreneurOkpo.ValidStrings.Concat(LegalEntityOkpo.ValidStrings).Concat(SeparateDivisionOkpo.ValidStrings);
         }
     }
 }
