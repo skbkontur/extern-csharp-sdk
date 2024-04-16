@@ -8,11 +8,8 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
     [SuppressMessage("ReSharper", "CommentTypo")]
     public class UlInfo
     {
-        public UlInfo(string ogrn, string name)
+        public UlInfo(string? ogrn, string name)
         {
-            if (string.IsNullOrWhiteSpace(ogrn))
-                throw Errors.RequiredJsonPropertyIsMissed(nameof(ogrn));
-            
             if (string.IsNullOrWhiteSpace(name))
                 throw Errors.RequiredJsonPropertyIsMissed(nameof(name));
             
@@ -23,7 +20,7 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data.BusinessR
         /// <summary>
         /// ОГРН
         /// </summary>
-        public string Ogrn { get; }
+        public string? Ogrn { get; }
         
         /// <summary>
         /// Название организации
