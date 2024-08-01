@@ -20,5 +20,6 @@ namespace Kontur.Extern.Api.Client.Paths
         public DraftBuilderListPath DraftBuilders => new(AccountId, Services);
         public ContentsPath Contents => new(AccountId, Services);
         public ReportsTableListPath ReportsTables => new(AccountId, Services);
+        public HandbooksPath Handbooks => new(AccountId, Services);
     }
 }

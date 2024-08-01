@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -34,7 +36,9 @@ namespace Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Converters.Enu
             for (var i = 0; i < names.Length; i++)
             {
                 var value = (T) values.GetValue(i)!;
-                var name = namingPolicy.ConvertName(names[i]);
+                var enumMemberAttribute = ((EnumMemberAttribute[])TypeToConvert.GetField(names[i])
+                    .GetCustomAttributes(typeof(EnumMemberAttribute), true)).FirstOrDefault();
+                var name = enumMemberAttribute?.Value ?? namingPolicy.ConvertName(names[i]);
                 valuesToNames.Add(value, JsonEncodedText.Encode(name, encoder));
                 stringsToValues.Add(name, value);
             }
