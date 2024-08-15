@@ -33,15 +33,4 @@ public class ControlUnitContacts
     /// Электронная почта
     /// </summary>
     public string Email { get; }
-
-    public ControlUnitContacts(string shortName, string fullName, string inn, string kpp, string address, string phone, string email)
-    {
-        ShortName = shortName;
-        FullName = fullName;
-        Inn = inn;
-        Kpp = kpp;
-        Address = address;
-        Phone = phone;
-        Email = email;
-    }
 }
