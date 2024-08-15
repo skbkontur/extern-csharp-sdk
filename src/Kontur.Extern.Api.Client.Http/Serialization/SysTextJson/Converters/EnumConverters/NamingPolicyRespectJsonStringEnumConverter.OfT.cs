@@ -36,9 +36,7 @@ namespace Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Converters.Enu
             for (var i = 0; i < names.Length; i++)
             {
                 var value = (T) values.GetValue(i)!;
-                var enumMemberAttribute = ((EnumMemberAttribute[])TypeToConvert.GetField(names[i])
-                    .GetCustomAttributes(typeof(EnumMemberAttribute), true)).FirstOrDefault();
-                var name = enumMemberAttribute?.Value ?? namingPolicy.ConvertName(names[i]);
+                var name = namingPolicy.ConvertName(names[i]);
                 valuesToNames.Add(value, JsonEncodedText.Encode(name, encoder));
                 stringsToValues.Add(name, value);
             }
@@ -65,7 +63,7 @@ namespace Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Converters.Enu
                 var enumString = reader.GetString();
                 if (enumString is not null && stringsToValues.TryGetValue(enumString, out var value))
                     return value;
-                
+
                 if (!Enum.TryParse(enumString, out value) && !Enum.TryParse(enumString, true, out value))
                 {
                     throw Errors.CannotParseJsonStringValueToEnumOfType(enumString, TypeToConvert);
