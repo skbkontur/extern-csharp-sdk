@@ -14,9 +14,11 @@
         <PackageReference Include="NSubstitute" Version="4.2.2" />        
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
         <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
-        <PackageReference Include="Vostok.ClusterClient.Transport" Version="0.1.19" />
-        <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.31" />
-        <PackageReference Include="Vostok.Logging.Console" Version="1.0.6" />
+        <PackageReference Include="Vostok.ClusterClient.Core" Version="0.1.49" />
+        <PackageReference Include="Vostok.ClusterClient.Transport" Version="0.1.34" />
+        <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.32" />
+        <PackageReference Include="Vostok.Logging.Console" Version="1.0.10" />
+        <PackageReference Include="Vostok.Logging.Formatting" Version="1.0.14" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.utility" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
