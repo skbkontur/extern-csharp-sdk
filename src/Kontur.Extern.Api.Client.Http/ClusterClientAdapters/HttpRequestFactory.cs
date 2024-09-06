@@ -18,10 +18,11 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
         private readonly FailoverAsync? failover;
         private readonly IClusterClient clusterClient;
         private readonly IJsonSerializer serializer;
+        private readonly ILog log;
 
         public HttpRequestFactory(
             IHttpClientConfiguration configuration,
-            RequestTimeouts requestTimeouts, 
+            RequestTimeouts requestTimeouts,
             Func<Request, TimeSpan, Task<Request>>? requestTransformAsync,
             Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler,
             FailoverAsync? failover,
@@ -33,6 +34,7 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
             this.errorResponseHandler = errorResponseHandler;
             this.failover = failover;
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            this.log = log;
 
             clusterClient = ClusterClientFactory.CreateClusterClient(configuration, log);
         }
@@ -47,7 +49,7 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
 
         public IPayloadHttpRequest Verb(string method, Uri url) => CreateHttpRequest(new Request(method, url));
 
-        private HttpRequest CreateHttpRequest(Request request) => 
-            new(request, requestTimeouts, requestTransformAsync, errorResponseHandler, failover, clusterClient, serializer);
+        private HttpRequest CreateHttpRequest(Request request) =>
+            new(request, requestTimeouts, requestTransformAsync, errorResponseHandler, failover, clusterClient, serializer, log);
     }
 }
