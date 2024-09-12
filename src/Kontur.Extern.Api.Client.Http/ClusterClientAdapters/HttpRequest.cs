@@ -8,6 +8,7 @@ using Kontur.Extern.Api.Client.Http.Serialization;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Commons.Time;
+using Vostok.Logging.Abstractions;
 using Request = Vostok.Clusterclient.Core.Model.Request;
 
 namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
@@ -20,6 +21,7 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
         private readonly Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler;
         private readonly FailoverAsync? failoverAsync;
         private readonly IClusterClient clusterClient;
+        private readonly ILog log;
         private readonly IJsonSerializer serializer;
         private IHttpContent? payload;
 
@@ -30,7 +32,8 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
             Func<IHttpResponse, ValueTask<bool>>? errorResponseHandler,
             FailoverAsync? failoverAsync,
             IClusterClient clusterClient,
-            IJsonSerializer serializer)
+            IJsonSerializer serializer,
+            ILog log)
         {
             this.request = request ?? throw new ArgumentNullException(nameof(request));
             this.requestTimeouts = requestTimeouts ?? throw new ArgumentNullException(nameof(requestTimeouts));
@@ -38,6 +41,7 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
             this.errorResponseHandler = errorResponseHandler;
             this.failoverAsync = failoverAsync;
             this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
+            this.log = log;
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
         }
 
@@ -69,13 +73,13 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
         {
             if (payload == null)
                 throw Errors.ContentMustBeSpecifiedBeforeSetRangeHeader();
-            
+
             var contentLength = payload.Length;
             if (from > to)
                 throw Errors.ContentRangeMustHaveValidBounds(nameof(to), from, to);
             if (contentLength.HasValue && to - from + 1 != contentLength)
                 throw Errors.ContentRangeMustHaveEqualBytesAsContentLength(nameof(to), from, to, contentLength.Value);
-            
+
             if (totalLength.HasValue)
             {
                 if (totalLength < contentLength)
@@ -154,7 +158,9 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
 
         private async Task<IHttpResponse> TrySendRequestAsync(Request resultRequest, TimeSpan leftTimeout)
         {
-            var result = await clusterClient.SendAsync(resultRequest, leftTimeout).ConfigureAwait(false); 
+            var result = await clusterClient.SendAsync(resultRequest, leftTimeout).ConfigureAwait(false);
+            log.Info($"Client request '{resultRequest.Method} {resultRequest.Url}' ended with status = '{result.Status}'; " +
+                     $"response-code = '{result.Response.Code}'; trace-id = '{result.Response.Headers["X-Kontur-Trace-Id"] ?? "none"}'");
             return new HttpResponse(resultRequest, result.Response, serializer);
         }
 
