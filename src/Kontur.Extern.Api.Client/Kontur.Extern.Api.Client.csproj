@@ -11,6 +11,7 @@
     <Description>Kontur.Extern API client</Description>
     <RepositoryUrl>https://github.com/skbkontur/extern-csharp-sdk</RepositoryUrl>
     <PackageTags>kontur extern extern-api</PackageTags>
+    <PackageId>Kontur.Extern.Api.Sdk</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,4 +38,5 @@
     <Folder Include="ApiLevel\Models\Responses\DraftBuilders\DocumentFiles" />
     <Folder Include="ApiLevel\Models\Responses\DraftBuilders\Documents" />
   </ItemGroup>
+  
 </Project>

@@ -2,20 +2,24 @@ full-build > client:
   build:
     target: src/Kontur.Extern.Api.Client.sln
     configuration: Release
-    
+
 client *default:
   deps:
-    - vostok.logging.abstractions    
     - vostok.clusterclient.core
     - vostok.clusterclient.transport
+    - vostok.commons.threading
+    - vostok.commons.time
+    - vostok.logging.abstractions
+    - vostok.logging.console
+    - vostok.logging.formatting
   build:
     target: src/Kontur.Extern.Api.Client.sln
     configuration: Client
   install:
-    - src/Kontur.Extern.Api.Client/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.dll    
+    - src/Kontur.Extern.Api.Client/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.dll
     - src/Kontur.Extern.Api.Client.Common/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.Common.dll
     - src/Kontur.Extern.Api.Client.Cryptography/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.Cryptography.dll
     - src/Kontur.Extern.Api.Client.Auth.Abstractions/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.Auth.Abstractions.dll
     - src/Kontur.Extern.Api.Client.Auth.OpenId/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.Auth.OpenId.dll
     - src/Kontur.Extern.Api.Client.Http/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.Http.dll
-    
+
