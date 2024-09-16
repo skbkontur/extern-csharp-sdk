@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -61,7 +63,7 @@ namespace Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Converters.Enu
                 var enumString = reader.GetString();
                 if (enumString is not null && stringsToValues.TryGetValue(enumString, out var value))
                     return value;
-                
+
                 if (!Enum.TryParse(enumString, out value) && !Enum.TryParse(enumString, true, out value))
                 {
                     throw Errors.CannotParseJsonStringValueToEnumOfType(enumString, TypeToConvert);

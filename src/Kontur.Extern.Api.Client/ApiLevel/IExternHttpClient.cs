@@ -4,6 +4,7 @@ using Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Events;
+using Kontur.Extern.Api.Client.ApiLevel.Clients.Handbooks;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Replies;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;
@@ -25,5 +26,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel
         IOrganizationsClient Organizations { get; }
         IContentsClient Contents { get; }
         IReportsTablesClient ReportsTables { get; }
+        IHandbooksClient Handbooks { get; }
     }
 }
