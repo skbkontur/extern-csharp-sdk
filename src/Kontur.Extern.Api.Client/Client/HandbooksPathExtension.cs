@@ -10,17 +10,17 @@ namespace Kontur.Extern.Api.Client;
 [PublicAPI]
 public static class HandbooksPathExtension
 {
-    public static async Task<List<ControlUnit>> GetControlUnits(this HandbooksPath path, bool? includeDeleted = false, TimeSpan? timeout = null)
+    public static async Task<List<ControlUnit>> GetControlUnits(this HandbooksPath path, TimeSpan? timeout = null)
     {
         var apiClient = path.Services.Api;
-        var controlUnits = await apiClient.Handbooks.GetControlUnits(timeout).ConfigureAwait(false);
+        var controlUnits = await apiClient.Handbooks.GetControlUnits(path.AccountId, timeout).ConfigureAwait(false);
         return controlUnits;
     }
-    
-    public static async Task<List<FnsForm>> GetFnsForms(this HandbooksPath path, bool? includeDeleted = false, TimeSpan? timeout = null)
+
+    public static async Task<List<FnsForm>> GetFnsForms(this HandbooksPath path, TimeSpan? timeout = null)
     {
         var apiClient = path.Services.Api;
-        var fnsForms = await apiClient.Handbooks.GetFnsForms(timeout).ConfigureAwait(false);
+        var fnsForms = await apiClient.Handbooks.GetFnsForms(path.AccountId, timeout).ConfigureAwait(false);
         return fnsForms;
     }
 }
