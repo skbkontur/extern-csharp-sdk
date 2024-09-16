@@ -15,5 +15,6 @@ public class HandbooksTestContext
     }
 
     public Task<List<ControlUnit>> GetControlUnits(Guid accountId) => konturExtern.Accounts.WithId(accountId).Handbooks.GetControlUnits();
+    public Task<ControlUnit> GetControlUnit(Guid accountId, string code) => konturExtern.Accounts.WithId(accountId).Handbooks.GetControlUnit(code);
     public Task<List<FnsForm>> GetFnsForms(Guid accountId) => konturExtern.Accounts.WithId(accountId).Handbooks.GetFnsForms();
 }

@@ -17,6 +17,13 @@ public static class HandbooksPathExtension
         return controlUnits;
     }
 
+    public static async Task<ControlUnit> GetControlUnit(this HandbooksPath path, string code, TimeSpan? timeout = null)
+    {
+        var apiClient = path.Services.Api;
+        var controlUnit = await apiClient.Handbooks.GetControlUnit(path.AccountId, code, timeout).ConfigureAwait(false);
+        return controlUnit;
+    }
+
     public static async Task<List<FnsForm>> GetFnsForms(this HandbooksPath path, TimeSpan? timeout = null)
     {
         var apiClient = path.Services.Api;

@@ -20,6 +20,13 @@ public class HandbooksClient : IHandbooksClient
         return controlUnits;
     }
 
+    public async Task<ControlUnit> GetControlUnit(Guid accountId, string code, TimeSpan? timeout = null)
+    {
+        var url = new RequestUrlBuilder($"/v1/{accountId}/handbooks/controlUnits/{code}").Build();
+        var controlUnit = await http.GetAsync<ControlUnit>(url);
+        return controlUnit;
+    }
+
     public async Task<List<FnsForm>> GetFnsForms(Guid accountId, TimeSpan? timeout = null)
     {
         var url = new RequestUrlBuilder($"/v1/{accountId}/handbooks/fnsForms").Build();

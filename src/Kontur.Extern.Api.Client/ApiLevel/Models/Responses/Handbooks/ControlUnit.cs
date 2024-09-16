@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using System.Collections.Concurrent;
+using System.Security.Cryptography.X509Certificates;
+using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
 
@@ -34,4 +36,9 @@ public class ControlUnit
     /// Контакты
     /// </summary>
     public ControlUnitContacts Contacts { get; set; }
+
+    /// <summary>
+    /// Список сертификатов
+    /// </summary>
+    public ConcurrentDictionary<string, X509Certificate2> Certificates;
 }

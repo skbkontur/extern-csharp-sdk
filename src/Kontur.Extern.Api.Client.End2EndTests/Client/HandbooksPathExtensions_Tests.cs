@@ -13,7 +13,7 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
         : base(output, environment)
     {
     }
-    
+
     [Fact]
     public async Task Get_control_units_should_be_success()
     {
@@ -25,7 +25,16 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
             controlUnit.Name.Should().NotBeNullOrEmpty();
         }
     }
-    
+
+    public async Task Get_control_unit_should_be_success()
+    {
+        var code = "084-034";
+        var controlUnit = await Context.Handbooks.GetControlUnit(AccountId, code);
+        controlUnit.Should().NotBeNull();
+        controlUnit.Code.Should().Be(code);
+        controlUnit.Name.Should().NotBeNullOrEmpty();
+    }
+
     [Fact]
     public async Task Get_fns_forms_should_be_success()
     {
