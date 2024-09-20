@@ -6,7 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Vostok.ClusterClient.Core" Version="0.1.36" />
+      <PackageReference Include="Vostok.ClusterClient.Core" Version="0.1.49" />
+      <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.32" />
     </ItemGroup>
 
 </Project>

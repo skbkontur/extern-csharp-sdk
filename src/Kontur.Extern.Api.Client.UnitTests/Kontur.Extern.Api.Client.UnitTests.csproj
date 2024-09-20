@@ -18,7 +18,9 @@
     <PackageReference Include="nunit" Version="3.13.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-    <PackageReference Include="Vostok.Logging.Console" Version="1.0.6" />
+    <PackageReference Include="Vostok.Logging.Abstractions" Version="1.0.32" />
+    <PackageReference Include="Vostok.Logging.Console" Version="1.0.10" />
+    <PackageReference Include="Vostok.Logging.Formatting" Version="1.0.14" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,11 @@
+using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Http.Configurations;
 using Kontur.Extern.Api.Client.Http.Retries;
 using Vostok.Clusterclient.Core;
+using Vostok.Clusterclient.Core.Model;
 using Vostok.Clusterclient.Transport;
 
 namespace Kontur.Extern.Api.Client.Testing.End2End.ClusterClient
@@ -14,6 +18,15 @@ namespace Kontur.Extern.Api.Client.Testing.End2End.ClusterClient
 
         public IIdempotentRequestSpecification? IdempotentRequests => null;
         public IRetryStrategyPolicy? RetryStrategy => null;
+        private readonly List<Func<Request, Request>> requestTransforms = new();
+
+        [UsedImplicitly]
+        public TestingHttpClientConfiguration WithRequestTransform(Func<Request, Request> requestTransform)
+        {
+            requestTransforms.Add(requestTransform);
+
+            return this;
+        }
 
         public void Apply(IClusterClientConfiguration config)
         {
@@ -21,7 +34,10 @@ namespace Kontur.Extern.Api.Client.Testing.End2End.ClusterClient
             config.Logging.LogResultDetails = false;
             config.Logging.LogRequestDetails = false;
             config.Logging.LogReplicaResults = false;
-        
+
+            foreach (var requestTransform in requestTransforms)
+                config.AddRequestTransform(requestTransform);
+
             config.SetupUniversalTransport();
             config.Transport = new DumpRequestsAndResponsesTransport(config.Transport, config.Log);
             config.SetupExternalUrlAsSingleReplicaCluster(serverUrl.ToUrl());

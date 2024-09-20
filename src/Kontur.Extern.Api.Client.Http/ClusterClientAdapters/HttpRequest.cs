@@ -159,8 +159,14 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
         private async Task<IHttpResponse> TrySendRequestAsync(Request resultRequest, TimeSpan leftTimeout)
         {
             var result = await clusterClient.SendAsync(resultRequest, leftTimeout).ConfigureAwait(false);
-            log.Info($"Client request '{resultRequest.Method} {resultRequest.Url}' ended with status = '{result.Status}'; " +
-                     $"response-code = '{result.Response.Code}'; trace-id = '{result.Response.Headers["X-Kontur-Trace-Id"] ?? "none"}'");
+
+            var resultLog = $"Client request '{resultRequest.Method} {resultRequest.Url}' ended with status = '{result.Status}'; " +
+                            $"response-code = '{result.Response.Code}'; trace-id = '{result.Response.Headers["X-Kontur-Trace-Id"] ?? "none"}'";
+            if (result.Response.IsSuccessful)
+                log.Info(resultLog);
+            else
+                log.Error(resultLog);
+
             return new HttpResponse(resultRequest, result.Response, serializer);
         }
 
