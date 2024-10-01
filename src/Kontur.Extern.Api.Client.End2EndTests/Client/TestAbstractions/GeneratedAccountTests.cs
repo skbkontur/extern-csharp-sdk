@@ -11,7 +11,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions
     [Collection(IsolatedAccountEnvironmentCollection.Name)]
     public abstract class GeneratedAccountTests 
     {
-        private readonly IsolatedAccountEnvironment environment;
+        protected readonly IsolatedAccountEnvironment environment;
         protected readonly ITestOutputHelper output;
 
         protected GeneratedAccountTests(ITestOutputHelper output, IsolatedAccountEnvironment environment)

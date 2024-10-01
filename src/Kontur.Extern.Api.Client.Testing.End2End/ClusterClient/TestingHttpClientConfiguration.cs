@@ -39,7 +39,6 @@ namespace Kontur.Extern.Api.Client.Testing.End2End.ClusterClient
                 config.AddRequestTransform(requestTransform);
 
             config.SetupUniversalTransport();
-            config.Transport = new DumpRequestsAndResponsesTransport(config.Transport, config.Log);
             config.SetupExternalUrlAsSingleReplicaCluster(serverUrl.ToUrl());
         }
     }
