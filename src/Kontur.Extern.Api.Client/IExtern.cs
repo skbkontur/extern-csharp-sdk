@@ -8,5 +8,6 @@ namespace Kontur.Extern.Api.Client
     {
         Task ReauthenticateAsync(TimeSpan? timeout = null);
         AccountListPath Accounts { get; }
+        EventsListPath Events { get; }
     }
 }

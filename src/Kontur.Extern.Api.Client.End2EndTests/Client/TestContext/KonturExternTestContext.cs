@@ -41,6 +41,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext
         public DraftsTestContext Drafts => new(konturExtern, CreateScope);
         public ContentsContext Contents => new(konturExtern);
         public HandbooksTestContext Handbooks => new(konturExtern);
+        public EventsTestContext Events => new(konturExtern);
 
         private ValueTask<EntityScope<TEntity>> CreateScope<TEntity>(
             Func<Task<TEntity>> entityCreate,

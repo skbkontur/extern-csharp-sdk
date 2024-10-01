@@ -118,6 +118,7 @@ namespace Kontur.Extern.Api.Client
                 services.Authenticator.AuthenticateAsync(true, timeout);
 
             public AccountListPath Accounts => new(services);
+            public EventsListPath Events => new(services);
         }
     }
 }
