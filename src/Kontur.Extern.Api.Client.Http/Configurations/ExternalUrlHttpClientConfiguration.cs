@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Http.Exceptions;
 using Kontur.Extern.Api.Client.Http.Retries;
@@ -28,12 +29,20 @@ namespace Kontur.Extern.Api.Client.Http.Configurations
         public IRetryStrategyPolicy RetryStrategy => new ExponentialBackOffRetryStrategyPolicy();
 
         private readonly List<Func<Request, Request>> requestTransforms = new();
+        private IWebProxy? webProxy;
 
         [UsedImplicitly]
         public ExternalUrlHttpClientConfiguration WithRequestTransform(Func<Request, Request> requestTransform)
         {
             requestTransforms.Add(requestTransform);
 
+            return this;
+        }
+
+        [UsedImplicitly]
+        public ExternalUrlHttpClientConfiguration WithWebProxy(IWebProxy proxy)
+        {
+            webProxy = proxy;
             return this;
         }
 
@@ -48,7 +57,11 @@ namespace Kontur.Extern.Api.Client.Http.Configurations
             foreach (var requestTransform in requestTransforms)
                 config.AddRequestTransform(requestTransform);
 
-            config.SetupUniversalTransport();
+            if (webProxy != null)
+                config.SetupUniversalTransport(new UniversalTransportSettings {Proxy = webProxy});
+            else
+                config.SetupUniversalTransport();
+
             config.SetupExternalUrlAsSingleReplicaCluster(externalUrl);
         }
     }
