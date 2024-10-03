@@ -29,12 +29,14 @@ namespace Kontur.Extern.Api.Client.Testing.End2End.ClusterClient
 
             return this;
         }
+
         [UsedImplicitly]
         public TestingHttpClientConfiguration WithWebProxy(IWebProxy proxy)
         {
             webProxy = proxy;
             return this;
         }
+
         public void Apply(IClusterClientConfiguration config)
         {
             config.Logging.LogReplicaRequests = false;
@@ -46,7 +48,7 @@ namespace Kontur.Extern.Api.Client.Testing.End2End.ClusterClient
                 config.AddRequestTransform(requestTransform);
 
             if (webProxy != null)
-                config.SetupUniversalTransport(new UniversalTransportSettings() { Proxy = webProxy });
+                config.SetupUniversalTransport(new UniversalTransportSettings {Proxy = webProxy});
             else
                 config.SetupUniversalTransport();
 

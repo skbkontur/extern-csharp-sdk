@@ -38,6 +38,7 @@ namespace Kontur.Extern.Api.Client.Http.Configurations
 
             return this;
         }
+
         [UsedImplicitly]
         public ExternalUrlHttpClientConfiguration WithWebProxy(IWebProxy proxy)
         {
@@ -57,7 +58,7 @@ namespace Kontur.Extern.Api.Client.Http.Configurations
                 config.AddRequestTransform(requestTransform);
 
             if (webProxy != null)
-               config.SetupUniversalTransport(new UniversalTransportSettings() { Proxy = webProxy });
+                config.SetupUniversalTransport(new UniversalTransportSettings {Proxy = webProxy});
             else
                 config.SetupUniversalTransport();
 
