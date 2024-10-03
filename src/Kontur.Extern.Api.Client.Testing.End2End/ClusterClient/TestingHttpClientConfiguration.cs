@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Http.Configurations;
@@ -19,6 +20,7 @@ namespace Kontur.Extern.Api.Client.Testing.End2End.ClusterClient
         public IIdempotentRequestSpecification? IdempotentRequests => null;
         public IRetryStrategyPolicy? RetryStrategy => null;
         private readonly List<Func<Request, Request>> requestTransforms = new();
+        private IWebProxy? webProxy;
 
         [UsedImplicitly]
         public TestingHttpClientConfiguration WithRequestTransform(Func<Request, Request> requestTransform)
@@ -27,7 +29,12 @@ namespace Kontur.Extern.Api.Client.Testing.End2End.ClusterClient
 
             return this;
         }
-
+        [UsedImplicitly]
+        public TestingHttpClientConfiguration WithWebProxy(IWebProxy proxy)
+        {
+            webProxy = proxy;
+            return this;
+        }
         public void Apply(IClusterClientConfiguration config)
         {
             config.Logging.LogReplicaRequests = false;
@@ -38,7 +45,11 @@ namespace Kontur.Extern.Api.Client.Testing.End2End.ClusterClient
             foreach (var requestTransform in requestTransforms)
                 config.AddRequestTransform(requestTransform);
 
-            config.SetupUniversalTransport();
+            if (webProxy != null)
+                config.SetupUniversalTransport(new UniversalTransportSettings() { Proxy = webProxy });
+            else
+                config.SetupUniversalTransport();
+
             config.SetupExternalUrlAsSingleReplicaCluster(serverUrl.ToUrl());
         }
     }
