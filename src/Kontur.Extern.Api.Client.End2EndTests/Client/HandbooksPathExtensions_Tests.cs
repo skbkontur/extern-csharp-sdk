@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Handbooks;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
 using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Api.Client.End2EndTests.TestEnvironment;
+using Kontur.Extern.Api.Client.Exceptions;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -16,55 +19,91 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
     }
 
     [Fact]
-    public async Task Get_control_units_should_be_success()
+    public async Task Should_return_control_units()
     {
-        var controlUnitList = await Context.Handbooks.GetControlUnits();
-        controlUnitList.Should().NotBeNullOrEmpty();
-        foreach (var controlUnit in controlUnitList)
-        {
-            controlUnit.Code.Should().NotBeNullOrEmpty();
-            controlUnit.Name.Should().NotBeNullOrEmpty();
-        }
+        var controlUnitsPage = await Context.Handbooks.GetControlUnits();
+        controlUnitsPage.ControlUnits.Length.Should().Be(100);
+        controlUnitsPage.Take.Should().Be(100);
+        controlUnitsPage.Skip.Should().Be(0);
     }
 
     [Fact]
-    public async Task Get_control_units_with_filter_should_be_success()
+    public async Task Should_return_control_units_with_filter()
     {
-        var regions = new[] {"14", "15"};
-        var types = new[] {"Pfr"};
-        var controlUnitList = await Context.Handbooks.GetControlUnits(new HandbookFilter
+        var handbookFilter = new ControlUnitsFilter
         {
-            Regions = regions,
-            Types = types
-        });
-        controlUnitList.Should().NotBeNullOrEmpty();
-        foreach (var controlUnit in controlUnitList)
-        {
-            controlUnit.Code.Should().NotBeNullOrEmpty();
-            controlUnit.Name.Should().NotBeNullOrEmpty();
-            regions.Should().Contain(controlUnit.Region);
-            types.Should().Contain(controlUnit.Type.ToString());
-        }
+            Region = "28",
+            Type = ControlUnitType.Pfr,
+            Skip = 5,
+            Take = 50
+        };
+        var controlUnitsPage = await Context.Handbooks.GetControlUnits(handbookFilter);
+        controlUnitsPage.ControlUnits.All(x => x.Region == handbookFilter.Region && x.Type == handbookFilter.Type).Should().BeTrue();
+        controlUnitsPage.Take.Should().BeGreaterThan(0);
+        controlUnitsPage.Skip.Should().Be(handbookFilter.Skip);
     }
 
     [Fact]
-    public async Task Get_control_unit_should_be_success()
+    public async Task Should_return_empty_array_when_skip_greater_than_total_count()
     {
-        var code = "016-028";
+        var handbookFilter = new ControlUnitsFilter
+        {
+            Region = "33",
+            Skip = 1600,
+            Take = 50
+        };
+        var controlUnitsPage = await Context.Handbooks.GetControlUnits(handbookFilter);
+        controlUnitsPage.ControlUnits.All(x => x.Region == handbookFilter.Region).Should().BeTrue();
+        controlUnitsPage.TotalCount.Should().BeGreaterThan(0);
+        controlUnitsPage.Take.Should().Be(0);
+        controlUnitsPage.Skip.Should().Be(handbookFilter.Skip);
+    }
+
+    [Fact]
+    public async Task Should_return_control_units_with_inactive()
+    {
+        var handbookFilter = new ControlUnitsFilter
+        {
+            IncludeInactive = true
+        };
+        var controlUnitsPage = await Context.Handbooks.GetControlUnits();
+        var controlUnitsPageWithInactive = await Context.Handbooks.GetControlUnits(handbookFilter);
+        controlUnitsPageWithInactive.TotalCount.Should().BeGreaterThan(controlUnitsPage.TotalCount);
+    }
+
+    [Fact]
+    public async Task Should_return_control_unit_by_code()
+    {
+        var code = "084-034";
         var controlUnit = await Context.Handbooks.GetControlUnit(code);
-        controlUnit.Should().NotBeNull();
         controlUnit.Code.Should().Be(code);
-        controlUnit.Name.Should().NotBeNullOrEmpty();
     }
 
     [Fact]
-    public async Task Get_fns_forms_should_be_success()
+    public async Task Should_return_fall_when_control_unit_not_exist()
     {
-        var fnsForms = await Context.Handbooks.GetFnsForms();
-        fnsForms.Should().NotBeNullOrEmpty();
-        foreach (var fnsForm in fnsForms)
-        {
-            fnsForm.Name.Should().NotBeNullOrEmpty();
-        }
+        const string code = "123456";
+        var ex = await Assert.ThrowsAsync<ApiException>(
+            () => Context.Handbooks.GetControlUnit(code)
+        );
+        ex.Message.Should().Be($"Not found control unit with code '{code}'");
+    }
+
+    [Fact]
+    public async Task Should_return_fns_forms()
+    {
+        var fnsFormsPage = await Context.Handbooks.GetFnsForms();
+        fnsFormsPage.FnsForms.Length.Should().Be(100);
+        fnsFormsPage.Take.Should().Be(100);
+        fnsFormsPage.Skip.Should().Be(0);
+    }
+
+    [Fact]
+    public async Task Should_return_fns_forms_with_filter()
+    {
+        var fnsFormsPage = await Context.Handbooks.GetFnsForms(skip: 5, take: 70);
+        fnsFormsPage.FnsForms.Length.Should().Be(70);
+        fnsFormsPage.Take.Should().Be(70);
+        fnsFormsPage.Skip.Should().Be(5);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Handbooks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
@@ -14,33 +13,38 @@ public class HandbooksClient : IHandbooksClient
 
     public HandbooksClient(IHttpRequestFactory http) => this.http = http;
 
-    public async Task<List<ControlUnit>> GetControlUnits(HandbookFilter? handbookFilter = null, TimeSpan? timeout = null)
+    public async Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? handbookFilter = null, TimeSpan? timeout = null)
     {
-        var url = new RequestUrlBuilder("/v1/handbooks/controlUnits");
+        var url = new RequestUrlBuilder("/v1/handbooks/control-units");
         if (handbookFilter != null)
         {
-            foreach (var e in handbookFilter.Types)
-                url.AppendToQuery("types", e);
-            foreach (var e in handbookFilter.Regions)
-                url.AppendToQuery("regions", e);
+            url.AppendToQuery("type", handbookFilter.Type);
+            url.AppendToQuery("region", handbookFilter.Region);
+            url.AppendToQuery("take", handbookFilter.Take);
+            url.AppendToQuery("skip", handbookFilter.Skip);
+            url.AppendToQuery("includeinactive", handbookFilter.IncludeInactive);
+
         }
 
         var uri = url.Build();
-        var controlUnits = await http.GetAsync<List<ControlUnit>>(uri);
+        var controlUnits = await http.GetAsync<ControlUnitsPage>(uri);
         return controlUnits;
     }
 
-    public async Task<ControlUnit> GetControlUnit(string code, TimeSpan? timeout = null)
+    public async Task<ControlUnitsPageItem> GetControlUnit(string code, TimeSpan? timeout = null)
     {
-        var url = new RequestUrlBuilder($"/v1/handbooks/controlUnit/{code}").Build();
-        var controlUnit = await http.GetAsync<ControlUnit>(url);
+        var url = new RequestUrlBuilder($"/v1/handbooks/control-units/{code}").Build();
+        var controlUnit = await http.GetAsync<ControlUnitsPageItem>(url);
         return controlUnit;
     }
 
-    public async Task<List<FnsForm>> GetFnsForms(TimeSpan? timeout = null)
+    public async Task<FnsFormsPage> GetFnsForms(int skip, int take, TimeSpan? timeout = null)
     {
-        var url = new RequestUrlBuilder("/v1/handbooks/fnsForms").Build();
-        var fnsForms = await http.GetAsync<List<FnsForm>>(url);
+        var url = new RequestUrlBuilder("/v1/handbooks/fns-forms")
+            .AppendToQuery("skip", skip)
+            .AppendToQuery("take", take)
+            .Build();
+        var fnsForms = await http.GetAsync<FnsFormsPage>(url);
         return fnsForms;
     }
 }

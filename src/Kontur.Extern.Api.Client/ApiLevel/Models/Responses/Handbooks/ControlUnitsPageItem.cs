@@ -1,11 +1,9 @@
-﻿using System.Collections.Concurrent;
-using System.Security.Cryptography.X509Certificates;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
 
 [PublicAPI]
-public class ControlUnit
+public class ControlUnitsPageItem
 {
     /// <summary>
     /// Тип контролирующего органа
@@ -40,5 +38,5 @@ public class ControlUnit
     /// <summary>
     /// Список сертификатов
     /// </summary>
-    public ConcurrentDictionary<string, X509Certificate2> Certificates;
+    public ControlUnitCertificateInfo[] Certificates;
 }
