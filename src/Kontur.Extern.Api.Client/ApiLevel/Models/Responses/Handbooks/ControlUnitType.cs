@@ -5,7 +5,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
 [PublicAPI]
 public enum ControlUnitType
 {
-    None = 0,
+    Unknown = -1,
     Fns,
     Fss,
     Fst,

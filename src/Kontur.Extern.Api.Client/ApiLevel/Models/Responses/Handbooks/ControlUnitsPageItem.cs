@@ -21,7 +21,7 @@ public class ControlUnitsPageItem
     public string Name { get; set; }
 
     /// <summary>
-    /// Регион
+    /// Номер региона
     /// </summary>
     public string Region { get; set; }
 

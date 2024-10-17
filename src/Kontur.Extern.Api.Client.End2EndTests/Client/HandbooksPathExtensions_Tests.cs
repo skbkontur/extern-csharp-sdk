@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Handbooks;
@@ -86,7 +87,7 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
         var ex = await Assert.ThrowsAsync<ApiException>(
             () => Context.Handbooks.GetControlUnit(code)
         );
-        ex.Message.Should().Be($"Not found control unit with code '{code}'");
+        ex.StatusCode.Should().Be(HttpStatusCode.NotFound);
     }
 
     [Fact]
@@ -105,5 +106,14 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
         fnsFormsPage.FnsForms.Length.Should().Be(70);
         fnsFormsPage.Take.Should().Be(70);
         fnsFormsPage.Skip.Should().Be(5);
+    }
+
+    [Fact]
+    public async Task Should_return_empty_fns_forms_when_skip_is_more_than_total_count()
+    {
+        var fnsFormsPage = await Context.Handbooks.GetFnsForms(skip: 2000, take: 50);
+        fnsFormsPage.FnsForms.Length.Should().Be(0);
+        fnsFormsPage.Take.Should().Be(0);
+        fnsFormsPage.Skip.Should().Be(2000);
     }
 }
