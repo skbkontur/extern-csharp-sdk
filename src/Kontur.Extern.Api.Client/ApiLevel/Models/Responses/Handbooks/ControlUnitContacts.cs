@@ -8,29 +8,35 @@ public class ControlUnitContacts
     /// <summary>
     /// Короткое наименование
     /// </summary>
-    public string ShortName { get; }
+    public string ShortName { get; set; }
+
     /// <summary>
     /// Полное наименование
     /// </summary>
-    public string FullName { get; }
+    public string FullName { get; set; }
+
     /// <summary>
     /// ИНН контролирующего органа
     /// </summary>
-    public string Inn { get; }
+    public string Inn { get; set; }
+
     /// <summary>
     /// КПП контролирующего органа
     /// </summary>
-    public string Kpp { get; }
+    public string Kpp { get; set; }
+
     /// <summary>
     /// Юридический адрес
     /// </summary>
-    public string Address { get; }
+    public string Address { get; set; }
+
     /// <summary>
     /// Контактный телефон
     /// </summary>
-    public string Phone { get; }
+    public string Phone { get; set; }
+
     /// <summary>
     /// Электронная почта
     /// </summary>
-    public string Email { get; }
+    public string Email { get; set; }
 }

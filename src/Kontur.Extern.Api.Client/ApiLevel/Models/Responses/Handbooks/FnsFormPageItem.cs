@@ -3,7 +3,7 @@
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
 
 [PublicAPI]
-public class FnsForm
+public class FnsFormPageItem
 {
     /// <summary>
     /// Код по КНД

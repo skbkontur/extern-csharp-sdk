@@ -3,7 +3,7 @@
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
 
 [PublicAPI]
-public class ControlUnit
+public class ControlUnitsPageItem
 {
     /// <summary>
     /// Тип контролирующего органа
@@ -21,7 +21,7 @@ public class ControlUnit
     public string Name { get; set; }
 
     /// <summary>
-    /// Регион
+    /// Номер региона
     /// </summary>
     public string Region { get; set; }
 
@@ -34,4 +34,9 @@ public class ControlUnit
     /// Контакты
     /// </summary>
     public ControlUnitContacts Contacts { get; set; }
+
+    /// <summary>
+    /// Список сертификатов
+    /// </summary>
+    public ControlUnitCertificateInfo[] Certificates;
 }

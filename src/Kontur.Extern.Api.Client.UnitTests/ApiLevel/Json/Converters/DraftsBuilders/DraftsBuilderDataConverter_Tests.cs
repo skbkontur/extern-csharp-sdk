@@ -17,6 +17,7 @@ using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerato
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers.BogusExtensions;
 using NUnit.Framework;
+using Vostok.Logging.Console;
 
 namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuilders
 {
@@ -29,7 +30,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuil
         [SetUp]
         public void SetUp()
         {
-            serializer = JsonSerializerFactory.CreateJsonSerializer(ignoreNullValues: false);
+            serializer = JsonSerializerFactory.CreateJsonSerializer(new ConsoleLog(), ignoreNullValues: false);
             autoFaker = new AutoFakerFactory().AddDraftsBuilderEntitiesGeneration().Create();
         }
 

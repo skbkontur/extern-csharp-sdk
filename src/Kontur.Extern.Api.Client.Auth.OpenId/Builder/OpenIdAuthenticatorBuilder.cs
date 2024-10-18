@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Auth.Abstractions;
@@ -29,10 +30,13 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
         public ILog Log { get; }
         private readonly ICrypt cryptoProvider;
 
-        public SpecifyClientIdentification WithOpenIdProviderUrl(Uri url, RequestTimeouts? requestTimeouts = null)
+        public SpecifyClientIdentification WithOpenIdProviderUrl(Uri url, RequestTimeouts? requestTimeouts = null, IWebProxy? webProxy = null)
         {
-            return WithHttpConfiguration(new ExternalUrlHttpClientConfiguration(url), requestTimeouts);
+            return WithHttpConfiguration(webProxy != null ?
+                new ExternalUrlHttpClientConfiguration(url).WithWebProxy(webProxy) :
+                new ExternalUrlHttpClientConfiguration(url), requestTimeouts);
         }
+
 
         [SuppressMessage("ReSharper", "ParameterHidesMember")]
         public SpecifyClientIdentification WithHttpConfiguration(IHttpClientConfiguration clientConfiguration, RequestTimeouts? requestTimeouts = null) =>

@@ -9,6 +9,7 @@ using Kontur.Extern.Api.Client.Models.ApiErrors;
 using Kontur.Extern.Api.Client.Models.ApiTasks;
 using Kontur.Extern.Api.Client.Models.Common;
 using NUnit.Framework;
+using Vostok.Logging.Console;
 
 namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters
 {
@@ -17,8 +18,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters
         private IJsonSerializer serializer = null!;
 
         [SetUp]
-        public void SetUp() => 
-            serializer = JsonSerializerFactory.CreateJsonSerializer();
+        public void SetUp() =>
+            serializer = JsonSerializerFactory.CreateJsonSerializer(new ConsoleLog());
 
         public static IEnumerable<ApiTaskResult<SuccessResult, FailureResult>> TaskOfTwoResultResults
         {
@@ -58,7 +59,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters
                 yield return ApiTaskResult<SuccessResult>.TaskFailure(new ApiError(errorType, HttpStatusCode.BadRequest, "message"), id, taskType);
             }
         }
-        
+
         [TestCaseSource(nameof(TaskOfOneResultResults))]
         public void Should_serialize_deserialize_task_result_of_one_results_in_running_state(ApiTaskResult<SuccessResult> taskResult)
         {
@@ -90,7 +91,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters
 
             public bool IsEmpty => Id == Guid.Empty;
         }
-        
+
         [PublicAPI]
         internal class FailureResult : IApiTaskResult
         {

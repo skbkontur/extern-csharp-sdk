@@ -5,6 +5,7 @@ using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using NUnit.Framework;
+using Vostok.Logging.Console;
 
 namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Drafts
 {
@@ -20,7 +21,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Drafts
         private IJsonSerializer serializer = null!;
 
         [SetUp]
-        public void SetUp() => serializer = JsonSerializerFactory.CreateJsonSerializer();
+        public void SetUp() => serializer = JsonSerializerFactory.CreateJsonSerializer(new ConsoleLog());
 
         [Test]
         public void Should_serialize_sender_request_to_json()

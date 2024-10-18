@@ -26,7 +26,7 @@ namespace Kontur.Extern.Api.Client
     {
         private static IPollingStrategy DefaultDelayPollingStrategy => new ConstantDelayPollingStrategy(5.Seconds());
         private static ICrypt DefaultCryptoProvider => new WinApiCrypt();
-        
+
         public bool EnableUnauthorizedFailover { get; set; }
 
         public IExtern Create(
@@ -45,7 +45,7 @@ namespace Kontur.Extern.Api.Client
             cryptoProvider ??= DefaultCryptoProvider;
             requestTimeouts ??= new RequestTimeouts();
 
-            var jsonSerializer = JsonSerializerFactory.CreateJsonSerializer();
+            var jsonSerializer = JsonSerializerFactory.CreateJsonSerializer(log);
             httpRequestFactory ??= CreateHttp(clientConfiguration, requestTimeouts, authenticator, jsonSerializer, log);
             api ??= new ExternHttpClient(httpRequestFactory);
             var services = new ExternClientServices(contentManagementOptions, httpRequestFactory, jsonSerializer, api, pollingStrategy, authenticator, cryptoProvider);
@@ -53,9 +53,9 @@ namespace Kontur.Extern.Api.Client
         }
 
         private HttpRequestFactory CreateHttp(
-            IHttpClientConfiguration clientConfiguration, 
-            RequestTimeouts requestTimeouts, 
-            IAuthenticator authenticator, 
+            IHttpClientConfiguration clientConfiguration,
+            RequestTimeouts requestTimeouts,
+            IAuthenticator authenticator,
             IJsonSerializer jsonSerializer,
             ILog log)
         {
@@ -63,7 +63,7 @@ namespace Kontur.Extern.Api.Client
                 EnableUnauthorizedFailover
                     ? (response, attempt) => AuthorizationErrorsFailover(requestTimeouts, authenticator, response, attempt)
                     : null;
-            
+
             return new HttpRequestFactory(
                 clientConfiguration,
                 requestTimeouts,
@@ -73,7 +73,7 @@ namespace Kontur.Extern.Api.Client
                 jsonSerializer,
                 log
             );
-            
+
             static async Task<Request> AuthenticateRequestAsync(IAuthenticator authProvider, Request request, TimeSpan timeout)
             {
                 return await authProvider.AuthenticateRequestAsync(request, false, timeout).ConfigureAwait(false);
@@ -114,7 +114,7 @@ namespace Kontur.Extern.Api.Client
 
             public Extern(IExternClientServices services) => this.services = services;
 
-            public Task ReauthenticateAsync(TimeSpan? timeout) => 
+            public Task ReauthenticateAsync(TimeSpan? timeout) =>
                 services.Authenticator.AuthenticateAsync(true, timeout);
 
             public AccountListPath Accounts => new(services);
