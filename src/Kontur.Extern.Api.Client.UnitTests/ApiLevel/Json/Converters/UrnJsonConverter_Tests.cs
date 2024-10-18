@@ -4,6 +4,7 @@ using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Testing.Helpers;
 using NUnit.Framework;
+using Vostok.Logging.Console;
 
 namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters
 {
@@ -12,8 +13,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters
         private IJsonSerializer serializer = null!;
 
         [SetUp]
-        public void SetUp() => 
-            serializer = JsonSerializerFactory.CreateJsonSerializer();
+        public void SetUp() =>
+            serializer = JsonSerializerFactory.CreateJsonSerializer(new ConsoleLog());
 
         [TestCase("urn:ns:val")]
         [TestCase("urn:ns")]
@@ -24,13 +25,13 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters
 
             json.Should().Be(value.ToQuoted());
         }
-        
+
         [TestCase("urn:ns:val")]
         [TestCase("urn:ns")]
         public void Should_deserialize_URN_from_string_value(string value)
         {
             var json = value.ToQuoted();
-            
+
             var deserialized = serializer.Deserialize<Urn>(json);
 
             deserialized.ToString().Should().BeEquivalentTo(value);

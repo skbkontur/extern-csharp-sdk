@@ -11,6 +11,7 @@ using Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites;
 using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.Docflows;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using NUnit.Framework;
+using Vostok.Logging.Console;
 
 namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
 {
@@ -19,20 +20,20 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
     {
         private static IJsonSerializer serializer = null!;
         private DocflowDocumentDescriptionGenerator descriptionGenerator = null!;
-            
+
         [SetUp]
         public void SetUp()
         {
-            serializer = JsonSerializerFactory.CreateJsonSerializer(ignoreNullValues: false);
+            serializer = JsonSerializerFactory.CreateJsonSerializer(new ConsoleLog(), ignoreNullValues: false);
             descriptionGenerator = new DocflowDocumentDescriptionGenerator();
         }
-        
+
         [TestCaseSource(nameof(DocumentTypeToRequisitesCases))]
         public void Should_deserialize_document_description_with_requisites_by_it_document_type(RequisitesCase requisitesCase)
         {
             var (json, expectedDescription) = requisitesCase.GenerateDescription(serializer, descriptionGenerator);
             Console.WriteLine($"Generated JSON: {json}");
-            
+
             var description = serializer.Deserialize<DocflowDocumentDescription>(json);
 
             description.Type.Should().Be(requisitesCase.DocumentType);
@@ -67,11 +68,11 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
             EnumLikeType
                 .AllEnumValuesFromNestedTypesOfStruct<DocumentType>()
                 .Select(dt => new RequisitesCase(dt, DocumentDescriptionRequisitesTypes.GetRequisiteType(dt)));
-        
+
         public record RequisitesCase
         {
             private readonly Type requisitesType;
-            
+
             public RequisitesCase(DocumentType documentType, Type requisitesType)
             {
                 DocumentType = documentType;
@@ -84,7 +85,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
                 var json = serializer.SerializeToIndentedString(docflow);
                 return (json, docflow);
             }
-            
+
             public DocumentType DocumentType { get; }
 
             public override string ToString() => $"{DocumentType} -> {requisitesType.Name}";

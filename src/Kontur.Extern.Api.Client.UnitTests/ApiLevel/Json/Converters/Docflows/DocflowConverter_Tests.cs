@@ -12,6 +12,7 @@ using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.Docflows;
 using Kontur.Extern.Api.Client.UnitTests.TestHelpers;
 using NUnit.Framework;
+using Vostok.Logging.Console;
 
 namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
 {
@@ -20,11 +21,11 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
     {
         private static IJsonSerializer serializer = null!;
         private DocflowDescriptionGenerator descriptionGenerator = null!;
-            
+
         [SetUp]
         public void SetUp()
         {
-            serializer = JsonSerializerFactory.CreateJsonSerializer();
+            serializer = JsonSerializerFactory.CreateJsonSerializer(new ConsoleLog());
             descriptionGenerator = new DocflowDescriptionGenerator();
         }
 
@@ -33,7 +34,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
         {
             var (json, expectedDocflow) = descriptionCase.GenerateWithDocuments(serializer, descriptionGenerator);
             Console.WriteLine($"Generated JSON: {json}");
-            
+
             var docflow = serializer.Deserialize<IDocflowWithDocuments>(json);
 
             docflow.Type.Should().Be(descriptionCase.DocflowType);
@@ -45,7 +46,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
         {
             var (json, expectedDocflow) = descriptionCase.GenerateWithoutDocuments(serializer, descriptionGenerator);
             Console.WriteLine($"Generated JSON: {json}");
-            
+
             var docflow = serializer.Deserialize<IDocflow>(json);
 
             docflow.Type.Should().Be(descriptionCase.DocflowType);
@@ -59,7 +60,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
             var originalDocflow = descriptionGenerator.GenerateDocflowWithoutDescription(docflowType);
             var json = serializer.SerializeToIndentedString(originalDocflow);
             Console.WriteLine($"Generated JSON: {json}");
-            
+
             var docflow = serializer.Deserialize<Docflow>(json);
 
             docflow.Type.Should().Be(docflowType);
@@ -73,7 +74,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
             var originalDocflow = descriptionGenerator.GenerateDocflowWithoutDescription(docflowType);
             var json = serializer.SerializeToIndentedString(originalDocflow);
             Console.WriteLine($"Generated JSON: {json}");
-            
+
             var docflow = serializer.Deserialize<Docflow>(json);
 
             docflow.Type.Should().Be(docflowType);
@@ -91,7 +92,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
             };
             var json = serializer.SerializeToIndentedString(originalDocflow);
             Console.WriteLine($"Generated JSON: {json}");
-            
+
             var docflow = serializer.Deserialize<Docflow>(json);
 
             docflow.Type.Should().Be(unknownDocflowType);
@@ -129,7 +130,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
         {
             private readonly Type? descriptionType;
             private readonly Func<DocflowDescriptionGenerator, Docflow> expectedDescriptionFactory;
-            
+
             public static DescriptionCase WithDescription(Type descriptionClass, DocflowType docflowType)
             {
                 return new DescriptionCase(
@@ -147,7 +148,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Docflows
                     null
                 );
             }
-            
+
             private DescriptionCase(DocflowType docflowType, Func<DocflowDescriptionGenerator, Docflow> expectedDescriptionFactory, Type? descriptionType)
             {
                 this.expectedDescriptionFactory = expectedDescriptionFactory;
