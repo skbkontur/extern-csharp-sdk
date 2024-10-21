@@ -8,6 +8,7 @@ using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Send;
 using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Models.Common;
 using NUnit.Framework;
+using Vostok.Logging.Console;
 
 namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Drafts
 {
@@ -75,16 +76,16 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.Drafts
         [SetUp]
         public void SetUp()
         {
-            serializer = JsonSerializerFactory.CreateJsonSerializer();
+            serializer = JsonSerializerFactory.CreateJsonSerializer(new ConsoleLog());
         }
-        
+
         [Test]
         public void Should_deserialize_send_failure_dto()
         {
             var expectedSendFailure = CreateSendFailureForJson();
 
             var sendFailure = serializer.Deserialize<SendFailure>(Json);
-            
+
             sendFailure.Should().BeEquivalentTo(expectedSendFailure);
         }
 

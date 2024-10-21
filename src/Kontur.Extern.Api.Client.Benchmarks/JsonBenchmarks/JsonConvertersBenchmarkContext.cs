@@ -4,6 +4,7 @@ using Kontur.Extern.Api.Client.ApiLevel.Json;
 using Kontur.Extern.Api.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters;
 using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Models.Docflows;
+using Vostok.Logging.Console;
 
 namespace Kontur.Extern.Api.Client.Benchmarks.JsonBenchmarks
 {
@@ -618,7 +619,7 @@ namespace Kontur.Extern.Api.Client.Benchmarks.JsonBenchmarks
 
         public JsonConvertersBenchmarkContext()
         {
-            SysSerializer = JsonSerializerFactory.CreateJsonSerializer(true);
+            SysSerializer = JsonSerializerFactory.CreateJsonSerializer(new ConsoleLog(), true);
             JsonNetSerializer = JsonNetSerializerFactory.CreateJsonSerializer(true);
             Docflow = SysSerializer.Deserialize<IDocflowWithDocuments>(json);
             utf8JsonBytes = Encoding.UTF8.GetBytes(json);

@@ -12,6 +12,7 @@
       <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
       <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1" />
+      <PackageReference Include="Vostok.Logging.Console" Version="1.0.10" />
     </ItemGroup>
 
     <ItemGroup>

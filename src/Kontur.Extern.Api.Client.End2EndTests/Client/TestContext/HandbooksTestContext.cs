@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Handbooks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
 
 namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext;
@@ -14,6 +13,7 @@ public class HandbooksTestContext
         this.konturExtern = konturExtern;
     }
 
-    public Task<List<ControlUnit>> GetControlUnits(Guid accountId) => konturExtern.Accounts.WithId(accountId).Handbooks.GetControlUnits();
-    public Task<List<FnsForm>> GetFnsForms(Guid accountId) => konturExtern.Accounts.WithId(accountId).Handbooks.GetFnsForms();
+    public Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? handbookFilter = null) => konturExtern.Accounts.Handbooks.GetControlUnits(handbookFilter);
+    public Task<ControlUnitsPageItem> GetControlUnit(string code) => konturExtern.Accounts.Handbooks.GetControlUnit(code);
+    public Task<FnsFormsPage> GetFnsForms(FnsFormsFilter? fnsFormsFilter = null) => konturExtern.Accounts.Handbooks.GetFnsForms(fnsFormsFilter);
 }

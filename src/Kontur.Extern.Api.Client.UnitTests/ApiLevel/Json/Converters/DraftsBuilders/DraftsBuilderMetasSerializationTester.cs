@@ -4,6 +4,7 @@ using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Enums;
 using Kontur.Extern.Api.Client.UnitTests.ApiLevel.Clients.Models.TestDtoGenerators.DraftsBuilders;
+using Vostok.Logging.Console;
 
 namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuilders
 {
@@ -17,7 +18,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuil
 
         public DraftsBuilderMetasSerializationTester(Func<TData> unknownDataFactory)
         {
-            serializer = JsonSerializerFactory.CreateJsonSerializer(ignoreNullValues: false);
+            serializer = JsonSerializerFactory.CreateJsonSerializer(new ConsoleLog(), ignoreNullValues: false);
             metaGenerator = new DraftsBuilderMetasGenerator<TMeta, TData>(unknownDataFactory);
         }
 
@@ -26,7 +27,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuil
             var builderMeta = metaGenerator.GenerateWithData(builderDataType, builderType);
             return (Serialize(builderMeta), builderMeta);
         }
-        
+
         public (string json, TMeta meta) GenerateWithUnknownTypeAndDataOf<T>()
             where T:TData
         {
