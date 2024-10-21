@@ -28,7 +28,7 @@ public class ControlUnitsPageItem
     /// <summary>
     /// Флаги особенностей работы контролирующего органа
     /// </summary>
-    public ControlUnitFlags[] Flags { get; set; }
+    public ControlUnitFlags Flags { get; set; }
 
     /// <summary>
     /// Контакты

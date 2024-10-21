@@ -13,18 +13,15 @@ public class HandbooksClient : IHandbooksClient
 
     public HandbooksClient(IHttpRequestFactory http) => this.http = http;
 
-    public async Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? handbookFilter = null, TimeSpan? timeout = null)
+    public async Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? handbookFilter, TimeSpan? timeout = null)
     {
-        var url = new RequestUrlBuilder("/v1/handbooks/control-units");
-        if (handbookFilter != null)
-        {
-            url.AppendToQuery("type", handbookFilter.Type);
-            url.AppendToQuery("region", handbookFilter.Region);
-            url.AppendToQuery("take", handbookFilter.Take);
-            url.AppendToQuery("skip", handbookFilter.Skip);
-            url.AppendToQuery("includeinactive", handbookFilter.IncludeInactive);
-
-        }
+        handbookFilter ??= new ControlUnitsFilter();
+        var url = new RequestUrlBuilder("/v1/handbooks/control-units")
+            .AppendToQuery("type", handbookFilter.Type)
+            .AppendToQuery("region", handbookFilter.Region)
+            .AppendToQuery("take", handbookFilter.Take)
+            .AppendToQuery("skip", handbookFilter.Skip)
+            .AppendToQuery("includeinactive", handbookFilter.IncludeInactive);
 
         var uri = url.Build();
         var controlUnits = await http.GetAsync<ControlUnitsPage>(uri);
@@ -38,9 +35,10 @@ public class HandbooksClient : IHandbooksClient
         return controlUnit;
     }
 
-    public async Task<FnsFormsPage> GetFnsForms(int skip, int take, TimeSpan? timeout = null)
+    public async Task<FnsFormsPage> GetFnsForms(string? knd, int skip, int take, TimeSpan? timeout = null)
     {
         var url = new RequestUrlBuilder("/v1/handbooks/fns-forms")
+            .AppendToQuery("knd", knd)
             .AppendToQuery("skip", skip)
             .AppendToQuery("take", take)
             .Build();

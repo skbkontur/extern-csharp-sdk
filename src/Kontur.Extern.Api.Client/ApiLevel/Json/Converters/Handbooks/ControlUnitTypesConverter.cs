@@ -16,7 +16,7 @@ public class ControlUnitTypesConverter : System.Text.Json.Serialization.JsonConv
         var value = reader.GetString();
         if (Enum.TryParse<ControlUnitType>(value, true, out var controlUnitType))
             return controlUnitType;
-        log.Warn("Необходимо обновить модель ControlUnitType");
+        log.Warn("Неизвестное значение ControlUnitType преобразовано в Unknown. Стоит обновить сборку клиента на актуальную");
         return ControlUnitType.Unknown;
     }
 

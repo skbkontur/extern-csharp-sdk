@@ -116,4 +116,24 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
         fnsFormsPage.Take.Should().Be(0);
         fnsFormsPage.Skip.Should().Be(2000);
     }
+
+    [Fact]
+    public async Task Should_return_fns_forms_with_knd()
+    {
+        var knd = "1151001";
+        var fnsForms = await Context.Handbooks.GetFnsForms(knd: knd);
+        fnsForms.FnsForms.All(x => x.Knd == knd).Should().BeTrue();
+        fnsForms.Skip.Should().Be(0);
+    }
+
+    [Fact]
+    public async Task Should_return_fns_forms_with_all_filters()
+    {
+        var knd = "1151001";
+        var fnsForms = await Context.Handbooks.GetFnsForms(knd: knd, skip: 5, take: 10);
+        fnsForms.FnsForms.All(x => x.Knd == knd).Should().BeTrue();
+        fnsForms.FnsForms.Length.Should().Be(10);
+        fnsForms.Skip.Should().Be(5);
+        fnsForms.Take.Should().Be(10);
+    }
 }

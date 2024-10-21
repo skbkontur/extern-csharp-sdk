@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Handbooks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
 
@@ -16,5 +15,5 @@ public class HandbooksTestContext
 
     public Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? handbookFilter = null) => konturExtern.Accounts.Handbooks.GetControlUnits(handbookFilter);
     public Task<ControlUnitsPageItem> GetControlUnit(string code) => konturExtern.Accounts.Handbooks.GetControlUnit(code);
-    public Task<FnsFormsPage> GetFnsForms(int skip = 0, int take = 100) => konturExtern.Accounts.Handbooks.GetFnsForms(skip, take);
+    public Task<FnsFormsPage> GetFnsForms(string? knd = null, int skip = 0, int take = 100) => konturExtern.Accounts.Handbooks.GetFnsForms(knd, skip, take);
 }
