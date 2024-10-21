@@ -9,5 +9,5 @@ public interface IHandbooksClient
 {
     Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? handbookFilter, TimeSpan? timeout = null);
     Task<ControlUnitsPageItem> GetControlUnit(string code, TimeSpan? timeout = null);
-    Task<FnsFormsPage> GetFnsForms(string? knd, int skip, int take, TimeSpan? timeout = null);
+    Task<FnsFormsPage> GetFnsForms(FnsFormsFilter? fnsFormsFilter, TimeSpan? timeout = null);
 }

@@ -102,7 +102,11 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
     [Fact]
     public async Task Should_return_fns_forms_with_filter()
     {
-        var fnsFormsPage = await Context.Handbooks.GetFnsForms(skip: 5, take: 70);
+        var fnsFormsPage = await Context.Handbooks.GetFnsForms(new FnsFormsFilter
+        {
+            Skip = 5,
+            Take = 70
+        });
         fnsFormsPage.FnsForms.Length.Should().Be(70);
         fnsFormsPage.Take.Should().Be(70);
         fnsFormsPage.Skip.Should().Be(5);
@@ -111,7 +115,11 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
     [Fact]
     public async Task Should_return_empty_fns_forms_when_skip_is_more_than_total_count()
     {
-        var fnsFormsPage = await Context.Handbooks.GetFnsForms(skip: 2000, take: 50);
+        var fnsFormsPage = await Context.Handbooks.GetFnsForms(new FnsFormsFilter
+        {
+            Skip = 2000,
+            Take = 50
+        });
         fnsFormsPage.FnsForms.Length.Should().Be(0);
         fnsFormsPage.Take.Should().Be(0);
         fnsFormsPage.Skip.Should().Be(2000);
@@ -121,7 +129,10 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
     public async Task Should_return_fns_forms_with_knd()
     {
         var knd = "1151001";
-        var fnsForms = await Context.Handbooks.GetFnsForms(knd: knd);
+        var fnsForms = await Context.Handbooks.GetFnsForms(new FnsFormsFilter
+        {
+            Knd = knd
+        });
         fnsForms.FnsForms.All(x => x.Knd == knd).Should().BeTrue();
         fnsForms.Skip.Should().Be(0);
     }
@@ -130,7 +141,12 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
     public async Task Should_return_fns_forms_with_all_filters()
     {
         var knd = "1151001";
-        var fnsForms = await Context.Handbooks.GetFnsForms(knd: knd, skip: 5, take: 10);
+        var fnsForms = await Context.Handbooks.GetFnsForms(new FnsFormsFilter
+        {
+            Knd = knd,
+            Skip = 5,
+            Take = 10
+        });
         fnsForms.FnsForms.All(x => x.Knd == knd).Should().BeTrue();
         fnsForms.FnsForms.Length.Should().Be(10);
         fnsForms.Skip.Should().Be(5);

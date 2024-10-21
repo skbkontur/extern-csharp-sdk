@@ -15,5 +15,5 @@ public class HandbooksTestContext
 
     public Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? handbookFilter = null) => konturExtern.Accounts.Handbooks.GetControlUnits(handbookFilter);
     public Task<ControlUnitsPageItem> GetControlUnit(string code) => konturExtern.Accounts.Handbooks.GetControlUnit(code);
-    public Task<FnsFormsPage> GetFnsForms(string? knd = null, int skip = 0, int take = 100) => konturExtern.Accounts.Handbooks.GetFnsForms(knd, skip, take);
+    public Task<FnsFormsPage> GetFnsForms(FnsFormsFilter? fnsFormsFilter = null) => konturExtern.Accounts.Handbooks.GetFnsForms(fnsFormsFilter);
 }

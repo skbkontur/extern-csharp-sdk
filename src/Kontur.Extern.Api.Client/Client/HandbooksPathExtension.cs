@@ -24,10 +24,10 @@ public static class HandbooksPathExtension
         return controlUnit;
     }
 
-    public static async Task<FnsFormsPage> GetFnsForms(this HandbooksPath path, string? knd, int skip, int take, TimeSpan? timeout = null)
+    public static async Task<FnsFormsPage> GetFnsForms(this HandbooksPath path, FnsFormsFilter? fnsFormsFilter, TimeSpan? timeout = null)
     {
         var apiClient = path.Services.Api;
-        var fnsForms = await apiClient.Handbooks.GetFnsForms(knd, skip, take, timeout).ConfigureAwait(false);
+        var fnsForms = await apiClient.Handbooks.GetFnsForms(fnsFormsFilter, timeout).ConfigureAwait(false);
         return fnsForms;
     }
 }

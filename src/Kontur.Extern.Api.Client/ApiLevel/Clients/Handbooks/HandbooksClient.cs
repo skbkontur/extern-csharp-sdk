@@ -35,12 +35,13 @@ public class HandbooksClient : IHandbooksClient
         return controlUnit;
     }
 
-    public async Task<FnsFormsPage> GetFnsForms(string? knd, int skip, int take, TimeSpan? timeout = null)
+    public async Task<FnsFormsPage> GetFnsForms(FnsFormsFilter? fnsFormsFilter, TimeSpan? timeout = null)
     {
+        fnsFormsFilter ??= new FnsFormsFilter();
         var url = new RequestUrlBuilder("/v1/handbooks/fns-forms")
-            .AppendToQuery("knd", knd)
-            .AppendToQuery("skip", skip)
-            .AppendToQuery("take", take)
+            .AppendToQuery("knd", fnsFormsFilter.Knd)
+            .AppendToQuery("skip", fnsFormsFilter.Skip)
+            .AppendToQuery("take", fnsFormsFilter.Take)
             .Build();
         var fnsForms = await http.GetAsync<FnsFormsPage>(url);
         return fnsForms;
