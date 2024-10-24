@@ -7,7 +7,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Handbooks;
 
 public interface IHandbooksClient
 {
-    Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? handbookFilter, TimeSpan? timeout = null);
-    Task<ControlUnitsPageItem> GetControlUnit(string code, TimeSpan? timeout = null);
-    Task<FnsFormsPage> GetFnsForms(FnsFormsFilter? fnsFormsFilter, TimeSpan? timeout = null);
+    Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? filter, TimeSpan? timeout = null);
+    Task<ControlUnit> GetControlUnit(string code, TimeSpan? timeout = null);
+    Task<FnsFormsPage> GetFnsForms(FnsFormsFilter? filter, TimeSpan? timeout = null);
 }

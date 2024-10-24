@@ -19,9 +19,9 @@ public class ControlUnitTypes_Tests
     [TestCase("pfr", ExpectedResult = ControlUnitType.Pfr)]
     [TestCase("rtn", ExpectedResult = ControlUnitType.Rtn)]
     [TestCase("stat", ExpectedResult = ControlUnitType.Stat)]
-    [TestCase("hello", ExpectedResult = ControlUnitType.Unknown)]
-    public ControlUnitType Should_return_null_description_if_it_is_known_but_missed(string value)
+    [TestCase("hello", ExpectedResult = null)]
+    public ControlUnitType? Should_return_null_description_if_it_is_known_but_missed(string value)
     {
-        return serializer.Deserialize<ControlUnitType>(serializer.SerializeToIndentedString(value));
+        return serializer.TryDeserialize<ControlUnitType?>(serializer.SerializeToIndentedString(value)).GetResultOrNull();
     }
 }

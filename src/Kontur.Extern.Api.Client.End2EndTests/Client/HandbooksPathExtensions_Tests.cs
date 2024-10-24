@@ -14,6 +14,8 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client;
 
 public class HandbooksPathExtensions_Tests : GeneratedAccountTests
 {
+    private const string Knd = "1151001";
+
     public HandbooksPathExtensions_Tests(ITestOutputHelper output, IsolatedAccountEnvironment environment)
         : base(output, environment)
     {
@@ -31,44 +33,44 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
     [Fact]
     public async Task Should_return_control_units_with_filter()
     {
-        var handbookFilter = new ControlUnitsFilter
+        var filter = new ControlUnitsFilter
         {
             Region = "28",
             Type = ControlUnitType.Pfr,
             Skip = 5,
             Take = 50
         };
-        var controlUnitsPage = await Context.Handbooks.GetControlUnits(handbookFilter);
-        controlUnitsPage.ControlUnits.All(x => x.Region == handbookFilter.Region && x.Type == handbookFilter.Type).Should().BeTrue();
+        var controlUnitsPage = await Context.Handbooks.GetControlUnits(filter);
+        controlUnitsPage.ControlUnits.All(x => x.Region == filter.Region && x.Type == filter.Type).Should().BeTrue();
         controlUnitsPage.Take.Should().BeGreaterThan(0);
-        controlUnitsPage.Skip.Should().Be(handbookFilter.Skip);
+        controlUnitsPage.Skip.Should().Be(filter.Skip);
     }
 
     [Fact]
     public async Task Should_return_empty_array_when_skip_greater_than_total_count()
     {
-        var handbookFilter = new ControlUnitsFilter
+        var filter = new ControlUnitsFilter
         {
             Region = "33",
             Skip = 1600,
             Take = 50
         };
-        var controlUnitsPage = await Context.Handbooks.GetControlUnits(handbookFilter);
-        controlUnitsPage.ControlUnits.All(x => x.Region == handbookFilter.Region).Should().BeTrue();
+        var controlUnitsPage = await Context.Handbooks.GetControlUnits(filter);
+        controlUnitsPage.ControlUnits.All(x => x.Region == filter.Region).Should().BeTrue();
         controlUnitsPage.TotalCount.Should().BeGreaterThan(0);
         controlUnitsPage.Take.Should().Be(0);
-        controlUnitsPage.Skip.Should().Be(handbookFilter.Skip);
+        controlUnitsPage.Skip.Should().Be(filter.Skip);
     }
 
     [Fact]
     public async Task Should_return_control_units_with_inactive()
     {
-        var handbookFilter = new ControlUnitsFilter
+        var filter = new ControlUnitsFilter
         {
             IncludeInactive = true
         };
         var controlUnitsPage = await Context.Handbooks.GetControlUnits();
-        var controlUnitsPageWithInactive = await Context.Handbooks.GetControlUnits(handbookFilter);
+        var controlUnitsPageWithInactive = await Context.Handbooks.GetControlUnits(filter);
         controlUnitsPageWithInactive.TotalCount.Should().BeGreaterThan(controlUnitsPage.TotalCount);
     }
 
@@ -128,26 +130,24 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
     [Fact]
     public async Task Should_return_fns_forms_with_knd()
     {
-        var knd = "1151001";
         var fnsForms = await Context.Handbooks.GetFnsForms(new FnsFormsFilter
         {
-            Knd = knd
+            Knd = Knd
         });
-        fnsForms.FnsForms.All(x => x.Knd == knd).Should().BeTrue();
+        fnsForms.FnsForms.All(x => x.Knd == Knd).Should().BeTrue();
         fnsForms.Skip.Should().Be(0);
     }
 
     [Fact]
     public async Task Should_return_fns_forms_with_all_filters()
     {
-        var knd = "1151001";
         var fnsForms = await Context.Handbooks.GetFnsForms(new FnsFormsFilter
         {
-            Knd = knd,
+            Knd = Knd,
             Skip = 5,
             Take = 10
         });
-        fnsForms.FnsForms.All(x => x.Knd == knd).Should().BeTrue();
+        fnsForms.FnsForms.All(x => x.Knd == Knd).Should().BeTrue();
         fnsForms.FnsForms.Length.Should().Be(10);
         fnsForms.Skip.Should().Be(5);
         fnsForms.Take.Should().Be(10);

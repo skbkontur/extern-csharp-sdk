@@ -13,35 +13,35 @@ public class HandbooksClient : IHandbooksClient
 
     public HandbooksClient(IHttpRequestFactory http) => this.http = http;
 
-    public async Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? handbookFilter, TimeSpan? timeout = null)
+    public async Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? filter, TimeSpan? timeout = null)
     {
-        handbookFilter ??= new ControlUnitsFilter();
+        filter ??= new ControlUnitsFilter();
         var url = new RequestUrlBuilder("/v1/handbooks/control-units")
-            .AppendToQuery("type", handbookFilter.Type)
-            .AppendToQuery("region", handbookFilter.Region)
-            .AppendToQuery("take", handbookFilter.Take)
-            .AppendToQuery("skip", handbookFilter.Skip)
-            .AppendToQuery("includeinactive", handbookFilter.IncludeInactive);
+            .AppendToQuery("type", filter.Type)
+            .AppendToQuery("region", filter.Region)
+            .AppendToQuery("take", filter.Take)
+            .AppendToQuery("skip", filter.Skip)
+            .AppendToQuery("includeinactive", filter.IncludeInactive);
 
         var uri = url.Build();
         var controlUnits = await http.GetAsync<ControlUnitsPage>(uri);
         return controlUnits;
     }
 
-    public async Task<ControlUnitsPageItem> GetControlUnit(string code, TimeSpan? timeout = null)
+    public async Task<ControlUnit> GetControlUnit(string code, TimeSpan? timeout = null)
     {
         var url = new RequestUrlBuilder($"/v1/handbooks/control-units/{code}").Build();
-        var controlUnit = await http.GetAsync<ControlUnitsPageItem>(url);
+        var controlUnit = await http.GetAsync<ControlUnit>(url);
         return controlUnit;
     }
 
-    public async Task<FnsFormsPage> GetFnsForms(FnsFormsFilter? fnsFormsFilter, TimeSpan? timeout = null)
+    public async Task<FnsFormsPage> GetFnsForms(FnsFormsFilter? filter, TimeSpan? timeout = null)
     {
-        fnsFormsFilter ??= new FnsFormsFilter();
+        filter ??= new FnsFormsFilter();
         var url = new RequestUrlBuilder("/v1/handbooks/fns-forms")
-            .AppendToQuery("knd", fnsFormsFilter.Knd)
-            .AppendToQuery("skip", fnsFormsFilter.Skip)
-            .AppendToQuery("take", fnsFormsFilter.Take)
+            .AppendToQuery("knd", filter.Knd)
+            .AppendToQuery("skip", filter.Skip)
+            .AppendToQuery("take", filter.Take)
             .Build();
         var fnsForms = await http.GetAsync<FnsFormsPage>(url);
         return fnsForms;
