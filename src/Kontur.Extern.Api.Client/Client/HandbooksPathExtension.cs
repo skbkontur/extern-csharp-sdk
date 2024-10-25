@@ -24,7 +24,7 @@ public static class HandbooksPathExtension
         return controlUnit;
     }
 
-    public static async Task<FnsFormsPage> GetFnsForms(this HandbooksPath path, FnsFormsFilter? filter, TimeSpan? timeout = null)
+    public static async Task<FnsFormsPage> GetFnsForms(this HandbooksPath path, FnsFormsFilter? filter = null, TimeSpan? timeout = null)
     {
         var apiClient = path.Services.Api;
         var fnsForms = await apiClient.Handbooks.GetFnsForms(filter, timeout).ConfigureAwait(false);
