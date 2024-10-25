@@ -9,7 +9,7 @@ public class ControlUnitsFilter
     /// <summary>
     /// Тип контролирующего органа
     /// </summary>
-    public ControlUnitType Type { get; set; }
+    public ControlUnitType? Type { get; set; }
 
     /// <summary>
     /// Номер региона
@@ -27,7 +27,7 @@ public class ControlUnitsFilter
     public int Skip { get; set; }
 
     /// <summary>
-    /// Включать в результат неактивные контролирующие органы
+    /// Флаг отображения неактивных контролирующих органов. Значение по умолчанию: false
     /// </summary>
     public bool IncludeInactive { get; set; }
 }
