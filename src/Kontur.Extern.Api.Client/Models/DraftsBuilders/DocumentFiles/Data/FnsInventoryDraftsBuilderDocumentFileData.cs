@@ -21,5 +21,10 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles.Data
         /// Пример использования параметра: "3" будет означать, что данный файл — третья страница в документе. 
         /// </summary>
         public int ScannedFileOrder { get; }
+        
+        /// <summary>
+        /// Флаг, что прикладываемый файл зашифрован. Значение по умолчанию: false
+        /// </summary>
+        public bool IsFileEncrypted { get; set; }
     }
 }
