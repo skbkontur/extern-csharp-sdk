@@ -73,6 +73,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
                 SuccessState = docflow.SuccessState;
                 Links = docflow.Links;
                 Id = docflow.Id;
+                AbonentId = docflow.AbonentId;
+                ExternUserId = docflow.ExternUserId;
                 OrganizationId = docflow.OrganizationId;
                 SendDateTime = docflow.SendDateTime;
                 LastChangeDateTime = docflow.LastChangeDateTime;
@@ -87,6 +89,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
                 SuccessState = docflow.SuccessState;
                 Links = docflow.Links;
                 Id = docflow.Id;
+                AbonentId = docflow.AbonentId;
+                ExternUserId = docflow.ExternUserId;
                 OrganizationId = docflow.OrganizationId;
                 SendDateTime = docflow.SendDateTime;
                 LastChangeDateTime = docflow.LastChangeDateTime;
@@ -98,6 +102,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
 
             [UsedImplicitly]
             public Guid Id { get; set; }
+            [UsedImplicitly]
+            public Guid AbonentId { get; set; }
+            [UsedImplicitly]
+            public Guid ExternUserId { get; set; }
             [UsedImplicitly]
             public Guid OrganizationId { get; set; }
             [UsedImplicitly]
@@ -123,8 +131,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
             {
                 var description = (DocflowDescription)(object)Description!;
                 return Documents is not null
-                    ? new Docflow(Id, OrganizationId, Type, Status, SuccessState, Documents, Links, SendDateTime, LastChangeDateTime, description)
-                    : new Docflow(Id, OrganizationId, Type, Status, SuccessState, Links, SendDateTime, LastChangeDateTime, description);
+                    ? new Docflow(Id, AbonentId, ExternUserId, OrganizationId, Type, Status, SuccessState, Documents, Links, SendDateTime, LastChangeDateTime, description)
+                    : new Docflow(Id, AbonentId, ExternUserId, OrganizationId, Type, Status, SuccessState, Links, SendDateTime, LastChangeDateTime, description);
             }
         }
     }
