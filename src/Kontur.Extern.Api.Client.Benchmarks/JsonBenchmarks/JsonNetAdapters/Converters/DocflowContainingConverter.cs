@@ -79,6 +79,8 @@ namespace Kontur.Extern.Api.Client.Benchmarks.JsonBenchmarks.JsonNetAdapters.Con
          private class Docflow : IDocflowWithDocuments
          {
              public Guid Id { get; set; }
+             public Guid AbonentId { get; }
+             public Guid ExternUserId { get; }
              public Guid OrganizationId { get; set; }
              public DocflowType Type { get; set; } = null!;
              public DocflowStatus Status { get; set; } = null!;

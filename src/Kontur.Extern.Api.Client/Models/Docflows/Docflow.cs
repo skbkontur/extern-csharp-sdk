@@ -15,6 +15,62 @@ namespace Kontur.Extern.Api.Client.Models.Docflows
     {
         public Docflow(
             Guid id,
+            Guid abonentId,
+            Guid externUserId,
+            Guid organizationId,
+            DocflowType type,
+            DocflowStatus status,
+            DocflowState successState,
+            List<Document> documents,
+            List<Link> links,
+            DateTime sendDateTime,
+            DateTime? lastChangeDateTime,
+            DocflowDescription description)
+            : this(
+                id,
+                organizationId,
+                type,
+                status,
+                successState,
+                documents,
+                links,
+                sendDateTime,
+                lastChangeDateTime,
+                description)
+        {
+            AbonentId = abonentId;
+            ExternUserId = externUserId;
+        }
+
+        public Docflow(
+            Guid id,
+            Guid abonentId,
+            Guid externUserId,
+            Guid organizationId,
+            DocflowType type,
+            DocflowStatus status,
+            DocflowState successState,
+            List<Link> links,
+            DateTime sendDateTime,
+            DateTime? lastChangeDateTime,
+            DocflowDescription description)
+            : this(
+                id,
+                organizationId,
+                type,
+                status,
+                successState,
+                links,
+                sendDateTime,
+                lastChangeDateTime,
+                description)
+        {
+            AbonentId = abonentId;
+            ExternUserId = externUserId;
+        }
+
+        public Docflow(
+            Guid id,
             Guid organizationId,
             DocflowType type,
             DocflowStatus status,
@@ -59,8 +115,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows
             Description = description;
             Documents = new List<Document>();
         }
-        
+
         public Guid Id { get; set; }
+        public Guid AbonentId { get; set; }
+        public Guid ExternUserId { get; set; }
         public Guid OrganizationId { get; set; }
         public DocflowType Type { get; set; }
         public DocflowStatus Status { get; set; }
@@ -71,6 +129,6 @@ namespace Kontur.Extern.Api.Client.Models.Docflows
         public DateTime? LastChangeDateTime { get; set; }
         public DocflowDescription Description { get; set; }
 
-        public bool IsEmpty => Description == null! && Id == default && OrganizationId == default;
+        public bool IsEmpty => Description == null! && Id == default && OrganizationId == default && AbonentId == default && ExternUserId == default;
     }
 }

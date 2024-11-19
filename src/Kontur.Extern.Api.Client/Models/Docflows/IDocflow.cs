@@ -26,7 +26,17 @@ namespace Kontur.Extern.Api.Client.Models.Docflows
         /// Идентификатор документооборота
         /// </summary>
         Guid Id { get; }
-        
+
+        /// <summary>
+        /// Идентификатор абонента (техническое свойство)
+        /// </summary>
+        Guid AbonentId { get; }
+
+        /// <summary>
+        /// Идентификатор пользователя Экстерна (техническое свойство)
+        /// </summary>
+        Guid ExternUserId { get; }
+
         /// <summary>
         /// Идентификатор организации
         /// </summary>
