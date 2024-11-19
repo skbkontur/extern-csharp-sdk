@@ -4,7 +4,7 @@ namespace Kontur.Extern.Api.Client.Models.Numbers;
 
 public record SfrRegNumber
 {
-    public static readonly RegexBasedParser<SfrRegNumber> Parser = new(@"^\d{3}-\d{3}-\d{6}$", v => new SfrRegNumber(v), (param, value) => Errors.InvalidAuthorityNumber(param, value, AuthorityNumberKind.PfrRegNumber, "ХХХ-ХХХ-ХХХХХХ"));
+    public static readonly RegexBasedParser<SfrRegNumber> Parser = new(@"^(\d{3}-\d{3}-\d{6}|\d{10})$", v => new SfrRegNumber(v), (param, value) => Errors.InvalidAuthorityNumber(param, value, AuthorityNumberKind.PfrRegNumber, "ХХХ-ХХХ-ХХХХХХ"));
 
     /// <summary>
     /// Регистрационный номер документооборота СФР. Формат данных: ХХХ-ХХХ-ХХХХХХ, где Х - это цифра от 0 до 9

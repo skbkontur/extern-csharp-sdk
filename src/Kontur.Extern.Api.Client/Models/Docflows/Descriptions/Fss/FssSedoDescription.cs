@@ -13,6 +13,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss
         /// </summary>
         public FssRegNumber RegistrationNumber { get; set; } = null!;
 
+        /// <summary>
+        /// Регистрационный номер СФР
+        /// </summary>
+        public SfrRegNumber RegistrationNumberSfr { get; set; } = null!;
 
         /// <summary>
         /// Идентификатор запроса в СЭДО ФСС
