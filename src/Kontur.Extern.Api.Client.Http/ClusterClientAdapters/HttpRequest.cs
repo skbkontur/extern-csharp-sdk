@@ -162,8 +162,10 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
 
             var resultLog = $"Client request '{resultRequest.Method} {resultRequest.Url}' ended with status = '{result.Status}'; " +
                             $"response-code = '{result.Response.Code}'; trace-id = '{result.Response.Headers["X-Kontur-Trace-Id"] ?? "none"}'";
-            if (result.Response.IsSuccessful)
+            if (result.Response.Code.IsSuccessful())
                 log.Info(resultLog);
+            else if (result.Response.Code.IsClientError() || result.Response.Code.IsRedirection())
+                log.Warn(resultLog);
             else
                 log.Error(resultLog);
 
