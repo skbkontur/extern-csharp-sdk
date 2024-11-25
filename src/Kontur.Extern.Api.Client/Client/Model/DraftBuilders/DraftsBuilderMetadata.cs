@@ -1,5 +1,6 @@
 using System;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Builders;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts;
 using Kontur.Extern.Api.Client.Exceptions;
 using Kontur.Extern.Api.Client.Model.Drafts;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders.Data;
@@ -14,28 +15,35 @@ namespace Kontur.Extern.Api.Client.Model.DraftBuilders
             DraftPayer payer,
             DraftSender sender,
             DraftRecipient recipient,
-            FnsInventoryDraftsBuilderData data) => new(
+            FnsInventoryDraftsBuilderData data,
+            DraftCreateOptionsRequest? draftOptions = null) => new(
             payer,
             sender,
             recipient,
             DraftBuilderType.Fns.Fns534.Inventory,
-            data ?? throw new ArgumentNullException(nameof(data))
+            data ?? throw new ArgumentNullException(nameof(data)),
+            draftOptions
         );
-        
-        public static DraftsBuilderMetadata FnsLetterDraftsBuilder(DraftPayer payer, DraftSender sender, DraftRecipient recipient) => new(
+
+        public static DraftsBuilderMetadata FnsLetterDraftsBuilder(
+            DraftPayer payer,
+            DraftSender sender,
+            DraftRecipient recipient,
+            DraftCreateOptionsRequest? draftOptions = null) => new(
             payer,
             sender,
             recipient,
-            DraftBuilderType.Fns.Fns534.Letter
+            DraftBuilderType.Fns.Fns534.Letter,
+            draftOptions: draftOptions
         );
-        
+
         public static DraftsBuilderMetadata RosstatLetterDraftsBuilder(DraftPayer payer, DraftSender sender, DraftRecipient recipient) => new(
             payer,
             sender,
             recipient,
             DraftBuilderType.Rosstat.Letter
         );
-        
+
         public static DraftsBuilderMetadata BusinessRegistrationDraftsBuilder(
             DraftPayer payer,
             DraftSender sender,
@@ -59,7 +67,7 @@ namespace Kontur.Extern.Api.Client.Model.DraftBuilders
             DraftBuilderType.Pfr.Report,
             data ?? throw new ArgumentNullException(nameof(data))
         );
-        
+
         public static DraftsBuilderMetadata PfrIosDraftsBuilder(DraftPayer payer, DraftSender sender, DraftRecipient recipient) => new(
             payer,
             sender,
@@ -79,22 +87,25 @@ namespace Kontur.Extern.Api.Client.Model.DraftBuilders
         private readonly DraftRecipient recipient;
         private readonly DraftBuilderType builderType;
         private readonly DraftsBuilderData? builderData;
+        private readonly DraftCreateOptionsRequest? draftOptions;
 
         private DraftsBuilderMetadata(
             DraftPayer payer,
             DraftSender sender,
             DraftRecipient recipient,
             DraftBuilderType builderType,
-            DraftsBuilderData? builderData = null)
+            DraftsBuilderData? builderData = null,
+            DraftCreateOptionsRequest? draftOptions = null)
         {
             if (builderType.IsEmpty)
                 throw Errors.ValueShouldNotBeEmpty(nameof(builderType));
-            
+
             this.payer = payer ?? throw new ArgumentNullException(nameof(payer));
             this.sender = sender ?? throw new ArgumentNullException(nameof(sender));
             this.recipient = recipient ?? throw new ArgumentNullException(nameof(recipient));
             this.builderType = builderType;
             this.builderData = builderData;
+            this.draftOptions = draftOptions;
         }
 
         public DraftsBuilderMetaRequest ToRequest() => new(
@@ -102,7 +113,8 @@ namespace Kontur.Extern.Api.Client.Model.DraftBuilders
             payer.ToRequest(),
             recipient.ToRequest(),
             builderType,
-            builderData ?? new UnknownDraftsBuilderData()
+            builderData ?? new UnknownDraftsBuilderData(),
+            draftOptions
         );
     }
 }

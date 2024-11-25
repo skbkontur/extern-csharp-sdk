@@ -16,13 +16,15 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Builde
             AccountInfoRequest payer,
             RecipientInfoRequest recipient,
             DraftBuilderType builderType,
-            DraftsBuilderData? builderData)
+            DraftsBuilderData? builderData,
+            DraftCreateOptionsRequest? draftOptions = null)
         {
             Sender = sender ?? throw new ArgumentNullException(nameof(sender));
             Payer = payer ?? throw new ArgumentNullException(nameof(payer));
             Recipient = recipient ?? throw new ArgumentNullException(nameof(recipient));
             BuilderType = builderType;
             BuilderData = builderData;
+            DraftOptions = draftOptions;
         }
         
         /// <summary>
@@ -51,7 +53,12 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Builde
         /// </summary>
         public DraftsBuilderData? BuilderData { get; }
 
+        /// <summary>
+        /// Дополнительные опции создания черновика
+        /// </summary>
+        public DraftCreateOptionsRequest? DraftOptions { get; set; }
+
         public DraftsBuilderMetaRequest ChangeBuilderType(DraftBuilderType builderType, DraftsBuilderData? data) => 
-            new(Sender, Payer, Recipient, builderType, data);
+            new(Sender, Payer, Recipient, builderType, data, DraftOptions);
     }
 }
