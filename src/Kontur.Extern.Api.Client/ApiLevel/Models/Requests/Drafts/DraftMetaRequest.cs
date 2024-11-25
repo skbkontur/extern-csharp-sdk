@@ -35,5 +35,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// Дополнительная информация
         /// </summary>
         public AdditionalInfoRequest? AdditionalInfo { get; set; }
+
+        /// <summary>
+        /// Дополнительные опции создания черновика
+        /// </summary>
+        public DraftCreateOptionsRequest? DraftOptions { get; set; }
     }
 }

@@ -53,6 +53,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuil
             var serializedBuilderType = jsonDocument.RootElement.GetProperty("builder-type").GetString();
             serializedBuilderType.Should().Be(builderType.ToString());
 
+            var serializedDraftOptions = jsonDocument.RootElement.GetProperty("draft-options").GetProperty("generate-warrant").GetBoolean();
+            serializedDraftOptions.Should().Be(true);
+
             var builderDataElement = jsonDocument.RootElement.GetProperty("builder-data");
             if (dataType is null)
             {
@@ -61,7 +64,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuil
             else
             {
                 var dataValues = builderDataElement.EnumerateObject();
-                if (dataType != typeof(PfrReportDraftsBuilderData))
+                if (dataType != typeof (PfrReportDraftsBuilderData))
                 {
                     dataValues.Should().NotBeEmpty();
                     dataValues.Should().Contain(x => x.Value.GetRawText() != "null");
@@ -96,7 +99,8 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Json.Converters.DraftsBuil
                     MriCode = mriCode
                 },
                 builderType,
-                (DraftsBuilderData?) autoFaker.Generate(dataType)
+                (DraftsBuilderData?)autoFaker.Generate(dataType),
+                new DraftCreateOptionsRequest {GenerateWarrant = true}
             );
             return request;
         }

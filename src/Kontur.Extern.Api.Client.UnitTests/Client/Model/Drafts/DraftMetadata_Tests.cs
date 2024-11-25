@@ -210,6 +210,20 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
             request.Should().BeEquivalentTo(expectedRequest);
         }
 
+        [Test]
+        public void WithGenerateWarrant_should_set_generate_warrant_flag()
+        {
+            var (newDraft, expectedRequest) = RandomDraft();
+            expectedRequest.DraftOptions = new DraftCreateOptionsRequest()
+            {
+                GenerateWarrant = true
+            };
+
+            var request = newDraft.WithGenerateWarrant(true).ToRequest();
+
+            request.Should().BeEquivalentTo(expectedRequest);
+        }
+
         private (DraftMetadata newDraft, DraftMetaRequest expectedRequest) RandomDraft()
         {
             var payerInn = codesGenerator.PersonInn();
