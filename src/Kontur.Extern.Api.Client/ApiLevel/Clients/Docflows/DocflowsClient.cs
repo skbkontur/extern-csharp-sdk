@@ -87,7 +87,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             http.TryGetAsync<Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}", timeout);
 
         public Task<Document> PatchDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, JsonPatchDocument<Document> patch, TimeSpan? timeout = null) =>
-            http.PatchAsync<Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}", timeout);
+            http.PatchAsync<JsonPatchDocument<Document>, Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}", patch, timeout);
+
+        public Task<IDocflowWithDocuments> PatchDocflowAsync(Guid accountId, Guid docflowId, JsonPatchDocument<IDocflowWithDocuments> patch, TimeSpan? timeout = null) =>
+            http.PatchAsync<JsonPatchDocument<IDocflowWithDocuments>, IDocflowWithDocuments>($"/v1/{accountId}/docflows/{docflowId}", patch, timeout);
 
         public Task<DocflowDocumentDescription> GetDocumentDescriptionAsync(
             Guid accountId,

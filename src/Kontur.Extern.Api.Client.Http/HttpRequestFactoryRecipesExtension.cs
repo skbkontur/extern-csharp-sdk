@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace Kontur.Extern.Api.Client.Http
 {
@@ -108,15 +109,26 @@ namespace Kontur.Extern.Api.Client.Http
             return await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
         }
 
-        public static async Task<TResponseDto> PatchAsync<TResponseDto>(this IHttpRequestFactory httpRequestFactory, string url, TimeoutSpecification timeout = default)
+        public static async Task<TResponseDto> PatchAsync<TRequestDto, TResponseDto>(this IHttpRequestFactory httpRequestFactory, string url, TRequestDto requestDto, TimeoutSpecification timeout = default)
         {
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
-            
-            var response = await httpRequestFactory.Patch(url.ToUrl()).SendAsync(timeout).ConfigureAwait(false);
+
+            return await PatchAsync<TRequestDto, TResponseDto>(httpRequestFactory, url.ToUrl(), requestDto, timeout).ConfigureAwait(false);
+        }
+
+        public static async Task<TResponseDto> PatchAsync<TRequestDto, TResponseDto>(this IHttpRequestFactory httpRequestFactory, Uri url, TRequestDto requestDto, TimeoutSpecification timeout = default)
+        {
+            if (requestDto is null)
+                throw new ArgumentNullException(nameof(requestDto));
+
+            var response = await httpRequestFactory.Patch(url)
+                .WithObject(requestDto)
+                .SendAsync(timeout).ConfigureAwait(false);
+
             return await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
         }
-        
+
         public static async Task<IHttpResponse> RawPostAsync<TRequestDto>(
             this IHttpRequestFactory httpRequestFactory,
             Uri url,

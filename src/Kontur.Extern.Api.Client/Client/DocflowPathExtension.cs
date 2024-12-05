@@ -5,6 +5,7 @@ using Kontur.Extern.Api.Client.Model;
 using Kontur.Extern.Api.Client.Models.Docflows;
 using Kontur.Extern.Api.Client.Models.Docflows.DocumentsRequests;
 using Kontur.Extern.Api.Client.Paths;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace Kontur.Extern.Api.Client
 {
@@ -21,6 +22,12 @@ namespace Kontur.Extern.Api.Client
         {
             var apiClient = path.Services.Api;
             return apiClient.Docflows.TryGetDocflowAsync(path.AccountId, path.DocflowId, timeout);
+        }
+
+        public static Task<IDocflowWithDocuments> PatchAsync(this in DocflowPath path, JsonPatchDocument<IDocflowWithDocuments> patch, TimeSpan? timeout = null)
+        {
+            var apiClient = path.Services.Api;
+            return apiClient.Docflows.PatchDocflowAsync(path.AccountId, path.DocflowId, patch, timeout);
         }
 
         public static Task<DocumentsRequest> GenerateDocumentsRequestAsync(this in DocflowPath path, CertificateContent certificate, TimeSpan? timeout = null)

@@ -151,6 +151,16 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         Task<Document> PatchDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, JsonPatchDocument<Document> patch, TimeSpan? timeout = null);
 
         /// <summary>
+        /// Изменение реквизитов документооборота
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="docflowId">Идентификатор документооборота</param>
+        /// <param name="patch">Список операций для изменения реквизитов</param>
+        /// <param name="timeout"></param>
+        /// <returns>Документооборот</returns>
+        Task<IDocflowWithDocuments> PatchDocflowAsync(Guid accountId, Guid docflowId, JsonPatchDocument<IDocflowWithDocuments> patch, TimeSpan? timeout = null);
+
+        /// <summary>
         /// Получение описания документа
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
