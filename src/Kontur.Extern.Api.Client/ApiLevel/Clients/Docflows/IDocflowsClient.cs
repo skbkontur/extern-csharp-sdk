@@ -10,6 +10,7 @@ using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 using Kontur.Extern.Api.Client.Models.Docflows.DocumentsRequests;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
 {
@@ -136,6 +137,18 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         /// <param name="timeout"></param>
         /// <returns>Документ из документооборота или null</returns>
         Task<Document?> TryGetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null);
+
+        
+        /// <summary>
+        ///  Изменение реквизитов документа требования
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="docflowId">Идентификатор документооборота</param>
+        /// <param name="documentId">Идентификатор документа</param>
+        /// <param name="patch">Список операций для изменения реквизитов</param>
+        /// <param name="timeout"></param>
+        /// <returns>Документ из документооборота</returns>
+        Task<Document> PatchDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, JsonPatchDocument<Document> patch, TimeSpan? timeout = null);
 
         /// <summary>
         /// Получение описания документа

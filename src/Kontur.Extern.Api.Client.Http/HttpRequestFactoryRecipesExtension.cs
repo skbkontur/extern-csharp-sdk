@@ -108,6 +108,15 @@ namespace Kontur.Extern.Api.Client.Http
             return await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
         }
 
+        public static async Task<TResponseDto> PatchAsync<TResponseDto>(this IHttpRequestFactory httpRequestFactory, string url, TimeoutSpecification timeout = default)
+        {
+            if (url == null)
+                throw new ArgumentNullException(nameof(url));
+            
+            var response = await httpRequestFactory.Patch(url.ToUrl()).SendAsync(timeout).ConfigureAwait(false);
+            return await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
+        }
+        
         public static async Task<IHttpResponse> RawPostAsync<TRequestDto>(
             this IHttpRequestFactory httpRequestFactory,
             Uri url,
