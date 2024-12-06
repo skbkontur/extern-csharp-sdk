@@ -1,37 +1,15 @@
-﻿using JetBrains.Annotations;
+﻿using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions;
 
 [PublicAPI]
+[SuppressMessage("ReSharper", "CommentTypo")]
 public class DocflowRequisites
 {
     /// <summary>
     /// Комментарий к документообороту
     /// </summary>
     public Comment? Comment { get; set; }
-}
-
-[PublicAPI]
-public class Comment
-{
-    /// <summary>
-    /// Текст комментария
-    /// </summary>
-    public string Text { get; set; } = null!;
-
-    /// <summary>
-    /// Цвет комментария для веб-интерфейса Контур.Экстерна
-    /// </summary>
-    public CommentColor Color { get; set; }
-}
-
-public enum CommentColor
-{
-    None,
-    Red,
-    Violet,
-    Gray,
-    Yellow,
-    Green,
-    Blue
 }

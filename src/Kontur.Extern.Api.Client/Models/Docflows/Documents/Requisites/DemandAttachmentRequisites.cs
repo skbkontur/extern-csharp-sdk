@@ -74,6 +74,8 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites
         public DemandStatus DemandStatus { get; set; }
     }
 
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class Comment
     {
         /// <summary>
@@ -86,7 +88,8 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites
         /// </summary>
         public CommentColor Color { get; set; }
     }
-
+    
+    [PublicAPI]
     public enum CommentColor
     {
         None,
@@ -98,6 +101,8 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites
         Blue
     }
 
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class Label
     {
         /// <summary>
@@ -106,6 +111,8 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites
         public string Name { get; set; } = null!;
     }
 
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public class Assignee
     {
         /// <summary>
@@ -134,6 +141,8 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Requisites
         public string? LastName { get; set; }
     }
 
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
     public enum DemandStatus
     {
         /// <summary>
