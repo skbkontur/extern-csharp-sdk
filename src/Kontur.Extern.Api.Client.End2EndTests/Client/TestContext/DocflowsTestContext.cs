@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.Model.DocflowFiltering;
 using Kontur.Extern.Api.Client.Models.Docflows;
+using Kontur.Extern.Api.Client.Models.Docflows.Documents;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext
 {
@@ -24,6 +26,12 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext
 
         public Task<IDocflowWithDocuments?> GetDocflowOrNull(Guid accountId, Guid docflowId) => 
             konturExtern.Accounts.WithId(accountId).Docflows.WithId(docflowId).TryGetAsync();
+
+        public Task<IDocflowWithDocuments> PatchDocflow(Guid accountId, Guid docflowId, JsonPatchDocument<IDocflowWithDocuments> patch) =>
+            konturExtern.Accounts.WithId(accountId).Docflows.WithId(docflowId).PatchAsync(patch);
+
+        public Task<Document> PatchDocument(Guid accountId, Guid docflowId, Guid documentId, JsonPatchDocument<Document> patch) =>
+            konturExtern.Accounts.WithId(accountId).Docflows.WithId(docflowId).Documents.WithId(documentId).PatchAsync(patch);
 
         public Task<IDocflowWithDocuments> GetDocflow(Guid accountId, Guid docflowId) => 
             konturExtern.Accounts.WithId(accountId).Docflows.WithId(docflowId).GetAsync();

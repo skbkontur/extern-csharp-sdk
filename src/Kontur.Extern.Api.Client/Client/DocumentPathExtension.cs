@@ -13,6 +13,7 @@ using Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Replies;
 using Kontur.Extern.Api.Client.Paths;
 using Kontur.Extern.Api.Client.Primitives;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace Kontur.Extern.Api.Client
 {
@@ -29,6 +30,12 @@ namespace Kontur.Extern.Api.Client
         {
             var apiClient = path.Services.Api;
             return apiClient.Docflows.GetDocumentAsync(path.AccountId, path.DocflowId, path.DocumentId, timeout);
+        }
+
+        public static Task<Document> PatchAsync(this in DocumentPath path, JsonPatchDocument<Document> patch, TimeSpan? timeout = null)
+        {
+            var apiClient = path.Services.Api;
+            return apiClient.Docflows.PatchDocumentAsync(path.AccountId, path.DocflowId, path.DocumentId, patch, timeout);
         }
         
         public static IEntityList<IDocflow> RelatedDocflowsList(this in DocumentPath path, DocflowFilterBuilder? filterBuilder = null)

@@ -9,6 +9,7 @@ namespace Kontur.Extern.Api.Client.Http
         IHttpRequest Get(Uri url);
         IPayloadHttpRequest Put(Uri url);
         IPayloadHttpRequest Post(Uri url);
+        IPayloadHttpRequest Patch (Uri url);
         IHttpRequest Delete(Uri url);
         IPayloadHttpRequest Verb(string method, Uri url);
     }

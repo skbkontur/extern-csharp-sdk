@@ -43,6 +43,8 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
 
         public IPayloadHttpRequest Put(Uri url) => CreateHttpRequest(Request.Put(url));
 
+        public IPayloadHttpRequest Patch(Uri url) => CreateHttpRequest(Request.Patch(url));
+
         public IPayloadHttpRequest Post(Uri url) => CreateHttpRequest(Request.Post(url));
 
         public IHttpRequest Delete(Uri url) => CreateHttpRequest(Request.Delete(url));
