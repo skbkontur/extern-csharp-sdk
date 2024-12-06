@@ -12,5 +12,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions
         /// Идентификатор черновика документооборота, если он был создан через API
         /// </summary>
         public Guid? OriginalDraftId { get; set; }
+        
+        /// <summary>
+        /// Реквизиты документооборота
+        /// </summary>
+        public DocflowRequisites? Requisites { get; set; }
     }
 }

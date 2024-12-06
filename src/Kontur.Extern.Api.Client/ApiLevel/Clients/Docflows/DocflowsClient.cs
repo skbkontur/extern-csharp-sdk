@@ -10,6 +10,7 @@ using Kontur.Extern.Api.Client.Models.Docflows;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents;
 using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Models.Docflows.DocumentsRequests;
+using Microsoft.AspNetCore.JsonPatch;
 using Vostok.Clusterclient.Core.Model;
 
 // ReSharper disable CommentTypo
@@ -84,6 +85,12 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
 
         public Task<Document?> TryGetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null) =>
             http.TryGetAsync<Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}", timeout);
+
+        public Task<Document> PatchDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, JsonPatchDocument<Document> patch, TimeSpan? timeout = null) =>
+            http.PatchAsync<JsonPatchDocument<Document>, Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}", patch, timeout);
+
+        public Task<IDocflowWithDocuments> PatchDocflowAsync(Guid accountId, Guid docflowId, JsonPatchDocument<IDocflowWithDocuments> patch, TimeSpan? timeout = null) =>
+            http.PatchAsync<JsonPatchDocument<IDocflowWithDocuments>, IDocflowWithDocuments>($"/v1/{accountId}/docflows/{docflowId}", patch, timeout);
 
         public Task<DocflowDocumentDescription> GetDocumentDescriptionAsync(
             Guid accountId,
