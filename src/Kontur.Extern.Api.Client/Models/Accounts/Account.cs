@@ -15,7 +15,7 @@ namespace Kontur.Extern.Api.Client.Models.Accounts
         /// </summary>
         public Guid Id { get; set; }
         /// <summary>
-        /// ИНН головной организации 
+        /// ИНН головной организации
         /// </summary>
         public string Inn { get; set; } = null!;
         /// <summary>
@@ -31,7 +31,7 @@ namespace Kontur.Extern.Api.Client.Models.Accounts
         /// </summary>
         [Obsolete("use Products")]
         public string ProductName { get; set; } = null!;
-        
+
         /// <summary>
         /// Список продуктов Контура
         /// </summary>
@@ -45,5 +45,10 @@ namespace Kontur.Extern.Api.Client.Models.Accounts
         /// Ссылки для работы с учетной записью
         /// </summary>
         public Link[] Links { get; set; } = null!;
+
+        /// <summary>
+        /// Идентификатор группы учетных записей
+        /// </summary>
+        public Guid? AbonentId { get; set; }
     }
 }
