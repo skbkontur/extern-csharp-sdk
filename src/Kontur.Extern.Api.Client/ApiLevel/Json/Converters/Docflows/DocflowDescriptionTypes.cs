@@ -57,6 +57,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
             [DocflowType.FssSedoBillingInformationDemand] = typeof(FssSedoBillingInformationDemandDescription),
             [DocflowType.FssSedoBillingInformation] = typeof(FssSedoBillingInformationDescription),
             [DocflowType.FssSedoBabyCareVacationCloseNotice] = typeof(FssSedoBabyCareVacationCloseNoticeDescription),
+            [DocflowType.FssSedoDisabilityChildrenDemand] = typeof(FssSedoDisabilityChildrenDemandDescription),
             [DocflowType.FssSedoBenefitPaymentStatusNotice] = typeof(FssSedoBenefitPaymentStatusNoticeDescription),
             [DocflowType.FssSedoProactiveExpireNotice] = typeof(FssSedoProactiveExpireNoticeDescription),
             [DocflowType.FssSedoError] = typeof(FssSedoErrorDescription),

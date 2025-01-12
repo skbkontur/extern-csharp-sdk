@@ -121,6 +121,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         public static readonly DocflowType FssSedoBabyCareVacationCloseNotice = "urn:docflow:fss-sedo-baby-care-vacation-close-notice";
 
         /// <summary>
+        /// Заявление о возмещении расходов на оплату дополнительных выходных дней для ухода за детьми-инвалидами
+        /// </summary>
+        public static readonly DocflowType FssSedoDisabilityChildrenDemand = "urn:docflow:fss-sedo-disability-children-demand";
+        /// <summary>
         /// Уведомление о статусе выплаты пособия
         /// </summary>
         public static readonly DocflowType FssSedoBenefitPaymentStatusNotice = "urn:docflow:fss-sedo-benefit-payment-status-notice";
