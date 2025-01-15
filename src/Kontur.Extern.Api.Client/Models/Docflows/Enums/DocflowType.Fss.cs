@@ -114,10 +114,12 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Справка о расчетах ФСС
         /// </summary>
         public static readonly DocflowType FssSedoBillingInformation = "urn:docflow:fss-sedo-billing-information";
+
         /// <summary>
         /// Уведомление о прекращении отпуска по уходу за ребенком до полутора лет
         /// </summary>
         public static readonly DocflowType FssSedoBabyCareVacationCloseNotice = "urn:docflow:fss-sedo-baby-care-vacation-close-notice";
+
         /// <summary>
         /// Уведомление о статусе выплаты пособия
         /// </summary>
@@ -127,5 +129,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Сведения о зарплате сотрудника
         /// </summary>
         public static readonly DocflowType FssSedoEmployeeSalaryInformation = "urn:docflow:fss-sedo-employee-salary-information";
+
+        /// <summary>
+        /// Ответ страхователя на обращение СФР
+        /// </summary>
+        public static readonly DocflowType FssSedoAppealReply = "urn:docflow:fss-sedo-appeal-reply";
     }
 }
