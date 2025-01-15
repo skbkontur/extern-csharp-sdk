@@ -126,6 +126,11 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         public static readonly DocflowType FssSedoBenefitPaymentStatusNotice = "urn:docflow:fss-sedo-benefit-payment-status-notice";
 
         /// <summary>
+        /// Уведомление о непоступлении ответа на запрос в срок
+        /// </summary>
+        public static readonly DocflowType FssSedoProactiveExpireNotice = "urn:docflow:fss-sedo-proactive-expire-notice";
+
+        /// <summary>
         /// Сведения о зарплате сотрудника
         /// </summary>
         public static readonly DocflowType FssSedoEmployeeSalaryInformation = "urn:docflow:fss-sedo-employee-salary-information";
@@ -134,5 +139,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Ответ страхователя на обращение СФР
         /// </summary>
         public static readonly DocflowType FssSedoAppealReply = "urn:docflow:fss-sedo-appeal-reply";
+        
+        /// <summary>
+        /// Обращение СФР к страхователю
+        /// </summary>
+        public static readonly DocflowType FssSedoAppeal = "urn:docflow:fss-sedo-appeal";
     }
 }
