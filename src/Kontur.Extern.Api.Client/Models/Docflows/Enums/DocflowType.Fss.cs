@@ -139,10 +139,15 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Ответ страхователя на обращение СФР
         /// </summary>
         public static readonly DocflowType FssSedoAppealReply = "urn:docflow:fss-sedo-appeal-reply";
-        
+
         /// <summary>
         /// Обращение СФР к страхователю
         /// </summary>
         public static readonly DocflowType FssSedoAppeal = "urn:docflow:fss-sedo-appeal";
+
+        /// <summary>
+        /// Подтверждение основного вида экономической деятельности на СЭДО
+        /// </summary>
+        public static readonly DocflowType FssSedoOvedConfirmation = "urn:docflow:fss-sedo-oved-confirmation";
     }
 }
