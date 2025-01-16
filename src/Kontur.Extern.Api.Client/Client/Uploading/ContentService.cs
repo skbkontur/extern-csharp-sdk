@@ -32,23 +32,23 @@ namespace Kontur.Extern.Api.Client.Uploading
             var response = await contents.StartUploadAsync(accountId, stream, 0, stream.Length - 1, stream.Length, timeout).ConfigureAwait(false);
             return response.Id;
         }
-
-        public async Task<Guid> UploadFirstChunkAsync(Guid accountId, byte[] buffer, long from, long? totalLength, TimeSpan? timeout)
+        
+        public async Task<Guid> UploadFirstChunkAsync(Guid accountId, byte[] buffer, long from, long totalLength, TimeSpan? timeout)
         {
             var to = from + buffer.Length - 1;
             var response = await contents.StartUploadAsync(accountId, buffer, from, to, totalLength, timeout).ConfigureAwait(false);
             return response.Id;
         }
 
-        public async Task<bool> UploadIntermediateChunkAsync(Guid accountId, Guid contentId, byte[] buffer, long from, long? totalLength, TimeSpan? timeout)
+        public async Task<bool> UploadIntermediateChunkAsync(Guid accountId, Guid contentId, byte[] buffer, long from, long totalLength, TimeSpan? timeout)
         {
             var response = await UploadChunkAsync(accountId, contentId, buffer, from, totalLength, timeout).ConfigureAwait(false);
             return response.IsCompleted;
         }
 
-        private Task<UploadChunkResponse> UploadChunkAsync(Guid accountId, Guid contentId, byte[] buffer, long from, long? totalLength, TimeSpan? timeout)
+        private Task<UploadChunkResponse> UploadChunkAsync(Guid accountId, Guid contentId, byte[] buffer, long from, long totalLength, TimeSpan? timeout)
         {
-            var to = from + buffer.Length - 1;
+            var to = Math.Min(from + buffer.Length, totalLength) - 1;
             return contents.UploadChunkAsync(accountId, contentId, buffer, from, to, totalLength, timeout);
         }
     }

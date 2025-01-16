@@ -12,7 +12,7 @@ namespace Kontur.Extern.Api.Client.Uploading
 
         Task<Guid> UploadWholeContentAsync(Guid accountId, byte[] buffer, TimeSpan? timeout);
         Task<Guid> UploadWholeContentAsync(Guid accountId, Stream stream, TimeSpan? timeout);
-        Task<Guid> UploadFirstChunkAsync(Guid accountId, byte[] buffer, long from, long? totalLength, TimeSpan? timeout);
-        Task<bool> UploadIntermediateChunkAsync(Guid accountId, Guid contentId, byte[] buffer, long from, long? totalLength, TimeSpan? timeout);
+        Task<Guid> UploadFirstChunkAsync(Guid accountId, byte[] buffer, long from, long totalLength, TimeSpan? timeout);
+        Task<bool> UploadIntermediateChunkAsync(Guid accountId, Guid contentId, byte[] buffer, long from, long totalLength, TimeSpan? timeout);
     }
 }
