@@ -917,6 +917,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Сообщение "Решение об отказе в возмещении расходов на оплату дополнительных выходных дней для ухода за детьми-инвалидами"
             /// </summary>
             public static readonly DocumentType DeclineNoticeDocument = "urn:document:fss-sedo-disability-children-demand-decline-notice-document";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-disability-children-demand-read-receipt";
         }
 
         /// <summary>
