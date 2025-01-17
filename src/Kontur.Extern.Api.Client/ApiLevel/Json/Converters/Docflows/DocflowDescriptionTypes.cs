@@ -4,6 +4,7 @@ using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Cbrf;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegistration;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss;
+using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Oved;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Pfr;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat;
@@ -57,8 +58,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
             [DocflowType.FssSedoBillingInformation] = typeof(FssSedoBillingInformationDescription),
             [DocflowType.FssSedoBabyCareVacationCloseNotice] = typeof(FssSedoBabyCareVacationCloseNoticeDescription),
             [DocflowType.FssSedoBenefitPaymentStatusNotice] = typeof(FssSedoBenefitPaymentStatusNoticeDescription),
+            [DocflowType.FssSedoProactiveExpireNotice] = typeof(FssSedoProactiveExpireNoticeDescription),
             [DocflowType.FssSedoError] = typeof(FssSedoErrorDescription),
             [DocflowType.FssSedoEmployeeSalaryInformation] = typeof(FssSedoEmployeeSalaryInformationDescription),
+            [DocflowType.FssSedoAppealReply] = typeof(FssSedoAppealReplyDescription),
+            [DocflowType.FssSedoAppeal] = typeof(FssSedoAppealDescription),
             [DocflowType.OvedConfirmation] = typeof(OvedConfirmationDescription),
             [DocflowType.CbrfReport] = typeof(CbrfReportDescription),
             [DocflowType.BusinessRegistration] = typeof(BusinessRegistrationDescription)
