@@ -18,7 +18,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Contents
         public Task<ContentResponse> StartUploadAsync(Guid accountId, byte[] content, long from, long to, long? contentLength = null, TimeSpan? timeout = null)
         {
             var request = http.Post($"v1/{accountId}/contents")
-                .WithBytes(content)
+                .WithBytes(
+                    content,
+                    0, 
+                    contentLength is null ? content.Length : (int)Math.Min(contentLength.Value - from, content.Length))
                 .ContentRange(from, to, contentLength)
                 .Accept(ContentTypes.Json);
             return SendRequestAsync<ContentResponse>(request, timeout);
@@ -36,7 +39,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Contents
         public Task<UploadChunkResponse> UploadChunkAsync(Guid accountId, Guid contentId, byte[] contentChunk, long from, long to, long? contentLength = null, TimeSpan? timeout = null)
         {
             var request = http.Put($"v1/{accountId}/contents/{contentId}")
-                .WithBytes(contentChunk)
+                .WithBytes(
+                    contentChunk,
+                    0, 
+                    contentLength is null ? contentChunk.Length : (int)Math.Min(contentLength.Value - from, contentChunk.Length))
                 .ContentRange(from, to, contentLength)
                 .Accept(ContentTypes.Json);
             return SendRequestAsync<UploadChunkResponse>(request, timeout);

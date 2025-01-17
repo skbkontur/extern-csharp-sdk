@@ -11,8 +11,11 @@ namespace Kontur.Extern.Api.Client.Http
                 : payloadHttpRequest.WithPayload(ObjectJsonContent.WithMessage(message));
         }
 
+        public static IPayloadSpecifiedRequest WithBytes(this IPayloadHttpRequest payloadHttpRequest, byte[] bytes, int offset, int length) => 
+            payloadHttpRequest.WithPayload(new BytesContent(bytes, offset, length));
+
         public static IPayloadSpecifiedRequest WithBytes(this IPayloadHttpRequest payloadHttpRequest, byte[] bytes) => 
-            payloadHttpRequest.WithPayload(new BytesContent(bytes));
+            payloadHttpRequest.WithBytes(bytes, 0, bytes.Length);
 
         public static IPayloadSpecifiedRequest WithJson(this IPayloadHttpRequest payloadHttpRequest, string json) => 
             payloadHttpRequest.WithPayload(new StringJsonContent(json));
