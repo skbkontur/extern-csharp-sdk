@@ -1,6 +1,6 @@
 using System;
-    using System.IO;
-    using System.Threading.Tasks;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Kontur.Extern.Api.Client.Uploading
 {
@@ -25,6 +25,9 @@ namespace Kontur.Extern.Api.Client.Uploading
             var buffer = new byte[uploadChunkSize];
             while (true)
             {
+                if (start >= streamLength)
+                    break;
+
                 var read = await stream.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false);
                 if (read <= 0)
                     break;
