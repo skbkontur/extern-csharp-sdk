@@ -77,6 +77,28 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
         }
 
         [Fact]
+        public async Task Should_create_a_new_draft_when_senderCert_is_null()
+        {
+            var certInn = GeneratedAccount.Inn;
+            var certKpp = GeneratedAccount.Kpp;
+
+            var payer = DraftPayer.LegalEntityPayer(certInn, certKpp);
+            
+            var newDraft = new DraftMetadata(
+                payer,
+                DraftSender.LegalEntity(certInn, certKpp, null).WithIpAddress(IPAddress.Parse("8.8.8.8")),
+                DraftRecipient.Ifns(IfnsCode.Parse("0087"), MriCode.Parse("9660"))
+            );
+            
+            await using var entityScope = await Context.Drafts.CreateNew(AccountId, newDraft);
+
+            var createdDraft = entityScope.Entity;
+            var loadedDraft = await Context.Drafts.GetDraft(AccountId, createdDraft.Id);
+
+            loadedDraft.Should().BeEquivalentTo(createdDraft);
+        }
+
+        [Fact]
         public void Should_return_forbidden_when_try_to_get_draft_with_random_accountId()
         {
             var apiException = Assert.ThrowsAsync<ApiException>(

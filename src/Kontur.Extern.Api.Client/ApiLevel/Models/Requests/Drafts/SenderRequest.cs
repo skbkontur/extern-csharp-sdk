@@ -25,7 +25,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         /// Сертификат для отправки
         /// </summary>
         // [Required]
-        public PublicKeyCertificateRequest Certificate { get; set; } = null!;
+        public PublicKeyCertificateRequest? Certificate { get; set; }
 
         /// <summary>
         /// Отправитель является представителем

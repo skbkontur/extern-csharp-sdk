@@ -7,24 +7,20 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
 {
     public class DraftSender
     {
-        public static DraftSender LegalEntity(LegalEntityInn inn, Kpp kpp, CertificateContent certificate)
+        public static DraftSender LegalEntity(LegalEntityInn inn, Kpp kpp, CertificateContent? certificate)
         {
             if (inn is null)
                 throw new ArgumentNullException(nameof(inn));
             if (kpp is null)
                 throw new ArgumentNullException(nameof(kpp));
-            if (certificate is null)
-                throw new ArgumentNullException(nameof(certificate));
             
             return new(inn.ToString(), kpp, certificate);
         }
 
-        public static DraftSender IndividualEntrepreneur(Inn inn, CertificateContent certificate)
+        public static DraftSender IndividualEntrepreneur(Inn inn, CertificateContent? certificate)
         {
             if (inn is null)
                 throw new ArgumentNullException(nameof(inn));
-            if (certificate is null)
-                throw new ArgumentNullException(nameof(certificate));
             
             return new(inn.ToString(), null, certificate);
         }
@@ -33,9 +29,9 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
         private readonly Kpp? kpp;
         private IPAddress? ip;
         private bool isRepresentative;
-        private readonly CertificateContent certificate;
+        private readonly CertificateContent? certificate;
 
-        private DraftSender(string inn, Kpp? kpp, CertificateContent certificate)
+        private DraftSender(string inn, Kpp? kpp, CertificateContent? certificate)
         {
             this.inn = inn;
             this.kpp = kpp;
@@ -62,7 +58,7 @@ namespace Kontur.Extern.Api.Client.Model.Drafts
             Kpp = kpp,
             IpAddress = ip,
             IsRepresentative = isRepresentative,
-            Certificate = new PublicKeyCertificateRequest
+            Certificate = certificate is null ? null : new PublicKeyCertificateRequest
             {
                 Content = certificate.ToBytes()
             }
