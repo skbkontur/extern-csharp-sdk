@@ -15,13 +15,13 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
         private readonly AuthoritiesCodesGenerator codesGenerator = new();
 
         [Test]
-        public void IndividualEntrepreneur_should_fail_when_given_certificate_is_null()
+        public void IndividualEntrepreneur_should_not_fail_when_given_certificate_is_null()
         {
             var inn = codesGenerator.PersonInn();
             
-            Action action = () => DraftSender.IndividualEntrepreneur(inn, null!);
+            var request = DraftSender.IndividualEntrepreneur(inn, null!).ToRequest();
 
-            action.Should().Throw<ArgumentException>();
+            request.Certificate.Should().BeNull();
         }
 
         [Test]
@@ -54,14 +54,14 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.Drafts
         }
 
         [Test]
-        public void LegalEntity_should_fail_when_given_certificate_is_null()
+        public void LegalEntity_should_not_fail_when_given_certificate_is_null()
         {
             var inn = codesGenerator.LegalEntityInn();
             var kpp = codesGenerator.Kpp();
             
-            Action action = () => DraftSender.LegalEntity(inn, kpp, null!);
+            var request = DraftSender.LegalEntity(inn, kpp, null!).ToRequest();
 
-            action.Should().Throw<ArgumentException>();
+            request.Certificate.Should().BeNull();
         }
 
         [Test]
