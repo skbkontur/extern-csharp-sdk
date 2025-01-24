@@ -33,23 +33,31 @@ namespace Kontur.Extern.Api.Client.Uploading
             return response.Id;
         }
         
-        public async Task<Guid> UploadFirstChunkAsync(Guid accountId, byte[] buffer, long from, long totalLength, TimeSpan? timeout)
+        public async Task<Guid> UploadFirstChunkAsync(Guid accountId, byte[] buffer, long from, long? totalLength, TimeSpan? timeout)
         {
-            var to = from + buffer.Length - 1;
+            var to = CalcEndForContentRange(from, buffer.Length, totalLength);
             var response = await contents.StartUploadAsync(accountId, buffer, from, to, totalLength, timeout).ConfigureAwait(false);
             return response.Id;
         }
 
-        public async Task<bool> UploadIntermediateChunkAsync(Guid accountId, Guid contentId, byte[] buffer, long from, long totalLength, TimeSpan? timeout)
+        public async Task<bool> UploadIntermediateChunkAsync(Guid accountId, Guid contentId, byte[] buffer, long from, long? totalLength, TimeSpan? timeout)
         {
             var response = await UploadChunkAsync(accountId, contentId, buffer, from, totalLength, timeout).ConfigureAwait(false);
             return response.IsCompleted;
         }
 
-        private Task<UploadChunkResponse> UploadChunkAsync(Guid accountId, Guid contentId, byte[] buffer, long from, long totalLength, TimeSpan? timeout)
+        private Task<UploadChunkResponse> UploadChunkAsync(Guid accountId, Guid contentId, byte[] buffer, long from, long? totalLength, TimeSpan? timeout)
         {
-            var to = Math.Min(from + buffer.Length, totalLength) - 1;
+            var to = CalcEndForContentRange(from, buffer.Length, totalLength);
             return contents.UploadChunkAsync(accountId, contentId, buffer, from, to, totalLength, timeout);
+        }
+
+        private static long CalcEndForContentRange(long from, long bufferLength, long? totalLength)
+        {
+            var minLength = totalLength is null
+                ? from + bufferLength
+                : Math.Min(from + bufferLength, totalLength.Value);
+            return minLength - 1;
         }
     }
 }
