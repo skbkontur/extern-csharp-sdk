@@ -77,6 +77,50 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
         }
 
         /// <summary>
+        /// Подтверждение основного вида экономической деятельности на СЭДО
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoOvedConfirmation
+        {
+            /// <summary>
+            /// Запрос на отправку сообщения "Заявление на подтверждение основного вида экономической деятельности"
+            /// </summary>
+            public static readonly DocumentType Request = "urn:document:fss-sedo-oved-confirmation-request";
+            /// <summary>
+            /// Сообщение "Заявление на подтверждение основного вида экономической деятельности" до создания SOAP-запроса
+            /// </summary>
+            public static readonly DocumentType RequestFuf = "urn:document:fss-sedo-oved-confirmation-request-fuf";
+            /// <summary>
+            /// Результат отправки сообщения на портал
+            /// </summary>
+            public static readonly DocumentType ReceptionResult = "urn:document:fss-sedo-oved-confirmation-reception-result";
+            /// <summary>
+            /// Сообщение "уведомление об изменении статуса запроса на подтверждение основного вида экономической деятельности"
+            /// </summary>
+            public static readonly DocumentType ResultDocument = "urn:document:fss-sedo-oved-confirmation-result-document";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-oved-confirmation-exchange-error";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-oved-confirmation-error-message";
+            /// <summary>
+            /// Приложение
+            /// </summary>
+            public static readonly DocumentType Attachment = "urn:document:fss-sedo-oved-confirmation-attachment";
+            /// <summary>
+            /// Сообщение "Уведомление о размере страховых взносов"
+            /// </summary>
+            public static readonly DocumentType InsurancePremiumsAmountNotificationDocument = "urn:document:fss-sedo-oved-confirmation-insurance-premiums-amount-notification-document";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-oved-confirmation-read-receipt";
+        }
+
+        /// <summary>
         /// Подписка оператора на документооборот с ФСС по абоненту
         /// </summary>
         [PublicAPI]

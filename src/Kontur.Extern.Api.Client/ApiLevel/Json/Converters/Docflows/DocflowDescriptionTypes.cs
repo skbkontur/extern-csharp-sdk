@@ -63,6 +63,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
             [DocflowType.FssSedoEmployeeSalaryInformation] = typeof(FssSedoEmployeeSalaryInformationDescription),
             [DocflowType.FssSedoAppealReply] = typeof(FssSedoAppealReplyDescription),
             [DocflowType.FssSedoAppeal] = typeof(FssSedoAppealDescription),
+            [DocflowType.FssSedoOvedConfirmation] = typeof(FssSedoOvedConfirmationDescription),
             [DocflowType.OvedConfirmation] = typeof(OvedConfirmationDescription),
             [DocflowType.CbrfReport] = typeof(CbrfReportDescription),
             [DocflowType.BusinessRegistration] = typeof(BusinessRegistrationDescription)
