@@ -114,6 +114,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Сообщение "Уведомление о размере страховых взносов"
             /// </summary>
             public static readonly DocumentType InsurancePremiumsAmountNotificationDocument = "urn:document:fss-sedo-oved-confirmation-insurance-premiums-amount-notification-document";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-oved-confirmation-read-receipt";
         }
 
         /// <summary>
