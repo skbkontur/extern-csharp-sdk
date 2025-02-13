@@ -67,7 +67,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
             [DocflowType.FssSedoOvedConfirmation] = typeof(FssSedoOvedConfirmationDescription),
             [DocflowType.OvedConfirmation] = typeof(OvedConfirmationDescription),
             [DocflowType.CbrfReport] = typeof(CbrfReportDescription),
-            [DocflowType.BusinessRegistration] = typeof(BusinessRegistrationDescription)
+            [DocflowType.BusinessRegistration] = typeof(BusinessRegistrationDescription),
+            [DocflowType.FssSedoBroadcastMessage] = typeof(FssSedoBroadcastMessageDescription)
         };
 
         public static Type? TryGetDescriptionType(DocflowType docflowType) =>
