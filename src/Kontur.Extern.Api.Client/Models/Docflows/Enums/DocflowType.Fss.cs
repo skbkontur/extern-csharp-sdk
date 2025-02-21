@@ -153,5 +153,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Подтверждение основного вида экономической деятельности на СЭДО
         /// </summary>
         public static readonly DocflowType FssSedoOvedConfirmation = "urn:docflow:fss-sedo-oved-confirmation";
+
+        /// <summary>
+        /// Широковещательное сообщение СЭДО от СФР
+        /// </summary>
+        public static readonly DocflowType FssSedoBroadcastMessage= "urn:docflow:fss-sedo-broadcast-message";
     }
 }
