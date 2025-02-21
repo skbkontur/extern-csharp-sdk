@@ -4,7 +4,6 @@ using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Cbrf;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fns.BusinessRegistration;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss;
-using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Oved;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Pfr;
 using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Rosstat;
