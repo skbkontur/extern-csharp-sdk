@@ -888,6 +888,42 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
         }
 
         /// <summary>
+        /// Заявление о возмещении расходов на оплату дополнительных выходных дней для ухода за детьми-инвалидами
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoDisabilityChildrenDemand
+        {
+            /// <summary>
+            /// Запрос на отправку сообщения "Заявление о возмещении расходов на оплату дополнительных выходных дней для ухода за детьми-инвалидами"
+            /// </summary>
+            public static readonly DocumentType Request = "urn:document:fss-sedo-disability-children-demand-request";
+            /// <summary>
+            /// Результат отправки сообщения на портал
+            /// </summary>
+            public static readonly DocumentType ReceptionResult = "urn:document:fss-sedo-disability-children-demand-reception-result";
+            /// <summary>
+            /// Сообщение "Результат обработки заявления о возмещении расходов на оплату дополнительных выходных дней для ухода за детьми-инвалидами"
+            /// </summary>
+            public static readonly DocumentType ResultDocument = "urn:document:fss-sedo-disability-children-demand-result-document";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-disability-children-demand-exchange-error";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-disability-children-demand-error-message";
+            /// <summary>
+            /// Сообщение "Решение об отказе в возмещении расходов на оплату дополнительных выходных дней для ухода за детьми-инвалидами"
+            /// </summary>
+            public static readonly DocumentType DeclineNoticeDocument = "urn:document:fss-sedo-disability-children-demand-decline-notice-document";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-disability-children-demand-read-receipt";
+        }
+
+        /// <summary>
         /// Уведомление о статусе выплаты пособия
         /// </summary>
         [PublicAPI]
