@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations.ControlUnitSubscriptions;
 using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
@@ -21,7 +22,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
         Task<Organization?> TryGetOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null);
         Task<Organization> UpdateOrganizationAsync(Guid accountId, Guid orgId, string newName, TimeSpan? timeout = null);
         Task<Organization> CreateOrganizationAsync(Guid accountId, string inn, Kpp? kpp, string name, TimeSpan? timeout = null);
-        
+
         /// <summary>
         /// Удаление организации
         /// </summary>
@@ -30,5 +31,13 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
         /// <param name="timeout"></param>
         /// <returns>Возвращает true, если организация успешно удалена; false, если организации не существует.</returns>
         Task<bool> DeleteOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null);
+
+        public Task<OrganizationSedoSubscriptionResponse> SearchOrganizationSedoSubscriptionsAsync(
+            Guid accountId,
+            Guid orgId,
+            string? registrationNumber = null,
+            int skip = 0,
+            int take = 100,
+            TimeSpan? timeout = null);
     }
 }

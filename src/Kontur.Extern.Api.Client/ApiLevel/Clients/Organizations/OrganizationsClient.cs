@@ -3,7 +3,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations.ControlUnitSubscriptions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations.ControlUnitSubscriptions;
 using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using Vostok.Clusterclient.Core.Model;
@@ -27,8 +29,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
             TimeSpan? timeout = null)
         {
             var url = new RequestUrlBuilder($"/v1/{accountId}/organizations")
-                .AppendToQuery("inn", inn) 
-                .AppendToQuery("kpp", kpp) 
+                .AppendToQuery("inn", inn)
+                .AppendToQuery("kpp", kpp)
                 .AppendToQuery("skip", skip)
                 .AppendToQuery("take", take)
                 .Build();
@@ -82,5 +84,26 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
 
         public Task<bool> DeleteOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null) =>
             http.TryDeleteAsync($"/v1/{accountId}/organizations/{orgId}", timeout);
+
+        public async Task<OrganizationSedoSubscriptionResponse> SearchOrganizationSedoSubscriptionsAsync(
+            Guid accountId,
+            Guid orgId,
+            string? registrationNumber = null,
+            int skip = 0,
+            int take = 100,
+            TimeSpan? timeout = null)
+        {
+            var requestBody = new SedoSubscriptionSearchRequest
+            {
+                RegistrationNumber = registrationNumber,
+                Skip = skip,
+                Take = take
+            };
+
+            var url = new RequestUrlBuilder($"/v1/{accountId}/organizations/{orgId}/control-unit-subscriptions").Build();
+
+            return await http.PostAsync<SedoSubscriptionSearchRequest, OrganizationSedoSubscriptionResponse>(url, requestBody, timeout)
+                .ConfigureAwait(false);
+        }
     }
 }

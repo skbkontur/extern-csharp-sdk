@@ -202,6 +202,18 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
             organizationCount.Should().Be(0);
         }
 
+        [Fact]
+        public async Task Should_return_organization_sedo_subscriptions()
+        {
+            await using var organizationScope = await Context.Organizations
+                .AddLegalEntityOrganization(AccountId, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org");
+            var organization = organizationScope.Entity;
+
+            var organizationSedoSubscriptions = await Context.Organizations.SearchOrganizationSedoSubscriptions(AccountId, organization.Id);
+
+            organizationSedoSubscriptions.Should().NotBeNull();
+        }
+
         private static void ShouldBeEqual(Organization organization, Organization expectedOrganization)
         {
             organization.Should().BeEquivalentTo(expectedOrganization);
