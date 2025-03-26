@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations.ControlUnitSubscriptions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
 using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Api.Client.End2EndTests.TestEnvironment;
@@ -209,7 +210,10 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client
                 .AddLegalEntityOrganization(AccountId, codesGenerator.LegalEntityInn(), codesGenerator.Kpp(), "the org");
             var organization = organizationScope.Entity;
 
-            var organizationSedoSubscriptions = await Context.Organizations.SearchOrganizationSedoSubscriptions(AccountId, organization.Id);
+            var organizationSedoSubscriptions = await Context.Organizations.SearchOrganizationControlUnitSubscriptionsAsync(
+                AccountId,
+                organization.Id,
+                new SedoSubscriptionSearchRequest());
 
             organizationSedoSubscriptions.Should().NotBeNull();
         }

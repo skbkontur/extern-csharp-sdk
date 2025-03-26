@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations.ControlUnitSubscriptions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations.ControlUnitSubscriptions;
 using Kontur.Extern.Api.Client.Models.Numbers;
@@ -32,12 +33,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
         /// <returns>Возвращает true, если организация успешно удалена; false, если организации не существует.</returns>
         Task<bool> DeleteOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null);
 
-        public Task<OrganizationSedoSubscriptionResponse> SearchOrganizationSedoSubscriptionsAsync(
+        Task<OrganizationSedoSubscriptionResponse> SearchOrganizationControlUnitSubscriptionsAsync(
             Guid accountId,
             Guid orgId,
-            string? registrationNumber = null,
-            int skip = 0,
-            int take = 100,
+            ControlUnitSubscriptionSearchRequest request,
             TimeSpan? timeout = null);
     }
 }

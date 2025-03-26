@@ -85,25 +85,22 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
         public Task<bool> DeleteOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null) =>
             http.TryDeleteAsync($"/v1/{accountId}/organizations/{orgId}", timeout);
 
-        public async Task<OrganizationSedoSubscriptionResponse> SearchOrganizationSedoSubscriptionsAsync(
+        public async Task<OrganizationSedoSubscriptionResponse> SearchOrganizationControlUnitSubscriptionsAsync(
             Guid accountId,
             Guid orgId,
-            string? registrationNumber = null,
-            int skip = 0,
-            int take = 100,
+            ControlUnitSubscriptionSearchRequest request,
             TimeSpan? timeout = null)
         {
-            var requestBody = new SedoSubscriptionSearchRequest
+            switch (request)
             {
-                RegistrationNumber = registrationNumber,
-                Skip = skip,
-                Take = take
-            };
+                case SedoSubscriptionSearchRequest sedoRequest:
+                    var url = new RequestUrlBuilder($"/v1/{accountId}/organizations/{orgId}/control-unit-subscriptions").Build();
 
-            var url = new RequestUrlBuilder($"/v1/{accountId}/organizations/{orgId}/control-unit-subscriptions").Build();
-
-            return await http.PostAsync<SedoSubscriptionSearchRequest, OrganizationSedoSubscriptionResponse>(url, requestBody, timeout)
-                .ConfigureAwait(false);
+                    return await http.PostAsync<SedoSubscriptionSearchRequest, OrganizationSedoSubscriptionResponse>(url, sedoRequest, timeout)
+                        .ConfigureAwait(false);
+                default:
+                    throw new NotImplementedException($"Organization control unit subscriptions search is not implemented for {request.GetType().Name}");
+            }
         }
     }
 }

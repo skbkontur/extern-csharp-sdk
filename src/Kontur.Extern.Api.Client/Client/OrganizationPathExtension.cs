@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations.ControlUnitSubscriptions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations.ControlUnitSubscriptions;
 using Kontur.Extern.Api.Client.Paths;
@@ -32,15 +33,13 @@ namespace Kontur.Extern.Api.Client
             return apiClient.Organizations.UpdateOrganizationAsync(path.AccountId, path.OrganizationId, name, timeout);
         }
 
-        public static Task<OrganizationSedoSubscriptionResponse> SearchOrganizationSedoSubscriptionsAsync(
+        public static Task<OrganizationSedoSubscriptionResponse> SearchOrganizationControlUnitSubscriptionsAsync(
             this in OrganizationPath path,
-            string? registrationNumber,
-            int skip = 0,
-            int take = 100,
+            ControlUnitSubscriptionSearchRequest request,
             TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
-            return apiClient.Organizations.SearchOrganizationSedoSubscriptionsAsync(path.AccountId, path.OrganizationId, registrationNumber, skip, take, timeout);
+            return apiClient.Organizations.SearchOrganizationControlUnitSubscriptionsAsync(path.AccountId, path.OrganizationId, request, timeout);
         }
     }
 }

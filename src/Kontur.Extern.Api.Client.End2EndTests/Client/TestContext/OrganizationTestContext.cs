@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations.ControlUnitSubscriptions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations.ControlUnitSubscriptions;
 using Kontur.Extern.Api.Client.Models.Numbers;
@@ -51,7 +52,10 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext
         public Task Rename(Guid accountId, Guid organizationId, string newName) =>
             konturExtern.Accounts.WithId(accountId).Organizations.WithId(organizationId).RenameAsync(newName);
 
-        public Task<OrganizationSedoSubscriptionResponse> SearchOrganizationSedoSubscriptions(Guid accountId, Guid organizationId, string? registrationNumber = null) =>
-            konturExtern.Accounts.WithId(accountId).Organizations.WithId(organizationId).SearchOrganizationSedoSubscriptionsAsync(registrationNumber);
+        public Task<OrganizationSedoSubscriptionResponse> SearchOrganizationControlUnitSubscriptionsAsync(
+            Guid accountId,
+            Guid organizationId,
+            ControlUnitSubscriptionSearchRequest request) =>
+            konturExtern.Accounts.WithId(accountId).Organizations.WithId(organizationId).SearchOrganizationControlUnitSubscriptionsAsync(request);
     }
 }
