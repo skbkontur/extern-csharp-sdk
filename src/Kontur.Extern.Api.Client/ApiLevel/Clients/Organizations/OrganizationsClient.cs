@@ -88,19 +88,13 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
         public async Task<OrganizationSedoSubscriptionResponse> SearchOrganizationControlUnitSubscriptionsAsync(
             Guid accountId,
             Guid orgId,
-            ControlUnitSubscriptionSearchRequest request,
+            SedoSubscriptionSearchRequest request,
             TimeSpan? timeout = null)
         {
-            switch (request)
-            {
-                case SedoSubscriptionSearchRequest sedoRequest:
-                    var url = new RequestUrlBuilder($"/v1/{accountId}/organizations/{orgId}/control-unit-subscriptions").Build();
+            var url = new RequestUrlBuilder($"/v1/{accountId}/organizations/{orgId}/control-unit-subscriptions").Build();
 
-                    return await http.PostAsync<SedoSubscriptionSearchRequest, OrganizationSedoSubscriptionResponse>(url, sedoRequest, timeout)
-                        .ConfigureAwait(false);
-                default:
-                    throw new NotImplementedException($"Organization control unit subscriptions search is not implemented for {request.GetType().Name}");
-            }
+            return await http.PostAsync<SedoSubscriptionSearchRequest, OrganizationSedoSubscriptionResponse>(url, request, timeout)
+                .ConfigureAwait(false);
         }
     }
 }

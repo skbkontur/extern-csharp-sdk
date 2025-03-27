@@ -55,7 +55,7 @@ namespace Kontur.Extern.Api.Client.End2EndTests.Client.TestContext
         public Task<OrganizationSedoSubscriptionResponse> SearchOrganizationControlUnitSubscriptionsAsync(
             Guid accountId,
             Guid organizationId,
-            ControlUnitSubscriptionSearchRequest request) =>
+            SedoSubscriptionSearchRequest request) =>
             konturExtern.Accounts.WithId(accountId).Organizations.WithId(organizationId).SearchOrganizationControlUnitSubscriptionsAsync(request);
     }
 }

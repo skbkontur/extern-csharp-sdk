@@ -36,7 +36,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
         Task<OrganizationSedoSubscriptionResponse> SearchOrganizationControlUnitSubscriptionsAsync(
             Guid accountId,
             Guid orgId,
-            ControlUnitSubscriptionSearchRequest request,
+            SedoSubscriptionSearchRequest request,
             TimeSpan? timeout = null);
     }
 }

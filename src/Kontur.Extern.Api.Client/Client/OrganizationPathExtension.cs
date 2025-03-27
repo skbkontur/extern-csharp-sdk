@@ -35,7 +35,7 @@ namespace Kontur.Extern.Api.Client
 
         public static Task<OrganizationSedoSubscriptionResponse> SearchOrganizationControlUnitSubscriptionsAsync(
             this in OrganizationPath path,
-            ControlUnitSubscriptionSearchRequest request,
+            SedoSubscriptionSearchRequest request,
             TimeSpan? timeout = null)
         {
             var apiClient = path.Services.Api;
