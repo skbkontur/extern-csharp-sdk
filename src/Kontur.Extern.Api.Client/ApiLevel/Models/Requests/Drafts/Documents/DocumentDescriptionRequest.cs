@@ -33,5 +33,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents
         /// Наименование файла документа
         /// </summary>
         public string? OriginalFilename { get; set; }
+        
+        /// <summary>
+        /// Флаг, что прикладываемый файл зашифрован. Значение по умолчанию: false.
+        /// </summary>
+        public bool IsDocumentEncrypted { get; set; }
     }
 }
