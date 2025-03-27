@@ -15,6 +15,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.Put
         private string? fileName;
         private DocumentType? type;
         private IDocumentContentUploadStrategy? contentUploadStrategy;
+        private bool isDocumentEncrypted;
 
         public DocumentRequestBuilder SetSvdregCode(SvdregCode code)
         {
@@ -45,6 +46,12 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.Put
             contentUploadStrategy = uploadStrategy;
             return this;
         }
+        
+        public DocumentRequestBuilder SetIsDocumentEncrypted(bool isDocumentEncrypted)
+        {
+            this.isDocumentEncrypted = isDocumentEncrypted;
+            return this;
+        }
 
         public async ValueTask<(Signature? signature, DocumentRequest documentRequest)> CreateRequestAsync(
             Guid accountId,
@@ -72,18 +79,15 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Documents.Put
                 _ => contentType
             };
 
-            DocumentDescriptionRequest? description = null;
-            if (svdregCode is not null || fileName is not null || type is not null || contentType is not null)
+            var description = new DocumentDescriptionRequest
             {
-                description = new DocumentDescriptionRequest
-                {
-                    Type = type,
-                    Filename = fileName,
-                    SvdregCode = svdregCode,
-                    ContentType = contentType
-                };
-            }
-
+                IsDocumentEncrypted = isDocumentEncrypted,
+                Type = type,
+                Filename = fileName,
+                SvdregCode = svdregCode,
+                ContentType = contentType
+            };
+            
             return new DocumentRequest
             {
                 ContentId = contentId,
