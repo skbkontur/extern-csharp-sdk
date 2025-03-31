@@ -974,5 +974,16 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// </summary>
             public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-employee-salary-information-error-message";
         }
+
+        /// <summary>
+        /// Широковещательное сообщение СЭДО от СФР
+        /// </summary>
+        public static class FssSedoBroadcastMessage
+        {
+            /// <summary>
+            /// Документ "Широковещательное сообщение СЭДО от СФР"
+            /// </summary>
+            public static readonly DocumentType Document = "urn:document:fss-sedo-broadcast-message-document";
+        }
     }
 }
