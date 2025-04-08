@@ -66,6 +66,9 @@ namespace Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.Converters.Enu
 
                 if (!Enum.TryParse(enumString, out value) && !Enum.TryParse(enumString, true, out value))
                 {
+                    if (stringsToValues.TryGetValue("unknown", out var resultEnum))
+                        return resultEnum;
+
                     throw Errors.CannotParseJsonStringValueToEnumOfType(enumString, TypeToConvert);
                 }
 
