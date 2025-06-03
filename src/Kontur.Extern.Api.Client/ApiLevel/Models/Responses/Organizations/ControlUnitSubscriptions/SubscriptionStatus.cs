@@ -22,5 +22,13 @@ public enum SubscriptionStatus
     /// <summary>
     /// Не удалось подписаться.
     /// </summary>
-    SubscribeFailed
+    SubscribeFailed,
+    /// <summary>
+    /// Из СФР долго не приходит результат подписки.
+    /// </summary>
+    SubscribeWithoutResponse,
+    /// <summary>
+    /// Из СФР долго не приходит результат отписки.
+    /// </summary>
+    UnsubscribeWithoutResponse
 }
