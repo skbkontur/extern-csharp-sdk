@@ -167,7 +167,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.ApiLevel.Models.Requests.Drafts.Doc
         {
             var accountId = Guid.NewGuid();
 
-            var expectedRequest = new DocumentRequest();
+            var expectedRequest = new DocumentRequest {Description = new DocumentDescriptionRequest()};
 
             var contentService = Substitute.For<IContentService>();
             var crypt = Substitute.For<ICrypt>();
