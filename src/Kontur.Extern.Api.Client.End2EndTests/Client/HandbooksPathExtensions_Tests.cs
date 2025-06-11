@@ -157,7 +157,7 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
     public async Task Should_return_mvd_unit_by_code()
     {
         var code = "020-015";
-        var controlUnit = await Context.Handbooks.GetControlUnit(code, true);
+        var controlUnit = await Context.Handbooks.GetControlUnit(code, AmbiguousUnitType.Mvd);
         controlUnit.Code.Should().Be(code);
         controlUnit.Type.Should().Be(ControlUnitType.Mvd);
     }
