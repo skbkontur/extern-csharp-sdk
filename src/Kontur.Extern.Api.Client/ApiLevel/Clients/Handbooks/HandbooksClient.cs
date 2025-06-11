@@ -28,9 +28,10 @@ public class HandbooksClient : IHandbooksClient
         return controlUnits;
     }
 
-    public async Task<ControlUnit> GetControlUnit(string code, TimeSpan? timeout = null)
+    public async Task<ControlUnit> GetControlUnit(string code, bool isMvd = false, TimeSpan? timeout = null)
     {
-        var url = new RequestUrlBuilder($"/v1/handbooks/control-units/{code}").Build();
+        var url = new RequestUrlBuilder($"/v1/handbooks/control-units/{code}")
+            .AppendToQuery("isMvd", isMvd).Build();
         var controlUnit = await http.GetAsync<ControlUnit>(url);
         return controlUnit;
     }
