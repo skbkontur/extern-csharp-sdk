@@ -39,4 +39,9 @@ public class ControlUnitContacts
     /// Электронная почта
     /// </summary>
     public string Email { get; set; }
+
+    /// <summary>
+    /// Id отделения МВД
+    /// </summary>
+    public string MvdId { get; set; }
 }
