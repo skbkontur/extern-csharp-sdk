@@ -10,5 +10,6 @@ public enum ControlUnitType
     Fst,
     Pfr,
     Rtn,
-    Stat
+    Stat,
+    Mvd
 }
