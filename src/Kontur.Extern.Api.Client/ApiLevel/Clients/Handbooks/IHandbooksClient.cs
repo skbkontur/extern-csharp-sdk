@@ -8,6 +8,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Handbooks;
 public interface IHandbooksClient
 {
     Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? filter, TimeSpan? timeout = null);
-    Task<ControlUnit> GetControlUnit(string code, bool isMvd = false, TimeSpan? timeout = null);
+    Task<ControlUnit> GetControlUnit(string code, AmbiguousUnitType? unitType = null, TimeSpan? timeout = null);
     Task<FnsFormsPage> GetFnsForms(FnsFormsFilter? filter, TimeSpan? timeout = null);
 }
