@@ -17,10 +17,10 @@ public static class HandbooksPathExtension
         return controlUnits;
     }
 
-    public static async Task<ControlUnit> GetControlUnit(this HandbooksPath path, string code, TimeSpan? timeout = null)
+    public static async Task<ControlUnit> GetControlUnit(this HandbooksPath path, string code, AmbiguousUnitType? unitType = null, TimeSpan? timeout = null)
     {
         var apiClient = path.Services.Api;
-        var controlUnit = await apiClient.Handbooks.GetControlUnit(code, timeout).ConfigureAwait(false);
+        var controlUnit = await apiClient.Handbooks.GetControlUnit(code, unitType).ConfigureAwait(false);
         return controlUnit;
     }
 
