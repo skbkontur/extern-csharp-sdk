@@ -985,5 +985,61 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// </summary>
             public static readonly DocumentType Document = "urn:document:fss-sedo-broadcast-message-document";
         }
+
+        /// <summary>
+        /// Запрос платежных реквизитов
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoPaymentDetailsDemand
+        {
+            /// <summary>
+            /// Запрос на получение документов
+            /// </summary>
+            public static DocumentType RequestMessage = "urn:document:fss-sedo-payment-details-demand-request-message";
+            /// <summary>
+            /// Документ "Запрос платежных реквизитов"
+            /// </summary>
+            public static DocumentType Document = "urn:document:fss-sedo-payment-details-demand-document";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-payment-details-demand-read-receipt";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static DocumentType ExchangeError = "urn:document:fss-sedo-payment-details-demand-exchange-error";
+        }
+
+        /// <summary>
+        /// Ответ на запрос платежных реквизитов
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoPaymentDetailsDemandReply
+        {
+            /// <summary>
+            /// Запрос на отправку сообщения "Ответ на запрос платежных реквизитов"
+            /// </summary>
+            public static DocumentType Request = "urn:document:fss-sedo-payment-details-demand-reply-request";
+            /// <summary>
+            /// Результат отправки сообщения на портал
+            /// </summary>
+            public static DocumentType ReceptionResult = "urn:document:fss-sedo-payment-details-demand-reply-reception-result";
+            /// <summary>
+            /// Сообщение "Результат ответа на запрос платежных реквизитов"
+            /// </summary>
+            public static DocumentType ResultDocument = "urn:document:fss-sedo-payment-details-demand-reply-result-document";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static DocumentType ExchangeError = "urn:document:fss-sedo-payment-details-demand-reply-exchange-error";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static DocumentType ErrorMessage = "urn:document:fss-sedo-payment-details-demand-reply-error-message";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-payment-details-demand-reply-read-receipt";
+        }
     }
 }

@@ -157,6 +157,16 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// <summary>
         /// Широковещательное сообщение СЭДО от СФР
         /// </summary>
-        public static readonly DocflowType FssSedoBroadcastMessage= "urn:docflow:fss-sedo-broadcast-message";
+        public static readonly DocflowType FssSedoBroadcastMessage = "urn:docflow:fss-sedo-broadcast-message";
+
+        /// <summary>
+        /// Запрос платежных реквизитов
+        /// </summary>
+        public static readonly DocflowType FssSedoPaymentDetailsDemand = "urn:docflow:fss-sedo-payment-details-demand";
+
+        /// <summary>
+        /// Ответ на запрос платежных реквизитов
+        /// </summary>
+        public static readonly DocflowType FssSedoPaymentDetailsDemandReply = "urn:docflow:fss-sedo-payment-details-demand-reply";
     }
 }
