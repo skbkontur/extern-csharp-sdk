@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Handbooks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks.UniqueHandbooks;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks.UniqueHandbooks.HandbookTypes;
 using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Api.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Api.Client.Exceptions;
@@ -180,5 +182,25 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
                                               && !x.Flags.BusinessRegistration).Should().BeTrue();
         controlUnitList.Take.Should().BeGreaterThan(0);
         controlUnitList.Skip.Should().Be(handbookFilter.Skip);
+    }
+    
+    [Fact]
+    public async Task Should_return_citizenship_handbook()
+    {
+        var handbookFilter = new HandbookFilter {Skip = 0, Take = 1000};
+
+        var citizenshipHandbook = await Context.Handbooks.GetHandbook(HandbookType.MvdCitizenship, handbookFilter);
+        citizenshipHandbook.HandbookType.Should().Be(HandbookType.MvdCitizenship);
+        citizenshipHandbook.Handbook.Any(c => ((MvdCitizenship)c).Name == "Россия").Should().BeTrue();
+    }
+    
+    [Fact]
+    public async Task Should_return_rfRegions_handbook()
+    {
+        var handbookFilter = new HandbookFilter {Skip = 0, Take = 1000};
+
+        var citizenshipHandbook = await Context.Handbooks.GetHandbook(HandbookType.MvdRegionsRf, handbookFilter);
+        citizenshipHandbook.HandbookType.Should().Be(HandbookType.MvdRegionsRf);
+        citizenshipHandbook.Handbook.Any(c => ((MvdRfRegions)c).Name == "Свердловская область").Should().BeTrue();
     }
 }
