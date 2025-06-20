@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Handbooks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks.UniqueHandbooks;
 using Kontur.Extern.Api.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 
@@ -46,5 +47,14 @@ public class HandbooksClient : IHandbooksClient
             .Build();
         var fnsForms = await http.GetAsync<FnsFormsPage>(url);
         return fnsForms;
+    }
+
+    public async Task<HandbookPage> GetHandbook(HandbookType handbookType, HandbookFilter? handbookFilter = null, TimeSpan? timeout = null)
+    {
+        handbookFilter ??= new HandbookFilter();
+        var url = new RequestUrlBuilder($"/v1/handbooks/{handbookType}")
+            .AppendToQuery("handbookFilter", handbookFilter).Build();
+        var handbook = await http.GetAsync<HandbookPage>(url);
+        return handbook;
     }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Handbooks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks.UniqueHandbooks;
 using Kontur.Extern.Api.Client.Paths;
 
 namespace Kontur.Extern.Api.Client;
@@ -29,5 +30,12 @@ public static class HandbooksPathExtension
         var apiClient = path.Services.Api;
         var fnsForms = await apiClient.Handbooks.GetFnsForms(filter, timeout).ConfigureAwait(false);
         return fnsForms;
+    }
+
+    public static async Task<HandbookPage> GetHandbook(this HandbooksPath path, HandbookType handbookType, HandbookFilter? handbookFilter = null, TimeSpan? timeout = null)
+    {
+        var apiClient = path.Services.Api;
+        var handbook = await apiClient.Handbooks.GetHandbook(handbookType, handbookFilter, timeout);
+        return handbook;
     }
 }
