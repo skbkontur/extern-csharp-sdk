@@ -85,7 +85,7 @@ namespace Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.NamingPolicies
                 value = char.ToLower(value[0]) + value.Substring(1);
             return value;
         }
-        
+
         private enum SeparatedCaseState
         {
             Start,

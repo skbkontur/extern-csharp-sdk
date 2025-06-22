@@ -29,10 +29,10 @@ public class HandbooksClient : IHandbooksClient
         return controlUnits;
     }
 
-    public async Task<ControlUnit> GetControlUnit(string code, AmbiguousUnitType? unitType = null, TimeSpan? timeout = null)
+    public async Task<ControlUnit> GetControlUnit(string code, AmbiguousUnitType? controlUnitType = null, TimeSpan? timeout = null)
     {
         var url = new RequestUrlBuilder($"/v1/handbooks/control-units/{code}")
-            .AppendToQuery("unitType", unitType).Build();
+            .AppendToQuery("controlUnitType", controlUnitType).Build();
         var controlUnit = await http.GetAsync<ControlUnit>(url);
         return controlUnit;
     }
@@ -53,7 +53,8 @@ public class HandbooksClient : IHandbooksClient
     {
         handbookFilter ??= new HandbookFilter();
         var url = new RequestUrlBuilder($"/v1/handbooks/{handbookType}")
-            .AppendToQuery("handbookFilter", handbookFilter).Build();
+            .AppendToQuery("take", handbookFilter.Take)
+            .AppendToQuery("skip", handbookFilter.Skip).Build();
         var handbook = await http.GetAsync<HandbookPage>(url);
         return handbook;
     }
