@@ -197,10 +197,18 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
     [Fact]
     public async Task Should_return_rfRegions_handbook()
     {
-        var handbookFilter = new HandbookFilter {Skip = 0, Take = 1000};
+        var citizenshipHandbook = await Context.Handbooks.GetHandbook(HandbookType.MvdRegionsRf);
+        citizenshipHandbook.HandbookType.Should().Be(HandbookType.MvdRegionsRf);
+        citizenshipHandbook.Handbook.Any(c => ((MvdRfRegions)c).Name == "Свердловская область").Should().BeTrue();
+    }
+    
+    [Fact]
+    public async Task Should_return_empty_rfRegions_handbook()
+    {
+        var handbookFilter = new HandbookFilter {Skip = 0, Take = 0};
 
         var citizenshipHandbook = await Context.Handbooks.GetHandbook(HandbookType.MvdRegionsRf, handbookFilter);
         citizenshipHandbook.HandbookType.Should().Be(HandbookType.MvdRegionsRf);
-        citizenshipHandbook.Handbook.Any(c => ((MvdRfRegions)c).Name == "Свердловская область").Should().BeTrue();
+        citizenshipHandbook.Handbook.Should().BeEmpty();
     }
 }
