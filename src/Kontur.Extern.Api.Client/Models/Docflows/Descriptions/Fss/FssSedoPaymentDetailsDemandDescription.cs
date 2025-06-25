@@ -4,7 +4,7 @@ using Kontur.Extern.Api.Client.Common.Time;
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss;
 
 [PublicAPI]
-public class FssSedoPaymentDetailsDemandDescription
+public class FssSedoPaymentDetailsDemandDescription: FssSedoDescription
 {
     /// <summary>
     /// Версия формы документа

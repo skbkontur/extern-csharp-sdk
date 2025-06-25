@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss;
 
 [PublicAPI]
-public class FssSedoPaymentDetailsDemandReplyDescription
+public class FssSedoPaymentDetailsDemandReplyDescription: FssSedoDescription
 {
     /// <summary>
     /// ИНН организации, за которую сдается отчет
