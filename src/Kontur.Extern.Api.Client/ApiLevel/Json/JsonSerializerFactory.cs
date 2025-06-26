@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json;
 using Kontur.Extern.Api.Client.ApiLevel.Json.Converters;
 using Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows;
@@ -16,11 +17,14 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json
 {
     public static class JsonSerializerFactory
     {
-        public static IJsonSerializer CreateJsonSerializer(ILog log, bool ignoreIndentation = false, bool ignoreNullValues = true)
+        public static IJsonSerializer CreateJsonSerializer(ILog log, bool ignoreIndentation = false, bool ignoreNullValues = true, Func<SystemTextJsonSerializerFactory>? setupSerializer = null)
         {
             var namingPolicy = new KebabCaseNamingPolicy();
-            return new SystemTextJsonSerializerFactory()
-                .WithNamingPolicy(namingPolicy)
+            var factory = new SystemTextJsonSerializerFactory();
+            if (setupSerializer is not null)
+                factory = setupSerializer();
+
+            return factory.WithNamingPolicy(namingPolicy)
                 .AddConverter(new UrnJsonConverter())
                 .AddConverter(new StringBasedValueTypesConverter())
                 .AddConverter(new DocflowConverter())
