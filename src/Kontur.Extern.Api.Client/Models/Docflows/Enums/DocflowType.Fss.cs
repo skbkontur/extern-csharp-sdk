@@ -168,5 +168,20 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Ответ на запрос платежных реквизитов
         /// </summary>
         public static readonly DocflowType FssSedoPaymentDetailsDemandReply = "urn:docflow:fss-sedo-payment-details-demand-reply";
+        
+        /// <summary>
+        /// Заявление на оплату санаторно-курортного лечения
+        /// </summary>
+        public static readonly DocflowType FssSedoAdditionalVacationStatement = "urn:docflow:fss-sedo-additional-vacation-statement";
+        
+        /// <summary>
+        /// Запрос недостающих документов для оплаты отпуска застрахованного лица
+        /// </summary>
+        public static readonly DocflowType FssSedoAdditionalVacationStatementNeedDoc = "urn:docflow:fss-sedo-additional-vacation-statement-need-doc";
+        
+        /// <summary>
+        /// Направление дополнительных документов по сведениям для оплаты отпуска застрахованного лица
+        /// </summary>
+        public static readonly DocflowType FssSedoAdditionalVacationStatementDocs = "urn:docflow:fss-sedo-additional-vacation-statement-docs";
     }
 }
