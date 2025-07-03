@@ -1,6 +1,6 @@
 ﻿namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
 
-public enum AmbiguousUnitType
+public enum AmbiguousControlUnitType
 {
     Mvd
 }

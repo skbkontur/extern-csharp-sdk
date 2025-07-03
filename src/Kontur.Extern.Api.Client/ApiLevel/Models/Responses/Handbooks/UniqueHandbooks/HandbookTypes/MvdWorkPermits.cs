@@ -1,14 +1,14 @@
 ﻿namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks.UniqueHandbooks.HandbookTypes;
 
-public class MvdWorkPermits : HandbookMvdItem
+public class MvdWorkPermits : HandbookItem
 {
     /// <summary>
     /// Код
     /// </summary>
-    public override string Code { get; set; }
+    public string Code { get; set; }
 
     /// <summary>
     /// Наименование основания для работы
     /// </summary>
-    public override string Name { get; set; }
+    public string Name { get; set; }
 }
