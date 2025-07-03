@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -159,7 +161,7 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
     public async Task Should_return_mvd_unit_by_code()
     {
         var code = "020-015";
-        var controlUnit = await Context.Handbooks.GetControlUnit(code, AmbiguousUnitType.Mvd);
+        var controlUnit = await Context.Handbooks.GetControlUnit(code, AmbiguousControlUnitType.Mvd);
         controlUnit.Code.Should().Be(code);
         controlUnit.Type.Should().Be(ControlUnitType.Mvd);
     }
@@ -210,5 +212,24 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
         var citizenshipHandbook = await Context.Handbooks.GetHandbook(HandbookType.MvdRegionsRf, handbookFilter);
         citizenshipHandbook.HandbookType.Should().Be(HandbookType.MvdRegionsRf);
         citizenshipHandbook.Handbook.Should().BeEmpty();
+    }
+
+    [Theory]
+    [MemberData(nameof(GetAllHandbookTypes))]
+    public async Task Should_return_handbooks(HandbookType handbookType)
+    {
+        var handbookFilter = new HandbookFilter {Skip = 0, Take = 25};
+
+        var handbook = await Context.Handbooks.GetHandbook(handbookType, handbookFilter);
+        handbook.HandbookType.Should().Be(handbookType);
+        handbook.Take.Should().Be(25);
+    }
+    
+    public static IEnumerable<object[]> GetAllHandbookTypes()
+    {
+        foreach (var value in Enum.GetValues(typeof(HandbookType)))
+        {
+            yield return new[] { value };
+        }
     }
 }

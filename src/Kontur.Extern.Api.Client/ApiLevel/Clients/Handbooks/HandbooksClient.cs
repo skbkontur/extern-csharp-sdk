@@ -25,15 +25,20 @@ public class HandbooksClient : IHandbooksClient
             .AppendToQuery("includeinactive", filter.IncludeInactive);
 
         var uri = url.Build();
-        var controlUnits = await http.GetAsync<ControlUnitsPage>(uri);
+        var controlUnits = await http.GetAsync<ControlUnitsPage>(uri).ConfigureAwait(false);
         return controlUnits;
     }
 
-    public async Task<ControlUnit> GetControlUnit(string code, AmbiguousUnitType? controlUnitType = null, TimeSpan? timeout = null)
+    public async Task<ControlUnit> GetControlUnit(string code, TimeSpan? timeout = null)
+    {
+        return await GetControlUnit(code, null, timeout);
+    }
+
+    public async Task<ControlUnit> GetControlUnit(string code, AmbiguousControlUnitType? controlUnitType, TimeSpan? timeout = null)
     {
         var url = new RequestUrlBuilder($"/v1/handbooks/control-units/{code}")
             .AppendToQuery("controlUnitType", controlUnitType).Build();
-        var controlUnit = await http.GetAsync<ControlUnit>(url);
+        var controlUnit = await http.GetAsync<ControlUnit>(url).ConfigureAwait(false);
         return controlUnit;
     }
 
