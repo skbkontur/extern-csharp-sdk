@@ -19,6 +19,11 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions
         public Okud? Okud { get; set; }
         
         /// <summary>
+        /// Уникальный идентификатор формы в Экстерне
+        /// </summary>
+        public string? Version { get; set; }
+        
+        /// <summary>
         /// Полное название формы
         /// </summary>
         public string? FormFullname { get; set; }
