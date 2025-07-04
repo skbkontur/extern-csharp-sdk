@@ -183,5 +183,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Направление дополнительных документов по сведениям для оплаты отпуска застрахованного лица
         /// </summary>
         public static readonly DocflowType FssSedoAdditionalVacationStatementDocs = "urn:docflow:fss-sedo-additional-vacation-statement-docs";
+
+        /// <summary>
+        /// Запрос регистрации/отзыва доверенности ФСС
+        /// </summary>
+        public static readonly DocflowType FssWarrantManagement = "urn:docflow:fss-warrant-management";
     }
 }
