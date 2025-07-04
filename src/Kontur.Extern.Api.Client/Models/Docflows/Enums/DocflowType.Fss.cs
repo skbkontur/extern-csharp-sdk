@@ -168,5 +168,15 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Ответ на запрос платежных реквизитов
         /// </summary>
         public static readonly DocflowType FssSedoPaymentDetailsDemandReply = "urn:docflow:fss-sedo-payment-details-demand-reply";
+
+        /// <summary>
+        /// Запрос регистрации/отзыва доверенности ФСС
+        /// </summary>
+        public static readonly DocflowType FssWarrantManagement = "urn:docflow:fss-warrant-management";
+        
+        /// <summary>
+        /// Результат создания/отзыва доверенности ФСС
+        /// </summary>
+        public static readonly DocflowType FssWarrantManagementResult = "urn:docflow:fss-warrant-management-result";
     }
 }
