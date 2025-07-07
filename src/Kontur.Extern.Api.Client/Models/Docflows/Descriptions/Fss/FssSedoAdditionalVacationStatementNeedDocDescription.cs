@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Common.Time;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss;
 
@@ -14,4 +15,9 @@ public class FssSedoAdditionalVacationStatementNeedDocDescription: FssSedoDescri
     ///  Номер извещения 
     /// </summary>
     public string NoticeNumber { get; set; }
+    
+    /// <summary>
+    /// Дедлайн ответа на запрос дополнительных документов
+    /// </summary>
+    public DateOnly? ReplyDeadlineDate { get; set; }
 }
