@@ -1,8 +1,9 @@
 ﻿using System;
-using Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss.Enums;
+using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.Models.Docflows.Descriptions.Fss;
 
+[PublicAPI]
 public class FssWarrantManagementDescription : FssSedoDescription
 {
     /// <summary>
@@ -11,9 +12,9 @@ public class FssWarrantManagementDescription : FssSedoDescription
     public Guid? MainWarrantId { get; set; }
 
     /// <summary>
-    /// Тип операции с доверенностью
+    /// Тип операции с доверенностью. Возможные значения - unknown, issuance, revocation
     /// </summary>
-    public FssWarrantManagementActionType WarrantManagementActionType { get; set; }
+    public string WarrantManagementActionType { get; set; }
 
     /// <summary>
     /// Отпечаток сертификата отправителя
