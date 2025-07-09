@@ -1072,6 +1072,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Ошибка обработки
             /// </summary>
             public static DocumentType ErrorMessage { get; } = "urn:document:fss-sedo-additional-vacation-statement-error-message";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-additional-vacation-statement-read-receipt";
         }
 
         /// <summary>
@@ -1092,6 +1096,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Ошибка взаимодействия с СЭДО
             /// </summary>
             public static DocumentType ExchangeError { get; } = "urn:document:fss-sedo-additional-vacation-statement-need-doc-exchange-error";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-additional-vacation-statement-need-doc-read-receipt";
         }
 
         /// <summary>
@@ -1120,6 +1128,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Ошибка обработки
             /// </summary>
             public static DocumentType ErrorMessage { get; } = "urn:document:fss-sedo-additional-vacation-statement-docs-error-message";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-additional-vacation-statement-docs-read-receipt";
         }
     }
 }
