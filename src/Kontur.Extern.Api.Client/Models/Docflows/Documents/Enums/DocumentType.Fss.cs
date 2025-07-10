@@ -856,11 +856,11 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Запрос на получение документов
             /// </summary>
-            public static readonly DocumentType RequestMessage  = "urn:document:fss-sedo-appeal-request-message";
+            public static readonly DocumentType RequestMessage = "urn:document:fss-sedo-appeal-request-message";
             /// <summary>
             /// Документ "Обращение СФР к страхователю"
             /// </summary>
-            public static readonly DocumentType Document  = "urn:document:fss-sedo-appeal-document";
+            public static readonly DocumentType Document = "urn:document:fss-sedo-appeal-document";
             /// <summary>
             /// Ошибка взаимодействия с СЭДО
             /// </summary>
@@ -1040,6 +1040,98 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
             public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-payment-details-demand-reply-read-receipt";
+        }
+
+        /// <summary>
+        /// Заявление на оплату санаторно-курортного лечения
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoAdditionalVacationStatement
+        {
+            /// <summary>
+            /// Запрос на отправку сообщения "Сведения для оплаты отпуска застрахованного лица"
+            /// </summary>
+            public static DocumentType Request { get; } = "urn:document:fss-sedo-additional-vacation-statement-request";
+            /// <summary>
+            /// Результат отправки сообщения на портал
+            /// </summary>
+            public static DocumentType ReceptionResult { get; } = "urn:document:fss-sedo-additional-vacation-statement-reception-result";
+            /// <summary>
+            /// Сообщение "Результат обработки сведений для оплаты отпуска застрахованного лица"
+            /// </summary>
+            public static DocumentType ReceivedDocument { get; } = "urn:document:fss-sedo-additional-vacation-statement-received-document";
+            /// <summary>
+            /// Сообщение "Результат рассмотрения сведений для оплаты отпуска застрахованного лица"
+            /// </summary>
+            public static DocumentType ResultDocument { get; } = "urn:document:fss-sedo-additional-vacation-statement-result-document";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static DocumentType ExchangeError { get; } = "urn:document:fss-sedo-additional-vacation-statement-exchange-error";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static DocumentType ErrorMessage { get; } = "urn:document:fss-sedo-additional-vacation-statement-error-message";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-additional-vacation-statement-read-receipt";
+        }
+
+        /// <summary>
+        /// Запрос недостающих документов для оплаты отпуска застрахованного лица
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoAdditionalVacationStatementNeedDoc
+        {
+            /// <summary>
+            /// Запрос на получение документов
+            /// </summary>
+            public static DocumentType RequestMessage { get; } = "urn:document:fss-sedo-additional-vacation-statement-need-doc-request-message";
+            /// <summary>
+            /// Документ "Запрос недостающих документов для оплаты отпуска застрахованного лица"
+            /// </summary>
+            public static DocumentType Document { get; } = "urn:document:fss-sedo-additional-vacation-statement-need-doc-document";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static DocumentType ExchangeError { get; } = "urn:document:fss-sedo-additional-vacation-statement-need-doc-exchange-error";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-additional-vacation-statement-need-doc-read-receipt";
+        }
+
+        /// <summary>
+        /// Направление дополнительных документов по сведениям для оплаты отпуска застрахованного лица
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoAdditionalVacationStatementDocs
+        {
+            /// <summary>
+            /// Запрос на отправку сообщения "Направление дополнительных документов по сведениям для оплаты отпуска застрахованного лица"
+            /// </summary>
+            public static DocumentType Request { get; } = "urn:document:fss-sedo-additional-vacation-statement-docs-request";
+            /// <summary>
+            /// Результат отправки сообщения на портал
+            /// </summary>
+            public static DocumentType ReceptionResult { get; } = "urn:document:fss-sedo-additional-vacation-statement-docs-reception-result";
+            /// <summary>
+            /// Сообщение "Результат обработки сведений для оплаты отпуска застрахованного лица"
+            /// </summary>
+            public static DocumentType ResultDocument { get; } = "urn:document:fss-sedo-additional-vacation-statement-docs-result-document";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static DocumentType ExchangeError { get; } = "urn:document:fss-sedo-additional-vacation-statement-docs-exchange-error";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static DocumentType ErrorMessage { get; } = "urn:document:fss-sedo-additional-vacation-statement-docs-error-message";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-additional-vacation-statement-docs-read-receipt";
         }
     }
 }
