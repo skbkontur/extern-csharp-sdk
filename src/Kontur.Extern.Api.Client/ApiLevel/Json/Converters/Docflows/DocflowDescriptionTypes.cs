@@ -72,7 +72,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
             [DocflowType.FssSedoPaymentDetailsDemandReply] = typeof(FssSedoPaymentDetailsDemandReplyDescription),
             [DocflowType.FssSedoAdditionalVacationStatement] = typeof(FssSedoAdditionalVacationStatementDescription),
             [DocflowType.FssSedoAdditionalVacationStatementNeedDoc] = typeof(FssSedoAdditionalVacationStatementNeedDocDescription),
-            [DocflowType.FssSedoAdditionalVacationStatementDocs] = typeof(FssSedoAdditionalVacationStatementDocsDescription)
+            [DocflowType.FssSedoAdditionalVacationStatementDocs] = typeof(FssSedoAdditionalVacationStatementDocsDescription),
+            [DocflowType.FssWarrantManagement] = typeof(FssWarrantManagementDescription)
         };
 
         public static Type? TryGetDescriptionType(DocflowType docflowType) =>
