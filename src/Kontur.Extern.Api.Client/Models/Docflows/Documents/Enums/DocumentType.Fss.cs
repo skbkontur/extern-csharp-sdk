@@ -597,6 +597,10 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// Сообщение "Результат создания/отзыва доверенности"
             /// </summary>
             public static readonly DocumentType ResponseMessage = "urn:document:fss-warrant-management-response-message";
+            /// <summary>
+            /// Квитанция о прочтении (используется в методе генерации ответного документа)
+            /// </summary>
+            public static readonly DocumentType ReadReceipt = "fss-warrant-management-read-receipt";
         }
 
         /// <summary>
