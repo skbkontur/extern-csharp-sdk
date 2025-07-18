@@ -600,7 +600,7 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
-            public static readonly DocumentType ReadReceipt = "fss-warrant-management-read-receipt";
+            public static readonly DocumentType ReadReceipt = "urn:document:fss-warrant-management-read-receipt";
         }
 
         /// <summary>
