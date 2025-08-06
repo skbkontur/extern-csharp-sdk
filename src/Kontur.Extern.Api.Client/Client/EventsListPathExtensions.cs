@@ -9,9 +9,5 @@ namespace Kontur.Extern.Api.Client;
 [PublicAPI]
 public static class EventsListPathExtensions
 {
-    public static Task<EventsPage> GetEventsAsync(this in EventsListPath path, int take, string fromId = "0_0", TimeSpan? timeout = null)
-    {
-        var apiClient = path.Services.Api;
-        return apiClient.Events.GetEventsAsync(take, fromId, timeout);
-    }
+
 }

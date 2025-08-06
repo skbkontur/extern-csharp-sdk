@@ -9,35 +9,5 @@ namespace Kontur.Extern.Api.Client;
 [PublicAPI]
 public static class ReportsTablesListPathExtension
 {
-    public static IEntityList<ReportsTable> List(
-        this in ReportsTableListPath path,
-        Guid[]? organizationIds = null,
-        DateTime? dateFrom = null,
-        DateTime? dateTo = null)
-    {
-        var apiClient = path.Services.Api;
-        var accountId = path.AccountId;
-        return new EntityList<ReportsTable>(
-            async (skip, take, timeout) =>
-            {
-                int intSkip;
-                checked
-                {
-                    intSkip = (int)skip;
-                }
 
-                var reportsTableResult = await apiClient
-                    .ReportsTables
-                    .GetReportsTablesAsync(
-                        accountId,
-                        organizationIds,
-                        dateFrom,
-                        dateTo,
-                        intSkip,
-                        take,
-                        timeout);
-
-                return (reportsTableResult.ReportsTables, reportsTableResult.ReportsTables.Length);
-            });
-    }
 }

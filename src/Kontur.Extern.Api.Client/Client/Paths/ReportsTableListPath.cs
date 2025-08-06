@@ -1,8 +1,14 @@
 ﻿using System;
+using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Common;
+using Kontur.Extern.Api.Client.Models.ReportsTables.Reports;
+using Kontur.Extern.Api.Client.Primitives;
 
 namespace Kontur.Extern.Api.Client.Paths;
 
+[PublicAPI]
+[ApiPathSection]
 public readonly struct ReportsTableListPath
 {
     public ReportsTableListPath(Guid accountId, IExternClientServices services)
@@ -20,4 +26,35 @@ public readonly struct ReportsTableListPath
     }
 
     public PaymentsListPath Payments => new(AccountId, Services);
+
+    public IEntityList<ReportsTable> List(
+        Guid[]? organizationIds = null,
+        DateTime? dateFrom = null,
+        DateTime? dateTo = null)
+    {
+        var apiClient = Services.Api;
+        var accountId = AccountId;
+        return new EntityList<ReportsTable>(
+            async (skip, take, timeout) =>
+            {
+                int intSkip;
+                checked
+                {
+                    intSkip = (int)skip;
+                }
+
+                var reportsTableResult = await apiClient
+                    .ReportsTables
+                    .GetReportsTablesAsync(
+                        accountId,
+                        organizationIds,
+                        dateFrom,
+                        dateTo,
+                        intSkip,
+                        take,
+                        timeout);
+
+                return (reportsTableResult.ReportsTables, reportsTableResult.ReportsTables.Length);
+            });
+    }
 }

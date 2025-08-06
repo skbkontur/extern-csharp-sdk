@@ -9,9 +9,5 @@ namespace Kontur.Extern.Api.Client;
 [PublicAPI]
 public static class EventsPathExtensions
 {
-    public static Task ShareEventsAsync(this in EventsPath path, ShareEventsRequest shareEventsRequest, TimeSpan? timeout = null)
-    {
-        var apiClient = path.Services.Api;
-        return apiClient.Events.ShareEventsAsync(path.AccountId, shareEventsRequest, timeout);
-    }
+
 }
