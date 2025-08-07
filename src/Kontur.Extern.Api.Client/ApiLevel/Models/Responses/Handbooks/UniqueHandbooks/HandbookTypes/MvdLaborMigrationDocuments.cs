@@ -1,9 +1,9 @@
 ﻿namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks.UniqueHandbooks.HandbookTypes;
 
 /// <summary>
-/// Трудовые уведомления. Статусы работодателя по выплате ВКС
+/// Трудовые уведомления. Документ трудовой миграции
 /// </summary>
-public class EmployerStatusHqs : HandbookItem
+public class MvdLaborMigrationDocuments : HandbookItem
 {
     /// <summary>
     /// Код
@@ -11,7 +11,7 @@ public class EmployerStatusHqs : HandbookItem
     public string Code { get; set; }
 
     /// <summary>
-    /// Наименование статуса работодателя
+    /// Наименование документа трудовой миграции
     /// </summary>
     public string Name { get; set; }
 }

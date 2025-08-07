@@ -35,6 +35,21 @@ public enum HandbookType
     /// <summary>
     /// Общероссийский классификатор видов экономической деятельности
     /// </summary>
-    Okved
+    MvdOkved,
+
+    /// <summary>
+    /// Документы трудовой миграции
+    /// </summary>
+    MvdLaborMigrationDocuments,
+
+    /// <summary>
+    /// Документы удостоверяющие личность иностранного гражданина
+    /// </summary>
+    MvdForeignCitizenIdentityDocuments,
+
+    /// <summary>
+    /// Виды трудового договора
+    /// </summary>
+    MvdEmploymentContractsType
 
 }

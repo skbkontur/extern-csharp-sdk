@@ -14,13 +14,16 @@ public class HandbookPageConverter : JsonConverter<HandbookPage>
 {
     private readonly Dictionary<HandbookType, Type> handbookToType = new() 
     {
-        {HandbookType.Okved, typeof(Okved)},
+        {HandbookType.MvdOkved, typeof(Okved)},
         {HandbookType.MvdCitizenship, typeof(MvdCitizenship)},
         {HandbookType.MvdEmployerStatus, typeof(EmployerStatus)},
         {HandbookType.MvdWorkPermits, typeof(MvdWorkPermits)},
         {HandbookType.MvdProfessionsSpeciality,typeof(MvdProfessionsSpeciality)},
         {HandbookType.MvdHqsEmployerStatus, typeof(EmployerStatusHqs)},
         {HandbookType.MvdRegionsRf, typeof(MvdRfRegions)},
+        {HandbookType.MvdEmploymentContractsType, typeof(MvdEmploymentContractsType)},
+        {HandbookType.MvdForeignCitizenIdentityDocuments, typeof(MvdForeignCitizenIdentityDocuments)},
+        {HandbookType.MvdLaborMigrationDocuments, typeof(MvdLaborMigrationDocuments)},
     };
 
     public override HandbookPage? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

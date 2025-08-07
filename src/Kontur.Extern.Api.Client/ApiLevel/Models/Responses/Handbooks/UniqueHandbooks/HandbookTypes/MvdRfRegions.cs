@@ -1,5 +1,8 @@
 ﻿namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks.UniqueHandbooks.HandbookTypes;
 
+/// <summary>
+/// Трудовые уведомления. Регионы
+/// </summary>
 public class MvdRfRegions : HandbookItem
 {
     /// <summary>

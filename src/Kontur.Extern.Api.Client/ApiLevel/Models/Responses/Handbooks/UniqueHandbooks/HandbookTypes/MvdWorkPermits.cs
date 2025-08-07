@@ -1,5 +1,8 @@
 ﻿namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks.UniqueHandbooks.HandbookTypes;
 
+/// <summary>
+/// Трудовые уведомления. Основание для работы
+/// </summary>
 public class MvdWorkPermits : HandbookItem
 {
     /// <summary>

@@ -1,5 +1,8 @@
 ﻿namespace Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks.UniqueHandbooks.HandbookTypes;
 
+/// <summary>
+/// Трудовые уведомления. Профессии. Виды деятельности. Специальности
+/// </summary>
 public class MvdProfessionsSpeciality : HandbookItem
 {
     /// <summary>
