@@ -9,7 +9,7 @@ public enum ControlUnitType
     Fss,
     Fst,
     Pfr,
-    Rpn,
+    Rtn,
     Stat,
     Mvd
 }
