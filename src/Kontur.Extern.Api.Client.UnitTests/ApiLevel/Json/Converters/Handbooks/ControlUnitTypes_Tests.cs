@@ -17,7 +17,7 @@ public class ControlUnitTypes_Tests
     [TestCase("fss", ExpectedResult = ControlUnitType.Fss)]
     [TestCase("fst", ExpectedResult = ControlUnitType.Fst)]
     [TestCase("pfr", ExpectedResult = ControlUnitType.Pfr)]
-    [TestCase("rtn", ExpectedResult = ControlUnitType.Rtn)]
+    [TestCase("rpn", ExpectedResult = ControlUnitType.Rpn)]
     [TestCase("stat", ExpectedResult = ControlUnitType.Stat)]
     [TestCase("hello", ExpectedResult = null)]
     public ControlUnitType? Should_return_null_description_if_it_is_known_but_missed(string value)

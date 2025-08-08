@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Handbooks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks.UniqueHandbooks;
 using Kontur.Extern.Api.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 
@@ -24,14 +25,20 @@ public class HandbooksClient : IHandbooksClient
             .AppendToQuery("includeinactive", filter.IncludeInactive);
 
         var uri = url.Build();
-        var controlUnits = await http.GetAsync<ControlUnitsPage>(uri);
+        var controlUnits = await http.GetAsync<ControlUnitsPage>(uri).ConfigureAwait(false);
         return controlUnits;
     }
 
     public async Task<ControlUnit> GetControlUnit(string code, TimeSpan? timeout = null)
     {
-        var url = new RequestUrlBuilder($"/v1/handbooks/control-units/{code}").Build();
-        var controlUnit = await http.GetAsync<ControlUnit>(url);
+        return await GetControlUnit(code, null, timeout);
+    }
+
+    public async Task<ControlUnit> GetControlUnit(string code, AmbiguousControlUnitType? controlUnitType, TimeSpan? timeout = null)
+    {
+        var url = new RequestUrlBuilder($"/v1/handbooks/control-units/{code}")
+            .AppendToQuery("controlUnitType", controlUnitType).Build();
+        var controlUnit = await http.GetAsync<ControlUnit>(url).ConfigureAwait(false);
         return controlUnit;
     }
 
@@ -45,5 +52,15 @@ public class HandbooksClient : IHandbooksClient
             .Build();
         var fnsForms = await http.GetAsync<FnsFormsPage>(url);
         return fnsForms;
+    }
+
+    public async Task<HandbookPage> GetHandbook(HandbookType handbookType, HandbookFilter? handbookFilter = null, TimeSpan? timeout = null)
+    {
+        handbookFilter ??= new HandbookFilter();
+        var url = new RequestUrlBuilder($"/v1/handbooks/{handbookType}")
+            .AppendToQuery("take", handbookFilter.Take)
+            .AppendToQuery("skip", handbookFilter.Skip).Build();
+        var handbook = await http.GetAsync<HandbookPage>(url);
+        return handbook;
     }
 }

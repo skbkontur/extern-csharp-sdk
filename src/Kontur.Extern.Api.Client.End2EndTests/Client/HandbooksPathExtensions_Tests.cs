@@ -1,9 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Handbooks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks.UniqueHandbooks;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Handbooks.UniqueHandbooks.HandbookTypes;
 using Kontur.Extern.Api.Client.End2EndTests.Client.TestAbstractions;
 using Kontur.Extern.Api.Client.End2EndTests.TestEnvironment;
 using Kontur.Extern.Api.Client.Exceptions;
@@ -151,5 +155,81 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
         fnsForms.FnsForms.Length.Should().Be(10);
         fnsForms.Skip.Should().Be(5);
         fnsForms.Take.Should().Be(10);
+    }
+
+    [Fact]
+    public async Task Should_return_mvd_unit_by_code()
+    {
+        var code = "020-015";
+        var controlUnit = await Context.Handbooks.GetControlUnit(code, AmbiguousControlUnitType.Mvd);
+        controlUnit.Code.Should().Be(code);
+        controlUnit.Type.Should().Be(ControlUnitType.Mvd);
+    }
+    
+    [Fact]
+    public async Task Should_return_mvd_control_units()
+    {
+        var handbookFilter = new ControlUnitsFilter
+        {
+            Region = "02",
+            Type = ControlUnitType.Mvd,
+            Skip = 0,
+            Take = 5
+        };
+        var controlUnitList = await Context.Handbooks.GetControlUnits(handbookFilter);
+        controlUnitList.ControlUnits.All(x => x.Region == handbookFilter.Region 
+                                              && x.Type == handbookFilter.Type 
+                                              && x.Flags.IsActive 
+                                              && !x.Flags.IsTest 
+                                              && !x.Flags.BusinessRegistration).Should().BeTrue();
+        controlUnitList.Take.Should().BeGreaterThan(0);
+        controlUnitList.Skip.Should().Be(handbookFilter.Skip);
+    }
+    
+    [Fact]
+    public async Task Should_return_citizenship_handbook()
+    {
+        var handbookFilter = new HandbookFilter {Skip = 0, Take = 1000};
+
+        var citizenshipHandbook = await Context.Handbooks.GetHandbook(HandbookType.MvdCitizenship, handbookFilter);
+        citizenshipHandbook.HandbookType.Should().Be(HandbookType.MvdCitizenship);
+        citizenshipHandbook.Handbook.Any(c => ((MvdCitizenship)c).Name == "Россия").Should().BeTrue();
+    }
+    
+    [Fact]
+    public async Task Should_return_rfRegions_handbook()
+    {
+        var citizenshipHandbook = await Context.Handbooks.GetHandbook(HandbookType.MvdRegionsRf);
+        citizenshipHandbook.HandbookType.Should().Be(HandbookType.MvdRegionsRf);
+        citizenshipHandbook.Handbook.Any(c => ((MvdRfRegions)c).Name == "Свердловская область").Should().BeTrue();
+    }
+    
+    [Fact]
+    public async Task Should_return_empty_rfRegions_handbook()
+    {
+        var handbookFilter = new HandbookFilter {Skip = 0, Take = 0};
+
+        var citizenshipHandbook = await Context.Handbooks.GetHandbook(HandbookType.MvdRegionsRf, handbookFilter);
+        citizenshipHandbook.HandbookType.Should().Be(HandbookType.MvdRegionsRf);
+        citizenshipHandbook.Handbook.Should().BeEmpty();
+    }
+
+    [Theory]
+    [MemberData(nameof(GetAllHandbookTypes))]
+    public async Task Should_return_handbooks(HandbookType handbookType)
+    {
+        var handbookFilter = new HandbookFilter {Skip = 0, Take = 25};
+
+        var handbook = await Context.Handbooks.GetHandbook(handbookType, handbookFilter);
+        handbook.HandbookType.Should().Be(handbookType);
+        handbook.Take.Should().Be(25);
+    }
+    
+    public static IEnumerable<object[]> GetAllHandbookTypes()
+    {
+        foreach (var value in Enum.GetValues(typeof(HandbookType)))
+        {
+            yield return new[] { value };
+        }
     }
 }

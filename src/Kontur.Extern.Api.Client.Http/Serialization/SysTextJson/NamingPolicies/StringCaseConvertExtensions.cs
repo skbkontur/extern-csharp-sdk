@@ -1,9 +1,17 @@
-﻿using System.Text;
+﻿using System;
+using System.Globalization;
+using System.Linq;
+using System.Text;
 
 namespace Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.NamingPolicies
 {
     public static class StringCaseConvertExtensions
     {
+        public static string KebabToCamelCase(this string value) => 
+            string.Join("", value.Split('-')
+                    .Select(word => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(word)))
+                .ToCamelCase();
+        
         public static string ToKebabCase(this string value) => value.ToSeparatedCase('-');
         
         public static string ToSnakeCase(this string value) => value.ToSeparatedCase('_');
@@ -68,6 +76,16 @@ namespace Kontur.Extern.Api.Client.Http.Serialization.SysTextJson.NamingPolicies
             return kebabCaseBuilder.ToString();
         }
         
+        private static string ToCamelCase(this string value)
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            if (value.Length > 0 && char.IsUpper(value[0]))
+                value = char.ToLower(value[0]) + value.Substring(1);
+            return value;
+        }
+
         private enum SeparatedCaseState
         {
             Start,
