@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows;
 using Kontur.Extern.Api.Client.Models.Docflows.Documents.Replies;
@@ -9,6 +12,9 @@ using Kontur.Extern.Api.Client.Models.Docflows.Documents.Replies;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
 {
+    [PublicAPI]
+    [SuppressMessage("ReSharper", "CommentTypo")]
+    [ApiPathSection]
     public interface IRepliesClient
     {
         /// <summary>

@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Events;
 using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Common;
 using Kontur.Extern.Api.Client.Models.Accounts;
@@ -70,6 +71,12 @@ namespace Kontur.Extern.Api.Client.Paths
         }
 
         public IEntityList<Warrant> Warrants() => throw new NotImplementedException();
+
+        public Task ShareAccountEventsAsync(ShareEventsRequest shareEventsRequest, TimeSpan? timeout = null)
+        {
+            var apiClient = Services.Api;
+            return apiClient.Events.ShareEventsAsync(AccountId, shareEventsRequest, timeout);
+        }
 
         public Task<bool> DeleteAsync(TimeSpan? timeout = null)
         {

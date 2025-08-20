@@ -110,15 +110,15 @@ namespace Kontur.Extern.Api.Client
 
         private class Extern : IExtern
         {
-            private readonly IExternClientServices services;
+            public Extern(IExternClientServices services) => Services = services;
 
-            public Extern(IExternClientServices services) => this.services = services;
+            public AccountListPath Accounts => new(Services);
+            public EventsListPath Events => new(Services);
+
+            public IExternClientServices Services { get; }
 
             public Task ReauthenticateAsync(TimeSpan? timeout) =>
-                services.Authenticator.AuthenticateAsync(true, timeout);
-
-            public AccountListPath Accounts => new(services);
-            public EventsListPath Events => new(services);
+                Services.Authenticator.AuthenticateAsync(true, timeout);
         }
     }
 }

@@ -8,6 +8,7 @@ using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Signatures;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ApiTasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Check;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Send;
+using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Models.ApiTasks;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows;
@@ -20,6 +21,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]
+    [ApiPathSection]
     public interface IDraftsClient
     {
         /// <summary>

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Docflows;
+using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Models.ApiTasks;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows;
@@ -16,6 +17,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
 {
     [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]
+    [ApiPathSection]
     public interface IDocflowsClient
     {
         /// <summary>
@@ -138,7 +140,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         /// <returns>Документ из документооборота или null</returns>
         Task<Document?> TryGetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null);
 
-        
+
         /// <summary>
         ///  Изменение реквизитов документа требования
         /// </summary>

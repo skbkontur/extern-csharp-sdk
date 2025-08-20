@@ -15,8 +15,6 @@ public readonly struct EventsListPath
 
     public IExternClientServices Services { get; }
 
-    public EventsPath WithId(Guid accountId) => new(accountId, Services);
-
     public Task<EventsPage> GetEventsAsync(int take, string fromId = "0_0", TimeSpan? timeout = null)
     {
         var apiClient = Services.Api;

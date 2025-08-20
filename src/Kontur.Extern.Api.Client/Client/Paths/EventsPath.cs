@@ -14,15 +14,21 @@ public readonly struct EventsPath
     public EventsPath(Guid accountId, IExternClientServices services)
     {
         AccountId = accountId;
-        Services = services ?? throw new ArgumentNullException(nameof(services));
+        this.services = services ?? throw new ArgumentNullException(nameof(services));
     }
 
     public Guid AccountId { get; }
-    public IExternClientServices Services { get; }
+    private readonly IExternClientServices services;
 
+    #region ObsoleteCode
+    [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+    public IExternClientServices Services => services;
+
+    [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Accounts)}.{nameof(AccountListPath.WithId)}().{nameof(AccountPath.ShareAccountEventsAsync)}() instead")]
     public Task ShareEventsAsync(ShareEventsRequest shareEventsRequest, TimeSpan? timeout = null)
     {
         var apiClient = Services.Api;
         return apiClient.Events.ShareEventsAsync(AccountId, shareEventsRequest, timeout);
     }
+    #endregion
 }

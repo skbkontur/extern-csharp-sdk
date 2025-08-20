@@ -40,5 +40,17 @@
     <Folder Include="ApiLevel\Models\Responses\DraftBuilders\DocumentFiles" />
     <Folder Include="ApiLevel\Models\Responses\DraftBuilders\Documents" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Client\AccountListPathExtension.cs" />
+    <Compile Remove="Client\ContentsPathExtension.cs" />
+    <Compile Remove="Client\DocflowListPathExtension.cs" />
+    <Compile Remove="Client\DocflowPathExtension.cs" />
+    <Compile Remove="Client\DocumentContentPathExtension.cs" />
+    <Compile Remove="Client\DocumentListPathExtension.cs" />
+    <Compile Remove="Client\DocumentPathExtension.cs" />
+    <Compile Remove="Client\DraftBuilderListPathExtension.cs" />
+    <Compile Remove="Client\DraftBuilderPathExtension.cs" />
+  </ItemGroup>
   
 </Project>

@@ -1,13 +1,19 @@
 using System;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Common;
 using Kontur.Extern.Api.Client.Paths;
 
 namespace Kontur.Extern.Api.Client
 {
+    [PublicAPI]
     public interface IExtern
     {
-        Task ReauthenticateAsync(TimeSpan? timeout = null);
-        AccountListPath Accounts { get; }
-        EventsListPath Events { get; }
+        public AccountListPath Accounts { get; }
+        public EventsListPath Events { get; }
+
+        public IExternClientServices Services { get; }
+
+        public Task ReauthenticateAsync(TimeSpan? timeout = null);
     }
 }
