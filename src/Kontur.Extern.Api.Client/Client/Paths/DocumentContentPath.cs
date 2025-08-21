@@ -17,18 +17,23 @@ namespace Kontur.Extern.Api.Client.Paths
             DocflowId = docflowId;
             DocumentId = documentId;
             ContentId = contentId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DocflowId { get; }
         public Guid DocumentId { get; }
         public Guid ContentId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
+
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
 
         public ILongOperation<PrintDocumentResult> Print(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             var accountId = AccountId;
             var docflowId = DocflowId;
             var documentId = DocumentId;
@@ -37,7 +42,7 @@ namespace Kontur.Extern.Api.Client.Paths
             return new LongOperation<PrintDocumentResult>(
                 () => apiClient.Docflows.StartPrintDocumentAsync(accountId, docflowId, documentId, contentId, timeout),
                 taskId => apiClient.Docflows.GetPrintDocumentTaskAsync(accountId, docflowId, documentId, taskId, timeout),
-                Services.LongOperationsPollingStrategy
+                services.LongOperationsPollingStrategy
             );
         }
     }

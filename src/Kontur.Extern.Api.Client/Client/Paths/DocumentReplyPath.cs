@@ -18,18 +18,23 @@ namespace Kontur.Extern.Api.Client.Paths
             DocflowId = docflowId;
             DocumentId = documentId;
             ReplyId = replyId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DocflowId { get; }
         public Guid DocumentId { get; }
         public Guid ReplyId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
+
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
 
         public Task<IDocflowWithDocuments> SendReplyAsync(IPAddress address, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Replies.SendReplyAsync(
                 AccountId,
                 DocflowId,

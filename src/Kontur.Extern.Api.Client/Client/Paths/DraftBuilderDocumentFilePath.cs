@@ -20,48 +20,53 @@ namespace Kontur.Extern.Api.Client.Paths
             DraftBuilderId = draftBuilderId;
             DocumentId = documentId;
             FileId = fileId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DraftBuilderId { get; }
         public Guid DocumentId { get; }
         public Guid FileId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
+
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
 
         public Task<DraftsBuilderDocumentFile> GetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.DraftsBuilder.GetFileAsync(AccountId, DraftBuilderId, DocumentId, FileId, timeout);
         }
 
         public Task<DraftsBuilderDocumentFile?> TryGetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.DraftsBuilder.TryGetFileAsync(AccountId, DraftBuilderId, DocumentId, FileId, timeout);
         }
 
         public Task<bool> DeleteAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.DraftsBuilder.DeleteFileAsync(AccountId, DraftBuilderId, DocumentId, FileId, timeout);
         }
 
         public Task<DraftsBuilderDocumentFileMeta> GetMetaAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.DraftsBuilder.GetFileMetaAsync(AccountId, DraftBuilderId, DocumentId, FileId, timeout);
         }
 
         public Task<DraftsBuilderDocumentFileMeta?> TryGetMetaAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.DraftsBuilder.TryGetFileMetaAsync(AccountId, DraftBuilderId, DocumentId, FileId, timeout);
         }
 
         public Task<DraftsBuilderDocumentFileMeta> UpdateMetaAsync(string fileName, DraftsBuilderDocumentFileData? data = null, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.DraftsBuilder.UpdateFileMetaAsync(
                 AccountId,
                 DraftBuilderId,
@@ -74,13 +79,13 @@ namespace Kontur.Extern.Api.Client.Paths
 
         public async Task<Signature> GetSignatureAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return await apiClient.DraftsBuilder.GetSignatureAsync(AccountId, DraftBuilderId, DocumentId, FileId, timeout).ConfigureAwait(false);
         }
 
         public async Task<Signature?> TryGetSignatureAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             var signatureBytes = await apiClient.DraftsBuilder.TryGetSignatureAsync(AccountId, DraftBuilderId, DocumentId, FileId, timeout).ConfigureAwait(false);
             return signatureBytes is null ? null : Signature.FromBytes(signatureBytes);
         }

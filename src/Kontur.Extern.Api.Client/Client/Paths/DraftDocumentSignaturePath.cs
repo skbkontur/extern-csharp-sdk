@@ -19,30 +19,35 @@ namespace Kontur.Extern.Api.Client.Paths
             DraftId = draftId;
             DocumentId = documentId;
             SignatureId = signatureId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DraftId { get; }
         public Guid DocumentId { get; }
         public Guid SignatureId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
+
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
 
         public Task<Signature> GetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Drafts.GetSignatureAsync(AccountId, DraftId, DocumentId, SignatureId, timeout);
         }
 
         public Task<bool> DeleteAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Drafts.DeleteSignatureAsync(AccountId, DraftId, DocumentId, SignatureId, timeout);
         }
 
         public Task UpdateAsync(Base64String signature, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             var signatureRequest = new SignatureRequest
             {
                 Base64Content = signature.ToString()
@@ -52,7 +57,7 @@ namespace Kontur.Extern.Api.Client.Paths
 
         public async Task<byte[]> DownloadAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             var signatureContent = await apiClient.Drafts.GetSignatureContentAsync(AccountId, DraftId, DocumentId, SignatureId, timeout).ConfigureAwait(false);
             return signatureContent;
         }

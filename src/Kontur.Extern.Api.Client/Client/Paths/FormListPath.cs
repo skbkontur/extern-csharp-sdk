@@ -16,16 +16,21 @@ public readonly struct FormListPath
     {
         AccountId = accountId;
         OrganizationId = organizationId;
-        Services = services ?? throw new ArgumentNullException(nameof(services));
+        this.services = services ?? throw new ArgumentNullException(nameof(services));
     }
 
     public Guid AccountId { get; }
     public Guid OrganizationId { get; }
-    public IExternClientServices Services { get; }
+    private readonly IExternClientServices services;
+
+    #region ObsoleteCode
+    [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+    public IExternClientServices Services => services;
+    #endregion
 
     public async Task<IReadOnlyCollection<FormInfo>> ListAsync(bool? includeDeleted = false, TimeSpan? timeout = null)
     {
-        var apiClient = Services.Api;
+        var apiClient = services.Api;
         var formsList = await apiClient.ReportsTables.GetFormsAsync(AccountId, OrganizationId, includeDeleted, timeout).ConfigureAwait(false);
         return formsList.Forms;
     }

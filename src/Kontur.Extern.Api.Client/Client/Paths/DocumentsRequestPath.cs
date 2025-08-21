@@ -18,7 +18,7 @@ namespace Kontur.Extern.Api.Client.Paths
             AccountId = accountId;
             DocflowId = docflowId;
             RequestId = requestId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
@@ -27,23 +27,28 @@ namespace Kontur.Extern.Api.Client.Paths
 
         public Guid RequestId { get; }
 
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
+
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
 
         public Task<DocumentsRequest> GetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.GetDocumentsRequestAsync(AccountId, DocflowId, RequestId, timeout);
         }
 
         public Task<IDocflowWithDocuments> SendAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.SendDocumentsRequestAsync(AccountId, DocflowId, RequestId, timeout);
         }
 
         public Task<DocumentsRequest> UpdateSignatureAsync(Signature signature, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.UpdateDocumentsRequestSignatureAsync(AccountId, DocflowId, RequestId, signature.ToBytes(), timeout);
         }
     }

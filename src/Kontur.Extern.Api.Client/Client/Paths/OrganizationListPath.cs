@@ -17,19 +17,24 @@ namespace Kontur.Extern.Api.Client.Paths
         public OrganizationListPath(Guid accountId, IExternClientServices services)
         {
             AccountId = accountId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
 
-        public OrganizationPath WithId(Guid organizationId) => new(AccountId, organizationId, Services);
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
+
+        public OrganizationPath WithId(Guid organizationId) => new(AccountId, organizationId, services);
 
         public  Task<Organization> AddIndividualEntrepreneurOrganizationAsync(Inn inn, string name, TimeSpan? timeout = null)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw Errors.StringShouldNotBeNullOrWhiteSpace(name);
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Organizations.CreateOrganizationAsync(AccountId, inn.ToString(), null, name, timeout);
         }
 
@@ -38,13 +43,13 @@ namespace Kontur.Extern.Api.Client.Paths
             if (string.IsNullOrWhiteSpace(name))
                 throw Errors.StringShouldNotBeNullOrWhiteSpace(name);
 
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Organizations.CreateOrganizationAsync(AccountId, inn.ToString(), kpp, name, timeout);
         }
 
         public  IEntityList<Organization> List(string? inn = null, string? kpp = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             var accountId = AccountId;
             return new EntityList<Organization>(async (skip, take, timeout) =>
             {

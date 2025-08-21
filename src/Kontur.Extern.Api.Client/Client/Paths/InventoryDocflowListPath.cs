@@ -18,20 +18,25 @@ namespace Kontur.Extern.Api.Client.Paths
             AccountId = accountId;
             DocflowId = docflowId;
             DocumentId = documentId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DocflowId { get; }
         public Guid DocumentId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
 
-        public InventoryDocflowPath WithId(Guid inventoryId) => new(AccountId, DocflowId, DocumentId, inventoryId, Services);
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
+
+        public InventoryDocflowPath WithId(Guid inventoryId) => new(AccountId, DocflowId, DocumentId, inventoryId, services);
 
         public IEntityList<IDocflow> List(DocflowFilterBuilder? filterBuilder = null)
         {
             return DocflowListsHelper.DocflowsList(
-                Services.Api,
+                services.Api,
                 AccountId,
                 DocflowId,
                 DocumentId,

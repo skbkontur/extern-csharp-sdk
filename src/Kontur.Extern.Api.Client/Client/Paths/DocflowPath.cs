@@ -18,38 +18,43 @@ namespace Kontur.Extern.Api.Client.Paths
         {
             AccountId = accountId;
             DocflowId = docflowId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DocflowId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
 
-        public DocumentListPath Documents => new(AccountId, DocflowId, Services);
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
 
-        public DocumentsRequestPath DocumentsRequest(Guid requestId) => new(AccountId, DocflowId, requestId, Services);
+        public DocumentListPath Documents => new(AccountId, DocflowId, services);
+
+        public DocumentsRequestPath DocumentsRequest(Guid requestId) => new(AccountId, DocflowId, requestId, services);
 
         public Task<IDocflowWithDocuments> GetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.GetDocflowAsync(AccountId, DocflowId, timeout);
         }
 
         public Task<IDocflowWithDocuments?> TryGetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.TryGetDocflowAsync(AccountId, DocflowId, timeout);
         }
 
         public Task<IDocflowWithDocuments> PatchAsync(JsonPatchDocument<IDocflowWithDocuments> patch, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.PatchDocflowAsync(AccountId, DocflowId, patch, timeout);
         }
 
         public Task<DocumentsRequest> GenerateDocumentsRequestAsync(CertificateContent certificate, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.GenerateDocumentsRequestAsync(AccountId, DocflowId, certificate.ToBytes(), timeout);
         }
     }

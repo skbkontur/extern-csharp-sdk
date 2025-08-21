@@ -17,25 +17,30 @@ namespace Kontur.Extern.Api.Client.Paths
             DocflowId = docflowId;
             DocumentId = documentId;
             InventoryId = inventoryId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DocflowId { get; }
         public Guid DocumentId { get; }
         public Guid InventoryId { get; }
-        public InventoryDocflowDocumentListPath Documents => new(AccountId, DocflowId, DocumentId, InventoryId, Services);
-        public IExternClientServices Services { get; }
+        public InventoryDocflowDocumentListPath Documents => new(AccountId, DocflowId, DocumentId, InventoryId, services);
+        private readonly IExternClientServices services;
+
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
 
         public Task<IDocflowWithDocuments?> TryGetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.TryGetInventoryDocflowAsync(AccountId, DocflowId, DocumentId, InventoryId, timeout);
         }
 
         public Task<IDocflowWithDocuments> GetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.GetInventoryDocflowAsync(AccountId, DocflowId, DocumentId, InventoryId, timeout);
         }
     }

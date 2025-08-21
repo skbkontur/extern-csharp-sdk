@@ -18,29 +18,35 @@ namespace Kontur.Extern.Api.Client.Paths
         public AccountPath(Guid accountId, IExternClientServices services)
         {
             AccountId = accountId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
-        public IExternClientServices Services { get; }
 
-        public OrganizationListPath Organizations => new(AccountId, Services);
-        public DocflowListPath Docflows => new(AccountId, Services);
-        public DraftListPath Drafts => new(AccountId, Services);
-        public DraftBuilderListPath DraftBuilders => new(AccountId, Services);
-        public ContentsPath Contents => new(AccountId, Services);
-        public ReportsTableListPath ReportsTables => new(AccountId, Services);
-        public EventsPath Events => new(AccountId, Services);
+        private readonly IExternClientServices services;
+
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
+
+        public OrganizationListPath Organizations => new(AccountId, services);
+        public DocflowListPath Docflows => new(AccountId, services);
+        public DraftListPath Drafts => new(AccountId, services);
+        public DraftBuilderListPath DraftBuilders => new(AccountId, services);
+        public ContentsPath Contents => new(AccountId, services);
+        public ReportsTableListPath ReportsTables => new(AccountId, services);
+        public EventsPath Events => new(AccountId, services);
 
         public Task<Account> GetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Accounts.GetAccountAsync(AccountId, timeout);
         }
 
         public Task<Account?> TryGetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Accounts.TryGetAccountAsync(AccountId, timeout);
         }
 
@@ -52,7 +58,7 @@ namespace Kontur.Extern.Api.Client.Paths
         /// <returns></returns>
         public IEntityList<Certificate> Certificates(bool? forAllUsers = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             var accountId = AccountId;
 
             return new EntityList<Certificate>(
@@ -74,13 +80,13 @@ namespace Kontur.Extern.Api.Client.Paths
 
         public Task ShareAccountEventsAsync(ShareEventsRequest shareEventsRequest, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Events.ShareEventsAsync(AccountId, shareEventsRequest, timeout);
         }
 
         public Task<bool> DeleteAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Accounts.DeleteAccountAsync(AccountId, timeout);
         }
     }

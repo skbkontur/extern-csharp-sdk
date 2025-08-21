@@ -15,17 +15,22 @@ namespace Kontur.Extern.Api.Client.Paths
         public DraftBuilderListPath(Guid accountId, IExternClientServices services)
         {
             AccountId = accountId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
 
-        public DraftBuilderPath WithId(Guid draftBuilderId) => new(AccountId, draftBuilderId, Services);
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
+
+        public DraftBuilderPath WithId(Guid draftBuilderId) => new(AccountId, draftBuilderId, services);
 
         public Task<DraftsBuilder> CreateDraftBuilderAsync(DraftsBuilderMetadata draftsBuilderMetadata, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
 
             return apiClient.DraftsBuilder.CreateDraftsBuilderAsync(AccountId, draftsBuilderMetadata.ToRequest(), timeout);
         }

@@ -16,18 +16,23 @@ namespace Kontur.Extern.Api.Client.Paths
         {
             AccountId = accountId;
             DocflowId = docflowId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DocflowId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
 
-        public DocumentPath WithId(Guid documentId) => new(AccountId, DocflowId, documentId, Services);
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
+
+        public DocumentPath WithId(Guid documentId) => new(AccountId, DocflowId, documentId, services);
 
         public Task<List<Document>> ListAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.GetDocumentsAsync(AccountId, DocflowId, timeout);
         }
     }

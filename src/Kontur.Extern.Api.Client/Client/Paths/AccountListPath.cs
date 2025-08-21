@@ -14,18 +14,23 @@ namespace Kontur.Extern.Api.Client.Paths
     [ApiPathSection]
     public readonly struct AccountListPath
     {
-        public AccountListPath(IExternClientServices services) => Services = services ?? throw new ArgumentNullException(nameof(services));
+        public AccountListPath(IExternClientServices services) => this.services = services ?? throw new ArgumentNullException(nameof(services));
 
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
 
-        public AccountPath WithId(Guid accountId) => new(accountId, Services);
-        public HandbooksPath Handbooks => new(Services);
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
+
+        public AccountPath WithId(Guid accountId) => new(accountId, services);
+        public HandbooksPath Handbooks => new(services);
 
         public Task<Account> CreateIndividualEntrepreneurAccountAsync(Inn inn, string organizationName, TimeSpan? timeout = null)
         {
             if (string.IsNullOrWhiteSpace(organizationName))
                 throw Errors.StringShouldNotBeNullOrWhiteSpace(organizationName);
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Accounts.CreateAccountAsync(inn.ToString(), null, organizationName, timeout);
         }
 
@@ -33,13 +38,13 @@ namespace Kontur.Extern.Api.Client.Paths
         {
             if (string.IsNullOrWhiteSpace(organizationName))
                 throw Errors.StringShouldNotBeNullOrWhiteSpace(organizationName);
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Accounts.CreateAccountAsync(inn.ToString(), kpp, organizationName, timeout);
         }
 
         public IEntityList<Account> List()
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return new EntityList<Account>(
                 async (skip, take, timeout) =>
                 {

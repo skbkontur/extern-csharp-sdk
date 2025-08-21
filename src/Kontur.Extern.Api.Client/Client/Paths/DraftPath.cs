@@ -23,36 +23,41 @@ namespace Kontur.Extern.Api.Client.Paths
         {
             AccountId = accountId;
             DraftId = draftId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DraftId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
 
-        public DraftDocumentPath Document(Guid documentId) => new(AccountId, DraftId, documentId, Services);
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
+
+        public DraftDocumentPath Document(Guid documentId) => new(AccountId, DraftId, documentId, services);
 
         public Task<Draft> GetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Drafts.GetDraftAsync(AccountId, DraftId, timeout);
         }
 
         public Task<Draft?> TryGetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Drafts.TryGetDraftAsync(AccountId, DraftId, timeout);
         }
 
         public Task<bool> DeleteAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Drafts.DeleteDraftAsync(AccountId, DraftId, timeout);
         }
 
         public Task<DraftMeta> UpdateMetadataAsync(DraftMetadata metadata, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Drafts.UpdateDraftMetaAsync(AccountId, DraftId, metadata.ToRequest(), timeout);
         }
 
@@ -61,9 +66,9 @@ namespace Kontur.Extern.Api.Client.Paths
             TimeSpan? uploadTimeout = null,
             TimeSpan? putTimeout = null)
         {
-            var apiClient = Services.Api;
-            var uploader = Services.ContentService;
-            var crypt = Services.Crypt;
+            var apiClient = services.Api;
+            var uploader = services.ContentService;
+            var crypt = services.Crypt;
 
             var (signature, documentRequest) = await document.CreateSignedRequestAsync(AccountId, uploader, crypt, uploadTimeout).ConfigureAwait(false);
             var createdOrUpdatedDocument = await apiClient.Drafts.UpdateDocumentAsync(AccountId, DraftId, document.DocumentId, documentRequest, putTimeout).ConfigureAwait(false);
@@ -76,7 +81,7 @@ namespace Kontur.Extern.Api.Client.Paths
 
         public ILongOperation<DraftCheckingStatus> Check(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             var accountId = AccountId;
             var draftId = DraftId;
 
@@ -91,16 +96,16 @@ namespace Kontur.Extern.Api.Client.Paths
                     var result = await apiClient.Drafts.GetCheckDraftTaskStatusAsync(accountId, draftId, taskId, timeout).ConfigureAwait(false);
                     return result.Convert(x => DraftCheckingStatus.From(x));
                 },
-                Services.LongOperationsPollingStrategy
+                services.LongOperationsPollingStrategy
             );
         }
 
         public ILongOperation<IDocflowWithDocuments, DraftSendingFailure> TrySend(bool allowToSendIncorrectPfrReport = false, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             var accountId = AccountId;
             var draftId = DraftId;
-            var jsonSerializer = Services.JsonSerializer;
+            var jsonSerializer = services.JsonSerializer;
 
             return new LongOperation<IDocflowWithDocuments, DraftSendingFailure>(
                 async () =>
@@ -113,14 +118,14 @@ namespace Kontur.Extern.Api.Client.Paths
                     var result = await apiClient.Drafts.GetSendDraftTaskStatusAsync(accountId, draftId, taskId, timeout).ConfigureAwait(false);
                     return result.ConvertFailureResult(x => DraftSendingFailure.From(x, draftId, jsonSerializer));
                 },
-                Services.LongOperationsPollingStrategy
+                services.LongOperationsPollingStrategy
             );
         }
 
         public ILongOperation<IDocflowWithDocuments> Send(bool allowToSendIncorrectPfrReport = false, TimeSpan? timeout = null)
         {
-            var jsonSerializer = Services.JsonSerializer;
-            var apiClient = Services.Api;
+            var jsonSerializer = services.JsonSerializer;
+            var apiClient = services.Api;
             var accountId = AccountId;
             var draftId = DraftId;
 
@@ -135,7 +140,7 @@ namespace Kontur.Extern.Api.Client.Paths
                     var result = await apiClient.Drafts.GetSendDraftTaskStatusAsync(accountId, draftId, taskId, timeout).ConfigureAwait(false);
                     return ToOnlyDraftApiResult(result, draftId, jsonSerializer);
                 },
-                Services.LongOperationsPollingStrategy
+                services.LongOperationsPollingStrategy
             );
 
             ApiTaskResult<IDocflowWithDocuments> ToOnlyDraftApiResult(ApiTaskResult<IDocflowWithDocuments, SendFailure> result, Guid draftId, IJsonSerializer serializer) =>

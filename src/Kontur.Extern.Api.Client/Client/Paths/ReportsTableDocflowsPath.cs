@@ -15,12 +15,17 @@ public readonly struct ReportsTableDocflowsPath
     {
         AccountId = accountId;
         OrganizationId = organizationId;
-        Services = services ?? throw new ArgumentNullException(nameof(services));
+        this.services = services ?? throw new ArgumentNullException(nameof(services));
     }
 
     public Guid AccountId { get; }
     public Guid OrganizationId { get; }
-    public IExternClientServices Services { get; }
+    private readonly IExternClientServices services;
+
+    #region ObsoleteCode
+    [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+    public IExternClientServices Services => services;
+    #endregion
 
     public async Task<ReportsTableDocflows> ListAsync(
         int formId,
@@ -29,7 +34,7 @@ public readonly struct ReportsTableDocflowsPath
         int periodNumber,
         TimeSpan? timeout = null)
     {
-        var apiClient = Services.Api;
+        var apiClient = services.Api;
         var docflows = await apiClient.ReportsTables.GetReportDocflowsAsync(
                 AccountId,
                 OrganizationId,

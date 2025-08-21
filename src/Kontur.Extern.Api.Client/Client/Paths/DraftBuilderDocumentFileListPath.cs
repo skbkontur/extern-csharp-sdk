@@ -18,24 +18,29 @@ namespace Kontur.Extern.Api.Client.Paths
             AccountId = accountId;
             DraftBuilderId = draftBuilderId;
             DocumentId = documentId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DraftBuilderId { get; }
         public Guid DocumentId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
 
-        public DraftBuilderDocumentFilePath WithId(Guid fileId) => new(AccountId, DraftBuilderId, DocumentId, fileId, Services);
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
+
+        public DraftBuilderDocumentFilePath WithId(Guid fileId) => new(AccountId, DraftBuilderId, DocumentId, fileId, services);
 
         public async Task<DraftsBuilderDocumentFile> SetFileAsync( //todo перенести в DraftBuilderDocumentFilePath?
             Kontur.Extern.Api.Client.Model.DraftBuilders.DraftsBuilderDocumentFile file,
             TimeSpan? uploadTimeout = null,
             TimeSpan? putTimeout = null)
         {
-            var apiClient = Services.Api;
-            var uploader = Services.ContentService;
-            var crypt = Services.Crypt;
+            var apiClient = services.Api;
+            var uploader = services.ContentService;
+            var crypt = services.Crypt;
 
             var documentRequest = await file
                 .CreateSignedRequestAsync(AccountId, uploader, crypt, uploadTimeout).ConfigureAwait(false);
@@ -46,7 +51,7 @@ namespace Kontur.Extern.Api.Client.Paths
 
         public Task<IReadOnlyCollection<DraftsBuilderDocumentFile>> ListAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.DraftsBuilder.GetFilesAsync(AccountId, DraftBuilderId, DocumentId, timeout);
         }
     }

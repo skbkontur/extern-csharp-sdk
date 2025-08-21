@@ -18,20 +18,25 @@ namespace Kontur.Extern.Api.Client.Paths
         {
             AccountId = accountId;
             DraftBuilderId = draftBuilderId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DraftBuilderId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
 
-        public DraftBuilderDocumentPath WithId(Guid documentId) => new(AccountId, DraftBuilderId, documentId, Services);
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
+
+        public DraftBuilderDocumentPath WithId(Guid documentId) => new(AccountId, DraftBuilderId, documentId, services);
 
         public Task<DraftsBuilderDocumentMeta> SetAsync(
             DraftsBuilderDocumentData? data,
             TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             Guid documentId;
             var request = new DraftsBuilderDocumentMetaRequest
             {
@@ -42,7 +47,7 @@ namespace Kontur.Extern.Api.Client.Paths
 
         public Task<IReadOnlyCollection<DraftsBuilderDocument>> ListAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.DraftsBuilder.GetDocumentsAsync(AccountId, DraftBuilderId, timeout);
         }
     }

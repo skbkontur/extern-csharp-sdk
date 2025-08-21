@@ -12,12 +12,17 @@ namespace Kontur.Extern.Api.Client.Paths;
 public readonly struct PaymentsListPath
 {
     public Guid AccountId { get; }
-    public IExternClientServices Services { get; }
+    private readonly IExternClientServices services;
+
+    #region ObsoleteCode
+    [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+    public IExternClientServices Services => services;
+    #endregion
 
     public PaymentsListPath(Guid accountId, IExternClientServices services)
     {
         AccountId = accountId;
-        Services = services ?? throw new ArgumentNullException(nameof(services));
+        this.services = services ?? throw new ArgumentNullException(nameof(services));
     }
 
     public IEntityList<OrganizationPayments> List(
@@ -25,7 +30,7 @@ public readonly struct PaymentsListPath
         DateTime? deadlineFrom = null,
         DateTime? deadlineTo = null)
     {
-        var apiClient = Services.Api;
+        var apiClient = services.Api;
         var accountId = AccountId;
         return new EntityList<OrganizationPayments>(
             async (skip, take, timeout) =>

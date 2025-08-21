@@ -15,21 +15,26 @@ namespace Kontur.Extern.Api.Client.Paths
         public ContentsPath(Guid accountId, IExternClientServices services)
         {
             AccountId = accountId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
+
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
 
         public Task<Stream> DownloadAsStreamAsync(Guid contentId, TimeSpan? timeout = null)
         {
-            var contentService = Services.ContentService;
+            var contentService = services.ContentService;
             return contentService.DownloadContentAsync(AccountId, contentId, timeout);
         }
 
         public Task<Guid> UploadAsync(Stream stream, TimeSpan? chunkUploadTimeout = null)
         {
-            var contentService = Services.ContentService;
+            var contentService = services.ContentService;
             return contentService.UploadContentByPartsAsync(AccountId, stream, chunkUploadTimeout);
         }
     }

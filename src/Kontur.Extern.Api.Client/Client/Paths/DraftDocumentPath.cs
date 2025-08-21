@@ -18,31 +18,36 @@ namespace Kontur.Extern.Api.Client.Paths
             AccountId = accountId;
             DraftId = draftId;
             DocumentId = documentId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DraftId { get; }
         public Guid DocumentId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
 
-        public DraftDocumentSignaturePath Signature(Guid signatureId) => new(AccountId, DraftId, DocumentId, signatureId, Services);
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
+
+        public DraftDocumentSignaturePath Signature(Guid signatureId) => new(AccountId, DraftId, DocumentId, signatureId, services);
 
         public Task<DraftDocument> GetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Drafts.GetDocumentAsync(AccountId, DraftId, DocumentId, timeout);
         }
 
         public Task<bool> DeleteAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Drafts.DeleteDocumentAsync(AccountId, DraftId, DocumentId, timeout);
         }
 
         public async Task<Guid> AddSignatureAsync(Base64String signature, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             var signatureRequest = new SignatureRequest
             {
                 Base64Content = signature.ToString()

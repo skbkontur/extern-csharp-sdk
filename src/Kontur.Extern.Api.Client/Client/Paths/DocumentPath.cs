@@ -27,39 +27,44 @@ namespace Kontur.Extern.Api.Client.Paths
             AccountId = accountId;
             DocflowId = docflowId;
             DocumentId = documentId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DocflowId { get; }
         public Guid DocumentId { get; }
-        public InventoryDocflowListPath InventoryDocflows => new(AccountId, DocflowId, DocumentId, Services);
-        public DocumentContentListPath Contents => new(AccountId, DocflowId, DocumentId, Services);
-        public DocumentReplyPath Reply(Guid replyId) => new(AccountId, DocflowId, DocumentId, replyId, Services);
-        public IExternClientServices Services { get; }
+        public InventoryDocflowListPath InventoryDocflows => new(AccountId, DocflowId, DocumentId, services);
+        public DocumentContentListPath Contents => new(AccountId, DocflowId, DocumentId, services);
+        public DocumentReplyPath Reply(Guid replyId) => new(AccountId, DocflowId, DocumentId, replyId, services);
+        private readonly IExternClientServices services;
+
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
 
         public Task<Document?> TryGetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.TryGetDocumentAsync(AccountId, DocflowId, DocumentId, timeout);
         }
 
         public Task<Document> GetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.GetDocumentAsync(AccountId, DocflowId, DocumentId, timeout);
         }
 
         public Task<Document> PatchAsync(JsonPatchDocument<Document> patch, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Docflows.PatchDocumentAsync(AccountId, DocflowId, DocumentId, patch, timeout);
         }
 
         public IEntityList<IDocflow> RelatedDocflowsList(DocflowFilterBuilder? filterBuilder = null)
         {
             return DocflowListsHelper.DocflowsList(
-                Services.Api,
+                services.Api,
                 AccountId,
                 DocflowId,
                 DocumentId,
@@ -72,7 +77,7 @@ namespace Kontur.Extern.Api.Client.Paths
         {
             if (documentType.IsEmpty)
                 throw Errors.ValueShouldNotBeEmpty(nameof(documentType));
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Replies.GenerateReplyAsync(
                 AccountId,
                 DocflowId,
@@ -95,7 +100,7 @@ namespace Kontur.Extern.Api.Client.Paths
             if (string.IsNullOrEmpty(documentTypeParameter) || documentTypeParameter.Contains(","))
                 throw Errors.InappropriateReplyLink(nameof(link));
 
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Replies.GenerateReplyAsync(
                 AccountId,
                 DocflowId,

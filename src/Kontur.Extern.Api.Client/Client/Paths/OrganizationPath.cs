@@ -17,34 +17,39 @@ namespace Kontur.Extern.Api.Client.Paths
         {
             AccountId = accountId;
             OrganizationId = organizationId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid OrganizationId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
+
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
 
         public Task<Organization> GetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Organizations.GetOrganizationAsync(AccountId, OrganizationId, timeout);
         }
 
         public Task<Organization?> TryGetAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Organizations.TryGetOrganizationAsync(AccountId, OrganizationId, timeout);
         }
 
         public Task<bool> DeleteAsync(TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Organizations.DeleteOrganizationAsync(AccountId, OrganizationId, timeout);
         }
 
         public Task RenameAsync(string name, TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Organizations.UpdateOrganizationAsync(AccountId, OrganizationId, name, timeout);
         }
 
@@ -52,7 +57,7 @@ namespace Kontur.Extern.Api.Client.Paths
             SedoSubscriptionSearchRequest request,
             TimeSpan? timeout = null)
         {
-            var apiClient = Services.Api;
+            var apiClient = services.Api;
             return apiClient.Organizations.SearchOrganizationControlUnitSubscriptionsAsync(AccountId, OrganizationId, request, timeout);
         }
     }

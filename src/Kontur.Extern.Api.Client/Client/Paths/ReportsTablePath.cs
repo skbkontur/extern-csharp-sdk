@@ -13,13 +13,18 @@ public readonly struct ReportsTablePath
     {
         AccountId = accountId;
         OrganizationId = organizationId;
-        Services = services ?? throw new ArgumentNullException(nameof(services));
+        this.services = services ?? throw new ArgumentNullException(nameof(services));
     }
 
     public Guid AccountId { get; }
     public Guid OrganizationId { get; }
-    public IExternClientServices Services { get; }
+    private readonly IExternClientServices services;
 
-    public FormListPath Forms => new(AccountId, OrganizationId, Services);
-    public ReportsTableDocflowsPath ReportDocflows => new(AccountId, OrganizationId, Services);
+    #region ObsoleteCode
+    [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+    public IExternClientServices Services => services;
+    #endregion
+
+    public FormListPath Forms => new(AccountId, OrganizationId, services);
+    public ReportsTableDocflowsPath ReportDocflows => new(AccountId, OrganizationId, services);
 }

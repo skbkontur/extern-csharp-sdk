@@ -14,28 +14,33 @@ public readonly struct HandbooksPath
 {
     public HandbooksPath(IExternClientServices services)
     {
-        Services = services ?? throw new ArgumentNullException(nameof(services));
+        this.services = services ?? throw new ArgumentNullException(nameof(services));
     }
 
-    public IExternClientServices Services { get; }
+    private readonly IExternClientServices services;
+
+    #region ObsoleteCode
+    [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+    public IExternClientServices Services => services;
+    #endregion
 
     public async Task<ControlUnitsPage> GetControlUnits(ControlUnitsFilter? filter = null, TimeSpan? timeout = null)
     {
-        var apiClient = Services.Api;
+        var apiClient = services.Api;
         var controlUnits = await apiClient.Handbooks.GetControlUnits(filter, timeout).ConfigureAwait(false);
         return controlUnits;
     }
 
     public async Task<ControlUnit> GetControlUnit(string code, TimeSpan? timeout = null)
     {
-        var apiClient = Services.Api;
+        var apiClient = services.Api;
         var controlUnit = await apiClient.Handbooks.GetControlUnit(code, timeout).ConfigureAwait(false);
         return controlUnit;
     }
 
     public async Task<FnsFormsPage> GetFnsForms(FnsFormsFilter? filter = null, TimeSpan? timeout = null)
     {
-        var apiClient = Services.Api;
+        var apiClient = services.Api;
         var fnsForms = await apiClient.Handbooks.GetFnsForms(filter, timeout).ConfigureAwait(false);
         return fnsForms;
     }

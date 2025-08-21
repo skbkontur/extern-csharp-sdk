@@ -14,25 +14,30 @@ public readonly struct ReportsTableListPath
     public ReportsTableListPath(Guid accountId, IExternClientServices services)
     {
         AccountId = accountId;
-        Services = services ?? throw new ArgumentNullException(nameof(services));
+        this.services = services ?? throw new ArgumentNullException(nameof(services));
     }
 
     public Guid AccountId { get; }
-    public IExternClientServices Services { get; }
+    private readonly IExternClientServices services;
+
+    #region ObsoleteCode
+    [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+    public IExternClientServices Services => services;
+    #endregion
 
     public ReportsTablePath WithOrganizationId(Guid organizationId)
     {
-        return new(AccountId, organizationId, Services);
+        return new(AccountId, organizationId, services);
     }
 
-    public PaymentsListPath Payments => new(AccountId, Services);
+    public PaymentsListPath Payments => new(AccountId, services);
 
     public IEntityList<ReportsTable> List(
         Guid[]? organizationIds = null,
         DateTime? dateFrom = null,
         DateTime? dateTo = null)
     {
-        var apiClient = Services.Api;
+        var apiClient = services.Api;
         var accountId = AccountId;
         return new EntityList<ReportsTable>(
             async (skip, take, timeout) =>

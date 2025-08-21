@@ -14,14 +14,19 @@ namespace Kontur.Extern.Api.Client.Paths
             AccountId = accountId;
             DocflowId = docflowId;
             DocumentId = documentId;
-            Services = services ?? throw new ArgumentNullException(nameof(services));
+            this.services = services ?? throw new ArgumentNullException(nameof(services));
         }
 
         public Guid AccountId { get; }
         public Guid DocflowId { get; }
         public Guid DocumentId { get; }
-        public IExternClientServices Services { get; }
+        private readonly IExternClientServices services;
 
-        public DocumentContentPath WithId(Guid contentId) => new(AccountId, DocflowId, DocumentId, contentId, Services);
+        #region ObsoleteCode
+        [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+        public IExternClientServices Services => services;
+        #endregion
+
+        public DocumentContentPath WithId(Guid contentId) => new(AccountId, DocflowId, DocumentId, contentId, services);
     }
 }

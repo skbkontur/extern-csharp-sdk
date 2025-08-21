@@ -11,13 +11,18 @@ namespace Kontur.Extern.Api.Client.Paths;
 [ApiPathSection]
 public readonly struct EventsListPath
 {
-    public EventsListPath(IExternClientServices services) => Services = services ?? throw new ArgumentNullException(nameof(services));
+    public EventsListPath(IExternClientServices services) => this.services = services ?? throw new ArgumentNullException(nameof(services));
 
-    public IExternClientServices Services { get; }
+    private readonly IExternClientServices services;
+
+    #region ObsoleteCode
+    [Obsolete($"Use {nameof(IExtern)}.{nameof(IExtern.Services)} instead")]
+    public IExternClientServices Services => services;
+    #endregion
 
     public Task<EventsPage> GetEventsAsync(int take, string fromId = "0_0", TimeSpan? timeout = null)
     {
-        var apiClient = Services.Api;
+        var apiClient = services.Api;
         return apiClient.Events.GetEventsAsync(take, fromId, timeout);
     }
 }
