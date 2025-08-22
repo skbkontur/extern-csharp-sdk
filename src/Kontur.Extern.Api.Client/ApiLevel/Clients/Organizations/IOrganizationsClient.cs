@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Organizations.ControlUnitSubscriptions;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Organizations.ControlUnitSubscriptions;
+using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
 {
+    [PublicAPI]
     [SuppressMessage("ReSharper", "CommentTypo")]
+    [ClientDocumentationSection]
     public interface IOrganizationsClient
     {
         Task<OrganizationBatch> GetAllOrganizationsAsync(

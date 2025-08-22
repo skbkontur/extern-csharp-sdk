@@ -1,4 +1,6 @@
+using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel;
+using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Primitives.Polling;
 using Kontur.Extern.Api.Client.Uploading;
 using Kontur.Extern.Api.Client.Auth.Abstractions;
@@ -8,6 +10,8 @@ using Kontur.Extern.Api.Client.Http.Serialization;
 
 namespace Kontur.Extern.Api.Client.Common
 {
+    [PublicAPI]
+    [ClientDocumentationSection]
     public interface IExternClientServices
     {
         IHttpRequestFactory Http { get; }

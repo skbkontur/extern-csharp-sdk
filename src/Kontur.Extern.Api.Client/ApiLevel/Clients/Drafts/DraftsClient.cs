@@ -105,6 +105,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
             var url = new RequestUrlBuilder($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/print")
                 .AppendToQuery("deferred", true)
                 .Build();
+            // todo (ks.savelev) Несуществующий метод/путь апи?
             return http.PostAsync<ApiTaskResult<PrintDocumentResult>>(url, timeout);
         }
 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Accounts;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Certificates;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Warrants;
+using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Models.Accounts;
 using Kontur.Extern.Api.Client.Models.Numbers;
@@ -11,6 +13,8 @@ using Kontur.Extern.Api.Client.Models.Numbers;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts
 {
+    [PublicAPI]
+    [ClientDocumentationSection]
     public interface IAccountClient
     {
         IHttpRequestFactory HttpRequestFactory { get; }
