@@ -11,7 +11,6 @@ using Kontur.Extern.Api.Client.Http.Serialization;
 namespace Kontur.Extern.Api.Client.Common
 {
     [PublicAPI]
-    [ClientDocumentationSection]
     public interface IExternClientServices
     {
         IHttpRequestFactory Http { get; }
