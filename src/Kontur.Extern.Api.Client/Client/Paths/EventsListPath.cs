@@ -11,7 +11,7 @@ namespace Kontur.Extern.Api.Client.Paths;
 [ClientDocumentationSection]
 public readonly struct EventsListPath
 {
-    public EventsListPath(IExternClientServices services) => this.Services = services ?? throw new ArgumentNullException(nameof(services));
+    public EventsListPath(IExternClientServices services) => Services = services ?? throw new ArgumentNullException(nameof(services));
 
     public IExternClientServices Services { get; }
 
