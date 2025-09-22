@@ -222,7 +222,7 @@ public class HandbooksPathExtensions_Tests : GeneratedAccountTests
 
         var handbook = await Context.Handbooks.GetHandbook(handbookType, handbookFilter);
         handbook.HandbookType.Should().Be(handbookType);
-        handbook.Take.Should().Be(25);
+        handbook.Take.Should().Be(handbook.TotalCount < 25 ? handbook.TotalCount : 25);
     }
     
     public static IEnumerable<object[]> GetAllHandbookTypes()
