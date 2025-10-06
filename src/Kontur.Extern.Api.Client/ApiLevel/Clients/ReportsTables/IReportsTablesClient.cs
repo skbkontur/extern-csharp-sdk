@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ReportsTables;
+using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Models.ReportsTables.Reports;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;
 
+[PublicAPI]
+[ClientDocumentationSection]
 public interface IReportsTablesClient
 {
     /// <summary>
@@ -56,7 +60,7 @@ public interface IReportsTablesClient
         int? skip = null,
         int? take = null,
         TimeSpan? timeout = null);
-    
+
     /// <summary>
     /// Детализация по форме отчетности
     /// </summary>

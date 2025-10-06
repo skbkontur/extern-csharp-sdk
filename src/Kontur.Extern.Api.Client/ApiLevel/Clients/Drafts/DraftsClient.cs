@@ -87,6 +87,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
             );
         }
 
+        [Obsolete($"Use async api-task {nameof(StartPrintDocumentAsync)}() method instead")]
         public async Task<byte[]> PrintDocumentAsync(
             Guid accountId,
             Guid draftId,
@@ -105,7 +106,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Drafts
             var url = new RequestUrlBuilder($"/v1/{accountId}/drafts/{draftId}/documents/{documentId}/print")
                 .AppendToQuery("deferred", true)
                 .Build();
-            return http.PostAsync<ApiTaskResult<PrintDocumentResult>>(url, timeout);
+
+            return http.GetAsync<ApiTaskResult<PrintDocumentResult>>(url, timeout);
         }
 
         public Task<Signature> CreateSignatureAsync(

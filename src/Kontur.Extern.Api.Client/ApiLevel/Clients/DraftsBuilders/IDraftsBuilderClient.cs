@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Builders;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.DocumentFiles;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Documents;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.DraftBuilders.Builders;
+using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Models.ApiTasks;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles;
@@ -14,6 +16,8 @@ using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
 {
+    [PublicAPI]
+    [ClientDocumentationSection]
     public interface IDraftsBuilderClient
     {
         /// <summary>
@@ -33,7 +37,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         /// <param name="timeout"></param>
         /// <returns>DraftsBuilder</returns>
         Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null);
-        
+
         /// <summary>
         /// Получение DraftsBuilder по идентификатору
         /// </summary>
@@ -187,7 +191,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             Guid draftsBuilderId,
             Guid documentId,
             TimeSpan? timeout = null);
-        
+
         /// <summary>
         /// Получение метаинформации документа
         /// </summary>
@@ -329,7 +333,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             Guid documentId,
             Guid fileId,
             TimeSpan? timeout = null);
-        
+
         /// <summary>
         /// Получение метаинформации файла
         /// </summary>

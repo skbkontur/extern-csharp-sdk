@@ -6,14 +6,13 @@ namespace Kontur.Extern.Api.Client.Primitives
     public interface IEntityList<T>
     {
         /// <summary>
-        /// Allows to change take items (and page size)
+        /// Взаимодействие с независимыми участками списка сущности (получение части списка в независимом порядке, аналог skip/take)
         /// </summary>
-        /// <param name="sliceSize"></param>
         /// <returns></returns>
         IEntityListSlicing<T> SliceBy(uint sliceSize);
 
         /// <summary>
-        /// return pagination interface
+        /// Взаимодействие со списком сущности с помощью пагинации (получение части списка в очерёдном порядке)
         /// </summary>
         /// <returns></returns>
         IPagination<T> Paging(uint pageSize);

@@ -8,12 +8,14 @@ using Kontur.Extern.Api.Client.ApiLevel.Clients.Handbooks;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.Replies;
 using Kontur.Extern.Api.Client.ApiLevel.Clients.ReportsTables;
+using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Http;
 // ReSharper disable CommentTypo
 
 namespace Kontur.Extern.Api.Client.ApiLevel
 {
     //todo Сделать нормальные тесты для всех методов всех реализованных подклиентов этого интерфейса.
+    [ClientDocumentationSection]
     public interface IExternHttpClient
     {
         IHttpRequestFactory Http { get; }

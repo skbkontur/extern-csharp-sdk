@@ -1,8 +1,12 @@
 using System;
+using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Common;
 
 namespace Kontur.Extern.Api.Client.Paths
 {
+    [PublicAPI]
+    [ClientDocumentationSection]
     public readonly struct InventoryDocflowDocumentPath
     {
         public InventoryDocflowDocumentPath(Guid accountId, Guid docflowId, Guid documentId, Guid inventoryId, Guid inventoryDocumentId, IExternClientServices services)
@@ -21,7 +25,7 @@ namespace Kontur.Extern.Api.Client.Paths
         public Guid InventoryId { get; }
         public Guid InventoryDocumentId { get; }
         public IExternClientServices Services { get; }
-        
+
         public InventoryDocflowDocumentContentListPath Contents => new(AccountId, DocflowId, DocumentId, InventoryId, InventoryDocumentId, Services);
     }
 }
