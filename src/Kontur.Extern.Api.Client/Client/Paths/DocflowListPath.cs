@@ -1,5 +1,7 @@
 using System;
+using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Common;
 using Kontur.Extern.Api.Client.Model.DocflowFiltering;
 using Kontur.Extern.Api.Client.Models.Docflows;
@@ -7,6 +9,8 @@ using Kontur.Extern.Api.Client.Primitives;
 
 namespace Kontur.Extern.Api.Client.Paths
 {
+    [PublicAPI]
+    [ClientDocumentationSection]
     public readonly struct DocflowListPath
     {
         public DocflowListPath(Guid accountId, IExternClientServices services)
