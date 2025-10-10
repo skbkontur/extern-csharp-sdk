@@ -1,3 +1,7 @@
+default:
+  build:
+    tool: dotnet
+
 full-build > client:
   build:
     target: src/Kontur.Extern.Api.Client.sln
@@ -15,7 +19,6 @@ client *default:
   build:
     target: src/Kontur.Extern.Api.Client.sln
     configuration: Client
-    tool: dotnet
   install:
     - src/Kontur.Extern.Api.Client/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.dll
     - src/Kontur.Extern.Api.Client.Common/bin/Client/netstandard2.0/Kontur.Extern.Api.Client.Common.dll
