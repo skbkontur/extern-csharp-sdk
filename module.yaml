@@ -1,3 +1,7 @@
+default:
+  build:
+    tool: dotnet
+
 full-build > client:
   build:
     target: src/Kontur.Extern.Api.Client.sln
