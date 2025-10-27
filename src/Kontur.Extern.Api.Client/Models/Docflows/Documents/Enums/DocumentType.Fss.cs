@@ -1137,5 +1137,53 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// </summary>
             public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-additional-vacation-statement-docs-read-receipt";
         }
+
+        /// <summary>
+        /// Запрос информации о судебном ограничении
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoJudicialRestriction
+        {
+            /// <summary>
+            /// Запрос на получение документов
+            /// </summary>
+            public static DocumentType RequestMessage { get; } = "urn:document:fss-sedo-judicial-restriction-request-message";
+            /// <summary>
+            /// Документ "Запрос информации о судебном ограничении"
+            /// </summary>
+            public static DocumentType Document { get; } = "urn:document:fss-sedo-judicial-restriction-document";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static DocumentType ExchangeError { get; } = "urn:document:fss-sedo-judicial-restriction-exchange-error";
+        }
+
+        /// <summary>
+        /// Ответ на запрос информации о судебном ограничении
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoJudicialRestrictionReply
+        {
+            /// <summary>
+            /// Запрос на отправку сообщения "Ответ на запрос информации о судебном ограничении"
+            /// </summary>
+            public static DocumentType Request { get; } = "urn:document:fss-sedo-judicial-restriction-reply-request";
+            /// <summary>
+            /// Результат отправки сообщения на портал
+            /// </summary>
+            public static DocumentType ReceptionResult { get; } = "urn:document:fss-sedo-judicial-restriction-reply-reception-result";
+            /// <summary>
+            /// Сообщение "Результат ответа на запрос информации о судебном ограничении"
+            /// </summary>
+            public static DocumentType ResultDocument { get; } = "urn:document:fss-sedo-judicial-restriction-reply-result-document";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static DocumentType ExchangeError { get; } = "urn:document:fss-sedo-judicial-restriction-reply-exchange-error";
+            /// <summary>
+            /// Ошибка обработки
+            /// </summary>
+            public static DocumentType ErrorMessage { get; } = "urn:document:fss-sedo-judicial-restriction-reply-error-message";
+        }
     }
 }
