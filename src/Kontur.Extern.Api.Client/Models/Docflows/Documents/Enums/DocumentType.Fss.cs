@@ -1115,27 +1115,47 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Documents.Enums
             /// <summary>
             /// Запрос на отправку сообщения "Направление дополнительных документов по сведениям для оплаты отпуска застрахованного лица"
             /// </summary>
-            public static DocumentType Request { get; } = "urn:document:fss-sedo-additional-vacation-statement-docs-request";
+            public static readonly DocumentType Request = "urn:document:fss-sedo-additional-vacation-statement-docs-request";
             /// <summary>
             /// Результат отправки сообщения на портал
             /// </summary>
-            public static DocumentType ReceptionResult { get; } = "urn:document:fss-sedo-additional-vacation-statement-docs-reception-result";
+            public static readonly DocumentType ReceptionResult = "urn:document:fss-sedo-additional-vacation-statement-docs-reception-result";
             /// <summary>
             /// Сообщение "Результат обработки сведений для оплаты отпуска застрахованного лица"
             /// </summary>
-            public static DocumentType ResultDocument { get; } = "urn:document:fss-sedo-additional-vacation-statement-docs-result-document";
+            public static readonly DocumentType ResultDocument = "urn:document:fss-sedo-additional-vacation-statement-docs-result-document";
             /// <summary>
             /// Ошибка взаимодействия с СЭДО
             /// </summary>
-            public static DocumentType ExchangeError { get; } = "urn:document:fss-sedo-additional-vacation-statement-docs-exchange-error";
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-additional-vacation-statement-docs-exchange-error";
             /// <summary>
             /// Ошибка обработки
             /// </summary>
-            public static DocumentType ErrorMessage { get; } = "urn:document:fss-sedo-additional-vacation-statement-docs-error-message";
+            public static readonly DocumentType ErrorMessage = "urn:document:fss-sedo-additional-vacation-statement-docs-error-message";
             /// <summary>
             /// Квитанция о прочтении (используется в методе генерации ответного документа)
             /// </summary>
             public static readonly DocumentType ReadReceipt = "urn:document:fss-sedo-additional-vacation-statement-docs-read-receipt";
+        }
+
+        /// <summary>
+        /// Сведения, необходимые для исчисления страхователем первых 3 дней пособия по временной нетрудоспособности
+        /// </summary>
+        [PublicAPI]
+        public static class FssSedoProactiveSalaryNotification
+        {
+            /// <summary>
+            /// Запрос на получение документов
+            /// </summary>
+            public static readonly DocumentType RequestMessage = "urn:document:fss-sedo-proactive-salary-notification-request-message";
+            /// <summary>
+            /// Документ "Сведения, необходимые для исчисления страхователем первых 3 дней пособия по временной нетрудоспособности"
+            /// </summary>
+            public static readonly DocumentType Document = "urn:document:fss-sedo-proactive-salary-notification-document";
+            /// <summary>
+            /// Ошибка взаимодействия с СЭДО
+            /// </summary>
+            public static readonly DocumentType ExchangeError = "urn:document:fss-sedo-proactive-salary-notification-exchange-error";
         }
 
         /// <summary>

@@ -190,6 +190,11 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         public static readonly DocflowType FssWarrantManagement = "urn:docflow:fss-warrant-management";
 
         /// <summary>
+        /// Сведения, необходимые для исчисления страхователем первых 3 дней пособия по временной нетрудоспособности
+        /// </summary>
+        public static readonly DocflowType FssSedoProactiveSalaryNotification= "urn:docflow:fss-sedo-proactive-salary-notification";
+
+        /// <summary>
         /// Запрос информации о судебном ограничении
         /// </summary>
         public static readonly DocflowType FssSedoJudicialRestriction = "urn:docflow:fss-sedo-judicial-restriction";
