@@ -168,17 +168,17 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Ответ на запрос платежных реквизитов
         /// </summary>
         public static readonly DocflowType FssSedoPaymentDetailsDemandReply = "urn:docflow:fss-sedo-payment-details-demand-reply";
-        
+
         /// <summary>
         /// Заявление на оплату санаторно-курортного лечения
         /// </summary>
         public static readonly DocflowType FssSedoAdditionalVacationStatement = "urn:docflow:fss-sedo-additional-vacation-statement";
-        
+
         /// <summary>
         /// Запрос недостающих документов для оплаты отпуска застрахованного лица
         /// </summary>
         public static readonly DocflowType FssSedoAdditionalVacationStatementNeedDoc = "urn:docflow:fss-sedo-additional-vacation-statement-need-doc";
-        
+
         /// <summary>
         /// Направление дополнительных документов по сведениям для оплаты отпуска застрахованного лица
         /// </summary>
@@ -188,5 +188,20 @@ namespace Kontur.Extern.Api.Client.Models.Docflows.Enums
         /// Запрос регистрации/отзыва доверенности ФСС
         /// </summary>
         public static readonly DocflowType FssWarrantManagement = "urn:docflow:fss-warrant-management";
+
+        /// <summary>
+        /// Сведения, необходимые для исчисления страхователем первых 3 дней пособия по временной нетрудоспособности
+        /// </summary>
+        public static readonly DocflowType FssSedoProactiveSalaryNotification= "urn:docflow:fss-sedo-proactive-salary-notification";
+
+        /// <summary>
+        /// Запрос информации о судебном ограничении
+        /// </summary>
+        public static readonly DocflowType FssSedoJudicialRestriction = "urn:docflow:fss-sedo-judicial-restriction";
+
+        /// <summary>
+        /// Ответ на запрос информации о судебном ограничении
+        /// </summary>
+        public static readonly DocflowType FssSedoJudicialRestrictionReply = "urn:docflow:fss-sedo-judicial-restriction-reply";
     }
 }
