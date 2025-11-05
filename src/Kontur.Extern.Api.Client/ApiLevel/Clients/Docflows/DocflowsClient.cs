@@ -308,6 +308,14 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
                 timeout);
         }
 
+        public Task<SaveDecryptedContentResult> SaveDocumentDecryptedContentAsync(Guid accountId, Guid docflowId, Guid documentId, SaveDecryptedContentRequest request, TimeSpan? timeout = null)
+        {
+            return http.PutAsync<SaveDecryptedContentRequest, SaveDecryptedContentResult>(
+                $"v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypted-document",
+                request,
+                timeout);
+        }
+
         private Task<DocflowPage> GetRelatedDocflowsAsync(RequestUrlBuilder urlBuilder, TimeSpan? timeout) => http.GetAsync<DocflowPage>(urlBuilder.Build(), timeout);
 
         private Task<IDocflowWithDocuments> GetDocflowAsync(string url, TimeSpan? timeout)
