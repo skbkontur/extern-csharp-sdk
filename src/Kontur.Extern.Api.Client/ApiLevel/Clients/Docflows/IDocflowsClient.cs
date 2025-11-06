@@ -415,7 +415,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             TimeSpan? timeout = null);
 
         /// <summary>
-        /// Сохранение расшифрованного контента в документ
+        /// Сохранение расшифрованного контента документа
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="docflowId">Идентификатор документооборота</param>

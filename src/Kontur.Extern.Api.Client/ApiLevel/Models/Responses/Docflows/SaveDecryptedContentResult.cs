@@ -12,7 +12,7 @@ public class SaveDecryptedContentResult
     /// </summary>
     public Guid ContentId { get; set; }
     /// <summary>
-    /// Идентификатор расшифрованного контента
+    /// Ссылки для работы с документом и документооборотом
     /// </summary>
     public Link[] Links { get; set; }
 }
