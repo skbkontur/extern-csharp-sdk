@@ -64,6 +64,9 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
             [DocflowType.FssSedoAppealReply] = typeof(FssSedoAppealReplyDescription),
             [DocflowType.FssSedoAppeal] = typeof(FssSedoAppealDescription),
             [DocflowType.FssSedoOvedConfirmation] = typeof(FssSedoOvedConfirmationDescription),
+            [DocflowType.FssSedoJudicialRestriction] = typeof(FssSedoJudicialRestrictionDescription),
+            [DocflowType.FssSedoJudicialRestrictionReply] = typeof(FssSedoJudicialRestrictionReplyDescription),
+            [DocflowType.FssSedoOvedConfirmation] = typeof(FssSedoOvedConfirmationDescription),
             [DocflowType.OvedConfirmation] = typeof(OvedConfirmationDescription),
             [DocflowType.CbrfReport] = typeof(CbrfReportDescription),
             [DocflowType.BusinessRegistration] = typeof(BusinessRegistrationDescription),
@@ -73,7 +76,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Json.Converters.Docflows
             [DocflowType.FssSedoAdditionalVacationStatement] = typeof(FssSedoAdditionalVacationStatementDescription),
             [DocflowType.FssSedoAdditionalVacationStatementNeedDoc] = typeof(FssSedoAdditionalVacationStatementNeedDocDescription),
             [DocflowType.FssSedoAdditionalVacationStatementDocs] = typeof(FssSedoAdditionalVacationStatementDocsDescription),
-            [DocflowType.FssWarrantManagement] = typeof(FssWarrantManagementDescription)
+            [DocflowType.FssWarrantManagement] = typeof(FssWarrantManagementDescription),
+            [DocflowType.FssSedoProactiveSalaryNotification] = typeof(FssSedoProactiveSalaryNotificationDescription)
         };
 
         public static Type? TryGetDescriptionType(DocflowType docflowType) =>
