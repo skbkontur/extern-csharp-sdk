@@ -2,6 +2,8 @@ using System;
 using System.Threading.Tasks;
 using System.Web;
 using JetBrains.Annotations;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Docflows;
 using Kontur.Extern.Api.Client.Attributes;
 using Kontur.Extern.Api.Client.Common;
 using Kontur.Extern.Api.Client.Exceptions;
@@ -103,6 +105,12 @@ namespace Kontur.Extern.Api.Client.Paths
                 new Urn("document", documentTypeParameter),
                 certificate.ToBytes(),
                 timeout);
+        }
+
+        public Task<SaveDecryptedContentResult> SaveDocumentDecryptedContentAsync(SaveDecryptedContentRequest request, TimeSpan? timeout = null)
+        {
+            var apiClient = Services.Api;
+            return apiClient.Docflows.SaveDocumentDecryptedContentAsync(AccountId, DocflowId, DocumentId, request, timeout);
         }
     }
 }

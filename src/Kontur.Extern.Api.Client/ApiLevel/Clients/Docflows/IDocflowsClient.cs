@@ -405,13 +405,29 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         /// <param name="docflowId">Идентификатор документооборота</param>
         /// <param name="requestId">Идентификатор запроса</param>
         /// <param name="signature"></param>
-        /// <param name="timeout">Сертификат</param>
+        /// <param name="timeout"></param>
         /// <returns></returns>
         Task<DocumentsRequest> UpdateDocumentsRequestSignatureAsync(
             Guid accountId,
             Guid docflowId,
             Guid requestId,
             byte[] signature,
+            TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Сохранение расшифрованного контента документа
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="docflowId">Идентификатор документооборота</param>
+        /// <param name="documentId">Идентификатор документа</param>
+        /// <param name="request">Тело запроса</param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
+        Task<SaveDecryptedContentResult> SaveDocumentDecryptedContentAsync(
+            Guid accountId,
+            Guid docflowId,
+            Guid documentId,
+            SaveDecryptedContentRequest request,
             TimeSpan? timeout = null);
     }
 }
