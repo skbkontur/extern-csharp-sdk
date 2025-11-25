@@ -311,7 +311,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         public Task<SaveDecryptedContentResult> SaveDocumentDecryptedContentAsync(Guid accountId, Guid docflowId, Guid documentId, SaveDecryptedContentRequest request, TimeSpan? timeout = null)
         {
             return http.PutAsync<SaveDecryptedContentRequest, SaveDecryptedContentResult>(
-                $"v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypted-document",
+                $"v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypted-content",
                 request,
                 timeout);
         }
