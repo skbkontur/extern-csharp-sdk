@@ -47,10 +47,10 @@ namespace Kontur.Extern.Api.Client.Paths
             return apiClient.Docflows.PatchDocflowAsync(AccountId, DocflowId, patch, timeout);
         }
 
-        public Task<DocumentsRequest> GenerateDocumentsRequestAsync(CertificateContent certificate, TimeSpan? timeout = null)
+        public Task<DocumentsRequest> GenerateDocumentsRequestAsync(CertificateContent certificate, TimeSpan? timeout = null, Guid? machineReadableWarrantId = null)
         {
             var apiClient = Services.Api;
-            return apiClient.Docflows.GenerateDocumentsRequestAsync(AccountId, DocflowId, certificate.ToBytes(), timeout);
+            return apiClient.Docflows.GenerateDocumentsRequestAsync(AccountId, DocflowId, certificate.ToBytes(), timeout, machineReadableWarrantId);
         }
     }
 }

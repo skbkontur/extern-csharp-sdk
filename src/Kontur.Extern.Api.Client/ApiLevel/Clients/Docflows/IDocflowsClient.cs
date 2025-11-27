@@ -377,12 +377,14 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         /// <param name="docflowId">Идентификатор документооборота</param>
         /// <param name="certificate">Сертификат</param>
         /// <param name="timeout"></param>
+        /// <param name="machineReadableWarrantId">Идентификатор машиночитаемой доверенности</param>
         /// <returns></returns>
         Task<DocumentsRequest> GenerateDocumentsRequestAsync(
             Guid accountId,
             Guid docflowId,
             byte[] certificate,
-            TimeSpan? timeout = null);
+            TimeSpan? timeout = null,
+            Guid? machineReadableWarrantId = null);
 
         /// <summary>
         /// Отправка запроса на получение входящих документов ФСС

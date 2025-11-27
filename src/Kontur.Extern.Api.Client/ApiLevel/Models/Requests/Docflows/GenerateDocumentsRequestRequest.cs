@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
 {
@@ -9,5 +10,10 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
         /// Сертификат в формате base64
         /// </summary>
         public byte[] CertificateBase64 { get; set; } = null!;
+
+        /// <summary>
+        /// Идентификатор машиночитаемой доверенности
+        /// </summary>
+        public Guid? MachineReadableWarrantId { get; set; }
     }
 }
