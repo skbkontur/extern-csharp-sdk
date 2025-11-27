@@ -281,13 +281,14 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
                 timeout
             );
 
-        public Task<DocumentsRequest> GenerateDocumentsRequestAsync(Guid accountId, Guid docflowId, byte[] certificate, TimeSpan? timeout = null)
+        public Task<DocumentsRequest> GenerateDocumentsRequestAsync(Guid accountId, Guid docflowId, byte[] certificate, TimeSpan? timeout = null, Guid? machineReadableWarrantId = null)
         {
             return http.PostAsync<GenerateDocumentsRequestRequest, DocumentsRequest>(
                 $"/v1/{accountId}/docflows/{docflowId}/generate-documents-request",
                 new GenerateDocumentsRequestRequest
                 {
-                    CertificateBase64 = certificate
+                    CertificateBase64 = certificate,
+                    MachineReadableWarrantId = machineReadableWarrantId
                 },
                 timeout
             );
