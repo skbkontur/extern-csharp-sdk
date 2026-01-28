@@ -64,5 +64,18 @@ namespace Kontur.Extern.Api.Client.Paths
                 Services.LongOperationsPollingStrategy
             );
         }
+
+        public ILongOperation<DraftsBuilderPrepareDocumentsResult> PrepareDocumentsTaskAsync(TimeSpan? timeout = null)
+        {
+            var apiClient = Services.Api;
+            var accountId = AccountId;
+            var draftBuilderId = DraftBuilderId;
+
+            return new LongOperation<DraftsBuilderPrepareDocumentsResult>(
+                () => apiClient.DraftsBuilder.StartPrepareDocumentsAsync(accountId, draftBuilderId, timeout),
+                taskId => apiClient.DraftsBuilder.GetPrepareDocumentsTaskAsync(accountId, draftBuilderId, taskId, timeout),
+                Services.LongOperationsPollingStrategy
+            );
+        }
     }
 }
