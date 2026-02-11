@@ -17,14 +17,14 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data.FnsInven
         {
             if (string.IsNullOrWhiteSpace(claimItemNumber))
                 throw Errors.RequiredJsonPropertyIsMissed(nameof(claimItemNumber));
-            
+
             ClaimItemNumber = claimItemNumber;
             LabelForGrouping = labelForGrouping;
             ScannedDocumentName = scannedDocumentName;
             Type = type;
-            BackgroundProcessing = backgroundProcessing ?? throw Errors.RequiredJsonPropertyIsMissed(nameof(backgroundProcessing));
+            BackgroundProcessing = backgroundProcessing;
         }
-        
+
         /// <summary>
         /// Пункт требования — номер пункта, под которым документ указан в требовании в виде 1.ХХ или 2.ХХ
         /// </summary>
@@ -49,6 +49,6 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data.FnsInven
         /// <summary>
         /// Условия для немедленной обработки документа
         /// </summary>
-        public FnsInventoryDraftsBuilderDocumentBackgroundProcessing BackgroundProcessing { get; }
+        public FnsInventoryDraftsBuilderDocumentBackgroundProcessing? BackgroundProcessing { get; }
     }
 }
