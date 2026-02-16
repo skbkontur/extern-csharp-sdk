@@ -2,11 +2,11 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows;
+using Kontur.Extern.Api.Client.Common.Time;
 using Kontur.Extern.Api.Client.Exceptions;
+using Kontur.Extern.Api.Client.Models.Common.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 using Kontur.Extern.Api.Client.Models.Numbers;
-using Kontur.Extern.Api.Client.Common.Time;
-using Kontur.Extern.Api.Client.Models.Common.Enums;
 
 namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
 {
@@ -135,6 +135,12 @@ namespace Kontur.Extern.Api.Client.Model.DocflowFiltering
         public DocflowFilterBuilder WithTypes(params DocflowType[] types)
         {
             filter.SetTypes(types);
+            return this;
+        }
+
+        public DocflowFilterBuilder WithSuccessStates(params DocflowState[] states)
+        {
+            filter.SetSuccessStates(states);
             return this;
         }
 

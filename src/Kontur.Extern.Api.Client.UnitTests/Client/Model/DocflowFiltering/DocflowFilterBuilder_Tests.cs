@@ -41,6 +41,7 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 .WithOkud(Okud.Parse("1234567"))
                 .WithRegNumberOfPfrDocflow(PfrRegNumber.Parse("123-456-789012"))
                 .WithTypes(DocflowType.Fns534Report, DocflowType.Fns534Letter)
+                .WithSuccessStates(DocflowState.Successful, DocflowState.Warning)
                 .WithFormName("the form")
                 .WithCreatedFrom(createdFrom)
                 .WithCreatedTo(createdTo)
@@ -69,7 +70,9 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
                 ("periodFrom", "2021-07-08T00:00:00.0000000"),
                 ("periodTo", "2021-07-18T00:00:00.0000000"),
                 ("type", "fns534-report"),
-                ("type", "fns534-letter")
+                ("type", "fns534-letter"),
+                ("successState", "successful"),
+                ("successState", "warning")
             );
         }
 
@@ -144,6 +147,31 @@ namespace Kontur.Extern.Api.Client.UnitTests.Client.Model.DocflowFiltering
             ShouldHaveExpectedQueryParameters(filter, ("type", type.ToUrn()!.Nss));
         }
 
+        [Test]
+        public void Should_create_correct_filter_with_success_states()
+        {
+            var filter = new DocflowFilterBuilder()
+                .WithSuccessStates(DocflowState.Successful, DocflowState.Warning)
+                .CreateFilter();
+            
+            ShouldHaveExpectedQueryParameters(
+                filter,
+                ("successState", "successful"),
+                ("successState", "warning"));
+        }
+
+        [Test]
+        public void Should_create_correct_filter_with_non_existing_state_in_sdk()
+        {
+            var filter = new DocflowFilterBuilder()
+                .WithSuccessStates(new DocflowState("urn:docflow-state:unknown-state"))
+                .CreateFilter();
+            
+            ShouldHaveExpectedQueryParameters(
+                filter,
+                ("successState", "unknown-state")); 
+        }
+        
         private static readonly DocflowType[] TypeCases =
         {
             DocflowType.PfrAncillary,

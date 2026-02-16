@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
-using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Common.Enums;
 using Kontur.Extern.Api.Client.Models.Docflows.Enums;
 
@@ -78,6 +78,12 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
         /// </summary>
         public void SetTypes(DocflowType[] value) => queryParameters.Set(value);
 
+        /// <summary>
+        /// Состояния документооборотов
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetSuccessStates(DocflowState[] value) => queryParameters.Set(value);
+        
         /// <summary>
         /// КНД – код налоговой декларации. Задается по маске XXXXXXX, где Х - это цифра от 0 до 9
         /// </summary>
@@ -154,6 +160,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
             public const string createdFrom = nameof(createdFrom);
             public const string createdTo = nameof(createdTo);
             public const string type = nameof(type);
+            public const string successState = nameof(successState);
             public const string knd = nameof(knd);
             public const string okud = nameof(okud);
             public const string okpo = nameof(okpo);
@@ -171,7 +178,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
             private readonly Dictionary<string, string> queryParameters = new();
             private readonly List<string> types = new(0);
             private readonly List<string> pfrLetterTypes = new(0);
-
+            private readonly List<string> successStates = new(0);
+            
             public IEnumerable<(string name, string value)> GetParameters()
             {
                 foreach (var pair in queryParameters)
@@ -187,6 +195,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
                 foreach (var category in pfrLetterTypes)
                 {
                     yield return (pfrLetterCategory, category);
+                }
+
+                foreach (var state in successStates)
+                {
+                    yield return (successState, state);
                 }
             }
             
@@ -245,6 +258,23 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Docflows
                 }
             }
 
+            public void Set(DocflowState[]? states)
+            {
+                if (states is null)
+                {
+                    successStates.Clear();
+                }
+                else
+                {
+                    foreach (var state in states)
+                    {
+                        var urn = state.ToUrn();
+                        if (!successStates.Contains(urn.Nss))
+                            successStates.Add(urn.Nss);
+                    }
+                }
+            }
+            
             public void Set(string parameterName, string? value) => 
                 SetValue(parameterName, value);
 
