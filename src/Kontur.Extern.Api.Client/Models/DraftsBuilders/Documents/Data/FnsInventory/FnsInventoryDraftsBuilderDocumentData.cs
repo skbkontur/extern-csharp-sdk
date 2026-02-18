@@ -10,7 +10,7 @@ namespace Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents.Data.FnsInven
     {
         public FnsInventoryDraftsBuilderDocumentData(
             string claimItemNumber, 
-            FnsInventoryDraftsBuilderDocumentBackgroundProcessing backgroundProcessing,
+            FnsInventoryDraftsBuilderDocumentBackgroundProcessing? backgroundProcessing,
             string? labelForGrouping,
             string? scannedDocumentName,
             FnsInventoryDraftsBuilderDocumentType? type)
