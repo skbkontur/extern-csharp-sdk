@@ -115,6 +115,20 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             TimeSpan? timeout = null);
 
         /// <summary>
+        /// Проверка статуса задачи подготовки документов DraftsBuilder
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftsBuilderId">Идентификатор DraftsBuilder</param>
+        /// <param name="taskId">Идентификатор задачи сборки</param>
+        /// <param name="timeout"></param>
+        /// <returns>Задача сборки</returns>
+        Task<ApiTaskResult<DraftsBuilderPrepareDocumentsResult>> GetPrepareDocumentsTaskAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid taskId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
         /// Создание документа в DraftsBuilder
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
@@ -136,6 +150,18 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         /// <param name="timeout"></param>
         /// <returns>Список документов DraftsBuilder</returns>
         Task<IReadOnlyCollection<DraftsBuilderDocument>> GetDocumentsAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Старт задачи подготовки документов DraftsBuilder
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftsBuilderId">Идентификатор DraftsBuilder</param>
+        /// <param name="timeout"></param>
+        /// <returns>Задача подготовки</returns>
+        Task<ApiTaskResult<DraftsBuilderPrepareDocumentsResult>> StartPrepareDocumentsAsync(
             Guid accountId,
             Guid draftsBuilderId,
             TimeSpan? timeout = null);
@@ -236,6 +262,24 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             Guid draftsBuilderId,
             Guid documentId,
             DraftsBuilderFileRequest fileRequest,
+            TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Создание файла в документе по контракту
+        /// </summary>
+        /// <param name="accountId">Идентификатор учетной записи</param>
+        /// <param name="draftsBuilderId">Идентификатор DraftsBuilder</param>
+        /// <param name="documentId">Идентификатор документа в DraftsBuilder</param>
+        /// <param name="version"></param>
+        /// <param name="contract">JSON-контракт для создания документа</param>
+        /// <param name="timeout"></param>
+        /// <returns>Файл DraftsBuilder</returns>
+        public Task<DraftsBuilderDocumentFile> GenerateFileAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            int? version,
+            string contract,
             TimeSpan? timeout = null);
 
         /// <summary>

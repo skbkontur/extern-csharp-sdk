@@ -86,6 +86,18 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             );
         }
 
+        public Task<ApiTaskResult<DraftsBuilderPrepareDocumentsResult>> GetPrepareDocumentsTaskAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid taskId,
+            TimeSpan? timeout = null)
+        {
+            return http.GetAsync<ApiTaskResult<DraftsBuilderPrepareDocumentsResult>>(
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/tasks/{taskId}",
+                timeout
+            );
+        }
+
         public Task<DraftsBuilderDocument> CreateDocumentAsync(
             Guid accountId,
             Guid draftsBuilderId,
@@ -106,6 +118,17 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.GetAsync<IReadOnlyCollection<DraftsBuilderDocument>>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents",
+                timeout
+            );
+        }
+
+        public Task<ApiTaskResult<DraftsBuilderPrepareDocumentsResult>> StartPrepareDocumentsAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            TimeSpan? timeout = null)
+        {
+            return http.PostAsync<ApiTaskResult<DraftsBuilderPrepareDocumentsResult>>(
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/prepare",
                 timeout
             );
         }
@@ -188,6 +211,24 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
                 fileRequest,
                 timeout
             );
+        }
+
+        public async Task<DraftsBuilderDocumentFile> GenerateFileAsync(
+            Guid accountId,
+            Guid draftsBuilderId,
+            Guid documentId,
+            int? version,
+            string contract,
+            TimeSpan? timeout = null)
+        {
+            var url = new RequestUrlBuilder($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/generate")
+                .AppendToQuery("version", version)
+                .Build();
+            var response = await http.Post(url)
+                .WithJson(contract)
+                .SendAsync(timeout);
+                
+             return await response.GetMessageAsync<DraftsBuilderDocumentFile>().ConfigureAwait(false); 
         }
 
         public Task<IReadOnlyCollection<DraftsBuilderDocumentFile>> GetFilesAsync(
