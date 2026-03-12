@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using FluentAssertions;
 using JetBrains.Annotations;
@@ -318,6 +319,46 @@ namespace Kontur.Extern.Api.Client.Http.UnitTests
                 action.Should().Throw<ArgumentException>();
             }
 
+            private HttpRequestFactory CreateHttp() => HttpRequestFactory_Tests.CreateHttp(fakeClient.Configuration, log);
+        }
+
+        public class UserAgent
+        {
+            private readonly ILog log;
+            private readonly FakeClusterClient fakeClient;
+
+            private FakeClusterClientVerify ClusterClientVerify => fakeClient.Verify;
+
+            public UserAgent(ITestOutputHelper output)
+            {
+                log = new TestLog(output);
+                fakeClient = CreateFakeClusterClient();
+            }
+
+            [Fact]
+            public async Task Should_set_user_agent_to_request()
+            {
+                const string userAgent = "user_agent";
+
+                var x = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+                log.Warn($"Version: {x}");
+                
+                await CreateHttp().Put("/some-resource")
+                    .UserAgent(userAgent)
+                    .SendAsync();
+                
+                ClusterClientVerify.SentRequest!.Headers!.UserAgent.Should().Be(userAgent);
+            }
+
+            [Fact]
+            public async Task Should_set_default_client_version_as_user_agent_if_not_passed()
+            {
+                await CreateHttp().Put("/some-resource")
+                    .SendAsync();
+                
+                ClusterClientVerify.SentRequest!.Headers!.UserAgent.Should().NotBeNullOrEmpty();
+            }
+            
             private HttpRequestFactory CreateHttp() => HttpRequestFactory_Tests.CreateHttp(fakeClient.Configuration, log);
         }
 

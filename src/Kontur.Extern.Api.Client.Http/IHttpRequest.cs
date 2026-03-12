@@ -30,5 +30,7 @@ namespace Kontur.Extern.Api.Client.Http
         Task<IHttpResponse> SendAsync(TimeoutSpecification timeoutSpecification = default, Func<IHttpResponse, bool>? ignoreResponseErrors = null);
 
         IHttpRequest Range(long from, long? to);
+        
+        IHttpRequest UserAgent(string userAgent);
     }
 }

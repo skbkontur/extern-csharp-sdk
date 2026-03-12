@@ -5,6 +5,7 @@ using Kontur.Extern.Api.Client.Http.Exceptions;
 using Kontur.Extern.Api.Client.Http.Models;
 using Kontur.Extern.Api.Client.Http.Options;
 using Kontur.Extern.Api.Client.Http.Serialization;
+using Kontur.Extern.Api.Client.Http.VersionGetter;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Commons.Time;
@@ -43,6 +44,10 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
             this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
             this.log = log;
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            
+            var clientVersion = ClientVersionGetter.GetClientVersion();
+            var userAgentHeader = $"Kontur.Extern.Api.Sdk/{clientVersion}";
+            UserAgent(userAgentHeader);
         }
 
         public IPayloadSpecifiedRequest WithPayload(IHttpContent content)
@@ -95,6 +100,12 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
             return this;
         }
 
+        public IHttpRequest UserAgent(string userAgent)
+        {
+            request = request.WithUserAgentHeader(userAgent);
+            return this;
+        }
+        
         public async Task<IHttpResponse> SendAsync(TimeoutSpecification timeoutSpecification = default, Func<IHttpResponse, bool>? ignoreResponseErrors = null)
         {
             var attempt = 0u;
