@@ -23,6 +23,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Contents
                     0, 
                     contentLength is null ? content.Length : (int)Math.Min(contentLength.Value - from, content.Length))
                 .ContentRange(from, to, contentLength)
+                .CallingMethod($"{nameof(ContentsClient)}.{nameof(StartUploadAsync)}_WithByteArrayContent")
                 .Accept(ContentTypes.Json);
             return SendRequestAsync<ContentResponse>(request, timeout);
         }
@@ -32,6 +33,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Contents
             var request = http.Post($"v1/{accountId}/contents")
                 .WithPayload(new StreamPayload(stream))
                 .ContentRange(from, to, contentLength)
+                .CallingMethod($"{nameof(ContentsClient)}.{nameof(StartUploadAsync)}_WithStreamContent")
                 .Accept(ContentTypes.Json);
             return SendRequestAsync<ContentResponse>(request, timeout);
         }
@@ -44,6 +46,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Contents
                     0, 
                     contentLength is null ? contentChunk.Length : (int)Math.Min(contentLength.Value - from, contentChunk.Length))
                 .ContentRange(from, to, contentLength)
+                .CallingMethod($"{nameof(ContentsClient)}.{nameof(UploadChunkAsync)}")
                 .Accept(ContentTypes.Json);
             return SendRequestAsync<UploadChunkResponse>(request, timeout);
         }
@@ -52,11 +55,14 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Contents
             ChunkContentStream.CreateAsync(range => DownloadAsBytesAsync(accountId, contentId, range.from, range.to, timeout), downloadChunkSize);
 
         public Task<byte[]> DownloadAsBytesAsync(Guid accountId, Guid contentId, TimeSpan? timeout = null) => 
-            http.GetBytesAsync($"v1/{accountId}/contents/{contentId}");
+            http.GetBytesAsync($"v1/{accountId}/contents/{contentId}", $"{nameof(ContentsClient)}.{nameof(DownloadAsBytesAsync)}");
 
         public async Task<(ArraySegment<byte> contentPart, long totalLength)> DownloadAsBytesAsync(Guid accountId, Guid contentId, long @from, long to, TimeSpan? timeout = null)
         {
-            var request = http.Get($"v1/{accountId}/contents/{contentId}").Range(from, to);
+            var request = http.Get($"v1/{accountId}/contents/{contentId}")
+                .CallingMethod($"{nameof(ContentsClient)}.{nameof(DownloadAsBytesAsync)}")
+                .Range(from, to);
+            
             var httpResponse = await request.SendAsync(timeout).ConfigureAwait(false);
             var totalLength = httpResponse.ContentRange.Length;
             if (totalLength == null)

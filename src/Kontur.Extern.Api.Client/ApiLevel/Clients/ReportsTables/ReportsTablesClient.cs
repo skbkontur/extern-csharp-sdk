@@ -22,7 +22,8 @@ public class ReportsTablesClient : IReportsTablesClient
         var url = new RequestUrlBuilder($"/v1/{accountId}/reports-tables/{organizationId}/forms")
             .AppendToQuery("includeDeleted", includeDeleted)
             .Build();
-        return http.GetAsync<FormsList>(url, timeout);
+        var callingMethod = $"{nameof(ReportsTablesClient)}.{nameof(GetFormsAsync)}";
+        return http.GetAsync<FormsList>(url, callingMethod, timeout);
     }
 
     public Task<PaymentsList> GetPaymentsAsync(
@@ -35,6 +36,7 @@ public class ReportsTablesClient : IReportsTablesClient
         TimeSpan? timeout = null)
     {
         var url = new RequestUrlBuilder($"/v1/{accountId}/reports-tables/search-payments").Build();
+        var callingMethod = $"{nameof(ReportsTablesClient)}.{nameof(GetPaymentsAsync)}";
         return http.PostAsync<SearchPaymentsRequest, PaymentsList>(
             url,
             new SearchPaymentsRequest
@@ -45,6 +47,7 @@ public class ReportsTablesClient : IReportsTablesClient
                 Skip = skip,
                 Take = take
             },
+            callingMethod,
             timeout);
     }
 
@@ -57,6 +60,7 @@ public class ReportsTablesClient : IReportsTablesClient
         TimeSpan? timeout = null)
     {
         var url = new RequestUrlBuilder($"/v1/{accountId}/reports-tables/search").Build();
+        var callingMethod = $"{nameof(ReportsTablesClient)}.{nameof(GetReportsTablesAsync)}";
         return http.PostAsync<SearchReportsRequest, ReportsTableList>(
             url, 
             new SearchReportsRequest
@@ -67,6 +71,7 @@ public class ReportsTablesClient : IReportsTablesClient
                 Skip = skip,
                 Take = take,
             },
+            callingMethod,
             timeout);
     }
 
@@ -78,7 +83,8 @@ public class ReportsTablesClient : IReportsTablesClient
             .AppendToQuery(nameof(periodYear), periodYear)
             .AppendToQuery(nameof(periodNumber), periodNumber)
             .Build();
-
-        return http.GetAsync<ReportsTableDocflows>(url, timeout);
+        var callingMethod = $"{nameof(ReportsTablesClient)}.{nameof(GetReportDocflowsAsync)}";
+        
+        return http.GetAsync<ReportsTableDocflows>(url, callingMethod, timeout);
     }
 }

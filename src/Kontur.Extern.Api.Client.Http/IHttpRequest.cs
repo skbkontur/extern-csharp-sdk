@@ -32,5 +32,7 @@ namespace Kontur.Extern.Api.Client.Http
         IHttpRequest Range(long from, long? to);
         
         IHttpRequest UserAgent(string userAgent);
+        
+        IHttpRequest CallingMethod(string? method);
     }
 }

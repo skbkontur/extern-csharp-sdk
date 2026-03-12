@@ -25,7 +25,7 @@ public class HandbooksClient : IHandbooksClient
             .AppendToQuery("includeinactive", filter.IncludeInactive);
 
         var uri = url.Build();
-        var controlUnits = await http.GetAsync<ControlUnitsPage>(uri).ConfigureAwait(false);
+        var controlUnits = await http.GetAsync<ControlUnitsPage>(uri, $"{nameof(HandbooksClient)}.{nameof(GetControlUnits)}").ConfigureAwait(false);
         return controlUnits;
     }
 
@@ -38,7 +38,7 @@ public class HandbooksClient : IHandbooksClient
     {
         var url = new RequestUrlBuilder($"/v1/handbooks/control-units/{code}")
             .AppendToQuery("controlUnitType", controlUnitType).Build();
-        var controlUnit = await http.GetAsync<ControlUnit>(url).ConfigureAwait(false);
+        var controlUnit = await http.GetAsync<ControlUnit>(url, $"{nameof(HandbooksClient)}.{nameof(GetControlUnit)}").ConfigureAwait(false);
         return controlUnit;
     }
 
@@ -50,7 +50,7 @@ public class HandbooksClient : IHandbooksClient
             .AppendToQuery("skip", filter.Skip)
             .AppendToQuery("take", filter.Take)
             .Build();
-        var fnsForms = await http.GetAsync<FnsFormsPage>(url);
+        var fnsForms = await http.GetAsync<FnsFormsPage>(url, $"{nameof(HandbooksClient)}.{nameof(GetFnsForms)}");
         return fnsForms;
     }
 
@@ -60,7 +60,7 @@ public class HandbooksClient : IHandbooksClient
         var url = new RequestUrlBuilder($"/v1/handbooks/{handbookType}")
             .AppendToQuery("take", handbookFilter.Take)
             .AppendToQuery("skip", handbookFilter.Skip).Build();
-        var handbook = await http.GetAsync<HandbookPage>(url);
+        var handbook = await http.GetAsync<HandbookPage>(url, $"{nameof(HandbooksClient)}.{nameof(GetHandbook)}");
         return handbook;
     }
 }

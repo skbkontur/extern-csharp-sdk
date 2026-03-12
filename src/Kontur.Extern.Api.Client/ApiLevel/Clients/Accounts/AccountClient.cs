@@ -23,17 +23,17 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts
                 .AppendToQuery("skip", skip)
                 .AppendToQuery("take", take)
                 .Build();
-            return HttpRequestFactory.GetAsync<AccountList>(url, timeout);
+            return HttpRequestFactory.GetAsync<AccountList>(url, $"{nameof(AccountClient)}.{nameof(GetAccountsAsync)}", timeout);
         }
 
         public Task<Account> GetAccountAsync(Guid accountId, TimeSpan? timeout = null) =>
-            HttpRequestFactory.GetAsync<Account>($"v1/{accountId}", timeout);
+            HttpRequestFactory.GetAsync<Account>($"v1/{accountId}", $"{nameof(AccountClient)}.{nameof(GetAccountAsync)}", timeout);
 
         public Task<Account?> TryGetAccountAsync(Guid accountId, TimeSpan? timeout = null) =>
-            HttpRequestFactory.TryGetAsync<Account>($"v1/{accountId}", timeout);
+            HttpRequestFactory.TryGetAsync<Account>($"v1/{accountId}", $"{nameof(AccountClient)}.{nameof(TryGetAccountAsync)}",timeout);
 
         public Task<bool> DeleteAccountAsync(Guid accountId, TimeSpan? timeout = null) =>
-            HttpRequestFactory.TryDeleteAsync($"v1/{accountId}", timeout);
+            HttpRequestFactory.TryDeleteAsync($"v1/{accountId}", $"{nameof(AccountClient)}.{nameof(DeleteAccountAsync)}", timeout);
 
         public Task<Account> CreateAccountAsync(
             string inn,
@@ -49,6 +49,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts
                     Kpp = kpp,
                     OrganizationName = organizationName
                 },
+                $"{nameof(AccountClient)}.{nameof(CreateAccountAsync)}",
                 timeout
             );
         }
@@ -65,7 +66,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts
                 .AppendToQuery("take", take)
                 .AppendToQuery("forAllUsers", forAllUsers)
                 .Build();
-            return HttpRequestFactory.GetAsync<CertificateList>(url, timeout);
+            return HttpRequestFactory.GetAsync<CertificateList>(url, $"{nameof(AccountClient)}.{nameof(GetAccountCertificatesAsync)}", timeout);
         }
 
         public Task<WarrantList> GetAccountWarrantsAsync(
@@ -80,7 +81,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts
                 .AppendToQuery("take", take)
                 .AppendToQuery("forAllUsers", forAllUsers)
                 .Build();
-            return HttpRequestFactory.GetAsync<WarrantList>(url, timeout);
+            return HttpRequestFactory.GetAsync<WarrantList>(url, $"{nameof(AccountClient)}.{nameof(GetAccountWarrantsAsync)}", timeout);
         }
     }
 }

@@ -25,24 +25,24 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             DraftsBuilderMetaRequest meta,
             TimeSpan? timeout = null)
         {
-            return http.PostAsync<DraftsBuilderMetaRequest, DraftsBuilder>($"/v1/{accountId}/drafts/builders", meta, timeout);
+            return http.PostAsync<DraftsBuilderMetaRequest, DraftsBuilder>($"/v1/{accountId}/drafts/builders", meta, $"{nameof(DraftsBuilderClient)}.{nameof(CreateDraftsBuilderAsync)}", timeout);
         }
 
         public Task<DraftsBuilder> GetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) =>
-            http.GetAsync<DraftsBuilder>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", timeout);
+            http.GetAsync<DraftsBuilder>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", $"{nameof(DraftsBuilderClient)}.{nameof(CreateDraftsBuilderAsync)}_WithDraftsBuilderId", timeout);
 
         public Task<DraftsBuilder?> TryGetDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) =>
-            http.TryGetAsync<DraftsBuilder>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", timeout);
+            http.TryGetAsync<DraftsBuilder>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", $"{nameof(DraftsBuilderClient)}.{nameof(TryGetDraftsBuilderAsync)}", timeout);
 
         public Task<bool> DeleteDraftsBuilderAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null) =>
-            http.TryDeleteAsync($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", timeout);
+            http.TryDeleteAsync($"/v1/{accountId}/drafts/builders/{draftsBuilderId}", $"{nameof(DraftsBuilderClient)}.{nameof(DeleteDraftsBuilderAsync)}", timeout);
 
         public Task<DraftsBuilderMeta> GetDraftsBuilderMetaAsync(
             Guid accountId,
             Guid draftsBuilderId,
             TimeSpan? timeout = null)
         {
-            return http.GetAsync<DraftsBuilderMeta>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta", timeout);
+            return http.GetAsync<DraftsBuilderMeta>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta", $"{nameof(DraftsBuilderClient)}.{nameof(GetDraftsBuilderMetaAsync)}", timeout);
         }
 
         public Task<DraftsBuilderMeta> UpdateDraftsBuilderMetaAsync(
@@ -54,6 +54,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             return http.PutAsync<DraftsBuilderMetaRequest, DraftsBuilderMeta>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/meta",
                 meta,
+                $"{nameof(DraftsBuilderClient)}.{nameof(UpdateDraftsBuilderMetaAsync)}",
                 timeout
             );
         }
@@ -63,7 +64,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             Guid draftsBuilderId,
             TimeSpan? timeout = null)
         {
-            return http.PostAsync<DraftsBuilderBuildResult>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build", timeout);
+            return http.PostAsync<DraftsBuilderBuildResult>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build", $"{nameof(DraftsBuilderClient)}.{nameof(BuildDraftsAsync)}", timeout);
         }
 
         public Task<ApiTaskResult<DraftsBuilderBuildResult>> StartBuildDraftsAsync(Guid accountId, Guid draftsBuilderId, TimeSpan? timeout = null)
@@ -71,7 +72,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             var url = new RequestUrlBuilder($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/build")
                 .AppendToQuery("deferred", true)
                 .Build();
-            return http.PostAsync<ApiTaskResult<DraftsBuilderBuildResult>>(url, timeout);
+            return http.PostAsync<ApiTaskResult<DraftsBuilderBuildResult>>(url, $"{nameof(DraftsBuilderClient)}.{nameof(StartBuildDraftsAsync)}",timeout);
         }
 
         public Task<ApiTaskResult<DraftsBuilderBuildResult>> GetBuildDraftsTaskAsync(
@@ -82,6 +83,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.GetAsync<ApiTaskResult<DraftsBuilderBuildResult>>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/tasks/{taskId}",
+                $"{nameof(DraftsBuilderClient)}.{nameof(GetBuildDraftsTaskAsync)}",
                 timeout
             );
         }
@@ -94,6 +96,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.GetAsync<ApiTaskResult<DraftsBuilderPrepareDocumentsResult>>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/tasks/{taskId}",
+                $"{nameof(DraftsBuilderClient)}.{nameof(GetPrepareDocumentsTaskAsync)}",
                 timeout
             );
         }
@@ -107,6 +110,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             return http.PostAsync<DraftsBuilderDocumentMetaRequest, DraftsBuilderDocument>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents",
                 meta,
+                $"{nameof(DraftsBuilderClient)}.{nameof(CreateDocumentAsync)}",
                 timeout
             );
         }
@@ -118,6 +122,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.GetAsync<IReadOnlyCollection<DraftsBuilderDocument>>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents",
+                $"{nameof(DraftsBuilderClient)}.{nameof(GetDocumentsAsync)}",
                 timeout
             );
         }
@@ -129,6 +134,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.PostAsync<ApiTaskResult<DraftsBuilderPrepareDocumentsResult>>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/prepare",
+                $"{nameof(DraftsBuilderClient)}.{nameof(StartPrepareDocumentsAsync)}",
                 timeout
             );
         }
@@ -141,6 +147,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.GetAsync<DraftsBuilderDocument>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}",
+                $"{nameof(DraftsBuilderClient)}.{nameof(GetDocumentAsync)}",
                 timeout
             );
         }
@@ -149,6 +156,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.TryGetAsync<DraftsBuilderDocument>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}",
+                $"{nameof(DraftsBuilderClient)}.{nameof(TryGetDocumentAsync)}",
                 timeout
             );
         }
@@ -161,6 +169,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.TryDeleteAsync(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}",
+                $"{nameof(DraftsBuilderClient)}.{nameof(DeleteDocumentAsync)}",
                 timeout
             );
         }
@@ -173,6 +182,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.GetAsync<DraftsBuilderDocumentMeta>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta",
+                $"{nameof(DraftsBuilderClient)}.{nameof(GetDocumentMetaAsync)}",
+
                 timeout
             );
         }
@@ -181,6 +192,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.TryGetAsync<DraftsBuilderDocumentMeta>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta",
+                $"{nameof(DraftsBuilderClient)}.{nameof(TryGetDocumentMetaAsync)}",
                 timeout
             );
         }
@@ -195,6 +207,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             return http.PutAsync<DraftsBuilderDocumentMetaRequest, DraftsBuilderDocumentMeta>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/meta",
                 meta,
+                $"{nameof(DraftsBuilderClient)}.{nameof(UpdateDocumentMetaAsync)}",
                 timeout
             );
         }
@@ -209,6 +222,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             return http.PostAsync<DraftsBuilderFileRequest, DraftsBuilderDocumentFile>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files",
                 fileRequest,
+                $"{nameof(DraftsBuilderClient)}.{nameof(CreateFileAsync)}",
                 timeout
             );
         }
@@ -226,6 +240,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
                 .Build();
             var response = await http.Post(url)
                 .WithJson(contract)
+                .CallingMethod($"{nameof(DraftsBuilderClient)}.{nameof(GenerateFileAsync)}")
                 .SendAsync(timeout);
                 
              return await response.GetMessageAsync<DraftsBuilderDocumentFile>().ConfigureAwait(false); 
@@ -239,6 +254,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.GetAsync<IReadOnlyCollection<DraftsBuilderDocumentFile>>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files",
+                $"{nameof(DraftsBuilderClient)}.{nameof(GetFilesAsync)}",
                 timeout
             );
         }
@@ -252,6 +268,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.GetAsync<DraftsBuilderDocumentFile>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
+                $"{nameof(DraftsBuilderClient)}.{nameof(GetFileAsync)}",
                 timeout
             );
         }
@@ -265,6 +282,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.TryGetAsync<DraftsBuilderDocumentFile>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
+                $"{nameof(DraftsBuilderClient)}.{nameof(TryGetFileAsync)}",
                 timeout
             );
         }
@@ -278,6 +296,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.TryDeleteAsync(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
+                $"{nameof(DraftsBuilderClient)}.{nameof(DeleteFileAsync)}",
                 timeout
             );
         }
@@ -293,6 +312,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             return http.PutAsync<DraftsBuilderFileRequest, DraftsBuilderDocumentFile>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}",
                 fileRequest,
+                $"{nameof(DraftsBuilderClient)}.{nameof(UpdateFileAsync)}",
                 timeout
             );
         }
@@ -306,6 +326,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.GetAsync<DraftsBuilderDocumentFileMeta>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta",
+                $"{nameof(DraftsBuilderClient)}.{nameof(GetFileMetaAsync)}",
                 timeout
             );
         }
@@ -314,6 +335,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             return http.TryGetAsync<DraftsBuilderDocumentFileMeta>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta",
+                $"{nameof(DraftsBuilderClient)}.{nameof(TryGetFileMetaAsync)}",
                 timeout
             );
         }
@@ -329,6 +351,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
             return http.PutAsync<DraftsBuilderFileMetaRequest, DraftsBuilderDocumentFileMeta>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/meta",
                 meta,
+                $"{nameof(DraftsBuilderClient)}.{nameof(UpdateFileMetaAsync)}",
                 timeout
             );
         }
@@ -342,6 +365,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
         {
             var base64String = await http.GetAsync<string>(
                 $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/signature",
+                $"{nameof(DraftsBuilderClient)}.{nameof(GetSignatureAsync)}",
                 timeout
             );
             return Convert.FromBase64String(base64String);
@@ -349,7 +373,11 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders
 
         public async Task<byte[]?> TryGetSignatureAsync(Guid accountId, Guid draftsBuilderId, Guid documentId, Guid fileId, TimeSpan? timeout = null)
         {
-            var base64String = await http.TryGetAsync<string>($"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/signature", timeout);
+            var base64String = await http.TryGetAsync<string>(
+                $"/v1/{accountId}/drafts/builders/{draftsBuilderId}/documents/{documentId}/files/{fileId}/signature", 
+                $"{nameof(DraftsBuilderClient)}.{nameof(TryGetSignatureAsync)}",
+                timeout
+            );
             if (base64String is null)
                 return null;
             return Convert.FromBase64String(base64String);
