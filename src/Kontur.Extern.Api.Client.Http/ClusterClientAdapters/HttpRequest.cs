@@ -110,7 +110,7 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
         {
             if (method is not null)
             {
-                request = request.WithHeader("X-Client-Method", method);
+                request = request.WithHeader(HttpHeaders.ClientMethodHeader, method);
             }
             return this;
         }

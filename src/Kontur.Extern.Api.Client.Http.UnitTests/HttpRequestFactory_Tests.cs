@@ -1,10 +1,10 @@
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Http.ClusterClientAdapters;
 using Kontur.Extern.Api.Client.Http.Configurations;
+using Kontur.Extern.Api.Client.Http.Constants;
 using Kontur.Extern.Api.Client.Http.Exceptions;
 using Kontur.Extern.Api.Client.Http.Options;
 using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson;
@@ -340,9 +340,6 @@ namespace Kontur.Extern.Api.Client.Http.UnitTests
             {
                 const string userAgent = "user_agent";
 
-                var x = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-                log.Warn($"Version: {x}");
-                
                 await CreateHttp().Put("/some-resource")
                     .UserAgent(userAgent)
                     .SendAsync();
@@ -357,6 +354,34 @@ namespace Kontur.Extern.Api.Client.Http.UnitTests
                     .SendAsync();
                 
                 ClusterClientVerify.SentRequest!.Headers!.UserAgent.Should().NotBeNullOrEmpty();
+            }
+            
+            private HttpRequestFactory CreateHttp() => HttpRequestFactory_Tests.CreateHttp(fakeClient.Configuration, log);
+        }
+
+        public class CallingMethod
+        {
+            private readonly ILog log;
+            private readonly FakeClusterClient fakeClient;
+
+            private FakeClusterClientVerify ClusterClientVerify => fakeClient.Verify;
+
+            public CallingMethod(ITestOutputHelper output)
+            {
+                log = new TestLog(output);
+                fakeClient = CreateFakeClusterClient();
+            }
+
+            [Fact]
+            public async Task Should_set_calling_method_to_request()
+            {
+                const string callingMethod = "some_method";
+
+                await CreateHttp().Put("/some-resource")
+                    .CallingMethod(callingMethod)
+                    .SendAsync();
+                
+                ClusterClientVerify.SentRequest!.Headers![HttpHeaders.ClientMethodHeader].Should().Be(callingMethod);
             }
             
             private HttpRequestFactory CreateHttp() => HttpRequestFactory_Tests.CreateHttp(fakeClient.Configuration, log);
