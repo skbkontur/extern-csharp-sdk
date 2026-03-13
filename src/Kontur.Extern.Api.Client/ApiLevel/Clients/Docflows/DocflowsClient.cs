@@ -60,7 +60,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             GetDocflowAsync($"/v1/{accountId}/docflows/{docflowId}", $"{nameof(DocflowsClient)}.{nameof(GetDocflowAsync)}", timeout);
 
         public Task<IDocflowWithDocuments?> TryGetDocflowAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) =>
-            http.TryGetAsync<IDocflowWithDocuments>($"/v1/{accountId}/docflows/{docflowId}", $"{nameof(DocflowsClient)}.{nameof(TryGetDocflowAsync)}", timeout);
+            http.TryGetAsync<IDocflowWithDocuments>($"/v1/{accountId}/docflows/{docflowId}", timeout, $"{nameof(DocflowsClient)}.{nameof(TryGetDocflowAsync)}");
 
         public Task<IDocflowWithDocuments> GetInventoryDocflowAsync(
             Guid accountId,
@@ -78,24 +78,23 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         public Task<List<Document>> GetDocumentsAsync(Guid accountId, Guid docflowId, TimeSpan? timeout = null) =>
             http.GetAsync<List<Document>>(
                 $"/v1/{accountId}/docflows/{docflowId}/documents",
-                $"{nameof(DocflowsClient)}.{nameof(GetDocumentsAsync)}",
-                TimeoutSpecification.SpecificOrLongOperationTimeout(timeout)
-            );
+                TimeoutSpecification.SpecificOrLongOperationTimeout(timeout),
+                $"{nameof(DocflowsClient)}.{nameof(GetDocumentsAsync)}");
 
         public Task<Document> GetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null) =>
-            http.GetAsync<Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}", $"{nameof(DocflowsClient)}.{nameof(GetDocumentAsync)}", timeout);
+            http.GetAsync<Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}", timeout, $"{nameof(DocflowsClient)}.{nameof(GetDocumentAsync)}");
 
         public Task<Document?> TryGetDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, TimeSpan? timeout = null) =>
-            http.TryGetAsync<Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}", $"{nameof(DocflowsClient)}.{nameof(TryGetDocumentAsync)}",timeout);
+            http.TryGetAsync<Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}",timeout, $"{nameof(DocflowsClient)}.{nameof(TryGetDocumentAsync)}");
 
         public Task<Document> PatchDocumentAsync(Guid accountId, Guid docflowId, Guid documentId, JsonPatchDocument<Document> patch, TimeSpan? timeout = null)
         {
-            return http.PatchAsync<List<Operation<Document>>, Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}", patch.Operations, $"{nameof(DocflowsClient)}.{nameof(PatchDocumentAsync)}_WithDocumentId",timeout);
+            return http.PatchAsync<List<Operation<Document>>, Document>($"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}", patch.Operations,timeout, $"{nameof(DocflowsClient)}.{nameof(PatchDocumentAsync)}_WithDocumentId");
         }
 
         public Task<IDocflowWithDocuments> PatchDocflowAsync(Guid accountId, Guid docflowId, JsonPatchDocument<IDocflowWithDocuments> patch, TimeSpan? timeout = null)
         {
-            return http.PatchAsync<List<Operation<IDocflowWithDocuments>>, IDocflowWithDocuments>($"/v1/{accountId}/docflows/{docflowId}", patch.Operations, $"{nameof(DocflowsClient)}.{nameof(PatchDocflowAsync)}",timeout);
+            return http.PatchAsync<List<Operation<IDocflowWithDocuments>>, IDocflowWithDocuments>($"/v1/{accountId}/docflows/{docflowId}", patch.Operations,timeout, $"{nameof(DocflowsClient)}.{nameof(PatchDocflowAsync)}");
         }
 
         public Task<DocflowDocumentDescription> GetDocumentDescriptionAsync(
@@ -106,9 +105,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         {
             return http.GetAsync<DocflowDocumentDescription>(
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/description",
-                $"{nameof(DocflowsClient)}.{nameof(GetDocumentDescriptionAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(GetDocumentDescriptionAsync)}");
         }
 
         public Task<List<Signature>> GetDocumentSignaturesAsync(
@@ -119,9 +117,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         {
             return http.GetAsync<List<Signature>>(
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures",
-                $"{nameof(DocflowsClient)}.{nameof(GetDocumentSignaturesAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(GetDocumentSignaturesAsync)}");
         }
 
         public Task<Signature> GetSignatureAsync(
@@ -133,9 +130,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         {
             return http.GetAsync<Signature>(
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}",
-                $"{nameof(DocflowsClient)}.{nameof(GetSignatureAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(GetSignatureAsync)}");
         }
 
         public async Task<byte[]> GetSignatureContentAsync(
@@ -147,9 +143,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         {
             var base64String = await http.GetAsync<string>(
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/signatures/{signatureId}/content",
-                $"{nameof(DocflowsClient)}.{nameof(GetSignatureContentAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(GetSignatureContentAsync)}");
             return Convert.FromBase64String(base64String);
         }
 
@@ -164,9 +159,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         {
             var base64String = await http.GetAsync<string>(
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/signatures/{signatureId}/content",
-                $"{nameof(DocflowsClient)}.{nameof(GetInventorySignatureContentAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(GetInventorySignatureContentAsync)}");
             return Convert.FromBase64String(base64String);
         }
 
@@ -180,9 +174,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             return http.PostAsync<PrintDocumentRequest, PrintDocumentResult>(
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/print",
                 new PrintDocumentRequest {ContentId = contentId},
-                $"{nameof(DocflowsClient)}.{nameof(PrintDocumentAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(PrintDocumentAsync)}");
         }
 
         public Task<PrintDocumentResult> PrintInventoryDocumentAsync(
@@ -197,9 +190,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             return http.PostAsync<PrintDocumentRequest, PrintDocumentResult>(
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/print",
                 new PrintDocumentRequest {ContentId = contentId},
-                $"{nameof(DocflowsClient)}.{nameof(PrintInventoryDocumentAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(PrintInventoryDocumentAsync)}");
         }
 
         public Task<ApiTaskResult<PrintDocumentResult>> StartPrintDocumentAsync(
@@ -215,9 +207,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             return http.PostAsync<PrintDocumentRequest, ApiTaskResult<PrintDocumentResult>>(
                 url,
                 new PrintDocumentRequest {ContentId = contentId},
-                $"{nameof(DocflowsClient)}.{nameof(StartPrintDocumentAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(StartPrintDocumentAsync)}");
         }
 
         public Task<ApiTaskResult<PrintDocumentResult>> StartPrintInventoryDocumentAsync(
@@ -235,9 +226,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             return http.PostAsync<PrintDocumentRequest, ApiTaskResult<PrintDocumentResult>>(
                 url,
                 new PrintDocumentRequest {ContentId = contentId},
-                $"{nameof(DocflowsClient)}.{nameof(StartPrintInventoryDocumentAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(StartPrintInventoryDocumentAsync)}");
         }
 
         public Task<ApiTaskResult<PrintDocumentResult>> GetPrintDocumentTaskAsync(
@@ -249,9 +239,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         {
             return http.GetAsync<ApiTaskResult<PrintDocumentResult>>(
                 $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/tasks/{taskId}",
-                $"{nameof(DocflowsClient)}.{nameof(GetPrintDocumentTaskAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(GetPrintDocumentTaskAsync)}");
         }
 
         public Task<ApiTaskResult<PrintDocumentResult>> GetPrintInventoryDocumentTaskAsync(
@@ -265,9 +254,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
         {
             return http.GetAsync<ApiTaskResult<PrintDocumentResult>>(
                 $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/tasks/{taskId}",
-                $"{nameof(DocflowsClient)}.{nameof(GetPrintInventoryDocumentTaskAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(GetPrintInventoryDocumentTaskAsync)}");
         }
 
         public Task<RecognizeResult> RecognizeDocumentAsync(
@@ -283,17 +271,15 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
                 {
                     ContentId = contentId
                 },
-                $"{nameof(DocflowsClient)}.{nameof(RecognizeDocumentAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(RecognizeDocumentAsync)}");
         }
 
         public Task<DocumentsRequest> GetDocumentsRequestAsync(Guid accountId, Guid docflowId, Guid requestId, TimeSpan? timeout = null) =>
             http.GetAsync<DocumentsRequest>(
                 $"/v1/{accountId}/docflows/{docflowId}/documents-requests/{requestId}",
-                $"{nameof(DocflowsClient)}.{nameof(GetDocumentsRequestAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(GetDocumentsRequestAsync)}");
 
         public Task<DocumentsRequest> GenerateDocumentsRequestAsync(Guid accountId, Guid docflowId, byte[] certificate, TimeSpan? timeout = null, Guid? machineReadableWarrantId = null)
         {
@@ -304,17 +290,16 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
                     CertificateBase64 = certificate,
                     MachineReadableWarrantId = machineReadableWarrantId
                 },
-                $"{nameof(DocflowsClient)}.{nameof(GenerateDocumentsRequestAsync)}",
-                timeout
-            );
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(GenerateDocumentsRequestAsync)}");
         }
 
         public Task<IDocflowWithDocuments> SendDocumentsRequestAsync(Guid accountId, Guid docflowId, Guid requestId, TimeSpan? timeout = null)
         {
             return http.PostAsync<IDocflowWithDocuments>(
                 $"/v1/{accountId}/docflows/{docflowId}/documents-requests/{requestId}/send",
-                $"{nameof(DocflowsClient)}.{nameof(SendDocumentsRequestAsync)}",
-                timeout);
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(SendDocumentsRequestAsync)}");
         }
 
         public Task<DocumentsRequest> UpdateDocumentsRequestSignatureAsync(Guid accountId, Guid docflowId, Guid requestId, byte[] signature, TimeSpan? timeout = null)
@@ -322,8 +307,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             return http.PutAsync<byte[], DocumentsRequest>(
                 $"v1/{accountId}/docflows/{docflowId}/documents-requests/{requestId}/signature",
                 signature,
-                $"{nameof(DocflowsClient)}.{nameof(UpdateDocumentsRequestSignatureAsync)}",
-                timeout);
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(UpdateDocumentsRequestSignatureAsync)}");
         }
 
         public Task<SaveDecryptedContentResult> SaveDocumentDecryptedContentAsync(Guid accountId, Guid docflowId, Guid documentId, SaveDecryptedContentRequest request, TimeSpan? timeout = null)
@@ -331,17 +316,17 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Docflows
             return http.PutAsync<SaveDecryptedContentRequest, SaveDecryptedContentResult>(
                 $"v1/{accountId}/docflows/{docflowId}/documents/{documentId}/decrypted-content",
                 request,
-                $"{nameof(DocflowsClient)}.{nameof(SaveDocumentDecryptedContentAsync)}",
-                timeout);
+                timeout,
+                $"{nameof(DocflowsClient)}.{nameof(SaveDocumentDecryptedContentAsync)}");
         }
 
-        private Task<DocflowPage> GetRelatedDocflowsAsync(RequestUrlBuilder urlBuilder, string callingMethod, TimeSpan? timeout) => http.GetAsync<DocflowPage>(urlBuilder.Build(), callingMethod, timeout);
+        private Task<DocflowPage> GetRelatedDocflowsAsync(RequestUrlBuilder urlBuilder, string callingMethod, TimeSpan? timeout) => http.GetAsync<DocflowPage>(urlBuilder.Build(), timeout, callingMethod);
 
         private Task<IDocflowWithDocuments> GetDocflowAsync(string url, string callingMethod, TimeSpan? timeout)
         {
-            return http.GetAsync<IDocflowWithDocuments>(url, callingMethod, timeout);
+            return http.GetAsync<IDocflowWithDocuments>(url, timeout, callingMethod);
         }
 
-        private Task<IDocflowWithDocuments?> TryGetDocflowAsync(string url, string callingMethod, TimeSpan? timeout) => http.TryGetAsync<IDocflowWithDocuments>(url, callingMethod, timeout);
+        private Task<IDocflowWithDocuments?> TryGetDocflowAsync(string url, string callingMethod, TimeSpan? timeout) => http.TryGetAsync<IDocflowWithDocuments>(url, timeout, callingMethod);
     }
 }

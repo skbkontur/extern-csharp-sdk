@@ -55,7 +55,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Contents
             ChunkContentStream.CreateAsync(range => DownloadAsBytesAsync(accountId, contentId, range.from, range.to, timeout), downloadChunkSize);
 
         public Task<byte[]> DownloadAsBytesAsync(Guid accountId, Guid contentId, TimeSpan? timeout = null) => 
-            http.GetBytesAsync($"v1/{accountId}/contents/{contentId}", $"{nameof(ContentsClient)}.{nameof(DownloadAsBytesAsync)}");
+            http.GetBytesAsync($"v1/{accountId}/contents/{contentId}", timeout, $"{nameof(ContentsClient)}.{nameof(DownloadAsBytesAsync)}");
 
         public async Task<(ArraySegment<byte> contentPart, long totalLength)> DownloadAsBytesAsync(Guid accountId, Guid contentId, long @from, long to, TimeSpan? timeout = null)
         {

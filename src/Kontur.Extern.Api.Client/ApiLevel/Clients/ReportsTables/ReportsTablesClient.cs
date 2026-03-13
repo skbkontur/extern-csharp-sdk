@@ -23,7 +23,7 @@ public class ReportsTablesClient : IReportsTablesClient
             .AppendToQuery("includeDeleted", includeDeleted)
             .Build();
         var callingMethod = $"{nameof(ReportsTablesClient)}.{nameof(GetFormsAsync)}";
-        return http.GetAsync<FormsList>(url, callingMethod, timeout);
+        return http.GetAsync<FormsList>(url, timeout, callingMethod);
     }
 
     public Task<PaymentsList> GetPaymentsAsync(
@@ -47,8 +47,8 @@ public class ReportsTablesClient : IReportsTablesClient
                 Skip = skip,
                 Take = take
             },
-            callingMethod,
-            timeout);
+            timeout,
+            callingMethod);
     }
 
     public Task<ReportsTableList> GetReportsTablesAsync(
@@ -71,8 +71,8 @@ public class ReportsTablesClient : IReportsTablesClient
                 Skip = skip,
                 Take = take,
             },
-            callingMethod,
-            timeout);
+            timeout,
+            callingMethod);
     }
 
     public Task<ReportsTableDocflows> GetReportDocflowsAsync(Guid accountId, Guid organizationId, int formId, DateTime deadline, int periodYear, int periodNumber, TimeSpan? timeout = null)
@@ -85,6 +85,6 @@ public class ReportsTablesClient : IReportsTablesClient
             .Build();
         var callingMethod = $"{nameof(ReportsTablesClient)}.{nameof(GetReportDocflowsAsync)}";
         
-        return http.GetAsync<ReportsTableDocflows>(url, callingMethod, timeout);
+        return http.GetAsync<ReportsTableDocflows>(url, timeout, callingMethod);
     }
 }

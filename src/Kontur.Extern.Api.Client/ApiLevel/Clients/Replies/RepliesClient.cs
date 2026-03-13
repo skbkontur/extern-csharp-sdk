@@ -140,7 +140,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
             };
             var url = $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/send";
             var callingMethod = $"{nameof(RepliesClient)}.{nameof(SendInventoryReplyAsync)}";
-            return http.PutAsync<SendReplyDocumentRequest, IDocflowWithDocuments>(url, body, callingMethod, timeout);
+            return http.PutAsync<SendReplyDocumentRequest, IDocflowWithDocuments>(url, body, timeout, callingMethod);
         }
 
         public Task<ReplyDocument> UpdateReplySignatureAsync(
@@ -153,7 +153,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
         {
             var url = $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/signature";
             var callingMethod = $"{nameof(RepliesClient)}.{nameof(UpdateReplySignatureAsync)}";
-            return http.PutAsync<byte[], ReplyDocument>(url, signature, callingMethod, timeout);
+            return http.PutAsync<byte[], ReplyDocument>(url, signature, timeout, callingMethod);
         }
 
         public Task<ReplyDocument> UpdateInventoryReplySignatureAsync(
@@ -168,7 +168,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
         {
             var url = $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/signature";
             var callingMethod = $"{nameof(RepliesClient)}.{nameof(UpdateInventoryReplySignatureAsync)}";
-            return http.PutAsync<byte[], ReplyDocument>(url, signature, callingMethod, timeout);
+            return http.PutAsync<byte[], ReplyDocument>(url, signature, timeout, callingMethod);
         }
 
         public Task<ReplyDocument> UpdateReplyContentAsync(
@@ -181,7 +181,7 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
         {
             var url = $"/v1/{accountId}/docflows/{docflowId}/documents/{documentId}/replies/{replyId}/content";
             var callingMethod = $"{nameof(RepliesClient)}.{nameof(UpdateReplyContentAsync)}";
-            return http.PutAsync<byte[], ReplyDocument>(url, content, callingMethod, timeout);
+            return http.PutAsync<byte[], ReplyDocument>(url, content, timeout, callingMethod);
         }
 
         public Task<ReplyDocument> UpdateInventoryReplyContentAsync(
@@ -196,15 +196,15 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Replies
         {
             var url = $"/v1/{accountId}/docflows/{relatedDocflowId}/documents/{relatedDocumentId}/inventories/{inventoryId}/documents/{documentId}/replies/{replyId}/content";
             var callingMethod = $"{nameof(RepliesClient)}.{nameof(UpdateInventoryReplyContentAsync)}";
-            return http.PutAsync<byte[], ReplyDocument>(url, content, callingMethod, timeout);
+            return http.PutAsync<byte[], ReplyDocument>(url, content, timeout, callingMethod);
         }
 
         private Task<IDocflowWithDocuments> PostDocflowAsync<TDto>(string url, TDto dto, string callingMethod, TimeSpan? timeout) =>
-            http.PostAsync<TDto, IDocflowWithDocuments>(url, dto, callingMethod, timeout);
+            http.PostAsync<TDto, IDocflowWithDocuments>(url, dto, timeout, callingMethod);
 
         private Task<ReplyDocument> PostReplyAsync<TDto>(Uri url, TDto dto, string callingMethod, TimeSpan? timeout) =>
-            http.PostAsync<TDto, ReplyDocument>(url, dto, callingMethod, timeout);
+            http.PostAsync<TDto, ReplyDocument>(url, dto, timeout, callingMethod);
 
-        private Task<ReplyDocument> GetReplyAsync(string url, string callingMethod, TimeSpan? timeout) => http.GetAsync<ReplyDocument>(url, callingMethod, timeout);
+        private Task<ReplyDocument> GetReplyAsync(string url, string callingMethod, TimeSpan? timeout) => http.GetAsync<ReplyDocument>(url, timeout, callingMethod);
     }
 }
