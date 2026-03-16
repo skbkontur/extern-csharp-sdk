@@ -50,5 +50,15 @@ namespace Kontur.Extern.Api.Client.Models.Accounts
         /// Идентификатор группы учетных записей
         /// </summary>
         public Guid? AbonentId { get; set; }
+
+        /// <summary>
+        /// Признак активности организации. Если вернулось значение false, то учетная запись заблокирована, иначе true
+        /// </summary>
+        public bool? IsActive { get; set; }
+
+        /// <summary>
+        /// Получение последнего входа портального пользователя в контексте абонента
+        /// </summary>
+        public DateTime? LastUserEntrance { get; set; }
     }
 }
