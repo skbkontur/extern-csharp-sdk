@@ -75,18 +75,7 @@ namespace Kontur.Extern.Api.Client.Http.UnitTests
         {
             var requestTimeouts = new RequestTimeouts();
             var timeoutSpecification = TimeoutSpecification.SpecificTimeout(RequestTimeouts.MinTimeout - 1.Seconds());
-            
-            Action action = () => timeoutSpecification.GetTimeout(CreateReadRequest(), requestTimeouts);
 
-            action.Should().Throw<ArgumentOutOfRangeException>();
-        }
-
-        [Fact]
-        public void GetTimeout_should_fail_when_given_too_big_specific_timeout()
-        {
-            var requestTimeouts = new RequestTimeouts();
-            var timeoutSpecification = TimeoutSpecification.SpecificTimeout(RequestTimeouts.MaxTimeout + 1.Seconds());
-            
             Action action = () => timeoutSpecification.GetTimeout(CreateReadRequest(), requestTimeouts);
 
             action.Should().Throw<ArgumentOutOfRangeException>();

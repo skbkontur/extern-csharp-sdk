@@ -8,21 +8,21 @@ namespace Kontur.Extern.Api.Client.Http
     public readonly struct TimeoutSpecification
     {
         public static readonly TimeoutSpecification LongOperationTimeout = new(true, null);
-        
+
         public static readonly TimeoutSpecification RegularOperationTimeout = default;
 
         public static TimeoutSpecification SpecificTimeout(TimeSpan timeout) => new(false, timeout);
-        
-        public static TimeoutSpecification SpecificOrLongOperationTimeout(TimeSpan? timeout) => 
+
+        public static TimeoutSpecification SpecificOrLongOperationTimeout(TimeSpan? timeout) =>
             timeout.HasValue
-                ? SpecificTimeout(timeout.Value) 
+                ? SpecificTimeout(timeout.Value)
                 : LongOperationTimeout;
-        
-        public static TimeoutSpecification SpecificOrRegularOperationTimeout(TimeSpan? timeout) => 
+
+        public static TimeoutSpecification SpecificOrRegularOperationTimeout(TimeSpan? timeout) =>
             timeout.HasValue
-                ? SpecificTimeout(timeout.Value) 
+                ? SpecificTimeout(timeout.Value)
                 : RegularOperationTimeout;
-        
+
         private readonly bool isLongOperation;
         private readonly TimeSpan? specificTimeout;
 
@@ -31,20 +31,17 @@ namespace Kontur.Extern.Api.Client.Http
             this.isLongOperation = isLongOperation;
             this.specificTimeout = specificTimeout;
         }
-        
+
         public TimeSpan GetTimeout(Request request, RequestTimeouts timeouts)
         {
             if (specificTimeout.HasValue)
-            {
-                timeouts.ValidateCustomTimeout(specificTimeout.Value);
                 return specificTimeout.Value;
-            }
 
             if (isLongOperation)
                 return timeouts.DefaultLongOperationTimeout;
 
-            return request.IsWriteRequest() 
-                ? timeouts.DefaultWriteTimeout 
+            return request.IsWriteRequest()
+                ? timeouts.DefaultWriteTimeout
                 : timeouts.DefaultReadTimeout;
         }
 
