@@ -52,9 +52,9 @@ namespace Kontur.Extern.Api.Client.Models.Accounts
         public Guid? AbonentId { get; set; }
 
         /// <summary>
-        /// Признак активности организации. Если вернулось значение false, то учетная запись заблокирована, иначе true
+        /// Признак заблокированности учетной записи. Если учетная запись заблокирована, то работа в веб-версии Контур.Экстерна будет недоступна.
         /// </summary>
-        public bool? IsActive { get; set; }
+        public bool? IsBlocked { get; set; }
 
         /// <summary>
         /// Получение последнего входа портального пользователя в контексте абонента
