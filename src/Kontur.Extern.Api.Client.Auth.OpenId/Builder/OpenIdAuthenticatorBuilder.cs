@@ -112,6 +112,8 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
             private readonly IOpenIdAuthenticationStrategy authenticationStrategy;
             private readonly SpecifyAuthStrategy specifyAuthStrategy;
             private TimeInterval? proactiveAuthTokenRefreshInterval;
+            private IOpenIdAuthenticationContext? authenticationContext;
+            private bool useRefreshTokens;
             private IStopwatchFactory? stopwatchFactory;
             private ILog log;
 
@@ -129,6 +131,18 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
                 return this;
             }
 
+            public Configured SubstituteAuthenticationContext(IOpenIdAuthenticationContext customAuthenticationContext)
+            {
+                this.authenticationContext = customAuthenticationContext;
+                return this;
+            }
+
+            public Configured EnableRefreshTokensUsage()
+            {
+                useRefreshTokens = true;
+                return this;
+            }
+
             public Configured RefreshAccessTokensBeforeExpirationProactivelyWithinInterval(TimeSpan interval)
             {
                 proactiveAuthTokenRefreshInterval = interval;
@@ -143,9 +157,10 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
                 var apiKey = specifyAuthStrategy.ApiKey;
                 var clientId = specifyAuthStrategy.ClientId;
 
-                var options = new OpenIdAuthenticationOptions(apiKey, clientId, proactiveAuthTokenRefreshInterval);
+                var options = new OpenIdAuthenticationOptions(apiKey, clientId, useRefreshTokens, proactiveAuthTokenRefreshInterval);
                 var openIdClient = OpenIdClient.Create(requestTimeouts, clientConfiguration, log);
-                return new OpenIdAuthenticator(options, openIdClient, authenticationStrategy, stopwatchFactory);
+                authenticationContext ??= new OpenIdAuthenticationContext();
+                return new OpenIdAuthenticator(options, openIdClient, authenticationStrategy, authenticationContext, stopwatchFactory);
             }
         }
     }

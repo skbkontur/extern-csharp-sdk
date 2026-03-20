@@ -5,7 +5,7 @@ using Kontur.Extern.Api.Client.Common.Time;
 
 namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models
 {
-    internal class AccessToken
+    internal class AccessToken : IAccessToken
     {
         private readonly string value;
         private readonly string? refreshToken;
