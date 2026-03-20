@@ -20,5 +20,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client
         Task<CertificateAuthenticationResponse> CertificateAuthenticationAsync(CertificateAuthenticationRequest request, TimeSpan? timeout = null);
 
         Task<DeviceAuthenticationResponse> StartDeviceAuthenticationAsync(StartDeviceAuthenticationRequest request, TimeSpan? timeout = null);
+
+        Task<UserInfoResponse> GetUserInfoAsync(UserInfoRequest request, TimeSpan? timeout = null);
     }
 }

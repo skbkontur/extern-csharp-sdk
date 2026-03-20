@@ -128,6 +128,14 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client
             return await PostToOpenIdServerAsync<DeviceAuthenticationResponse>("/connect/deviceauthorization", request.ToRequestAuthCredentials(), content, timeout).ConfigureAwait(false);
         }
 
+        public Task<UserInfoResponse> GetUserInfoAsync(UserInfoRequest request, TimeSpan? timeout = null)
+        {
+            var httpRequest = http.Get("/connect/userinfo")
+                .Authorization("Bearer", Base64String.FromEncoded(request.AccessToken))
+                .Accept(ContentTypes.Json);
+            return SendRequestAsync<UserInfoResponse>(httpRequest, timeout);
+        }
+
         [SuppressMessage("ReSharper", "SuggestBaseTypeForParameter")]
         private Task<TResult> PostToOpenIdServerAsync<TResult>(string url, Credentials basicAuthCredentials, FormUrlEncodedContent content, TimeSpan? timeout)
         {
