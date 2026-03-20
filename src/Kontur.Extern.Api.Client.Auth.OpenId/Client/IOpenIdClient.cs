@@ -15,6 +15,10 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client
 
         Task<TokenResponse> RequestTokenAsync(JwtTrustedTokenRequest request, TimeSpan? timeout = null);
 
+        Task<TokenResponse> RequestTokenAsync(DeviceTokenRequest request, TimeSpan? timeout = null);
+
         Task<CertificateAuthenticationResponse> CertificateAuthenticationAsync(CertificateAuthenticationRequest request, TimeSpan? timeout = null);
+
+        Task<DeviceAuthenticationResponse> StartDeviceAuthenticationAsync(StartDeviceAuthenticationRequest request, TimeSpan? timeout = null);
     }
 }

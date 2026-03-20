@@ -45,12 +45,18 @@
             public const string DecryptedKey = "decrypted_key";
         }
 
+        public static class DeviceTokenRequest
+        {
+            public const string DeviceCode = "device_code";
+        }
+
         public static class GrantTypes
         {
             public const string Password = "password";
             public const string RefreshToken = "refresh_token";
             public const string Certificate = "certificate";
             public const string Trusted = "trusted";
+            public const string DeviceCode = "urn:ietf:params:oauth:grant-type:device_code";
         }
     }
 }
