@@ -4,9 +4,9 @@ using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
 
 namespace Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Requests
 {
-    public abstract class UserInfoRequest : ClientAuthenticatedRequest
+    public class UserInfoRequest : ClientAuthenticatedRequest
     {
-        protected UserInfoRequest(string accessToken, string clientId, string clientSecret)
+        public UserInfoRequest(string accessToken, string clientId, string clientSecret)
             : base(clientId, clientSecret)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
