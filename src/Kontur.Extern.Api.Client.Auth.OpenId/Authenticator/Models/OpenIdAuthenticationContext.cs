@@ -1,12 +1,12 @@
 #nullable enable
 namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models
 {
-    internal class OpenIdAuthenticationContext
+    internal class OpenIdAuthenticationContext : IOpenIdAuthenticationContext
     {
         private readonly object syncObject = new();
-        private AccessToken? accessToken;
+        private IAccessToken? accessToken;
 
-        public bool TryGetAccessToken(out AccessToken token)
+        public bool TryGetAccessToken(out IAccessToken token)
         {
             lock (syncObject)
             {
@@ -21,7 +21,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models
             }
         }
 
-        public void SetAccessToken(AccessToken token)
+        public void SetAccessToken(IAccessToken token)
         {
             lock (syncObject)
             {
