@@ -1,12 +1,9 @@
 #nullable enable
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Auth.Abstractions;
 using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator;
 using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.DeviceFlowUI;
 using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client;
 using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
@@ -14,6 +11,10 @@ using Kontur.Extern.Api.Client.Common.Time;
 using Kontur.Extern.Api.Client.Cryptography;
 using Kontur.Extern.Api.Client.Http.Configurations;
 using Kontur.Extern.Api.Client.Http.Options;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using Vostok.Logging.Abstractions;
 
 namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
@@ -100,6 +101,9 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
 
             public Configured WithAuthenticationByCertificate(X509Certificate2 certificate) =>
                 new(new CertificateOpenIdAuthenticationStrategy(new CertificateCredentials {PublicKeyCertificate = certificate}, CryptoProvider), this, Log);
+
+            public Configured WithDeviceFlowAuthentification(IDeviceFlowUIProvider uiProvider) =>
+                new(new DeviceFlowOpenIdAuthenticationStrategy(uiProvider), this, Log);
         }
 
         [PublicAPI]
