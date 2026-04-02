@@ -1,6 +1,4 @@
-﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
+﻿
 
 // ReSharper disable CommentTypo
 

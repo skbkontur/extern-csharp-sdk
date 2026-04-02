@@ -13,15 +13,15 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator
         /// </summary>
         /// <param name="apiKey">ApiKey which will be send as the client secret to the auth server.</param>
         /// <param name="clientId">Client id which will be sent to the auth server.</param>
+        /// <param name="proactiveAuthTokenRefreshInterval">The interval before the current access token expires to refresh the current access token. By default equal to 5 seconds.</param>
         /// <param name="useRefreshTokens"></param>
         /// <param name="allowUserInfoRequest"></param>
-        /// <param name="proactiveAuthTokenRefreshInterval">The interval before the current access token expires to refresh the current access token. By default equal to 5 seconds.</param>
         public OpenIdAuthenticationOptions(
             string apiKey,
             string clientId,
-            bool useRefreshTokens,
-            bool allowUserInfoRequest,
-            TimeInterval? proactiveAuthTokenRefreshInterval = null)
+            TimeInterval? proactiveAuthTokenRefreshInterval = null,
+            bool useRefreshTokens = false,
+            bool allowUserInfoRequest = false)
         {
             if (string.IsNullOrWhiteSpace(apiKey))
                 throw Errors.StringShouldNotBeNullOrWhiteSpace(nameof(apiKey));

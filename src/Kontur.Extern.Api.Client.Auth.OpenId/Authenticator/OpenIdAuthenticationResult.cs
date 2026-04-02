@@ -1,5 +1,6 @@
 using Kontur.Extern.Api.Client.Auth.Abstractions;
 using Kontur.Extern.Api.Client.Common.Time;
+using Kontur.Extern.Api.Client.Http.Constants;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator
@@ -15,6 +16,6 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator
         public string AccessToken { get; }
         public TimeInterval RemainingTime { get; }
 
-        public Request Apply(Request request) => request.WithAuthorizationHeader("Bearer", AccessToken); 
+        public Request Apply(Request request) => request.WithAuthorizationHeader(AuthSchemes.Bearer, AccessToken); 
     }
 }

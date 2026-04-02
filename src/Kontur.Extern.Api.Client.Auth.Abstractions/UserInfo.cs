@@ -1,9 +1,6 @@
-﻿using JetBrains.Annotations;
-
-namespace Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Responses
+﻿namespace Kontur.Extern.Api.Client.Auth.Abstractions
 {
-    [PublicAPI]
-    public class UserInfoResponse
+    public class UserInfo
     {
         public string Sub { get; set; }
 
@@ -14,7 +11,5 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Responses
         public string MiddleName { get; set; }
 
         public string Name { get; set; }
-
-        public long UpdatedAt { get; set; }
     }
 }

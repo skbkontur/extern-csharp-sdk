@@ -1,4 +1,5 @@
-using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.DeviceFlowUI;
+#nullable enable
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.DeviceFlowUserInteraction;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Requests;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client.Models.Responses;
@@ -10,11 +11,11 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies
 {
     internal class DeviceFlowOpenIdAuthenticationStrategy : IOpenIdAuthenticationStrategy
     {
-        private readonly IDeviceFlowUIProvider _deviceFlowUi;
+        private readonly IDeviceFlowUserInteractionProvider userInteractionProvider;
 
-        public DeviceFlowOpenIdAuthenticationStrategy(IDeviceFlowUIProvider deviceFlowUi)
+        public DeviceFlowOpenIdAuthenticationStrategy(IDeviceFlowUserInteractionProvider userInteractionProvider)
         {
-            _deviceFlowUi = deviceFlowUi;
+            this.userInteractionProvider = userInteractionProvider;
         }
 
         public async Task<TokenResponse> AuthenticateAsync(IOpenIdClient openId, OpenIdAuthenticationOptions options, TimeSpan? timeout = null)
@@ -22,14 +23,14 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies
             var startResponse = await StartDeviceFlowAuthorizationAsync(openId, options, timeout).ConfigureAwait(false);
             var interval = TimeSpan.FromSeconds(startResponse.IntervalInSeconds);
 
-            using var ui = ShowUI(startResponse);
+            using var ui = InitiateUserInteraction(startResponse);
 
             while (true)
             {
                 CheckNotCancelled(ui);
 
                 var tokenResponse = await TryGetTokenAsync(openId, options, startResponse.DeviceCode, timeout).ConfigureAwait(false);
-                if (tokenResponse != null)
+                if (tokenResponse is not null)
                     return tokenResponse;
 
                 CheckNotCancelled(ui);
@@ -37,14 +38,18 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies
                 await Task.Delay(interval).ConfigureAwait(false);
             }
 
-            static void CheckNotCancelled(IDeviceFlowUI ui)
+            static void CheckNotCancelled(IDeviceFlowUserInteractionProcess userInteractionProcess)
             {
-                if (ui.IsCancelled())
-                    throw new OpenIdException("cancelled_by_user");
+                if (userInteractionProcess.IsCancelled())
+                    throw Errors.DeviceFlowAuthorizationCancelledByUser();
             }
         }
 
-        private async Task<TokenResponse> TryGetTokenAsync(IOpenIdClient openId, OpenIdAuthenticationOptions options, string deviceCode, TimeSpan? timeout)
+        private static async Task<TokenResponse?> TryGetTokenAsync(
+            IOpenIdClient openId,
+            OpenIdAuthenticationOptions options,
+            string deviceCode,
+            TimeSpan? timeout)
         {
             try
             {
@@ -61,15 +66,18 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies
                 return null;
             }
 
-            static bool IsSkippableError(OpenIdException exception)
+            static bool IsSkippableError(OpenIdException ex)
             {
-                // todo: add exception field ?
-                return exception.Message.Contains("authorization_pending")
-                       || exception.Message.Contains("slow_down");
+                return ex.ServerErrorCode
+                        is OpenIdServerErrorCode.AuthorizationPending
+                           or OpenIdServerErrorCode.SlowDown;
             }
         }
 
-        private Task<DeviceAuthenticationResponse> StartDeviceFlowAuthorizationAsync(IOpenIdClient openId, OpenIdAuthenticationOptions options, TimeSpan? timeout)
+        private static Task<DeviceAuthenticationResponse> StartDeviceFlowAuthorizationAsync(
+            IOpenIdClient openId,
+            OpenIdAuthenticationOptions options,
+            TimeSpan? timeout)
         {
             var request = new StartDeviceAuthenticationRequest(
                 options.Scope,
@@ -79,15 +87,16 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies
             return openId.StartDeviceAuthenticationAsync(request, timeout);
         }
 
-        private IDeviceFlowUI ShowUI(DeviceAuthenticationResponse startResponse)
+        private IDeviceFlowUserInteractionProcess InitiateUserInteraction(
+            DeviceAuthenticationResponse startResponse)
         {
-            var info = new DeviceFlowInfo
+            var info = new DeviceFlowUserInteractionInfo
             {
-                AuthorizationUri = startResponse.VerificationUriComplete,
-                UriForChangeUser = startResponse.VerificationUriComplete + "&prompt=login",
+                VerificationUriComplete = startResponse.VerificationUriComplete,
+                VerificationUriForForcedUserReLogin = startResponse.VerificationUriComplete + "&prompt=login",
                 ExpiresIn = TimeSpan.FromSeconds(startResponse.ExpiresInSeconds),
             };
-            return _deviceFlowUi.ShowUI(info);
+            return userInteractionProvider.InitiateUserInteraction(info);
         }
     }
 }

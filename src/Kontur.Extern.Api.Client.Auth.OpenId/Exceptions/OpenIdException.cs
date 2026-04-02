@@ -13,10 +13,10 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Exceptions
         {
         }
 
-        public OpenIdException(ErrorResponse errorResponse)
+        public OpenIdException(ErrorResponse errorResponse, OpenIdServerErrorCode? errorCode)
             : this(GetMessage(errorResponse))
         {
-            
+            ServerErrorCode = errorCode;
         }
 
         public OpenIdException(string message, Exception inner)
@@ -30,6 +30,8 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Exceptions
             : base(info, context)
         {
         }
+
+        public OpenIdServerErrorCode? ServerErrorCode { get; }
 
         private static string GetMessage(ErrorResponse errorResponse)
         {

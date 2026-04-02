@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Auth.Abstractions;
 using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator;
 using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies;
-using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.DeviceFlowUI;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.DeviceFlowUserInteraction;
 using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client;
 using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
@@ -102,8 +102,8 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
             public Configured WithAuthenticationByCertificate(X509Certificate2 certificate) =>
                 new(new CertificateOpenIdAuthenticationStrategy(new CertificateCredentials {PublicKeyCertificate = certificate}, CryptoProvider), this, Log);
 
-            public Configured WithDeviceFlowAuthentification(IDeviceFlowUIProvider uiProvider) =>
-                new(new DeviceFlowOpenIdAuthenticationStrategy(uiProvider), this, Log);
+            public Configured WithDeviceFlowAuthentification(IDeviceFlowUserInteractionProvider userInteractionProvider) =>
+                new(new DeviceFlowOpenIdAuthenticationStrategy(userInteractionProvider), this, Log);
         }
 
         [PublicAPI]
@@ -132,9 +132,9 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
                 return this;
             }
 
-            public Configured SubstituteAuthenticationContext(IOpenIdAuthenticationContext customAuthenticationContext)
+            public Configured WithCustomAuthenticationContext(IOpenIdAuthenticationContext customAuthenticationContext)
             {
-                this.authenticationContext = customAuthenticationContext;
+                authenticationContext = customAuthenticationContext;
                 return this;
             }
 
@@ -167,9 +167,9 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
                 var options = new OpenIdAuthenticationOptions(
                     apiKey,
                     clientId,
+                    proactiveAuthTokenRefreshInterval,
                     useRefreshTokens,
-                    allowUserInfoRequest,
-                    proactiveAuthTokenRefreshInterval);
+                    allowUserInfoRequest);
                 var openIdClient = OpenIdClient.Create(requestTimeouts, clientConfiguration, log);
                 authenticationContext ??= new OpenIdAuthenticationContext();
                 return new OpenIdAuthenticator(options, openIdClient, authenticationStrategy, authenticationContext, stopwatchFactory);
