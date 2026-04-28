@@ -41,14 +41,14 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
         public Task<Organization> GetOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null) =>
             http.GetAsync<Organization>(
                 $"/v1/{accountId}/organizations/{orgId}",
-                timeout,
-                $"{nameof(OrganizationsClient)}.{nameof(GetAllOrganizationsAsync)}");
+                timeout
+            );
 
         public Task<Organization?> TryGetOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null) =>
             http.TryGetAsync<Organization>(
                 $"/v1/{accountId}/organizations/{orgId}",
-                timeout,
-                $"{nameof(OrganizationsClient)}.{nameof(GetOrganizationAsync)}");
+                timeout
+            );
 
         public Task<Organization> UpdateOrganizationAsync(
             Guid accountId,
@@ -59,8 +59,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
             return http.PutAsync<UpdateOrganizationRequest, Organization>(
                 $"/v1/{accountId}/organizations/{orgId}",
                 new UpdateOrganizationRequest {Name = newName},
-                timeout,
-                $"{nameof(OrganizationsClient)}.{nameof(UpdateOrganizationAsync)}");
+                timeout
+            );
         }
 
         public Task<Organization> CreateOrganizationAsync(
@@ -78,14 +78,12 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
                     Kpp = kpp,
                     Name = name
                 },
-                timeout,
-                $"{nameof(OrganizationsClient)}.{nameof(CreateOrganizationAsync)}");
+                timeout
+            );
         }
 
         public Task<bool> DeleteOrganizationAsync(Guid accountId, Guid orgId, TimeSpan? timeout = null) =>
-            http.TryDeleteAsync($"/v1/{accountId}/organizations/{orgId}",
-                timeout,
-                $"{nameof(OrganizationsClient)}.{nameof(DeleteOrganizationAsync)}");
+            http.TryDeleteAsync($"/v1/{accountId}/organizations/{orgId}", timeout);
 
         public async Task<OrganizationSedoSubscriptionResponse> SearchOrganizationControlUnitSubscriptionsAsync(
             Guid accountId,
@@ -94,8 +92,8 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Organizations
             TimeSpan? timeout = null)
         {
             var url = new RequestUrlBuilder($"/v1/{accountId}/organizations/{orgId}/control-unit-subscriptions").Build();
-            var callingMethod = $"{nameof(OrganizationsClient)}.{nameof(GetAllOrganizationsAsync)}";
-            return await http.PostAsync<SedoSubscriptionSearchRequest, OrganizationSedoSubscriptionResponse>(url, request, timeout, callingMethod)
+
+            return await http.PostAsync<SedoSubscriptionSearchRequest, OrganizationSedoSubscriptionResponse>(url, request, timeout)
                 .ConfigureAwait(false);
         }
     }

@@ -106,15 +106,6 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
             return this;
         }
 
-        public IHttpRequest CallingMethod(string? method)
-        {
-            if (method is not null)
-            {
-                request = request.WithHeader(HttpHeaders.ClientMethodHeader, method);
-            }
-            return this;
-        }
-
         public async Task<IHttpResponse> SendAsync(TimeoutSpecification timeoutSpecification = default, Func<IHttpResponse, bool>? ignoreResponseErrors = null)
         {
             var attempt = 0u;

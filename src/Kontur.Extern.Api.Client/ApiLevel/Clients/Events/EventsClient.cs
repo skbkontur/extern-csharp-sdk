@@ -22,15 +22,12 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Events
                 .AppendToQuery("take", take)
                 .AppendToQuery("fromId", fromId)
                 .Build();
-            return http.GetAsync<EventsPage>(url, timeout, $"{nameof(EventsClient)}.{nameof(GetEventsAsync)}");
+            return http.GetAsync<EventsPage>(url, timeout);
         }
 
         public Task ShareEventsAsync(Guid accountId, ShareEventsRequest shareEventsRequest, TimeSpan? timeout = null)
         {
-            return http.Post($"/v1/{accountId}/share-events")
-                .WithObject(shareEventsRequest)
-                .CallingMethod($"{nameof(EventsClient)}.{nameof(ShareEventsAsync)}")
-                .SendAsync(timeout);
+            return http.Post($"/v1/{accountId}/share-events").WithObject(shareEventsRequest).SendAsync(timeout);
         }
     }
 }
