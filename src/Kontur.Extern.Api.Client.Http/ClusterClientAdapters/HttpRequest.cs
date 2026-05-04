@@ -45,8 +45,7 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
             this.log = log;
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
             
-            var clientVersion = ClientVersionGetter.ClientVersion.Value ?? "unknown";
-            var userAgentHeader = $"Kontur.Extern.Api.Sdk/{clientVersion}";
+            var userAgentHeader = GetUserAgent();
             UserAgent(userAgentHeader);
         }
 
@@ -183,6 +182,14 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
             return new HttpResponse(resultRequest, result.Response, serializer);
         }
 
+        private static string GetUserAgent()
+        {
+            var clientVersion = ClientMetaGetter.ClientVersion.Value ?? "unknown";
+            var packageType = ClientMetaGetter.PackageType.Value!;
+            var userAgentHeader = $"Kontur.Extern.Api.Sdk/{clientVersion} ({packageType})";
+            return userAgentHeader;
+        }
+        
         private enum ErrorHandlingResult
         {
             ReturnResponse,
