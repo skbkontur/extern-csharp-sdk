@@ -65,7 +65,8 @@ namespace Kontur.Extern.Api.Client.Http
         {
             var response = await httpRequestFactory
                 .Get(url)
-                .SendAsync(timeout).ConfigureAwait(false);
+                .SendAsync(timeout)
+                .ConfigureAwait(false);
             
             return await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
         }
@@ -85,7 +86,8 @@ namespace Kontur.Extern.Api.Client.Http
 
             var response = await httpRequestFactory.Put(url)
                 .WithObject(requestDto)
-                .SendAsync(timeout).ConfigureAwait(false);
+                .SendAsync(timeout)
+                .ConfigureAwait(false);
             
             return await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
         }
@@ -104,11 +106,8 @@ namespace Kontur.Extern.Api.Client.Http
                 .Post(url);
 
             var sendTask = requestDto is not null
-                ? request
-                    .WithObject(requestDto)
-                    .SendAsync(timeout)
-                : request
-                    .SendAsync(timeout);
+                ? request.WithObject(requestDto).SendAsync(timeout)
+                : request.SendAsync(timeout);
 
             var response = await sendTask.ConfigureAwait(false);
             return await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
@@ -147,7 +146,8 @@ namespace Kontur.Extern.Api.Client.Http
 
             var response = await httpRequestFactory.Patch(url)
                 .WithObject(requestDto)
-                .SendAsync(timeout).ConfigureAwait(false);
+                .SendAsync(timeout)
+                .ConfigureAwait(false);
 
             return await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
         }
@@ -161,11 +161,8 @@ namespace Kontur.Extern.Api.Client.Http
             var request = httpRequestFactory.Post(url);
 
             var sendTask = requestDto is not null
-                ? request
-                    .WithObject(requestDto)
-                    .SendAsync(timeout, IgnoreAllErrors)
-                : request
-                    .SendAsync(timeout, IgnoreAllErrors);
+                ? request.WithObject(requestDto).SendAsync(timeout, IgnoreAllErrors)
+                : request.SendAsync(timeout, IgnoreAllErrors);
 
             return await sendTask.ConfigureAwait(false);
         }
