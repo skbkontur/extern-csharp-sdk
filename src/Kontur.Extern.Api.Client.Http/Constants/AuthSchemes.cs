@@ -4,5 +4,6 @@ namespace Kontur.Extern.Api.Client.Http.Constants
     {
         public const string AuthSid = "auth.sid";
         public const string Basic = "Basic";
+        public const string Bearer = "Bearer";
     }
 }

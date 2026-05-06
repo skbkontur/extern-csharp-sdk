@@ -60,7 +60,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator
 
                 var accessTokenFactory = new AccessTokenFactory(stopwatchFactory);
                 var tokenResponse = await TryRefreshTokenAsync(refreshToken, timeout).ConfigureAwait(false);
-                if (tokenResponse != null)
+                if (tokenResponse is not null)
                     return accessTokenFactory.CreateAccessToken(tokenResponse);
 
                 return null;
@@ -86,10 +86,29 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator
                 );
                 return await openId.RequestTokenAsync(request, timeout).ConfigureAwait(false);
             }
-            catch (OpenIdException ex)
+            catch (OpenIdException)
             {
                 return null;
             }
+        }
+
+        public async Task<UserInfo> GetCurrentSessionUserInfoAsync(TimeSpan? timeout)
+        {
+            if (!authenticationContext.TryGetAccessToken(out var accessToken))
+                throw Errors.UserNotAuthenticatedYet();
+
+            var request = new UserInfoRequest(accessToken.ToString());
+
+            var response = await openId.GetUserInfoAsync(request, timeout).ConfigureAwait(false);
+
+            return new UserInfo
+            {
+                Sub = response.Sub,
+                GivenName = response.GivenName,
+                FamilyName = response.FamilyName,
+                MiddleName = response.MiddleName,
+                Name = response.Name,
+            };
         }
     }
 }

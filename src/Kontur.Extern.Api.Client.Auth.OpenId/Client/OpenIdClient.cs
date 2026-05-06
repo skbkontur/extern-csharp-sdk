@@ -131,7 +131,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client
         public Task<UserInfoResponse> GetUserInfoAsync(UserInfoRequest request, TimeSpan? timeout = null)
         {
             var httpRequest = http.Get("/connect/userinfo")
-                .Authorization("Bearer", Base64String.FromEncoded(request.AccessToken))
+                .Authorization(AuthSchemes.Bearer, Base64String.FromEncoded(request.AccessToken))
                 .Accept(ContentTypes.Json);
             return SendRequestAsync<UserInfoResponse>(httpRequest, timeout);
         }
@@ -159,7 +159,11 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client
                 var errorResponse = await httpResponse.TryGetMessageAsync<ErrorResponse>().ConfigureAwait(false);
                 if (errorResponse is not null)
                 {
-                    throw new OpenIdException(errorResponse);
+                    var errorCode = Serializer
+                        .TryDeserialize<OpenIdServerErrorCode?>($"\"{errorResponse.Error}\"")
+                        .GetResultOrNull();
+
+                    throw new OpenIdException(errorResponse, errorCode);
                 }
             }
 

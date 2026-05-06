@@ -28,7 +28,7 @@ namespace Kontur.Extern.Api.Client.Testing.Fakes.Time
         public void UpcomingStopwatchAdvancedTo(TimeInterval interval) => 
             UpcomingStopwatch.Elapsed.Returns(interval);
 
-        public void ActiveStopwatchAdvancedToRefreshTokenTimeWhenActiveTokenTTLIs(TimeInterval activeTokenExpiresIn) => 
+        public void ActiveStopwatchAdvancedToProactiveTokenRefreshTimeWhenActiveTokenTTLIs(TimeInterval activeTokenExpiresIn) => 
             ActiveStopwatchAdvancedTo(activeTokenExpiresIn - proactiveAuthTokenRefreshInterval);
 
         public void ActiveStopwatchAdvancedTo(TimeInterval timeInterval) => 
