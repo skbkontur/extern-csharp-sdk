@@ -1,5 +1,8 @@
-﻿namespace Kontur.Extern.Api.Client.Auth.OpenId.Exceptions
+﻿using JetBrains.Annotations;
+
+namespace Kontur.Extern.Api.Client.Auth.OpenId.Exceptions
 {
+    [PublicAPI]
     public enum OpenIdServerErrorCode
     {
         AbsentOrUnknown = 0,
