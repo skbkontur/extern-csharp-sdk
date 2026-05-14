@@ -5,11 +5,11 @@ using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Builders;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.DocumentFiles;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.DraftBuilders.Documents;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.DraftBuilders.Builders;
+using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Models.ApiTasks;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Builders;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.DocumentFiles;
 using Kontur.Extern.Api.Client.Models.DraftsBuilders.Documents;
-using Kontur.Extern.Api.Client.Http;
 using Vostok.Clusterclient.Core.Model;
 
 namespace Kontur.Extern.Api.Client.ApiLevel.Clients.DraftsBuilders

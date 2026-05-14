@@ -4,8 +4,8 @@ using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Accounts;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Accounts;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Certificates;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Warrants;
-using Kontur.Extern.Api.Client.Models.Accounts;
 using Kontur.Extern.Api.Client.Http;
+using Kontur.Extern.Api.Client.Models.Accounts;
 using Kontur.Extern.Api.Client.Models.Numbers;
 using Vostok.Clusterclient.Core.Model;
 

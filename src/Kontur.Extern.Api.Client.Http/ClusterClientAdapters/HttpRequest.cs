@@ -5,6 +5,7 @@ using Kontur.Extern.Api.Client.Http.Exceptions;
 using Kontur.Extern.Api.Client.Http.Models;
 using Kontur.Extern.Api.Client.Http.Options;
 using Kontur.Extern.Api.Client.Http.Serialization;
+using Kontur.Extern.Api.Client.Http.VersionGetter;
 using Vostok.Clusterclient.Core;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Commons.Time;
@@ -43,6 +44,9 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
             this.clusterClient = clusterClient ?? throw new ArgumentNullException(nameof(clusterClient));
             this.log = log;
             this.serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            
+            var userAgentHeader = GetUserAgent();
+            UserAgent(userAgentHeader);
         }
 
         public IPayloadSpecifiedRequest WithPayload(IHttpContent content)
@@ -92,6 +96,12 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
                 request = request.WithContentRangeHeader(from, to);
             }
 
+            return this;
+        }
+
+        public IHttpRequest UserAgent(string userAgent)
+        {
+            request = request.WithUserAgentHeader(userAgent);
             return this;
         }
 
@@ -172,6 +182,14 @@ namespace Kontur.Extern.Api.Client.Http.ClusterClientAdapters
             return new HttpResponse(resultRequest, result.Response, serializer);
         }
 
+        private static string GetUserAgent()
+        {
+            var clientVersion = ClientMetaGetter.ClientVersion.Value ?? "unknown";
+            var packageType = ClientMetaGetter.PackageType.Value!;
+            var userAgentHeader = $"Kontur.Extern.Api.Sdk/{clientVersion} ({packageType})";
+            return userAgentHeader;
+        }
+        
         private enum ErrorHandlingResult
         {
             ReturnResponse,

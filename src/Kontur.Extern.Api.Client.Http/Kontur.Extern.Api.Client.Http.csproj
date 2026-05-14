@@ -2,12 +2,18 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <Version>0.1.0-alpha</Version>
         <LangVersion>latest</LangVersion>        
         <Nullable>enable</Nullable>        
         <Configurations>Debug;Release;Client</Configurations>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <IsNugetPackage Condition="'$(IsNugetPackage)' == ''">false</IsNugetPackage>
+    </PropertyGroup>
+    <ItemGroup>
+        <AssemblyMetadata Include="IsNugetPackage" Value="$(IsNugetPackage)" />
+    </ItemGroup>
+    
     <ItemGroup>
       <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
       <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="6.0.10" />

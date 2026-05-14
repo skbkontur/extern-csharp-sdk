@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.JsonPatch;
 
 namespace Kontur.Extern.Api.Client.Http
 {
@@ -11,7 +10,11 @@ namespace Kontur.Extern.Api.Client.Http
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
 
-            var response = await httpRequestFactory.Get(url.ToUrl()).SendAsync(timeout).ConfigureAwait(false);
+            var response = await httpRequestFactory
+                .Get(url.ToUrl())
+                .SendAsync(timeout)
+                .ConfigureAwait(false);
+            
             return await response.GetBytesAsync().ConfigureAwait(false);
         }
 
@@ -20,7 +23,11 @@ namespace Kontur.Extern.Api.Client.Http
             if (url == null)
                 throw new ArgumentNullException(nameof(url));
 
-            var response = await httpRequestFactory.Get(url.ToUrl()).SendAsync(timeout, IgnoreNotFoundApiErrors).ConfigureAwait(false);
+            var response = await httpRequestFactory
+                .Get(url.ToUrl())
+                .SendAsync(timeout, IgnoreNotFoundApiErrors)
+                .ConfigureAwait(false);
+            
             return response.Status.IsNotFound
                 ? default
                 : await response.GetBytesAsync().ConfigureAwait(false);
@@ -36,7 +43,11 @@ namespace Kontur.Extern.Api.Client.Http
 
         public static async Task<TResponseDto?> TryGetAsync<TResponseDto>(this IHttpRequestFactory httpRequestFactory, Uri url, TimeoutSpecification timeout = default)
         {
-            var response = await httpRequestFactory.Get(url).SendAsync(timeout, IgnoreNotFoundApiErrors).ConfigureAwait(false);
+            var response = await httpRequestFactory
+                .Get(url)
+                .SendAsync(timeout, IgnoreNotFoundApiErrors)
+                .ConfigureAwait(false);
+            
             return response.Status.IsNotFound
                 ? default
                 : await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
@@ -52,7 +63,11 @@ namespace Kontur.Extern.Api.Client.Http
 
         public static async Task<TResponseDto> GetAsync<TResponseDto>(this IHttpRequestFactory httpRequestFactory, Uri url, TimeoutSpecification timeout = default)
         {
-            var response = await httpRequestFactory.Get(url).SendAsync(timeout).ConfigureAwait(false);
+            var response = await httpRequestFactory
+                .Get(url)
+                .SendAsync(timeout)
+                .ConfigureAwait(false);
+            
             return await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
         }
 
@@ -71,7 +86,9 @@ namespace Kontur.Extern.Api.Client.Http
 
             var response = await httpRequestFactory.Put(url)
                 .WithObject(requestDto)
-                .SendAsync(timeout).ConfigureAwait(false);
+                .SendAsync(timeout)
+                .ConfigureAwait(false);
+            
             return await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
         }
 
@@ -85,7 +102,8 @@ namespace Kontur.Extern.Api.Client.Http
 
         public static async Task<TResponseDto> PostAsync<TRequestDto, TResponseDto>(this IHttpRequestFactory httpRequestFactory, Uri url, TRequestDto? requestDto, TimeoutSpecification timeout = default)
         {
-            var request = httpRequestFactory.Post(url);
+            var request = httpRequestFactory
+                .Post(url);
 
             var sendTask = requestDto is not null
                 ? request.WithObject(requestDto).SendAsync(timeout)
@@ -105,7 +123,11 @@ namespace Kontur.Extern.Api.Client.Http
 
         public static async Task<TResponseDto> PostAsync<TResponseDto>(this IHttpRequestFactory httpRequestFactory, Uri url, TimeoutSpecification timeout = default)
         {
-            var response = await httpRequestFactory.Post(url).SendAsync(timeout).ConfigureAwait(false);
+            var response = await httpRequestFactory
+                .Post(url)
+                .SendAsync(timeout)
+                .ConfigureAwait(false);
+            
             return await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
         }
 
@@ -124,7 +146,8 @@ namespace Kontur.Extern.Api.Client.Http
 
             var response = await httpRequestFactory.Patch(url)
                 .WithObject(requestDto)
-                .SendAsync(timeout).ConfigureAwait(false);
+                .SendAsync(timeout)
+                .ConfigureAwait(false);
 
             return await response.GetMessageAsync<TResponseDto>().ConfigureAwait(false);
         }
@@ -153,7 +176,9 @@ namespace Kontur.Extern.Api.Client.Http
         }
 
         public static Task DeleteAsync(this IHttpRequestFactory httpRequestFactory, Uri url, in TimeoutSpecification timeout = default) =>
-            httpRequestFactory.Delete(url).SendAsync(timeout);
+            httpRequestFactory
+                .Delete(url)
+                .SendAsync(timeout);
 
         public static Task<bool> TryDeleteAsync(this IHttpRequestFactory httpRequestFactory, string url, in TimeoutSpecification timeout = default)
         {
@@ -165,7 +190,11 @@ namespace Kontur.Extern.Api.Client.Http
 
         public static async Task<bool> TryDeleteAsync(this IHttpRequestFactory httpRequestFactory, Uri url, TimeoutSpecification timeout = default)
         {
-            var httpResponse = await httpRequestFactory.Delete(url).SendAsync(timeout, IgnoreNotFoundApiErrors).ConfigureAwait(false);
+            var httpResponse = await httpRequestFactory
+                .Delete(url)
+                .SendAsync(timeout, IgnoreNotFoundApiErrors)
+                .ConfigureAwait(false);
+            
             var httpStatus = httpResponse.Status;
             return !httpStatus.IsNotFound;
         }

@@ -321,6 +321,43 @@ namespace Kontur.Extern.Api.Client.Http.UnitTests
             private HttpRequestFactory CreateHttp() => HttpRequestFactory_Tests.CreateHttp(fakeClient.Configuration, log);
         }
 
+        public class UserAgent
+        {
+            private readonly ILog log;
+            private readonly FakeClusterClient fakeClient;
+
+            private FakeClusterClientVerify ClusterClientVerify => fakeClient.Verify;
+
+            public UserAgent(ITestOutputHelper output)
+            {
+                log = new TestLog(output);
+                fakeClient = CreateFakeClusterClient();
+            }
+
+            [Fact]
+            public async Task Should_set_user_agent_to_request()
+            {
+                const string userAgent = "user_agent";
+
+                await CreateHttp().Put("/some-resource")
+                    .UserAgent(userAgent)
+                    .SendAsync();
+                
+                ClusterClientVerify.SentRequest!.Headers!.UserAgent.Should().Be(userAgent);
+            }
+
+            [Fact]
+            public async Task Should_set_default_client_version_as_user_agent_if_not_passed()
+            {
+                await CreateHttp().Put("/some-resource")
+                    .SendAsync();
+                
+                ClusterClientVerify.SentRequest!.Headers!.UserAgent.Should().NotBeNullOrEmpty();
+            }
+            
+            private HttpRequestFactory CreateHttp() => HttpRequestFactory_Tests.CreateHttp(fakeClient.Configuration, log);
+        }
+        
         public abstract class VerbTestBase
         {
             private readonly TestLog log;

@@ -6,13 +6,13 @@ using Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts.Signatures;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.ApiTasks;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Check;
 using Kontur.Extern.Api.Client.ApiLevel.Models.Responses.Drafts.Send;
+using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Models.ApiTasks;
 using Kontur.Extern.Api.Client.Models.Common;
 using Kontur.Extern.Api.Client.Models.Docflows;
 using Kontur.Extern.Api.Client.Models.Drafts;
 using Kontur.Extern.Api.Client.Models.Drafts.Documents;
 using Kontur.Extern.Api.Client.Models.Drafts.Meta;
-using Kontur.Extern.Api.Client.Http;
 using Kontur.Extern.Api.Client.Models.Drafts.Prepare;
 using Vostok.Clusterclient.Core.Model;
 
