@@ -17,20 +17,21 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts
 
         public AccountClient(IHttpRequestFactory http) => HttpRequestFactory = http;
 
-        public Task<AccountList> GetAccountsAsync(int? skip = null, int? take = null, TimeSpan? timeout = null)
+        public Task<AccountList> GetAccountsAsync(int? skip = null, int? take = null, TimeSpan? timeout = null, bool isShowBlocked = false)
         {
             var url = new RequestUrlBuilder("v1")
                 .AppendToQuery("skip", skip)
                 .AppendToQuery("take", take)
+                .AppendToQuery("isShowBlocked", isShowBlocked)
                 .Build();
             return HttpRequestFactory.GetAsync<AccountList>(url, timeout);
         }
 
-        public Task<Account> GetAccountAsync(Guid accountId, TimeSpan? timeout = null) =>
-            HttpRequestFactory.GetAsync<Account>($"v1/{accountId}", timeout);
+        public Task<Account> GetAccountAsync(Guid accountId, TimeSpan? timeout = null, bool isShowBlocked = false) =>
+            HttpRequestFactory.GetAsync<Account>(new RequestUrlBuilder("v1").AppendToPath(accountId).AppendToQuery("isShowBlocked", isShowBlocked).Build(), timeout);
 
-        public Task<Account?> TryGetAccountAsync(Guid accountId, TimeSpan? timeout = null) =>
-            HttpRequestFactory.TryGetAsync<Account>($"v1/{accountId}", timeout);
+        public Task<Account?> TryGetAccountAsync(Guid accountId, TimeSpan? timeout = null, bool isShowBlocked = false) =>
+            HttpRequestFactory.TryGetAsync<Account>(new RequestUrlBuilder("v1").AppendToPath(accountId).AppendToQuery("isShowBlocked", isShowBlocked).Build(), timeout);
 
         public Task<bool> DeleteAccountAsync(Guid accountId, TimeSpan? timeout = null) =>
             HttpRequestFactory.TryDeleteAsync($"v1/{accountId}", timeout);

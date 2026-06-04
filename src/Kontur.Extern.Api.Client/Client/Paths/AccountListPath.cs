@@ -37,7 +37,7 @@ namespace Kontur.Extern.Api.Client.Paths
             return apiClient.Accounts.CreateAccountAsync(inn.ToString(), kpp, organizationName, timeout);
         }
 
-        public IEntityList<Account> List()
+        public IEntityList<Account> List(bool isShowBlocked = false)
         {
             var apiClient = Services.Api;
             return new EntityList<Account>(
@@ -49,7 +49,7 @@ namespace Kontur.Extern.Api.Client.Paths
                         intSkip = (int) skip;
                     }
 
-                    var accountList = await apiClient.Accounts.GetAccountsAsync(intSkip, take, timeout);
+                    var accountList = await apiClient.Accounts.GetAccountsAsync(intSkip, take, timeout, isShowBlocked);
 
                     return (accountList.Accounts, accountList.TotalCount);
                 });
