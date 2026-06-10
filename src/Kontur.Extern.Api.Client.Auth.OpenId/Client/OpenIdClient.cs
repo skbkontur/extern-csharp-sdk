@@ -11,6 +11,7 @@ using Kontur.Extern.Api.Client.Http.ClusterClientAdapters;
 using Kontur.Extern.Api.Client.Http.Configurations;
 using Kontur.Extern.Api.Client.Http.Constants;
 using Kontur.Extern.Api.Client.Http.Contents;
+using Kontur.Extern.Api.Client.Http.Models;
 using Kontur.Extern.Api.Client.Http.Options;
 using Kontur.Extern.Api.Client.Http.Serialization;
 using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson;
@@ -96,6 +97,17 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client
             return await PostToOpenIdServerAsync<TokenResponse>("/connect/token", request.ToRequestAuthCredentials(), content, timeout).ConfigureAwait(false);
         }
 
+        public async Task<TokenResponse> RequestTokenAsync(DeviceTokenRequest request, TimeSpan? timeout = null)
+        {
+            var content = new FormUrlEncodedContent()
+                .AddGrantType(ContractConstants.GrantTypes.DeviceCode)
+                .AddScope(request.Scope)
+                .AddEntry(ContractConstants.DeviceTokenRequest.DeviceCode, request.DeviceCode)
+                .AddRequestAuthentication(request);
+
+            return await PostToOpenIdServerAsync<TokenResponse>("/connect/token", request.ToRequestAuthCredentials(), content, timeout).ConfigureAwait(false);
+        }
+
         public async Task<CertificateAuthenticationResponse> CertificateAuthenticationAsync(CertificateAuthenticationRequest request, TimeSpan? timeout = null)
         {
             var content = new FormUrlEncodedContent()
@@ -105,6 +117,23 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client
                 .AddRequestAuthentication(request);
 
             return await PostToOpenIdServerAsync<CertificateAuthenticationResponse>("/authentication/certificate", request.ToRequestAuthCredentials(), content, timeout).ConfigureAwait(false);
+        }
+
+        public async Task<DeviceAuthenticationResponse> StartDeviceAuthenticationAsync(StartDeviceAuthenticationRequest request, TimeSpan? timeout = null)
+        {
+            var content = new FormUrlEncodedContent()
+                .AddScope(request.Scope)
+                .AddRequestAuthentication(request);
+
+            return await PostToOpenIdServerAsync<DeviceAuthenticationResponse>("/connect/deviceauthorization", request.ToRequestAuthCredentials(), content, timeout).ConfigureAwait(false);
+        }
+
+        public Task<UserInfoResponse> GetUserInfoAsync(UserInfoRequest request, TimeSpan? timeout = null)
+        {
+            var httpRequest = http.Get("/connect/userinfo")
+                .Authorization(AuthSchemes.Bearer, Base64String.FromEncoded(request.AccessToken))
+                .Accept(ContentTypes.Json);
+            return SendRequestAsync<UserInfoResponse>(httpRequest, timeout);
         }
 
         [SuppressMessage("ReSharper", "SuggestBaseTypeForParameter")]
@@ -130,7 +159,11 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Client
                 var errorResponse = await httpResponse.TryGetMessageAsync<ErrorResponse>().ConfigureAwait(false);
                 if (errorResponse is not null)
                 {
-                    throw new OpenIdException(errorResponse);
+                    var errorCode = Serializer
+                        .TryDeserialize<OpenIdServerErrorCode?>($"\"{errorResponse.Error}\"")
+                        .GetResultOrNull();
+
+                    throw new OpenIdException(errorResponse, errorCode);
                 }
             }
 

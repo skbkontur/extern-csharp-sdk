@@ -1,12 +1,9 @@
 #nullable enable
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using JetBrains.Annotations;
 using Kontur.Extern.Api.Client.Auth.Abstractions;
 using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator;
 using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies;
+using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.DeviceFlowUserInteraction;
 using Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.Models;
 using Kontur.Extern.Api.Client.Auth.OpenId.Client;
 using Kontur.Extern.Api.Client.Auth.OpenId.Exceptions;
@@ -14,6 +11,10 @@ using Kontur.Extern.Api.Client.Common.Time;
 using Kontur.Extern.Api.Client.Cryptography;
 using Kontur.Extern.Api.Client.Http.Configurations;
 using Kontur.Extern.Api.Client.Http.Options;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using Vostok.Logging.Abstractions;
 
 namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
@@ -100,6 +101,9 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
 
             public Configured WithAuthenticationByCertificate(X509Certificate2 certificate) =>
                 new(new CertificateOpenIdAuthenticationStrategy(new CertificateCredentials {PublicKeyCertificate = certificate}, CryptoProvider), this, Log);
+
+            public Configured WithDeviceFlowAuthentification(IDeviceFlowUserInteractionProvider userInteractionProvider) =>
+                new(new DeviceFlowOpenIdAuthenticationStrategy(userInteractionProvider), this, Log);
         }
 
         [PublicAPI]
@@ -108,6 +112,9 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
             private readonly IOpenIdAuthenticationStrategy authenticationStrategy;
             private readonly SpecifyAuthStrategy specifyAuthStrategy;
             private TimeInterval? proactiveAuthTokenRefreshInterval;
+            private IOpenIdAuthenticationContext? authenticationContext;
+            private bool useRefreshTokens;
+            private bool allowUserInfoRequest;
             private IStopwatchFactory? stopwatchFactory;
             private ILog log;
 
@@ -125,6 +132,24 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
                 return this;
             }
 
+            public Configured WithCustomAuthenticationContext(IOpenIdAuthenticationContext customAuthenticationContext)
+            {
+                authenticationContext = customAuthenticationContext;
+                return this;
+            }
+
+            public Configured EnableRefreshTokensUsage()
+            {
+                useRefreshTokens = true;
+                return this;
+            }
+
+            public Configured AllowUserInfoRequest()
+            {
+                allowUserInfoRequest = true;
+                return this;
+            }
+
             public Configured RefreshAccessTokensBeforeExpirationProactivelyWithinInterval(TimeSpan interval)
             {
                 proactiveAuthTokenRefreshInterval = interval;
@@ -139,9 +164,15 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Builder
                 var apiKey = specifyAuthStrategy.ApiKey;
                 var clientId = specifyAuthStrategy.ClientId;
 
-                var options = new OpenIdAuthenticationOptions(apiKey, clientId, proactiveAuthTokenRefreshInterval);
+                var options = new OpenIdAuthenticationOptions(
+                    apiKey,
+                    clientId,
+                    proactiveAuthTokenRefreshInterval,
+                    useRefreshTokens,
+                    allowUserInfoRequest);
                 var openIdClient = OpenIdClient.Create(requestTimeouts, clientConfiguration, log);
-                return new OpenIdAuthenticator(options, openIdClient, authenticationStrategy, stopwatchFactory);
+                authenticationContext ??= new OpenIdAuthenticationContext();
+                return new OpenIdAuthenticator(options, openIdClient, authenticationStrategy, authenticationContext, stopwatchFactory);
             }
         }
     }

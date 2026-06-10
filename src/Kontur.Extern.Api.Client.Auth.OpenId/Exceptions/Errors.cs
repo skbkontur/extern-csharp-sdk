@@ -25,5 +25,11 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Exceptions
         
         public static Exception TokenResponseInvalidExpirationSeconds(int expiresInSeconds) => 
             new OpenIdException($"The token response has invalid token expiration seconds {expiresInSeconds}");
+
+        public static Exception DeviceFlowAuthorizationCancelledByUser() =>
+            new OpenIdException("The device flow authorization process has been canceled by the user.");
+
+        public static Exception UserNotAuthenticatedYet() =>
+            new InvalidOperationException("The user has not yet been authenticated.");
     }
 }
