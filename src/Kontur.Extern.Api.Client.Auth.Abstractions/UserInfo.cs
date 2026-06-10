@@ -1,5 +1,8 @@
-﻿namespace Kontur.Extern.Api.Client.Auth.Abstractions
+﻿using JetBrains.Annotations;
+
+namespace Kontur.Extern.Api.Client.Auth.Abstractions
 {
+    [PublicAPI]
     public class UserInfo
     {
         public string Sub { get; set; }

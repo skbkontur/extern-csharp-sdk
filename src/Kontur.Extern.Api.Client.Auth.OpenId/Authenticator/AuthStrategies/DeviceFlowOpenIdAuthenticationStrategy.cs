@@ -93,7 +93,7 @@ namespace Kontur.Extern.Api.Client.Auth.OpenId.Authenticator.AuthStrategies
             var info = new DeviceFlowUserInteractionInfo
             {
                 VerificationUriComplete = startResponse.VerificationUriComplete,
-                VerificationUriForForcedUserReLogin = startResponse.VerificationUriComplete + "&prompt=login",
+                ForcedUserReloginVerificationUri = startResponse.VerificationUriComplete + "&prompt=login",
                 ExpiresIn = TimeSpan.FromSeconds(startResponse.ExpiresInSeconds),
             };
             return userInteractionProvider.InitiateUserInteraction(info);
