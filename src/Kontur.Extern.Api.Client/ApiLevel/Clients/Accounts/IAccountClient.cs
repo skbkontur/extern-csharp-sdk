@@ -25,27 +25,27 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Clients.Accounts
         /// <param name="skip">Количество пропускаемых записей</param>
         /// <param name="take">Количество возвращаемых записей</param>
         /// <param name="timeout"></param>
-        /// <param name="isShowBlocked">Получать в ответе заблокированные учетные записи, или нет</param>
+        /// <param name="showBlocked">Получать в ответе заблокированные учетные записи, или нет</param>
         /// <returns>Список учетных записей</returns>
-        Task<AccountList> GetAccountsAsync(int? skip = null, int? take = null, TimeSpan? timeout = null, bool isShowBlocked = false);
+        Task<AccountList> GetAccountsAsync(int? skip = null, int? take = null, TimeSpan? timeout = null, bool showBlocked = false);
 
         /// <summary>
         /// Получение учетной записи по ее идентификатору
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="timeout"></param>
-        /// <param name="isShowBlocked">Получать в ответе заблокированные учетные записи, или нет</param>
+        /// <param name="showBlocked">Получать в ответе заблокированные учетные записи, или нет</param>
         /// <returns>Учетная запись</returns>
-        Task<Account> GetAccountAsync(Guid accountId, TimeSpan? timeout = null, bool isShowBlocked = false);
+        Task<Account> GetAccountAsync(Guid accountId, TimeSpan? timeout = null, bool showBlocked = false);
 
         /// <summary>
         /// Получение учетной записи по ее идентификатору
         /// </summary>
         /// <param name="accountId">Идентификатор учетной записи</param>
         /// <param name="timeout"></param>
-        /// <param name="isShowBlocked">Получать в ответе заблокированные учетные записи, или нет</param>
+        /// <param name="showBlocked">Получать в ответе заблокированные учетные записи, или нет</param>
         /// <returns>Учетная запись или <code>null</code> если учетная запись с указанным <paramref name="accountId"/> отсутствует.</returns>
-        Task<Account?> TryGetAccountAsync(Guid accountId, TimeSpan? timeout = null, bool isShowBlocked = false);
+        Task<Account?> TryGetAccountAsync(Guid accountId, TimeSpan? timeout = null, bool showBlocked = false);
 
         /// <summary>
         /// Удаление учетной записи

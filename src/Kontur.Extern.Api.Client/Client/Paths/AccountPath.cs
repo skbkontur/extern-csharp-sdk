@@ -33,16 +33,16 @@ namespace Kontur.Extern.Api.Client.Paths
         public ReportsTableListPath ReportsTables => new(AccountId, Services);
         public EventsPath Events => new(AccountId, Services);
 
-        public Task<Account> GetAsync(TimeSpan? timeout = null, bool isShowBlocked = false)
+        public Task<Account> GetAsync(TimeSpan? timeout = null, bool showBlocked = false)
         {
             var apiClient = Services.Api;
-            return apiClient.Accounts.GetAccountAsync(AccountId, timeout, isShowBlocked);
+            return apiClient.Accounts.GetAccountAsync(AccountId, timeout, showBlocked);
         }
 
-        public Task<Account?> TryGetAsync(TimeSpan? timeout = null, bool isShowBlocked = false)
+        public Task<Account?> TryGetAsync(TimeSpan? timeout = null, bool showBlocked = false)
         {
             var apiClient = Services.Api;
-            return apiClient.Accounts.TryGetAccountAsync(AccountId, timeout, isShowBlocked);
+            return apiClient.Accounts.TryGetAccountAsync(AccountId, timeout, showBlocked);
         }
 
         /// <summary>
