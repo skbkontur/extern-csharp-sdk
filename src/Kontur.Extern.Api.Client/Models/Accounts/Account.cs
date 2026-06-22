@@ -50,5 +50,15 @@ namespace Kontur.Extern.Api.Client.Models.Accounts
         /// Идентификатор группы учетных записей
         /// </summary>
         public Guid? AbonentId { get; set; }
+
+        /// <summary>
+        /// Признак заблокированности учетной записи. Если учетная запись заблокирована, то работа в веб-версии Контур.Экстерна будет недоступна.
+        /// </summary>
+        public bool? IsBlocked { get; set; }
+
+        /// <summary>
+        /// Получение последнего входа портального пользователя в контексте абонента
+        /// </summary>
+        public DateTime? LastUserEntrance { get; set; }
     }
 }
