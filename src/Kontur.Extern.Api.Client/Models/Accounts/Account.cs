@@ -50,5 +50,15 @@ namespace Kontur.Extern.Api.Client.Models.Accounts
         /// Идентификатор группы учетных записей
         /// </summary>
         public Guid? AbonentId { get; set; }
+
+        /// <summary>
+        /// Признак блокировки учетной записи, в случае true - работа в веб приложении Экстерна будет недоступна
+        /// </summary>
+        public bool IsBlocked { get; set; }
+
+        /// <summary>
+        /// Дата последнего входа в веб-приложение Экстерна
+        /// </summary>
+        public DateTime? LastUserEntrance { get; set; }
     }
 }
