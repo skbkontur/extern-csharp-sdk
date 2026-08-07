@@ -16,6 +16,7 @@ using Kontur.Extern.Api.Client.Http.ClusterClientAdapters;
 using Kontur.Extern.Api.Client.Http.Configurations;
 using Kontur.Extern.Api.Client.Http.Options;
 using Kontur.Extern.Api.Client.Http.Serialization;
+using Kontur.Extern.Api.Client.Http.Serialization.SysTextJson;
 using Vostok.Clusterclient.Core.Model;
 using Vostok.Commons.Time;
 using Vostok.Logging.Abstractions;
@@ -38,14 +39,15 @@ namespace Kontur.Extern.Api.Client
             IAuthenticator authenticator,
             IExternHttpClient? api,
             IHttpRequestFactory? httpRequestFactory,
-            ILog log)
+            ILog log,
+            Func<SystemTextJsonSerializerFactory>? setupSerializer = null)
         {
             contentManagementOptions ??= ContentManagementOptions.Default;
             pollingStrategy ??= DefaultDelayPollingStrategy;
             cryptoProvider ??= DefaultCryptoProvider;
             requestTimeouts ??= new RequestTimeouts();
 
-            var jsonSerializer = JsonSerializerFactory.CreateJsonSerializer(log);
+            var jsonSerializer = JsonSerializerFactory.CreateJsonSerializer(log, setupSerializer: setupSerializer);
             httpRequestFactory ??= CreateHttp(clientConfiguration, requestTimeouts, authenticator, jsonSerializer, log);
             api ??= new ExternHttpClient(httpRequestFactory);
             var services = new ExternClientServices(contentManagementOptions, httpRequestFactory, jsonSerializer, api, pollingStrategy, authenticator, cryptoProvider);
