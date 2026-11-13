@@ -50,9 +50,6 @@ namespace Kontur.Extern.Api.Client.ApiLevel.Models.Requests.Drafts
         public DraftCommentColor Color { get; set; }
     }
     
-    /// <summary>
-    /// https://git.skbkontur.ru/keweb/drafts/-/blob/master/src/drafts.shared/Dtos.cs?ref_type=heads#L135
-    /// </summary>
     [PublicAPI]
     public enum DraftCommentColor
     {
